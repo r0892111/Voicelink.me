@@ -15,4 +15,6 @@ export interface AuthResponse {
 export interface AuthConfig {
   supabaseUrl: string;
   functionName: string;
+  clientId: string;
+  baseUrl: string;
 }

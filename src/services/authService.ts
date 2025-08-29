@@ -7,27 +7,13 @@ export class AuthService {
     this.config = config;
   }
 
+  private generateState(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  }
+
   async initiateAuth(): Promise<AuthResponse> {
     try {
-      // Call the edge function to get the OAuth URL
-      const response = await fetch(`${this.config.supabaseUrl}/functions/v1/${this.config.functionName}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to get auth URL: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const authUrl = data.authUrl;
-
-      if (!authUrl) {
-        throw new Error('No auth URL returned from edge function');
-      }
+      const authUrl = this.getAuthUrl();
       
       // Redirect to the OAuth URL
       window.location.href = authUrl;
@@ -42,24 +28,55 @@ export class AuthService {
     }
   }
 
+  private getAuthUrl(): string {
+    // Clear any existing state to ensure fresh authentication
+    localStorage.removeItem(`${this.config.functionName}_oauth_state`);
+
+    // Generate a fresh state parameter
+    const state = this.generateState();
+
+    // Ensure consistent redirect URI
+    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/${this.config.functionName}/callback`;
+
+    const params = new URLSearchParams({
+      client_id: this.config.clientId,
+      response_type: 'code',
+      redirect_uri: redirectUri,
+      state: state
+    });
+
+    // Store the new state
+    localStorage.setItem(`${this.config.functionName}_oauth_state`, state);
+    
+    const authUrl = `${this.config.baseUrl}/oauth2/authorize?${params.toString()}`;
+
+    return authUrl;
+  }
+
   static createTeamleaderAuth(): AuthService {
     return new AuthService({
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
-      functionName: 'teamleader-auth'
+      functionName: 'teamleader',
+      clientId: import.meta.env.VITE_TEAMLEADER_CLIENT_ID || 'f6d23cd41fad1c1de3471253996c4588',
+      baseUrl: import.meta.env.VITE_TEAMLEADER_BASE_URL || 'https://focus.teamleader.eu'
     });
   }
 
   static createPipedriveAuth(): AuthService {
     return new AuthService({
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
-      functionName: 'pipedrive-auth'
+      functionName: 'pipedrive',
+      clientId: import.meta.env.VITE_PIPEDRIVE_CLIENT_ID || '',
+      baseUrl: import.meta.env.VITE_PIPEDRIVE_BASE_URL || 'https://oauth.pipedrive.com'
     });
   }
 
   static createOdooAuth(): AuthService {
     return new AuthService({
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
-      functionName: 'odoo-auth'
+      functionName: 'odoo',
+      clientId: import.meta.env.VITE_ODOO_CLIENT_ID || '',
+      baseUrl: import.meta.env.VITE_ODOO_BASE_URL || ''
     });
   }
 }
