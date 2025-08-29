@@ -94,7 +94,7 @@ export class AuthService {
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
       functionName: 'odoo',
       clientId: import.meta.env.VITE_ODOO_CLIENT_ID || '6c18f564-c3ca-470f-b218-831e1c64f0be',
-      baseUrl: '' // Not used for API key auth
+      baseUrl: 'https://accounts.odoo.com'
     });
   }
 
