@@ -66,8 +66,8 @@ export class AuthService {
     return new AuthService({
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
       functionName: 'pipedrive',
-      clientId: import.meta.env.VITE_PIPEDRIVE_CLIENT_ID || '',
-      baseUrl: import.meta.env.VITE_PIPEDRIVE_BASE_URL || 'https://oauth.pipedrive.com'
+      clientId: import.meta.env.VITE_PIPEDRIVE_CLIENT_ID || 'your-pipedrive-client-id',
+      baseUrl: 'https://oauth.pipedrive.com'
     });
   }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { X, Loader2, AlertCircle } from 'lucide-react';
 import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
+import { PipedriveAuth } from '../services/pipedriveAuth';
 import { authProviders } from '../config/authProviders';
 
 interface AuthModalProps {
@@ -25,7 +26,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           authService = AuthService.createTeamleaderAuth();
           break;
         case 'pipedrive':
-          authService = AuthService.createPipedriveAuth();
+          const pipedriveAuth = new PipedriveAuth();
+          const result = await pipedriveAuth.initiateAuth();
+          if (!result.success && result.error) {
+            setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
+            setLoadingProvider(null);
+          }
+          return;
           break;
         case 'odoo':
           authService = AuthService.createOdooAuth();
