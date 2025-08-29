@@ -39,6 +39,9 @@ export const AuthCallback: React.FC = () => {
         // Clean up stored state
         localStorage.removeItem(`${platform}_oauth_state`);
 
+        // Update loading message to indicate we're exchanging the code
+        setMessage('Exchanging authorization code for access token...');
+
         // Call the appropriate edge function to exchange code for tokens
         const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth`, {
           method: 'POST',
@@ -78,7 +81,12 @@ export const AuthCallback: React.FC = () => {
       }
     };
 
-    handleCallback();
+    // Add a small delay to show the loading state before processing
+    const timer = setTimeout(() => {
+      handleCallback();
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, [platform, searchParams, navigate]);
 
   const getIcon = () => {
