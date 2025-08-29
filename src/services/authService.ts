@@ -99,7 +99,7 @@ export class AuthService {
   }
 
   // Special method for Odoo API key authentication
-  async authenticateWithApiKey(email: string, apiKey: string, odooUrl: string): Promise<AuthResponse> {
+  async authenticateWithApiKey(accessToken: string): Promise<AuthResponse> {
     try {
       const response = await fetch(`${this.config.supabaseUrl}/functions/v1/odoo-auth`, {
         method: 'POST',
@@ -108,9 +108,7 @@ export class AuthService {
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
-          email,
-          api_key: apiKey,
-          odoo_url: odooUrl
+          access_token: accessToken
         })
       });
 

@@ -8,25 +8,15 @@ interface OdooAuthFormProps {
 }
 
 export const OdooAuthForm: React.FC<OdooAuthFormProps> = ({ onSuccess, onCancel }) => {
-  const [email, setEmail] = useState('');
-  const [apiKey, setApiKey] = useState('');
-  const [odooUrl, setOdooUrl] = useState('');
+  const [accessToken, setAccessToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !apiKey || !odooUrl) {
-      setError('Please fill in all fields');
-      return;
-    }
-
-    // Basic URL validation
-    try {
-      new URL(odooUrl);
-    } catch {
-      setError('Please enter a valid Odoo URL (e.g., https://yourcompany.odoo.com)');
+    if (!accessToken) {
+      setError('Please enter your Odoo access token');
       return;
     }
 
@@ -35,7 +25,7 @@ export const OdooAuthForm: React.FC<OdooAuthFormProps> = ({ onSuccess, onCancel 
 
     try {
       const authService = AuthService.createOdooAuth();
-      const result = await authService.authenticateWithApiKey(email, apiKey, odooUrl);
+      const result = await authService.authenticateWithApiKey(accessToken);
       
       if (result.success) {
         onSuccess();
@@ -57,7 +47,7 @@ export const OdooAuthForm: React.FC<OdooAuthFormProps> = ({ onSuccess, onCancel 
           <Settings className="w-6 h-6 text-white" />
         </div>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">Connect to Odoo</h3>
-        <p className="text-gray-600 text-sm">Enter your Odoo credentials to connect</p>
+        <p className="text-gray-600 text-sm">Enter your Odoo access token to connect</p>
       </div>
 
       {/* Error Message */}
@@ -71,50 +61,20 @@ export const OdooAuthForm: React.FC<OdooAuthFormProps> = ({ onSuccess, onCancel 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="odoo-url" className="block text-sm font-medium text-gray-700 mb-2">
-            Odoo URL
+          <label htmlFor="odoo-access-token" className="block text-sm font-medium text-gray-700 mb-2">
+            Access Token
           </label>
           <input
-            id="odoo-url"
-            type="url"
-            value={odooUrl}
-            onChange={(e) => setOdooUrl(e.target.value)}
-            placeholder="https://yourcompany.odoo.com"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            disabled={loading}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="odoo-email" className="block text-sm font-medium text-gray-700 mb-2">
-            Email
-          </label>
-          <input
-            id="odoo-email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="your.email@company.com"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            disabled={loading}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="odoo-api-key" className="block text-sm font-medium text-gray-700 mb-2">
-            API Key
-          </label>
-          <input
-            id="odoo-api-key"
+            id="odoo-access-token"
             type="password"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            placeholder="Your Odoo API key"
+            value={accessToken}
+            onChange={(e) => setAccessToken(e.target.value)}
+            placeholder="Your Odoo access token"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             disabled={loading}
           />
           <p className="text-xs text-gray-500 mt-1">
-            You can find your API key in Odoo under Settings → Users & Companies → Users
+            You can get your access token from Odoo's OAuth 2.0 authentication flow
           </p>
         </div>
 
@@ -131,7 +91,7 @@ export const OdooAuthForm: React.FC<OdooAuthFormProps> = ({ onSuccess, onCancel 
           </button>
           <button
             type="submit"
-            disabled={loading || !email || !apiKey || !odooUrl}
+            disabled={loading || !accessToken}
             className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {loading ? (
