@@ -1,6 +1,9 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Users } from 'lucide-react';
 import { AuthModal } from './components/AuthModal';
+import { AuthCallback } from './components/AuthCallback';
+import { Dashboard } from './components/Dashboard';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -34,10 +37,16 @@ function App() {
         </div>
       </header>
 
-      {/* Main Content Area - Blank */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Content will go here */}
-      </main>
+      {/* Routes */}
+      <Routes>
+        <Route path="/" element={
+          <main className="max-w-7xl mx-auto px-6 py-8">
+            {/* Blank main content */}
+          </main>
+        } />
+        <Route path="/auth/:platform/callback" element={<AuthCallback />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
 
       <AuthModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
