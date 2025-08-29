@@ -35,8 +35,10 @@ export class AuthService {
     // Generate a fresh state parameter
     const state = this.generateState();
 
-    // Ensure consistent redirect URI
-    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/${this.config.functionName}/callback`;
+    // Use production callback URL for Pipedrive, local for others
+    const redirectUri = this.config.functionName === 'pipedrive' 
+      ? 'https://voicelink.me/auth/pipedrive/callback'
+      : `${window.location.protocol}//${window.location.host}/auth/${this.config.functionName}/callback`;
 
     let params: URLSearchParams;
     
