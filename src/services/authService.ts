@@ -93,7 +93,7 @@ export class AuthService {
     return new AuthService({
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
       functionName: 'odoo',
-      clientId: '', // Not used for API key auth
+      clientId: import.meta.env.VITE_ODOO_CLIENT_ID || '6c18f564-c3ca-470f-b218-831e1c64f0be',
       baseUrl: '' // Not used for API key auth
     });
   }
