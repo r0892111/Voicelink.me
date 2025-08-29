@@ -75,8 +75,8 @@ export class AuthService {
     return new AuthService({
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
       functionName: 'odoo',
-      clientId: import.meta.env.VITE_ODOO_CLIENT_ID || 'your-odoo-client-id',
-      baseUrl: import.meta.env.VITE_ODOO_BASE_URL || 'https://your-odoo-instance.odoo.com'
+      clientId: import.meta.env.VITE_ODOO_CLIENT_ID || '',
+      baseUrl: import.meta.env.VITE_ODOO_BASE_URL || ''
     });
   }
 }

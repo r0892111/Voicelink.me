@@ -43,7 +43,7 @@ export const AuthCallback: React.FC = () => {
         setMessage('Exchanging authorization code for access token...');
 
         // Call the appropriate edge function to exchange code for tokens
-        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth-callback`, {
+        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
