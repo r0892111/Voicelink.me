@@ -16,12 +16,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [showOdooForm, setShowOdooForm] = React.useState(false);
 
   const handleSignIn = async (provider: AuthProvider) => {
-    // Handle Odoo differently - show form instead of OAuth
-    if (provider.name === 'odoo') {
-      setShowOdooForm(true);
-      return;
-    }
-
     try {
       setLoadingProvider(provider.name);
       setError(null);
@@ -34,6 +28,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           break;
         case 'pipedrive':
           authService = AuthService.createPipedriveAuth();
+          break;
+        case 'odoo':
+          authService = AuthService.createOdooAuth();
           break;
         default:
           console.error('Unknown provider:', provider.name);
