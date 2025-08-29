@@ -19,19 +19,38 @@ export const useAuth = () => {
         const { data: { user: authUser } } = await supabase.auth.getUser();
         
         if (authUser) {
-          // Try to get user data from our custom tables
-          const { data: userData } = await supabase
-            .from('users')
-            .select('id, name, email')
-            .eq('id', authUser.id)
-            .single();
+          // Check all CRM user tables to find the authenticated user
+          const [teamleaderData, pipedriveData, odooData, usersData] = await Promise.all([
+            supabase.from('teamleader_users').select('user_info').eq('user_id', authUser.id).maybeSingle(),
+            supabase.from('pipedrive_users').select('user_info').eq('user_id', authUser.id).maybeSingle(),
+            supabase.from('odoo_users').select('user_info').eq('user_id', authUser.id).maybeSingle(),
+            supabase.from('users').select('id, name, email').eq('id', authUser.id).maybeSingle()
+          ]);
+
+          let userData = null;
+          let platform = 'auth';
+
+          // Check which platform the user is from
+          if (teamleaderData.data?.user_info) {
+            userData = teamleaderData.data.user_info;
+            platform = 'teamleader';
+          } else if (pipedriveData.data?.user_info) {
+            userData = pipedriveData.data.user_info;
+            platform = 'pipedrive';
+          } else if (odooData.data?.user_info) {
+            userData = odooData.data.user_info;
+            platform = 'odoo';
+          } else if (usersData.data) {
+            userData = usersData.data;
+            platform = 'custom';
+          }
 
           if (userData) {
             setUser({
-              id: userData.id,
-              name: userData.name,
-              email: userData.email,
-              platform: 'custom'
+              id: authUser.id,
+              name: userData.name || userData.first_name || authUser.email?.split('@')[0] || 'User',
+              email: userData.email || authUser.email || '',
+              platform
             });
           } else {
             // Fallback to auth user data
