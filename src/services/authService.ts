@@ -38,17 +38,35 @@ export class AuthService {
     // Ensure consistent redirect URI
     const redirectUri = `${window.location.protocol}//${window.location.host}/auth/${this.config.functionName}/callback`;
 
-    const params = new URLSearchParams({
-      client_id: this.config.clientId,
-      response_type: 'code',
-      redirect_uri: redirectUri,
-      state: state
-    });
+    let params: URLSearchParams;
+    
+    if (this.config.functionName === 'pipedrive') {
+      // Pipedrive-specific OAuth parameters
+      params = new URLSearchParams({
+        client_id: this.config.clientId,
+        state: state,
+        redirect_uri: redirectUri,
+      });
+    } else {
+      // Standard OAuth parameters for other platforms
+      params = new URLSearchParams({
+        client_id: this.config.clientId,
+        response_type: 'code',
+        redirect_uri: redirectUri,
+        state: state
+      });
+    }
 
     // Store the new state
     localStorage.setItem(`${this.config.functionName}_oauth_state`, state);
     
-    const authUrl = `${this.config.baseUrl}/oauth2/authorize?${params.toString()}`;
+    let authUrl: string;
+    
+    if (this.config.functionName === 'pipedrive') {
+      authUrl = `https://oauth.pipedrive.com/oauth/authorize?${params.toString()}`;
+    } else {
+      authUrl = `${this.config.baseUrl}/oauth2/authorize?${params.toString()}`;
+    }
 
     return authUrl;
   }
@@ -66,8 +84,8 @@ export class AuthService {
     return new AuthService({
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
       functionName: 'pipedrive',
-      clientId: import.meta.env.VITE_PIPEDRIVE_CLIENT_ID || '',
-      baseUrl: import.meta.env.VITE_PIPEDRIVE_BASE_URL || 'https://oauth.pipedrive.com'
+      clientId: import.meta.env.VITE_PIPEDRIVE_CLIENT_ID || 'your-pipedrive-client-id',
+      baseUrl: 'https://oauth.pipedrive.com'
     });
   }
 
