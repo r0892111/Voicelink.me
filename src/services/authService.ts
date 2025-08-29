@@ -93,8 +93,45 @@ export class AuthService {
     return new AuthService({
       supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
       functionName: 'odoo',
-      clientId: import.meta.env.VITE_ODOO_CLIENT_ID || '',
-      baseUrl: import.meta.env.VITE_ODOO_BASE_URL || ''
+      clientId: '', // Not used for API key auth
+      baseUrl: '' // Not used for API key auth
     });
+  }
+
+  // Special method for Odoo API key authentication
+  async authenticateWithApiKey(email: string, apiKey: string, odooUrl: string): Promise<AuthResponse> {
+    try {
+      const response = await fetch(`${this.config.supabaseUrl}/functions/v1/odoo-auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          email,
+          api_key: apiKey,
+          odoo_url: odooUrl
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Authentication failed: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      
+      if (result.success) {
+        // Reload the page to trigger auth state update
+        window.location.href = '/dashboard';
+        return { success: true };
+      } else {
+        return { success: false, error: result.error || 'Authentication failed' };
+      }
+    } catch (error) {
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Authentication failed' 
+      };
+    }
   }
 }
