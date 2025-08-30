@@ -12,9 +12,16 @@ interface AuthModalProps {
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = React.useState(false);
 
   const handleSignIn = async (provider: AuthProvider) => {
+    // Prevent double calls
+    if (isProcessing || loadingProvider) {
+      return;
+    }
+
     try {
+      setIsProcessing(true);
       setLoadingProvider(provider.name);
       setError(null);
       
@@ -44,7 +51,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       
     } catch (error) {
       setError(`Error signing in with ${provider.displayName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
       setLoadingProvider(null);
+      setIsProcessing(false);
     }
   };
 

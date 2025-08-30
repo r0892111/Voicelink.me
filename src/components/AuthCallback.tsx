@@ -9,10 +9,18 @@ export const AuthCallback: React.FC = () => {
   const [message, setMessage] = useState('Processing authentication...');
   const { platform } = useParams<{ platform: string }>();
   const navigate = useNavigate();
+  const [hasProcessed, setHasProcessed] = useState(false);
 
   useEffect(() => {
+    // Prevent double execution in React StrictMode
+    if (hasProcessed) {
+      return;
+    }
+
     const handleCallback = async () => {
       try {
+        setHasProcessed(true);
+        
         if (!platform) {
           setStatus('error');
           setMessage('Invalid authentication platform');
@@ -148,7 +156,6 @@ export const AuthCallback: React.FC = () => {
     };
 
     handleCallback();
-  }, [platform, navigate]);
 
   const getIcon = () => {
     switch (status) {
