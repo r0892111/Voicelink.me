@@ -1,147 +1,183 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { Loader2, CheckCircle, XCircle } from 'lucide-react';
+import React from 'react';
+import { X, Loader2, AlertCircle } from 'lucide-react';
+import { AuthProvider } from '../types/auth';
+import { AuthService } from '../services/authService';
+        // Special handling for Odoo OAuth which uses access_token in URL fragment
+        if (platform === 'odoo') {
+          const fragment = window.location.hash.substring(1);
+          const params = new URLSearchParams(fragment);
+          const accessToken = params.get('access_token');
+          const state = params.get('state');
+          const error = params.get('error');
 
-export const AuthCallback: React.FC = () => {
-  const { platform } = useParams<{ platform: string }>();
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
-  const [message, setMessage] = useState('Processing authentication...');
+          if (error) {
+            setStatus('error');
+            setMessage(`Authentication failed: ${error}`);
+            return;
+          }
 
-  useEffect(() => {
-    const handleCallback = async () => {
-      try {
-        const code = searchParams.get('code');
-        const state = searchParams.get('state');
-        const error = searchParams.get('error');
+          if (!accessToken || !state) {
+            setStatus('error');
+            setMessage('Missing authentication parameters');
+            return;
+          }
 
-        if (error) {
-          setStatus('error');
-          setMessage(`Authentication failed: ${error}`);
-          return;
-        }
+          // Verify state parameter
+          const storedState = localStorage.getItem('odoo_oauth_state');
+          if (state !== storedState) {
+            setStatus('error');
+            setMessage('Invalid state parameter');
+            return;
+          }
 
-        if (!code || !state) {
-          setStatus('error');
-          setMessage('Missing authentication parameters');
-          return;
-        }
+          // Clean up stored state
+          localStorage.removeItem('odoo_oauth_state');
 
-        // Verify state parameter
-        const storedState = localStorage.getItem(`${platform}_oauth_state`);
-        if (state !== storedState) {
-          setStatus('error');
-          setMessage('Invalid state parameter');
-          return;
-        }
+          // Update loading message
+          setMessage('Processing Odoo authentication...');
 
-        // Clean up stored state
-        localStorage.removeItem(`${platform}_oauth_state`);
+          // Call the Odoo edge function with access token
+          const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/odoo-auth`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({
+              access_token: accessToken,
+              state,
+            })
+          });
 
-        // Update loading message to indicate we're exchanging the code
-        setMessage('Exchanging authorization code for access token...');
+          if (!response.ok) {
+            throw new Error(`Authentication failed: ${response.statusText}`);
+          }
 
-        // Call the appropriate edge function to exchange code for tokens
-        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({
-            code,
-            redirect_uri: `${window.location.protocol}//${window.location.host}/auth/${platform}/callback`
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Authentication failed: ${response.statusText}`);
-        }
-
-        const result = await response.json();
-        
-        if (result.success) {
-          setStatus('success');
-          setMessage(`Successfully authenticated with ${platform}!`);
+          const result = await response.json();
           
-          // Redirect to dashboard after a short delay
-          setTimeout(() => {
-            navigate('/dashboard');
-          }, 2000);
-        } else {
-          setStatus('error');
-          setMessage(result.error || 'Authentication failed');
+          if (result.success) {
+            setStatus('success');
+            setMessage('Successfully authenticated with Odoo!');
+            
+            // Redirect to dashboard after a short delay
+            setTimeout(() => {
+              navigate('/dashboard');
+            }, 2000);
+          } else {
+            setStatus('error');
+            setMessage(result.error || 'Authentication failed');
+          }
+          return;
         }
 
-      } catch (error) {
-        console.error('Callback error:', error);
-        setStatus('error');
-        setMessage(error instanceof Error ? error.message : 'Authentication failed');
+        // Standard OAuth flow for other platforms
+import { authProviders } from '../config/authProviders';
+
+interface AuthModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+
+  const handleSignIn = async (provider: AuthProvider) => {
+    try {
+      setLoadingProvider(provider.name);
+      setError(null);
+      
+      let authService: AuthService;
+      
+      switch (provider.name) {
+        case 'teamleader':
+          authService = AuthService.createTeamleaderAuth();
+          break;
+        case 'pipedrive':
+          authService = AuthService.createPipedriveAuth();
+          break;
+        case 'odoo':
+          authService = AuthService.createOdooAuth();
+          break;
+        default:
+          console.error('Unknown provider:', provider.name);
+          return;
       }
-    };
 
-    // Add a small delay to show the loading state before processing
-    const timer = setTimeout(() => {
-      handleCallback();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [platform, searchParams, navigate]);
-
-  const getIcon = () => {
-    switch (status) {
-      case 'loading':
-        return <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />;
-      case 'success':
-        return <CheckCircle className="w-12 h-12 text-green-600" />;
-      case 'error':
-        return <XCircle className="w-12 h-12 text-red-600" />;
+      const result = await authService.initiateAuth();
+      
+      if (!result.success && result.error) {
+        setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
+        setLoadingProvider(null);
+      }
+      
+    } catch (error) {
+      setError(`Error signing in with ${provider.displayName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setLoadingProvider(null);
     }
   };
 
-  const getStatusColor = () => {
-    switch (status) {
-      case 'loading':
-        return 'text-blue-600';
-      case 'success':
-        return 'text-green-600';
-      case 'error':
-        return 'text-red-600';
-    }
-  };
+  if (!isOpen) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center">
-        <div className="mb-6">
-          {getIcon()}
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 relative">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
+        {/* Modal Header */}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Platform</h2>
+          <p className="text-gray-600">Sign in with your preferred CRM platform</p>
+          
+          {error && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <span className="text-sm">{error}</span>
+            </div>
+          )}
         </div>
-        
-        <h2 className={`text-2xl font-bold mb-4 ${getStatusColor()}`}>
-          {status === 'loading' && 'Authenticating...'}
-          {status === 'success' && 'Success!'}
-          {status === 'error' && 'Authentication Failed'}
-        </h2>
-        
-        <p className="text-gray-600 mb-6">
-          {message}
-        </p>
 
-        {status === 'error' && (
-          <button
-            onClick={() => navigate('/')}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-          >
-            Try Again
-          </button>
-        )}
+        {/* Sign-in Options */}
+        <div className="space-y-4">
+          {authProviders.map((provider) => {
+            const IconComponent = provider.icon;
+            const isLoading = loadingProvider === provider.name;
+            
+            return (
+              <button
+                key={provider.name}
+                onClick={() => handleSignIn(provider)}
+                disabled={loadingProvider !== null}
+                className={`w-full ${provider.color} ${provider.hoverColor} text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                    <span>Connecting to {provider.displayName}...</span>
+                  </>
+                ) : (
+                  <>
+                    <IconComponent className="w-6 h-6" />
+                    <span>Sign in with {provider.displayName}</span>
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
 
-        {status === 'success' && (
+        {/* Footer */}
+        <div className="mt-6 pt-4 border-t border-gray-200 text-center">
           <p className="text-sm text-gray-500">
-            Redirecting to dashboard...
+            Secure authentication powered by OAuth 2.0
           </p>
-        )}
+        </div>
       </div>
     </div>
   );
