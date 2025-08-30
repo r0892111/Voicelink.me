@@ -1,106 +1,115 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Users, LogOut, User } from 'lucide-react';
-import { AuthModal } from './components/AuthModal';
-import { AuthCallback } from './components/AuthCallback';
-import { Dashboard } from './components/Dashboard';
-import { useAuth } from './hooks/useAuth';
+import { X, Loader2, AlertCircle } from 'lucide-react';
+import { AuthProvider } from '../types/auth';
+import { AuthService } from '../services/authService';
+                  className="flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-lg transition-all duration-200"
 
-function App() {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const { user, loading, signOut } = useAuth();
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Users className="w-8 h-8 text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">CRM Hub</span>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            {user ? (
-              <div className="flex items-center space-x-3">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                    <User className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="text-gray-900 font-medium">{user.name}</span>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full capitalize">
-                    {user.platform}
-                  </span>
-                </div>
-                <button
-                  onClick={signOut}
-                  className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Sign Out</span>
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={openModal}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 hover:shadow-md"
-              >
-                Sign In
-              </button>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* Routes */}
-      <Routes>
-        <Route path="/" element={
-          <main className="max-w-7xl mx-auto px-6 py-8">
-            {user ? (
-              <Dashboard />
-            ) : (
-              <div className="text-center py-16">
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                  Welcome to CRM Hub
-                </h1>
-                <p className="text-xl text-gray-600 mb-8">
-                  Connect with your favorite CRM platform to get started
-                </p>
-                <button
-                  onClick={openModal}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg"
-                >
-                  Get Started
-                </button>
-              </div>
-            )}
-          </main>
-        } />
-        <Route path="/auth/:platform/callback" element={<AuthCallback />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-
-      {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
-    </div>
-  );
+interface AuthModalProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export default App;
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+
+  const handleSignIn = async (provider: AuthProvider) => {
+    try {
+      setLoadingProvider(provider.name);
+      setError(null);
+      
+      let authService: AuthService;
+      
+      switch (provider.name) {
+        case 'teamleader':
+          authService = AuthService.createTeamleaderAuth();
+          break;
+        case 'pipedrive':
+          authService = AuthService.createPipedriveAuth();
+          break;
+        case 'odoo':
+          authService = AuthService.createOdooAuth();
+          break;
+        default:
+          console.error('Unknown provider:', provider.name);
+          return;
+      }
+
+      const result = await authService.initiateAuth();
+      
+      if (!result.success && result.error) {
+        setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
+        setLoadingProvider(null);
+      }
+      
+    } catch (error) {
+      setError(`Error signing in with ${provider.displayName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setLoadingProvider(null);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 relative">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
+        {/* Modal Header */}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Platform</h2>
+          <p className="text-gray-600">Sign in with your preferred CRM platform</p>
+          
+          {error && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <span className="text-sm">{error}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Sign-in Options */}
+        <div className="space-y-4">
+          {authProviders.map((provider) => {
+            const IconComponent = provider.icon;
+            const isLoading = loadingProvider === provider.name;
+            
+            return (
+              <button
+                key={provider.name}
+                onClick={() => handleSignIn(provider)}
+                disabled={loadingProvider !== null}
+                className={`w-full ${provider.color} ${provider.hoverColor} text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                    <span>Connecting to {provider.displayName}...</span>
+                  </>
+                ) : (
+                  <>
+                    <IconComponent className="w-6 h-6" />
+                    <span>Sign in with {provider.displayName}</span>
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Footer */}
+        <div className="mt-6 pt-4 border-t border-gray-200 text-center">
+          <p className="text-sm text-gray-500">
+            Secure authentication powered by OAuth 2.0
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
