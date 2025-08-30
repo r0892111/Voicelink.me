@@ -3,7 +3,6 @@ import { X, Loader2, AlertCircle } from 'lucide-react';
 import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
-import { OdooAuthForm } from './OdooAuthForm';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -13,7 +12,6 @@ interface AuthModalProps {
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
-  const [showOdooForm, setShowOdooForm] = React.useState(false);
 
   const handleSignIn = async (provider: AuthProvider) => {
     try {
@@ -50,15 +48,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleOdooSuccess = () => {
-    setShowOdooForm(false);
-    onClose();
-  };
-
-  const handleOdooCancel = () => {
-    setShowOdooForm(false);
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -73,61 +62,53 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         </button>
 
         {/* Modal Header */}
-        {!showOdooForm && (
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Platform</h2>
-            <p className="text-gray-600">Sign in with your preferred CRM platform</p>
-            
-            {error && (
-              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
-                <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                <span className="text-sm">{error}</span>
-              </div>
-            )}
-          </div>
-        )}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Platform</h2>
+          <p className="text-gray-600">Sign in with your preferred CRM platform</p>
+          
+          {error && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <span className="text-sm">{error}</span>
+            </div>
+          )}
+        </div>
 
-        {/* Content */}
-        {showOdooForm ? (
-          <OdooAuthForm onSuccess={handleOdooSuccess} onCancel={handleOdooCancel} />
-        ) : (
-          <div className="space-y-4">
-            {authProviders.map((provider) => {
-              const IconComponent = provider.icon;
-              const isLoading = loadingProvider === provider.name;
-              
-              return (
-                <button
-                  key={provider.name}
-                  onClick={() => handleSignIn(provider)}
-                  disabled={loadingProvider !== null}
-                  className={`w-full ${provider.color} ${provider.hoverColor} text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="w-6 h-6 animate-spin" />
-                      <span>Connecting to {provider.displayName}...</span>
-                    </>
-                  ) : (
-                    <>
-                      <IconComponent className="w-6 h-6" />
-                      <span>Sign in with {provider.displayName}</span>
-                    </>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        )}
+        {/* Sign-in Options */}
+        <div className="space-y-4">
+          {authProviders.map((provider) => {
+            const IconComponent = provider.icon;
+            const isLoading = loadingProvider === provider.name;
+            
+            return (
+              <button
+                key={provider.name}
+                onClick={() => handleSignIn(provider)}
+                disabled={loadingProvider !== null}
+                className={`w-full ${provider.color} ${provider.hoverColor} text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                    <span>Connecting to {provider.displayName}...</span>
+                  </>
+                ) : (
+                  <>
+                    <IconComponent className="w-6 h-6" />
+                    <span>Sign in with {provider.displayName}</span>
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
 
         {/* Footer */}
-        {!showOdooForm && (
-          <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-            <p className="text-sm text-gray-500">
-              Secure authentication powered by OAuth 2.0
-            </p>
-          </div>
-        )}
+        <div className="mt-6 pt-4 border-t border-gray-200 text-center">
+          <p className="text-sm text-gray-500">
+            Secure authentication powered by OAuth 2.0
+          </p>
+        </div>
       </div>
     </div>
   );

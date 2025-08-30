@@ -1,5 +1,4 @@
 import { AuthConfig, AuthResponse } from '../types/auth';
-import { OdooAuth } from './odooAuth';
 
 export class AuthService {
   private config: AuthConfig;
@@ -91,26 +90,11 @@ export class AuthService {
   }
 
   static createOdooAuth(): AuthService {
-    // Return a special wrapper that uses OdooAuth
-    return {
-      initiateAuth: async () => {
-        const odooAuth = new OdooAuth();
-        const authUrl = odooAuth.getAuthUrl();
-        window.location.href = authUrl;
-        return { success: true, redirectUrl: authUrl };
-      },
-      authenticateWithApiKey: async (accessToken: string) => {
-        const odooAuth = new OdooAuth();
-        const result = await odooAuth.exchangeCodeForToken(accessToken, '');
-        
-        if (result.success) {
-          window.location.href = '/dashboard';
-          return { success: true };
-        } else {
-          return { success: false, error: result.error || 'Authentication failed' };
-        }
-      }
-    } as AuthService;
+    return new AuthService({
+      supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
+      functionName: 'odoo',
+      clientId: import.meta.env.VITE_ODOO_CLIENT_ID || '',
+      baseUrl: import.meta.env.VITE_ODOO_BASE_URL || ''
+    });
   }
-
 }

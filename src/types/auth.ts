@@ -18,15 +18,3 @@ export interface AuthConfig {
   clientId: string;
   baseUrl: string;
 }
-
-export interface OdooUser {
-  id: string;
-  name: string;
-  email: string;
-}
-
-export interface CrmUserInfo {
-  id: string;
-  name: string;
-  email: string;
-}
