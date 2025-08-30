@@ -1,192 +1,115 @@
-import { CrmUserInfo } from '../types/auth';
+import React from 'react';
+import { X, Loader2, AlertCircle } from 'lucide-react';
+import { AuthProvider } from '../types/auth';
+import { AuthService } from '../services/authService';
+import { authProviders } from '../config/authProviders';
 
-export class AuthService {
-  private provider: string;
-  private clientId: string;
-  private redirectUri: string;
-
-  constructor(provider: string, clientId: string, redirectUri: string) {
-    this.provider = provider;
-    this.clientId = clientId;
-    this.redirectUri = redirectUri;
-  }
-
-  static createTeamleaderAuth(): AuthService {
-    const clientId = import.meta.env.VITE_TEAMLEADER_CLIENT_ID || '';
-    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/teamleader/callback`;
-    return new AuthService('teamleader', clientId, redirectUri);
-  }
-
-  static createPipedriveAuth(): AuthService {
-    const clientId = import.meta.env.VITE_PIPEDRIVE_CLIENT_ID || '';
-    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/pipedrive/callback`;
-    return new AuthService('pipedrive', clientId, redirectUri);
-  }
-
-  static createOdooAuth(): AuthService {
-    const clientId = import.meta.env.VITE_ODOO_CLIENT_ID || '9849446b-87d1-4901-863b-a756148ee670';
-    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/odoo/callback`;
-    return new AuthService('odoo', clientId, redirectUri);
-  }
-
-  async initiateAuth(): Promise<{ success: boolean; redirectUrl?: string; error?: string }> {
-    try {
-      if (this.provider === 'odoo') {
-        // Clear any existing state to ensure fresh authentication
-        localStorage.removeItem('odoo_oauth_state');
-
-        // Generate a fresh state parameter
-        const state = this.generateState();
-
-        const params = new URLSearchParams({
-          response_type: 'code',
-          client_id: this.clientId,
-          redirect_uri: this.redirectUri,
-          scope: 'userinfo',
-          state: state,
-        });
-
-        // Store the new state
-        localStorage.setItem('odoo_oauth_state', state);
-        const authUrl = `https://accounts.odoo.com/oauth2/auth?${params.toString()}`;
-
-        // Redirect to Odoo OAuth
-        window.location.href = authUrl;
-        return { success: true };
-      } else {
-        // Handle other providers
-        const state = this.generateState();
-        localStorage.setItem(`${this.provider}_oauth_state`, state);
-
-        let authUrl = '';
-        if (this.provider === 'teamleader') {
-          const params = new URLSearchParams({
-            response_type: 'code',
-            client_id: this.clientId,
-            redirect_uri: this.redirectUri,
-            state: state,
-          });
-          authUrl = `https://app.teamleader.eu/oauth2/authorize?${params.toString()}`;
-        } else if (this.provider === 'pipedrive') {
-          const params = new URLSearchParams({
-            response_type: 'code',
-            client_id: this.clientId,
-            redirect_uri: this.redirectUri,
-            state: state,
-          });
-          authUrl = `https://oauth.pipedrive.com/oauth/authorize?${params.toString()}`;
-        }
-
-        window.location.href = authUrl;
-        return { success: true };
-      }
-    } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error occurred' 
-      };
-    }
-  }
-
-  async handleCallback(code?: string, state?: string, accessToken?: string): Promise<{
-    success: boolean;
-    user?: CrmUserInfo;
-    session?: { access_token: string; refresh_token: string };
-    error?: string;
-  }> {
-    try {
-      if (this.provider === 'odoo') {
-        // For Odoo, we expect accessToken and state from URL fragment
-        if (!accessToken || !state) {
-          return { success: false, error: 'Missing access token or state parameter' };
-        }
-
-        // Verify state parameter
-        const storedState = localStorage.getItem('odoo_oauth_state');
-        
-        if (storedState && state !== storedState) {
-          return { success: false, error: `Invalid state parameter. Expected: ${storedState}, Received: ${state}` };
-        }
-
-        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/odoo-auth`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({
-            access_token: accessToken,
-            state,
-          }),
-        });
-
-        if (!response.ok) {
-          const responseText = await response.text();
-
-          let errorData;
-          try {
-            errorData = JSON.parse(responseText);
-          } catch {
-            errorData = { error: `Server returned HTML instead of JSON. Status: ${response.status}` };
-          }
-
-          return { success: false, error: errorData.error || 'Authentication failed' };
-        }
-
-        const result = await response.json();
-
-        // Clean up state after successful authentication
-        localStorage.removeItem('odoo_oauth_state');
-
-        return result;
-      } else {
-        // Handle other providers with authorization code
-        if (!code || !state) {
-          return { success: false, error: 'Missing authorization code or state parameter' };
-        }
-
-        // Verify state parameter
-        const storedState = localStorage.getItem(`${this.provider}_oauth_state`);
-        if (!storedState || state !== storedState) {
-          return { success: false, error: 'Invalid state parameter' };
-        }
-
-        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${this.provider}-auth`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({
-            code,
-            state,
-            redirect_uri: this.redirectUri,
-          }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          return { success: false, error: errorData.error || 'Authentication failed' };
-        }
-
-        const result = await response.json();
-
-        // Clean up state after successful authentication
-        localStorage.removeItem(`${this.provider}_oauth_state`);
-
-        return result;
-      }
-    } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error occurred' 
-      };
-    }
-  }
-
-  private generateState(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  }
+interface AuthModalProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
+
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+
+  const handleSignIn = async (provider: AuthProvider) => {
+    try {
+      setLoadingProvider(provider.name);
+      setError(null);
+      
+      let authService: AuthService;
+      
+      switch (provider.name) {
+        case 'teamleader':
+          authService = AuthService.createTeamleaderAuth();
+          break;
+        case 'pipedrive':
+          authService = AuthService.createPipedriveAuth();
+          break;
+        case 'odoo':
+          authService = AuthService.createOdooAuth();
+          break;
+        default:
+          console.error('Unknown provider:', provider.name);
+          return;
+      }
+
+      const result = await authService.initiateAuth();
+      
+      if (!result.success && result.error) {
+        setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
+        setLoadingProvider(null);
+      }
+      
+    } catch (error) {
+      setError(`Error signing in with ${provider.displayName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setLoadingProvider(null);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 relative">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
+        {/* Modal Header */}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Platform</h2>
+          <p className="text-gray-600">Sign in with your preferred CRM platform</p>
+          
+          {error && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <span className="text-sm">{error}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Sign-in Options */}
+        <div className="space-y-4">
+          {authProviders.map((provider) => {
+            const IconComponent = provider.icon;
+            const isLoading = loadingProvider === provider.name;
+            
+            return (
+              <button
+                key={provider.name}
+                onClick={() => handleSignIn(provider)}
+                disabled={loadingProvider !== null}
+                className={`w-full ${provider.color} ${provider.hoverColor} text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                    <span>Connecting to {provider.displayName}...</span>
+                  </>
+                ) : (
+                  <>
+                    <IconComponent className="w-6 h-6" />
+                    <span>Sign in with {provider.displayName}</span>
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Footer */}
+        <div className="mt-6 pt-4 border-t border-gray-200 text-center">
+          <p className="text-sm text-gray-500">
+            Secure authentication powered by OAuth 2.0
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
