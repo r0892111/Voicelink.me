@@ -156,6 +156,7 @@ export const AuthCallback: React.FC = () => {
     };
 
     handleCallback();
+  }, [hasProcessed, platform, navigate]);
 
   const getIcon = () => {
     switch (status) {
