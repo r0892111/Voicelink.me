@@ -1,4 +1,5 @@
 import { AuthConfig, AuthResponse } from '../types/auth';
+import { OdooAuth } from './odooAuth';
 
 export class AuthService {
   private config: AuthConfig;
@@ -90,46 +91,26 @@ export class AuthService {
   }
 
   static createOdooAuth(): AuthService {
-    return new AuthService({
-      supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
-      functionName: 'odoo',
-      clientId: import.meta.env.VITE_ODOO_CLIENT_ID || '6c18f564-c3ca-470f-b218-831e1c64f0be',
-      baseUrl: 'https://accounts.odoo.com'
-    });
+    // Return a special wrapper that uses OdooAuth
+    return {
+      initiateAuth: async () => {
+        const odooAuth = new OdooAuth();
+        const authUrl = odooAuth.getAuthUrl();
+        window.location.href = authUrl;
+        return { success: true, redirectUrl: authUrl };
+      },
+      authenticateWithApiKey: async (accessToken: string) => {
+        const odooAuth = new OdooAuth();
+        const result = await odooAuth.exchangeCodeForToken(accessToken, '');
+        
+        if (result.success) {
+          window.location.href = '/dashboard';
+          return { success: true };
+        } else {
+          return { success: false, error: result.error || 'Authentication failed' };
+        }
+      }
+    } as AuthService;
   }
 
-  // Special method for Odoo API key authentication
-  async authenticateWithApiKey(accessToken: string): Promise<AuthResponse> {
-    try {
-      const response = await fetch(`${this.config.supabaseUrl}/functions/v1/odoo-auth`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          access_token: accessToken
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Authentication failed: ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      
-      if (result.success) {
-        // Reload the page to trigger auth state update
-        window.location.href = '/dashboard';
-        return { success: true };
-      } else {
-        return { success: false, error: result.error || 'Authentication failed' };
-      }
-    } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Authentication failed' 
-      };
-    }
-  }
 }
