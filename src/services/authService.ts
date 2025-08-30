@@ -1,115 +1,123 @@
-import React from 'react';
-import { X, Loader2, AlertCircle } from 'lucide-react';
-import { AuthProvider } from '../types/auth';
-import { AuthService } from '../services/authService';
-import { authProviders } from '../config/authProviders';
+import { supabase } from '../lib/supabase';
 
-interface AuthModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+export interface AuthResult {
+  success: boolean;
+  error?: string;
 }
 
-export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
-  const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
+export class AuthService {
+  static createTeamleaderAuth(): AuthService {
+    return new AuthService('teamleader');
+  }
 
-  const handleSignIn = async (provider: AuthProvider) => {
+  static createPipedriveAuth(): AuthService {
+    return new AuthService('pipedrive');
+  }
+
+  static createOdooAuth(): AuthService {
+    return new AuthService('odoo');
+  }
+
+  constructor(private provider: string) {}
+
+  async initiateAuth(): Promise<AuthResult> {
     try {
-      setLoadingProvider(provider.name);
-      setError(null);
-      
-      let authService: AuthService;
-      
-      switch (provider.name) {
+      switch (this.provider) {
         case 'teamleader':
-          authService = AuthService.createTeamleaderAuth();
-          break;
+          return this.initiateTeamleaderAuth();
         case 'pipedrive':
-          authService = AuthService.createPipedriveAuth();
-          break;
+          return this.initiatePipedriveAuth();
         case 'odoo':
-          authService = AuthService.createOdooAuth();
-          break;
+          return this.initiateOdooAuth();
         default:
-          console.error('Unknown provider:', provider.name);
-          return;
+          return { success: false, error: 'Unknown provider' };
       }
-
-      const result = await authService.initiateAuth();
-      
-      if (!result.success && result.error) {
-        setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
-        setLoadingProvider(null);
-      }
-      
     } catch (error) {
-      setError(`Error signing in with ${provider.displayName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
-      setLoadingProvider(null);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Authentication failed' 
+      };
     }
-  };
+  }
 
-  if (!isOpen) return null;
+  private async initiateTeamleaderAuth(): Promise<AuthResult> {
+    const clientId = import.meta.env.VITE_TEAMLEADER_CLIENT_ID;
+    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/teamleader/callback`;
+    
+    if (!clientId) {
+      return { success: false, error: 'TeamLeader client ID not configured' };
+    }
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 relative">
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <X className="w-6 h-6" />
-        </button>
+    const state = this.generateState();
+    localStorage.setItem('teamleader_oauth_state', state);
 
-        {/* Modal Header */}
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Platform</h2>
-          <p className="text-gray-600">Sign in with your preferred CRM platform</p>
-          
-          {error && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
-              <AlertCircle className="w-5 h-5 flex-shrink-0" />
-              <span className="text-sm">{error}</span>
-            </div>
-          )}
-        </div>
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      scope: 'read',
+      state: state,
+    });
 
-        {/* Sign-in Options */}
-        <div className="space-y-4">
-          {authProviders.map((provider) => {
-            const IconComponent = provider.icon;
-            const isLoading = loadingProvider === provider.name;
-            
-            return (
-              <button
-                key={provider.name}
-                onClick={() => handleSignIn(provider)}
-                disabled={loadingProvider !== null}
-                className={`w-full ${provider.color} ${provider.hoverColor} text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="w-6 h-6 animate-spin" />
-                    <span>Connecting to {provider.displayName}...</span>
-                  </>
-                ) : (
-                  <>
-                    <IconComponent className="w-6 h-6" />
-                    <span>Sign in with {provider.displayName}</span>
-                  </>
-                )}
-              </button>
-            );
-          })}
-        </div>
+    const authUrl = `https://app.teamleader.eu/oauth2/authorize?${params.toString()}`;
+    window.location.href = authUrl;
+    
+    return { success: true };
+  }
 
-        {/* Footer */}
-        <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-          <p className="text-sm text-gray-500">
-            Secure authentication powered by OAuth 2.0
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
+  private async initiatePipedriveAuth(): Promise<AuthResult> {
+    const clientId = import.meta.env.VITE_PIPEDRIVE_CLIENT_ID;
+    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/pipedrive/callback`;
+    
+    if (!clientId) {
+      return { success: false, error: 'Pipedrive client ID not configured' };
+    }
+
+    const state = this.generateState();
+    localStorage.setItem('pipedrive_oauth_state', state);
+
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      scope: 'users:read',
+      state: state,
+    });
+
+    const authUrl = `https://oauth.pipedrive.com/oauth/authorize?${params.toString()}`;
+    window.location.href = authUrl;
+    
+    return { success: true };
+  }
+
+  private async initiateOdooAuth(): Promise<AuthResult> {
+    const clientId = import.meta.env.VITE_ODOO_CLIENT_ID || '9849446b-87d1-4901-863b-a756148ee670';
+    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/odoo/callback`;
+
+    // Clear any existing state to ensure fresh authentication
+    localStorage.removeItem('odoo_oauth_state');
+
+    // Generate a fresh state parameter
+    const state = this.generateState();
+
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      scope: 'userinfo',
+      state: state,
+    });
+
+    // Store the new state
+    localStorage.setItem('odoo_oauth_state', state);
+    const authUrl = `https://accounts.odoo.com/oauth2/auth?${params.toString()}`;
+
+    window.location.href = authUrl;
+    return { success: true };
+  }
+
+  private generateState(): string {
+    return Math.random().toString(36).substring(2, 15) + 
+           Math.random().toString(36).substring(2, 15);
+  }
+}
