@@ -12,16 +12,16 @@ interface AuthModalProps {
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
-  const [isProcessing, setIsProcessing] = React.useState(false);
+  const processingRef = React.useRef(false);
 
   const handleSignIn = async (provider: AuthProvider) => {
-    // Prevent double calls
-    if (isProcessing || loadingProvider) {
+    // Prevent double calls using ref to avoid React state timing issues
+    if (processingRef.current || loadingProvider) {
       return;
     }
 
     try {
-      setIsProcessing(true);
+      processingRef.current = true;
       setLoadingProvider(provider.name);
       setError(null);
       
@@ -46,16 +46,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       
       if (!result.success && result.error) {
         setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
-        setLoadingProvider(null);
       }
       
     } catch (error) {
       setError(`Error signing in with ${provider.displayName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setLoadingProvider(null);
-      setIsProcessing(false);
+      processingRef.current = false;
     }
   };
+
+  // Reset processing state when modal closes
+  React.useEffect(() => {
+    if (!isOpen) {
+      processingRef.current = false;
+      setLoadingProvider(null);
+      setError(null);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
