@@ -9,17 +9,17 @@ export const AuthCallback: React.FC = () => {
   const [message, setMessage] = useState('Processing authentication...');
   const { platform } = useParams<{ platform: string }>();
   const navigate = useNavigate();
-  const [hasProcessed, setHasProcessed] = useState(false);
+  const hasProcessedRef = React.useRef(false);
 
   useEffect(() => {
     // Prevent double execution in React StrictMode
-    if (hasProcessed) {
+    if (hasProcessedRef.current) {
       return;
     }
 
     const handleCallback = async () => {
       try {
-        setHasProcessed(true);
+        hasProcessedRef.current = true;
         
         if (!platform) {
           setStatus('error');
@@ -156,7 +156,7 @@ export const AuthCallback: React.FC = () => {
     };
 
     handleCallback();
-  }, [hasProcessed, platform, navigate]);
+  }, [platform, navigate]);
 
   const getIcon = () => {
     switch (status) {
