@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Users, Zap, Settings } from 'lucide-react';
+import { UserInfoCard } from './UserInfoCard';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -52,14 +53,13 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* User Info Debug */}
+      {/* User Information */}
       {user?.user_info && (
-        <div className="bg-white rounded-xl shadow-sm p-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">User Information</h2>
-          <pre className="bg-gray-50 p-4 rounded-lg text-sm overflow-auto">
-            {JSON.stringify(user.user_info, null, 2)}
-          </pre>
-        </div>
+        <UserInfoCard 
+          platform={user.platform}
+          userInfo={user.user_info}
+          email={user.email}
+        />
       )}
     </div>
   );
