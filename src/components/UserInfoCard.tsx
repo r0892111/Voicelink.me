@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Mail, Phone, Globe, Calendar, Building, Settings } from 'lucide-react';
+import { User, Mail, Phone, Globe, Calendar, Building } from 'lucide-react';
 
 interface UserInfoCardProps {
   platform: 'teamleader' | 'pipedrive' | 'odoo';
