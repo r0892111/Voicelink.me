@@ -87,3 +87,4 @@ export const SubscriptionDashboard: React.FC = () => {
       </div>
     </div>
   );
+};
