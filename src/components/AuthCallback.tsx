@@ -169,6 +169,30 @@ export const AuthCallback: React.FC = () => {
                 const { data } = await supabase
                   .from('odoo_users')
                   .select('*')
+            if (currentSession?.user) {
+              // Fetch the user data from the appropriate table
+              let userData = null;
+              
+              if (platform === 'pipedrive') {
+                const { data } = await supabase
+                  .from('pipedrive_users')
+                  .select('*')
+                  .eq('user_id', currentSession.user.id)
+                  .is('deleted_at', null)
+                  .single();
+                userData = data;
+              } else if (platform === 'teamleader') {
+                const { data } = await supabase
+                  .from('teamleader_users')
+                  .select('*')
+                  .eq('user_id', currentSession.user.id)
+                  .is('deleted_at', null)
+                  .single();
+                userData = data;
+              } else if (platform === 'odoo') {
+                const { data } = await supabase
+                  .from('odoo_users')
+                  .select('*')
             if (error) {
               console.error('Session setup error:', error);
               setStatus('error');
