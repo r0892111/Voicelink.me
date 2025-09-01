@@ -44,7 +44,6 @@ export const useAuth = () => {
               platform: 'teamleader',
               user_info: teamleaderUser.user_info
             });
-            setLoading(false);
             return;
           }
 
@@ -64,7 +63,6 @@ export const useAuth = () => {
               platform: 'pipedrive',
               user_info: pipedriveUser.user_info
             });
-            setLoading(false);
             return;
           }
 
@@ -84,7 +82,6 @@ export const useAuth = () => {
               platform: 'odoo',
               user_info: odooUser.user_info
             });
-            setLoading(false);
             return;
           }
         }
