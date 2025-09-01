@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Users, Zap, Settings } from 'lucide-react';
+import { Users, Zap, Settings, ShoppingBag } from 'lucide-react';
 import { UserInfoCard } from './UserInfoCard';
+import { BuyButton } from './BuyButton';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -61,6 +62,37 @@ export const Dashboard: React.FC = () => {
           email={user.email}
         />
       )}
+
+      {/* Quick Purchase Section */}
+      <div className="bg-white rounded-xl shadow-sm p-8">
+        <div className="flex items-center space-x-2 mb-6">
+          <ShoppingBag className="w-6 h-6 text-blue-600" />
+          <h2 className="text-xl font-semibold text-gray-900">Upgrade Your Experience</h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <BuyButton
+            priceId="price_premium_monthly"
+            productName="Premium Monthly"
+            price="$29.99/mo"
+            description="Advanced CRM features and priority support"
+          />
+          
+          <BuyButton
+            priceId="price_premium_yearly"
+            productName="Premium Yearly"
+            price="$299.99/yr"
+            description="Save 17% with annual billing"
+          />
+          
+          <BuyButton
+            priceId="price_addon_analytics"
+            productName="Analytics Add-on"
+            price="$9.99"
+            description="One-time purchase for advanced analytics"
+          />
+        </div>
+      </div>
     </div>
   );
 };

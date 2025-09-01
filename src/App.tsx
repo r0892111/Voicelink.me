@@ -4,6 +4,8 @@ import { Users, LogOut, User } from 'lucide-react';
 import { AuthModal } from './components/AuthModal';
 import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
+import { BuyButton } from './components/BuyButton';
+import { SuccessPage } from './components/SuccessPage';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
@@ -90,12 +92,24 @@ function App() {
                 >
                   Get Started
                 </button>
+                
+                {/* Demo Product */}
+                <div className="mt-16 max-w-sm mx-auto">
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-6">Featured Product</h2>
+                  <BuyButton
+                    priceId="price_1234567890"
+                    productName="CRM Premium Features"
+                    price="$29.99"
+                    description="Unlock advanced CRM features and integrations"
+                  />
+                </div>
               </div>
             )}
           </main>
         } />
         <Route path="/auth/:platform/callback" element={<AuthCallback />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/success" element={<SuccessPage />} />
       </Routes>
 
       {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
