@@ -74,21 +74,21 @@ export const Dashboard: React.FC = () => {
           <BuyButton
             priceId="price_premium_monthly"
             productName="Premium Monthly"
-            price="$29.99/mo"
+            price="€29.99/mo"
             description="Advanced CRM features and priority support"
           />
           
           <BuyButton
             priceId="price_premium_yearly"
             productName="Premium Yearly"
-            price="$299.99/yr"
+            price="€299.99/yr"
             description="Save 17% with annual billing"
           />
           
           <BuyButton
             priceId="price_addon_analytics"
             productName="Analytics Add-on"
-            price="$9.99"
+            price="€9.99"
             description="One-time purchase for advanced analytics"
           />
         </div>

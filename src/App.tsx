@@ -99,7 +99,7 @@ function App() {
                   <BuyButton
                     priceId="price_1234567890"
                     productName="CRM Premium Features"
-                    price="$29.99"
+                    price="€29.99"
                     description="Unlock advanced CRM features and integrations"
                   />
                 </div>
