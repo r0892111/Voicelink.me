@@ -38,25 +38,25 @@ export const SubscriptionDashboard: React.FC = () => {
       {/* Platform Info */}
       <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="flex items-center space-x-3 mb-4">
-          {user?.provider && getPlatformIcon(user.provider)}
+          {user && getPlatformIcon(user.platform)}
           <div>
             <h2 className="text-xl font-semibold text-gray-900">
-              Connected Platform: {user?.provider ? user.provider.charAt(0).toUpperCase() + user.provider.slice(1) : 'Unknown'}
+              Connected Platform: {user?.platform ? user.platform.charAt(0).toUpperCase() + user.platform.slice(1) : 'Unknown'}
             </h2>
             <p className="text-gray-600">Your CRM integration is active</p>
           </div>
         </div>
-        <UserInfoCard />
+        {user?.user_info && (
+          <UserInfoCard 
+            platform={user.platform}
+            userInfo={user.user_info}
+            email={user.email}
+          />
+        )}
       </div>
 
       {/* WhatsApp Integration */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">WhatsApp Integration</h2>
-        <p className="text-gray-600 mb-6">
-          Connect your WhatsApp number to receive notifications and updates from your CRM.
-        </p>
-        <WhatsAppVerification />
-      </div>
+      <WhatsAppVerification />
 
       {/* Premium Features */}
       <div className="bg-white rounded-xl shadow-sm p-6">
@@ -87,4 +87,3 @@ export const SubscriptionDashboard: React.FC = () => {
       </div>
     </div>
   );
-};
