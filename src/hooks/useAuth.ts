@@ -25,74 +25,88 @@ export const useAuth = () => {
         
         if (session?.user) {
           const userId = session.user.id;
+          const userPlatform = localStorage.getItem('userPlatform');
           
-          // Check TeamLeader users
-          const { data: teamleaderUser } = await supabase
-            .from('teamleader_users')
-            .select('*')
-            .eq('user_id', userId)
-            .is('deleted_at', null)
-            .single();
-
-          if (teamleaderUser) {
-            setUser({
-              id: userId,
-              email: session.user.email || '',
-              name: teamleaderUser.user_info?.user?.first_name && teamleaderUser.user_info?.user?.last_name 
-                ? `${teamleaderUser.user_info.user.first_name} ${teamleaderUser.user_info.user.last_name}`
-                : teamleaderUser.user_info?.user?.email || 'TeamLeader User',
-              platform: 'teamleader',
-              user_info: teamleaderUser.user_info
-            });
-            setLoading(false);
-            return;
+          // Store platform helper functions
+          const setUserPlatform = (platform: string | null) => {
+            if (platform) {
+              localStorage.setItem('userPlatform', platform);
+            } else {
+              localStorage.removeItem('userPlatform');
+            }
+          };
+          
+          // Determine platform from stored state or check all platforms once
+          let platform = userPlatform;
+          
+          if (!platform) {
+            // First time check - determine which platform this user belongs to
+            const platforms = ['teamleader', 'pipedrive', 'odoo'];
+            
+            for (const p of platforms) {
+              const tableName = `${p}_users`;
+              const { data } = await supabase
+                .from(tableName)
+                .select('*')
+                .eq('user_id', userId)
+                .is('deleted_at', null)
+                .single();
+              
+              if (data) {
+                platform = p;
+                setUserPlatform(p);
+                break;
+              }
+            }
           }
+          
+          if (platform) {
+            // Only query the specific platform table
+            const tableName = `${platform}_users`;
+            const { data: userData } = await supabase
+              .from(tableName)
+              .select('*')
+              .eq('user_id', userId)
+              .is('deleted_at', null)
+              .single();
 
-          // Check Pipedrive users
-          const { data: pipedriveUser } = await supabase
-            .from('pipedrive_users')
-            .select('*')
-            .eq('user_id', userId)
-            .is('deleted_at', null)
-            .single();
+            if (userData) {
+              let userName = '';
+              
+              switch (platform) {
+                case 'teamleader':
+                  userName = userData.user_info?.user?.first_name && userData.user_info?.user?.last_name 
+                    ? `${userData.user_info.user.first_name} ${userData.user_info.user.last_name}`
+                    : userData.user_info?.user?.email || 'TeamLeader User';
+                  break;
+                case 'pipedrive':
+                  userName = userData.user_info?.name || userData.user_info?.email || 'Pipedrive User';
+                  break;
+                case 'odoo':
+                  userName = userData.user_info?.name || 'Odoo User';
+                  break;
+                default:
+                  userName = 'User';
+              }
 
-          if (pipedriveUser) {
-            setUser({
-              id: userId,
-              email: session.user.email || '',
-              name: pipedriveUser.user_info?.name || pipedriveUser.user_info?.email || 'Pipedrive User',
-              platform: 'pipedrive',
-              user_info: pipedriveUser.user_info
-            });
-            setLoading(false);
-            return;
-          }
-
-          // Check Odoo users
-          const { data: odooUser } = await supabase
-            .from('odoo_users')
-            .select('*')
-            .eq('user_id', userId)
-            .is('deleted_at', null)
-            .single();
-
-          if (odooUser) {
-            setUser({
-              id: userId,
-              email: session.user.email || '',
-              name: odooUser.user_info?.name || 'Odoo User',
-              platform: 'odoo',
-              user_info: odooUser.user_info
-            });
-            setLoading(false);
-            return;
+              setUser({
+                id: userId,
+                email: session.user.email || '',
+                name: userName,
+                platform: platform as 'teamleader' | 'pipedrive' | 'odoo',
+                user_info: userData.user_info
+              });
+              return;
+            }
           }
         }
         
         setUser(null);
+        setUserPlatform(null);
       } catch (error) {
         console.error('Auth check error:', error);
         setUser(null);
+        setUserPlatform(null);
       } finally {
         setLoading(false);
       }
@@ -112,6 +126,7 @@ export const useAuth = () => {
     try {
       await supabase.auth.signOut();
       setUser(null);
+      setUserPlatform(null);
     } catch (error) {
       console.error('Sign out error:', error);
     }
