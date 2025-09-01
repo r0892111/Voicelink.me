@@ -17,17 +17,6 @@ interface AuthUser {
 export const useAuth = () => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userPlatform, setUserPlatform] = useState<string | null>(null);
-
-  // Platform helper functions
-  const setUserPlatformStorage = (platform: string | null) => {
-    if (platform) {
-      localStorage.setItem('userPlatform', platform);
-    } else {
-      localStorage.removeItem('userPlatform');
-    }
-    setUserPlatform(platform);
-  };
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -36,9 +25,19 @@ export const useAuth = () => {
         
         if (session?.user) {
           const userId = session.user.id;
+          const userPlatform = localStorage.getItem('userPlatform');
           
-          // Use cached platform if available, otherwise detect it
-          let platform = userPlatform || localStorage.getItem('userPlatform');
+          // Store platform helper functions
+          const setUserPlatform = (platform: string | null) => {
+            if (platform) {
+              localStorage.setItem('userPlatform', platform);
+            } else {
+              localStorage.removeItem('userPlatform');
+            }
+          };
+          
+          // Determine platform from stored state or check all platforms once
+          let platform = userPlatform;
           
           if (!platform) {
             // First time check - determine which platform this user belongs to
@@ -55,7 +54,7 @@ export const useAuth = () => {
               
               if (data) {
                 platform = p;
-                setUserPlatformStorage(p);
+                setUserPlatform(p);
                 break;
               }
             }
@@ -103,11 +102,11 @@ export const useAuth = () => {
         }
         
         setUser(null);
-        setUserPlatformStorage(null);
+        setUserPlatform(null);
       } catch (error) {
         console.error('Auth check error:', error);
         setUser(null);
-        setUserPlatformStorage(null);
+        setUserPlatform(null);
       } finally {
         setLoading(false);
       }
@@ -121,13 +120,13 @@ export const useAuth = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [userPlatform]);
+  }, []);
 
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
       setUser(null);
-      setUserPlatformStorage(null);
+      setUserPlatform(null);
     } catch (error) {
       console.error('Sign out error:', error);
     }
