@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Users, Zap, Settings, CreditCard, ArrowRight } from 'lucide-react';
+import { Users, Zap, Settings } from 'lucide-react';
 import { UserInfoCard } from './UserInfoCard';
 
 export const Dashboard: React.FC = () => {
@@ -53,35 +53,6 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm p-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <button
-            onClick={() => window.location.href = '/billing'}
-            className="flex items-center justify-between p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors group"
-          >
-            <div className="flex items-center space-x-3">
-              <CreditCard className="w-6 h-6 text-blue-600" />
-              <div className="text-left">
-                <h3 className="font-medium text-gray-900">Manage Billing</h3>
-                <p className="text-sm text-gray-600">View subscriptions and invoices</p>
-              </div>
-            </div>
-            <ArrowRight className="w-5 h-5 text-blue-600 group-hover:translate-x-1 transition-transform" />
-          </button>
-          
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg opacity-75">
-            <div className="flex items-center space-x-3">
-              <Settings className="w-6 h-6 text-gray-500" />
-              <div className="text-left">
-                <h3 className="font-medium text-gray-900">Settings</h3>
-                <p className="text-sm text-gray-600">Coming soon</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       {/* User Information */}
       {user?.user_info && (
         <UserInfoCard 

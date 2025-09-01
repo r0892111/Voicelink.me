@@ -1,10 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Users, LogOut, User, CreditCard } from 'lucide-react';
+import { Users, LogOut, User } from 'lucide-react';
 import { AuthModal } from './components/AuthModal';
 import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
-import { BillingPage } from './components/BillingPage';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
@@ -42,13 +41,6 @@ function App() {
           <div className="flex items-center space-x-3">
             {user ? (
               <div className="flex items-center space-x-3">
-                <button
-                  onClick={() => window.location.href = '/billing'}
-                  className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  <CreditCard className="w-4 h-4" />
-                  <span>Billing</span>
-                </button>
                 <div className="flex items-center space-x-2">
                   <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                     <User className="w-4 h-4 text-white" />
@@ -104,7 +96,6 @@ function App() {
         } />
         <Route path="/auth/:platform/callback" element={<AuthCallback />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/billing" element={<BillingPage />} />
       </Routes>
 
       {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
