@@ -23,8 +23,26 @@ const supabase = createClient(
 export const useAuth = () => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [userPlatform, setUserPlatform] = useState<string | null>(null);
+
+  const setUserPlatformStorage = (platform: string | null) => {
+    if (platform) {
+      localStorage.setItem('userPlatform', platform);
+      setUserPlatform(platform);
+    } else {
+      localStorage.removeItem('userPlatform');
+      localStorage.removeItem('auth_provider');
+      setUserPlatform(null);
+    }
+  };
 
 useEffect(() => {
+  // Initialize platform from localStorage
+  const storedPlatform = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
+  if (storedPlatform) {
+    setUserPlatform(storedPlatform);
+  }
+  
   // Run once on mount
   checkAuth();
 
@@ -45,15 +63,9 @@ const checkAuth = async () => {
         
         if (session?.user) {
           const userId = session.user.id;
-          const userPlatform = localStorage.getItem('userPlatform');
+          let platform = userPlatform || localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
           
-      
-          
-          // Determine platform from stored state or check all platforms once
-          let platform = userPlatform;
-          
-          
-          if (platform) {
+          if (platform && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
             // Only query the specific platform table
             const tableName = `${platform}_users`;
             const { data: userData } = await supabase
@@ -64,6 +76,9 @@ const checkAuth = async () => {
               .single();
 
             if (userData) {
+              // Save the confirmed platform
+              setUserPlatformStorage(platform);
+              
               let userName = '';
               
               switch (platform) {
@@ -91,15 +106,59 @@ const checkAuth = async () => {
               });
               return;
             }
+          } else {
+            // Platform unknown - check all tables once to determine platform
+            const platforms = ['teamleader', 'pipedrive', 'odoo'];
+            
+            for (const platformName of platforms) {
+              const tableName = `${platformName}_users`;
+              const { data: userData } = await supabase
+                .from(tableName)
+                .select('*')
+                .eq('user_id', userId)
+                .is('deleted_at', null)
+                .single();
+
+              if (userData) {
+                // Found the user's platform - save it and set user
+                setUserPlatformStorage(platformName);
+                
+                let userName = '';
+                switch (platformName) {
+                  case 'teamleader':
+                    userName = userData.user_info?.user?.first_name && userData.user_info?.user?.last_name 
+                      ? `${userData.user_info.user.first_name} ${userData.user_info.user.last_name}`
+                      : userData.user_info?.user?.email || 'TeamLeader User';
+                    break;
+                  case 'pipedrive':
+                    userName = userData.user_info?.name || userData.user_info?.email || 'Pipedrive User';
+                    break;
+                  case 'odoo':
+                    userName = userData.user_info?.name || 'Odoo User';
+                    break;
+                  default:
+                    userName = 'User';
+                }
+
+                setUser({
+                  id: userId,
+                  email: session.user.email || '',
+                  name: userName,
+                  platform: platformName as 'teamleader' | 'pipedrive' | 'odoo',
+                  user_info: userData.user_info
+                });
+                return;
+              }
+            }
           }
         }
         
         setUser(null);
-        setUserPlatform(null);
+        setUserPlatformStorage(null);
       } catch (error) {
         console.error('Auth check error:', error);
         setUser(null);
-        setUserPlatform(null);
+        setUserPlatformStorage(null);
       } finally {
         setLoading(false);
       }
@@ -108,7 +167,7 @@ const checkAuth = async () => {
     try {
       await supabase.auth.signOut();
       setUser(null);
-      setUserPlatform(null);
+      setUserPlatformStorage(null);
     } catch (error) {
       console.error('Sign out error:', error);
     }
