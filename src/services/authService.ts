@@ -50,6 +50,7 @@ export class AuthService {
 
     const state = this.generateState();
     localStorage.setItem('teamleader_oauth_state', state);
+    localStorage.setItem('auth_provider', 'teamleader');
 
     const params = new URLSearchParams({
       response_type: 'code',
@@ -74,6 +75,7 @@ export class AuthService {
 
     const state = this.generateState();
     localStorage.setItem('pipedrive_oauth_state', state);
+    localStorage.setItem('auth_provider', 'pipedrive');
 
     const params = new URLSearchParams({
       response_type: 'code',
@@ -109,6 +111,7 @@ export class AuthService {
 
     // Store the new state
     localStorage.setItem('odoo_oauth_state', state);
+    localStorage.setItem('auth_provider', 'odoo');
     const authUrl = `https://accounts.odoo.com/oauth2/auth?${params.toString()}`;
 
     window.location.href = authUrl;
