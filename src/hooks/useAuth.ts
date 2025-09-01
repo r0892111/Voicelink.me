@@ -60,7 +60,7 @@ export const useAuth = () => {
             setUser({
               id: userId,
               email: session.user.email || '',
-              name: pipedriveUser.user_info?.name || 'Pipedrive User',
+              name: pipedriveUser.user_info?.name || pipedriveUser.user_info?.email || 'Pipedrive User',
               platform: 'pipedrive',
               user_info: pipedriveUser.user_info
             });

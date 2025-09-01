@@ -82,14 +82,77 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo, 
   };
 
   const renderPipedriveInfo = () => {
-    // Placeholder for Pipedrive data structure
+    const user = userInfo || {};
+    const company = user.company_name ? {
+      name: user.company_name,
+      domain: user.company_domain,
+      country: user.company_country,
+      currency: user.default_currency
+    } : null;
+    
     return (
-      <div className="p-4 bg-orange-50 rounded-lg">
-        <div className="flex items-center space-x-2 mb-2">
-          <User className="w-4 h-4 text-orange-500" />
-          <h3 className="font-medium text-gray-900">Pipedrive User Info</h3>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 bg-orange-50 rounded-lg">
+            <div className="flex items-center space-x-2 mb-2">
+              <User className="w-4 h-4 text-orange-500" />
+              <h3 className="font-medium text-gray-900">Personal Info</h3>
+            </div>
+            <div className="space-y-2 text-sm">
+              <p><span className="font-medium">Name:</span> {user.name}</p>
+              <p><span className="font-medium">Language:</span> {user.language?.language_code}-{user.language?.country_code}</p>
+              <p><span className="font-medium">Locale:</span> {user.locale}</p>
+              <p><span className="font-medium">Time Zone:</span> {user.timezone_name}</p>
+              <p><span className="font-medium">Admin:</span> {user.is_admin ? 'Yes' : 'No'}</p>
+            </div>
+          </div>
+          
+          <div className="p-4 bg-orange-50 rounded-lg">
+            <div className="flex items-center space-x-2 mb-2">
+              <Mail className="w-4 h-4 text-orange-500" />
+              <h3 className="font-medium text-gray-900">Contact</h3>
+            </div>
+            <div className="space-y-2 text-sm">
+              <p><span className="font-medium">Email:</span> {user.email}</p>
+              <p><span className="font-medium">Status:</span> {user.active_flag ? 'Active' : 'Inactive'}</p>
+              {user.phone && (
+                <p><span className="font-medium">Phone:</span> {user.phone}</p>
+              )}
+              <p><span className="font-medium">Last Login:</span> {user.last_login}</p>
+            </div>
+          </div>
         </div>
-        <p className="text-sm text-gray-600">Pipedrive user data will be displayed here once available.</p>
+
+        {company && (
+          <div className="p-4 bg-orange-50 rounded-lg">
+            <div className="flex items-center space-x-2 mb-2">
+              <Building className="w-4 h-4 text-orange-500" />
+              <h3 className="font-medium text-gray-900">Company</h3>
+            </div>
+            <div className="space-y-2 text-sm">
+              <p><span className="font-medium">Company:</span> {company.name}</p>
+              <p><span className="font-medium">Domain:</span> {company.domain}</p>
+              <p><span className="font-medium">Country:</span> {company.country}</p>
+              <p><span className="font-medium">Currency:</span> {company.currency}</p>
+            </div>
+          </div>
+        )}
+
+        {user.access && user.access.length > 0 && (
+          <div className="p-4 bg-orange-50 rounded-lg">
+            <div className="flex items-center space-x-2 mb-2">
+              <Settings className="w-4 h-4 text-orange-500" />
+              <h3 className="font-medium text-gray-900">Permissions</h3>
+            </div>
+            <div className="space-y-2 text-sm">
+              {user.access.map((access: any, index: number) => (
+                <p key={index}>
+                  <span className="font-medium">{access.app}:</span> {access.admin ? 'Admin' : 'User'}
+                </p>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   };
