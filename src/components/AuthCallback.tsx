@@ -138,6 +138,29 @@ export const AuthCallback: React.FC = () => {
         const result = await response.json();
         
         if (result.success) {
+          // Handle session creation for platforms that return session_url
+          if (result.session_url) {
+            // For platforms like Pipedrive that use magic link verification
+            setMessage('Completing authentication...');
+            window.location.href = result.session_url;
+            return;
+          }
+          
+          // If the result contains session data, set the session
+          if (result.session) {
+            const { data, error } = await supabase.auth.setSession({
+              access_token: result.session.access_token,
+              refresh_token: result.session.refresh_token
+            });
+            
+            if (error) {
+              console.error('Session setup error:', error);
+              setStatus('error');
+              setMessage('Failed to establish session');
+              return;
+            }
+          }
+          
           // If the result contains session data, set the session
           if (result.session) {
             const { data, error } = await supabase.auth.setSession({
@@ -154,9 +177,9 @@ export const AuthCallback: React.FC = () => {
           }
           
           setStatus('success');
-          setMessage('Successfully authenticated! Redirecting...');
+          setMessage('Successfully authenticated with Odoo!');
           
-          // Redirect to dashboard after a short delay
+          // Redirect to home after a short delay
           setTimeout(() => {
             navigate('/');
           }, 2000);
