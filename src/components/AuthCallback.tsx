@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
 
 type CallbackStatus = 'loading' | 'success' | 'error';
 
@@ -137,12 +138,27 @@ export const AuthCallback: React.FC = () => {
         const result = await response.json();
         
         if (result.success) {
+          // If the result contains session data, set the session
+          if (result.session) {
+            const { data, error } = await supabase.auth.setSession({
+              access_token: result.session.access_token,
+              refresh_token: result.session.refresh_token
+            });
+            
+            if (error) {
+              console.error('Session setup error:', error);
+              setStatus('error');
+              setMessage('Failed to establish session');
+              return;
+            }
+          }
+          
           setStatus('success');
-          setMessage(`Successfully authenticated with ${platform}!`);
+          setMessage('Successfully authenticated! Redirecting...');
           
           // Redirect to dashboard after a short delay
           setTimeout(() => {
-            navigate('/dashboard');
+            navigate('/');
           }, 2000);
         } else {
           setStatus('error');
@@ -158,6 +174,13 @@ export const AuthCallback: React.FC = () => {
     handleCallback();
   }, [platform, navigate]);
 
+  // Add supabase import
+  const supabase = React.useMemo(() => {
+    return createClient(
+      import.meta.env.VITE_SUPABASE_URL,
+      import.meta.env.VITE_SUPABASE_ANON_KEY
+    );
+  }, []);
   const getIcon = () => {
     switch (status) {
       case 'loading':

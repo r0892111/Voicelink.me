@@ -24,7 +24,6 @@ export const useAuth = () => {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session?.user) {
-          // Check all CRM user tables to find the authenticated user
           const userId = session.user.id;
           
           // Check TeamLeader users
@@ -39,7 +38,9 @@ export const useAuth = () => {
             setUser({
               id: userId,
               email: session.user.email || '',
-              name: teamleaderUser.user_info?.name || 'TeamLeader User',
+              name: teamleaderUser.user_info?.user?.first_name && teamleaderUser.user_info?.user?.last_name 
+                ? `${teamleaderUser.user_info.user.first_name} ${teamleaderUser.user_info.user.last_name}`
+                : teamleaderUser.user_info?.user?.email || 'TeamLeader User',
               platform: 'teamleader',
               user_info: teamleaderUser.user_info
             });
@@ -108,8 +109,12 @@ export const useAuth = () => {
   }, []);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
   };
 
   return { user, loading, signOut };
