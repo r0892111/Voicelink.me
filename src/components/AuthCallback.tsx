@@ -27,6 +27,7 @@ export const AuthCallback: React.FC = () => {
           setMessage('Invalid authentication platform');
           return;
         }
+        console.log('Calling edge function for platform:', platform);
 
         // Special handling for Odoo OAuth which uses access_token in URL fragment
         if (platform === 'odoo') {
@@ -61,7 +62,7 @@ export const AuthCallback: React.FC = () => {
 
           // Update loading message
           setMessage('Processing Odoo authentication...');
-
+            
           // Call the Odoo edge function with access token
           const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/odoo-auth`, {
             method: 'POST',
@@ -118,6 +119,7 @@ export const AuthCallback: React.FC = () => {
         setMessage(`Processing ${platform} authentication...`);
 
         // Call the appropriate edge function
+        
         const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth`, {
           method: 'POST',
           headers: {
@@ -161,20 +163,7 @@ export const AuthCallback: React.FC = () => {
             }
           }
           
-          // If the result contains session data, set the session
-          if (result.session) {
-            const { data, error } = await supabase.auth.setSession({
-              access_token: result.session.access_token,
-              refresh_token: result.session.refresh_token
-            });
-            
-            if (error) {
-              console.error('Session setup error:', error);
-              setStatus('error');
-              setMessage('Failed to establish session');
-              return;
-            }
-          }
+
           
           setStatus('success');
           setMessage('Successfully authenticated with Odoo!');
