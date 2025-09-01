@@ -138,13 +138,37 @@ export const AuthCallback: React.FC = () => {
         const result = await response.json();
         
         if (result.success) {
-          // If the result contains session data, set the session
-          if (result.session) {
-            const { data, error } = await supabase.auth.setSession({
-              access_token: result.session.access_token,
-              refresh_token: result.session.refresh_token
-            });
+          // For platforms that don't return session data directly, fetch from database
+          if (!result.session && (platform === 'pipedrive' || platform === 'teamleader' || platform === 'odoo')) {
+            setMessage('Setting up your session...');
             
+            // Get the current user session to identify the user
+            const { data: { session: currentSession } } = await supabase.auth.getSession();
+            
+            if (currentSession?.user) {
+              // Fetch the user data from the appropriate table
+              let userData = null;
+              
+              if (platform === 'pipedrive') {
+                const { data } = await supabase
+                  .from('pipedrive_users')
+                  .select('*')
+                  .eq('user_id', currentSession.user.id)
+                  .is('deleted_at', null)
+                  .single();
+                userData = data;
+              } else if (platform === 'teamleader') {
+                const { data } = await supabase
+                  .from('teamleader_users')
+                  .select('*')
+                  .eq('user_id', currentSession.user.id)
+                  .is('deleted_at', null)
+                  .single();
+                userData = data;
+              } else if (platform === 'odoo') {
+                const { data } = await supabase
+                  .from('odoo_users')
+                  .select('*')
             if (error) {
               console.error('Session setup error:', error);
               setStatus('error');
@@ -159,9 +183,48 @@ export const AuthCallback: React.FC = () => {
             setTimeout(() => {
               navigate('/');
             }, 2000);
+              }
+              
+              // Fetch the refresh token from pipedrive_users table
+              const { data: pipedriveUser, error: fetchError } = await supabase
+                .from('pipedrive_users')
+                .select('refresh_token')
+                .eq('user_id', currentSession.user.id)
+                .is('deleted_at', null)
+                .single();
+              
+              if (fetchError || !pipedriveUser?.refresh_token) {
+                throw new Error('Failed to fetch refresh token from database');
+              }
+              
+              // Create session with access token and refresh token from database
+              const { data, error } = await supabase.auth.setSession({
+                access_token: result.access_token,
+                refresh_token: pipedriveUser.refresh_token
+              });
+              
+              if (error) {
+                console.error('Session setup error:', error);
+                throw new Error('Failed to establish session');
+              }
+              
+              setStatus('success');
+              setMessage('Successfully authenticated with Pipedrive!');
+              
+              // Redirect to home after a short delay
+              setTimeout(() => {
+                navigate('/');
+              }, 2000);
+              
+            } catch (sessionError) {
+              console.error('Pipedrive session setup error:', sessionError);
+              setStatus('error');
+              setMessage(sessionError instanceof Error ? sessionError.message : 'Failed to set up session');
+            }
           } else {
+            // Fallback for other cases
             setStatus('error');
-            setMessage('No session data received from authentication');
+            setMessage('Authentication completed but session setup failed');
           }
         } else {
           setStatus('error');
