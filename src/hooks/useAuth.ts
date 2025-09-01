@@ -19,7 +19,23 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-                : teamleaderUser.user_info?.user?.email || 'TeamLeader User',
+    const checkAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user) {
+          const userId = session.user.id;
+          const userPlatform = localStorage.getItem('userPlatform');
+          
+          // Store platform helper functions
+          const setUserPlatform = (platform: string | null) => {
+            if (platform) {
+              localStorage.setItem('userPlatform', platform);
+            } else {
+              localStorage.removeItem('userPlatform');
+            }
+          };
+          
           // Determine platform from stored state or check all platforms once
           let platform = userPlatform;
           
