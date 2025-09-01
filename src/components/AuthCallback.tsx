@@ -169,44 +169,16 @@ export const AuthCallback: React.FC = () => {
                 const { data } = await supabase
                   .from('odoo_users')
                   .select('*')
-            if (currentSession?.user) {
-              // Fetch the user data from the appropriate table
-              let userData = null;
+                  .eq('user_id', currentSession.user.id)
+                  .is('deleted_at', null)
+                  .single();
+                userData = data;
+              }
               
-              if (platform === 'pipedrive') {
-                const { data } = await supabase
-                  .from('pipedrive_users')
-                  .select('*')
-                  .eq('user_id', currentSession.user.id)
-                  .is('deleted_at', null)
-                  .single();
-                userData = data;
-              } else if (platform === 'teamleader') {
-                const { data } = await supabase
-                  .from('teamleader_users')
-                  .select('*')
-                  .eq('user_id', currentSession.user.id)
-                  .is('deleted_at', null)
-                  .single();
-                userData = data;
-              } else if (platform === 'odoo') {
-                const { data } = await supabase
-                  .from('odoo_users')
-                  .select('*')
-            if (error) {
-              console.error('Session setup error:', error);
-              setStatus('error');
-              setMessage('Failed to establish session');
-              return;
-            }
-            
-            setStatus('success');
-            setMessage(`Successfully authenticated with ${platform?.charAt(0).toUpperCase()}${platform?.slice(1)}!`);
-            
-            // Redirect to home after a short delay
-            setTimeout(() => {
-              navigate('/');
-            }, 2000);
+              if (!userData) {
+                setStatus('error');
+                setMessage('Failed to fetch user data');
+                return;
               }
               
               // Fetch the refresh token from pipedrive_users table
@@ -229,21 +201,21 @@ export const AuthCallback: React.FC = () => {
               
               if (error) {
                 console.error('Session setup error:', error);
-                throw new Error('Failed to establish session');
+                setStatus('error');
+                setMessage('Failed to establish session');
+                return;
               }
               
               setStatus('success');
-              setMessage('Successfully authenticated with Pipedrive!');
+              setMessage(`Successfully authenticated with ${platform?.charAt(0).toUpperCase()}${platform?.slice(1)}!`);
               
               // Redirect to home after a short delay
               setTimeout(() => {
                 navigate('/');
               }, 2000);
-              
-            } catch (sessionError) {
-              console.error('Pipedrive session setup error:', sessionError);
+            } else {
               setStatus('error');
-              setMessage(sessionError instanceof Error ? sessionError.message : 'Failed to set up session');
+              setMessage('No current session found');
             }
           } else {
             // Fallback for other cases
@@ -271,6 +243,7 @@ export const AuthCallback: React.FC = () => {
       import.meta.env.VITE_SUPABASE_ANON_KEY
     );
   }, []);
+  
   const getIcon = () => {
     switch (status) {
       case 'loading':
