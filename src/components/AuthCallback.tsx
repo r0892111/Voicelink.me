@@ -17,8 +17,10 @@ export const AuthCallback: React.FC = () => {
     if (hasProcessedRef.current) {
       return;
     }
-
-    const handleCallback = async () => {
+    handleCallback();
+  }, [platform, navigate]);
+  
+ const handleCallback = async () => {
       try {
         hasProcessedRef.current = true;
         
@@ -83,7 +85,7 @@ export const AuthCallback: React.FC = () => {
           
           if (result.success) {
             setStatus('success');
-            setMessage('Successfully authenticated with Odoo!');
+            setMessage(`Successfully authenticated with  ${platform}!`);
             
             // Redirect to dashboard after a short delay
             setTimeout(() => {
@@ -177,7 +179,7 @@ export const AuthCallback: React.FC = () => {
           }
           
           setStatus('success');
-          setMessage('Successfully authenticated with Odoo!');
+          setMessage(`Successfully authenticated with  ${platform}!`);
           
           // Redirect to home after a short delay
           setTimeout(() => {
@@ -193,10 +195,6 @@ export const AuthCallback: React.FC = () => {
         setMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
       }
     };
-
-    handleCallback();
-  }, [platform, navigate]);
-
   // Add supabase import
   const supabase = React.useMemo(() => {
     return createClient(
@@ -204,6 +202,7 @@ export const AuthCallback: React.FC = () => {
       import.meta.env.VITE_SUPABASE_ANON_KEY
     );
   }, []);
+
   const getIcon = () => {
     switch (status) {
       case 'loading':
