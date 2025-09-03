@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useSubscription } from '../hooks/useSubscription';
-import { useSubscription } from '../hooks/useSubscription';
 import { Users, Zap, Settings, ShoppingBag } from 'lucide-react';
 import { UserInfoCard } from './UserInfoCard';
 import { BuyButton } from './BuyButton';
