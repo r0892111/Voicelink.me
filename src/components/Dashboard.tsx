@@ -10,7 +10,6 @@ import { SubscriptionDashboard } from './SubscriptionDashboard';
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
-  const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
