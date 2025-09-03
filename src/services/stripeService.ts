@@ -10,6 +10,7 @@ export interface CheckoutOptions {
   quantity?: number;
   successUrl?: string;
   cancelUrl?: string;
+  crmProvider?: string;
 }
 
 export class StripeService {
@@ -21,6 +22,8 @@ export class StripeService {
         throw new Error('User must be authenticated to make a purchase');
       }
 
+      // Get CRM provider from localStorage or options
+      const crmProvider = options.crmProvider || localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout`, {
         method: 'POST',
         headers: {
@@ -32,6 +35,7 @@ export class StripeService {
           quantity: options.quantity || 1,
           success_url: options.successUrl || `${window.location.origin}/success`,
           cancel_url: options.cancelUrl || `${window.location.origin}/`,
+          crm_provider: crmProvider,
         }),
       });
 
