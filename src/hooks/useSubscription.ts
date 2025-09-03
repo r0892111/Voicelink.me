@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -7,53 +7,68 @@ const supabase = createClient(
 );
 
 export interface Subscription {
-  id: string;
-  status: 'active' | 'canceled' | 'incomplete' | 'past_due' | 'trialing';
+  customer_id: string;
+  subscription_id: string;
+  subscription_status: 'active' | 'canceled' | 'incomplete' | 'past_due' | 'trialing';
+  price_id: string | null;
+  current_period_start: number;
   current_period_end: number;
   cancel_at_period_end: boolean;
-  price_id: string;
+  payment_method_brand: string | null;
+  payment_method_last4: string | null;
+  crm_provider: string | null;
+  crm_user_id: string | null;
+  product_name: string;
+  metadata: Record<string, string> | null;
 }
 
 export const useSubscription = () => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    checkSubscription();
-  }, []);
+  const checkSubscription = useCallback(async () => {
+    setLoading(true);
 
-  const checkSubscription = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session?.user) {
-        // Query the stripe_user_subscriptions view
-        const { data: subscriptionData } = await supabase
-          .from('stripe_user_subscriptions')
-          .select('*')
-          .single();
-
-        if (subscriptionData && subscriptionData.subscription_status === 'active') {
-          setSubscription({
-            id: subscriptionData.subscription_id,
-            status: subscriptionData.subscription_status,
-            current_period_end: subscriptionData.current_period_end,
-            cancel_at_period_end: subscriptionData.cancel_at_period_end,
-            price_id: subscriptionData.price_id
-          });
-        } else {
-          setSubscription(null);
-        }
+      // Get current auth session
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error || !session) {
+        console.error('No active Supabase session:', error);
+        setSubscription(null);
+        return;
       }
-    } catch (error) {
-      console.error('Error checking subscription:', error);
+
+      // Call your edge function
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await response.json();
+
+      if (!result.success || !result.subscription) {
+        console.log('No subscription found:', result.message || result.error);
+        setSubscription(null);
+        return;
+      }
+
+      setSubscription(result.subscription as Subscription);
+    } catch (err) {
+      console.error('Error checking subscription:', err);
       setSubscription(null);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const hasActiveSubscription = subscription?.status === 'active';
+  useEffect(() => {
+    checkSubscription();
+  }, [checkSubscription]);
+
+  const hasActiveSubscription = subscription?.subscription_status === 'active';
 
   return { subscription, loading, hasActiveSubscription, checkSubscription };
 };
