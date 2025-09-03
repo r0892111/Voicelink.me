@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useSubscription } from '../hooks/useSubscription';
+import { useSubscription } from '../hooks/useSubscription';
 import { Users, Zap, Settings, ShoppingBag } from 'lucide-react';
 import { UserInfoCard } from './UserInfoCard';
 import { BuyButton } from './BuyButton';
@@ -8,6 +9,7 @@ import { SubscriptionDashboard } from './SubscriptionDashboard';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
 
   const getPlatformIcon = (platform: string) => {
@@ -23,6 +25,24 @@ export const Dashboard: React.FC = () => {
     }
   };
 
+  // Show loading state while checking subscription
+  if (subscriptionLoading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show subscription dashboard if user has active subscription
+  if (hasActiveSubscription) {
+    return <SubscriptionDashboard />;
+  }
+
+  // Show regular dashboard for users without subscription
   // Show loading state while checking subscription
   if (subscriptionLoading) {
     return (
