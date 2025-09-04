@@ -6,9 +6,9 @@ export const HeroDemo: React.FC = () => {
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
       <div className="max-w-7xl mx-auto px-6 mb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-center">
           {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8 lg:pr-8 max-w-5xl">
+          <div className="space-y-8 lg:pl-8 lg:pr-12 w-full">
             <div className="space-y-6">
               <div className="relative">
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
