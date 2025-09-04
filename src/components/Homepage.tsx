@@ -104,18 +104,31 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                           {/* User Voice Message */}
                           <div className="flex justify-end">
                             <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-xs shadow-sm">
-                              <div className="flex items-center space-x-2 mb-2">
+                              <div className="flex items-center space-x-3 mb-2">
                                 <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
                                   <Play className="w-3 h-3 text-white ml-0.5" />
                                 </div>
                                 <div className="flex-1">
-                                  <div className="h-6 rounded-full relative overflow-hidden" style={{ backgroundColor: '#25D366' }}>
-                                    <div className="absolute inset-0 flex items-center px-2">
-                                      <div className="flex space-x-0.5">
-                                        {[...Array(20)].map((_, i) => (
-                                          <div key={i} className="w-0.5 bg-white rounded-full" style={{ height: `${Math.random() * 16 + 4}px` }}></div>
+                                  <div className="h-8 rounded-lg relative overflow-hidden bg-white/20 backdrop-blur-sm">
+                                    <div className="absolute inset-0 flex items-center justify-center px-3">
+                                      <div className="flex items-end space-x-0.5 w-full">
+                                        {[...Array(35)].map((_, i) => {
+                                          const heights = [8, 12, 16, 20, 24, 20, 16, 12, 8, 4, 6, 10, 14, 18, 22, 18, 14, 10, 6, 8, 12, 16, 20, 16, 12, 8, 4, 6, 10, 14, 18, 14, 10, 6, 4];
+                                          return (
+                                            <div 
+                                              key={i} 
+                                              className="bg-white rounded-full transition-all duration-75" 
+                                              style={{ 
+                                                width: '2px', 
+                                                height: `${heights[i] || 8}px`,
+                                                opacity: i < 25 ? 0.9 : 0.4
+                                              }}
+                                            ></div>
+                                          );
                                         ))}
                                       </div>
+                                      {/* Progress indicator */}
+                                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-16 h-0.5 bg-white/60 rounded-full"></div>
                                     </div>
                                   </div>
                                 </div>
