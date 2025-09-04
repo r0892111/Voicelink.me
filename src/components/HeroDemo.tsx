@@ -252,9 +252,8 @@ export const HeroDemo: React.FC = () => {
               <div className="space-y-3">
                 <div className="text-sm" style={{ color: '#202226' }}>Senior Procurement Manager</div>
                 <div className="flex items-center space-x-2">
-                  <MessageCircle className="w-4 h-4" style={{ color: '#25D366' }} />
+                  <Phone className="w-4 h-4" style={{ color: '#25D366' }} />
                   <span className="text-sm font-medium">+32 456 789 123</span>
-                  <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#25D366', color: 'white' }}>WhatsApp</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-sm">📧</span>
