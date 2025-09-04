@@ -103,32 +103,19 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                         <div className="bg-[#ECE5DD] min-h-[500px] p-4 space-y-4">
                           {/* User Voice Message */}
                           <div className="flex justify-end">
-                            <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-sm shadow-sm">
-                              <div className="flex items-center space-x-3 mb-2">
+                            <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-xs shadow-sm">
+                              <div className="flex items-center space-x-2 mb-2">
                                 <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
                                   <Play className="w-3 h-3 text-white ml-0.5" />
                                 </div>
                                 <div className="flex-1">
-                                  <div className="h-10 rounded-lg relative overflow-hidden bg-white/20 backdrop-blur-sm">
-                                    <div className="absolute inset-0 flex items-center justify-center px-3">
-                                      <div className="flex items-end space-x-0.5 w-full">
-                                        {[...Array(50)].map((_, i) => {
-                                          const heights = [6, 10, 14, 18, 22, 26, 30, 28, 24, 20, 16, 12, 8, 10, 14, 18, 22, 26, 24, 20, 16, 12, 8, 6, 10, 14, 18, 22, 20, 16, 12, 8, 6, 10, 14, 18, 16, 12, 8, 6, 4, 8, 12, 16, 14, 10, 8, 6, 4, 6];
-                                          return (
-                                            <div 
-                                              key={i} 
-                                              className="bg-white rounded-full transition-all duration-75" 
-                                              style={{ 
-                                                width: '1.5px', 
-                                                height: `${heights[i] || 8}px`,
-                                                opacity: i < 35 ? 0.9 : 0.4
-                                              }}
-                                            ></div>
-                                          );
-                                        })}
+                                  <div className="h-6 rounded-full relative overflow-hidden" style={{ backgroundColor: '#25D366' }}>
+                                    <div className="absolute inset-0 flex items-center px-2">
+                                      <div className="flex space-x-0.5">
+                                        {[...Array(20)].map((_, i) => (
+                                          <div key={i} className="w-0.5 bg-white rounded-full" style={{ height: `${Math.random() * 16 + 4}px` }}></div>
+                                        ))}
                                       </div>
-                                      {/* Progress indicator */}
-                                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-24 h-0.5 bg-white/60 rounded-full"></div>
                                     </div>
                                   </div>
                                 </div>
