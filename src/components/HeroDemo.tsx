@@ -42,42 +42,33 @@ export const HeroDemo: React.FC = () => {
                     {/* User Voice Message - Enhanced with wider display and detailed waveform */}
                     <div className="flex justify-end">
                       <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-[280px] shadow-sm">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm" style={{ backgroundColor: '#25D366' }}>
-                            <Play className="w-4 h-4 text-white ml-0.5" />
+                        <div className="flex items-center space-x-2 mb-2">
+                          <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
+                            <Play className="w-3 h-3 text-white ml-0.5" />
                           </div>
                           <div className="flex-1">
-                            {/* WhatsApp-style waveform visualization */}
-                            <div className="h-7 rounded-lg relative overflow-hidden bg-[#128C7E]/15">
-                              <div className="absolute inset-0 flex items-center justify-center px-3">
-                                {/* WhatsApp-style waveform bars */}
-                                <div className="flex items-center space-x-0.5 w-full">
-                                  {[...Array(32)].map((_, i) => {
-                                    // WhatsApp-style waveform heights (more compact and realistic)
-                                    const heights = [
-                                      3, 6, 9, 12, 15, 18, 15, 12, 9, 6, 4, 7, 10, 13, 16, 13, 10, 7, 6, 9, 12, 15, 12, 9, 6, 4, 3, 6, 8, 11, 8, 5
-                                    ];
-                                    const isPlayed = i < 20; // Show progress through waveform
-                                    
-                                    return (
-                                      <div 
-                                        key={i} 
-                                        className="rounded-full transition-all duration-100" 
-                                        style={{ 
-                                          width: '1.5px', 
-                                          height: `${heights[i] || 8}px`,
-                                          backgroundColor: isPlayed ? '#128C7E' : '#128C7E',
-                                          opacity: isPlayed ? 1 : 0.3
-                                        }}
-                                      ></div>
-                                    );
-                                  })}
-                                </div>
-                              </div>
+                            {/* Authentic WhatsApp waveform */}
+                            <div className="flex items-center space-x-1 px-2 py-1">
+                              {[...Array(25)].map((_, i) => {
+                                const heights = [2, 4, 6, 8, 10, 12, 14, 16, 14, 12, 10, 8, 6, 10, 14, 18, 16, 12, 8, 6, 4, 2, 4, 6, 8];
+                                const isPlayed = i < 15;
+                                
+                                return (
+                                  <div 
+                                    key={i} 
+                                    className="rounded-full" 
+                                    style={{ 
+                                      width: '2px', 
+                                      height: `${heights[i]}px`,
+                                      backgroundColor: isPlayed ? '#128C7E' : '#B3B3B3'
+                                    }}
+                                  ></div>
+                                );
+                              })}
                             </div>
                           </div>
-                          <div className="text-right">
-                            <div className="text-xs font-medium text-[#128C7E]">1:23</div>
+                          <div className="text-xs font-medium text-gray-600 ml-1">
+                            1:23
                           </div>
                         </div>
                         <div className="flex justify-end items-center space-x-1">
