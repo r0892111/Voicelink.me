@@ -2,20 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Improve text rendering for 3D transforms */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* Optimize transforms for better text quality */
-.transform-gpu {
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  will-change: transform;
-}
-
 /* Custom 3D effects */
 .shadow-4xl {
   box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 0.5), 
