@@ -8,7 +8,7 @@ export const HeroDemo: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 mb-16">
         <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-center">
           {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8 lg:pr-12 w-full animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="space-y-8 lg:pl-8 lg:pr-12 w-full">
             <div className="space-y-6">
               <div className="relative">
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
@@ -72,7 +72,7 @@ export const HeroDemo: React.FC = () => {
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-8 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+          <div className="flex justify-center lg:justify-end lg:pl-8">
             <div className="relative max-w-xs mx-auto">
               {/* Background Effect Elements */}
               <div className="absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl opacity-40 scale-110"></div>
@@ -245,20 +245,19 @@ export const HeroDemo: React.FC = () => {
       </div>
 
       {/* Partial CRM Preview - Centered Below */}
-      <div className="w-full px-6 animate-fade-in-up" style={{ animationDelay: '1.4s' }}>
+      <div className="w-full px-6">
         {/* Floating CRM Cards Layout */}
         <div className="relative w-full h-[750px] py-8 max-w-7xl mx-auto">
             
             {/* Contact Card - Top Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl animate-slide-in-left"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '2%', 
                 left: '8%', 
                 width: '320px',
                 transform: 'rotate(-2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                animationDelay: '1.6s'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
             >
               <div className="flex items-center space-x-3 mb-4">
@@ -294,14 +293,13 @@ export const HeroDemo: React.FC = () => {
 
             {/* Voice Note Analysis Card - Top Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl animate-slide-in-right"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '1%', 
                 right: '8%', 
                 width: '350px',
                 transform: 'rotate(1.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                animationDelay: '1.8s'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
             >
               <div className="flex items-center space-x-3 mb-4">
@@ -355,14 +353,13 @@ export const HeroDemo: React.FC = () => {
 
             {/* Calendar Widget - Center Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl animate-slide-in-bottom"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '30%', 
                 left: '15%', 
                 width: '280px',
                 transform: 'rotate(-1deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                animationDelay: '2.0s'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -412,14 +409,13 @@ export const HeroDemo: React.FC = () => {
 
             {/* Analytics Card - Bottom Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl animate-slide-in-bottom"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '33%', 
                 right: '15%', 
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                animationDelay: '2.2s'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -494,14 +490,13 @@ export const HeroDemo: React.FC = () => {
 
             {/* Pipeline Card - Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl animate-fade-in-up"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '25%', 
                 left: '50%', 
                 width: '360px',
                 transform: 'translateX(-50%) rotate(0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                animationDelay: '2.4s'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -537,14 +532,13 @@ export const HeroDemo: React.FC = () => {
 
             {/* Quick Stats Card - Top Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl animate-scale-in"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '5%', 
                 left: '50%', 
                 width: '200px',
                 transform: 'translateX(-50%) rotate(-0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                animationDelay: '2.6s'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
             >
               <div className="text-center">
