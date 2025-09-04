@@ -62,23 +62,24 @@ export const HeroDemo: React.FC = () => {
 
           {/* Phone Mockup - Right Side */}
           <div className="flex justify-center lg:justify-end lg:pl-24">
-            <div className="relative max-w-xs mx-auto">
+            <div className="relative max-w-xs mx-auto" style={{ perspective: '1000px', perspectiveOrigin: 'center center' }}>
               {/* Background Effect Elements */}
-              <div className="absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl opacity-40 scale-110"></div>
-              <div className="absolute inset-0 transform translate-x-6 translate-y-6 bg-gradient-to-br from-gray-400 to-gray-600 rounded-[2.5rem] blur-xl opacity-35 scale-107"></div>
-              <div className="absolute inset-0 transform translate-x-4 translate-y-4 bg-gradient-to-br from-gray-500 to-gray-700 rounded-[2.5rem] blur-lg opacity-30 scale-105"></div>
-              <div className="absolute inset-0 transform translate-x-2 translate-y-2 bg-gradient-to-br from-gray-600 to-gray-800 rounded-[2.5rem] blur-md opacity-25 scale-103"></div>
-              <div className="absolute inset-0 transform translate-x-1 translate-y-1 bg-gradient-to-br from-gray-700 to-gray-900 rounded-[2.5rem] blur-sm opacity-20 scale-101"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-3xl opacity-30" style={{ transform: 'rotateX(25deg) rotateY(-15deg) translateZ(-50px) scale(1.2)' }}></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-400 to-gray-600 rounded-[2.5rem] blur-2xl opacity-25" style={{ transform: 'rotateX(22deg) rotateY(-12deg) translateZ(-40px) scale(1.15)' }}></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-500 to-gray-700 rounded-[2.5rem] blur-xl opacity-20" style={{ transform: 'rotateX(20deg) rotateY(-10deg) translateZ(-30px) scale(1.1)' }}></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-gray-800 rounded-[2.5rem] blur-lg opacity-15" style={{ transform: 'rotateX(18deg) rotateY(-8deg) translateZ(-20px) scale(1.05)' }}></div>
               
               {/* Phone Frame */}
               <div className="relative bg-black rounded-[2.5rem] p-1.5 shadow-2xl z-10" style={{ 
                 aspectRatio: '9/19.5',
-                boxShadow: '0 40px 80px -20px rgba(0, 0, 0, 0.5), 0 25px 50px -15px rgba(0, 0, 0, 0.4), 0 15px 30px -10px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2)'
+                boxShadow: '0 40px 80px -20px rgba(0, 0, 0, 0.5), 0 25px 50px -15px rgba(0, 0, 0, 0.4), 0 15px 30px -10px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2), 0 60px 120px -30px rgba(0, 0, 0, 0.3)',
+                transform: 'rotateX(15deg) rotateY(-8deg) translateZ(50px)',
+                transformStyle: 'preserve-3d'
               }}>
                 {/* iPhone 16 Dynamic Island */}
                 <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full z-10"></div>
                 
-                <div className="bg-white rounded-[2.25rem] overflow-hidden h-full">
+                <div className="bg-white rounded-[2.25rem] overflow-hidden h-full" style={{ transform: 'translateZ(2px)' }}>
                   {/* WhatsApp Header */}
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
