@@ -260,6 +260,16 @@ export const HeroDemo: React.FC = () => {
                 transform: 'rotate(-2deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(-2deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(-2deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+              }}
             >
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
@@ -301,6 +311,16 @@ export const HeroDemo: React.FC = () => {
                 width: '350px',
                 transform: 'rotate(1.5deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="flex items-center space-x-3 mb-4">
@@ -362,6 +382,16 @@ export const HeroDemo: React.FC = () => {
                 transform: 'rotate(-1deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(-1deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(-1deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+              }}
             >
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
@@ -417,6 +447,16 @@ export const HeroDemo: React.FC = () => {
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -499,6 +539,16 @@ export const HeroDemo: React.FC = () => {
                 transform: 'translateX(-50%) rotate(0.5deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+              }}
             >
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
@@ -540,6 +590,16 @@ export const HeroDemo: React.FC = () => {
                 width: '200px',
                 transform: 'translateX(-50%) rotate(-0.5deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="text-center">
