@@ -61,7 +61,7 @@ export const HeroDemo: React.FC = () => {
             <div className="flex items-center space-x-6 text-sm text-gray-500">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                <span>No credit card required</span>
+                <span>One-click CRM Connection</span>
               </div>
               <span>·</span>
               <div className="flex items-center space-x-2">
