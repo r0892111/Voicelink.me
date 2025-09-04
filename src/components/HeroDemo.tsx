@@ -21,8 +21,6 @@ export const HeroDemo: React.FC = () => {
                   }}>
                     CRM Data
                   </h1>
-                  {/* Gradient underline accent */}
-                  <div className="absolute bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 rounded-full opacity-20 transform -skew-x-12"></div>
                   {/* Subtle background glow */}
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10"></div>
                 </div>
