@@ -125,7 +125,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                                               }}
                                             ></div>
                                           );
-                                        ))}
+                                        })}
                                       </div>
                                       {/* Progress indicator */}
                                       <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-16 h-0.5 bg-white/60 rounded-full"></div>
