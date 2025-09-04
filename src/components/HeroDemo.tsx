@@ -1,79 +1,166 @@
+                      ),
+                      linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 30%, rgba(0,0,0,0.1) 100%)
 import React from 'react';
-import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone } from 'lucide-react';
-
+                    transform: 'translateZ(-8px) rotateY(3deg)',
+                    borderRadius: '0 2.5rem 2.5rem 0',
+                    boxShadow: 'inset -2px 0 4px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.1)'
 export const HeroDemo: React.FC = () => {
   return (
+                
+                {/* Bottom Bezel */}
     <div className="w-full">
-      {/* Hero Content - Text Left, Phone Right */}
+                  className="absolute inset-x-0 -bottom-1 h-4 rounded-b-[2.5rem]"
       <div className="max-w-7xl mx-auto px-6 mb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8">
-            <div className="space-y-6">
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                <div>Transform speech to</div>
-                <div style={{ color: '#F7E69B' }}>CRM Data</div>
+                      linear-gradient(180deg,
+                        rgba(0,0,0,0.95) 0%,
+                        rgba(30,30,30,0.9) 20%,
+                        rgba(60,60,60,0.8) 40%,
+                        rgba(90,90,90,0.6) 60%,
+                        rgba(120,120,120,0.4) 80%,
+                        rgba(150,150,150,0.2) 100%
+                      ),
+                      linear-gradient(90deg, rgba(255,255,255,0.05) 0%, transparent 50%, rgba(0,0,0,0.05) 100%)
               </h1>
-              <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
-                <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
+                    transform: 'translateZ(-8px) rotateX(3deg)',
+                    borderRadius: '0 0 2.5rem 2.5rem',
+                    boxShadow: 'inset 0 -2px 4px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.1)'
                 <p>Turn voice messages into structured data instantly.</p>
               </div>
             </div>
-            
+                {/* Premium Dynamic Island */}
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
-                style={{ backgroundColor: '#1C2C55' }}
+                    background: `
+                      linear-gradient(145deg, #000000 0%, #1a1a1a 30%, #000000 70%, #0a0a0a 100%),
+                      radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 70%)
+                    `,
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
-              >
-                <span>Get Started Free</span>
+                      inset 0 3px 6px rgba(0, 0, 0, 0.6),
+                      inset 0 -1px 3px rgba(255, 255, 255, 0.15),
+                      inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+                      0 2px 4px rgba(0, 0, 0, 0.4)
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
+                    transform: 'translateZ(4px)'
               <button 
                 className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2"
                 style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
-                onMouseEnter={(e) => {
+                {/* Enhanced Camera System */}
                   e.currentTarget.style.backgroundColor = '#F7E69B';
-                  e.currentTarget.style.borderColor = '#1C2C55';
+                  className="absolute top-3 left-1/2 transform -translate-x-1/2 translate-x-8 w-4 h-4 rounded-full z-10"
                 }}
-                onMouseLeave={(e) => {
+                    background: `
+                      radial-gradient(circle at 30% 30%, #2a2a2a 0%, #000000 40%, #1a1a1a 80%, #333333 100%),
+                      radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 0%, transparent 50%)
+                    `,
                   e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.borderColor = '#1C2C55';
-                }}
-              >
+                      inset 0 2px 4px rgba(0, 0, 0, 0.9),
+                      inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+                      0 0 0 2px rgba(0, 0, 0, 0.8),
+                      0 0 0 3px rgba(255, 255, 255, 0.1),
+                      0 2px 4px rgba(0, 0, 0, 0.4)
                 <Play className="w-5 h-5" />
-                <span>Watch Demo</span>
+                    transform: 'translateZ(6px)'
               </button>
-            </div>
+                >
+                  {/* Camera Lens Reflection */}
+                  <div 
+                    className="absolute top-1 left-1 w-1.5 h-1.5 rounded-full"
+                    style={{
+                      background: 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%)',
+                      transform: 'translateZ(1px)'
+                    }}
+                  ></div>
+                </div>
 
-            <div className="flex items-center space-x-6 text-sm text-gray-500">
+                {/* Premium Volume Buttons */}
               <div className="flex items-center space-x-2">
-                <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  className="absolute left-0 w-1.5 h-10 rounded-l-full"
                 <span>No credit card required</span>
-              </div>
-              <span>·</span>
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                    top: '12%',
+                    background: `
+                      linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 20%, #000000 50%, #1a1a1a 80%, #2a2a2a 100%),
+                      linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 50%)
+                    `,
+                    boxShadow: `
+                      inset 2px 0 4px rgba(0, 0, 0, 0.4),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                      inset 0 -1px 0 rgba(0, 0, 0, 0.3)
+                    `,
+                    transform: 'translateZ(-2px) translateX(-1.5px)'
                 <span>Connect WhatsApp in 2 minutes</span>
               </div>
             </div>
-          </div>
+                  className="absolute left-0 w-1.5 h-8 rounded-l-full"
 
-          {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-24">
-            <div className="relative max-w-xs mx-auto">
-              {/* Phone Frame */}
+                    top: '26%',
+                    background: `
+                      linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 20%, #000000 50%, #1a1a1a 80%, #2a2a2a 100%),
+                      linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 50%)
+                    `,
+                    boxShadow: `
+                      inset 2px 0 4px rgba(0, 0, 0, 0.4),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                      inset 0 -1px 0 rgba(0, 0, 0, 0.3)
+                    `,
+                    transform: 'translateZ(-2px) translateX(-1.5px)'
+              style={{ 
+                perspective: '1500px',
+                transformStyle: 'preserve-3d'
+                {/* Premium Power Button */}
+            >
+                  className="absolute right-0 w-1.5 h-14 rounded-r-full"
+              <div 
+                    top: '18%',
+                    background: `
+                      linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 20%, #000000 50%, #1a1a1a 80%, #2a2a2a 100%),
+                      linear-gradient(270deg, rgba(255,255,255,0.1) 0%, transparent 50%)
+                    `,
+                    boxShadow: `
+                      inset -2px 0 4px rgba(0, 0, 0, 0.4),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                      inset 0 -1px 0 rgba(0, 0, 0, 0.3)
+                    `,
+                    transform: 'translateZ(-2px) translateX(1.5px)'
+                  zIndex: -1
+                }}
+              ></div>
+                {/* Screen Glass Effect */}
+              
+                  className="rounded-[2.25rem] overflow-hidden h-full relative"
               <div className="relative bg-black rounded-[2.5rem] p-1 shadow-2xl" style={{ aspectRatio: '9/19.5' }}>
-                {/* iPhone 16 Dynamic Island */}
-                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"></div>
-                
-                <div className="bg-white rounded-[2.25rem] overflow-hidden h-full">
+                    background: `
+                      linear-gradient(145deg, #ffffff 0%, #f8f9fa 50%, #f0f1f3 100%),
+                      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255,255,255,0.8) 0%, transparent 40%),
+                      radial-gradient(ellipse 60% 40% at 80% 90%, rgba(0,0,0,0.02) 0%, transparent 50%)
+                    `,
+                className="relative rounded-[2.5rem] p-1 transform transition-all duration-700 hover:scale-[1.02] group" 
+                      inset 0 0 0 1px rgba(0, 0, 0, 0.06),
+                      inset 0 2px 8px rgba(0, 0, 0, 0.04),
+                      inset 0 0 40px rgba(0, 0, 0, 0.02),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                      0 0 0 1px rgba(255, 255, 255, 0.1)
                   {/* WhatsApp Header */}
-                  <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
+                    transform: 'translateZ(4px)'
                       <img 
                         src="/Finit Icon Blue.svg" 
+                  {/* Screen Glass Reflection */}
+                  <div 
+                    className="absolute inset-0 rounded-[2.25rem] pointer-events-none"
+                    style={{
+                      background: `
+                        linear-gradient(135deg, 
+                          rgba(255,255,255,0.15) 0%, 
+                          transparent 20%, 
+                          transparent 80%, 
+                          rgba(255,255,255,0.05) 100%
+                        )
+                      `,
+                      transform: 'translateZ(1px)'
+                    }}
+                  ></div>
+                  
                         alt="VoiceLink" 
                         className="w-full h-full object-contain"
                       />
@@ -492,49 +579,54 @@ export const HeroDemo: React.FC = () => {
                   </div>
                   <div className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#1C2C55', color: 'white' }}>Priority</div>
                 </div>
+                    0 0 0 1px rgba(0, 0, 0, 0.12),
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>StartupXYZ</div>
-                    <div className="text-xs text-gray-600">€12,000 • Proposal Review</div>
+                    0 2px 4px rgba(0, 0, 0, 0.08),
                   </div>
-                  <div className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">Active</div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>GrowthCorp</div>
-                    <div className="text-xs text-gray-600">€28,000 • Discovery Phase</div>
-                  </div>
+                    0 8px 16px rgba(0, 0, 0, 0.12),
                   <div className="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded-full">Prospect</div>
+                    0 16px 32px rgba(0, 0, 0, 0.16),
                 </div>
+                    0 32px 64px rgba(0, 0, 0, 0.20),
               </div>
+                    0 48px 96px rgba(0, 0, 0, 0.24),
             </div>
+                    0 64px 128px rgba(0, 0, 0, 0.28),
 
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2),
             {/* Quick Stats Card - Top Center */}
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
             <div 
+                    inset 1px 0 0 rgba(255, 255, 255, 0.08),
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+                    inset -1px 0 0 rgba(0, 0, 0, 0.2),
               style={{ 
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.05)
+                    linear-gradient(145deg, #3a3a3a 0%, #1a1a1a 20%, #000000 40%, #0a0a0a 60%, #1a1a1a 80%, #2a2a2a 100%),
                 top: '5%', 
-                left: '50%', 
-                width: '200px',
-                transform: 'translateX(-50%) rotate(-0.5deg)',
+                    radial-gradient(ellipse 60% 40% at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 60%),
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                    radial-gradient(ellipse 40% 30% at 70% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
               }}
+                    linear-gradient(90deg, transparent 0%, rgba(28, 44, 85, 0.1) 50%, transparent 100%)
+                  transform: 'rotateY(-12deg) rotateX(5deg) translateZ(40px)',
             >
-              <div className="text-center">
-                <div className="text-xs text-gray-500 mb-2">Today's Activity</div>
+                  transformStyle: 'preserve-3d',
                 <div className="text-2xl font-bold mb-1" style={{ color: '#1C2C55' }}>12</div>
+                  filter: 'drop-shadow(0 0 20px rgba(28, 44, 85, 0.15))'
                 <div className="text-xs" style={{ color: '#202226' }}>Voice recordings processed</div>
                 <div className="mt-3 h-1 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="h-full rounded-full" style={{ backgroundColor: '#F7E69B', width: '75%' }}></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating Background Elements */}
-            <div className="absolute bottom-8 left-1/3 w-20 h-20 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
+                      linear-gradient(90deg,
+                {/* Right Side Bezel with Metallic Finish */}
+                        rgba(0,0,0,0.95) 0%,
             <div className="absolute top-1/2 left-1/2 w-12 h-12 rounded-full opacity-5" style={{ backgroundColor: '#25D366' }}></div>
+                        rgba(30,30,30,0.9) 20%,
         </div>
+                        rgba(60,60,60,0.8) 40%,
       </div>
+                        rgba(90,90,90,0.6) 60%,
     </div>
+                        rgba(120,120,120,0.4) 80%,
   );
+                        rgba(150,150,150,0.2) 100%
 };
