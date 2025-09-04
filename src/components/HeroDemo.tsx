@@ -8,7 +8,7 @@ export const HeroDemo: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 mb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8">
+          <div className="space-y-8 lg:pl-8 lg:pr-4 max-w-2xl">
             <div className="space-y-6">
               <div className="relative">
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
