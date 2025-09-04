@@ -17,15 +17,15 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </div>
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden z-10 pt-32">
+      <section className="relative min-h-screen flex items-center overflow-hidden z-10 pt-48">
         <div className="w-full">
           {/* Centered Headline Block */}
-          <div className="text-center mb-20 px-6">
+          <div className="text-center mb-24 px-6">
             <div className="max-w-5xl mx-auto space-y-8">
               <div className="space-y-6">
-                <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                  Transform WhatsApp
-                  <span style={{ color: '#F7E69B' }}> CRM Data</span>
+                <h1 className="text-5xl lg:text-6xl font-bold leading-tight text-center" style={{ color: '#1C2C55' }}>
+                  <div>Transform WhatsApp</div>
+                  <div style={{ color: '#F7E69B' }}>CRM Data</div>
                 </h1>
                 <div className="text-xl leading-relaxed max-w-3xl mx-auto space-y-2" style={{ color: '#202226' }}>
                   <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
