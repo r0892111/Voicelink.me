@@ -8,7 +8,7 @@ export const HeroDemo: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 mb-16">
         <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-center">
           {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8 lg:pr-12 w-full">
+          <div className="space-y-8 lg:pl-8 lg:pr-12 w-full animate-fade-in-up">
             <div className="space-y-6">
               <div className="relative">
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
@@ -72,7 +72,7 @@ export const HeroDemo: React.FC = () => {
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-8">
+          <div className="flex justify-center lg:justify-end lg:pl-8 animate-fade-in-right">
             <div className="relative max-w-xs mx-auto">
               {/* Background Effect Elements */}
               <div className="absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl opacity-40 scale-110"></div>
@@ -245,7 +245,7 @@ export const HeroDemo: React.FC = () => {
       </div>
 
       {/* Partial CRM Preview - Centered Below */}
-      <div className="w-full px-6">
+      <div className="w-full px-6 animate-fade-in-up-delayed">
         {/* Floating CRM Cards Layout */}
         <div className="relative w-full h-[750px] py-8 max-w-7xl mx-auto">
             
