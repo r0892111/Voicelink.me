@@ -354,46 +354,6 @@ export const HeroDemo: React.FC = () => {
             {/* Task List Card - Center Right */}
 
             {/* Notification Feed - Bottom Left */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '50%', 
-                left: '8%', 
-                width: '320px',
-                transform: 'rotate(1deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
-                  <MessageCircle className="w-4 h-4 text-white" />
-                </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>WhatsApp Activity</h4>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#25D366' }}></div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium" style={{ color: '#1C2C55' }}>New voice note</div>
-                    <div className="text-xs text-gray-600">Sarah Mitchell • 2 min ago</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
-                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium" style={{ color: '#1C2C55' }}>CRM updated</div>
-                    <div className="text-xs text-gray-600">Contact & tasks synced</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium" style={{ color: '#1C2C55' }}>Reminder set</div>
-                    <div className="text-xs text-gray-600">Follow-up call scheduled</div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* Analytics Card - Bottom Right */}
             <div 
