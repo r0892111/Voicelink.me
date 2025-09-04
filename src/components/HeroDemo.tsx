@@ -108,17 +108,16 @@ export const HeroDemo: React.FC = () => {
                           
                           <div className="space-y-1.5 text-sm">
                             <div>📞 <strong>Follow-up Call</strong> - Sarah Mitchell (TechFlow)</div>
-                            <div className="ml-4 text-gray-700">• Discuss premium package pricing</div>
-                            <div className="ml-4 text-gray-700">• Review implementation timeline</div>
+                            <div className="ml-4 text-gray-700">• Discuss premium package pricing and implementation timeline</div>
                             <div className="ml-4 text-gray-700">• Thursday, Jan 16 at 2:00 PM</div>
                             <div className="ml-4 text-xs px-2 py-1 rounded-full inline-block mt-1" style={{ backgroundColor: '#FFE4B5', color: '#D2691E' }}>🔥 High Priority</div>
                             
-                            <div className="pt-2">📝 <strong>Key Notes:</strong></div>
+                            <div className="pt-1">📝 <strong>Key Notes:</strong></div>
                             <div className="ml-4 text-gray-700">• Budget increased 40% for digital tools</div>
                             <div className="ml-4 text-gray-700">• Strong interest in WhatsApp integration</div>
                             <div className="ml-4 text-gray-700">• Prefers Thursday PM calls</div>
                             
-                            <div className="pt-2">📋 <strong>Action Items:</strong></div>
+                            <div className="pt-1">📋 <strong>Action Items:</strong></div>
                             <div className="ml-4 text-gray-700">• Send proposal by Friday</div>
                             <div className="ml-4 text-gray-700">• Include ROI calculations</div>
                           </div>
