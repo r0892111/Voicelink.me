@@ -8,11 +8,17 @@ interface HomepageProps {
 
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative">
+      {/* Continuous Background Gradient */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 25%, #F7E69B 50%, #FFFFFF 75%, #1C2C55 100%)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(45deg, transparent 0%, rgba(247, 230, 155, 0.1) 20%, transparent 40%, rgba(28, 44, 85, 0.05) 60%, transparent 80%, rgba(247, 230, 155, 0.08) 100%)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(28, 44, 85, 0.02) 0%, transparent 30%, rgba(247, 230, 155, 0.03) 50%, transparent 70%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
+      </div>
+      
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
-        <div className="relative max-w-7xl mx-auto px-6">
+      <section className="relative min-h-screen flex items-center overflow-hidden z-10">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="space-y-8">
@@ -110,9 +116,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
-        <div className="relative max-w-7xl mx-auto px-6">
+      <section id="features" className="py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
               Powerful Features for Modern Teams
@@ -166,9 +171,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
-        <div className="relative max-w-7xl mx-auto px-6">
+      <section id="testimonials" className="py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
               Trusted by Growing Teams
@@ -252,9 +256,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
-        <div className="relative max-w-7xl mx-auto px-6">
+      <section id="pricing" className="py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
               Simple, Transparent Pricing
@@ -322,9 +325,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
-        <div className="relative max-w-7xl mx-auto px-6">
+      <section className="py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
               How It Works
@@ -393,8 +395,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)' }}>
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
+      <section className="py-20 relative z-10" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)' }}>
+        <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
             Ready to Transform Your Workflow?
           </h2>
@@ -454,7 +456,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Footer */}
-      <footer className="text-white py-12" style={{ backgroundColor: '#202226' }}>
+      <footer className="text-white py-12 relative z-10" style={{ backgroundColor: '#202226' }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
