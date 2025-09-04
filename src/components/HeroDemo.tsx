@@ -19,7 +19,7 @@ export const HeroDemo: React.FC = () => {
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
                       <img 
-                        src="/Finit Icon White.svg" 
+                        src="/Finit Icon Blue.svg" 
                         alt="VoiceLink" 
                         className="w-full h-full object-contain"
                       />
