@@ -397,7 +397,7 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                bottom: '8%', 
+                top: '65%', 
                 left: '2%', 
                 width: '320px',
                 transform: 'rotate(1deg)',
@@ -439,7 +439,7 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                bottom: '12%', 
+                top: '68%', 
                 right: '2%', 
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
@@ -474,7 +474,7 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                top: '55%', 
+                top: '45%', 
                 left: '50%', 
                 width: '360px',
                 transform: 'translateX(-50%) rotate(0.5deg)',
