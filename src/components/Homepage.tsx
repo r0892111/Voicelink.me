@@ -8,55 +8,10 @@ interface HomepageProps {
 
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Seamless Background Gradients */}
-      <div className="absolute inset-0">
-        {/* Hero gradient */}
-        <div className="absolute inset-0 h-screen" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
-        
-        {/* Features gradient - blends from hero */}
-        <div className="absolute w-full" style={{ 
-          top: '100vh', 
-          height: '120vh',
-          background: 'linear-gradient(45deg, #F7E69B 0%, #FFFFFF 40%, rgba(28, 44, 85, 0.08) 100%)',
-          transform: 'translateY(-20vh)'
-        }}></div>
-        
-        {/* Social proof gradient - blends from features */}
-        <div className="absolute w-full" style={{ 
-          top: '200vh', 
-          height: '120vh',
-          background: 'linear-gradient(-135deg, rgba(28, 44, 85, 0.06) 0%, #FFFFFF 60%, #F7E69B 100%)',
-          transform: 'translateY(-40vh)'
-        }}></div>
-        
-        {/* Pricing gradient - blends from social proof */}
-        <div className="absolute w-full" style={{ 
-          top: '300vh', 
-          height: '120vh',
-          background: 'linear-gradient(90deg, #F7E69B 0%, #FFFFFF 30%, #FFFFFF 70%, rgba(28, 44, 85, 0.05) 100%)',
-          transform: 'translateY(-60vh)'
-        }}></div>
-        
-        {/* How it works gradient - blends from pricing */}
-        <div className="absolute w-full" style={{ 
-          top: '400vh', 
-          height: '120vh',
-          background: 'linear-gradient(180deg, rgba(28, 44, 85, 0.04) 0%, #FFFFFF 30%, #FFFFFF 70%, #F7E69B 100%)',
-          transform: 'translateY(-80vh)'
-        }}></div>
-        
-        {/* Final CTA gradient - blends from how it works */}
-        <div className="absolute w-full" style={{ 
-          top: '500vh', 
-          height: '120vh',
-          background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)',
-          transform: 'translateY(-100vh)'
-        }}></div>
-      </div>
-
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
@@ -155,7 +110,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 relative overflow-hidden">
+      <section id="features" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
@@ -210,7 +166,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className="py-20 relative overflow-hidden">
+      <section id="testimonials" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
@@ -295,7 +252,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 relative overflow-hidden">
+      <section id="pricing" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
@@ -364,7 +322,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
