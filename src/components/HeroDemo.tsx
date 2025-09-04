@@ -234,7 +234,7 @@ export const HeroDemo: React.FC = () => {
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '2%', 
-                left: '1%', 
+                left: '8%', 
                 width: '320px',
                 transform: 'rotate(-2deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -272,7 +272,7 @@ export const HeroDemo: React.FC = () => {
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '1%', 
-                right: '1%', 
+                right: '8%', 
                 width: '350px',
                 transform: 'rotate(1.5deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -313,7 +313,7 @@ export const HeroDemo: React.FC = () => {
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '45%', 
-                left: '10%', 
+                left: '15%', 
                 width: '280px',
                 transform: 'rotate(-1deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -359,7 +359,7 @@ export const HeroDemo: React.FC = () => {
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '48%', 
-                right: '8%', 
+                right: '15%', 
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
