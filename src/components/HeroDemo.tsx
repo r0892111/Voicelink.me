@@ -6,25 +6,14 @@ export const HeroDemo: React.FC = () => {
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
       <div className="max-w-7xl mx-auto px-6 mb-16">
-        <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8 lg:pr-12 w-full animate-fade-in-up">
+          <div className="space-y-8 lg:pl-8">
             <div className="space-y-6">
-              <div className="relative">
-                <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
-                  Just...
-                </h1>
-                <div className="relative inline-block">
-                  <h1 className="text-6xl lg:text-7xl font-black tracking-tight relative z-10" style={{ 
-                    color: '#1C2C55',
-                    textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)'
-                  }}>
-                    Talk to your CRM
-                  </h1>
-                  {/* Subtle background glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10"></div>
-                </div>
-              </div>
+              <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
+                <div>Transform speech to</div>
+                <div style={{ color: '#F7E69B' }}>CRM Data</div>
+              </h1>
               <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
                 <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
                 <p>Turn voice messages into structured data instantly.</p>
@@ -72,7 +61,7 @@ export const HeroDemo: React.FC = () => {
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-8 animate-fade-in-right">
+          <div className="flex justify-center lg:justify-end lg:pl-24">
             <div className="relative max-w-xs mx-auto">
               {/* Background Effect Elements */}
               <div className="absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl opacity-40 scale-110"></div>
@@ -245,9 +234,9 @@ export const HeroDemo: React.FC = () => {
       </div>
 
       {/* Partial CRM Preview - Centered Below */}
-      <div className="w-full px-6 animate-fade-in-up-delayed">
+      <div className="w-full px-6">
         {/* Floating CRM Cards Layout */}
-        <div className="relative w-full h-[750px] py-8 max-w-[90rem] mx-auto px-8">
+        <div className="relative w-full h-[750px] py-8 max-w-7xl mx-auto">
             
             {/* Contact Card - Top Left */}
             <div 
@@ -464,26 +453,26 @@ export const HeroDemo: React.FC = () => {
               
               {/* Auto-inserted Events */}
               <div className="space-y-2">
-                <div className="text-sm font-semibold text-gray-600 mb-2">Auto-inserted from voice notes:</div>
+                <div className="text-xs font-medium text-gray-500 mb-2">Auto-inserted from voice notes:</div>
                 <div className="flex items-center justify-between p-2 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
                     <div>
-                      <div className="text-sm font-bold" style={{ color: '#1C2C55' }}>Follow-up Call</div>
-                      <div className="text-sm text-gray-700">Sarah Mitchell</div>
+                      <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</div>
+                      <div className="text-xs text-gray-600">Sarah Mitchell</div>
                     </div>
                   </div>
-                  <div className="text-sm font-bold" style={{ color: '#1C2C55' }}>Jan 16 • 2:00 PM</div>
+                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Jan 16 • 2:00 PM</div>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
                     <div>
-                      <div className="text-sm font-bold" style={{ color: '#1C2C55' }}>Proposal Deadline</div>
-                      <div className="text-sm text-gray-700">TechFlow Enterprise</div>
+                      <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Proposal Deadline</div>
+                      <div className="text-xs text-gray-600">TechFlow Enterprise</div>
                     </div>
                   </div>
-                  <div className="text-sm font-bold text-gray-700">Jan 17 • 5:00 PM</div>
+                  <div className="text-xs font-medium text-gray-600">Jan 17 • 5:00 PM</div>
                 </div>
               </div>
             </div>
