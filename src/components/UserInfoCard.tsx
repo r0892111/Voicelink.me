@@ -229,34 +229,3 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo, 
     </div>
   );
 };
-
-        </div>
-        <p className="text-sm text-gray-600">Odoo user data will be displayed here once available.</p>
-      </div>
-    );
-  };
-
-  const renderPlatformInfo = () => {
-    switch (platform) {
-      case 'teamleader':
-        return renderTeamleaderInfo();
-      case 'pipedrive':
-        return renderPipedriveInfo();
-      case 'odoo':
-        return renderOdooInfo();
-      default:
-        return (
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">Unknown platform: {platform}</p>
-          </div>
-        );
-    }
-  };
-
-  return (
-    <div className="bg-white rounded-xl shadow-sm p-8">
-      <h2 className="text-xl font-semibold text-gray-900 mb-6">User Information</h2>
-      {renderPlatformInfo()}
-    </div>
-  );
-};
