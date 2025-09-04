@@ -463,7 +463,7 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                top: '15%', 
+                top: '20%', 
                 left: '50%', 
                 width: '360px',
                 transform: 'translateX(-50%) rotate(0.5deg)',
