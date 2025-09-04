@@ -21,16 +21,18 @@ export const HeroDemo: React.FC = () => {
                       <span className="text-sm font-semibold text-gray-600">SM</span>
                     </div>
                     <div className="flex-1">
-                      <div className="text-white font-medium">Sarah Mitchell</div>
+                      <div className="text-white font-medium">VoiceLink</div>
                       <div className="flex items-center space-x-1">
                         <div className="w-2 h-2 rounded-full bg-green-400"></div>
                         <span className="text-xs text-green-200">online</span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <div className="w-6 h-6 text-white">📞</div>
-                      <div className="w-6 h-6 text-white">📹</div>
-                      <div className="w-6 h-6 text-white">⋮</div>
+                      <img 
+                        src="/Finit Voicelink White.svg" 
+                        alt="VoiceLink" 
+                        className="h-6 w-auto"
+                      />
                     </div>
                   </div>
 
