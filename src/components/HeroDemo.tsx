@@ -3,6 +3,7 @@ import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone } 
 
 export const HeroDemo: React.FC = () => {
   return (
+    <>
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
       <div className="max-w-7xl mx-auto px-6 mb-16">
@@ -509,5 +510,6 @@ export const HeroDemo: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
