@@ -12,14 +12,14 @@ export const HeroDemo: React.FC = () => {
             <div className="space-y-6">
               <div className="relative">
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
-                  Transform speech to
+                  Stop Typing
                 </h1>
                 <div className="relative inline-block">
                   <h1 className="text-6xl lg:text-7xl font-black tracking-tight relative z-10" style={{ 
                     color: '#1C2C55',
                     textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)'
                   }}>
-                    CRM Data
+                    Speak to your CRM
                   </h1>
                   {/* Subtle background glow */}
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10"></div>
