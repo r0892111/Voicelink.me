@@ -19,7 +19,7 @@ export const HeroDemo: React.FC = () => {
                     color: '#1C2C55',
                     textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)'
                   }}>
-                    Talk to your CRM!
+                    Talk to your CRM
                   </h1>
                   {/* Subtle background glow */}
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10"></div>
