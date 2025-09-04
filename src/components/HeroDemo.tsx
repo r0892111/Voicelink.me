@@ -227,11 +227,7 @@ export const HeroDemo: React.FC = () => {
       {/* Partial CRM Preview - Centered Below */}
       <div className="max-w-4xl mx-auto px-6">
         <div className="relative">
-          {/* Fade overlay to indicate more content below */}
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent z-10"></div>
-          
-          <div className="overflow-hidden" style={{ height: '300px' }}>
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300 hover:scale-105">
               <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
               <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
               
@@ -340,17 +336,6 @@ export const HeroDemo: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
-          
-          {/* Scroll indicator */}
-          <div className="text-center mt-8">
-            <div className="inline-flex items-center space-x-2 text-sm text-gray-500">
-              <span>Scroll down to see more</span>
-              <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
-              <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
