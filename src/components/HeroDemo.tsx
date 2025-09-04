@@ -361,16 +361,6 @@ export const HeroDemo: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 rounded-full mt-1.5" style={{ backgroundColor: '#1C2C55' }}></div>
-                    <div>
-                      <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Budget Review</div>
-                      <div className="text-xs text-gray-700 mb-1">Prepare Q1 allocation report</div>
-                      <div className="text-xs text-gray-600">📅 Wed, Jan 22</div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
