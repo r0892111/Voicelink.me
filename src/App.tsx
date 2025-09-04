@@ -1,15 +1,17 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Users, LogOut, User } from 'lucide-react';
+import { Users, LogOut, User, Menu, X } from 'lucide-react';
 import { AuthModal } from './components/AuthModal';
 import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
 import { BuyButton } from './components/BuyButton';
 import { SuccessPage } from './components/SuccessPage';
+import { Homepage } from './components/Homepage';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const { user, loading, signOut } = useAuth();
 
   const openModal = () => {
@@ -30,82 +32,89 @@ function App() {
       </div>
     );
   }
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Users className="w-8 h-8 text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">CRM Hub</span>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            {user ? (
-              <div className="flex items-center space-x-3">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                    <User className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="text-gray-900 font-medium">{user.name}</span>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full capitalize">
-                    {user.platform}
-                  </span>
-                </div>
-                <button
-                  onClick={signOut}
-                  className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Sign Out</span>
-                </button>
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                <Users className="w-6 h-6 text-white" />
               </div>
-            ) : (
-              <button
-                onClick={openModal}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 hover:shadow-md"
-              >
-                Sign In
-              </button>
-            )}
+              <span className="text-xl font-bold text-gray-900">VoiceLink</span>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+              <a href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
+              <a href="#testimonials" className="text-gray-600 hover:text-gray-900 transition-colors">Reviews</a>
+              
+              {user ? (
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                      <User className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-gray-900 font-medium">{user.name}</span>
+                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full capitalize">
+                      {user.platform}
+                    </span>
+                  </div>
+                  <button
+                    onClick={signOut}
+                    className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={openModal}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-xl transition-all duration-200 hover:shadow-lg"
+                >
+                  Sign In
+                </button>
+              )}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-gray-600 hover:text-gray-900"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
+              <div className="flex flex-col space-y-4 pt-4">
+                <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+                <a href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
+                <a href="#testimonials" className="text-gray-600 hover:text-gray-900 transition-colors">Reviews</a>
+                {!user && (
+                  <button
+                    onClick={openModal}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-xl transition-all duration-200 text-left"
+                  >
+                    Sign In
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
-      </header>
+      </nav>
 
       {/* Routes */}
       <Routes>
         <Route path="/" element={
-          <main className="max-w-7xl mx-auto px-6 py-8">
-            {user ? (
-              <Dashboard />
-            ) : (
-              <div className="text-center py-16">
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                  Welcome to CRM Hub
-                </h1>
-                <p className="text-xl text-gray-600 mb-8">
-                  Connect with your favorite CRM platform to get started
-                </p>
-                <button
-                  onClick={openModal}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg"
-                >
-                  Get Started
-                </button>
-                
-                {/* Demo Product */}
-                <div className="mt-16 max-w-sm mx-auto">
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-6">Featured Product</h2>
-                  <BuyButton
-                    priceId="price_1234567890"
-                    productName="CRM Premium Features"
-                    price="€29.99"
-                    description="Unlock advanced CRM features and integrations"
-                  />
-                </div>
-              </div>
-            )}
-          </main>
+          user ? <Dashboard /> : <Homepage openModal={openModal} />
         } />
         <Route path="/auth/:platform/callback" element={<AuthCallback />} />
         <Route path="/dashboard" element={<Dashboard />} />
