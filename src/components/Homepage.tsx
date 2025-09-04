@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mic, Zap, Shield, ArrowRight, Star, CheckCircle, Play } from 'lucide-react';
+import { Mic, Zap, Shield, ArrowRight, Star, CheckCircle, Play, Users } from 'lucide-react';
 import { BuyButton } from './BuyButton';
 
 interface HomepageProps {
