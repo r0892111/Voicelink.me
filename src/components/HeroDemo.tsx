@@ -64,10 +64,11 @@ export const HeroDemo: React.FC = () => {
           <div className="flex justify-center lg:justify-end lg:pl-24" style={{ perspective: '1000px' }}>
             <div className="relative max-w-xs mx-auto transform-gpu transition-all duration-700 hover:scale-110" 
                  style={{ 
-                   transform: 'rotateX(8deg) rotateY(-5deg) translateZ(30px)',
+                   transform: 'rotateX(3deg) rotateY(-2deg) translateZ(10px)',
                    transformStyle: 'preserve-3d',
                    backfaceVisibility: 'hidden',
-                   WebkitBackfaceVisibility: 'hidden'
+                   WebkitBackfaceVisibility: 'hidden',
+                   willChange: 'transform'
                  }}>
               {/* Phone Frame */}
               <div className="relative bg-black rounded-[2.5rem] p-1 transition-all duration-700 hover:shadow-4xl" 
@@ -77,21 +78,26 @@ export const HeroDemo: React.FC = () => {
                      filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15))',
                      WebkitFontSmoothing: 'antialiased',
                      MozOsxFontSmoothing: 'grayscale',
-                     textRendering: 'optimizeLegibility'
+                     textRendering: 'optimizeLegibility',
+                     WebkitTransform: 'translateZ(0)',
+                     transform: 'translateZ(0)'
                    }}>
                 {/* iPhone 16 Dynamic Island */}
                 <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"
                      style={{ 
-                       transform: 'translateX(-50%) translateZ(2px)',
-                       backfaceVisibility: 'hidden'
+                       transform: 'translateX(-50%)',
+                       backfaceVisibility: 'hidden',
+                       WebkitTransform: 'translateX(-50%) translateZ(0)'
                      }}></div>
                 
                 <div className="bg-white rounded-[2.25rem] overflow-hidden h-full relative"
                      style={{ 
-                       transform: 'translateZ(1px)',
+                       transform: 'translateZ(0)',
                        backfaceVisibility: 'hidden',
                        WebkitFontSmoothing: 'antialiased',
-                       MozOsxFontSmoothing: 'grayscale'
+                       MozOsxFontSmoothing: 'grayscale',
+                       WebkitTransform: 'translateZ(0)',
+                       imageRendering: 'crisp-edges'
                      }}>
                   {/* WhatsApp Header */}
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
