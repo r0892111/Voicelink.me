@@ -35,10 +35,12 @@ export const HeroDemo: React.FC = () => {
                   </div>
 
                   {/* Chat Messages */}
-                  <div className="bg-[#ECE5DD] flex-1 p-4 space-y-4" style={{ 
+                  <div className="bg-[#ECE5DD] flex-1 flex flex-col" style={{ 
                     backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d4d8' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                    minHeight: '600px'
+                    height: '600px'
                   }}>
+                    {/* Scrollable Messages Container */}
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                     {/* User Voice Message - Enhanced with wider display and detailed waveform */}
                     <div className="flex justify-end">
                       <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-[280px] shadow-sm">
@@ -131,9 +133,10 @@ export const HeroDemo: React.FC = () => {
                         </div>
                       </div>
                     </div>
+                    </div>
                     
                     {/* WhatsApp Input Area */}
-                    <div className="mt-auto pt-4">
+                    <div className="flex-shrink-0 p-4 pt-2">
                       <div className="bg-white rounded-full px-4 py-2 flex items-center space-x-3 shadow-sm">
                         <div className="text-gray-400">😊</div>
                         <div className="flex-1 text-sm text-gray-500">Type a message</div>
