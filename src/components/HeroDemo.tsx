@@ -15,35 +15,45 @@ export const HeroDemo: React.FC = () => {
                   Just...
                 </h1>
                 <div className="relative inline-block">
-                  <h1 className="text-6xl lg:text-7xl font-black tracking-tight relative z-10 animate-scale-in" style={{ 
-                    color: '#1C2C55',
-                    textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
-                    animationDelay: '0.4s'
-                  }}>
+                  <h1
+                    className="text-6xl lg:text-7xl font-black tracking-tight relative z-10 animate-scale-in"
+                    style={{
+                      color: '#1C2C55',
+                      textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
+                      animationDelay: '0.4s'
+                    }}
+                  >
                     Talk to your CRM
                   </h1>
                   {/* Subtle background glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10 animate-fade-in" style={{ animationDelay: '0.6s' }}></div>
+                  <div
+                    className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10 animate-fade-in"
+                    style={{ animationDelay: '0.6s' }}
+                  ></div>
                 </div>
               </div>
               <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.8s' }}>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
-                <p className="animate-fade-in-up" style={{ animationDelay: '1.0s' }}>Turn voice messages into structured data instantly.</p>
+                <p className="animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+                  Send voice notes via WhatsApp and watch them automatically sync with your CRM.
+                </p>
+                <p className="animate-fade-in-up" style={{ animationDelay: '1.0s' }}>
+                  Turn voice messages into structured data instantly.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
               <button
-                className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                className="group text-white font-semibold py-4 px-8 rounded-2xl transition-transform duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
                 style={{ backgroundColor: '#1C2C55' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0F1A3A')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#1C2C55')}
               >
                 <span>Get Started Free</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button 
-                className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
+              <button
+                className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-transform duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
                 style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#F7E69B';
@@ -81,24 +91,24 @@ export const HeroDemo: React.FC = () => {
               <div className="absolute inset-0 transform translate-x-4 translate-y-4 bg-gradient-to-br from-gray-500 to-gray-700 rounded-[2.5rem] blur-lg opacity-30 scale-105"></div>
               <div className="absolute inset-0 transform translate-x-2 translate-y-2 bg-gradient-to-br from-gray-600 to-gray-800 rounded-[2.5rem] blur-md opacity-25 scale-103"></div>
               <div className="absolute inset-0 transform translate-x-1 translate-y-1 bg-gradient-to-br from-gray-700 to-gray-900 rounded-[2.5rem] blur-sm opacity-20 scale-101"></div>
-              
+
               {/* Phone Frame */}
-              <div className="relative bg-black rounded-[2.5rem] p-1.5 shadow-2xl z-10" style={{ 
-                aspectRatio: '9/19.5',
-                boxShadow: '0 40px 80px -20px rgba(0, 0, 0, 0.5), 0 25px 50px -15px rgba(0, 0, 0, 0.4), 0 15px 30px -10px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2)'
-              }}>
+              <div
+                className="relative bg-black rounded-[2.5rem] p-1.5 shadow-2xl z-10"
+                style={{
+                  aspectRatio: '9/19.5',
+                  boxShadow:
+                    '0 40px 80px -20px rgba(0, 0, 0, 0.5), 0 25px 50px -15px rgba(0, 0, 0, 0.4), 0 15px 30px -10px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2)'
+                }}
+              >
                 {/* iPhone 16 Dynamic Island */}
                 <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full z-10"></div>
-                
+
                 <div className="bg-white rounded-[2.25rem] overflow-hidden h-full">
                   {/* WhatsApp Header */}
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3 animate-fade-in-up" style={{ animationDelay: '1.0s' }}>
                     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
-                      <img 
-                        src="/Finit Icon Blue.svg" 
-                        alt="VoiceLink" 
-                        className="w-full h-full object-contain"
-                      />
+                      <img src="/Finit Icon Blue.svg" alt="VoiceLink" className="w-full h-full object-contain" />
                     </div>
                     <div className="flex-1">
                       <div className="text-white font-medium">VoiceLink</div>
@@ -108,125 +118,126 @@ export const HeroDemo: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <img 
-                        src="/whatsapp-white-icon.webp" 
-                        alt="WhatsApp" 
-                        className="w-6 h-6 text-white"
-                      />
+                      <img src="/whatsapp-white-icon.webp" alt="WhatsApp" className="w-6 h-6 text-white" />
                       <div className="text-white text-lg font-bold">⋮</div>
                     </div>
                   </div>
 
                   {/* Chat Messages */}
-                  <div className="bg-[#ECE5DD] flex-1 flex flex-col" style={{ 
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d4d8' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                    height: '600px'
-                  }}>
+                  <div
+                    className="bg-[#ECE5DD] flex-1 flex flex-col"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d4d8' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                      height: '600px'
+                    }}
+                  >
                     {/* Scrollable Messages Container */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-4 relative" style={{ 
-                      scrollbarWidth: 'thin', 
-                      scrollbarColor: '#CBD5E0 transparent'
-                    }}>
+                    <div
+                      className="flex-1 overflow-y-auto p-4 space-y-4 relative"
+                      style={{
+                        scrollbarWidth: 'thin',
+                        scrollbarColor: '#CBD5E0 transparent'
+                      }}
+                    >
                       {/* Scroll indicator at top */}
                       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-300 rounded-full opacity-50 z-10"></div>
-                      
-                    {/* User Voice Message - Enhanced with wider display and detailed waveform */}
-                    <div className="flex justify-end animate-fade-in-right" style={{ animationDelay: '1.5s' }}>
-                      <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-[280px] shadow-sm">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
-                            <Play className="w-3 h-3 text-white ml-0.5" />
+
+                      {/* User Voice Message */}
+                      <div className="flex justify-end animate-fade-in-right" style={{ animationDelay: '1.5s' }}>
+                        <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-[280px] shadow-sm">
+                          <div className="flex items-center space-x-2 mb-2">
+                            <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
+                              <Play className="w-3 h-3 text-white ml-0.5" />
+                            </div>
+                            <div className="flex-1">
+                              {/* Authentic WhatsApp waveform */}
+                              <div className="flex items-center space-x-1 px-2 py-1">
+                                {[...Array(25)].map((_, i) => {
+                                  const heights = [2, 4, 6, 8, 10, 12, 14, 16, 14, 12, 10, 8, 6, 10, 14, 18, 16, 12, 8, 6, 4, 2, 4, 6, 8];
+                                  const isPlayed = i < 15;
+                                  return (
+                                    <div
+                                      key={i}
+                                      className="rounded-full"
+                                      style={{
+                                        width: '2px',
+                                        height: `${heights[i]}px`,
+                                        backgroundColor: isPlayed ? '#128C7E' : '#B3B3B3'
+                                      }}
+                                    ></div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                            <div className="text-xs font-medium text-gray-600 ml-1">1:23</div>
                           </div>
-                          <div className="flex-1">
-                            {/* Authentic WhatsApp waveform */}
-                            <div className="flex items-center space-x-1 px-2 py-1">
-                              {[...Array(25)].map((_, i) => {
-                                const heights = [2, 4, 6, 8, 10, 12, 14, 16, 14, 12, 10, 8, 6, 10, 14, 18, 16, 12, 8, 6, 4, 2, 4, 6, 8];
-                                const isPlayed = i < 15;
-                                
-                                return (
-                                  <div 
-                                    key={i} 
-                                    className="rounded-full" 
-                                    style={{ 
-                                      width: '2px', 
-                                      height: `${heights[i]}px`,
-                                      backgroundColor: isPlayed ? '#128C7E' : '#B3B3B3'
-                                    }}
-                                  ></div>
-                                );
-                              })}
+                          <div className="flex justify-end items-center space-x-1">
+                            <span className="text-xs text-gray-500">2:30 PM</span>
+                            <div className="flex space-x-0.5">
+                              <CheckCircle className="w-3 h-3 text-[#53BDEB]" />
                             </div>
                           </div>
-                          <div className="text-xs font-medium text-gray-600 ml-1">
-                            1:23
+                        </div>
+                      </div>
+
+                      {/* Processing Indicator */}
+                      <div className="flex justify-start animate-fade-in-left" style={{ animationDelay: '1.8s' }}>
+                        <div className="bg-white rounded-2xl rounded-bl-md p-3 max-w-[250px] shadow-sm">
+                          <div className="flex items-center space-x-2">
+                            <Zap className="w-4 h-4 animate-pulse" style={{ color: '#1C2C55' }} />
+                            <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>
+                              AI Processing Voice Note...
+                            </span>
+                          </div>
+                          <div className="mt-2 h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="h-full rounded-full animate-pulse" style={{ backgroundColor: '#F7E69B', width: '70%' }}></div>
                           </div>
                         </div>
-                        <div className="flex justify-end items-center space-x-1">
-                          <span className="text-xs text-gray-500">2:30 PM</span>
-                          <div className="flex space-x-0.5">
-                            <CheckCircle className="w-3 h-3 text-[#53BDEB]" />
+                      </div>
+
+                      {/* VoiceLink Bot Reply */}
+                      <div className="flex justify-start animate-fade-in-left" style={{ animationDelay: '2.1s' }}>
+                        <div className="bg-white rounded-2xl rounded-bl-md p-4 max-w-[280px] shadow-sm">
+                          <div className="flex items-center space-x-2 mb-3">
+                            <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center p-1">
+                              <img src="/Finit Icon Blue.svg" alt="VoiceLink" className="w-full h-full object-contain" />
+                            </div>
+                            <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>
+                              VoiceLink
+                            </span>
+                          </div>
+
+                          <div className="text-sm text-gray-800 leading-relaxed">
+                            <div className="font-medium mb-2" style={{ color: '#1C2C55' }}>
+                              ✅ Updated CRM with:
+                            </div>
+
+                            <div className="space-y-1.5 text-sm">
+                              <div>📞 <strong>Follow-up Call</strong> - Sarah Mitchell (TechFlow)</div>
+                              <div className="ml-4 text-gray-700">• Discuss premium package pricing and implementation timeline</div>
+                              <div className="ml-4 text-gray-700">• Thursday, Jan 16 at 2:00 PM</div>
+
+                              <div className="pt-1">📝 <strong>Key Notes:</strong></div>
+                              <div className="ml-4 text-gray-700">• Budget increased 40% for digital tools</div>
+                              <div className="ml-4 text-gray-700">• Strong interest in WhatsApp integration</div>
+                              <div className="ml-4 text-gray-700">• Prefers Thursday PM calls</div>
+
+                              <div className="pt-1">📋 <strong>Action Items:</strong></div>
+                              <div className="ml-4 text-gray-700">• Send proposal by Friday</div>
+                              <div className="ml-4 text-gray-700">• Include ROI calculations</div>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-end items-center space-x-1 mt-3">
+                            <span className="text-xs text-gray-500">2:31 PM</span>
+                            <div className="flex space-x-0.5">
+                              <CheckCircle className="w-3 h-3 text-[#53BDEB]" />
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Processing Indicator */}
-                    <div className="flex justify-start animate-fade-in-left" style={{ animationDelay: '1.8s' }}>
-                      <div className="bg-white rounded-2xl rounded-bl-md p-3 max-w-[250px] shadow-sm">
-                        <div className="flex items-center space-x-2">
-                          <Zap className="w-4 h-4 animate-pulse" style={{ color: '#1C2C55' }} />
-                          <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>AI Processing Voice Note...</span>
-                        </div>
-                        <div className="mt-2 h-1 bg-gray-200 rounded-full overflow-hidden">
-                          <div className="h-full rounded-full animate-pulse" style={{ backgroundColor: '#F7E69B', width: '70%' }}></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* VoiceLink Bot Reply */}
-                    <div className="flex justify-start animate-fade-in-left" style={{ animationDelay: '2.1s' }}>
-                      <div className="bg-white rounded-2xl rounded-bl-md p-4 max-w-[280px] shadow-sm">
-                        <div className="flex items-center space-x-2 mb-3">
-                          <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center p-1">
-                            <img 
-                              src="/Finit Icon Blue.svg" 
-                              alt="VoiceLink" 
-                              className="w-full h-full object-contain"
-                            />
-                          </div>
-                          <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>VoiceLink</span>
-                        </div>
-                        
-                        <div className="text-sm text-gray-800 leading-relaxed">
-                          <div className="font-medium mb-2" style={{ color: '#1C2C55' }}>✅ Updated CRM with:</div>
-                          
-                          <div className="space-y-1.5 text-sm">
-                            <div>📞 <strong>Follow-up Call</strong> - Sarah Mitchell (TechFlow)</div>
-                            <div className="ml-4 text-gray-700">• Discuss premium package pricing and implementation timeline</div>
-                            <div className="ml-4 text-gray-700">• Thursday, Jan 16 at 2:00 PM</div>
-                            
-                            <div className="pt-1">📝 <strong>Key Notes:</strong></div>
-                            <div className="ml-4 text-gray-700">• Budget increased 40% for digital tools</div>
-                            <div className="ml-4 text-gray-700">• Strong interest in WhatsApp integration</div>
-                            <div className="ml-4 text-gray-700">• Prefers Thursday PM calls</div>
-                            
-                            <div className="pt-1">📋 <strong>Action Items:</strong></div>
-                            <div className="ml-4 text-gray-700">• Send proposal by Friday</div>
-                            <div className="ml-4 text-gray-700">• Include ROI calculations</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex justify-end items-center space-x-1 mt-3">
-                          <span className="text-xs text-gray-500">2:31 PM</span>
-                          <div className="flex space-x-0.5">
-                            <CheckCircle className="w-3 h-3 text-[#53BDEB]" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    </div>
-                    
                     {/* WhatsApp Input Area */}
                     <div className="flex-shrink-0 p-4 pt-2">
                       <div className="bg-white rounded-full px-4 py-2 flex items-center space-x-3 shadow-sm">
@@ -249,372 +260,388 @@ export const HeroDemo: React.FC = () => {
       <div className="w-full px-6">
         {/* Floating CRM Cards Layout */}
         <div className="relative w-full h-[750px] py-8 max-w-7xl mx-auto">
-            
-            {/* Contact Card - Top Left */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '2%', 
-                left: '8%', 
-                width: '320px',
-                transform: 'rotate(-2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'rotate(-2deg) scale(1.1) translateZ(50px)';
-                e.currentTarget.style.zIndex = '1000';
-                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'rotate(-2deg) scale(1)';
-                e.currentTarget.style.zIndex = 'auto';
-                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
-              }}
-            >
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Sarah Mitchell</h4>
-                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#25D366' }}></div>
-                </div>
+
+          {/* Contact Card - Top Left */}
+          <div
+            className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform-gpu will-change-transform transition-[transform,box-shadow] duration-500 hover:shadow-3xl"
+            style={{
+              top: '2%',
+              left: '8%',
+              width: '320px',
+              transform: 'rotate(-2deg) translateZ(0)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'rotate(-2deg) translateZ(0) scale(1.06)';
+              e.currentTarget.style.zIndex = '1000';
+              e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'rotate(-2deg) translateZ(0) scale(1)';
+              e.currentTarget.style.zIndex = 'auto';
+              e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+            }}
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                <Users className="w-6 h-6 text-white" />
               </div>
-              <div className="space-y-3">
-                <div className="text-sm" style={{ color: '#202226' }}>Senior Procurement Manager</div>
-                <div className="flex items-center space-x-2">
-                  <Phone className="w-4 h-4" style={{ color: '#25D366' }} />
-                  <span className="text-sm font-medium">+32 456 789 123</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 rounded bg-gray-100 flex items-center justify-center">
-                    <span className="text-xs">@</span>
-                  </div>
-                  <span className="text-sm">sarah.mitchell@techflow.be</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 rounded bg-gray-100 flex items-center justify-center">
-                    <span className="text-xs font-bold">B</span>
-                  </div>
-                  <span className="text-sm font-medium">TechFlow Solutions</span>
-                </div>
-                <div className="text-xs px-3 py-1 rounded-full bg-blue-100 text-blue-700 inline-block">Enterprise Client</div>
+              <div className="flex items-center space-x-2">
+                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Sarah Mitchell</h4>
+                <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#25D366' }}></div>
               </div>
             </div>
+            <div className="space-y-3">
+              <div className="text-sm" style={{ color: '#202226' }}>Senior Procurement Manager</div>
+              <div className="flex items-center space-x-2">
+                <Phone className="w-4 h-4" style={{ color: '#25D366' }} />
+                <span className="text-sm font-medium">+32 456 789 123</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 rounded bg-gray-100 flex items-center justify-center">
+                  <span className="text-xs">@</span>
+                </div>
+                <span className="text-sm">sarah.mitchell@techflow.be</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 rounded bg-gray-100 flex items-center justify-center">
+                  <span className="text-xs font-bold">B</span>
+                </div>
+                <span className="text-sm font-medium">TechFlow Solutions</span>
+              </div>
+              <div className="text-xs px-3 py-1 rounded-full bg-blue-100 text-blue-700 inline-block">Enterprise Client</div>
+            </div>
+          </div>
 
-            {/* Voice Note Analysis Card - Top Right */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '1%', 
-                right: '8%', 
-                width: '350px',
-                transform: 'rotate(1.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1.1) translateZ(50px)';
-                e.currentTarget.style.zIndex = '1000';
-                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1)';
-                e.currentTarget.style.zIndex = 'auto';
-                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
-              }}
-            >
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#F7E69B' }}>
-                  <Mic className="w-5 h-5" style={{ color: '#1C2C55' }} />
-                </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Client Summary</h4>
-                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>AI Processed</span>
+          {/* Voice Note Analysis Card - Top Right */}
+          <div
+            className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform-gpu will-change-transform transition-[transform,box-shadow] duration-500 hover:shadow-3xl"
+            style={{
+              top: '1%',
+              right: '8%',
+              width: '350px',
+              transform: 'rotate(1.5deg) translateZ(0)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'rotate(1.5deg) translateZ(0) scale(1.06)';
+              e.currentTarget.style.zIndex = '1000';
+              e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'rotate(1.5deg) translateZ(0) scale(1)';
+              e.currentTarget.style.zIndex = 'auto';
+              e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+            }}
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#F7E69B' }}>
+                <Mic className="w-5 h-5" style={{ color: '#1C2C55' }} />
               </div>
-              <div className="space-y-3 text-sm" style={{ color: '#202226' }}>
-                <div className="flex items-start space-x-2">
-                  <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div>
-                    <div className="font-medium">Budget allocation increased by 40%</div>
-                    <div className="text-xs text-gray-600 mt-1">Digital transformation budget expanded from €75k to €105k for Q1-Q2</div>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div>
-                    <div className="font-medium">Strong interest in WhatsApp integration</div>
-                    <div className="text-xs text-gray-600 mt-1">Specifically mentioned need for seamless communication tools and mobile-first solutions</div>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div>
-                    <div className="font-medium">Prefers Thursday PM calls</div>
-                    <div className="text-xs text-gray-600 mt-1">Best availability between 2:00-4:00 PM on Thursdays due to team meeting schedule</div>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div>
-                    <div className="font-medium">Decision timeline accelerated</div>
-                    <div className="text-xs text-gray-600 mt-1">Wants to finalize vendor selection by end of January due to Q1 implementation goals</div>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div>
-                    <div className="font-medium">Technical requirements clarified</div>
-                    <div className="text-xs text-gray-600 mt-1">Needs API integration with existing ERP system and multi-language support</div>
-                  </div>
+              <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Client Summary</h4>
+              <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>AI Processed</span>
+            </div>
+            <div className="space-y-3 text-sm" style={{ color: '#202226' }}>
+              <div className="flex items-start space-x-2">
+                <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div>
+                  <div className="font-medium">Budget allocation increased by 40%</div>
+                  <div className="text-xs text-gray-600 mt-1">Digital transformation budget expanded from €75k to €105k for Q1-Q2</div>
                 </div>
               </div>
-              <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500">
-                Jan 15, 2025 - 2:30 PM
+              <div className="flex items-start space-x-2">
+                <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div>
+                  <div className="font-medium">Strong interest in WhatsApp integration</div>
+                  <div className="text-xs text-gray-600 mt-1">Specifically mentioned need for seamless communication tools and mobile-first solutions</div>
+                </div>
+              </div>
+              <div className="flex items-start space-x-2">
+                <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div>
+                  <div className="font-medium">Prefers Thursday PM calls</div>
+                  <div className="text-xs text-gray-600 mt-1">Best availability between 2:00-4:00 PM on Thursdays due to team meeting schedule</div>
+                </div>
+              </div>
+              <div className="flex items-start space-x-2">
+                <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div>
+                  <div className="font-medium">Decision timeline accelerated</div>
+                  <div className="text-xs text-gray-600 mt-1">Wants to finalize vendor selection by end of January due to Q1 implementation goals</div>
+                </div>
+              </div>
+              <div className="flex items-start space-x-2">
+                <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div>
+                  <div className="font-medium">Technical requirements clarified</div>
+                  <div className="text-xs text-gray-600 mt-1">Needs API integration with existing ERP system and multi-language support</div>
+                </div>
               </div>
             </div>
+            <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500">Jan 15, 2025 - 2:30 PM</div>
+          </div>
 
-            {/* Calendar Widget - Center Left */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '30%', 
-                left: '15%', 
-                width: '280px',
-                transform: 'rotate(-1deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'rotate(-1deg) scale(1.1) translateZ(50px)';
-                e.currentTarget.style.zIndex = '1000';
-                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'rotate(-1deg) scale(1)';
-                e.currentTarget.style.zIndex = 'auto';
-                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
-              }}
-            >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <CheckCircle className="w-4 h-4 text-white" />
-                </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Action Items</h4>
+          {/* Calendar Widget - Center Left */}
+          <div
+            className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform-gpu will-change-transform transition-[transform,box-shadow] duration-500 hover:shadow-3xl"
+            style={{
+              top: '30%',
+              left: '15%',
+              width: '280px',
+              transform: 'rotate(-1deg) translateZ(0)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'rotate(-1deg) translateZ(0) scale(1.06)';
+              e.currentTarget.style.zIndex = '1000';
+              e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'rotate(-1deg) translateZ(0) scale(1)';
+              e.currentTarget.style.zIndex = 'auto';
+              e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+            }}
+          >
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                <CheckCircle className="w-4 h-4 text-white" />
               </div>
-              
-              {/* Actionables from Voice Notes */}
-              <div className="space-y-2">
-                <div className="text-xs font-medium text-gray-500 mb-3">Generated from voice notes:</div>
-                
-                <div className="flex items-start space-x-3 p-3 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
-                  <div className="w-2 h-2 rounded-full mt-1.5 animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div className="flex-1">
-                    <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Call Sarah Mitchell</div>
-                    <div className="text-xs text-gray-700 mb-1">Discuss premium package pricing</div>
-                    <div className="text-xs text-gray-600">📅 Thu, Jan 16 • 2:00 PM</div>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
-                  <div className="w-2 h-2 rounded-full mt-1.5" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div className="flex-1">
-                    <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Send Proposal</div>
-                    <div className="text-xs text-gray-700 mb-1">Include ROI calculations & case studies</div>
-                    <div className="text-xs text-gray-600">📅 Fri, Jan 17 • 5:00 PM</div>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
-                  <div className="w-2 h-2 rounded-full mt-1.5" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div className="flex-1">
-                    <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Research Integration</div>
-                    <div className="text-xs text-gray-700 mb-1">WhatsApp API requirements for TechFlow</div>
-                    <div className="text-xs text-gray-600">📅 Mon, Jan 20 • 10:00 AM</div>
-                  </div>
-                </div>
-                
-              </div>
+              <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Action Items</h4>
             </div>
 
-            {/* Task List Card - Center Right */}
+            {/* Actionables from Voice Notes */}
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-gray-500 mb-3">Generated from voice notes:</div>
 
-            {/* Notification Feed - Bottom Left */}
-
-            {/* Analytics Card - Bottom Right */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '33%', 
-                right: '15%', 
-                width: '280px',
-                transform: 'rotate(-1.2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1.1) translateZ(50px)';
-                e.currentTarget.style.zIndex = '1000';
-                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1)';
-                e.currentTarget.style.zIndex = 'auto';
-                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
-              }}
-            >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <span className="text-white text-sm font-bold">📅</span>
+              <div className="flex items-start space-x-3 p-3 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
+                <div className="w-2 h-2 rounded-full mt-1.5 animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Call Sarah Mitchell</div>
+                  <div className="text-xs text-gray-700 mb-1">Discuss premium package pricing</div>
+                  <div className="text-xs text-gray-600">📅 Thu, Jan 16 • 2:00 PM</div>
                 </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>January 2025</h4>
               </div>
-              
-              {/* Calendar Grid */}
-              <div className="mb-3">
-                <div className="grid grid-cols-7 gap-1 mb-2">
-                  {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
-                    <div key={i} className="text-center text-xs font-medium text-gray-500 py-1">
-                      {day}
-                    </div>
-                  ))}
+
+              <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                <div className="w-2 h-2 rounded-full mt-1.5" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Send Proposal</div>
+                  <div className="text-xs text-gray-700 mb-1">Include ROI calculations & case studies</div>
+                  <div className="text-xs text-gray-600">📅 Fri, Jan 17 • 5:00 PM</div>
                 </div>
-                <div className="grid grid-cols-7 gap-1">
-                  {/* Calendar days */}
-                  {[...Array(35)].map((_, i) => {
-                    const dayNumber = i - 2; // Start from Monday
-                    const isCurrentMonth = dayNumber > 0 && dayNumber <= 31;
-                    const isToday = dayNumber === 15;
-                    const hasEvent = [16, 17, 20].includes(dayNumber);
-                    
-                    return (
-                      <div 
-                        key={i} 
-                        className={`
+              </div>
+
+              <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                <div className="w-2 h-2 rounded-full mt-1.5" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Research Integration</div>
+                  <div className="text-xs text-gray-700 mb-1">WhatsApp API requirements for TechFlow</div>
+                  <div className="text-xs text-gray-600">📅 Mon, Jan 20 • 10:00 AM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Analytics Card - Bottom Right */}
+          <div
+            className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform-gpu will-change-transform transition-[transform,box-shadow] duration-500 hover:shadow-3xl"
+            style={{
+              top: '33%',
+              right: '15%',
+              width: '280px',
+              transform: 'rotate(-1.2deg) translateZ(0)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'rotate(-1.2deg) translateZ(0) scale(1.06)';
+              e.currentTarget.style.zIndex = '1000';
+              e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'rotate(-1.2deg) translateZ(0) scale(1)';
+              e.currentTarget.style.zIndex = 'auto';
+              e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+            }}
+          >
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                <span className="text-white text-sm font-bold">📅</span>
+              </div>
+              <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>January 2025</h4>
+            </div>
+
+            {/* Calendar Grid */}
+            <div className="mb-3">
+              <div className="grid grid-cols-7 gap-1 mb-2">
+                {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
+                  <div key={i} className="text-center text-xs font-medium text-gray-500 py-1">
+                    {day}
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-7 gap-1">
+                {[...Array(35)].map((_, i) => {
+                  const dayNumber = i - 2;
+                  const isCurrentMonth = dayNumber > 0 && dayNumber <= 31;
+                  const isToday = dayNumber === 15;
+                  const hasEvent = [16, 17, 20].includes(dayNumber);
+
+                  return (
+                    <div
+                      key={i}
+                      className={`
                           text-center text-xs py-1 rounded relative
                           ${!isCurrentMonth ? 'text-gray-300' : 'text-gray-700'}
                           ${isToday ? 'bg-blue-100 text-blue-700 font-semibold' : ''}
                           ${hasEvent ? 'font-medium' : ''}
                         `}
-                      >
-                        {isCurrentMonth ? dayNumber : ''}
-                        {hasEvent && (
-                          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              
-              {/* Auto-inserted Events */}
-              <div className="space-y-2">
-                <div className="text-xs font-medium text-gray-500 mb-2">Auto-inserted from voice notes:</div>
-                <div className="flex items-center justify-between p-2 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
-                    <div>
-                      <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</div>
-                      <div className="text-xs text-gray-600">Sarah Mitchell</div>
+                    >
+                      {isCurrentMonth ? dayNumber : ''}
+                      {hasEvent && (
+                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
+                      )}
                     </div>
-                  </div>
-                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Jan 16 • 2:00 PM</div>
-                </div>
-                <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                    <div>
-                      <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Proposal Deadline</div>
-                      <div className="text-xs text-gray-600">TechFlow Enterprise</div>
-                    </div>
-                  </div>
-                  <div className="text-xs font-medium text-gray-600">Jan 17 • 5:00 PM</div>
-                </div>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Pipeline Card - Center */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '25%', 
-                left: '50%', 
-                width: '360px',
-                transform: 'translateX(-50%) rotate(0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1.1) translateZ(50px)';
-                e.currentTarget.style.zIndex = '1000';
-                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1)';
-                e.currentTarget.style.zIndex = 'auto';
-                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
-              }}
-            >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <span className="text-white text-sm font-bold">P</span>
+            {/* Auto-inserted Events */}
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-gray-500 mb-2">Auto-inserted from voice notes:</div>
+              <div className="flex items-center justify-between p-2 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
+                  <div>
+                    <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</div>
+                    <div className="text-xs text-gray-600">Sarah Mitchell</div>
+                  </div>
                 </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Sales Pipeline</h4>
+                <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Jan 16 • 2:00 PM</div>
               </div>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
+              <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
                   <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>TechFlow Deal</div>
-                    <div className="text-xs" style={{ color: '#202226' }}>€45,000 • Contract Negotiation</div>
+                    <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Proposal Deadline</div>
+                    <div className="text-xs text-gray-600">TechFlow Enterprise</div>
                   </div>
-                  <div className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#1C2C55', color: 'white' }}>Priority</div>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>StartupXYZ</div>
-                    <div className="text-xs text-gray-600">€12,000 • Proposal Review</div>
-                  </div>
-                  <div className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">Active</div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>GrowthCorp</div>
-                    <div className="text-xs text-gray-600">€28,000 • Discovery Phase</div>
-                  </div>
-                  <div className="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded-full">Prospect</div>
-                </div>
+                <div className="text-xs font-medium text-gray-600">Jan 17 • 5:00 PM</div>
               </div>
             </div>
+          </div>
 
-            {/* Quick Stats Card - Top Center */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '5%', 
-                left: '50%', 
-                width: '200px',
-                transform: 'translateX(-50%) rotate(-0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1.1) translateZ(50px)';
-                e.currentTarget.style.zIndex = '1000';
-                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1)';
-                e.currentTarget.style.zIndex = 'auto';
-                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
-              }}
-            >
-              <div className="text-center">
-                <div className="text-xs text-gray-500 mb-2">Today's Activity</div>
-                <div className="text-2xl font-bold mb-1" style={{ color: '#1C2C55' }}>12</div>
-                <div className="text-xs" style={{ color: '#202226' }}>Voice recordings processed</div>
-                <div className="mt-3 h-1 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="h-full rounded-full" style={{ backgroundColor: '#F7E69B', width: '75%' }}></div>
+          {/* Pipeline Card - Center */}
+          <div
+            className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform-gpu will-change-transform transition-[transform,box-shadow] duration-500 hover:shadow-3xl"
+            style={{
+              top: '25%',
+              left: '50%',
+              width: '360px',
+              transform: 'translateX(-50%) rotate(0.5deg) translateZ(0)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) translateZ(0) scale(1.06)';
+              e.currentTarget.style.zIndex = '1000';
+              e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) translateZ(0) scale(1)';
+              e.currentTarget.style.zIndex = 'auto';
+              e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+            }}
+          >
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                <span className="text-white text-sm font-bold">P</span>
+              </div>
+              <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Sales Pipeline</h4>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
+                <div>
+                  <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>TechFlow Deal</div>
+                  <div className="text-xs" style={{ color: '#202226' }}>€45,000 • Contract Negotiation</div>
                 </div>
+                <div className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#1C2C55', color: 'white' }}>Priority</div>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                <div>
+                  <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>StartupXYZ</div>
+                  <div className="text-xs text-gray-600">€12,000 • Proposal Review</div>
+                </div>
+                <div className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">Active</div>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                  <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>GrowthCorp</div>
+                  <div className="text-xs text-gray-600">€28,000 • Discovery Phase</div>
+                </div>
+                <div className="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded-full">Prospect</div>
               </div>
             </div>
+          </div>
 
-            {/* Floating Background Elements */}
-            <div className="absolute bottom-8 left-1/3 w-20 h-20 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
-            <div className="absolute top-1/2 left-1/2 w-12 h-12 rounded-full opacity-5" style={{ backgroundColor: '#25D366' }}></div>
+          {/* Quick Stats Card - Top Center */}
+          <div
+            className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform-gpu will-change-transform transition-[transform,box-shadow] duration-500 hover:shadow-3xl"
+            style={{
+              top: '5%',
+              left: '50%',
+              width: '200px',
+              transform: 'translateX(-50%) rotate(-0.5deg) translateZ(0)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) translateZ(0) scale(1.06)';
+              e.currentTarget.style.zIndex = '1000';
+              e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) translateZ(0) scale(1)';
+              e.currentTarget.style.zIndex = 'auto';
+              e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
+            }}
+          >
+            <div className="text-center">
+              <div className="text-xs text-gray-500 mb-2">Today's Activity</div>
+              <div className="text-2xl font-bold mb-1" style={{ color: '#1C2C55' }}>12</div>
+              <div className="text-xs" style={{ color: '#202226' }}>Voice recordings processed</div>
+              <div className="mt-3 h-1 bg-gray-200 rounded-full overflow-hidden">
+                <div className="h-full rounded-full" style={{ backgroundColor: '#F7E69B', width: '75%' }}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating Background Elements */}
+          <div className="absolute bottom-8 left-1/3 w-20 h-20 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
+          <div className="absolute top-1/2 left-1/2 w-12 h-12 rounded-full opacity-5" style={{ backgroundColor: '#25D366' }}></div>
         </div>
       </div>
     </div>
