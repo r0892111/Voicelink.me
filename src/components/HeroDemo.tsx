@@ -36,47 +36,32 @@ export const HeroDemo: React.FC = () => {
                             <Play className="w-4 h-4 text-white ml-0.5" />
                           </div>
                           <div className="flex-1">
-                            {/* Enhanced waveform visualization */}
-                            <div className="h-12 rounded-xl relative overflow-hidden bg-white/15 backdrop-blur-sm border border-white/20">
+                            {/* WhatsApp-style waveform visualization */}
+                            <div className="h-8 rounded-lg relative overflow-hidden bg-[#128C7E]/20">
                               <div className="absolute inset-0 flex items-center justify-center px-4">
-                                {/* Realistic audio waveform with 50+ bars */}
-                                <div className="flex items-end space-x-0.5 w-full justify-center">
-                                  {[...Array(55)].map((_, i) => {
-                                    // Create realistic waveform pattern with natural audio variations
-                                    const wavePattern = [
-                                      6, 10, 14, 18, 22, 26, 30, 34, 38, 34, 30, 26, 22, 18, 14, 10, 8,
-                                      12, 16, 20, 24, 28, 32, 36, 32, 28, 24, 20, 16, 12, 10, 14, 18,
-                                      22, 26, 24, 20, 16, 12, 8, 6, 10, 14, 18, 16, 12, 10, 8, 6, 4,
-                                      8, 12, 16, 14, 10, 8
+                                {/* WhatsApp-style waveform bars */}
+                                <div className="flex items-center space-x-1 w-full">
+                                  {[...Array(28)].map((_, i) => {
+                                    // WhatsApp-style waveform heights (more compact and realistic)
+                                    const heights = [
+                                      4, 8, 12, 16, 20, 24, 20, 16, 12, 8, 6, 10, 14, 18, 22, 18, 14, 10, 8, 12, 16, 20, 16, 12, 8, 6, 4, 8
                                     ];
-                                    const isPlayed = i < 37; // Show 67% progress through waveform
+                                    const isPlayed = i < 18; // Show progress through waveform
                                     
                                     return (
                                       <div 
                                         key={i} 
-                                        className="bg-white rounded-full transition-all duration-100" 
+                                        className="rounded-full transition-all duration-100" 
                                         style={{ 
-                                          width: '1.2px', 
+                                          width: '2px', 
                                           height: `${wavePattern[i] || 8}px`,
-                                          opacity: isPlayed ? 0.95 : 0.35,
-                                          transform: isPlayed ? 'scaleY(1)' : 'scaleY(0.7)'
+                                          backgroundColor: isPlayed ? '#128C7E' : '#128C7E',
+                                          opacity: isPlayed ? 1 : 0.3
                                         }}
                                       ></div>
                                     );
                                   })}
                                 </div>
-                                
-                                {/* Playback progress overlay */}
-                                <div 
-                                  className="absolute left-4 top-1/2 transform -translate-y-1/2 h-0.5 bg-white/80 rounded-full transition-all duration-300 shadow-sm"
-                                  style={{ width: '67%' }}
-                                ></div>
-                                
-                                {/* Current playback position indicator */}
-                                <div 
-                                  className="absolute top-1/2 transform -translate-y-1/2 w-1 h-8 bg-white rounded-full shadow-md"
-                                  style={{ left: '67%' }}
-                                ></div>
                               </div>
                             </div>
                           </div>
