@@ -18,10 +18,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden z-10">
-        <div className="w-full">
-          {/* Centered Hero Text */}
-          <div className="text-center mb-16 px-6">
-            <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
                   Transform WhatsApp
@@ -72,260 +72,129 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Full-Width CRM Dashboard */}
-          <div className="w-full px-6">
-            <div className="max-w-7xl mx-auto">
-              <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100 hover:shadow-3xl transition-all duration-500">
-                {/* Dashboard Header */}
-                <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
-                  <div className="flex items-center space-x-4">
-                    <img 
-                      src="/Finit Voicelink Blue.svg" 
-                      alt="VoiceLink" 
-                      className="h-8 w-auto"
-                    />
-                    <div>
-                      <h3 className="text-xl font-bold" style={{ color: '#1C2C55' }}>CRM Dashboard</h3>
-                      <p className="text-sm text-gray-600">Real-time WhatsApp voice note processing</p>
+            {/* Right Illustration */}
+            <div className="relative">
+              <div className="relative rounded-3xl p-6 transform rotate-2 hover:rotate-0 transition-transform duration-500" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)' }}>
+                <div className="bg-white rounded-2xl p-6 shadow-xl max-w-lg">
+                  <div className="space-y-6">
+                    {/* VoiceLink logo in illustration - blue version on white background */}
+                    <div className="flex justify-center mb-4">
+                      <img 
+                        src="/Finit Voicelink Blue.svg" 
+                        alt="VoiceLink" 
+                        className="h-6 w-auto opacity-80"
+                      />
                     </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full animate-pulse" style={{ backgroundColor: '#25D366' }}></div>
-                    <span className="text-sm font-medium" style={{ color: '#25D366' }}>Live</span>
-                  </div>
-                </div>
-
-                {/* WhatsApp Voice Note Processing */}
-                <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6 mb-8">
-                  <div className="flex items-center space-x-4 mb-4">
-                    <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
-                      <MessageCircle className="w-7 h-7 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-semibold text-gray-700 mb-2">Incoming WhatsApp Voice Note</div>
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
-                          <Play className="w-4 h-4 text-white ml-0.5" />
+                    
+                    {/* WhatsApp Voice Note Section */}
+                    <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
+                          <MessageCircle className="w-5 h-5 text-white" />
                         </div>
-                        <div className="h-4 rounded-full flex-1 relative overflow-hidden" style={{ backgroundColor: '#F7E69B' }}>
-                          <div className="absolute left-0 top-0 h-full rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55', width: '65%' }}></div>
-                        </div>
-                        <span className="text-sm text-gray-600 font-mono">1:23</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2 mb-3">
-                    <Zap className="w-5 h-5 animate-pulse" style={{ color: '#1C2C55' }} />
-                    <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>AI Processing Voice Note...</span>
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#F7E69B', animationDelay: '0ms' }}></div>
-                      <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#F7E69B', animationDelay: '150ms' }}></div>
-                      <div className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#F7E69B', animationDelay: '300ms' }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Main Dashboard Grid */}
-                <div className="grid lg:grid-cols-3 gap-8">
-                  {/* Client Information */}
-                  <div className="lg:col-span-1 space-y-6">
-                    {/* Client Contact Card */}
-                    <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
-                      <div className="flex items-center space-x-3 mb-4">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                          <Users className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Sarah Mitchell</h4>
-                          <p className="text-sm text-gray-600">Senior Procurement Manager</p>
+                        <div className="flex-1">
+                          <div className="text-xs font-medium text-gray-600 mb-1">WhatsApp Voice Note</div>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
+                              <Play className="w-2.5 h-2.5 text-white ml-0.5" />
+                            </div>
+                            <div className="h-2 rounded-full flex-1" style={{ backgroundColor: '#F7E69B' }}></div>
+                            <span className="text-xs text-gray-500">0:45</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white">
-                            <MessageCircle className="w-4 h-4" style={{ color: '#25D366' }} />
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">+32 456 789 123</div>
-                            <div className="text-xs text-gray-500">WhatsApp Verified</div>
-                          </div>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Zap className="w-3 h-3" style={{ color: '#1C2C55' }} />
+                        <span className="text-xs font-medium" style={{ color: '#1C2C55' }}>AI Processing...</span>
+                      </div>
+                    </div>
+
+                    {/* Client Information Card */}
+                    <div className="bg-blue-50 rounded-xl p-4 mb-4">
+                      <div className="text-xs font-semibold text-gray-600 mb-3">CLIENT INFORMATION</div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Sarah Mitchell</span>
+                          <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#25D366', color: 'white' }}>Active</span>
                         </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white">
-                            <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>@</span>
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">sarah.mitchell@techflow.be</div>
-                            <div className="text-xs text-gray-500">Primary Contact</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white">
-                            <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>🏢</span>
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">TechFlow Solutions</div>
-                            <div className="text-xs text-gray-500">Enterprise Client</div>
-                          </div>
+                        <div className="text-xs text-gray-600">
+                          <div>TechFlow Solutions</div>
+                          <div>+32 456 789 123</div>
+                          <div>sarah.mitchell@techflow.be</div>
                         </div>
                       </div>
                     </div>
 
                     {/* Recent Visit Notes */}
-                    <div className="bg-yellow-50 rounded-2xl p-6 border border-yellow-100">
-                      <div className="flex items-center space-x-2 mb-4">
-                        <Mic className="w-5 h-5" style={{ color: '#F7E69B' }} />
-                        <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Latest Voice Note</h4>
+                    <div className="bg-yellow-50 rounded-xl p-4 mb-4">
+                      <div className="text-xs font-semibold text-gray-600 mb-2">RECENT VISIT NOTES</div>
+                      <div className="text-xs text-gray-700 leading-relaxed">
+                        "Discussed Q1 budget expansion. Sarah confirmed 40% growth target. Interested in premium package. Mentioned competitor pricing concerns. Very positive about WhatsApp integration demo."
                       </div>
-                      <div className="bg-white rounded-xl p-4 mb-4">
-                        <div className="text-sm text-gray-700 leading-relaxed mb-3">
-                          "Just finished the Q1 planning meeting with Sarah. She's confirmed the 40% budget expansion for digital tools. Very interested in our premium WhatsApp integration package. Mentioned competitor pricing concerns but loves our real-time sync feature. She wants a detailed proposal by Friday."
-                        </div>
-                        <div className="flex items-center justify-between text-xs text-gray-500">
-                          <span>Jan 15, 2025 - 2:30 PM</span>
-                          <span className="px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>Processed</span>
-                        </div>
-                      </div>
+                      <div className="text-xs text-gray-500 mt-2">Jan 15, 2025 - 2:30 PM</div>
                     </div>
-                  </div>
 
-                  {/* Calendar & Actions */}
-                  <div className="lg:col-span-2 space-y-6">
                     {/* Upcoming Calendar */}
-                    <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
-                      <div className="flex items-center space-x-2 mb-6">
-                        <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                          <span className="text-white text-xs font-bold">📅</span>
-                        </div>
-                        <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Upcoming Appointments</h4>
-                      </div>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-white rounded-xl p-4 border-l-4" style={{ borderColor: '#F7E69B' }}>
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <h5 className="font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</h5>
-                              <p className="text-sm text-gray-600">Sarah Mitchell - TechFlow</p>
-                            </div>
-                            <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>High</span>
+                    <div className="bg-purple-50 rounded-xl p-4 mb-4">
+                      <div className="text-xs font-semibold text-gray-600 mb-3">UPCOMING APPOINTMENTS</div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Follow-up Call</div>
+                            <div className="text-xs text-gray-600">Thu, Jan 16 - 2:00 PM</div>
                           </div>
-                          <div className="text-sm text-gray-700 mb-2">Discuss premium package pricing and implementation timeline</div>
-                          <div className="text-xs text-gray-500">Thursday, Jan 16 - 2:00 PM</div>
+                          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
                         </div>
-                        <div className="bg-white rounded-xl p-4 border-l-4 border-orange-400">
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <h5 className="font-semibold" style={{ color: '#1C2C55' }}>Proposal Review</h5>
-                              <p className="text-sm text-gray-600">Internal Team Meeting</p>
-                            </div>
-                            <span className="text-xs px-2 py-1 rounded-full bg-orange-100 text-orange-700">Medium</span>
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Proposal Review</div>
+                            <div className="text-xs text-gray-600">Fri, Jan 17 - 10:30 AM</div>
                           </div>
-                          <div className="text-sm text-gray-700 mb-2">Finalize WhatsApp integration proposal details</div>
-                          <div className="text-xs text-gray-500">Friday, Jan 17 - 10:30 AM</div>
+                          <div className="w-2 h-2 rounded-full bg-orange-400"></div>
                         </div>
                       </div>
                     </div>
 
                     {/* Action Items */}
-                    <div className="bg-green-50 rounded-2xl p-6 border border-green-100">
-                      <div className="flex items-center space-x-2 mb-6">
-                        <CheckCircle className="w-6 h-6" style={{ color: '#25D366' }} />
-                        <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Action Items from WhatsApp Voice Notes</h4>
-                      </div>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-4">
-                          <div className="bg-white rounded-xl p-4 flex items-start space-x-3">
-                            <CheckCircle className="w-5 h-5 mt-0.5" style={{ color: '#25D366' }} />
-                            <div className="flex-1">
-                              <h5 className="font-semibold text-sm mb-1" style={{ color: '#1C2C55' }}>Call back Thursday at 2:00 PM</h5>
-                              <p className="text-xs text-gray-600 mb-2">Discuss premium package pricing and address competitor concerns</p>
-                              <div className="flex items-center space-x-2">
-                                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>Due Today</span>
-                                <span className="text-xs text-gray-500">From WhatsApp note</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="bg-white rounded-xl p-4 flex items-start space-x-3">
-                            <div className="w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center" style={{ borderColor: '#F7E69B' }}>
-                              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
-                            </div>
-                            <div className="flex-1">
-                              <h5 className="font-semibold text-sm mb-1" style={{ color: '#1C2C55' }}>Send detailed proposal by Friday</h5>
-                              <p className="text-xs text-gray-600 mb-2">Include WhatsApp integration demo and ROI calculations</p>
-                              <div className="flex items-center space-x-2">
-                                <span className="text-xs px-2 py-1 rounded-full bg-orange-100 text-orange-700">Due Friday</span>
-                                <span className="text-xs text-gray-500">From WhatsApp note</span>
-                              </div>
-                            </div>
+                    <div className="bg-green-50 rounded-xl p-4 mb-4">
+                      <div className="text-xs font-semibold text-gray-600 mb-3">ACTION ITEMS</div>
+                      <div className="space-y-2">
+                        <div className="flex items-start space-x-2">
+                          <CheckCircle className="w-3 h-3 mt-0.5" style={{ color: '#25D366' }} />
+                          <div className="text-xs text-gray-700">
+                            <div className="font-medium">Call back Thursday at 2:00 PM</div>
+                            <div className="text-gray-500">Discuss premium package pricing</div>
                           </div>
                         </div>
-                        <div className="space-y-4">
-                          <div className="bg-white rounded-xl p-4 flex items-start space-x-3">
-                            <div className="w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center" style={{ borderColor: '#1C2C55' }}>
-                              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                            </div>
-                            <div className="flex-1">
-                              <h5 className="font-semibold text-sm mb-1" style={{ color: '#1C2C55' }}>Follow up on contract review</h5>
-                              <p className="text-xs text-gray-600 mb-2">Legal team feedback expected Monday - prepare response</p>
-                              <div className="flex items-center space-x-2">
-                                <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">Due Monday</span>
-                                <span className="text-xs text-gray-500">From WhatsApp note</span>
-                              </div>
-                            </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-3 h-3 rounded-full border-2 mt-0.5" style={{ borderColor: '#F7E69B' }}></div>
+                          <div className="text-xs text-gray-700">
+                            <div className="font-medium">Send proposal by Friday</div>
+                            <div className="text-gray-500">Include WhatsApp integration demo</div>
                           </div>
-                          <div className="bg-white rounded-xl p-4 flex items-start space-x-3">
-                            <div className="w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center" style={{ borderColor: '#25D366' }}>
-                              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#25D366' }}></div>
-                            </div>
-                            <div className="flex-1">
-                              <h5 className="font-semibold text-sm mb-1" style={{ color: '#1C2C55' }}>Schedule implementation kickoff</h5>
-                              <p className="text-xs text-gray-600 mb-2">Coordinate with Sarah's team for WhatsApp setup session</p>
-                              <div className="flex items-center space-x-2">
-                                <span className="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">Next Week</span>
-                                <span className="text-xs text-gray-500">From WhatsApp note</span>
-                              </div>
-                            </div>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-3 h-3 rounded-full border-2 mt-0.5" style={{ borderColor: '#1C2C55' }}></div>
+                          <div className="text-xs text-gray-700">
+                            <div className="font-medium">Follow up on contract review</div>
+                            <div className="text-gray-500">Legal team feedback expected Monday</div>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* CRM Sync Status */}
-                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-2">
-                          <Zap className="w-5 h-5" style={{ color: '#1C2C55' }} />
-                          <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>CRM Sync Status</h4>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <div className="w-3 h-3 rounded-full animate-pulse" style={{ backgroundColor: '#25D366' }}></div>
-                          <span className="text-sm font-medium" style={{ color: '#25D366' }}>Real-time</span>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-3 gap-4">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold mb-1" style={{ color: '#1C2C55' }}>47</div>
-                          <div className="text-xs text-gray-600">Voice Notes<br/>This Month</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold mb-1" style={{ color: '#1C2C55' }}>12</div>
-                          <div className="text-xs text-gray-600">Active<br/>Clients</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold mb-1" style={{ color: '#25D366' }}>98%</div>
-                          <div className="text-xs text-gray-600">Sync<br/>Success Rate</div>
-                        </div>
-                      </div>
-                      <div className="mt-4 flex justify-center">
-                        <div className="px-4 py-2 rounded-full text-sm font-medium" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
-                          ✓ All WhatsApp data synced to TeamLeader
-                        </div>
+                    {/* Sync Status */}
+                    <div className="flex justify-end">
+                      <div className="px-3 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
+                        Synced to CRM
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full opacity-60 animate-pulse" style={{ backgroundColor: '#F7E69B' }}></div>
+              <div className="absolute -bottom-6 -left-6 w-16 h-16 rounded-full opacity-40 animate-pulse delay-1000" style={{ backgroundColor: '#1C2C55' }}></div>
             </div>
           </div>
         </div>
