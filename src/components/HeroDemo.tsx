@@ -63,8 +63,16 @@ export const HeroDemo: React.FC = () => {
           {/* Phone Mockup - Right Side */}
           <div className="flex justify-center lg:justify-end lg:pl-24">
             <div className="relative max-w-xs mx-auto">
+              {/* Background Effect Elements */}
+              <div className="absolute inset-0 transform translate-x-4 translate-y-4 bg-gradient-to-br from-gray-200 to-gray-300 rounded-[2.5rem] blur-xl opacity-30 scale-105"></div>
+              <div className="absolute inset-0 transform translate-x-2 translate-y-2 bg-gradient-to-br from-gray-300 to-gray-400 rounded-[2.5rem] blur-lg opacity-20 scale-102"></div>
+              <div className="absolute inset-0 transform translate-x-1 translate-y-1 bg-gradient-to-br from-gray-400 to-gray-500 rounded-[2.5rem] blur-md opacity-15 scale-101"></div>
+              
               {/* Phone Frame */}
-              <div className="relative bg-black rounded-[2.5rem] p-1 shadow-2xl" style={{ aspectRatio: '9/19.5' }}>
+              <div className="relative bg-black rounded-[2.5rem] p-1 shadow-2xl z-10" style={{ 
+                aspectRatio: '9/19.5',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 15px 30px -15px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2)'
+              }}>
                 {/* iPhone 16 Dynamic Island */}
                 <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"></div>
                 
