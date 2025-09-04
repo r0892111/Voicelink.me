@@ -358,7 +358,7 @@ export const HeroDemo: React.FC = () => {
                   <div className="flex-1">
                     <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Call Sarah Mitchell</div>
                     <div className="text-xs text-gray-700 mb-1">Discuss premium package pricing</div>
-                    <div className="text-xs text-gray-600">📅 Thu, Jan 16 at 2:00 PM</div>
+                    <div className="text-xs text-gray-600">📅 Thu, Jan 16 • 2:00 PM</div>
                   </div>
                 </div>
                 
@@ -367,7 +367,7 @@ export const HeroDemo: React.FC = () => {
                   <div className="flex-1">
                     <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Send Proposal</div>
                     <div className="text-xs text-gray-700 mb-1">Include ROI calculations & case studies</div>
-                    <div className="text-xs text-gray-600">📅 Fri, Jan 17 by EOD</div>
+                    <div className="text-xs text-gray-600">📅 Fri, Jan 17 • 5:00 PM</div>
                   </div>
                 </div>
                 
@@ -376,7 +376,7 @@ export const HeroDemo: React.FC = () => {
                   <div className="flex-1">
                     <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Research Integration</div>
                     <div className="text-xs text-gray-700 mb-1">WhatsApp API requirements for TechFlow</div>
-                    <div className="text-xs text-gray-600">📅 Mon, Jan 20</div>
+                    <div className="text-xs text-gray-600">📅 Mon, Jan 20 • 10:00 AM</div>
                   </div>
                 </div>
                 
