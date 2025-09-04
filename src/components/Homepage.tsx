@@ -123,10 +123,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                               </div>
                               <div className="flex justify-end items-center space-x-1">
                                 <span className="text-xs text-gray-500">2:30 PM</span>
-                                <div className="flex space-x-0.5">
-                                  <CheckCircle className="w-3 h-3 text-blue-500" />
-                                  <CheckCircle className="w-3 h-3 text-blue-500" />
-                                </div>
+                                <CheckCircle className="w-3 h-3 text-blue-500" />
                               </div>
                             </div>
                           </div>
