@@ -40,7 +40,13 @@ export const HeroDemo: React.FC = () => {
                     height: '600px'
                   }}>
                     {/* Scrollable Messages Container */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4 relative" style={{ 
+                      scrollbarWidth: 'thin', 
+                      scrollbarColor: '#CBD5E0 transparent'
+                    }}>
+                      {/* Scroll indicator at top */}
+                      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-300 rounded-full opacity-50 z-10"></div>
+                      
                     {/* User Voice Message - Enhanced with wider display and detailed waveform */}
                     <div className="flex justify-end">
                       <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-[280px] shadow-sm">
