@@ -54,7 +54,7 @@ export const HeroDemo: React.FC = () => {
                                         className="rounded-full transition-all duration-100" 
                                         style={{ 
                                           width: '2px', 
-                                          height: `${wavePattern[i] || 8}px`,
+                                          height: `${heights[i] || 8}px`,
                                           backgroundColor: isPlayed ? '#128C7E' : '#128C7E',
                                           opacity: isPlayed ? 1 : 0.3
                                         }}
