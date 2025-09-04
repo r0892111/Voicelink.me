@@ -227,7 +227,7 @@ export const HeroDemo: React.FC = () => {
       {/* Partial CRM Preview - Centered Below */}
       <div className="w-full px-6">
         {/* Floating CRM Cards Layout */}
-        <div className="relative w-full h-96 py-8 max-w-7xl mx-auto" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)' }}>
+        <div className="relative w-full h-[600px] py-8 max-w-7xl mx-auto" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)' }}>
             
             {/* Contact Card - Top Left */}
             <div 
