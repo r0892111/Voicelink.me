@@ -12,7 +12,7 @@ export const HeroDemo: React.FC = () => {
             <div className="space-y-6">
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
                 <div>Transform speech to</div>
-                <div style={{ color: '#F7E69B' }}>CRM Data</div>
+                <div style={{ color: '#1C2C55' }}>CRM Data</div>
               </h1>
               <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
                 <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
