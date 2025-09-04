@@ -3,7 +3,6 @@ import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone } 
 
 export const HeroDemo: React.FC = () => {
   return (
-    <>
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
       <div className="max-w-7xl mx-auto px-6 mb-16">
@@ -328,52 +327,6 @@ export const HeroDemo: React.FC = () => {
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
                   <span className="text-white text-sm font-bold">C</span>
                 </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>This Week</h4>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</div>
-                    <div className="text-xs" style={{ color: '#202226' }}>Sarah Mitchell</div>
-                  </div>
-                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Thu 2PM</div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Send Proposal</div>
-                    <div className="text-xs text-gray-600">TechFlow Solutions - Enterprise Package</div>
-                  </div>
-                  <div className="text-xs font-medium text-orange-600">Fri</div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Product Demo</div>
-                    <div className="text-xs text-gray-600">Integration Capabilities</div>
-                  </div>
-                  <div className="text-xs font-medium text-gray-500">Mon</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Task List Card - Center Right */}
-
-            {/* Notification Feed - Bottom Left */}
-
-            {/* Analytics Card - Bottom Right */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '48%', 
-                right: '15%', 
-                width: '280px',
-                transform: 'rotate(-1.2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <span className="text-white text-sm font-bold">C</span>
-                </div>
                 <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>January 2025</h4>
               </div>
               
@@ -436,6 +389,44 @@ export const HeroDemo: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-xs font-medium text-gray-600">17th</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Task List Card - Center Right */}
+
+            {/* Notification Feed - Bottom Left */}
+
+            {/* Analytics Card - Bottom Right */}
+            <div 
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              style={{ 
+                top: '48%', 
+                right: '15%', 
+                width: '280px',
+                transform: 'rotate(-1.2deg)',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+              }}
+            >
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                  <Zap className="w-4 h-4 text-white" />
+                </div>
+                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>AI Insights</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="text-center p-4 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
+                  <div className="text-2xl font-bold" style={{ color: '#1C2C55' }}>94%</div>
+                  <div className="text-xs" style={{ color: '#202226' }}>Voice accuracy</div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="text-lg font-bold" style={{ color: '#1C2C55' }}>12</div>
+                    <div className="text-xs text-gray-600">Notes today</div>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="text-lg font-bold" style={{ color: '#1C2C55' }}>8</div>
+                    <div className="text-xs text-gray-600">Tasks created</div>
                   </div>
                 </div>
               </div>
@@ -508,7 +499,7 @@ export const HeroDemo: React.FC = () => {
             <div className="absolute bottom-8 left-1/3 w-20 h-20 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
             <div className="absolute top-1/2 left-1/2 w-12 h-12 rounded-full opacity-5" style={{ backgroundColor: '#25D366' }}></div>
         </div>
+      </div>
     </div>
-    </>
   );
 };
