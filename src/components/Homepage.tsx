@@ -24,7 +24,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             <div className="max-w-5xl mx-auto space-y-8">
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-6xl font-bold leading-tight text-center" style={{ color: '#1C2C55' }}>
-                  <div>Transform WhatsApp</div>
+                  <div>Turn voice notes into</div>
                   <div style={{ color: '#F7E69B' }}>CRM Data</div>
                 </h1>
                 <div className="text-xl leading-relaxed max-w-3xl mx-auto space-y-2" style={{ color: '#202226' }}>
