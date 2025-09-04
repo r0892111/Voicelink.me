@@ -111,7 +111,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
       {/* Features Section */}
       <section id="features" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(45deg, #F7E69B 0%, #FFFFFF 40%, rgba(28, 44, 85, 0.08) 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
@@ -167,7 +167,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
       {/* Social Proof Section */}
       <section id="testimonials" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(-135deg, rgba(28, 44, 85, 0.06) 0%, #FFFFFF 60%, #F7E69B 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
@@ -253,7 +253,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
       {/* Pricing Section */}
       <section id="pricing" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, #F7E69B 0%, #FFFFFF 30%, #FFFFFF 70%, rgba(28, 44, 85, 0.05) 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
@@ -323,7 +323,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
       {/* How It Works */}
       <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(28, 44, 85, 0.04) 0%, #FFFFFF 30%, #FFFFFF 70%, #F7E69B 100%)' }}></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
