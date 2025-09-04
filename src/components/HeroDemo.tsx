@@ -6,14 +6,25 @@ export const HeroDemo: React.FC = () => {
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
       <div className="max-w-7xl mx-auto px-6 mb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-center">
           {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8">
+          <div className="space-y-8 lg:pl-8 lg:pr-12 w-full">
             <div className="space-y-6">
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                <div>Transform speech to</div>
-                <div style={{ color: '#F7E69B' }}>CRM Data</div>
-              </h1>
+              <div className="relative">
+                <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
+                  Just...
+                </h1>
+                <div className="relative inline-block">
+                  <h1 className="text-6xl lg:text-7xl font-black tracking-tight relative z-10" style={{ 
+                    color: '#1C2C55',
+                    textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)'
+                  }}>
+                    Talk to your CRM
+                  </h1>
+                  {/* Subtle background glow */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10"></div>
+                </div>
+              </div>
               <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
                 <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
                 <p>Turn voice messages into structured data instantly.</p>
@@ -61,7 +72,7 @@ export const HeroDemo: React.FC = () => {
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-24">
+          <div className="flex justify-center lg:justify-end lg:pl-12">
             <div className="relative max-w-xs mx-auto">
               {/* Background Effect Elements */}
               <div className="absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl opacity-40 scale-110"></div>
