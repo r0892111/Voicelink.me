@@ -61,7 +61,7 @@ export const HeroDemo: React.FC = () => {
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-12">
+          <div className="flex justify-center lg:justify-end lg:pl-24">
             <div className="relative max-w-xs mx-auto">
               {/* Phone Frame */}
               <div className="relative bg-black rounded-[2.5rem] p-1 shadow-2xl" style={{ aspectRatio: '9/19.5' }}>
