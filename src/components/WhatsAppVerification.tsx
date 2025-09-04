@@ -45,19 +45,20 @@ export const WhatsAppVerification: React.FC = () => {
 
     try {
       // Get user platform and ID
-      const platform = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
+      const platform = user.platform
       if (!platform) {
         throw new Error('User platform not found');
       }
 
       // Get CRM user ID based on platform
       let crmUserId;
+      console.log('User info:', user);
       switch (platform) {
         case 'teamleader':
-          crmUserId = user.user_info?.user?.id;
+          crmUserId = user.id;
           break;
         case 'pipedrive':
-          crmUserId = user.user_info?.id;
+          crmUserId = user.id;
           break;
         case 'odoo':
           crmUserId = user.user_info?.uid;
@@ -65,7 +66,7 @@ export const WhatsAppVerification: React.FC = () => {
         default:
           throw new Error('Unknown platform');
       }
-
+ 
       if (!crmUserId) {
         throw new Error('CRM user ID not found');
       }
@@ -123,10 +124,10 @@ export const WhatsAppVerification: React.FC = () => {
       let crmUserId;
       switch (platform) {
         case 'teamleader':
-          crmUserId = user.user_info?.user?.id;
+          crmUserId = user.id;
           break;
         case 'pipedrive':
-          crmUserId = user.user_info?.id;
+          crmUserId = user.id;
           break;
         case 'odoo':
           crmUserId = user.user_info?.uid;
