@@ -256,11 +256,15 @@ export const HeroDemo: React.FC = () => {
                   <span className="text-sm font-medium">+32 456 789 123</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm">📧</span>
+                  <div className="w-4 h-4 rounded bg-gray-100 flex items-center justify-center">
+                    <span className="text-xs">@</span>
+                  </div>
                   <span className="text-sm">sarah.mitchell@techflow.be</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm">🏢</span>
+                  <div className="w-4 h-4 rounded bg-gray-100 flex items-center justify-center">
+                    <span className="text-xs font-bold">B</span>
+                  </div>
                   <span className="text-sm font-medium">TechFlow Solutions</span>
                 </div>
                 <div className="text-xs px-3 py-1 rounded-full bg-blue-100 text-blue-700 inline-block">Enterprise Client</div>
@@ -288,19 +292,19 @@ export const HeroDemo: React.FC = () => {
               <div className="space-y-3 text-sm" style={{ color: '#202226' }}>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <span>40% budget expansion confirmed</span>
+                  <span>Budget allocation increased by 40%</span>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <span>Premium WhatsApp integration interest</span>
+                  <span>Enterprise integration requirements identified</span>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <span>ROI examples requested</span>
+                  <span>ROI analysis and case studies requested</span>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <span>Thursday PM calls preferred</span>
+                  <span>Preferred meeting schedule: Thursday afternoons</span>
                 </div>
               </div>
               <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500">
@@ -321,7 +325,7 @@ export const HeroDemo: React.FC = () => {
             >
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <span className="text-white text-sm font-bold">📅</span>
+                  <span className="text-white text-sm font-bold">C</span>
                 </div>
                 <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>This Week</h4>
               </div>
@@ -336,14 +340,14 @@ export const HeroDemo: React.FC = () => {
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
                     <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Send Proposal</div>
-                    <div className="text-xs text-gray-600">TechFlow Solutions</div>
+                    <div className="text-xs text-gray-600">TechFlow Solutions - Enterprise Package</div>
                   </div>
                   <div className="text-xs font-medium text-orange-600">Fri</div>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
-                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Demo Prep</div>
-                    <div className="text-xs text-gray-600">WhatsApp Integration</div>
+                    <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Product Demo</div>
+                    <div className="text-xs text-gray-600">Integration Capabilities</div>
                   </div>
                   <div className="text-xs font-medium text-gray-500">Mon</div>
                 </div>
@@ -402,7 +406,7 @@ export const HeroDemo: React.FC = () => {
             >
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <span className="text-white text-sm font-bold">💼</span>
+                  <span className="text-white text-sm font-bold">P</span>
                 </div>
                 <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Sales Pipeline</h4>
               </div>
@@ -410,23 +414,23 @@ export const HeroDemo: React.FC = () => {
                 <div className="flex items-center justify-between p-3 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
                   <div>
                     <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>TechFlow Deal</div>
-                    <div className="text-xs" style={{ color: '#202226' }}>€45,000 • Negotiation</div>
+                    <div className="text-xs" style={{ color: '#202226' }}>€45,000 • Contract Negotiation</div>
                   </div>
-                  <div className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#1C2C55', color: 'white' }}>Hot</div>
+                  <div className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#1C2C55', color: 'white' }}>Priority</div>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                   <div>
                     <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>StartupXYZ</div>
-                    <div className="text-xs text-gray-600">€12,000 • Proposal</div>
+                    <div className="text-xs text-gray-600">€12,000 • Proposal Review</div>
                   </div>
-                  <div className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">Warm</div>
+                  <div className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">Active</div>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
                     <div className="text-sm font-semibold" style={{ color: '#1C2C55' }}>GrowthCorp</div>
-                    <div className="text-xs text-gray-600">€28,000 • Discovery</div>
+                    <div className="text-xs text-gray-600">€28,000 • Discovery Phase</div>
                   </div>
-                  <div className="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded-full">Cold</div>
+                  <div className="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded-full">Prospect</div>
                 </div>
               </div>
             </div>
@@ -445,7 +449,7 @@ export const HeroDemo: React.FC = () => {
               <div className="text-center">
                 <div className="text-xs text-gray-500 mb-2">Today's Activity</div>
                 <div className="text-2xl font-bold mb-1" style={{ color: '#1C2C55' }}>12</div>
-                <div className="text-xs" style={{ color: '#202226' }}>Voice notes processed</div>
+                <div className="text-xs" style={{ color: '#202226' }}>Voice recordings processed</div>
                 <div className="mt-3 h-1 bg-gray-200 rounded-full overflow-hidden">
                   <div className="h-full rounded-full" style={{ backgroundColor: '#F7E69B', width: '75%' }}></div>
                 </div>
