@@ -62,55 +62,134 @@ export const HeroDemo: React.FC = () => {
 
           {/* Phone Mockup - Right Side */}
           <div className="flex justify-center lg:justify-end lg:pl-24">
-            <div className="relative max-w-xs mx-auto">
+            <div className="relative max-w-xs mx-auto" style={{ perspective: '1200px' }}>
               {/* Phone Frame */}
               <div 
-                className="relative bg-black rounded-[2.5rem] p-1 transform hover:scale-105 transition-all duration-500" 
+                className="relative rounded-[2.5rem] p-1 transform hover:scale-[1.02] transition-all duration-700 hover:rotate-y-[-2deg]" 
                 style={{ 
                   aspectRatio: '9/19.5',
                   boxShadow: `
-                    0 0 0 1px rgba(0, 0, 0, 0.1),
-                    0 2px 4px rgba(0, 0, 0, 0.1),
-                    0 8px 16px rgba(0, 0, 0, 0.15),
-                    0 16px 32px rgba(0, 0, 0, 0.2),
-                    0 32px 64px rgba(0, 0, 0, 0.25),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                    inset 0 -1px 0 rgba(0, 0, 0, 0.2)
+                    0 0 0 1px rgba(0, 0, 0, 0.08),
+                    0 1px 2px rgba(0, 0, 0, 0.12),
+                    0 4px 8px rgba(0, 0, 0, 0.16),
+                    0 8px 16px rgba(0, 0, 0, 0.20),
+                    0 16px 32px rgba(0, 0, 0, 0.24),
+                    0 32px 64px rgba(0, 0, 0, 0.28),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+                    inset 1px 0 0 rgba(255, 255, 255, 0.05),
+                    inset -1px 0 0 rgba(0, 0, 0, 0.15)
                   `,
-                  background: 'linear-gradient(145deg, #1a1a1a 0%, #000000 50%, #1a1a1a 100%)',
-                  transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
+                  background: `
+                    linear-gradient(145deg, #2a2a2a 0%, #0a0a0a 25%, #000000 50%, #0a0a0a 75%, #2a2a2a 100%),
+                    radial-gradient(ellipse at top left, rgba(255,255,255,0.1) 0%, transparent 50%),
+                    radial-gradient(ellipse at bottom right, rgba(255,255,255,0.05) 0%, transparent 50%)
+                  `,
+                  transform: 'rotateY(-8deg) rotateX(3deg) translateZ(20px)',
                   transformStyle: 'preserve-3d'
                 }}
               >
-                {/* Phone Side Bezels for 3D Effect */}
+                {/* Enhanced 3D Side Bezels */}
                 <div 
-                  className="absolute inset-y-0 -right-1 w-2 rounded-r-[2.5rem]"
+                  className="absolute inset-y-0 -right-1 w-3 rounded-r-[2.5rem]"
                   style={{
-                    background: 'linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%)',
-                    transform: 'translateZ(-2px)'
+                    background: `
+                      linear-gradient(90deg, 
+                        rgba(0,0,0,0.9) 0%, 
+                        rgba(20,20,20,0.8) 30%, 
+                        rgba(40,40,40,0.6) 70%, 
+                        rgba(60,60,60,0.3) 100%
+                      )
+                    `,
+                    transform: 'translateZ(-4px) rotateY(2deg)',
+                    borderRadius: '0 2.5rem 2.5rem 0'
                   }}
                 ></div>
                 <div 
-                  className="absolute inset-x-0 -bottom-1 h-2 rounded-b-[2.5rem]"
+                  className="absolute inset-x-0 -bottom-1 h-3 rounded-b-[2.5rem]"
                   style={{
-                    background: 'linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%)',
-                    transform: 'translateZ(-2px)'
+                    background: `
+                      linear-gradient(180deg, 
+                        rgba(0,0,0,0.9) 0%, 
+                        rgba(20,20,20,0.8) 30%, 
+                        rgba(40,40,40,0.6) 70%, 
+                        rgba(60,60,60,0.3) 100%
+                      )
+                    `,
+                    transform: 'translateZ(-4px) rotateX(2deg)',
+                    borderRadius: '0 0 2.5rem 2.5rem'
                   }}
                 ></div>
                 
-                {/* iPhone 16 Dynamic Island */}
+                {/* Enhanced iPhone 16 Dynamic Island */}
                 <div 
-                  className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"
+                  className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 rounded-full z-10"
                   style={{
-                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(255, 255, 255, 0.1)'
+                    background: 'linear-gradient(145deg, #000000 0%, #1a1a1a 50%, #000000 100%)',
+                    boxShadow: `
+                      inset 0 2px 4px rgba(0, 0, 0, 0.5), 
+                      inset 0 -1px 2px rgba(255, 255, 255, 0.1),
+                      0 1px 3px rgba(0, 0, 0, 0.3)
+                    `,
+                    transform: 'translateZ(2px)'
+                  }}
+                ></div>
+                
+                {/* Camera Lens Detail */}
+                <div 
+                  className="absolute top-3 left-1/2 transform -translate-x-1/2 translate-x-8 w-3 h-3 rounded-full z-10"
+                  style={{
+                    background: 'radial-gradient(circle, #1a1a1a 0%, #000000 70%, #333333 100%)',
+                    boxShadow: `
+                      inset 0 1px 2px rgba(0, 0, 0, 0.8),
+                      0 0 0 1px rgba(255, 255, 255, 0.1),
+                      0 1px 2px rgba(0, 0, 0, 0.3)
+                    `,
+                    transform: 'translateZ(3px)'
+                  }}
+                ></div>
+                
+                {/* Volume Buttons */}
+                <div 
+                  className="absolute left-0 w-1 h-8 rounded-l-full"
+                  style={{
+                    top: '15%',
+                    background: 'linear-gradient(180deg, #2a2a2a 0%, #000000 50%, #2a2a2a 100%)',
+                    boxShadow: 'inset 1px 0 2px rgba(0, 0, 0, 0.3)',
+                    transform: 'translateZ(-1px) translateX(-1px)'
+                  }}
+                ></div>
+                <div 
+                  className="absolute left-0 w-1 h-6 rounded-l-full"
+                  style={{
+                    top: '25%',
+                    background: 'linear-gradient(180deg, #2a2a2a 0%, #000000 50%, #2a2a2a 100%)',
+                    boxShadow: 'inset 1px 0 2px rgba(0, 0, 0, 0.3)',
+                    transform: 'translateZ(-1px) translateX(-1px)'
+                  }}
+                ></div>
+                
+                {/* Power Button */}
+                <div 
+                  className="absolute right-0 w-1 h-12 rounded-r-full"
+                  style={{
+                    top: '20%',
+                    background: 'linear-gradient(180deg, #2a2a2a 0%, #000000 50%, #2a2a2a 100%)',
+                    boxShadow: 'inset -1px 0 2px rgba(0, 0, 0, 0.3)',
+                    transform: 'translateZ(-1px) translateX(1px)'
                   }}
                 ></div>
                 
                 <div 
                   className="bg-white rounded-[2.25rem] overflow-hidden h-full relative"
                   style={{
-                    boxShadow: 'inset 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 2px 4px rgba(0, 0, 0, 0.05)',
-                    transform: 'translateZ(1px)'
+                    boxShadow: `
+                      inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+                      inset 0 2px 4px rgba(0, 0, 0, 0.03),
+                      inset 0 0 20px rgba(0, 0, 0, 0.02)
+                    `,
+                    transform: 'translateZ(2px)',
+                    background: 'linear-gradient(145deg, #ffffff 0%, #fafafa 100%)'
                   }}
                 >
                   {/* WhatsApp Header */}
