@@ -453,7 +453,7 @@ export const HeroDemo: React.FC = () => {
                       <div className="text-xs text-gray-600">Sarah Mitchell</div>
                     </div>
                   </div>
-                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>16th</div>
+                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Jan 16 • 2:00 PM</div>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-2">
