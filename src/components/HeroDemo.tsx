@@ -33,10 +33,11 @@ export const HeroDemo: React.FC = () => {
                     </div>
                     <div className="flex items-center space-x-4">
                       <img 
-                        src="/Finit Voicelink White.svg" 
-                        alt="VoiceLink" 
-                        className="h-6 w-auto"
+                        src="/whatsapp.svg" 
+                        alt="WhatsApp" 
+                        className="w-6 h-6 text-white"
                       />
+                      <div className="text-white text-lg font-bold">⋮</div>
                     </div>
                   </div>
 
