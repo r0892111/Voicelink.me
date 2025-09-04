@@ -12,7 +12,7 @@ export const HeroDemo: React.FC = () => {
             <div className="space-y-6">
               <div className="relative">
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
-                  Stop Typing
+                  Just...
                 </h1>
                 <div className="relative inline-block">
                   <h1 className="text-6xl lg:text-7xl font-black tracking-tight relative z-10" style={{ 
