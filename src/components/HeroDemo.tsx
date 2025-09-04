@@ -2,19 +2,35 @@ import React from 'react';
 import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone } from 'lucide-react';
 
 export const HeroDemo: React.FC = () => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    // Trigger animations after component mounts
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
       <div className="max-w-7xl mx-auto px-6 mb-16">
         <div className="grid lg:grid-cols-[2fr_1fr] gap-8 items-center">
           {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8 lg:pr-12 w-full">
+          <div className={`space-y-8 lg:pl-8 lg:pr-12 w-full transition-all duration-1000 ease-out ${
+            isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+          }`}>
             <div className="space-y-6">
-              <div className="relative">
-                <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
+              <div className={`relative transition-all duration-1200 ease-out delay-200 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}>
+                <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4 animate-fade-in-up" style={{ color: '#1C2C55' }}>
                   Just...
                 </h1>
-                <div className="relative inline-block">
+                <div className={`relative inline-block transition-all duration-1400 ease-out delay-400 ${
+                  isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                }`}>
                   <h1 className="text-6xl lg:text-7xl font-black tracking-tight relative z-10" style={{ 
                     color: '#1C2C55',
                     textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)'
@@ -25,15 +41,19 @@ export const HeroDemo: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10"></div>
                 </div>
               </div>
-              <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
+              <div className={`text-2xl xl:text-3xl leading-relaxed space-y-3 max-w-4xl transition-all duration-1000 ease-out delay-600 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+              }`} style={{ color: '#202226' }}>
                 <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
                 <p>Turn voice messages into structured data instantly.</p>
               </div>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className={`flex flex-col sm:flex-row gap-4 max-w-2xl transition-all duration-1000 ease-out delay-800 ${
+              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
               <button
-                className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
+                className="group text-white font-semibold text-lg py-5 px-10 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-3 transform hover:-translate-y-1"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
@@ -58,7 +78,9 @@ export const HeroDemo: React.FC = () => {
               </button>
             </div>
 
-            <div className="flex items-center space-x-6 text-sm text-gray-500">
+            <div className={`flex items-center space-x-6 text-base text-gray-500 transition-all duration-1000 ease-out delay-1000 ${
+              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
                 <span>One-click CRM Connection</span>
@@ -72,17 +94,31 @@ export const HeroDemo: React.FC = () => {
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-12">
+          <div className={`flex justify-center lg:justify-end lg:pl-12 transition-all duration-1200 ease-out delay-300 ${
+            isLoaded ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-12 scale-95'
+          }`}>
             <div className="relative max-w-xs mx-auto">
               {/* Background Effect Elements */}
-              <div className="absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl opacity-40 scale-110"></div>
-              <div className="absolute inset-0 transform translate-x-6 translate-y-6 bg-gradient-to-br from-gray-400 to-gray-600 rounded-[2.5rem] blur-xl opacity-35 scale-107"></div>
-              <div className="absolute inset-0 transform translate-x-4 translate-y-4 bg-gradient-to-br from-gray-500 to-gray-700 rounded-[2.5rem] blur-lg opacity-30 scale-105"></div>
-              <div className="absolute inset-0 transform translate-x-2 translate-y-2 bg-gradient-to-br from-gray-600 to-gray-800 rounded-[2.5rem] blur-md opacity-25 scale-103"></div>
-              <div className="absolute inset-0 transform translate-x-1 translate-y-1 bg-gradient-to-br from-gray-700 to-gray-900 rounded-[2.5rem] blur-sm opacity-20 scale-101"></div>
+              <div className={`absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl scale-110 transition-opacity duration-1500 delay-500 ${
+                isLoaded ? 'opacity-40' : 'opacity-0'
+              }`}></div>
+              <div className={`absolute inset-0 transform translate-x-6 translate-y-6 bg-gradient-to-br from-gray-400 to-gray-600 rounded-[2.5rem] blur-xl scale-107 transition-opacity duration-1400 delay-600 ${
+                isLoaded ? 'opacity-35' : 'opacity-0'
+              }`}></div>
+              <div className={`absolute inset-0 transform translate-x-4 translate-y-4 bg-gradient-to-br from-gray-500 to-gray-700 rounded-[2.5rem] blur-lg scale-105 transition-opacity duration-1300 delay-700 ${
+                isLoaded ? 'opacity-30' : 'opacity-0'
+              }`}></div>
+              <div className={`absolute inset-0 transform translate-x-2 translate-y-2 bg-gradient-to-br from-gray-600 to-gray-800 rounded-[2.5rem] blur-md scale-103 transition-opacity duration-1200 delay-800 ${
+                isLoaded ? 'opacity-25' : 'opacity-0'
+              }`}></div>
+              <div className={`absolute inset-0 transform translate-x-1 translate-y-1 bg-gradient-to-br from-gray-700 to-gray-900 rounded-[2.5rem] blur-sm scale-101 transition-opacity duration-1100 delay-900 ${
+                isLoaded ? 'opacity-20' : 'opacity-0'
+              }`}></div>
               
               {/* Phone Frame */}
-              <div className="relative bg-black rounded-[2.5rem] p-1.5 shadow-2xl z-10" style={{ 
+              <div className={`relative bg-black rounded-[2.5rem] p-1.5 shadow-2xl z-10 transition-all duration-1000 ease-out delay-400 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`} style={{ 
                 aspectRatio: '9/19.5',
                 boxShadow: '0 40px 80px -20px rgba(0, 0, 0, 0.5), 0 25px 50px -15px rgba(0, 0, 0, 0.4), 0 15px 30px -10px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2)'
               }}>
@@ -130,7 +166,9 @@ export const HeroDemo: React.FC = () => {
                       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-300 rounded-full opacity-50 z-10"></div>
                       
                     {/* User Voice Message - Enhanced with wider display and detailed waveform */}
-                    <div className="flex justify-end">
+                    <div className={`flex justify-end transition-all duration-800 ease-out delay-1200 ${
+                      isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+                    }`}>
                       <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-[280px] shadow-sm">
                         <div className="flex items-center space-x-2 mb-2">
                           <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
@@ -171,7 +209,9 @@ export const HeroDemo: React.FC = () => {
                     </div>
 
                     {/* Processing Indicator */}
-                    <div className="flex justify-start">
+                    <div className={`flex justify-start transition-all duration-800 ease-out delay-1400 ${
+                      isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+                    }`}>
                       <div className="bg-white rounded-2xl rounded-bl-md p-3 max-w-[250px] shadow-sm">
                         <div className="flex items-center space-x-2">
                           <Zap className="w-4 h-4 animate-pulse" style={{ color: '#1C2C55' }} />
@@ -184,7 +224,9 @@ export const HeroDemo: React.FC = () => {
                     </div>
 
                     {/* VoiceLink Bot Reply */}
-                    <div className="flex justify-start">
+                    <div className={`flex justify-start transition-all duration-800 ease-out delay-1600 ${
+                      isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+                    }`}>
                       <div className="bg-white rounded-2xl rounded-bl-md p-4 max-w-[280px] shadow-sm">
                         <div className="flex items-center space-x-2 mb-3">
                           <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center p-1">
@@ -247,11 +289,15 @@ export const HeroDemo: React.FC = () => {
       {/* Partial CRM Preview - Centered Below */}
       <div className="w-full px-6">
         {/* Floating CRM Cards Layout */}
-        <div className="relative w-full h-[750px] py-8 max-w-7xl mx-auto">
+        <div className={`relative w-full h-[750px] py-8 max-w-7xl mx-auto transition-all duration-1000 ease-out delay-1800 ${
+          isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+        }`}>
             
             {/* Contact Card - Top Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className={`absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl ${
+                isLoaded ? 'animate-float-in-1' : 'opacity-0 translate-y-8'
+              }`}
               style={{ 
                 top: '2%', 
                 left: '8%', 
@@ -293,7 +339,9 @@ export const HeroDemo: React.FC = () => {
 
             {/* Voice Note Analysis Card - Top Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className={`absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl ${
+                isLoaded ? 'animate-float-in-2' : 'opacity-0 translate-y-8'
+              }`}
               style={{ 
                 top: '1%', 
                 right: '8%', 
@@ -353,7 +401,9 @@ export const HeroDemo: React.FC = () => {
 
             {/* Calendar Widget - Center Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className={`absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl ${
+                isLoaded ? 'animate-float-in-3' : 'opacity-0 translate-y-8'
+              }`}
               style={{ 
                 top: '30%', 
                 left: '15%', 
@@ -409,7 +459,9 @@ export const HeroDemo: React.FC = () => {
 
             {/* Analytics Card - Bottom Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className={`absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl ${
+                isLoaded ? 'animate-float-in-4' : 'opacity-0 translate-y-8'
+              }`}
               style={{ 
                 top: '33%', 
                 right: '15%', 
@@ -490,7 +542,9 @@ export const HeroDemo: React.FC = () => {
 
             {/* Pipeline Card - Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className={`absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl ${
+                isLoaded ? 'animate-float-in-5' : 'opacity-0 translate-y-8'
+              }`}
               style={{ 
                 top: '25%', 
                 left: '50%', 
@@ -532,7 +586,9 @@ export const HeroDemo: React.FC = () => {
 
             {/* Quick Stats Card - Top Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className={`absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl ${
+                isLoaded ? 'animate-float-in-6' : 'opacity-0 translate-y-8'
+              }`}
               style={{ 
                 top: '5%', 
                 left: '50%', 
