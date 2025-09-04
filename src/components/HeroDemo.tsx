@@ -534,7 +534,6 @@ export const HeroDemo: React.FC = () => {
             </div>
 
             {/* Floating Background Elements */}
-            <div className="absolute top-8 right-1/3 w-24 h-24 rounded-full opacity-5" style={{ backgroundColor: '#1C2C55' }}></div>
             <div className="absolute bottom-8 left-1/3 w-20 h-20 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
             <div className="absolute top-1/2 left-1/2 w-12 h-12 rounded-full opacity-5" style={{ backgroundColor: '#25D366' }}></div>
         </div>
