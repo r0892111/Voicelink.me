@@ -286,7 +286,7 @@ export const HeroDemo: React.FC = () => {
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#F7E69B' }}>
                   <Mic className="w-5 h-5" style={{ color: '#1C2C55' }} />
                 </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Note</h4>
+                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Client Summary</h4>
                 <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>AI Processed</span>
               </div>
               <div className="space-y-3 text-sm" style={{ color: '#202226' }}>
