@@ -6,32 +6,32 @@ export const HeroDemo: React.FC = () => {
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
       <div className="max-w-7xl mx-auto px-6 mb-16">
-        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Hero Text - Left Side */}
-          <div className="space-y-8 lg:pl-8 lg:pr-4">
+          <div className="space-y-8 lg:pl-8">
             <div className="space-y-6">
-              <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
+              <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
                 <div>Transform speech to</div>
                 <div style={{ color: '#F7E69B' }}>CRM Data</div>
               </h1>
-              <div className="text-xl lg:text-2xl xl:text-3xl leading-relaxed space-y-3 max-w-4xl" style={{ color: '#202226' }}>
+              <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
                 <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
                 <p>Turn voice messages into structured data instantly.</p>
               </div>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-6 max-w-2xl">
+            <div className="flex flex-col sm:flex-row gap-4">
               <button
-                className="group text-white font-semibold py-5 px-10 text-lg rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-3"
+                className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
               >
                 <span>Get Started Free</span>
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button 
-                className="group border-2 font-semibold py-5 px-10 text-lg rounded-2xl transition-all duration-300 flex items-center justify-center space-x-3"
+                className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2"
                 style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#F7E69B';
@@ -42,7 +42,7 @@ export const HeroDemo: React.FC = () => {
                   e.currentTarget.style.borderColor = '#1C2C55';
                 }}
               >
-                <Play className="w-6 h-6" />
+                <Play className="w-5 h-5" />
                 <span>Watch Demo</span>
               </button>
             </div>
@@ -50,18 +50,18 @@ export const HeroDemo: React.FC = () => {
             <div className="flex items-center space-x-6 text-sm text-gray-500">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                <span className="text-base">No credit card required</span>
+                <span>No credit card required</span>
               </div>
               <span>·</span>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                <span className="text-base">Connect WhatsApp in 2 minutes</span>
+                <span>Connect WhatsApp in 2 minutes</span>
               </div>
             </div>
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="flex justify-center lg:justify-end lg:pl-24">
             <div className="relative max-w-xs mx-auto">
               {/* Background Effect Elements */}
               <div className="absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl opacity-40 scale-110"></div>
