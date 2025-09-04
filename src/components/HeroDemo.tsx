@@ -227,7 +227,7 @@ export const HeroDemo: React.FC = () => {
       {/* Partial CRM Preview - Centered Below */}
       <div className="w-full px-6">
         {/* Floating CRM Cards Layout */}
-        <div className="relative w-full h-[800px] py-8 max-w-7xl mx-auto">
+        <div className="relative w-full h-[1000px] py-8 max-w-7xl mx-auto">
             
             {/* Contact Card - Top Left */}
             <div 
