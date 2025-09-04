@@ -258,23 +258,15 @@ export const HeroDemo: React.FC = () => {
                 left: '8%', 
                 width: '320px',
                 transform: 'rotate(-2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'subpixel-antialiased',
-                MozOsxFontSmoothing: 'auto',
-                transformStyle: 'preserve-3d',
-                willChange: 'transform',
-                WebkitTransform: 'translateZ(0)',
-                transform: 'rotate(-2deg) translateZ(0)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'rotate(-2deg) scale(1.1) translateZ(0)';
+                e.currentTarget.style.transform = 'rotate(-2deg) scale(1.1) translateZ(50px)';
                 e.currentTarget.style.zIndex = '1000';
                 e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'rotate(-2deg) scale(1) translateZ(0)';
+                e.currentTarget.style.transform = 'rotate(-2deg) scale(1)';
                 e.currentTarget.style.zIndex = 'auto';
                 e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
@@ -318,23 +310,15 @@ export const HeroDemo: React.FC = () => {
                 right: '8%', 
                 width: '350px',
                 transform: 'rotate(1.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'subpixel-antialiased',
-                MozOsxFontSmoothing: 'auto',
-                transformStyle: 'preserve-3d',
-                willChange: 'transform',
-                WebkitTransform: 'translateZ(0)',
-                transform: 'rotate(1.5deg) translateZ(0)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1.1) translateZ(0)';
+                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1.1) translateZ(50px)';
                 e.currentTarget.style.zIndex = '1000';
                 e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1) translateZ(0)';
+                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1)';
                 e.currentTarget.style.zIndex = 'auto';
                 e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
@@ -396,23 +380,15 @@ export const HeroDemo: React.FC = () => {
                 left: '15%', 
                 width: '280px',
                 transform: 'rotate(-1deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'subpixel-antialiased',
-                MozOsxFontSmoothing: 'auto',
-                transformStyle: 'preserve-3d',
-                willChange: 'transform',
-                WebkitTransform: 'translateZ(0)',
-                transform: 'rotate(-1deg) translateZ(0)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'rotate(-1deg) scale(1.1) translateZ(0)';
+                e.currentTarget.style.transform = 'rotate(-1deg) scale(1.1) translateZ(50px)';
                 e.currentTarget.style.zIndex = '1000';
                 e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'rotate(-1deg) scale(1) translateZ(0)';
+                e.currentTarget.style.transform = 'rotate(-1deg) scale(1)';
                 e.currentTarget.style.zIndex = 'auto';
                 e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
@@ -470,23 +446,15 @@ export const HeroDemo: React.FC = () => {
                 right: '15%', 
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'subpixel-antialiased',
-                MozOsxFontSmoothing: 'auto',
-                transformStyle: 'preserve-3d',
-                willChange: 'transform',
-                WebkitTransform: 'translateZ(0)',
-                transform: 'rotate(-1.2deg) translateZ(0)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1.1) translateZ(0)';
+                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1.1) translateZ(50px)';
                 e.currentTarget.style.zIndex = '1000';
                 e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1) translateZ(0)';
+                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1)';
                 e.currentTarget.style.zIndex = 'auto';
                 e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
@@ -569,23 +537,15 @@ export const HeroDemo: React.FC = () => {
                 left: '50%', 
                 width: '360px',
                 transform: 'translateX(-50%) rotate(0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'subpixel-antialiased',
-                MozOsxFontSmoothing: 'auto',
-                transformStyle: 'preserve-3d',
-                willChange: 'transform',
-                WebkitTransform: 'translateZ(0)',
-                transform: 'translateX(-50%) rotate(0.5deg) translateZ(0)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1.1) translateZ(0)';
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1.1) translateZ(50px)';
                 e.currentTarget.style.zIndex = '1000';
                 e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1) translateZ(0)';
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1)';
                 e.currentTarget.style.zIndex = 'auto';
                 e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
@@ -629,23 +589,15 @@ export const HeroDemo: React.FC = () => {
                 left: '50%', 
                 width: '200px',
                 transform: 'translateX(-50%) rotate(-0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                WebkitFontSmoothing: 'subpixel-antialiased',
-                MozOsxFontSmoothing: 'auto',
-                transformStyle: 'preserve-3d',
-                willChange: 'transform',
-                WebkitTransform: 'translateZ(0)',
-                transform: 'translateX(-50%) rotate(-0.5deg) translateZ(0)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1.1) translateZ(0)';
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1.1) translateZ(50px)';
                 e.currentTarget.style.zIndex = '1000';
                 e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1) translateZ(0)';
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1)';
                 e.currentTarget.style.zIndex = 'auto';
                 e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
