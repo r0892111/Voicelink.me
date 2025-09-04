@@ -352,46 +352,6 @@ export const HeroDemo: React.FC = () => {
             </div>
 
             {/* Task List Card - Center Right */}
-            <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
-              style={{ 
-                top: '22%', 
-                right: '5%', 
-                width: '300px',
-                transform: 'rotate(0.8deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <CheckCircle className="w-4 h-4 text-white" />
-                </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Action Items</h4>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg border-l-4 border-green-400">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <div className="flex-1">
-                    <div className="text-sm font-medium" style={{ color: '#1C2C55' }}>Voice note processed</div>
-                    <div className="text-xs text-gray-600">Sarah Mitchell call</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 rounded-lg border-l-4" style={{ backgroundColor: '#F7E69B', borderColor: '#1C2C55' }}>
-                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium" style={{ color: '#1C2C55' }}>Prepare proposal</div>
-                    <div className="text-xs" style={{ color: '#202226' }}>Due Friday</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border-l-4 border-gray-300">
-                  <div className="w-4 h-4 rounded-full bg-gray-400"></div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium" style={{ color: '#1C2C55' }}>Schedule demo</div>
-                    <div className="text-xs text-gray-600">Next week</div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* Notification Feed - Bottom Left */}
             <div 
