@@ -64,11 +64,55 @@ export const HeroDemo: React.FC = () => {
           <div className="flex justify-center lg:justify-end lg:pl-24">
             <div className="relative max-w-xs mx-auto">
               {/* Phone Frame */}
-              <div className="relative bg-black rounded-[2.5rem] p-1 shadow-2xl" style={{ aspectRatio: '9/19.5' }}>
-                {/* iPhone 16 Dynamic Island */}
-                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"></div>
+              <div 
+                className="relative bg-black rounded-[2.5rem] p-1 transform hover:scale-105 transition-all duration-500" 
+                style={{ 
+                  aspectRatio: '9/19.5',
+                  boxShadow: `
+                    0 0 0 1px rgba(0, 0, 0, 0.1),
+                    0 2px 4px rgba(0, 0, 0, 0.1),
+                    0 8px 16px rgba(0, 0, 0, 0.15),
+                    0 16px 32px rgba(0, 0, 0, 0.2),
+                    0 32px 64px rgba(0, 0, 0, 0.25),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.2)
+                  `,
+                  background: 'linear-gradient(145deg, #1a1a1a 0%, #000000 50%, #1a1a1a 100%)',
+                  transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
+                  transformStyle: 'preserve-3d'
+                }}
+              >
+                {/* Phone Side Bezels for 3D Effect */}
+                <div 
+                  className="absolute inset-y-0 -right-1 w-2 rounded-r-[2.5rem]"
+                  style={{
+                    background: 'linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%)',
+                    transform: 'translateZ(-2px)'
+                  }}
+                ></div>
+                <div 
+                  className="absolute inset-x-0 -bottom-1 h-2 rounded-b-[2.5rem]"
+                  style={{
+                    background: 'linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%)',
+                    transform: 'translateZ(-2px)'
+                  }}
+                ></div>
                 
-                <div className="bg-white rounded-[2.25rem] overflow-hidden h-full">
+                {/* iPhone 16 Dynamic Island */}
+                <div 
+                  className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"
+                  style={{
+                    boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(255, 255, 255, 0.1)'
+                  }}
+                ></div>
+                
+                <div 
+                  className="bg-white rounded-[2.25rem] overflow-hidden h-full relative"
+                  style={{
+                    boxShadow: 'inset 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 2px 4px rgba(0, 0, 0, 0.05)',
+                    transform: 'translateZ(1px)'
+                  }}
+                >
                   {/* WhatsApp Header */}
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
