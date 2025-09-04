@@ -240,12 +240,27 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       <div className="bg-yellow-50 rounded-2xl p-6 border border-yellow-100">
                         <div className="flex items-center space-x-2 mb-4">
                           <Mic className="w-5 h-5" style={{ color: '#F7E69B' }} />
-                          <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Latest Note</h4>
+                          <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Client Note</h4>
                         </div>
                         <div className="bg-white rounded-xl p-4">
-                          <p className="text-sm text-gray-700 leading-relaxed mb-3">
-                            "Finished Q1 planning with Sarah. Confirmed 40% budget expansion for digital tools. Strong interest in premium WhatsApp integration. Loves real-time CRM sync; asked for detailed pricing deck and ROI examples. Prefers Thursday PM calls."
-                          </p>
+                          <div className="text-sm text-gray-700 space-y-2 mb-3">
+                            <div className="flex items-start space-x-2">
+                              <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                              <span>Confirmed 40% budget expansion for digital tools</span>
+                            </div>
+                            <div className="flex items-start space-x-2">
+                              <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                              <span>Strong interest in premium WhatsApp integration</span>
+                            </div>
+                            <div className="flex items-start space-x-2">
+                              <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                              <span>Requested detailed pricing deck and ROI examples</span>
+                            </div>
+                            <div className="flex items-start space-x-2">
+                              <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                              <span>Prefers Thursday PM calls for follow-ups</span>
+                            </div>
+                          </div>
                           <div className="flex items-center justify-between text-xs text-gray-500">
                             <span>Jan 15, 2025 - 2:30 PM</span>
                             <span className="px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>Processed</span>
@@ -253,93 +268,29 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                         </div>
                       </div>
 
-                      {/* Upcoming & Action Items Grid */}
-                      <div className="grid md:grid-cols-2 gap-6">
-                        {/* Upcoming Appointments */}
-                        <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
-                          <div className="flex items-center space-x-2 mb-4">
-                            <span className="text-lg">📅</span>
-                            <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Upcoming</h4>
-                          </div>
-                          <div className="space-y-3">
-                            <div className="bg-white rounded-xl p-3 border-l-4" style={{ borderColor: '#F7E69B' }}>
-                              <div className="flex justify-between items-start mb-1">
-                                <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</span>
-                                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>High</span>
-                              </div>
-                              <div className="text-xs text-gray-600 mb-1">Thu, Jan 16 – 2:00 PM</div>
-                              <div className="text-xs text-gray-700">Discuss premium package pricing and implementation timeline.</div>
-                            </div>
-                            <div className="bg-white rounded-xl p-3 border-l-4 border-orange-400">
-                              <div className="flex justify-between items-start mb-1">
-                                <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Proposal Review</span>
-                                <span className="text-xs px-2 py-1 rounded-full bg-orange-100 text-orange-700">Medium</span>
-                              </div>
-                              <div className="text-xs text-gray-600 mb-1">Fri, Jan 17 – 10:30 AM</div>
-                              <div className="text-xs text-gray-700">Finalize WhatsApp integration proposal details.</div>
-                            </div>
-                          </div>
+                      {/* Combined Upcoming & Action Items */}
+                      <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
+                        <div className="flex items-center space-x-2 mb-4">
+                          <span className="text-lg">📅</span>
+                          <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Upcoming & Actions</h4>
                         </div>
-
-                        {/* Action Items */}
-                        <div className="bg-green-50 rounded-2xl p-6 border border-green-100">
-                          <div className="flex items-center space-x-2 mb-4">
-                            <CheckCircle className="w-5 h-5" style={{ color: '#25D366' }} />
-                            <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Action Items</h4>
-                          </div>
-                          <div className="space-y-3">
-                            <div className="bg-white rounded-xl p-3 flex items-start space-x-3">
-                              <CheckCircle className="w-4 h-4 mt-0.5" style={{ color: '#25D366' }} />
-                              <div className="flex-1">
-                                <div className="text-sm font-semibold mb-1" style={{ color: '#1C2C55' }}>Call back Thursday at 2:00 PM</div>
-                                <div className="text-xs text-gray-600 mb-1">Discuss premium package pricing</div>
-                                <div className="flex items-center space-x-2">
-                                  <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>Due Today</span>
-                                  <span className="text-xs text-gray-500">From WhatsApp note</span>
-                                </div>
-                              </div>
+                        <div className="space-y-3">
+                          <div className="bg-white rounded-xl p-4 border-l-4" style={{ borderColor: '#F7E69B' }}>
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</span>
+                              <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>High</span>
                             </div>
-                            <div className="bg-white rounded-xl p-3 flex items-start space-x-3">
-                              <div className="w-4 h-4 rounded-full border-2 mt-0.5 flex items-center justify-center" style={{ borderColor: '#F7E69B' }}>
-                                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
-                              </div>
-                              <div className="flex-1">
-                                <div className="text-sm font-semibold mb-1" style={{ color: '#1C2C55' }}>Send detailed proposal by Friday</div>
-                                <div className="text-xs text-gray-600 mb-1">Include WhatsApp integration demo</div>
-                                <div className="flex items-center space-x-2">
-                                  <span className="text-xs px-2 py-1 rounded-full bg-orange-100 text-orange-700">Due Friday</span>
-                                  <span className="text-xs text-gray-500">From WhatsApp note</span>
-                                </div>
-                              </div>
+                            <div className="text-xs text-gray-600 mb-1">Sarah Mitchell – TechFlow</div>
+                            <div className="text-xs text-gray-700">Discuss premium package pricing and implementation timeline.</div>
+                            <div className="text-xs text-gray-500 mt-1">Thursday, Jan 16 – 2:00 PM</div>
+                          </div>
+                          <div className="bg-white rounded-xl p-4 border-l-4 border-orange-400">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Send Proposal</span>
+                              <span className="text-xs px-2 py-1 rounded-full bg-orange-100 text-orange-700">Due Friday</span>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Sync Status Footer */}
-                      <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-4 border border-gray-100">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
-                            <Zap className="w-5 h-5" style={{ color: '#1C2C55' }} />
-                            <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>CRM Sync Status</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#25D366' }}></div>
-                            <span className="text-sm font-medium" style={{ color: '#25D366' }}>Real-time</span>
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-3 gap-4 mt-4 text-center">
-                          <div>
-                            <div className="text-lg font-bold" style={{ color: '#1C2C55' }}>47</div>
-                            <div className="text-xs text-gray-600">Records processed today</div>
-                          </div>
-                          <div>
-                            <div className="text-lg font-bold" style={{ color: '#1C2C55' }}>12</div>
-                            <div className="text-xs text-gray-600">Pending</div>
-                          </div>
-                          <div>
-                            <div className="text-lg font-bold" style={{ color: '#25D366' }}>98%</div>
-                            <div className="text-xs text-gray-600">Success rate</div>
+                            <div className="text-xs text-gray-600 mb-1">Include WhatsApp integration demo and ROI calculations</div>
+                            <div className="text-xs text-gray-500 mt-1">From WhatsApp note</div>
                           </div>
                         </div>
                       </div>
