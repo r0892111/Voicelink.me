@@ -12,7 +12,7 @@ export const HeroDemo: React.FC = () => {
             <div className="space-y-6">
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
                 <div>Transform speech to</div>
-                <div style={{ color: '#1C2C55' }}>CRM Data</div>
+                <div style={{ color: '#F7E69B' }}>CRM Data</div>
               </h1>
               <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
                 <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
@@ -61,44 +61,14 @@ export const HeroDemo: React.FC = () => {
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-24" style={{ perspective: '1000px' }}>
-            <div className="relative max-w-xs mx-auto transform-gpu transition-all duration-700 hover:scale-110" 
-                 style={{ 
-                   transform: 'rotateX(3deg) rotateY(-2deg) translateZ(10px)',
-                   transformStyle: 'preserve-3d',
-                   backfaceVisibility: 'hidden',
-                   WebkitBackfaceVisibility: 'hidden',
-                   willChange: 'transform'
-                 }}>
+          <div className="flex justify-center lg:justify-end lg:pl-24">
+            <div className="relative max-w-xs mx-auto">
               {/* Phone Frame */}
-              <div className="relative bg-black rounded-[2.5rem] p-1 transition-all duration-700 hover:shadow-4xl" 
-                   style={{ 
-                     aspectRatio: '9/19.5',
-                     boxShadow: '0 50px 100px -20px rgba(0, 0, 0, 0.4), 0 30px 60px -30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)',
-                     filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15))',
-                     WebkitFontSmoothing: 'antialiased',
-                     MozOsxFontSmoothing: 'grayscale',
-                     textRendering: 'optimizeLegibility',
-                     WebkitTransform: 'translateZ(0)',
-                     transform: 'translateZ(0)'
-                   }}>
+              <div className="relative bg-black rounded-[2.5rem] p-1 shadow-2xl" style={{ aspectRatio: '9/19.5' }}>
                 {/* iPhone 16 Dynamic Island */}
-                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"
-                     style={{ 
-                       transform: 'translateX(-50%)',
-                       backfaceVisibility: 'hidden',
-                       WebkitTransform: 'translateX(-50%) translateZ(0)'
-                     }}></div>
+                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"></div>
                 
-                <div className="bg-white rounded-[2.25rem] overflow-hidden h-full relative"
-                     style={{ 
-                       transform: 'translateZ(0)',
-                       backfaceVisibility: 'hidden',
-                       WebkitFontSmoothing: 'antialiased',
-                       MozOsxFontSmoothing: 'grayscale',
-                       WebkitTransform: 'translateZ(0)',
-                       imageRendering: 'crisp-edges'
-                     }}>
+                <div className="bg-white rounded-[2.25rem] overflow-hidden h-full">
                   {/* WhatsApp Header */}
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
