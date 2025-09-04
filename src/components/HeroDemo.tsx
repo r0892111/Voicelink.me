@@ -252,7 +252,7 @@ export const HeroDemo: React.FC = () => {
             
             {/* Contact Card - Top Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '2%', 
                 left: '8%', 
@@ -260,7 +260,20 @@ export const HeroDemo: React.FC = () => {
                 transform: 'rotate(-2deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                 backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden'
+                WebkitBackfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                transformStyle: 'preserve-3d'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(-2deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(-2deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="flex items-center space-x-3 mb-4">
@@ -296,7 +309,7 @@ export const HeroDemo: React.FC = () => {
 
             {/* Voice Note Analysis Card - Top Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '1%', 
                 right: '8%', 
@@ -304,7 +317,20 @@ export const HeroDemo: React.FC = () => {
                 transform: 'rotate(1.5deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                 backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden'
+                WebkitBackfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                transformStyle: 'preserve-3d'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(1.5deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="flex items-center space-x-3 mb-4">
@@ -358,7 +384,7 @@ export const HeroDemo: React.FC = () => {
 
             {/* Calendar Widget - Center Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '30%', 
                 left: '15%', 
@@ -366,7 +392,20 @@ export const HeroDemo: React.FC = () => {
                 transform: 'rotate(-1deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                 backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden'
+                WebkitBackfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                transformStyle: 'preserve-3d'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(-1deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(-1deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -416,7 +455,7 @@ export const HeroDemo: React.FC = () => {
 
             {/* Analytics Card - Bottom Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '33%', 
                 right: '15%', 
@@ -424,7 +463,20 @@ export const HeroDemo: React.FC = () => {
                 transform: 'rotate(-1.2deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                 backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden'
+                WebkitBackfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                transformStyle: 'preserve-3d'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -499,7 +551,7 @@ export const HeroDemo: React.FC = () => {
 
             {/* Pipeline Card - Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '25%', 
                 left: '50%', 
@@ -507,7 +559,20 @@ export const HeroDemo: React.FC = () => {
                 transform: 'translateX(-50%) rotate(0.5deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                 backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden'
+                WebkitBackfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                transformStyle: 'preserve-3d'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -543,7 +608,7 @@ export const HeroDemo: React.FC = () => {
 
             {/* Quick Stats Card - Top Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '5%', 
                 left: '50%', 
@@ -551,7 +616,20 @@ export const HeroDemo: React.FC = () => {
                 transform: 'translateX(-50%) rotate(-0.5deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
                 backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden'
+                WebkitBackfaceVisibility: 'hidden',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                transformStyle: 'preserve-3d'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1.1) translateZ(50px)';
+                e.currentTarget.style.zIndex = '1000';
+                e.currentTarget.style.boxShadow = '0 40px 80px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1)';
+                e.currentTarget.style.zIndex = 'auto';
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)';
               }}
             >
               <div className="text-center">
