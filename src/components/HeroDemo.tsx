@@ -103,26 +103,25 @@ export const HeroDemo: React.FC = () => {
                           <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>VoiceLink</span>
                         </div>
                         
-                        <div className="space-y-3">
-                          <div className="text-sm font-medium" style={{ color: '#1C2C55' }}>Updated CRM with:</div>
+                        <div className="text-sm text-gray-800 leading-relaxed">
+                          <div className="font-medium mb-2" style={{ color: '#1C2C55' }}>✅ Updated CRM with:</div>
                           
-                          <div className="bg-yellow-50 rounded-xl p-3 border-l-4" style={{ borderColor: '#F7E69B' }}>
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</span>
-                              <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>High</span>
-                            </div>
-                            <div className="text-xs text-gray-600 mb-1">Sarah Mitchell – TechFlow</div>
-                            <div className="text-xs text-gray-700">Discuss premium package pricing and implementation timeline.</div>
-                            <div className="text-xs text-gray-500 mt-1">Thursday, Jan 16 – 2:00 PM</div>
+                          <div className="space-y-1.5 text-sm">
+                            <div>📞 <strong>Follow-up Call</strong> - Sarah Mitchell (TechFlow)</div>
+                            <div className="ml-4 text-gray-700">• Discuss premium package pricing</div>
+                            <div className="ml-4 text-gray-700">• Review implementation timeline</div>
+                            <div className="ml-4 text-gray-700">• Thursday, Jan 16 at 2:00 PM</div>
+                            <div className="ml-4 text-xs px-2 py-1 rounded-full inline-block mt-1" style={{ backgroundColor: '#FFE4B5', color: '#D2691E' }}>🔥 High Priority</div>
+                            
+                            <div className="pt-2">📝 <strong>Key Notes:</strong></div>
+                            <div className="ml-4 text-gray-700">• Budget increased 40% for digital tools</div>
+                            <div className="ml-4 text-gray-700">• Strong interest in WhatsApp integration</div>
+                            <div className="ml-4 text-gray-700">• Prefers Thursday PM calls</div>
+                            
+                            <div className="pt-2">📋 <strong>Action Items:</strong></div>
+                            <div className="ml-4 text-gray-700">• Send proposal by Friday</div>
+                            <div className="ml-4 text-gray-700">• Include ROI calculations</div>
                           </div>
-
-                          <details className="group">
-                            <summary className="text-xs cursor-pointer" style={{ color: '#1C2C55' }}>View summary ▼</summary>
-                            <div className="mt-2 p-2 bg-gray-50 rounded-lg text-xs space-y-1">
-                              <div><strong>Actionables:</strong> Call back Thu 2:00 PM · Send proposal by Fri · Review contract comments</div>
-                              <div><strong>Client info:</strong> Budget increased 40% for digital tools; prefers real-time sync.</div>
-                            </div>
-                          </details>
                         </div>
                         
                         <div className="flex justify-end items-center space-x-1 mt-3">
