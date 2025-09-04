@@ -227,7 +227,7 @@ export const HeroDemo: React.FC = () => {
       {/* Partial CRM Preview - Centered Below */}
       <div className="w-full px-6">
         {/* Floating CRM Cards Layout */}
-        <div className="relative w-full h-[600px] py-8 max-w-7xl mx-auto">
+        <div className="relative w-full h-[1000px] py-8 max-w-7xl mx-auto">
             
             {/* Contact Card - Top Left */}
             <div 
@@ -453,7 +453,7 @@ export const HeroDemo: React.FC = () => {
                       <div className="text-xs text-gray-600">Sarah Mitchell</div>
                     </div>
                   </div>
-                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Jan 16 • 2:00 PM</div>
+                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>16th</div>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-2">
@@ -463,7 +463,7 @@ export const HeroDemo: React.FC = () => {
                       <div className="text-xs text-gray-600">TechFlow Enterprise</div>
                     </div>
                   </div>
-                  <div className="text-xs font-medium text-gray-600">Jan 17 • 5:00 PM</div>
+                  <div className="text-xs font-medium text-gray-600">17th</div>
                 </div>
               </div>
             </div>
