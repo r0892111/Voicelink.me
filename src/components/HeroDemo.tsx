@@ -76,7 +76,7 @@ export const HeroDemo: React.FC = () => {
                 boxShadow: '0 40px 80px -20px rgba(0, 0, 0, 0.5), 0 25px 50px -15px rgba(0, 0, 0, 0.4), 0 15px 30px -10px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2)'
               }}>
                 {/* iPhone 16 Dynamic Island */}
-                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full z-10"></div>
+                <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full z-10"></div>
                 
                 <div className="bg-white rounded-[2.25rem] overflow-hidden h-full">
                   {/* WhatsApp Header */}
