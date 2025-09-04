@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom 3D effects */
+.shadow-4xl {
+  box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 0.5), 
+              0 35px 70px -15px rgba(0, 0, 0, 0.3),
+              0 15px 30px -10px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhance the 3D perspective for the phone container */
+@media (min-width: 1024px) {
+  .phone-3d-container {
+    perspective: 1200px;
+    perspective-origin: center center;
+  }
+}
