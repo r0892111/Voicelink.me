@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight } from 'lucide-react';
+import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone } from 'lucide-react';
 
 export const HeroDemo: React.FC = () => {
   return (
