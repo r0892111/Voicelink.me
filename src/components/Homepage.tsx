@@ -20,63 +20,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden z-10 pt-48">
         <div className="w-full">
-          {/* Centered Headline Block */}
-          <div className="text-center mb-24 px-6">
-            <div className="max-w-5xl mx-auto space-y-8">
-              <div className="space-y-6">
-                <h1 className="text-5xl lg:text-6xl font-bold leading-tight text-center" style={{ color: '#1C2C55' }}>
-                  <div>Transform speech to</div>
-                  <div style={{ color: '#F7E69B' }}>CRM Data</div>
-                </h1>
-                <div className="text-xl leading-relaxed max-w-3xl mx-auto space-y-2" style={{ color: '#202226' }}>
-                  <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
-                  <p>Turn voice messages into structured data instantly.</p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={openModal}
-                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
-                  style={{ backgroundColor: '#1C2C55' }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
-                >
-                  <span>Get Started Free</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button 
-                  className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2"
-                  style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#F7E69B';
-                    e.currentTarget.style.borderColor = '#1C2C55';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.borderColor = '#1C2C55';
-                  }}
-                >
-                  <Play className="w-5 h-5" />
-                  <span>Watch Demo</span>
-                </button>
-              </div>
 
-              <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span>No credit card required</span>
-                </div>
-                <span>·</span>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span>Connect WhatsApp in 2 minutes</span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Hero Demo Section */}
           <HeroDemo />
         </div>
       </section>

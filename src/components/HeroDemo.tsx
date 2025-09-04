@@ -1,13 +1,67 @@
 import React from 'react';
-import { MessageCircle, Zap, CheckCircle, Play, Users, Mic } from 'lucide-react';
+import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight } from 'lucide-react';
 
 export const HeroDemo: React.FC = () => {
   return (
-    <div className="w-full px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-5 gap-12 items-start">
-          {/* Phone Mockup (40% - 2 columns) */}
-          <div className="lg:col-span-2">
+    <div className="w-full">
+      {/* Hero Content - Text Left, Phone Right */}
+      <div className="max-w-7xl mx-auto px-6 mb-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Hero Text - Left Side */}
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
+                <div>Transform speech to</div>
+                <div style={{ color: '#F7E69B' }}>CRM Data</div>
+              </h1>
+              <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
+                <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
+                <p>Turn voice messages into structured data instantly.</p>
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
+                style={{ backgroundColor: '#1C2C55' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+              >
+                <span>Get Started Free</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button 
+                className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2"
+                style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#F7E69B';
+                  e.currentTarget.style.borderColor = '#1C2C55';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.borderColor = '#1C2C55';
+                }}
+              >
+                <Play className="w-5 h-5" />
+                <span>Watch Demo</span>
+              </button>
+            </div>
+
+            <div className="flex items-center space-x-6 text-sm text-gray-500">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                <span>No credit card required</span>
+              </div>
+              <span>·</span>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                <span>Connect WhatsApp in 2 minutes</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Phone Mockup - Right Side */}
+          <div className="flex justify-center lg:justify-end">
             <div className="relative max-w-xs mx-auto">
               {/* Phone Frame */}
               <div className="relative bg-black rounded-[2.5rem] p-1 shadow-2xl" style={{ aspectRatio: '9/19.5' }}>
@@ -167,12 +221,22 @@ export const HeroDemo: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* CRM Summary Panel (60% - 3 columns) */}
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+      {/* Partial CRM Preview - Centered Below */}
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="relative">
+          {/* Fade overlay to indicate more content below */}
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent z-10"></div>
+          
+          <div className="overflow-hidden" style={{ height: '300px' }}>
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300 hover:scale-105">
+              <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
+              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
+              
               {/* Panel Header */}
-              <div className="bg-gray-50 px-6 py-4 border-b border-gray-100">
+              <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 relative z-10">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold" style={{ color: '#1C2C55' }}>CRM Snapshot</h3>
                   <div className="flex items-center space-x-2">
@@ -182,7 +246,7 @@ export const HeroDemo: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-6 space-y-6">
+              <div className="p-6 space-y-6 relative z-10">
                 {/* Client Contact Card */}
                 <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
                   <div className="flex items-center space-x-4 mb-4">
@@ -275,6 +339,16 @@ export const HeroDemo: React.FC = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          
+          {/* Scroll indicator */}
+          <div className="text-center mt-8">
+            <div className="inline-flex items-center space-x-2 text-sm text-gray-500">
+              <span>Scroll down to see more</span>
+              <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
+              <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           </div>
         </div>
