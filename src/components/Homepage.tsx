@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mic, Zap, Shield, ArrowRight, Star, CheckCircle, Play, Users } from 'lucide-react';
+import { MessageCircle, Zap, Shield, ArrowRight, Star, CheckCircle, Play, Users, Mic } from 'lucide-react';
 import { BuyButton } from './BuyButton';
 
 interface HomepageProps {
@@ -24,12 +24,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             <div className="space-y-8">
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                  Transform Voice to
+                  Transform WhatsApp
                   <span style={{ color: '#F7E69B' }}> CRM Data</span>
                 </h1>
                 <p className="text-xl leading-relaxed max-w-lg" style={{ color: '#202226' }}>
-                  AI-powered voice transcription that automatically syncs with your CRM. 
-                  Turn conversations into structured data instantly.
+                  Send voice notes via WhatsApp and watch them automatically sync with your CRM. 
+                  Turn voice messages into structured data instantly.
                 </p>
               </div>
               
@@ -68,7 +68,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 </div>
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span>Setup in 2 minutes</span>
+                  <span>Connect WhatsApp in 2 minutes</span>
                 </div>
               </div>
             </div>
@@ -86,16 +86,27 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                         className="h-8 w-auto opacity-80"
                       />
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                        <Mic className="w-6 h-6 text-white" />
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
+                        <MessageCircle className="w-6 h-6 text-white" />
                       </div>
                       <div className="flex-1">
-                        <div className="h-3 rounded-full mb-2" style={{ backgroundColor: '#F7E69B' }}></div>
-                        <div className="h-2 bg-gray-100 rounded-full w-3/4"></div>
+                        <div className="text-xs font-medium text-gray-600 mb-1">WhatsApp Voice Note</div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
+                            <Play className="w-3 h-3 text-white ml-0.5" />
+                          </div>
+                          <div className="h-3 rounded-full flex-1" style={{ backgroundColor: '#F7E69B' }}></div>
+                          <span className="text-xs text-gray-500">0:45</span>
+                        </div>
                       </div>
                     </div>
+                    <div className="flex items-center space-x-2 mb-3">
+                      <Zap className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>AI Processing...</span>
+                    </div>
                     <div className="border-l-4 pl-4 space-y-2" style={{ borderColor: '#1C2C55' }}>
+                      <div className="text-xs font-medium text-gray-600 mb-2">Extracted CRM Data:</div>
                       <div className="h-2 bg-gray-100 rounded-full"></div>
                       <div className="h-2 bg-gray-100 rounded-full w-5/6"></div>
                       <div className="h-2 bg-gray-100 rounded-full w-4/6"></div>
@@ -132,11 +143,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.05) 100%)' }}></div>
               <div className="relative">
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
-                <Mic className="w-8 h-8 text-white" />
+                <MessageCircle className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Voice Recognition</h3>
+              <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>WhatsApp Voice Notes</h3>
               <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Advanced AI transcription that understands context, accents, and industry terminology with 99% accuracy.
+                Send voice notes directly through WhatsApp. Advanced AI transcription understands context, accents, and industry terminology with 99% accuracy.
               </p>
               </div>
             </div>
@@ -149,7 +160,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </div>
               <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Instant CRM Sync</h3>
               <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Seamlessly integrates with TeamLeader, Pipedrive, and Odoo. Data appears in your CRM within seconds.
+                Seamlessly integrates with TeamLeader, Pipedrive, and Odoo. Voice data from WhatsApp appears in your CRM within seconds.
               </p>
               </div>
             </div>
@@ -162,7 +173,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </div>
               <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Enterprise Security</h3>
               <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Bank-level encryption and GDPR compliance. Your voice data is processed securely and never stored.
+                Bank-level encryption and GDPR compliance. Your WhatsApp voice messages are processed securely and never stored.
               </p>
               </div>
             </div>
@@ -192,7 +203,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 ))}
               </div>
               <blockquote className="mb-6 leading-relaxed" style={{ color: '#202226' }}>
-                "VoiceLink has revolutionized how we capture client conversations. What used to take 15 minutes of manual data entry now happens automatically."
+                "VoiceLink has revolutionized how we capture client conversations. I just send a WhatsApp voice note after meetings and the data appears in our CRM automatically."
               </blockquote>
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#1C2C55' }}>
@@ -215,7 +226,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 ))}
               </div>
               <blockquote className="mb-6 leading-relaxed" style={{ color: '#202226' }}>
-                "The WhatsApp integration is brilliant. I can update our CRM while driving between client meetings. It's a game-changer for field sales."
+                "The WhatsApp voice notes are brilliant. I can update our CRM while driving between client meetings just by talking to WhatsApp. It's a game-changer for field sales."
               </blockquote>
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#1C2C55' }}>
@@ -238,7 +249,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 ))}
               </div>
               <blockquote className="mb-6 leading-relaxed" style={{ color: '#202226' }}>
-                "Setup took literally 2 minutes. The AI accuracy is incredible - it even picks up on client sentiment and key action items."
+                "Setup took literally 2 minutes. I just connected my WhatsApp and now voice notes automatically become CRM entries. The AI accuracy is incredible."
               </blockquote>
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#1C2C55' }}>
@@ -291,7 +302,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 <div className="space-y-4 mb-8">
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Unlimited voice messages</span>
+                    <span style={{ color: '#202226' }}>Unlimited WhatsApp voice notes</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
@@ -299,7 +310,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>WhatsApp integration</span>
+                    <span style={{ color: '#202226' }}>Native WhatsApp integration</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
@@ -329,10 +340,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-              How It Works
+              How WhatsApp Voice Notes Work
             </h2>
             <p className="text-xl" style={{ color: '#202226' }}>
-              Three simple steps to transform your voice into CRM data
+              Three simple steps to transform WhatsApp voice notes into CRM data
             </p>
           </div>
 
@@ -341,16 +352,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
               <div className="relative p-6">
               <div className="relative mb-6">
-                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
-                  <Mic className="w-10 h-10 text-white" />
+                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#25D366' }}>
+                  <MessageCircle className="w-10 h-10 text-white" />
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
                   1
                 </div>
               </div>
-              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Record Voice Message</h3>
+              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Send WhatsApp Voice Note</h3>
               <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Send a voice message via WhatsApp with your meeting notes, client feedback, or any CRM data.
+                Record and send a voice note through WhatsApp with your meeting notes, client feedback, or any CRM data.
               </p>
               </div>
             </div>
@@ -401,8 +412,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             Ready to Transform Your Workflow?
           </h2>
           <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
-            Join hundreds of teams already using VoiceLink to streamline their CRM processes. 
-            Start your free trial today.
+            Join hundreds of teams already using WhatsApp voice notes to streamline their CRM processes. 
+            Connect your WhatsApp and start your free trial today.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
