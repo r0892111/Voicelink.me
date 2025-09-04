@@ -463,7 +463,7 @@ export const HeroDemo: React.FC = () => {
                       <div className="text-xs text-gray-600">TechFlow Enterprise</div>
                     </div>
                   </div>
-                  <div className="text-xs font-medium text-gray-600">17th</div>
+                  <div className="text-xs font-medium text-gray-600">Jan 17 • 5:00 PM</div>
                 </div>
               </div>
             </div>
