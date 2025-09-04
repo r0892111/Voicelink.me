@@ -72,6 +72,14 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <div className="relative rounded-3xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)' }}>
                 <div className="bg-white rounded-2xl p-6 shadow-xl">
                   <div className="space-y-4">
+                    {/* VoiceLink logo in illustration - blue version on white background */}
+                    <div className="flex justify-center mb-4">
+                      <img 
+                        src="/Finit Voicelink Blue.svg" 
+                        alt="VoiceLink" 
+                        className="h-8 w-auto opacity-80"
+                      />
+                    </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
                         <Mic className="w-6 h-6 text-white" />
@@ -241,9 +249,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               
               <div className="p-8">
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4" style={{ backgroundColor: '#1C2C55' }}>
-                    <Zap className="w-8 h-8 text-white" />
-                  </div>
+                  {/* VoiceLink logo in pricing card - blue version on white background */}
+                  <img 
+                    src="/Finit Voicelink Blue.svg" 
+                    alt="VoiceLink Pro" 
+                    className="h-12 w-auto mx-auto mb-4"
+                  />
                   <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>VoiceLink Pro</h3>
                   <div className="flex items-baseline justify-center space-x-1">
                     <span className="text-4xl font-bold" style={{ color: '#1C2C55' }}>€29</span>
@@ -368,6 +379,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7E69B'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
             >
+              {/* Small logo icon in CTA button */}
+              <img 
+                src="/Finit Voicelink Blue.svg" 
+                alt="" 
+                className="w-5 h-5 mr-1"
+              />
               <span>Start Free Trial</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
@@ -409,10 +426,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                <Users className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold">VoiceLink</span>
+              {/* White logo on dark background */}
+              <img 
+                src="/Finit Voicelink White.svg" 
+                alt="VoiceLink" 
+                className="h-8 w-auto"
+              />
             </div>
             
             <div className="flex items-center space-x-6 text-sm text-white opacity-70">

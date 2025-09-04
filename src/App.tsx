@@ -40,10 +40,12 @@ function App() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gray-900">VoiceLink</span>
+              {/* Blue logo on light background */}
+              <img 
+                src="/Finit Voicelink Blue.svg" 
+                alt="VoiceLink" 
+                className="h-10 w-auto"
+              />
             </div>
             
             {/* Desktop Navigation */}
