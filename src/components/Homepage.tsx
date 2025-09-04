@@ -19,7 +19,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
                   Transform Voice to
-                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> CRM Data</span>
+                  <span style={{ color: '#F7E69B' }}> CRM Data</span>
                 </h1>
                 <p className="text-xl leading-relaxed max-w-lg" style={{ color: '#202226' }}>
                   AI-powered voice transcription that automatically syncs with your CRM. 
@@ -110,8 +110,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="features" className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(45deg, #FFFFFF 0%, rgba(28, 44, 85, 0.03) 50%, rgba(247, 230, 155, 0.05) 100%)' }}></div>
+        <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
               Powerful Features for Modern Teams
@@ -122,7 +123,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.05) 100%)' }}></div>
+              <div className="relative">
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
                 <Mic className="w-8 h-8 text-white" />
               </div>
@@ -130,9 +133,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <p className="leading-relaxed" style={{ color: '#202226' }}>
                 Advanced AI transcription that understands context, accents, and industry terminology with 99% accuracy.
               </p>
+              </div>
             </div>
 
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.05) 100%)' }}></div>
+              <div className="relative">
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
                 <Zap className="w-8 h-8 text-white" />
               </div>
@@ -140,9 +146,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <p className="leading-relaxed" style={{ color: '#202226' }}>
                 Seamlessly integrates with TeamLeader, Pipedrive, and Odoo. Data appears in your CRM within seconds.
               </p>
+              </div>
             </div>
 
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.05) 100%)' }}></div>
+              <div className="relative">
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
                 <Shield className="w-8 h-8 text-white" />
               </div>
@@ -150,14 +159,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <p className="leading-relaxed" style={{ color: '#202226' }}>
                 Bank-level encryption and GDPR compliance. Your voice data is processed securely and never stored.
               </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Social Proof Section */}
-      <section id="testimonials" className="py-20" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="testimonials" className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(-45deg, rgba(247, 230, 155, 0.08) 0%, #FFFFFF 30%, rgba(28, 44, 85, 0.03) 100%)' }}></div>
+        <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
               Trusted by Growing Teams
@@ -168,7 +179,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 relative border" style={{ borderColor: '#F7E69B' }}>
+            <div className="bg-white rounded-2xl p-8 relative border hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden" style={{ borderColor: '#F7E69B' }}>
+              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.03) 0%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
+              <div className="relative">
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -186,9 +199,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   <div className="text-sm" style={{ color: '#202226' }}>Sales Director, TechCorp</div>
                 </div>
               </div>
+              </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 relative border" style={{ borderColor: '#F7E69B' }}>
+            <div className="bg-white rounded-2xl p-8 relative border hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden" style={{ borderColor: '#F7E69B' }}>
+              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.03) 0%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
+              <div className="relative">
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -206,9 +222,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   <div className="text-sm" style={{ color: '#202226' }}>Account Manager, GrowthCo</div>
                 </div>
               </div>
+              </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 relative border" style={{ borderColor: '#F7E69B' }}>
+            <div className="bg-white rounded-2xl p-8 relative border hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden" style={{ borderColor: '#F7E69B' }}>
+              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.03) 0%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
+              <div className="relative">
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -226,14 +245,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   <div className="text-sm" style={{ color: '#202226' }}>Customer Success, StartupXYZ</div>
                 </div>
               </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="pricing" className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(28, 44, 85, 0.02) 0%, #FFFFFF 50%, rgba(247, 230, 155, 0.06) 100%)' }}></div>
+        <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
               Simple, Transparent Pricing
@@ -244,10 +265,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           <div className="max-w-md mx-auto">
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative">
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300 hover:scale-105">
               <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
+              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
               
-              <div className="p-8">
+              <div className="p-8 relative">
                 <div className="text-center mb-8">
                   {/* VoiceLink logo in pricing card - blue version on white background */}
                   <img 
@@ -300,8 +322,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(225deg, rgba(247, 230, 155, 0.04) 0%, #FFFFFF 40%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
+        <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
               How It Works
@@ -312,7 +335,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center group">
+            <div className="text-center group relative">
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
+              <div className="relative p-6">
               <div className="relative mb-6">
                 <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
                   <Mic className="w-10 h-10 text-white" />
@@ -325,9 +350,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <p className="leading-relaxed" style={{ color: '#202226' }}>
                 Send a voice message via WhatsApp with your meeting notes, client feedback, or any CRM data.
               </p>
+              </div>
             </div>
 
-            <div className="text-center group">
+            <div className="text-center group relative">
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
+              <div className="relative p-6">
               <div className="relative mb-6">
                 <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
                   <Zap className="w-10 h-10 text-white" />
@@ -340,9 +368,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <p className="leading-relaxed" style={{ color: '#202226' }}>
                 Our advanced AI transcribes and structures your voice data, extracting key information automatically.
               </p>
+              </div>
             </div>
 
-            <div className="text-center group">
+            <div className="text-center group relative">
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
+              <div className="relative p-6">
               <div className="relative mb-6">
                 <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
                   <Shield className="w-10 h-10 text-white" />
@@ -355,6 +386,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <p className="leading-relaxed" style={{ color: '#202226' }}>
                 Data automatically syncs to your CRM with proper formatting, tags, and contact associations.
               </p>
+              </div>
             </div>
           </div>
         </div>
