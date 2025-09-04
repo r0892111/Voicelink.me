@@ -183,7 +183,6 @@ export const HeroDemo: React.FC = () => {
                             <div>📞 <strong>Follow-up Call</strong> - Sarah Mitchell (TechFlow)</div>
                             <div className="ml-4 text-gray-700">• Discuss premium package pricing and implementation timeline</div>
                             <div className="ml-4 text-gray-700">• Thursday, Jan 16 at 2:00 PM</div>
-                            <div className="ml-4 text-xs px-2 py-1 rounded-full inline-block mt-1" style={{ backgroundColor: '#FFE4B5', color: '#D2691E' }}>🔥 High Priority</div>
                             
                             <div className="pt-1">📝 <strong>Key Notes:</strong></div>
                             <div className="ml-4 text-gray-700">• Budget increased 40% for digital tools</div>
