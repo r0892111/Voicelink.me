@@ -228,7 +228,6 @@ export const HeroDemo: React.FC = () => {
       <div className="w-full px-6">
         {/* Floating CRM Cards Layout */}
         <div className="relative w-full h-[600px] py-8 max-w-7xl mx-auto">
-        <div className="relative w-full h-[800px] py-8 max-w-7xl mx-auto">
             
             {/* Contact Card - Top Left */}
             <div 
@@ -526,7 +525,6 @@ export const HeroDemo: React.FC = () => {
             {/* Floating Background Elements */}
             <div className="absolute bottom-8 left-1/3 w-20 h-20 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
             <div className="absolute top-1/2 left-1/2 w-12 h-12 rounded-full opacity-5" style={{ backgroundColor: '#25D366' }}></div>
-        </div>
         </div>
       </div>
     </div>
