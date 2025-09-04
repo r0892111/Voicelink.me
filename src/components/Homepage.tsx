@@ -17,7 +17,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </div>
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden z-10">
+      <section className="relative min-h-screen flex items-center overflow-hidden z-10 pt-32">
         <div className="w-full">
           {/* Centered Headline Block */}
           <div className="text-center mb-20 px-6">
