@@ -79,6 +79,42 @@ export const HeroDemo: React.FC = () => {
                 <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full z-10"></div>
                 
                 <div className="bg-white rounded-[2.25rem] overflow-hidden h-full">
+                  {/* iPhone Status Bar */}
+                  <div className="absolute top-1 left-0 right-0 z-20 px-6 py-2 flex items-center justify-between text-black">
+                    {/* Left side - 5G */}
+                    <div className="text-sm font-semibold">
+                      5G
+                    </div>
+                    
+                    {/* Right side - Cellular, WiFi, Battery */}
+                    <div className="flex items-center space-x-1">
+                      {/* Cellular bars */}
+                      <div className="flex items-end space-x-0.5">
+                        <div className="w-1 h-1 bg-black rounded-full"></div>
+                        <div className="w-1 h-1.5 bg-black rounded-full"></div>
+                        <div className="w-1 h-2 bg-black rounded-full"></div>
+                        <div className="w-1 h-2.5 bg-black rounded-full"></div>
+                      </div>
+                      
+                      {/* WiFi icon */}
+                      <div className="ml-1">
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                        </svg>
+                      </div>
+                      
+                      {/* Battery */}
+                      <div className="ml-1 flex items-center">
+                        <div className="relative">
+                          <div className="w-6 h-3 border border-black rounded-sm">
+                            <div className="w-4 h-1.5 bg-black rounded-sm m-0.5"></div>
+                          </div>
+                          <div className="absolute -right-0.5 top-1 w-0.5 h-1 bg-black rounded-r-sm"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* WhatsApp Header */}
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
