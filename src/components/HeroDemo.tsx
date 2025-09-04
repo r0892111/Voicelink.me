@@ -252,13 +252,15 @@ export const HeroDemo: React.FC = () => {
             
             {/* Contact Card - Top Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
               style={{ 
                 top: '2%', 
                 left: '8%', 
                 width: '320px',
                 transform: 'rotate(-2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
               }}
             >
               <div className="flex items-center space-x-3 mb-4">
@@ -294,13 +296,15 @@ export const HeroDemo: React.FC = () => {
 
             {/* Voice Note Analysis Card - Top Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
               style={{ 
                 top: '1%', 
                 right: '8%', 
                 width: '350px',
                 transform: 'rotate(1.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
               }}
             >
               <div className="flex items-center space-x-3 mb-4">
@@ -354,13 +358,15 @@ export const HeroDemo: React.FC = () => {
 
             {/* Calendar Widget - Center Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
               style={{ 
                 top: '30%', 
                 left: '15%', 
                 width: '280px',
                 transform: 'rotate(-1deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -410,13 +416,15 @@ export const HeroDemo: React.FC = () => {
 
             {/* Analytics Card - Bottom Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
               style={{ 
                 top: '33%', 
                 right: '15%', 
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -491,13 +499,15 @@ export const HeroDemo: React.FC = () => {
 
             {/* Pipeline Card - Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
               style={{ 
                 top: '25%', 
                 left: '50%', 
                 width: '360px',
                 transform: 'translateX(-50%) rotate(0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
               }}
             >
               <div className="flex items-center space-x-2 mb-4">
@@ -533,13 +543,15 @@ export const HeroDemo: React.FC = () => {
 
             {/* Quick Stats Card - Top Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-3xl hover:z-50"
               style={{ 
                 top: '5%', 
                 left: '50%', 
                 width: '200px',
                 transform: 'translateX(-50%) rotate(-0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
               }}
             >
               <div className="text-center">
