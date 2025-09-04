@@ -292,19 +292,38 @@ export const HeroDemo: React.FC = () => {
               <div className="space-y-3 text-sm" style={{ color: '#202226' }}>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <span>Budget allocation increased by 40%</span>
+                  <div>
+                    <div className="font-medium">Budget allocation increased by 40%</div>
+                    <div className="text-xs text-gray-600 mt-1">Digital transformation budget expanded from €75k to €105k for Q1-Q2</div>
+                  </div>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <span>Enterprise integration requirements identified</span>
+                  <div>
+                    <div className="font-medium">Strong interest in WhatsApp integration</div>
+                    <div className="text-xs text-gray-600 mt-1">Specifically mentioned need for seamless communication tools and mobile-first solutions</div>
+                  </div>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <span>ROI analysis and case studies requested</span>
+                  <div>
+                    <div className="font-medium">Prefers Thursday PM calls</div>
+                    <div className="text-xs text-gray-600 mt-1">Best availability between 2:00-4:00 PM on Thursdays due to team meeting schedule</div>
+                  </div>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
-                  <span>Preferred meeting schedule: Thursday afternoons</span>
+                  <div>
+                    <div className="font-medium">Decision timeline accelerated</div>
+                    <div className="text-xs text-gray-600 mt-1">Wants to finalize vendor selection by end of January due to Q1 implementation goals</div>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <div className="w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: '#1C2C55' }}></div>
+                  <div>
+                    <div className="font-medium">Technical requirements clarified</div>
+                    <div className="text-xs text-gray-600 mt-1">Needs API integration with existing ERP system and multi-language support</div>
+                  </div>
                 </div>
               </div>
               <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500">
