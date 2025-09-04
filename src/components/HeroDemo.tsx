@@ -17,8 +17,12 @@ export const HeroDemo: React.FC = () => {
                 <div className="bg-white rounded-[2.25rem] overflow-hidden h-full">
                   {/* WhatsApp Header */}
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">SM</span>
+                    <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
+                      <img 
+                        src="/Finit Icon White.svg" 
+                        alt="VoiceLink" 
+                        className="w-full h-full object-contain"
+                      />
                     </div>
                     <div className="flex-1">
                       <div className="text-white font-medium">VoiceLink</div>
