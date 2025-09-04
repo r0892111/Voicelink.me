@@ -103,51 +103,19 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                         <div className="bg-[#ECE5DD] min-h-[500px] p-4 space-y-4">
                           {/* User Voice Message */}
                           <div className="flex justify-end">
-                            <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-4 max-w-sm shadow-sm">
-                              <div className="flex items-center space-x-3 mb-2">
+                            <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md p-3 max-w-xs shadow-sm">
+                              <div className="flex items-center space-x-2 mb-2">
                                 <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
                                   <Play className="w-3 h-3 text-white ml-0.5" />
                                 </div>
                                 <div className="flex-1">
-                                  <div className="h-10 rounded-lg relative overflow-hidden bg-white/15 backdrop-blur-sm border border-white/20">
-                                    <div className="absolute inset-0 flex items-center justify-center px-3">
-                                      {/* Waveform visualization with realistic audio patterns */}
-                                      <div className="flex items-end space-x-0.5 w-full justify-center">
-                                        {[...Array(45)].map((_, i) => {
-                                          // Create realistic waveform pattern with varying amplitudes
-                                          const wavePattern = [
-                                            4, 8, 12, 16, 20, 24, 28, 32, 28, 24, 20, 16, 12, 8, 6, 
-                                            10, 14, 18, 22, 26, 30, 26, 22, 18, 14, 10, 8, 12, 16, 
-                                            20, 18, 14, 10, 6, 4, 8, 12, 16, 14, 10, 8, 6, 4, 6, 8
-                                          ];
-                                          const isPlayed = i < 30; // Show progress through waveform
-                                          
-                                          return (
-                                            <div 
-                                              key={i} 
-                                              className="bg-white rounded-full transition-all duration-100 hover:scale-110" 
-                                              style={{ 
-                                                width: '1.5px', 
-                                                height: `${wavePattern[i] || 6}px`,
-                                                opacity: isPlayed ? 0.95 : 0.4,
-                                                transform: isPlayed ? 'scaleY(1)' : 'scaleY(0.8)'
-                                              }}
-                                            ></div>
-                                          );
+                                  <div className="h-6 rounded-full relative overflow-hidden" style={{ backgroundColor: '#25D366' }}>
+                                    <div className="absolute inset-0 flex items-center px-2">
+                                      <div className="flex space-x-0.5">
+                                        {[...Array(20)].map((_, i) => (
+                                          <div key={i} className="w-0.5 bg-white rounded-full" style={{ height: `${Math.random() * 16 + 4}px` }}></div>
                                         ))}
                                       </div>
-                                      
-                                      {/* Playback progress overlay */}
-                                      <div 
-                                        className="absolute left-3 top-1/2 transform -translate-y-1/2 h-0.5 bg-white/70 rounded-full transition-all duration-300"
-                                        style={{ width: '67%' }}
-                                      ></div>
-                                      
-                                      {/* Current playback position indicator */}
-                                      <div 
-                                        className="absolute top-1/2 transform -translate-y-1/2 w-1 h-6 bg-white rounded-full shadow-sm"
-                                        style={{ left: '67%' }}
-                                      ></div>
                                     </div>
                                   </div>
                                 </div>
