@@ -10,10 +10,23 @@ export const HeroDemo: React.FC = () => {
           {/* Hero Text - Left Side */}
           <div className="space-y-8 lg:pl-8">
             <div className="space-y-6">
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                <div>Transform speech to</div>
-                <div style={{ color: '#F7E69B' }}>CRM Data</div>
-              </h1>
+              <div className="relative">
+                <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4" style={{ color: '#1C2C55' }}>
+                  Transform speech to
+                </h1>
+                <div className="relative inline-block">
+                  <h1 className="text-6xl lg:text-7xl font-black tracking-tight relative z-10" style={{ 
+                    color: '#1C2C55',
+                    textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)'
+                  }}>
+                    CRM Data
+                  </h1>
+                  {/* Gradient underline accent */}
+                  <div className="absolute bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 rounded-full opacity-20 transform -skew-x-12"></div>
+                  {/* Subtle background glow */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10"></div>
+                </div>
+              </div>
               <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
                 <p>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
                 <p>Turn voice messages into structured data instantly.</p>
