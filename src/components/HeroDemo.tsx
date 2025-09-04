@@ -225,8 +225,8 @@ export const HeroDemo: React.FC = () => {
       </div>
 
       {/* Partial CRM Preview - Centered Below */}
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="relative min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)' }}>
+      <div className="w-full px-6">
+        <div className="relative min-h-screen max-w-7xl mx-auto" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)' }}>
           {/* Floating CRM Cards Layout */}
           <div className="relative w-full h-full py-16">
             
@@ -234,8 +234,8 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                top: '10%', 
-                left: '5%', 
+                top: '8%', 
+                left: '2%', 
                 width: '320px',
                 transform: 'rotate(-2deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -273,8 +273,8 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                top: '8%', 
-                right: '8%', 
+                top: '6%', 
+                right: '2%', 
                 width: '350px',
                 transform: 'rotate(1.5deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -314,8 +314,8 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                top: '45%', 
-                left: '12%', 
+                top: '40%', 
+                left: '8%', 
                 width: '280px',
                 transform: 'rotate(-1deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -356,8 +356,8 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                top: '35%', 
-                right: '15%', 
+                top: '32%', 
+                right: '8%', 
                 width: '300px',
                 transform: 'rotate(0.8deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -398,8 +398,8 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                bottom: '15%', 
-                left: '8%', 
+                bottom: '12%', 
+                left: '4%', 
                 width: '320px',
                 transform: 'rotate(1deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -440,8 +440,8 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                bottom: '20%', 
-                right: '10%', 
+                bottom: '18%', 
+                right: '4%', 
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -475,7 +475,7 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                top: '60%', 
+                top: '58%', 
                 left: '50%', 
                 width: '360px',
                 transform: 'translateX(-50%) rotate(0.5deg)',
@@ -517,7 +517,7 @@ export const HeroDemo: React.FC = () => {
             <div 
               className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
               style={{ 
-                top: '5%', 
+                top: '3%', 
                 left: '50%', 
                 width: '200px',
                 transform: 'translateX(-50%) rotate(-0.5deg)',
@@ -535,9 +535,9 @@ export const HeroDemo: React.FC = () => {
             </div>
 
             {/* Floating Background Elements */}
-            <div className="absolute top-20 right-20 w-32 h-32 rounded-full opacity-5" style={{ backgroundColor: '#1C2C55' }}></div>
-            <div className="absolute bottom-32 left-20 w-24 h-24 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
-            <div className="absolute top-1/2 left-1/3 w-16 h-16 rounded-full opacity-5" style={{ backgroundColor: '#25D366' }}></div>
+            <div className="absolute top-20 right-32 w-32 h-32 rounded-full opacity-5" style={{ backgroundColor: '#1C2C55' }}></div>
+            <div className="absolute bottom-32 left-32 w-24 h-24 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
+            <div className="absolute top-1/2 left-1/2 w-16 h-16 rounded-full opacity-5" style={{ backgroundColor: '#25D366' }}></div>
           </div>
         </div>
       </div>
