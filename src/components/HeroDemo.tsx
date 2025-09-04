@@ -464,26 +464,26 @@ export const HeroDemo: React.FC = () => {
               
               {/* Auto-inserted Events */}
               <div className="space-y-2">
-                <div className="text-xs font-medium text-gray-500 mb-2">Auto-inserted from voice notes:</div>
+                <div className="text-sm font-semibold text-gray-600 mb-2">Auto-inserted from voice notes:</div>
                 <div className="flex items-center justify-between p-2 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
                     <div>
-                      <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</div>
-                      <div className="text-xs text-gray-600">Sarah Mitchell</div>
+                      <div className="text-sm font-bold" style={{ color: '#1C2C55' }}>Follow-up Call</div>
+                      <div className="text-sm text-gray-700">Sarah Mitchell</div>
                     </div>
                   </div>
-                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>Jan 16 • 2:00 PM</div>
+                  <div className="text-sm font-bold" style={{ color: '#1C2C55' }}>Jan 16 • 2:00 PM</div>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
                     <div>
-                      <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Proposal Deadline</div>
-                      <div className="text-xs text-gray-600">TechFlow Enterprise</div>
+                      <div className="text-sm font-bold" style={{ color: '#1C2C55' }}>Proposal Deadline</div>
+                      <div className="text-sm text-gray-700">TechFlow Enterprise</div>
                     </div>
                   </div>
-                  <div className="text-xs font-medium text-gray-600">Jan 17 • 5:00 PM</div>
+                  <div className="text-sm font-bold text-gray-700">Jan 17 • 5:00 PM</div>
                 </div>
               </div>
             </div>
