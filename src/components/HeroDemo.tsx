@@ -72,7 +72,7 @@ export const HeroDemo: React.FC = () => {
           </div>
 
           {/* Phone Mockup - Right Side */}
-          <div className="flex justify-center lg:justify-end lg:pl-24">
+          <div className="flex justify-center lg:justify-end lg:pl-12">
             <div className="relative max-w-xs mx-auto">
               {/* Background Effect Elements */}
               <div className="absolute inset-0 transform translate-x-8 translate-y-8 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2.5rem] blur-2xl opacity-40 scale-110"></div>
