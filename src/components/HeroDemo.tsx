@@ -62,24 +62,37 @@ export const HeroDemo: React.FC = () => {
 
           {/* Phone Mockup - Right Side */}
           <div className="flex justify-center lg:justify-end lg:pl-24" style={{ perspective: '1000px' }}>
-            <div className="relative max-w-xs mx-auto transform-gpu transition-all duration-700 hover:scale-110" 
+            <div className="relative max-w-xs mx-auto transform-gpu transition-all duration-700 hover:scale-110 will-change-transform" 
                  style={{ 
-                   transform: 'rotateX(15deg) rotateY(-10deg) translateZ(50px)',
-                   transformStyle: 'preserve-3d'
+                   transform: 'rotateX(8deg) rotateY(-5deg) translateZ(30px)',
+                   transformStyle: 'preserve-3d',
+                   backfaceVisibility: 'hidden',
+                   WebkitFontSmoothing: 'antialiased',
+                   MozOsxFontSmoothing: 'grayscale'
                  }}>
               {/* Phone Frame */}
-              <div className="relative bg-black rounded-[2.5rem] p-1 transition-all duration-700 hover:shadow-4xl" 
+              <div className="relative bg-black rounded-[2.5rem] p-1 transition-all duration-700 hover:shadow-4xl will-change-transform" 
                    style={{ 
                      aspectRatio: '9/19.5',
                      boxShadow: '0 50px 100px -20px rgba(0, 0, 0, 0.4), 0 30px 60px -30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)',
-                     filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15))'
+                     filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15))',
+                     WebkitFontSmoothing: 'antialiased',
+                     MozOsxFontSmoothing: 'grayscale'
                    }}>
                 {/* iPhone 16 Dynamic Island */}
                 <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-10"
-                     style={{ transform: 'translateX(-50%) translateZ(2px)' }}></div>
+                     style={{ 
+                       transform: 'translateX(-50%) translateZ(2px)',
+                       WebkitFontSmoothing: 'antialiased'
+                     }}></div>
                 
-                <div className="bg-white rounded-[2.25rem] overflow-hidden h-full relative"
-                     style={{ transform: 'translateZ(1px)' }}>
+                <div className="bg-white rounded-[2.25rem] overflow-hidden h-full relative will-change-transform"
+                     style={{ 
+                       transform: 'translateZ(1px)',
+                       WebkitFontSmoothing: 'antialiased',
+                       MozOsxFontSmoothing: 'grayscale',
+                       textRendering: 'optimizeLegibility'
+                     }}>
                   {/* WhatsApp Header */}
                   <div className="bg-[#075E54] px-4 py-4 pt-8 flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
