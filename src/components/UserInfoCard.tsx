@@ -158,12 +158,78 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo, 
   };
 
   const renderOdooInfo = () => {
-    // Placeholder for Odoo data structure
+    const user = userInfo || {};
+    
     return (
-      <div className="p-4 bg-purple-50 rounded-lg">
-        <div className="flex items-center space-x-2 mb-2">
-          <User className="w-4 h-4 text-purple-600" />
-          <h3 className="font-medium text-gray-900">Odoo User Info</h3>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 bg-purple-50 rounded-lg">
+            <div className="flex items-center space-x-2 mb-2">
+              <User className="w-4 h-4 text-purple-600" />
+              <h3 className="font-medium text-gray-900">Personal Info</h3>
+            </div>
+            <div className="space-y-2 text-sm">
+              <p><span className="font-medium">Name:</span> {user.name}</p>
+              <p><span className="font-medium">User ID:</span> {user.user_id}</p>
+              <p><span className="font-medium">Support Access:</span> {user.support ? 'Yes' : 'No'}</p>
+            </div>
+          </div>
+          
+          <div className="p-4 bg-purple-50 rounded-lg">
+            <div className="flex items-center space-x-2 mb-2">
+              <Mail className="w-4 h-4 text-purple-600" />
+              <h3 className="font-medium text-gray-900">Contact</h3>
+            </div>
+            <div className="space-y-2 text-sm">
+              <p><span className="font-medium">Email:</span> {user.email}</p>
+              <p><span className="font-medium">Scope:</span> {user.scope}</p>
+            </div>
+          </div>
+        </div>
+
+        {user.audience && (
+          <div className="p-4 bg-purple-50 rounded-lg">
+            <div className="flex items-center space-x-2 mb-2">
+              <Settings className="w-4 h-4 text-purple-600" />
+              <h3 className="font-medium text-gray-900">OAuth Details</h3>
+            </div>
+            <div className="space-y-2 text-sm">
+              <p><span className="font-medium">Audience:</span> {user.audience}</p>
+              {user.expires_in && (
+                <p><span className="font-medium">Token Expires:</span> {Math.floor(user.expires_in / 60)} minutes</p>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderPlatformInfo = () => {
+    switch (platform) {
+      case 'teamleader':
+        return renderTeamleaderInfo();
+      case 'pipedrive':
+        return renderPipedriveInfo();
+      case 'odoo':
+        return renderOdooInfo();
+      default:
+        return (
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <p className="text-sm text-gray-600">Unknown platform: {platform}</p>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm p-8">
+      <h2 className="text-xl font-semibold text-gray-900 mb-6">User Information</h2>
+      {renderPlatformInfo()}
+    </div>
+  );
+};
+
         </div>
         <p className="text-sm text-gray-600">Odoo user data will be displayed here once available.</p>
       </div>
