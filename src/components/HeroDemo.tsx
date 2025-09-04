@@ -111,8 +111,12 @@ export const HeroDemo: React.FC = () => {
                     <div className="flex justify-start">
                       <div className="bg-white rounded-2xl rounded-bl-md p-4 max-w-[280px] shadow-sm">
                         <div className="flex items-center space-x-2 mb-3">
-                          <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                            <span className="text-xs text-white">🤖</span>
+                          <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center p-1">
+                            <img 
+                              src="/Finit Icon Blue.svg" 
+                              alt="VoiceLink" 
+                              className="w-full h-full object-contain"
+                            />
                           </div>
                           <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>VoiceLink</span>
                         </div>
