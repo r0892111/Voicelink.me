@@ -325,70 +325,51 @@ export const HeroDemo: React.FC = () => {
             >
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <span className="text-white text-sm font-bold">C</span>
+                  <CheckCircle className="w-4 h-4 text-white" />
                 </div>
-                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>January 2025</h4>
+                <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>Action Items</h4>
               </div>
               
-              {/* Calendar Grid */}
-              <div className="mb-3">
-                <div className="grid grid-cols-7 gap-1 mb-2">
-                  {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
-                    <div key={i} className="text-center text-xs font-medium text-gray-500 py-1">
-                      {day}
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-7 gap-1">
-                  {/* Calendar days */}
-                  {[...Array(35)].map((_, i) => {
-                    const dayNumber = i - 2; // Start from Monday
-                    const isCurrentMonth = dayNumber > 0 && dayNumber <= 31;
-                    const isToday = dayNumber === 15;
-                    const hasEvent = [16, 17, 20].includes(dayNumber);
-                    
-                    return (
-                      <div 
-                        key={i} 
-                        className={`
-                          text-center text-xs py-1 rounded relative
-                          ${!isCurrentMonth ? 'text-gray-300' : 'text-gray-700'}
-                          ${isToday ? 'bg-blue-100 text-blue-700 font-semibold' : ''}
-                          ${hasEvent ? 'font-medium' : ''}
-                        `}
-                      >
-                        {isCurrentMonth ? dayNumber : ''}
-                        {hasEvent && (
-                          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              
-              {/* Auto-inserted Events */}
+              {/* Actionables from Voice Notes */}
               <div className="space-y-2">
-                <div className="text-xs font-medium text-gray-500 mb-2">Auto-inserted from voice notes:</div>
-                <div className="flex items-center justify-between p-2 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
-                    <div>
-                      <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Follow-up Call</div>
-                      <div className="text-xs text-gray-600">Sarah Mitchell</div>
-                    </div>
+                <div className="text-xs font-medium text-gray-500 mb-3">Generated from voice notes:</div>
+                
+                <div className="flex items-start space-x-3 p-3 rounded-lg" style={{ backgroundColor: '#F7E69B' }}>
+                  <div className="w-2 h-2 rounded-full mt-1.5 animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
+                  <div className="flex-1">
+                    <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Call Sarah Mitchell</div>
+                    <div className="text-xs text-gray-700 mb-1">Discuss premium package pricing</div>
+                    <div className="text-xs text-gray-600">📅 Thu, Jan 16 at 2:00 PM</div>
                   </div>
-                  <div className="text-xs font-medium" style={{ color: '#1C2C55' }}>16th</div>
                 </div>
-                <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                
+                <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                  <div className="w-2 h-2 rounded-full mt-1.5" style={{ backgroundColor: '#1C2C55' }}></div>
+                  <div className="flex-1">
+                    <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Send Proposal</div>
+                    <div className="text-xs text-gray-700 mb-1">Include ROI calculations & case studies</div>
+                    <div className="text-xs text-gray-600">📅 Fri, Jan 17 by EOD</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                  <div className="w-2 h-2 rounded-full mt-1.5" style={{ backgroundColor: '#1C2C55' }}></div>
+                  <div className="flex-1">
+                    <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Research Integration</div>
+                    <div className="text-xs text-gray-700 mb-1">WhatsApp API requirements for TechFlow</div>
+                    <div className="text-xs text-gray-600">📅 Mon, Jan 20</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
+                    <div className="w-2 h-2 rounded-full mt-1.5" style={{ backgroundColor: '#1C2C55' }}></div>
                     <div>
-                      <div className="text-xs font-semibold" style={{ color: '#1C2C55' }}>Proposal Deadline</div>
-                      <div className="text-xs text-gray-600">TechFlow Enterprise</div>
+                      <div className="text-xs font-semibold mb-1" style={{ color: '#1C2C55' }}>Budget Review</div>
+                      <div className="text-xs text-gray-700 mb-1">Prepare Q1 allocation report</div>
+                      <div className="text-xs text-gray-600">📅 Wed, Jan 22</div>
                     </div>
                   </div>
-                  <div className="text-xs font-medium text-gray-600">17th</div>
                 </div>
               </div>
             </div>
