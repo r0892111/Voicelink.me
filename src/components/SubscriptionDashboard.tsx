@@ -14,6 +14,7 @@ export const SubscriptionDashboard: React.FC = () => {
       case 'pipedrive':
         return <Zap className="w-6 h-6 text-orange-500" />;
       case 'odoo':
+        console.log('Rendering Odoo icon');
         return <Settings className="w-6 h-6 text-purple-600" />;
       default:
         return <Users className="w-6 h-6 text-gray-600" />;

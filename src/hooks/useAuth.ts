@@ -63,6 +63,7 @@ const checkAuth = async () => {
         
         if (session?.user) {
           const userId = session.user.id;
+          console.log(localStorage.getItem('userPlatform'))
           let platform = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
           
           if (platform && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
@@ -80,7 +81,7 @@ const checkAuth = async () => {
               setUserPlatformStorage(platform);
               
               let userName = '';
-              
+              console.log('User data found for platform:', platform, userData);
               switch (platform) {
                 case 'teamleader':
                   userName = userData.user_info?.user?.first_name && userData.user_info?.user?.last_name 
