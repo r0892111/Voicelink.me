@@ -167,10 +167,36 @@ const checkAuth = async () => {
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
+      
+      // Clear all authentication-related localStorage items
+      localStorage.removeItem('userPlatform');
+      localStorage.removeItem('auth_provider');
+      localStorage.removeItem('teamleader_oauth_state');
+      localStorage.removeItem('pipedrive_oauth_state');
+      localStorage.removeItem('odoo_oauth_state');
+      
+      // Clear any other potential auth-related items
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && (key.includes('oauth') || key.includes('auth') || key.includes('token'))) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(key => localStorage.removeItem(key));
+      
       setUser(null);
       setUserPlatformStorage(null);
+      
+      // Force a page reload to ensure complete cleanup
+      window.location.href = '/';
     } catch (error) {
       console.error('Sign out error:', error);
+      // Even if sign out fails, clear local data
+      localStorage.clear();
+      setUser(null);
+      setUserPlatformStorage(null);
+      window.location.href = '/';
     }
   };
 
