@@ -28,7 +28,7 @@ export const useSubscription = () => {
 
   const checkSubscription = useCallback(async () => {
     setLoading(true);
-
+    
     try {
       // Get current auth session
       const { data: { session }, error } = await supabase.auth.getSession();

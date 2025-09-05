@@ -15,46 +15,53 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const processingRef = React.useRef(false);
 
   const handleSignIn = async (provider: AuthProvider) => {
-    // Prevent double calls using ref to avoid React state timing issues
-    if (processingRef.current || loadingProvider) {
-      return;
+  // Prevent double calls using ref
+  if (processingRef.current || loadingProvider) return;
+
+  try {
+    processingRef.current = true;
+    setLoadingProvider(provider.name);
+    setError(null);
+
+    // Set platform in localStorage immediately
+    localStorage.setItem('userPlatform', provider.name);
+    localStorage.setItem('auth_provider', provider.name);
+
+    let authService: AuthService;
+
+    switch (provider.name) {
+      case 'teamleader':
+        authService = AuthService.createTeamleaderAuth();
+        break;
+      case 'pipedrive':
+        authService = AuthService.createPipedriveAuth();
+        break;
+      case 'odoo':
+        authService = AuthService.createOdooAuth();
+        break;
+      default:
+        console.error('Unknown provider:', provider.name);
+        return;
     }
 
-    try {
-      processingRef.current = true;
-      setLoadingProvider(provider.name);
-      setError(null);
-      
-      let authService: AuthService;
-      
-      switch (provider.name) {
-        case 'teamleader':
-          authService = AuthService.createTeamleaderAuth();
-          break;
-        case 'pipedrive':
-          authService = AuthService.createPipedriveAuth();
-          break;
-        case 'odoo':
-          authService = AuthService.createOdooAuth();
-          break;
-        default:
-          console.error('Unknown provider:', provider.name);
-          return;
-      }
+    const result = await authService.initiateAuth();
 
-      const result = await authService.initiateAuth();
-      
-      if (!result.success && result.error) {
-        setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
-      }
-      
-    } catch (error) {
-      setError(`Error signing in with ${provider.displayName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    } finally {
-      setLoadingProvider(null);
-      processingRef.current = false;
+    if (!result.success && result.error) {
+      setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
+      // Clear platform if auth failed
+      localStorage.removeItem('userPlatform');
+      localStorage.removeItem('auth_provider');
     }
-  };
+
+  } catch (error) {
+    setError(`Error signing in with ${provider.displayName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    localStorage.removeItem('userPlatform');
+    localStorage.removeItem('auth_provider');
+  } finally {
+    setLoadingProvider(null);
+    processingRef.current = false;
+  }
+};
 
   // Reset processing state when modal closes
   React.useEffect(() => {
