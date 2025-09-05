@@ -71,6 +71,10 @@ export const AuthCallback: React.FC = () => {
         return;
       }
       localStorage.removeItem(`${platform}_oauth_state`);
+      
+      // Ensure platform is set in localStorage before API call
+      localStorage.setItem('userPlatform', platform);
+      localStorage.setItem('auth_provider', platform);
 
       setMessage(`Processing ${platform} authentication...`);
 

@@ -12,12 +12,12 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
  const setUserPlatform = (platform: string | null) => {
-            if (platform) {
-              localStorage.setItem('userPlatform', platform);
-            } else {
-              localStorage.removeItem('userPlatform');
-            }
-          };
+  if (platform) {
+    localStorage.setItem('userPlatform', platform);
+  } else {
+    localStorage.removeItem('userPlatform');
+  }
+};
 
 
 export const useAuth = () => {
@@ -63,7 +63,7 @@ const checkAuth = async () => {
         
         if (session?.user) {
           const userId = session.user.id;
-          let platform = userPlatform || localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
+          let platform = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
           
           if (platform && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
             // Only query the specific platform table
@@ -108,7 +108,7 @@ const checkAuth = async () => {
             }
           } else {
             // Platform unknown - check all tables once to determine platform
-            const platforms = ['teamleader', 'pipedrive', 'odoo'];
+            const platforms = ['odoo', 'pipedrive', 'teamleader']; // Check Odoo first
             
             for (const platformName of platforms) {
               const tableName = `${platformName}_users`;
@@ -122,6 +122,7 @@ const checkAuth = async () => {
               if (userData) {
                 // Found the user's platform - save it and set user
                 setUserPlatformStorage(platformName);
+                console.log('Platform detected and saved:', platformName);
                 
                 let userName = '';
                 switch (platformName) {

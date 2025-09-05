@@ -95,8 +95,10 @@ export class AuthService {
     const clientId = import.meta.env.VITE_ODOO_CLIENT_ID || '9849446b-87d1-4901-863b-a756148ee670';
     const redirectUri = `${window.location.protocol}//${window.location.host}/auth/odoo/callback`;
 
-    // Clear any existing state to ensure fresh authentication
+    // Clear any existing auth state to ensure fresh authentication
     localStorage.removeItem('odoo_oauth_state');
+    localStorage.removeItem('userPlatform');
+    localStorage.removeItem('auth_provider');
 
     // Generate a fresh state parameter
     const state = this.generateState();
@@ -112,6 +114,7 @@ export class AuthService {
     // Store the new state
     localStorage.setItem('odoo_oauth_state', state);
     localStorage.setItem('auth_provider', 'odoo');
+    localStorage.setItem('userPlatform', 'odoo');
     const authUrl = `https://accounts.odoo.com/oauth2/auth?${params.toString()}`;
 
     window.location.href = authUrl;
