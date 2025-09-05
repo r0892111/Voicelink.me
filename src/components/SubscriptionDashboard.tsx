@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Crown, Users, Zap, Settings } from 'lucide-react';
 import { UserInfoCard } from './UserInfoCard';
 import { WhatsAppVerification } from './WhatsAppVerification';
+import { OdooApiKeyInput } from './OdooApiKeyInput';
 
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -58,6 +59,9 @@ export const SubscriptionDashboard: React.FC = () => {
 
       {/* WhatsApp Integration */}
       <WhatsAppVerification />
+
+      {/* Odoo API Key Input - Only for Odoo users */}
+      {user?.platform === 'odoo' && <OdooApiKeyInput />}
 
       {/* Premium Features */}
       <div className="bg-white rounded-xl shadow-sm p-6">
