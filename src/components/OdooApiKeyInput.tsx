@@ -29,29 +29,30 @@ export const OdooApiKeyInput: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('odoo_users')
-        .select('api_key')
+        .select('id')
         .eq('user_id', user.id)
+        .not('api_key', 'is', null)
         .single();
 
       if (error) {
-        console.error('Error loading API key:', error);
+        // No existing API key found - this is normal
+        setHasExistingKey(false);
         return;
       }
 
-      if (data?.api_key) {
+      if (data?.id) {
         setHasExistingKey(true);
-        // Show masked version of the key
-        setApiKey('••••••••••••••••');
       }
     } catch (error) {
       console.error('Error loading API key:', error);
+      setHasExistingKey(false);
     } finally {
       setLoading(false);
     }
   };
 
   const saveApiKey = async () => {
-    if (!apiKey.trim() || apiKey === '••••••••••••••••') {
+    if (!apiKey.trim()) {
       setError('Please enter a valid API key');
       return;
     }
@@ -79,23 +80,17 @@ export const OdooApiKeyInput: React.FC = () => {
 
       setSuccess(true);
       setHasExistingKey(true);
+      setApiKey(''); // Clear the input field
       
-      // Show success message and then mask the key
+      // Show success message
       setTimeout(() => {
         setSuccess(false);
-        setApiKey('••••••••••••••••');
       }, 2000);
 
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to save API key');
     } finally {
       setSaving(false);
-    }
-  };
-
-  const handleInputFocus = () => {
-    if (hasExistingKey && apiKey === '••••••••••••••••') {
-      setApiKey('');
     }
   };
 
@@ -126,7 +121,7 @@ export const OdooApiKeyInput: React.FC = () => {
           <h3 className="text-lg font-semibold text-gray-900">Odoo API Key</h3>
           <p className="text-sm text-gray-600">
             {hasExistingKey 
-              ? 'Your API key is securely stored and ready to use'
+              ? '✅ API key is securely stored and ready to use'
               : 'Enter your Odoo API key to enable advanced integrations'
             }
           </p>
@@ -150,7 +145,7 @@ export const OdooApiKeyInput: React.FC = () => {
       <div className="space-y-4">
         <div>
           <label htmlFor="odoo-api-key" className="block text-sm font-medium text-gray-700 mb-2">
-            API Key
+            {hasExistingKey ? 'Update API Key' : 'API Key'}
           </label>
           <div className="relative">
             <input
@@ -158,8 +153,7 @@ export const OdooApiKeyInput: React.FC = () => {
               id="odoo-api-key"
               value={apiKey}
               onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              placeholder={hasExistingKey ? "Click to update API key" : "Enter your Odoo API key"}
+              placeholder={hasExistingKey ? "Enter new API key to update" : "Enter your Odoo API key"}
               className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
             />
             <Key className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -171,7 +165,7 @@ export const OdooApiKeyInput: React.FC = () => {
 
         <button
           onClick={saveApiKey}
-          disabled={saving || !apiKey.trim() || apiKey === '••••••••••••••••'}
+          disabled={saving || !apiKey.trim()}
           className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
         >
           {saving ? (
