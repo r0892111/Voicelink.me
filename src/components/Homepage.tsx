@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Zap, Shield, ArrowRight, Star, CheckCircle, Play, Users, Mic } from 'lucide-react';
+import { MessageCircle, Zap, Shield, ArrowRight, Star, CheckCircle, Play, Users, Mic, Settings } from 'lucide-react';
 import { HeroDemo } from './HeroDemo';
 
 // Pricing Calculator Component
@@ -223,85 +223,199 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
         </div>
       </section>
 
-      {/* Social Proof Section */}
-      <section id="testimonials" className="py-20 relative z-10">
+      {/* Custom Solutions Section */}
+      <section id="custom-solutions" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-              Trusted by Growing Teams
+          {/* Header Section */}
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center space-x-2 px-6 py-3 rounded-full mb-6" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)', border: '1px solid rgba(28, 44, 85, 0.1)' }}>
+              <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
+              <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Custom Voice Solutions</span>
+            </div>
+            <h2 className="text-5xl font-bold mb-6 leading-tight" style={{ color: '#1C2C55' }}>
+              Built for Your
+              <span className="block relative">
+                <span className="relative z-10">Unique Business</span>
+                <div className="absolute inset-0 transform translate-y-2 opacity-20" style={{ background: 'linear-gradient(90deg, #F7E69B 0%, transparent 100%)', height: '20px', bottom: '0' }}></div>
+              </span>
             </h2>
-            <p className="text-xl" style={{ color: '#202226' }}>
-              See how VoiceLink transforms productivity for sales and support teams
+            <p className="text-xl leading-relaxed max-w-4xl mx-auto" style={{ color: '#202226' }}>
+              VoiceLink isn't just a CRM tool. We create custom voice-powered solutions tailored to your industry, 
+              workflow, and specific business requirements. If it has an API, we can connect to it.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 relative border hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden" style={{ borderColor: '#F7E69B' }}>
-              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.03) 0%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
-              <div className="relative">
-              <div className="flex items-center mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                ))}
-              </div>
-              <blockquote className="mb-6 leading-relaxed" style={{ color: '#202226' }}>
-                "VoiceLink has revolutionized how we capture client conversations. I just send a WhatsApp voice note after meetings and the data appears in our CRM automatically."
-              </blockquote>
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#1C2C55' }}>
-                  SJ
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+            {/* Left Side - Animated Use Cases */}
+            <div className="space-y-8">
+              <div className="group">
+                <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                  <div className="flex items-start space-x-4 mb-6">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                      <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Field Technicians</h3>
+                      <p className="text-gray-600">On-the-road reporting made simple</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    Technicians speak their service reports while driving between jobs. Voice notes automatically 
+                    generate structured reports with job details, parts used, time spent, and next steps - 
+                    all formatted exactly how your system needs it.
+                  </p>
+                  <div className="flex items-center space-x-2 text-sm font-medium" style={{ color: '#1C2C55' }}>
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
+                    <span>Custom report formats • Real-time sync • Mobile-first</span>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-semibold" style={{ color: '#1C2C55' }}>Sarah Johnson</div>
-                  <div className="text-sm" style={{ color: '#202226' }}>Sales Director, TechCorp</div>
-                </div>
               </div>
+
+              <div className="group">
+                <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                  <div className="flex items-start space-x-4 mb-6">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                      <Users className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Healthcare Teams</h3>
+                      <p className="text-gray-600">Patient care documentation</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    Healthcare professionals record patient interactions, treatment notes, and care plans via voice. 
+                    Our AI structures the information according to medical standards and integrates with EMR systems, 
+                    ensuring compliance and accuracy.
+                  </p>
+                  <div className="flex items-center space-x-2 text-sm font-medium" style={{ color: '#1C2C55' }}>
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
+                    <span>HIPAA compliant • Medical terminology • EMR integration</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 relative border hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden" style={{ borderColor: '#F7E69B' }}>
-              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.03) 0%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
-              <div className="relative">
-              <div className="flex items-center mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                ))}
-              </div>
-              <blockquote className="mb-6 leading-relaxed" style={{ color: '#202226' }}>
-                "The WhatsApp voice notes are brilliant. I can update our CRM while driving between client meetings just by talking to WhatsApp. It's a game-changer for field sales."
-              </blockquote>
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#1C2C55' }}>
-                  MR
+            {/* Right Side - Technology Showcase */}
+            <div className="relative">
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-2xl border border-gray-100 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-yellow-100 to-orange-100 rounded-full blur-2xl opacity-40"></div>
+                
+                <div className="relative z-10">
+                  <div className="text-center mb-8">
+                    <div className="w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                      <Zap className="w-10 h-10 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Any System, Any API</h3>
+                    <p className="text-gray-600">We connect to whatever you use</p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
+                        </div>
+                        <span className="font-medium text-gray-800">ERP Systems</span>
+                      </div>
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
+                        </div>
+                        <span className="font-medium text-gray-800">Project Management</span>
+                      </div>
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
+                        </div>
+                        <span className="font-medium text-gray-800">Inventory Systems</span>
+                      </div>
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
+                        </div>
+                        <span className="font-medium text-gray-800">Custom Databases</span>
+                      </div>
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    </div>
+
+                    <div className="text-center mt-6 p-4 rounded-xl" style={{ backgroundColor: 'rgba(247, 230, 155, 0.1)' }}>
+                      <p className="text-sm font-medium" style={{ color: '#1C2C55' }}>
+                        + Any system with REST API, GraphQL, or webhooks
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-semibold" style={{ color: '#1C2C55' }}>Michael Rodriguez</div>
-                  <div className="text-sm" style={{ color: '#202226' }}>Account Manager, GrowthCo</div>
-                </div>
-              </div>
               </div>
             </div>
+          </div>
 
-            <div className="bg-white rounded-2xl p-8 relative border hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden" style={{ borderColor: '#F7E69B' }}>
-              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.03) 0%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
-              <div className="relative">
-              <div className="flex items-center mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                ))}
+          {/* Bottom CTA Section */}
+          <div className="text-center bg-gradient-to-r from-gray-50 to-white rounded-3xl p-12 shadow-lg border border-gray-100 relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-20"></div>
+            <div className="relative z-10">
+              <h3 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                Ready to Build Your Custom Solution?
+              </h3>
+              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Tell us about your workflow, and we'll show you how voice technology can transform your business operations. 
+                Every solution is tailored to your exact needs.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
+                  style={{ backgroundColor: '#1C2C55' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+                >
+                  <span>Schedule Custom Demo</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button 
+                  className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                  style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#F7E69B';
+                    e.currentTarget.style.borderColor = '#1C2C55';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.borderColor = '#1C2C55';
+                  }}
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Discuss Your Needs</span>
+                </button>
               </div>
-              <blockquote className="mb-6 leading-relaxed" style={{ color: '#202226' }}>
-                "Setup took literally 2 minutes. I just connected my WhatsApp and now voice notes automatically become CRM entries. The AI accuracy is incredible."
-              </blockquote>
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold" style={{ backgroundColor: '#1C2C55' }}>
-                  EK
+              
+              <div className="mt-8 flex items-center justify-center space-x-8 text-sm text-gray-500">
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span>Free consultation</span>
                 </div>
-                <div>
-                  <div className="font-semibold" style={{ color: '#1C2C55' }}>Emma Kim</div>
-                  <div className="text-sm" style={{ color: '#202226' }}>Customer Success, StartupXYZ</div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span>Custom proof of concept</span>
                 </div>
-              </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span>Tailored implementation</span>
+                </div>
               </div>
             </div>
           </div>
