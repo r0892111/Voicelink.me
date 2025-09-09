@@ -61,7 +61,7 @@ export const WhatsAppVerification: React.FC = () => {
           crmUserId = user.id;
           break;
         case 'odoo':
-          crmUserId = user.id;
+          crmUserId = user.user_info?.user_id;
           break;
         default:
           throw new Error('Unknown platform');
@@ -130,7 +130,7 @@ export const WhatsAppVerification: React.FC = () => {
           crmUserId = user.id;
           break;
         case 'odoo':
-          crmUserId = user.id;
+          crmUserId = user.user_info?.user_id;
           break;
         default:
           throw new Error('Unknown platform');

@@ -39,7 +39,7 @@ export const useSubscription = () => {
       }
 
       // Call your edge function
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=${encodeURIComponent(localStorage.getItem('userPlatform')!)}`, {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${session.access_token}`,
