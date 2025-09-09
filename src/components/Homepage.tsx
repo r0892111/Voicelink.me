@@ -466,12 +466,13 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                           </div>
                           <div>
                             <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-900 to-purple-900 bg-clip-text text-transparent">
-                              VoiceLink Pro
+                              <span style={{ color: '#1C2C55' }}>VoiceLink Pro</span>
                             </h3>
                             <p className="text-lg text-slate-600 font-medium">Perfect for growing teams</p>
                           </div>
                         </div>
                       </div>
+                        <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style={{ backgroundColor: '#1C2C55' }}>
                       
                       {/* Features list */}
                       <div className="space-y-4">
