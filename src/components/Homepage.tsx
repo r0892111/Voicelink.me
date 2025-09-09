@@ -31,52 +31,98 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-              Powerful Features for Modern Teams
+              One-Click CRM Integrations
             </h2>
-            <p className="text-xl max-w-3xl mx-auto" style={{ color: '#202226' }}>
-              Everything you need to streamline your CRM workflow with AI-powered voice processing
+            <p className="text-xl max-w-3xl mx-auto mb-8" style={{ color: '#202226' }}>
+              Connect your favorite CRM platform instantly. Currently integrated with leading platforms, with more coming soon.
             </p>
+            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 rounded-full">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>More integrations coming soon</span>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.05) 100%)' }}></div>
-              <div className="relative">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
-                <MessageCircle className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>WhatsApp Voice Notes</h3>
-              <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Send voice notes directly through WhatsApp. Advanced AI transcription understands context, accents, and industry terminology with 99% accuracy.
-              </p>
-              </div>
-            </div>
-
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.05) 100%)' }}></div>
-              <div className="relative">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
-                <Zap className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Instant CRM Sync</h3>
-              <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Seamlessly integrates with TeamLeader, Pipedrive, and Odoo. Voice data from WhatsApp appears in your CRM within seconds.
-              </p>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {/* TeamLeader */}
+            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border-2 border-transparent hover:border-emerald-200">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, rgba(16, 185, 129, 0.05) 100%)' }}></div>
+              <div className="relative text-center">
+                <div className="w-20 h-20 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
+                  <img 
+                    src="/Teamleader_Icon.svg" 
+                    alt="TeamLeader" 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>TeamLeader</h3>
+                <p className="leading-relaxed mb-4" style={{ color: '#202226' }}>
+                  Complete CRM and project management platform. Connect instantly to sync voice notes with contacts, deals, and projects.
+                </p>
+                <div className="inline-flex items-center space-x-2 px-3 py-1 bg-emerald-100 rounded-full">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                  <span className="text-xs font-medium text-emerald-700">One-click connect</span>
+                </div>
               </div>
             </div>
 
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.05) 100%)' }}></div>
-              <div className="relative">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
-                <Shield className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Enterprise Security</h3>
-              <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Bank-level encryption and GDPR compliance. Your WhatsApp voice messages are processed securely and never stored.
-              </p>
+            {/* Pipedrive */}
+            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border-2 border-transparent hover:border-orange-200">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.02) 0%, rgba(249, 115, 22, 0.05) 100%)' }}></div>
+              <div className="relative text-center">
+                <div className="w-20 h-20 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
+                  <img 
+                    src="/Pipedrive_id-7ejZnwv_0.svg" 
+                    alt="Pipedrive" 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Pipedrive</h3>
+                <p className="leading-relaxed mb-4" style={{ color: '#202226' }}>
+                  Sales-focused CRM built for growing teams. Automatically sync voice notes with deals, activities, and contact records.
+                </p>
+                <div className="inline-flex items-center space-x-2 px-3 py-1 bg-orange-100 rounded-full">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  <span className="text-xs font-medium text-orange-700">One-click connect</span>
+                </div>
               </div>
             </div>
+
+            {/* Odoo */}
+            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border-2 border-transparent hover:border-purple-200">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.02) 0%, rgba(147, 51, 234, 0.05) 100%)' }}></div>
+              <div className="relative text-center">
+                <div className="w-20 h-20 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
+                  <img 
+                    src="/odoo_logo.svg" 
+                    alt="Odoo" 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Odoo</h3>
+                <p className="leading-relaxed mb-4" style={{ color: '#202226' }}>
+                  All-in-one business management suite. Integrate voice notes with CRM, sales, inventory, and all your business processes.
+                </p>
+                <div className="inline-flex items-center space-x-2 px-3 py-1 bg-purple-100 rounded-full">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <span className="text-xs font-medium text-purple-700">One-click connect</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Coming Soon Section */}
+          <div className="text-center">
+            <div className="inline-flex items-center space-x-3 px-6 py-3 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0s' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+              <span className="text-lg font-medium text-gray-600">HubSpot, Salesforce, Zoho & more coming soon</span>
+            </div>
+            <p className="mt-4 text-sm text-gray-500 max-w-2xl mx-auto">
+              We're constantly adding new CRM integrations. Request your platform and we'll prioritize it for the next release.
+            </p>
           </div>
         </div>
       </section>
