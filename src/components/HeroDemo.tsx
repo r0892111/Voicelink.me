@@ -23,7 +23,7 @@ export const HeroDemo: React.FC = () => {
                     Talk to your CRM
                   </h1>
                   {/* Subtle background glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10 animate-fade-in" style={{ animationDelay: '0.6s' }}></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-150 -z-10 animate-fade-in" style={{ animationDelay: '0.6s' }}></div>
                 </div>
               </div>
               <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
