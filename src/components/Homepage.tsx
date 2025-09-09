@@ -1,7 +1,98 @@
 import React from 'react';
 import { MessageCircle, Zap, Shield, ArrowRight, Star, CheckCircle, Play, Users, Mic } from 'lucide-react';
-import { BuyButton } from './BuyButton';
 import { HeroDemo } from './HeroDemo';
+
+// Pricing Calculator Component
+const PricingCalculator: React.FC = () => {
+  const [userCount, setUserCount] = React.useState(1);
+  const [customInput, setCustomInput] = React.useState('');
+  const [isCustom, setIsCustom] = React.useState(false);
+  
+  const basePrice = 29.99;
+  const totalPrice = userCount * basePrice;
+  
+  const predefinedOptions = [1, 2, 3, 5, 10, 20, 50, 100];
+  
+  const handleUserCountChange = (value: string) => {
+    if (value === 'custom') {
+      setIsCustom(true);
+      setCustomInput('');
+    } else {
+      setIsCustom(false);
+      setUserCount(parseInt(value));
+    }
+  };
+  
+  const handleCustomInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomInput(value);
+    const numValue = parseInt(value);
+    if (!isNaN(numValue) && numValue > 0) {
+      setUserCount(numValue);
+    }
+  };
+  
+  return (
+    <div className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium mb-3" style={{ color: '#1C2C55' }}>
+          Number of Users
+        </label>
+        <select
+          value={isCustom ? 'custom' : userCount.toString()}
+          onChange={(e) => handleUserCountChange(e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center font-medium"
+          style={{ color: '#1C2C55' }}
+        >
+          {predefinedOptions.map(option => (
+            <option key={option} value={option.toString()}>
+              {option} user{option > 1 ? 's' : ''}
+            </option>
+          ))}
+          <option value="custom">Custom amount</option>
+        </select>
+        
+        {isCustom && (
+          <input
+            type="number"
+            min="1"
+            value={customInput}
+            onChange={handleCustomInputChange}
+            placeholder="Enter number of users"
+            className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center font-medium"
+            style={{ color: '#1C2C55' }}
+          />
+        )}
+      </div>
+      
+      <div className="text-center">
+        <div className="flex items-baseline justify-center space-x-1 mb-2">
+          <span className="text-4xl font-bold" style={{ color: '#1C2C55' }}>
+            €{totalPrice.toFixed(2)}
+          </span>
+          <span className="text-lg" style={{ color: '#202226' }}>/month</span>
+        </div>
+        <p className="text-sm mb-6" style={{ color: '#202226' }}>
+          €{basePrice}/user/month • {userCount} user{userCount > 1 ? 's' : ''}
+        </p>
+        
+        <button
+          className="w-full text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
+          style={{ backgroundColor: '#1C2C55' }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+        >
+          <span>Start Free Trial</span>
+          <ArrowRight className="w-5 h-5" />
+        </button>
+        
+        <p className="text-xs text-gray-500 mt-3">
+          14-day free trial • No credit card required
+        </p>
+      </div>
+    </div>
+  );
+};
 
 interface HomepageProps {
   openModal: () => void;
@@ -225,32 +316,29 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               Simple, Transparent Pricing
             </h2>
             <p className="text-xl" style={{ color: '#202226' }}>
-              Start free, upgrade when you're ready. No hidden fees.
+              Per user pricing. Start free, upgrade when you're ready. No hidden fees.
             </p>
           </div>
 
-          <div className="max-w-md mx-auto">
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300 hover:scale-105">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300">
               <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
               <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
               
               <div className="p-8 relative">
-                <div className="text-center mb-8">
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                  {/* Left side - Product info */}
+                  <div className="text-center md:text-left">
                   {/* VoiceLink logo in pricing card - blue version on white background */}
                   <img 
                     src="/Finit Voicelink Blue.svg" 
                     alt="VoiceLink Pro" 
-                    className="h-12 w-auto mx-auto mb-4"
+                    className="h-12 w-auto mx-auto md:mx-0 mb-4"
                   />
                   <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>VoiceLink Pro</h3>
-                  <div className="flex items-baseline justify-center space-x-1">
-                    <span className="text-4xl font-bold" style={{ color: '#1C2C55' }}>€29</span>
-                    <span className="text-lg" style={{ color: '#202226' }}>.99/month</span>
-                  </div>
-                  <p className="mt-2" style={{ color: '#202226' }}>Perfect for growing teams</p>
-                </div>
-
-                <div className="space-y-4 mb-8">
+                  <p className="mb-6" style={{ color: '#202226' }}>Perfect for growing teams</p>
+                  
+                  <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
                     <span style={{ color: '#202226' }}>Unlimited WhatsApp voice notes</span>
@@ -271,15 +359,14 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
                     <span style={{ color: '#202226' }}>Priority support</span>
                   </div>
+                  </div>
                 </div>
 
-                <BuyButton
-                  priceId="price_1S2ZQPLPohnizGblvhj9qbK3"
-                  productName="VoiceLink Pro"
-                  price="€29.99"
-                  description="Advanced voice-to-CRM features"
-                  className="w-full"
-                />
+                {/* Right side - Pricing and purchase */}
+                <div className="text-center">
+                  <PricingCalculator />
+                </div>
+              </div>
               </div>
             </div>
           </div>
