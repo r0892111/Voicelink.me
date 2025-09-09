@@ -49,7 +49,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   {/* CRM Logos Row */}
                   <div className="flex justify-center items-center space-x-16 mb-12">
                     <div className="group/logo hover:scale-110 transition-transform duration-300">
-                      <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4">
+                      <div className="w-32 h-32 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6">
                         <img 
                           src="/Teamleader_Icon.svg" 
                           alt="TeamLeader" 
@@ -60,7 +60,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     </div>
                     
                     <div className="group/logo hover:scale-110 transition-transform duration-300">
-                      <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4">
+                      <div className="w-32 h-32 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6">
                         <img 
                           src="/Pipedrive_id-7ejZnwv_0.svg" 
                           alt="Pipedrive" 
@@ -71,7 +71,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     </div>
                     
                     <div className="group/logo hover:scale-110 transition-transform duration-300">
-                      <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4">
+                      <div className="w-32 h-32 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6">
                         <img 
                           src="/odoo_logo.svg" 
                           alt="Odoo" 
