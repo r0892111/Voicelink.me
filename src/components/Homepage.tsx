@@ -236,7 +236,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               Built for Your
               <span className="block relative">
                 <span className="relative z-10">Unique Business</span>
-                <div className="absolute inset-0 transform translate-y-2 opacity-20" style={{ background: 'linear-gradient(90deg, #F7E69B 0%, transparent 100%)', height: '20px', bottom: '0' }}></div>
               </span>
             </h2>
             <p className="text-xl leading-relaxed max-w-4xl mx-auto" style={{ color: '#202226' }}>
