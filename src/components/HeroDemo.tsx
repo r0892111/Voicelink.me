@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone, TrendingUp } from 'lucide-react';
+import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone, TrendingUp, Calendar } from 'lucide-react';
 
 export const HeroDemo: React.FC = () => {
   return (
@@ -461,7 +461,7 @@ export const HeroDemo: React.FC = () => {
             >
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
-                  <span className="text-white text-sm font-bold">📅</span>
+                  <Calendar className="w-4 h-4 text-white" />
                 </div>
                 <h4 className="text-lg font-bold" style={{ color: '#1C2C55' }}>January 2025</h4>
               </div>
