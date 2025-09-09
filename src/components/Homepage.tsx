@@ -43,68 +43,80 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {/* TeamLeader */}
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border-2 border-transparent hover:border-emerald-200">
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, rgba(16, 185, 129, 0.05) 100%)' }}></div>
-              <div className="relative text-center">
-                <div className="w-20 h-20 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
-                  <img 
-                    src="/Teamleader_Icon.svg" 
-                    alt="TeamLeader" 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>TeamLeader</h3>
-                <p className="leading-relaxed mb-4" style={{ color: '#202226' }}>
-                  Complete CRM and project management platform. Connect instantly to sync voice notes with contacts, deals, and projects.
-                </p>
-                <div className="inline-flex items-center space-x-2 px-3 py-1 bg-emerald-100 rounded-full">
-                  <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  <span className="text-xs font-medium text-emerald-700">One-click connect</span>
-                </div>
-              </div>
-            </div>
+            {/* Single Consolidated CRM Integration Card */}
+            <div className="md:col-span-3">
+              <div className="group bg-white rounded-3xl p-12 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border-2 border-transparent hover:border-blue-200">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
+                <div className="relative text-center">
+                  {/* CRM Logos Row */}
+                  <div className="flex justify-center items-center space-x-12 mb-8">
+                    <div className="group/logo hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center">
+                        <img 
+                          src="/Teamleader_Icon.svg" 
+                          alt="TeamLeader" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div className="text-xs font-medium mt-2 text-emerald-600">TeamLeader</div>
+                    </div>
+                    
+                    <div className="w-8 h-0.5 bg-gray-300 rounded-full"></div>
+                    
+                    <div className="group/logo hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center">
+                        <img 
+                          src="/Pipedrive_id-7ejZnwv_0.svg" 
+                          alt="Pipedrive" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div className="text-xs font-medium mt-2 text-orange-500">Pipedrive</div>
+                    </div>
+                    
+                    <div className="w-8 h-0.5 bg-gray-300 rounded-full"></div>
+                    
+                    <div className="group/logo hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center">
+                        <img 
+                          src="/odoo_logo.svg" 
+                          alt="Odoo" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div className="text-xs font-medium mt-2 text-purple-600">Odoo</div>
+                    </div>
+                  </div>
 
-            {/* Pipedrive */}
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border-2 border-transparent hover:border-orange-200">
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.02) 0%, rgba(249, 115, 22, 0.05) 100%)' }}></div>
-              <div className="relative text-center">
-                <div className="w-20 h-20 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
-                  <img 
-                    src="/Pipedrive_id-7ejZnwv_0.svg" 
-                    alt="Pipedrive" 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Pipedrive</h3>
-                <p className="leading-relaxed mb-4" style={{ color: '#202226' }}>
-                  Sales-focused CRM built for growing teams. Automatically sync voice notes with deals, activities, and contact records.
-                </p>
-                <div className="inline-flex items-center space-x-2 px-3 py-1 bg-orange-100 rounded-full">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <span className="text-xs font-medium text-orange-700">One-click connect</span>
-                </div>
-              </div>
-            </div>
+                  <h3 className="text-2xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                    Currently Integrated CRM Platforms
+                  </h3>
+                  
+                  <p className="text-lg leading-relaxed mb-6 max-w-3xl mx-auto" style={{ color: '#202226' }}>
+                    Connect instantly with any of our supported CRM platforms. Whether you use TeamLeader for project management, 
+                    Pipedrive for sales, or Odoo for comprehensive business management - your voice notes sync automatically 
+                    with contacts, deals, and activities.
+                  </p>
 
-            {/* Odoo */}
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border-2 border-transparent hover:border-purple-200">
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.02) 0%, rgba(147, 51, 234, 0.05) 100%)' }}></div>
-              <div className="relative text-center">
-                <div className="w-20 h-20 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
-                  <img 
-                    src="/odoo_logo.svg" 
-                    alt="Odoo" 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold mb-4" style={{ color: '#1C2C55' }}>Odoo</h3>
-                <p className="leading-relaxed mb-4" style={{ color: '#202226' }}>
-                  All-in-one business management suite. Integrate voice notes with CRM, sales, inventory, and all your business processes.
-                </p>
-                <div className="inline-flex items-center space-x-2 px-3 py-1 bg-purple-100 rounded-full">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                  <span className="text-xs font-medium text-purple-700">One-click connect</span>
+                  <div className="flex flex-wrap justify-center gap-4 mb-6">
+                    <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 rounded-full">
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                      <span className="text-sm font-medium text-blue-700">One-click authentication</span>
+                    </div>
+                    <div className="inline-flex items-center space-x-2 px-4 py-2 bg-green-50 rounded-full">
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <span className="text-sm font-medium text-green-700">Real-time sync</span>
+                    </div>
+                    <div className="inline-flex items-center space-x-2 px-4 py-2 bg-purple-50 rounded-full">
+                      <CheckCircle className="w-4 h-4 text-purple-600" />
+                      <span className="text-sm font-medium text-purple-700">Secure OAuth 2.0</span>
+                    </div>
+                  </div>
+
+                  <div className="inline-flex items-center space-x-2 px-6 py-3 rounded-full" style={{ backgroundColor: '#F7E69B' }}>
+                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
+                    <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Ready to connect in under 2 minutes</span>
+                  </div>
                 </div>
               </div>
             </div>
