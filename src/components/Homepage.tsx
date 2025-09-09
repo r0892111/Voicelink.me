@@ -475,7 +475,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       
                       {/* Features list */}
                       <div className="space-y-4">
-                        {[
+                            className="w-full text-white font-bold py-5 px-8 rounded-2xl transition-all duration-300 hover:shadow-2xl hover:scale-105 flex items-center justify-center space-x-3 text-lg shadow-xl"
+                            style={{ backgroundColor: '#1C2C55' }}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
                           'Unlimited WhatsApp voice notes',
                           'Real-time CRM sync',
                           'Native WhatsApp integration',
@@ -483,10 +486,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                           'Priority support'
                         ].map((feature, index) => (
                           <div key={index} className="flex items-center space-x-4 group">
-                            <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                              <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
                               <CheckCircle className="w-4 h-4 text-white" />
                             </div>
-                            <span className="text-slate-700 font-medium text-lg group-hover:text-slate-900 transition-colors">
+                              <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
                               {feature}
                             </span>
                           </div>
@@ -496,15 +499,15 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       {/* Trust indicators */}
                       <div className="flex items-center space-x-6 pt-4 border-t border-slate-200">
                         <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                          <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
                           <span className="text-sm font-medium text-slate-600">14-day free trial</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#F7E69B' }}></div>
                           <span className="text-sm font-medium text-slate-600">No setup fees</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
                           <span className="text-sm font-medium text-slate-600">Cancel anytime</span>
                         </div>
                       </div>
