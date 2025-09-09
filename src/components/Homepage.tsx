@@ -45,60 +45,58 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {/* Single Consolidated CRM Integration Card */}
             <div className="md:col-span-3">
-              <div className="group bg-white rounded-3xl p-12 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border-2 border-transparent hover:border-blue-200">
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
-                <div className="relative text-center">
+              <div className="text-center">
                   {/* CRM Logos Row */}
-                  <div className="flex justify-center items-center space-x-12 mb-8">
+                  <div className="flex justify-center items-center space-x-16 mb-12">
                     <div className="group/logo hover:scale-110 transition-transform duration-300">
-                      <div className="w-16 h-16 flex items-center justify-center">
+                      <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4">
                         <img 
                           src="/Teamleader_Icon.svg" 
                           alt="TeamLeader" 
                           className="w-full h-full object-contain"
                         />
                       </div>
-                      <div className="text-xs font-medium mt-2 text-emerald-600">TeamLeader</div>
+                      <div className="text-sm font-bold mt-4 text-emerald-600">TeamLeader</div>
                     </div>
                     
-                    <div className="w-8 h-0.5 bg-gray-300 rounded-full"></div>
+                    <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-orange-400 rounded-full"></div>
                     
                     <div className="group/logo hover:scale-110 transition-transform duration-300">
-                      <div className="w-16 h-16 flex items-center justify-center">
+                      <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4">
                         <img 
                           src="/Pipedrive_id-7ejZnwv_0.svg" 
                           alt="Pipedrive" 
                           className="w-full h-full object-contain"
                         />
                       </div>
-                      <div className="text-xs font-medium mt-2 text-orange-500">Pipedrive</div>
+                      <div className="text-sm font-bold mt-4 text-orange-500">Pipedrive</div>
                     </div>
                     
-                    <div className="w-8 h-0.5 bg-gray-300 rounded-full"></div>
+                    <div className="w-12 h-1 bg-gradient-to-r from-orange-400 to-purple-400 rounded-full"></div>
                     
                     <div className="group/logo hover:scale-110 transition-transform duration-300">
-                      <div className="w-16 h-16 flex items-center justify-center">
+                      <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4">
                         <img 
                           src="/odoo_logo.svg" 
                           alt="Odoo" 
                           className="w-full h-full object-contain"
                         />
                       </div>
-                      <div className="text-xs font-medium mt-2 text-purple-600">Odoo</div>
+                      <div className="text-sm font-bold mt-4 text-purple-600">Odoo</div>
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                  <h3 className="text-3xl font-bold mb-6" style={{ color: '#1C2C55' }}>
                     Currently Integrated CRM Platforms
                   </h3>
                   
-                  <p className="text-lg leading-relaxed mb-6 max-w-3xl mx-auto" style={{ color: '#202226' }}>
+                  <p className="text-xl leading-relaxed mb-8 max-w-4xl mx-auto" style={{ color: '#202226' }}>
                     Connect instantly with any of our supported CRM platforms. Whether you use TeamLeader for project management, 
                     Pipedrive for sales, or Odoo for comprehensive business management - your voice notes sync automatically 
                     with contacts, deals, and activities.
                   </p>
 
-                  <div className="flex flex-wrap justify-center gap-4 mb-6">
+                  <div className="flex flex-wrap justify-center gap-6 mb-8">
                     <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 rounded-full">
                       <CheckCircle className="w-4 h-4 text-blue-600" />
                       <span className="text-sm font-medium text-blue-700">One-click authentication</span>
@@ -113,11 +111,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     </div>
                   </div>
 
-                  <div className="inline-flex items-center space-x-2 px-6 py-3 rounded-full" style={{ backgroundColor: '#F7E69B' }}>
+                  <div className="inline-flex items-center space-x-2 px-8 py-4 rounded-full text-lg font-semibold" style={{ backgroundColor: '#F7E69B' }}>
                     <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#1C2C55' }}></div>
                     <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Ready to connect in under 2 minutes</span>
                   </div>
-                </div>
               </div>
             </div>
           </div>
