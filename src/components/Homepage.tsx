@@ -59,8 +59,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       <div className="text-sm font-bold mt-4 text-emerald-600">TeamLeader</div>
                     </div>
                     
-                    <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-orange-400 rounded-full"></div>
-                    
                     <div className="group/logo hover:scale-110 transition-transform duration-300">
                       <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4">
                         <img 
@@ -71,8 +69,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       </div>
                       <div className="text-sm font-bold mt-4 text-orange-500">Pipedrive</div>
                     </div>
-                    
-                    <div className="w-12 h-1 bg-gradient-to-r from-orange-400 to-purple-400 rounded-full"></div>
                     
                     <div className="group/logo hover:scale-110 transition-transform duration-300">
                       <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4">
