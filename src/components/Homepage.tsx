@@ -33,6 +33,121 @@ const PricingCalculator: React.FC = () => {
   };
   
   return (
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="text-center space-y-2">
+        <h4 className="text-2xl font-bold bg-gradient-to-r from-blue-900 to-purple-900 bg-clip-text text-transparent">
+          Choose Your Plan
+        </h4>
+        <p className="text-slate-600">Scale with your team size</p>
+      </div>
+      
+      {/* User count selector */}
+      <div>
+        <label className="block text-lg font-semibold mb-4 text-slate-800">
+          Number of Users
+        </label>
+        <select
+          value={isCustom ? 'custom' : userCount.toString()}
+          onChange={(e) => handleUserCountChange(e.target.value)}
+          className="w-full px-6 py-4 bg-white border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 text-center font-semibold text-lg text-slate-800 shadow-sm hover:shadow-md transition-all duration-200"
+        >
+          {predefinedOptions.map(option => (
+            <option key={option} value={option.toString()}>
+              {option} user{option > 1 ? 's' : ''}
+            </option>
+          ))}
+          <option value="custom">Custom amount</option>
+        </select>
+        
+        {isCustom && (
+          <input
+            type="number"
+            min="1"
+            value={customInput}
+            onChange={handleCustomInputChange}
+            placeholder="Enter number of users"
+            className="w-full mt-4 px-6 py-4 bg-white border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 text-center font-semibold text-lg text-slate-800 shadow-sm hover:shadow-md transition-all duration-200"
+          />
+        )}
+      </div>
+      
+      {/* Pricing display */}
+      <div className="text-center space-y-6">
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
+          <div className="space-y-3">
+            <div className="flex items-baseline justify-center space-x-2">
+              <span className="text-sm font-medium text-slate-500">Total</span>
+            </div>
+            <div className="flex items-baseline justify-center space-x-1">
+              <span className="text-5xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                €{totalPrice.toFixed(2)}
+              </span>
+              <span className="text-xl font-semibold text-slate-600">/month</span>
+            </div>
+            <p className="text-slate-600 font-medium">
+              €{basePrice}/user/month • {userCount} user{userCount > 1 ? 's' : ''}
+            </p>
+          </div>
+        </div>
+        
+        {/* CTA Button */}
+        <div className="space-y-4">
+          <button
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-5 px-8 rounded-2xl transition-all duration-300 hover:shadow-2xl hover:scale-105 flex items-center justify-center space-x-3 text-lg shadow-xl"
+          >
+            <span>Start Free Trial</span>
+            <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+          </button>
+          
+          <div className="flex items-center justify-center space-x-4 text-sm text-slate-500">
+            <div className="flex items-center space-x-1">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <span>14-day free trial</span>
+            </div>
+            <span>•</span>
+            <div className="flex items-center space-x-1">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <span>No credit card required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Update the existing PricingCalculator component
+const OldPricingCalculator: React.FC = () => {
+  const [userCount, setUserCount] = React.useState(1);
+  const [customInput, setCustomInput] = React.useState('');
+  const [isCustom, setIsCustom] = React.useState(false);
+  
+  const basePrice = 29.99;
+  const totalPrice = userCount * basePrice;
+  
+  const predefinedOptions = [1, 2, 3, 5, 10, 20, 50, 100];
+  
+  const handleUserCountChange = (value: string) => {
+    if (value === 'custom') {
+      setIsCustom(true);
+      setCustomInput('');
+    } else {
+      setIsCustom(false);
+      setUserCount(parseInt(value));
+    }
+  };
+  
+  const handleCustomInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomInput(value);
+    const numValue = parseInt(value);
+    if (!isNaN(numValue) && numValue > 0) {
+      setUserCount(numValue);
+    }
+  };
+  
+  return (
     <div className="space-y-6">
       <div>
         <label className="block text-sm font-medium mb-3" style={{ color: '#1C2C55' }}>
@@ -321,52 +436,86 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300">
-              <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
-              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
+            <div className="relative">
+              {/* Premium background with subtle patterns */}
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50 rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-3xl"></div>
               
-              <div className="p-8 relative">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
+              {/* Main pricing card */}
+              <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
+                {/* Premium accent bar */}
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800"></div>
+                
+                {/* Subtle corner decorations */}
+                <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-blue-100/30 to-purple-100/30 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 to-blue-100/30 rounded-full blur-xl"></div>
+                
+                <div className="p-12 relative">
+                  <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 items-center">
                   {/* Left side - Product info */}
-                  <div className="text-center md:text-left">
-                  {/* VoiceLink logo in pricing card - blue version on white background */}
-                  <img 
-                    src="/Finit Voicelink Blue.svg" 
-                    alt="VoiceLink Pro" 
-                    className="h-12 w-auto mx-auto md:mx-0 mb-4"
-                  />
-                  <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>VoiceLink Pro</h3>
-                  <p className="mb-6" style={{ color: '#202226' }}>Perfect for growing teams</p>
-                  
-                  <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Unlimited WhatsApp voice notes</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Real-time CRM sync</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Native WhatsApp integration</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Multi-language support</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Priority support</span>
-                  </div>
-                  </div>
-                </div>
+                    <div className="space-y-8">
+                      {/* Logo and title */}
+                      <div className="space-y-4">
+                        <div className="flex items-center space-x-4">
+                          <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <img 
+                              src="/Finit Icon White.svg" 
+                              alt="VoiceLink Pro" 
+                              className="w-8 h-8"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-900 to-purple-900 bg-clip-text text-transparent">
+                              VoiceLink Pro
+                            </h3>
+                            <p className="text-lg text-slate-600 font-medium">Perfect for growing teams</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Features list */}
+                      <div className="space-y-4">
+                        {[
+                          'Unlimited WhatsApp voice notes',
+                          'Real-time CRM sync',
+                          'Native WhatsApp integration',
+                          'Multi-language support',
+                          'Priority support'
+                        ].map((feature, index) => (
+                          <div key={index} className="flex items-center space-x-4 group">
+                            <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                              <CheckCircle className="w-4 h-4 text-white" />
+                            </div>
+                            <span className="text-slate-700 font-medium text-lg group-hover:text-slate-900 transition-colors">
+                              {feature}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Trust indicators */}
+                      <div className="flex items-center space-x-6 pt-4 border-t border-slate-200">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                          <span className="text-sm font-medium text-slate-600">14-day free trial</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-sm font-medium text-slate-600">No setup fees</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                          <span className="text-sm font-medium text-slate-600">Cancel anytime</span>
+                        </div>
+                      </div>
+                    </div>
 
-                {/* Right side - Pricing and purchase */}
-                <div className="text-center">
-                  <PricingCalculator />
+                    {/* Right side - Pricing calculator */}
+                    <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-8 shadow-inner border border-slate-200/50">
+                      <PricingCalculator />
+                    </div>
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
           </div>
