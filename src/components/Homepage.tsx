@@ -513,7 +513,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
