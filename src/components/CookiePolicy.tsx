@@ -145,7 +145,7 @@ const CookiePolicy: React.FC = () => {
               </div>
 
               <p className="leading-relaxed mb-6">
-                Please read our <a href="https://voicelink.me/privacy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">privacy statement</a> to learn about how we process personal data, how we secure them, how long we retain them and what privacy rights you have.
+                Please read our <a href="https://voicelink.me/privacypolicy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">privacy statement</a> to learn about how we process personal data, how we secure them, how long we retain them and what privacy rights you have.
               </p>
             </div>
 
