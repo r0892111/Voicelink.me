@@ -686,6 +686,36 @@ export default function SaasAgreementPage() {
               </div>
             </div>
           </div>
+
+          <div className="border-t-2 border-gray-300 pt-8 mt-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
+            <div className="bg-blue-50 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">FINIT SOLUTIONS</h3>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="font-medium text-gray-700">E-mail:</span>
+                  <a href="mailto:contact@finitsolutions.be" className="text-blue-600 hover:text-blue-800 underline">
+                    contact@finitsolutions.be
+                  </a>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="font-medium text-gray-700">Tel.:</span>
+                  <div className="space-y-1">
+                    <div>
+                      <a href="tel:+32495702314" className="text-blue-600 hover:text-blue-800 underline">
+                        +32 (0)495 702 314
+                      </a>
+                    </div>
+                    <div>
+                      <a href="tel:+32468029945" className="text-blue-600 hover:text-blue-800 underline">
+                        +32 (0)468 029 945
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
