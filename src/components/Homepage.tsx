@@ -140,7 +140,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 relative z-10">
+      <section id="features" className="py-16 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-5xl font-bold mb-6 tracking-tight" style={{ color: '#1C2C55' }}>
