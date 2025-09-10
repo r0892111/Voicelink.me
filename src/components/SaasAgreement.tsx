@@ -320,6 +320,7 @@ export default function SaasAgreementPage() {
                 {/* Contact Information */}
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <h4 className="font-semibold mb-2">Contact Information</h4>
+                </div>
               </div>
             </div>
           </div>
@@ -327,6 +328,3 @@ export default function SaasAgreementPage() {
       </section>
     </main>
   );
-}
-  )
-}
