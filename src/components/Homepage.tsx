@@ -246,7 +246,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             {/* Left Side - Animated Use Cases */}
             <div className="space-y-8">
              <div className="text-center lg:text-left mb-8">
-               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Here are two examples:</h3>
+               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Two examples:</h3>
                <p className="text-gray-600">VoiceLink adapts to any industry or workflow that needs voice-to-data conversion.</p>
              </div>
              
