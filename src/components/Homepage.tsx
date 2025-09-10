@@ -99,7 +99,6 @@ const PricingCalculator: React.FC = () => {
             </div>
           )}
         </div>
-        </p>
         
         <button
           className="w-full text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
