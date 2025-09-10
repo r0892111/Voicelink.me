@@ -578,89 +578,98 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-16">
-              {/* Step 1 */}
-              <div className="text-center">
-                <div className="relative mb-8">
-                  <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto shadow-sm border border-gray-100" style={{ backgroundColor: '#25D366' }}>
-                    <MessageCircle className="w-12 h-12 text-white" />
+          <div className="max-w-6xl mx-auto">
+            {/* Professional Process Flow */}
+            <div className="relative">
+              {/* Connection Line */}
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-200 to-transparent transform -translate-y-1/2 hidden lg:block"></div>
+              
+              <div className="grid lg:grid-cols-3 gap-12 lg:gap-8">
+                {/* Step 1 - Voice Input */}
+                <div className="group relative">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(37, 211, 102, 0.1)' }}>
+                        <svg className="w-7 h-7" style={{ color: '#25D366' }} fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                        </svg>
+                      </div>
+                      <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
+                        Step 1
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                      Voice Input
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Record your thoughts naturally through WhatsApp voice messages
+                    </p>
                   </div>
-                  <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold shadow-sm" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
-                    1
+                  
+                  {/* Animated Arrow */}
+                  <div className="hidden lg:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                    <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-                <h3 className="text-2xl font-semibold mb-4" style={{ color: '#1C2C55' }}>
-                  Send Voice Note
-                </h3>
-                <p className="text-lg leading-relaxed max-w-xs mx-auto" style={{ color: '#6B7280' }}>
-                  Record your thoughts naturally through WhatsApp
-                </p>
-              </div>
 
-              {/* Step 2 */}
-              <div className="text-center">
-                <div className="relative mb-8">
-                  <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto shadow-sm border border-gray-100" style={{ backgroundColor: '#1C2C55' }}>
-                    <Zap className="w-12 h-12 text-white" />
+                {/* Step 2 - AI Processing */}
+                <div className="group relative">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                        <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                          <circle cx="12" cy="9" r="2" fill="currentColor"/>
+                        </svg>
+                      </div>
+                      <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
+                        Step 2
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                      AI Processing
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Advanced AI extracts and structures key information from your voice
+                    </p>
                   </div>
-                  <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold shadow-sm" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
-                    2
+                  
+                  {/* Animated Arrow */}
+                  <div className="hidden lg:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                    <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-                <h3 className="text-2xl font-semibold mb-4" style={{ color: '#1C2C55' }}>
-                  AI Processing
-                </h3>
-                <p className="text-lg leading-relaxed max-w-xs mx-auto" style={{ color: '#6B7280' }}>
-                  Advanced AI extracts and structures key information
-                </p>
-              </div>
 
-              {/* Step 3 */}
-              <div className="text-center">
-                <div className="relative mb-8">
-                  <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto shadow-sm border border-gray-100" style={{ backgroundColor: '#1C2C55' }}>
-                    <Shield className="w-12 h-12 text-white" />
+                {/* Step 3 - CRM Integration */}
+                <div className="group relative">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                        <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 12c0 2.21 3.582 4 8 4s8-1.79 8-4"/>
+                        </svg>
+                      </div>
+                      <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
+                        Step 3
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                      CRM Integration
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Structured data syncs automatically to your CRM system
+                    </p>
                   </div>
-                  <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold shadow-sm" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
-                    3
-                  </div>
-                </div>
-                <h3 className="text-2xl font-semibold mb-4" style={{ color: '#1C2C55' }}>
-                  CRM Integration
-                </h3>
-                <p className="text-lg leading-relaxed max-w-xs mx-auto" style={{ color: '#6B7280' }}>
-                  Data syncs automatically to your CRM system
-                </p>
-              </div>
-            </div>
-
-            {/* Process Flow Visualization */}
-            <div className="mt-20 relative">
-              <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent transform -translate-y-1/2 hidden md:block"></div>
-              <div className="flex justify-center items-center space-x-16 relative">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#25D366' }}></div>
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-              </div>
-            </div>
-
-            {/* Simple Stats */}
-            <div className="mt-20 text-center">
-              <div className="inline-flex items-center space-x-12 px-8 py-6 bg-gray-50 rounded-2xl">
-                <div>
-                  <div className="text-3xl font-bold" style={{ color: '#1C2C55' }}>~30s</div>
-                  <div className="text-sm font-medium text-gray-600">Processing time</div>
-                </div>
-                <div className="w-px h-8 bg-gray-300"></div>
-                <div>
-                  <div className="text-3xl font-bold" style={{ color: '#1C2C55' }}>99%</div>
-                  <div className="text-sm font-medium text-gray-600">Accuracy rate</div>
-                </div>
-                <div className="w-px h-8 bg-gray-300"></div>
-                <div>
-                  <div className="text-3xl font-bold" style={{ color: '#1C2C55' }}>24/7</div>
-                  <div className="text-sm font-medium text-gray-600">Always available</div>
                 </div>
               </div>
             </div>
