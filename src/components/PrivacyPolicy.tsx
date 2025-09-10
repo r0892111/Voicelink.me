@@ -502,6 +502,85 @@ const PrivacyPolicy: React.FC = () => {
             In addition, we may retain personal data if you have given us consent for this, or if it is possible that we need these data in the context of legal proceedings. In the latter case, we must use certain personal data as evidence. For that purpose, we retain certain personal data in accordance with the statutory limitation period, which may be up to thirty years; the usual limitation period for personal legal claims is ten years.
           </p>
         </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Sources of personal data</h3>
+          
+          <p className="leading-relaxed mb-6">
+            We process the personal data that you provide to us voluntarily. If additional personal data are required, it will be indicated whether or not you are obliged to provide them and what the consequences are if you do not. Failure to provide personal data may result in us not being able to deliver our products and services to you.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            In particular, we may receive your personal data from the following sources:
+          </p>
+
+          <ul className="list-disc list-inside mb-6 ml-4 space-y-1">
+            <li>Our external partners and independent service providers;</li>
+            <li>Our online payment services partner;</li>
+            <li>Your CRM partner;</li>
+            <li>Publicly accessible sources and official registers (such as the Crossroads Bank for Enterprises or public websites).</li>
+          </ul>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Categories of recipients</h3>
+          
+          <p className="leading-relaxed mb-6">
+            Within our organization, we ensure that your personal data are only accessible to persons who need them to comply with contractual and legal obligations.
+            We will only transfer your personal data to third parties in accordance with legal provisions or where you have given your consent. In certain cases, our employees are supported by external service providers in the performance of their duties.
+          </p>
+
+          <p className="leading-relaxed mb-6">
+            Apart from this, we do not transfer personal data to third parties, unless we are obliged to do so on the basis of legal provisions (e.g. transfers to public authorities such as supervisory or law enforcement bodies).
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            In particular, we identify the following categories of recipients:
+          </p>
+
+          <ul className="list-disc list-inside mb-6 ml-4 space-y-1">
+            <li>Public authorities or regulatory bodies when they request this in the context of compliance with a judgment or ruling, law, regulation, standard, or legal procedure;</li>
+            <li>External (IT) service providers that enable us to offer you functionalities on the platform;</li>
+            <li>External (legal and financial) advisors and consultants;</li>
+            <li>Your CRM partner;</li>
+            <li>Our online payment services partner;</li>
+            <li>External marketing and communication partners who support us in setting up and carrying out campaigns, newsletters, and other communications.</li>
+          </ul>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Transfers to third countries outside the European Economic Area ("EEA")</h3>
+          
+          <p className="leading-relaxed mb-6">
+            We only transfer your personal data to processors or controllers in third countries if we are legally authorized to do so or if this is necessary for handling a case.
+            Where such transfers are required, we take the necessary measures to ensure that your personal data are highly protected and that all transfers of personal data outside the EEA take place lawfully.
+          </p>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Security of your personal data</h3>
+          
+          <p className="leading-relaxed mb-6">
+            The security of your personal data is important to us. We have taken reasonable and appropriate technical and organizational security measures to protect your personal data as well as possible against accidental or intentional manipulation, loss, destruction, or access by unauthorized persons.
+            Unfortunately, the transmission of information via the internet is not completely secure. Although we do our utmost to protect your personal data, we cannot guarantee the security of personal data transmitted to us via the internet.
+          </p>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Questions or complaints?</h3>
+          
+          <p className="leading-relaxed mb-6">
+            You may always contact us by telephone, e-mail, or letter using the contact details under the heading "Who are we?". We will be happy to answer your questions.
+          </p>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Changes</h3>
+          
+          <p className="leading-relaxed mb-6">
+            In order to take into account feedback or to reflect changes in our processing activities, we may amend this privacy statement from time to time. We therefore invite you to always consult the latest version of this privacy statement on our platform.
+          </p>
+        </div>
       </div>
     </div>
   );
