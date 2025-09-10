@@ -124,6 +124,18 @@ const PricingCalculator: React.FC = () => {
                 {tierInfo.tier} Plan • {tierInfo.discount}% discount
               </span>
               <p className="text-xs text-green-600 mt-1">
+                Save €{savings.toFixed(2)}/month
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const LandingPage: React.FC<{ openModal: () => void }> = ({ openModal }) => {
+  const visibleSections = useScrollAnimation();
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -206,31 +218,109 @@ const PricingCalculator: React.FC = () => {
 
       {/* Pricing Section */}
       <PricingSection openModal={openModal} />
-                {/* Step 3 - CRM Integration */}
-                <div className={`group relative transition-all duration-1000 delay-[900ms] ${
-                  visibleSections.has('how-it-works') 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                        <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 12c0 2.21 3.582 4 8 4s8-1.79 8-4"/>
-                        </svg>
-                      </div>
-                      <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
-                        Step 3
-                      </div>
+
+      {/* How It Works Section */}
+      <section 
+        id="how-it-works" 
+        data-animate-section
+        className={`py-20 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('how-it-works') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className={`text-center mb-16 transition-all duration-1000 delay-200 ${
+            visibleSections.has('how-it-works') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
+            <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+              How It Works
+            </h2>
+            <p className="text-xl" style={{ color: '#202226' }}>
+              Three simple steps to transform your voice notes into structured CRM data
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className={`grid md:grid-cols-3 gap-8 transition-all duration-1000 delay-300 ${
+              visibleSections.has('how-it-works') 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}>
+              {/* Step 1 - Voice Recording */}
+              <div className={`group relative transition-all duration-1000 delay-500 ${
+                visibleSections.has('how-it-works') 
+                  ? 'opacity-100 -translate-x-0' 
+                  : 'opacity-0 -translate-x-8'
+              }`}>
+                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                      <Mic className="w-7 h-7" style={{ color: '#1C2C55' }} />
                     </div>
-                    <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                      CRM Integration
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      Structured data syncs automatically to your CRM system
-                    </p>
+                    <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
+                      Step 1
+                    </div>
                   </div>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                    Record Voice Note
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Send a WhatsApp voice message with your meeting notes, client details, or follow-up tasks
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 2 - AI Processing */}
+              <div className={`group relative transition-all duration-1000 delay-700 ${
+                visibleSections.has('how-it-works') 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}>
+                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                      <Zap className="w-7 h-7" style={{ color: '#1C2C55' }} />
+                    </div>
+                    <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
+                      Step 2
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                    AI Processing
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Our AI transcribes and structures your voice into organized data fields
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 - CRM Integration */}
+              <div className={`group relative transition-all duration-1000 delay-[900ms] ${
+                visibleSections.has('how-it-works') 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 translate-x-8'
+              }`}>
+                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                      <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 12c0 2.21 3.582 4 8 4s8-1.79 8-4"/>
+                      </svg>
+                    </div>
+                    <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
+                      Step 3
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                    CRM Integration
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Structured data syncs automatically to your CRM system
+                  </p>
                 </div>
               </div>
             </div>
