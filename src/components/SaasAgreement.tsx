@@ -28,105 +28,111 @@ export default function SaasAgreementPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl font-bold mb-2"
             >
-              {/* PASTE EXACT DOCUMENT TITLE HERE (no edits) */}
+              SOFTWARE AS A SERVICE AGREEMENT
             </motion.h1>
 
-            {/* Meta line (optional: version/date) */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="text-muted-foreground mb-8"
-            >
-              {/* If you want a version/date line, paste it here exactly as-is */}
-            </motion.p>
-
-            {/* Body */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="prose prose-lg dark:prose-invert max-w-none"
             >
-              {/* ===== Start of Part 1 text (paste verbatim) ===== */}
-
-              {/* Section: BETWEEN */}
-              <h2 className="text-2xl font-semibold mt-8 mb-4" id="between">BETWEEN:</h2>
+              {/* BETWEEN */}
+              <h2 className="text-2xl font-semibold mt-8 mb-4" id="between">
+                BETWEEN:
+              </h2>
               <p>
-                {/* Paste clause 1 exactly as provided (Finit Solutions identification) */}
+                FINIT SOLUTIONS, located at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1020.600.643 (RPR Leuven);
               </p>
               <p>
-                {/* Paste clause 2 exactly as provided (Customer) */}
+                Hereinafter referred to as "FINIT SOLUTIONS";
+              </p>
+              <h3 className="text-xl font-semibold mt-8 mb-3">AND:</h3>
+              <p>
+                 The "Customer";
+              </p>
+              <p>
+                Hereinafter also referred to individually as "Party" or jointly as "Parties".
               </p>
 
-              {/* Section: CONSIDERING THAT */}
-              <h2 className="text-2xl font-semibold mt-8 mb-4" id="considering">CONSIDERING THAT:</h2>
-              <ol>
-                <li>
-                  {/* (i) Paste exactly */}
-                </li>
-                <li>
-                  {/* (ii) Paste exactly */}
-                </li>
-                <li>
-                  {/* (iii) Paste exactly */}
-                </li>
-                <li>
-                  {/* (iv) Paste exactly */}
-                </li>
-              </ol>
+              {/* CONSIDERING THAT */}
+              <h2 className="text-2xl font-semibold mt-8 mb-4" id="considering">
+                CONSIDERING THAT:
+              </h2>
+              <p>
+                FINIT SOLUTIONS has developed a "software as a service" solution that uses artificial intelligence to convert spoken input into CRM data and implement it in the CRM system used by the Customer. Called: "VoiceLink";
+              </p>
+              <p>
+                FINIT SOLUTIONS has developed a "software as a service" solution that uses artificial intelligence to structure and categorize all files on the Customer's drive. Called: "FilePilot" 
+              </p>
+              <p>
+                The Customer wishes to use at least one of FINIT SOLUTIONS' "software as a service" solutions (hereinafter also referred to as "Solutions") in the context of its commercial activities;
+              </p>
+              <p>
+                FINIT SOLUTIONS wishes to make its Solutions available to the Customer in accordance with the terms and conditions set out in this "software as a service agreement" (hereinafter the "Agreement").
+              </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4" id="agreement-open">
+              <h2 className="text-2xl font-semibold mt-8 mb-4" id="agree">
                 THE PARTIES AGREE AS FOLLOWS:
               </h2>
 
               {/* Article 1 */}
               <h3 className="text-xl font-semibold mt-8 mb-3" id="article-1">
-                Article 1 Monthly fee
+                Article 1 	Monthly fee
               </h3>
               <p>
-                {/* Paste the introductory sentence exactly */}
+                The monthly fee charged to the Customer for the Software and Services consists of:
               </p>
 
-              {/* Pricing Table (VoiceLink tiers) */}
+              {/* Pricing list as table rendering, preserving exact strings */}
               <div className="overflow-x-auto mt-4">
                 <table className="w-full text-sm border border-border">
-                  <thead className="bg-muted/50">
-                    <tr>
-                      <th className="p-3 text-left">VoiceLink</th>
-                      <th className="p-3 text-left">Users</th>
-                      <th className="p-3 text-left">Price</th>
-                    </tr>
-                  </thead>
                   <tbody>
-                    {/* Replace each row with the exact tier lines you provide */}
                     <tr className="border-t">
                       <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top"></td>
+                    </tr>
+                    <tr className="border-t">
                       <td className="p-3 align-top">From 1 user</td>
                       <td className="p-3 align-top">29 EUR per month per user</td>
                     </tr>
                     <tr className="border-t">
-                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top"></td>
+                      <td className="p-3 align-top"></td>
+                    </tr>
+                    <tr className="border-t">
                       <td className="p-3 align-top">From 5 users</td>
                       <td className="p-3 align-top">25 EUR per month per user</td>
                     </tr>
                     <tr className="border-t">
-                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top"></td>
+                      <td className="p-3 align-top"></td>
+                    </tr>
+                    <tr className="border-t">
                       <td className="p-3 align-top">From 10 users</td>
                       <td className="p-3 align-top">22 EUR per month per user</td>
                     </tr>
                     <tr className="border-t">
-                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top"></td>
+                      <td className="p-3 align-top"></td>
+                    </tr>
+                    <tr className="border-t">
                       <td className="p-3 align-top">From 25 users</td>
                       <td className="p-3 align-top">19 EUR per month per user</td>
                     </tr>
                     <tr className="border-t">
-                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top"></td>
+                      <td className="p-3 align-top"></td>
+                    </tr>
+                    <tr className="border-t">
                       <td className="p-3 align-top">From 50 users</td>
                       <td className="p-3 align-top">17 EUR per month per user</td>
                     </tr>
                     <tr className="border-t">
-                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top"></td>
+                      <td className="p-3 align-top"></td>
+                    </tr>
+                    <tr className="border-t">
                       <td className="p-3 align-top">From 100 users</td>
                       <td className="p-3 align-top">14 EUR per month per user</td>
                     </tr>
@@ -136,16 +142,14 @@ export default function SaasAgreementPage() {
 
               {/* Article 2 */}
               <h3 className="text-xl font-semibold mt-8 mb-3" id="article-2">
-                Article 2 Method of concluding the Agreement
+                Article 2 	Method of concluding the Agreement
               </h3>
               <p>
-                {/* Paste the Article 2 paragraph(s) exactly */}
+                The Agreement is concluded by its acceptance by the Customer during the online checkout process, whereby one or more of the Solutions are purchased via its Platform. 
               </p>
               <p>
-                {/* Paste the sentence about Agreement & Annexes delivery exactly */}
+                This Agreement and its Annexes will be delivered to the Customer prior to the completion of the order. 
               </p>
-
-              {/* ===== End of Part 1 text ===== */}
             </motion.div>
           </div>
         </div>
