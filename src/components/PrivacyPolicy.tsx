@@ -19,7 +19,7 @@ const PrivacyPolicy: React.FC = () => {
           </button>
           
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy Statement</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
             <h2 className="text-xl font-semibold text-blue-600 mb-4">FINIT VOICELINK</h2>
             <p className="text-sm text-gray-600">Version: 18/08/2025</p>
           </div>
