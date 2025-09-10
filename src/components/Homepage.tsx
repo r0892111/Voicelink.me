@@ -274,93 +274,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                <p className="text-gray-600">VoiceLink adapts to any industry or workflow that needs voice-to-data conversion.</p>
              </div>
              
-          
-          {/* Pricing Tiers Table */}
-          <div className="mt-16">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
-              <p className="text-gray-600">Automatic discounts applied based on team size</p>
-            </div>
-            
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200" style={{ backgroundColor: '#F8FAFC' }}>
-                      <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Plan</th>
-                      <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Team Size</th>
-                      <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Price per User</th>
-                      <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Discount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-gray-100">
-                      <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Starter</td>
-                      <td className="py-4 px-6 text-gray-600">1–4 users</td>
-                      <td className="py-4 px-6 font-semibold">€29.90</td>
-                      <td className="py-4 px-6 text-gray-500">—</td>
-                    </tr>
-                    <tr className="border-b border-gray-100">
-                      <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Team</td>
-                      <td className="py-4 px-6 text-gray-600">5–9 users</td>
-                      <td className="py-4 px-6 font-semibold">€27.00</td>
-                      <td className="py-4 px-6">
-                        <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                          10% off
-                        </span>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-100">
-                      <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Business</td>
-                      <td className="py-4 px-6 text-gray-600">10–24 users</td>
-                      <td className="py-4 px-6 font-semibold">€24.00</td>
-                      <td className="py-4 px-6">
-                        <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                          20% off
-                        </span>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-100">
-                      <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Growth</td>
-                      <td className="py-4 px-6 text-gray-600">25–49 users</td>
-                      <td className="py-4 px-6 font-semibold">€21.00</td>
-                      <td className="py-4 px-6">
-                        <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                          30% off
-                        </span>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-100">
-                      <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Scale</td>
-                      <td className="py-4 px-6 text-gray-600">50–99 users</td>
-                      <td className="py-4 px-6 font-semibold">€18.00</td>
-                      <td className="py-4 px-6">
-                        <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                          40% off
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Enterprise</td>
-                      <td className="py-4 px-6 text-gray-600">100+ users</td>
-                      <td className="py-4 px-6 font-semibold">€15.00+</td>
-                      <td className="py-4 px-6">
-                        <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-full">
-                          50%+ off
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            
-            <div className="text-center mt-6">
-              <p className="text-sm text-gray-500">
-                All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support
-              </p>
-            </div>
-          </div>
               <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
@@ -494,6 +407,93 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Pricing Tiers Table */}
+        <div className="mt-16">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
+            <p className="text-gray-600">Automatic discounts applied based on team size</p>
+          </div>
+          
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200" style={{ backgroundColor: '#F8FAFC' }}>
+                    <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Plan</th>
+                    <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Team Size</th>
+                    <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Price per User</th>
+                    <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Discount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Starter</td>
+                    <td className="py-4 px-6 text-gray-600">1–4 users</td>
+                    <td className="py-4 px-6 font-semibold">€29.90</td>
+                    <td className="py-4 px-6 text-gray-500">—</td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Team</td>
+                    <td className="py-4 px-6 text-gray-600">5–9 users</td>
+                    <td className="py-4 px-6 font-semibold">€27.00</td>
+                    <td className="py-4 px-6">
+                      <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                        10% off
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Business</td>
+                    <td className="py-4 px-6 text-gray-600">10–24 users</td>
+                    <td className="py-4 px-6 font-semibold">€24.00</td>
+                    <td className="py-4 px-6">
+                      <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                        20% off
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Growth</td>
+                    <td className="py-4 px-6 text-gray-600">25–49 users</td>
+                    <td className="py-4 px-6 font-semibold">€21.00</td>
+                    <td className="py-4 px-6">
+                      <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                        30% off
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Scale</td>
+                    <td className="py-4 px-6 text-gray-600">50–99 users</td>
+                    <td className="py-4 px-6 font-semibold">€18.00</td>
+                    <td className="py-4 px-6">
+                      <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                        40% off
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Enterprise</td>
+                    <td className="py-4 px-6 text-gray-600">100+ users</td>
+                    <td className="py-4 px-6 font-semibold">€15.00+</td>
+                    <td className="py-4 px-6">
+                      <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-full">
+                        50%+ off
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div className="text-center mt-6">
+            <p className="text-sm text-gray-500">
+              All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support
+            </p>
           </div>
         </div>
       </section>
