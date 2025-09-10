@@ -233,12 +233,7 @@ export default function SaasAgreementPage() {
                   </p>
                 </div>
 
-                {/* Additional sections would continue here... */}
-                <div className="mt-12 p-6 bg-blue-50 rounded-lg">
-                  <p className="text-sm text-blue-800">
-                    <strong>Note:</strong> This is a comprehensive legal agreement. For the complete terms and conditions, including all articles covering liability, intellectual property, termination, and other important provisions, please contact FINIT SOLUTIONS directly or consult the full legal document.
-                  </p>
-                </div>
+                
 
                 {/* Article 3 */}
                 <h3 className="text-lg font-semibold mt-8 mb-4 underline">
