@@ -240,7 +240,7 @@ export const SubscriptionDashboard: React.FC = () => {
 
           {/* Premium Features Grid */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="text-center mb-12">
+            <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
                 Your Premium Features
               </h2>
@@ -249,56 +249,58 @@ export const SubscriptionDashboard: React.FC = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* WhatsApp Integration */}
-              <div className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
-                <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)' }}>
-                  <MessageCircle className="w-6 h-6 text-green-600" />
+              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                  <MessageCircle className="w-8 h-8" style={{ color: '#1C2C55' }} />
                 </div>
-                <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>
+                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
                   WhatsApp Voice Notes
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-600 leading-relaxed mb-6">
                   Send unlimited voice messages directly to your CRM via WhatsApp
                 </p>
-                <div className="mt-4 flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="text-xs text-green-600 font-medium">Unlimited Usage</span>
+                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Unlimited Usage</span>
                 </div>
               </div>
 
               {/* Real-time Sync */}
-              <div className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
-                <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}>
-                  <Zap className="w-6 h-6 text-blue-600" />
+              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                  <Zap className="w-8 h-8" style={{ color: '#1C2C55' }} />
                 </div>
-                <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>
+                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
                   Real-time Sync
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-600 leading-relaxed mb-6">
                   Instant synchronization with your CRM platform
                 </p>
-                <div className="mt-4 flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-blue-500" />
-                  <span className="text-xs text-blue-600 font-medium">Live Updates</span>
+                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Live Updates</span>
                 </div>
               </div>
 
               {/* Priority Support */}
-              <div className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
-                <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)' }}>
-                  <Headphones className="w-6 h-6 text-amber-600" />
+              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                  <Headphones className="w-8 h-8" style={{ color: '#1C2C55' }} />
                 </div>
-                <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>
+                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
                   Priority Support
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-600 leading-relaxed mb-6">
                   24/7 dedicated assistance from our expert team
                 </p>
-                <div className="mt-4 flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-amber-500" />
-                  <span className="text-xs text-amber-600 font-medium">24/7 Support</span>
+                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>24/7 Support</span>
                 </div>
+              </div>
               </div>
             </div>
           </section>
