@@ -183,6 +183,22 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-sm text-gray-600">Time Zone</span>
                             <span className="text-sm font-medium text-gray-900">{user.user_info.time_zone}</span>
                           </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">WhatsApp Status</span>
+                            <span className={`text-sm font-medium inline-flex items-center px-2 py-1 rounded-full text-xs ${
+                              whatsappStatus === 'active' 
+                                ? 'bg-green-100 text-green-800' 
+                                : whatsappStatus === 'pending'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-gray-100 text-gray-800'
+                            }`}>
+                              {whatsappStatus === 'active' && '✅ '}
+                              {whatsappStatus === 'pending' && '⏳ '}
+                              {whatsappStatus === 'not_set' && '❌ '}
+                              {whatsappStatus === 'active' ? 'Connected' : 
+                               whatsappStatus === 'pending' ? 'Pending' : 'Not Connected'}
+                            </span>
+                          </div>
                           {user.user_info.telephones && user.user_info.telephones.length > 0 && (
                             <div className="flex justify-between items-center py-2 border-b border-gray-100">
                               <span className="text-sm text-gray-600">Phone</span>
