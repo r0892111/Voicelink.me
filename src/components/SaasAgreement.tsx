@@ -594,6 +594,98 @@ export default function SaasAgreementPage() {
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <h4 className="font-semibold mb-2">Contact Information</h4>
                 </div>
+
+                {/* Article 13 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  13. Subcontracting
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    FINIT SOLUTIONS has the right to transfer or subcontract its obligations under this Agreement to a subcontractor.
+                  </p>
+                  
+                  <p>
+                    Notwithstanding the foregoing, FINIT SOLUTIONS shall remain fully responsible for the performance of its obligations under this Agreement towards the Customer.
+                  </p>
+                </div>
+
+                {/* Article 14 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  14. Non-competition and non-solicitation clause
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    The Parties agree that during the term and after the termination of the Agreement and for a period of one (1) year after the end of this Agreement for any reason whatsoever, the Customer and its affiliated companies shall not, either directly or indirectly, provide services similar to those provided by FINIT SOLUTIONS or engage in any activities that would compete with the activities of FINIT SOLUTIONS within the territory of Belgium.
+                  </p>
+                  
+                  <p>
+                    Furthermore, the Customer and its affiliated companies are expressly prohibited from employing FINIT SOLUTIONS employees who are directly or indirectly involved in the performance of the Agreement and/or FINIT SOLUTIONS employees who are affiliated with companies belonging to the same group as FINIT SOLUTIONS (either as an employee or as a self-employed person), or to have them carry out assignments on its behalf through subcontracting or in any other way, even if such a request was initially initiated by the employee concerned.
+                  </p>
+                  
+                  <p>
+                    If FINIT SOLUTIONS is notified that the obligations under the first and second paragraphs of this article of the Agreement are being breached by the Customer or its affiliated companies, the Customer shall owe compensation of fifty thousand (50,000.00) euros, plus two thousand five hundred (2,500.00) per calendar day that the breach continues. The parties acknowledge and accept that this amount is a reasonable estimate of the actual damage suffered by FINIT SOLUTIONS in such a case and is therefore appropriate. Notwithstanding the foregoing, FINIT SOLUTIONS reserves the right, in the event of a breach of this article of the Agreement by the Customer, to prove its actual damage and claim higher compensation.
+                  </p>
+                </div>
+
+                {/* Article 15 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  15. Final provisions
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    <strong>Hierarchy of documents</strong> – In the event of any conflict between the provisions of the Agreement and the Annexes to the Agreement, the following order of precedence shall apply: (1) the front page of the Agreement; (2) Appendix 1. In any case, the documents shall remain subordinate (in accordance with the hierarchy described above) to the relationship between the Parties insofar as the provisions of those documents are not contradictory.
+                  </p>
+                  
+                  <p>
+                    <strong>Independent parties</strong> – None of the provisions of this Agreement shall be construed as indicating the intention of the Parties to form a company, association, or joint venture.
+                  </p>
+                  
+                  <p>
+                    <strong>Entire Agreement</strong> – This Agreement, together with its appendices, contains the entire agreement and understanding between the Parties with respect to the subject matter hereof and supersedes all prior agreements or understandings, whether written or oral, relating to the same subject matter that are still in effect between the Parties.
+                  </p>
+                  
+                  <p>
+                    <strong>Amendments</strong> – Amendments to this Agreement, as well as additions or deletions, must be agreed in writing by both Parties.
+                  </p>
+                  
+                  <p>
+                    <strong>Severability</strong> – Where possible, the provisions of this Agreement shall be interpreted so as to be valid and enforceable under applicable law. However, if one or more provisions of this Agreement are found to be wholly or partially invalid, illegal, or unenforceable, the remaining provisions of that provision and of this Agreement shall remain in full force and effect as if the invalid, illegal, or unenforceable provision had never been included herein. Furthermore, in such a case, the Parties shall amend the invalid, illegal, or unenforceable provision(s) or part thereof and/or agree on a new provision in such a way that the purpose of the invalid, illegal, or unenforceable provision(s) is reflected as much as possible.
+                  </p>
+                  
+                  <p>
+                    <strong>No waiver</strong> – The failure or delay by a Party to exercise a right under this Agreement, the exercise of a right under this Agreement in whole or in part, or the partial response or lack of response by a Party in the event of a breach by the other Party of one or more provisions of this Agreement, shall not be deemed or construed as a waiver (express or implied, in whole or in part) of that Party's rights under this Agreement or the provision(s) in question, nor shall it prevent the further exercise of those rights. Any waiver of a right must be express and in writing.
+                  </p>
+                  
+                  <p>
+                    <strong>Notices</strong> – All notices provided for in the Agreement or made in connection with this Agreement must be (i) either sent in writing by registered mail to the addresses specified in the preamble to this Agreement, or (ii) sent by email with confirmation of receipt. Any communication by registered mail shall be deemed to have been given three (3) business days after the postmark; any communication by email shall be deemed to have been given one (1) day after dispatch. The parties may notify each other of a change of address in accordance with this provision.
+                  </p>
+                  
+                  <p>
+                    <strong>Language of the Agreement</strong> – The Dutch version of this Agreement shall always be the binding version and translations of this Agreement shall always be for indicative purposes only.
+                  </p>
+                  
+                  <p>
+                    <strong>Authorized signatories</strong> – The Parties represent and warrant to each other that (1) the person(s) accepting this Agreement are authorized representatives of the entities represented, and (2) no further approvals, acts, or ratifications are required for the full enforceability of this Agreement against them; or that the person accepting this Agreement does so in their own name and on their own behalf; each Party shall indemnify and hold harmless the other Party for any breach of the foregoing representation and warranty.
+                  </p>
+                </div>
+
+                {/* Article 16 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  16. Applicable law and competent courts
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    This Agreement and the rights and obligations of the Parties under this Agreement are governed by and shall be construed in accordance with Belgian law.
+                  </p>
+                  
+                  <p>
+                    In the event of a dispute concerning the validity, application, performance, or interpretation of this Agreement, the courts of Leuven shall have exclusive jurisdiction.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
