@@ -255,7 +255,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       </td>
                       <td className="px-6 py-4">
                         {tier.discount > 0 ? (
-                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
                             tier.discount >= 50 ? 'bg-blue-100 text-blue-800' :
                             tier.discount >= 30 ? 'bg-green-100 text-green-800' :
                             'bg-yellow-100 text-yellow-800'
