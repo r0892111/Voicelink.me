@@ -478,6 +478,37 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6">
+
+          {/* Monthly/Annual Toggle */}
+          <div className="flex justify-center mb-12 transition-all duration-1000 delay-200 opacity-0 translate-y-8" data-animate="fade-in-up">
+            <div className="bg-white rounded-full p-1 shadow-lg border border-gray-200">
+              <div className="flex">
+                <button
+                  onClick={() => setIsAnnual(false)}
+                  className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                    !isAnnual
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setIsAnnual(true)}
+                  className={`px-6 py-3 rounded-full font-medium transition-all duration-300 relative ${
+                    isAnnual
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Annual
+                  <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                    Save up to 40%
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
           <div className={`text-center mb-16 transition-all duration-1000 delay-200 ${
             visibleSections.has('pricing') 
               ? 'opacity-100 translate-y-0' 
@@ -496,47 +527,91 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               visibleSections.has('pricing') 
                 ? 'opacity-100 translate-y-0' 
                 : 'opacity-0 translate-y-8'
-            }`}>
-              {/* Left side - VoiceLink Pro Card */}
+                  <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
+                  <p className="text-gray-600 mb-6 group-hover:text-gray-700 transition-colors">Automatic discounts applied based on team size</p>
               <div className={`bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-1000 delay-500 ${
-                visibleSections.has('pricing') 
-                  ? 'opacity-100 -translate-x-0' 
-                  : 'opacity-0 -translate-x-8'
+                  <div className="space-y-4 mb-8">
+                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg group-hover:bg-gray-100 transition-colors">
+                      <div>
+                        <div className="font-medium text-gray-900">1–4 users</div>
+                        <div className="text-sm text-gray-500">Starter</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold" style={{ color: '#1C2C55' }}>
+                          €{isAnnual ? '299.00' : '29.90'}
+                        </div>
+                        <div className="text-sm text-gray-500">per user</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors">
+                      <div>
+                        <div className="font-medium text-gray-900">5–9 users</div>
+                        <div className="text-sm text-green-600">Team • 10% off</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold" style={{ color: '#1C2C55' }}>
+                          €{isAnnual ? '270.00' : '27.00'}
+                        </div>
+                        <div className="text-sm text-gray-500">per user</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
+                      <div>
+                        <div className="font-medium text-gray-900">10–24 users</div>
+                        <div className="text-sm text-blue-600">Business • 20% off</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold" style={{ color: '#1C2C55' }}>
+                          €{isAnnual ? '240.00' : '24.00'}
+                        </div>
+                        <div className="text-sm text-gray-500">per user</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg group-hover:bg-purple-100 transition-colors">
+                      <div>
+                        <div className="font-medium text-gray-900">25–49 users</div>
+                        <div className="text-sm text-purple-600">Growth • 30% off</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold" style={{ color: '#1C2C55' }}>
+                          €{isAnnual ? '210.00' : '21.00'}
+                        </div>
+                        <div className="text-sm text-gray-500">per user</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg group-hover:bg-yellow-100 transition-colors">
+                      <div>
+                        <div className="font-medium text-gray-900">50+ users</div>
+                        <div className="text-sm text-yellow-600">Enterprise • 40% off</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold" style={{ color: '#1C2C55' }}>
+                          €{isAnnual ? '180.00' : '18.00'}
+                        </div>
+                        <div className="text-sm text-gray-500">per user</div>
+                      </div>
+                    </div>
               }`}>
                 <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
-                <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
-                
-                <div className="p-8 relative">
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
-                    {/* Left side - Product info */}
-                    <div className="text-center md:text-left">
-                    {/* VoiceLink logo in pricing card - blue version on white background */}
-                    <img 
-                      src="/Finit Voicelink Blue.svg" 
-                      alt="VoiceLink Pro" 
-                      className="h-12 w-auto mx-auto md:mx-0 mb-4"
-                    />
-                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>VoiceLink Pro</h3>
-                    <p className="mb-6" style={{ color: '#202226' }}>Perfect for growing teams</p>
-                    
-                    <div className="space-y-4">
-                    <div className="flex items-center space-x-3">
-                      <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                      <span style={{ color: '#202226' }}>Unlimited WhatsApp voice notes</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                      <span style={{ color: '#202226' }}>Real-time CRM sync</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                      <span style={{ color: '#202226' }}>Native WhatsApp integration</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
                       <span style={{ color: '#202226' }}>Multi-language support</span>
                     </div>
-                    <div className="flex items-center space-x-3">
+                      <span>Multi-language support</span>
+                    </li>
+                    Contact Sales
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ backgroundColor: '#F7E69B' }}>
+                  <p className="text-center text-sm text-gray-500 mt-3">
+                    All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support
+                  </p>
+                        <span className="text-xs font-bold" style={{ color: '#1C2C55' }}>✓</span>
+                      </div>
+                      <span>Priority support</span>
                       <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
                       <span style={{ color: '#202226' }}>Priority support</span>
                     </div>
@@ -547,16 +622,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   <div className="text-center">
                     <PricingCalculator />
                   </div>
+                    Start Free Trial
                 </div>
-                </div>
+                  <p className="text-center text-sm text-gray-500 mt-3">
+                    14-day free trial • No credit card required
+                  </p>
               </div>
 
               {/* Right side - Volume Discount Tiers Table */}
-              <div className={`bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-1000 delay-700 ${
-                visibleSections.has('pricing') 
-                  ? 'opacity-100 translate-x-0' 
-                  : 'opacity-0 translate-x-8'
-              }`}>
+              {/* Volume Discounts */}
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden group hover:scale-105 hover:shadow-2xl transition-all duration-300 delay-700 opacity-0 translate-x-8" data-animate="slide-from-right">
                 <div className="p-6">
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
