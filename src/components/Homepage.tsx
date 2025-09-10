@@ -209,7 +209,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
           {/* More integrations coming */}
           <div className="text-center">
-            <div className="inline-flex items-center space-x-3 px-8 py-4 bg-gray-50 rounded-full border border-gray-200 mb-8">
+            <div className="inline-flex items-center space-x-3 px-8 py-4 bg-gray-50 rounded-full border border-gray-200 mb-6">
               <div className="flex space-x-1.5">
                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
@@ -219,13 +219,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </div>
             
             <div className="max-w-3xl mx-auto">
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="text-lg text-gray-600 mb-4">
+                We're constantly working on adding new CRM integrations to make VoiceLink available for everyone.
+              </p>
+              <p className="text-base text-gray-500 mb-6">
                 Don't see your CRM? We build custom integrations for any platform with an API.
               </p>
-              <button className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-gray-300 rounded-full hover:border-gray-400 transition-colors">
-                <span className="text-base font-medium text-gray-700">Request Custom Integration</span>
+              <button className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-gray-300 rounded-full hover:border-gray-400 transition-colors group">
+                <span className="text-base font-medium text-gray-700">Contact Us for Custom Integration</span>
                 <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </button>
             </div>
