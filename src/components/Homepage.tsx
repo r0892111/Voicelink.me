@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Users, Zap, Shield, Globe, MessageCircle, Play } from 'lucide-react';
+import { Star, Users, Zap, Shield, Globe, MessageCircle, Play, ArrowRight, CheckCircle, Settings } from 'lucide-react';
 import { HeroDemo } from './HeroDemo';
 import { PricingSection } from './PricingSection';
 
@@ -113,8 +113,19 @@ const PricingCalculator: React.FC = () => {
             €{totalPrice.toFixed(2)}
           </span>
           <span className="text-lg" style={{ color: '#202226' }}>/month</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface HomepageProps {
+  openModal: () => void;
+}
 
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
+  const visibleSections = useScrollAnimation();
+  const [selectedUsers, setSelectedUsers] = React.useState(1);
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -430,12 +441,13 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Pricing Section */}
-      <section 
+      <section>
         <PricingSection 
           selectedUsers={selectedUsers}
           setSelectedUsers={setSelectedUsers}
           openModal={openModal}
         />
+      </section>
       <section 
         id="custom-solutions" 
         data-animate-section
@@ -756,4 +768,4 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </footer>
     </div>
   );
-};}
+};
