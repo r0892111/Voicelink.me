@@ -151,11 +151,11 @@ const Disclaimer: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-4">
-                If you wish to learn more about data processing via the website, you can consult our website privacy statement here: [HYPERLINK].
+                If you wish to learn more about data processing via the website, you can consult our website privacy statement here: <a href="https://finitsolutions.be/privacy/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">https://finitsolutions.be/privacy/</a>.
               </p>
 
               <p className="leading-relaxed mb-6">
-                If you wish to learn more about data processing via the platform, you can consult our SaaS platform privacy statement here: [HYPERLINK].
+                If you wish to learn more about data processing via the platform, you can consult our SaaS platform privacy statement here: <a href="https://voicelink.me/privacy/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">https://voicelink.me/privacy/</a>.
               </p>
             </div>
 
