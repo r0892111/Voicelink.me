@@ -6,7 +6,7 @@ import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
 import { BuyButton } from './components/BuyButton';
 import { SuccessPage } from './components/SuccessPage';
-import { Homepage } from './components/Homepage';
+import Homepage from './components/Homepage';
 import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
