@@ -168,23 +168,6 @@ export const SubscriptionDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Advanced Analytics */}
-              <div className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
-                <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(147, 51, 234, 0.1)' }}>
-                  <BarChart3 className="w-6 h-6 text-purple-600" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>
-                  Advanced Analytics
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Detailed insights and reports on your voice note usage
-                </p>
-                <div className="mt-4 flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-purple-500" />
-                  <span className="text-xs text-purple-600 font-medium">Pro Analytics</span>
-                </div>
-              </div>
-
               {/* Priority Support */}
               <div className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
                 <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)' }}>
