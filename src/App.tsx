@@ -7,7 +7,7 @@ import { Dashboard } from './components/Dashboard';
 import { BuyButton } from './components/BuyButton';
 import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
-import { SaasAgreement } from './components/SaasAgreement';
+import SaasAgreement from './components/SaasAgreement';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
