@@ -42,14 +42,10 @@ export const WhatsAppVerification: React.FC = () => {
         .select('whatsapp_number, whatsapp_status')
         .eq('user_id', user.id)
         .is('deleted_at', null)
-        .maybeSingle();
+        .single();
 
       if (error) {
         console.error('Error fetching WhatsApp status:', error);
-        setWhatsappStatus({
-          whatsapp_number: null,
-          whatsapp_status: 'not_set'
-        });
         return;
       }
 
@@ -58,19 +54,9 @@ export const WhatsAppVerification: React.FC = () => {
           whatsapp_number: data.whatsapp_number,
           whatsapp_status: data.whatsapp_status || 'not_set'
         });
-      } else {
-        // No data found, set to default state
-        setWhatsappStatus({
-          whatsapp_number: null,
-          whatsapp_status: 'not_set'
-        });
       }
     } catch (error) {
       console.error('Error fetching WhatsApp status:', error);
-      setWhatsappStatus({
-        whatsapp_number: null,
-        whatsapp_status: 'not_set'
-      });
     } finally {
       setFetchingStatus(false);
     }
@@ -151,7 +137,11 @@ export const WhatsAppVerification: React.FC = () => {
       setOtpExpiresAt(result.expires_at);
       setOtpStep('verify');
       
-      // Don't update status to pending - keep it as 'not_set' to show the verification form
+      // Update local status to pending
+      setWhatsappStatus(prev => ({
+        ...prev,
+        whatsapp_status: 'pending'
+      }));
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to send verification code');
     } finally {
