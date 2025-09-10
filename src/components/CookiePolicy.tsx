@@ -237,7 +237,7 @@ const CookiePolicy: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-6">
-                <strong>Right to lodge a complaint (Article 77(1) GDPR):</strong> You may lodge a complaint with the supervisory authority for data protection. A list of EU supervisory authorities is available here: <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl</a>.
+                <strong>Right to lodge a complaint (Article 77(1) GDPR):</strong> You may lodge a complaint with the supervisory authority for data protection. A list of EU supervisory authorities is available here: <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl" className=\"text-blue-600 hover:underline" target=\"_blank" rel="noopener noreferrer">https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl</a>.
               </p>
             </div>
 
