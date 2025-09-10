@@ -8,6 +8,7 @@ import { BuyButton } from './components/BuyButton';
 import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
 import SaasAgreement from './components/SaasAgreement';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
@@ -121,6 +122,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/success" element={<SuccessPage />} />
         <Route path="/saas-agreement" element={<SaasAgreement />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
 
       {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
