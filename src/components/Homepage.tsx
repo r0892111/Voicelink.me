@@ -454,69 +454,101 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 relative z-10">
+      <section className="py-32 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+          <div className="text-center mb-24">
+            <h2 className="text-5xl font-bold mb-6 leading-tight tracking-tight" style={{ color: '#1C2C55' }}>
               How WhatsApp Voice Notes Work
             </h2>
-            <p className="text-xl" style={{ color: '#202226' }}>
-              Three simple steps to transform WhatsApp voice notes into CRM data
+            <p className="text-2xl font-light max-w-3xl mx-auto leading-relaxed" style={{ color: '#6B7280' }}>
+              Three simple steps to transform voice into structured data
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center group relative">
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
-              <div className="relative p-6">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#25D366' }}>
-                  <MessageCircle className="w-10 h-10 text-white" />
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-16">
+              {/* Step 1 */}
+              <div className="text-center">
+                <div className="relative mb-8">
+                  <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto shadow-sm border border-gray-100" style={{ backgroundColor: '#25D366' }}>
+                    <MessageCircle className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold shadow-sm" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
+                    1
+                  </div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
-                  1
-                </div>
+                <h3 className="text-2xl font-semibold mb-4" style={{ color: '#1C2C55' }}>
+                  Send Voice Note
+                </h3>
+                <p className="text-lg leading-relaxed max-w-xs mx-auto" style={{ color: '#6B7280' }}>
+                  Record your thoughts naturally through WhatsApp
+                </p>
               </div>
-              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Send WhatsApp Voice Note</h3>
-              <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Record and send a voice note through WhatsApp with your meeting notes, client feedback, or any CRM data.
-              </p>
+
+              {/* Step 2 */}
+              <div className="text-center">
+                <div className="relative mb-8">
+                  <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto shadow-sm border border-gray-100" style={{ backgroundColor: '#1C2C55' }}>
+                    <Zap className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold shadow-sm" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
+                    2
+                  </div>
+                </div>
+                <h3 className="text-2xl font-semibold mb-4" style={{ color: '#1C2C55' }}>
+                  AI Processing
+                </h3>
+                <p className="text-lg leading-relaxed max-w-xs mx-auto" style={{ color: '#6B7280' }}>
+                  Advanced AI extracts and structures key information
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="text-center">
+                <div className="relative mb-8">
+                  <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto shadow-sm border border-gray-100" style={{ backgroundColor: '#1C2C55' }}>
+                    <Shield className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold shadow-sm" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
+                    3
+                  </div>
+                </div>
+                <h3 className="text-2xl font-semibold mb-4" style={{ color: '#1C2C55' }}>
+                  CRM Integration
+                </h3>
+                <p className="text-lg leading-relaxed max-w-xs mx-auto" style={{ color: '#6B7280' }}>
+                  Data syncs automatically to your CRM system
+                </p>
               </div>
             </div>
 
-            <div className="text-center group relative">
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
-              <div className="relative p-6">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
-                  <Zap className="w-10 h-10 text-white" />
-                </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
-                  2
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>AI Processing</h3>
-              <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Our advanced AI transcribes and structures your voice data, extracting key information automatically.
-              </p>
+            {/* Process Flow Visualization */}
+            <div className="mt-20 relative">
+              <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent transform -translate-y-1/2 hidden md:block"></div>
+              <div className="flex justify-center items-center space-x-16 relative">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#25D366' }}></div>
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
               </div>
             </div>
 
-            <div className="text-center group relative">
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(28, 44, 85, 0.02) 0%, rgba(247, 230, 155, 0.03) 100%)' }}></div>
-              <div className="relative p-6">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1C2C55' }}>
-                  <Shield className="w-10 h-10 text-white" />
+            {/* Simple Stats */}
+            <div className="mt-20 text-center">
+              <div className="inline-flex items-center space-x-12 px-8 py-6 bg-gray-50 rounded-2xl">
+                <div>
+                  <div className="text-3xl font-bold" style={{ color: '#1C2C55' }}>~30s</div>
+                  <div className="text-sm font-medium text-gray-600">Processing time</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: '#F7E69B', color: '#1C2C55' }}>
-                  3
+                <div className="w-px h-8 bg-gray-300"></div>
+                <div>
+                  <div className="text-3xl font-bold" style={{ color: '#1C2C55' }}>99%</div>
+                  <div className="text-sm font-medium text-gray-600">Accuracy rate</div>
                 </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>CRM Integration</h3>
-              <p className="leading-relaxed" style={{ color: '#202226' }}>
-                Data automatically syncs to your CRM with proper formatting, tags, and contact associations.
-              </p>
+                <div className="w-px h-8 bg-gray-300"></div>
+                <div>
+                  <div className="text-3xl font-bold" style={{ color: '#1C2C55' }}>24/7</div>
+                  <div className="text-sm font-medium text-gray-600">Always available</div>
+                </div>
               </div>
             </div>
           </div>
