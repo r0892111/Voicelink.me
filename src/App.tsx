@@ -52,7 +52,6 @@ function App() {
             <div className="hidden md:flex items-center space-x-8">
               <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
               <a href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
-              <a href="#testimonials" className="text-gray-600 hover:text-gray-900 transition-colors">Reviews</a>
               
               {user ? (
                 <div className="flex items-center space-x-4">
@@ -98,7 +97,6 @@ function App() {
               <div className="flex flex-col space-y-4 pt-4">
                 <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
                 <a href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
-                <a href="#testimonials" className="text-gray-600 hover:text-gray-900 transition-colors">Reviews</a>
                 {!user && (
                   <button
                     onClick={openModal}
