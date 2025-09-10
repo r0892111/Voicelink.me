@@ -209,18 +209,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
           {/* More integrations coming */}
           <div className="text-center">
-            <div className="inline-flex items-center space-x-3 px-8 py-4 bg-gray-50 rounded-full border border-gray-200 mb-6">
-              <div className="flex space-x-1.5">
-                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-              </div>
-              <span className="text-base font-medium text-gray-600">HubSpot, Salesforce, Zoho & more</span>
-            </div>
-            
             <div className="max-w-3xl mx-auto">
               <p className="text-lg text-gray-600 mb-4">
-                We're constantly working on adding new CRM integrations to make VoiceLink available for everyone.
+                We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.
               </p>
               <p className="text-base text-gray-500 mb-6">
                 Don't see your CRM? We build custom integrations for any platform with an API.
