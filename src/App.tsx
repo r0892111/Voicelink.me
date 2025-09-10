@@ -11,6 +11,7 @@ import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
 import CookiePolicy from './components/CookiePolicy';
+import Support from './components/Support';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
@@ -127,6 +128,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/support" element={<Support />} />
       </Routes>
 
       {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
