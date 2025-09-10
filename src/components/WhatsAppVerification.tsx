@@ -347,27 +347,34 @@ export const WhatsAppVerification: React.FC = () => {
           </p>
         </div>
         
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <button
-            onClick={disconnectWhatsApp}
-            disabled={loading}
-            className="text-sm text-red-600 hover:text-red-800 hover:underline disabled:opacity-50 flex items-center space-x-1"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Disconnecting...</span>
-              </>
-            ) : (
-              <>
-                <X className="w-4 h-4" />
-                <span>Disconnect WhatsApp</span>
-              </>
-            )}
-          </button>
-          <p className="text-xs text-gray-500 mt-1">
-            This will remove your WhatsApp connection and allow you to connect a different number
-          </p>
+        <div className="mt-6 pt-6 border-t border-gray-200">
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <h4 className="text-sm font-medium text-gray-900 mb-1">Change WhatsApp Number</h4>
+                <p className="text-xs text-gray-600">
+                  Disconnect to connect a different WhatsApp number
+                </p>
+              </div>
+              <button
+                onClick={disconnectWhatsApp}
+                disabled={loading}
+                className="ml-4 inline-flex items-center px-3 py-2 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-white hover:bg-red-50 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    <span>Disconnecting...</span>
+                  </>
+                ) : (
+                  <>
+                    <X className="w-4 h-4 mr-2" />
+                    <span>Disconnect</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
