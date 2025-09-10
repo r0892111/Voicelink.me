@@ -514,8 +514,82 @@ export default function SaasAgreementPage() {
                   <p>
                     The Customer hereby grants FINIT SOLUTIONS a worldwide, royalty-free, non-exclusive, perpetual, and irrevocable license to use, copy, modify, or otherwise exploit the Feedback for any purpose, including incorporating or implementing the Feedback into the Software and/or Services. The Customer agrees that FINIT SOLUTIONS may exploit all Feedback without any restriction or obligation due to intellectual, industrial or other (property) rights or otherwise. For the avoidance of doubt, Feedback shall not be considered Confidential Information of the Customer, and nothing in this Agreement shall limit FINIT SOLUTIONS' right to independently use, develop, evaluate or market products and services, whether or not the Feedback is incorporated therein or otherwise.
                   </p>
+
+                {/* Article 10 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  10. Compliance
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    The Parties acknowledge that when processing personal data in the context of this Agreement, they will always act in accordance with the principles set out in Regulation (EU) 2016/679 of April 27, 2016, on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (the "GDPR"), as well as any additional applicable national and/or European legislation on the protection of personal data. The Parties shall lay down the detailed arrangements for the processing of personal data within the framework of the Agreement in the processing agreement.
+                  </p>
+                  
+                  <p>
+                    The Customer acknowledges and accepts that the Software and Services use artificial intelligence functionalities (including "large language models") and that FINIT SOLUTIONS may pass on the data processed within the framework of the Agreement (including personal data) to external service providers for the purpose of offering those artificial intelligence functionalities.
+                  </p>
+                  
+                  <p>
+                    The Customer is solely responsible for the use and implementation of appropriate means for the safety, protection, and security of its personal equipment and data. It is strongly recommended to:
+                  </p>
+                  
+                  <div className="ml-6 space-y-2">
+                    <p>• use cryptographic means to protect the Customer's data against unauthorized access;</p>
+                    <p>• regularly back up data;</p>
+                    <p>• regularly update your own software and maintain up-to-date antivirus software at all times.</p>
+                  </div>
                 </div>
 
+                {/* Article 11 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  11. Force Majeure
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    Neither Party shall be liable to the other Party for any event of Force Majeure.
+                  </p>
+                  
+                  <p>
+                    The Party invoking Force Majeure (hereinafter: the "Affected Party") shall notify the other Party in writing, without unreasonable delay, after the Affected Party first became aware (or should have become aware) of such an event of Force Majeure and the delay in the performance of the Agreement due to such an event of Force Majeure. Failure to give such notice within fourteen (14) business days after the event of Force Majeure shall prevent the Affected Party from claiming that an event of Force Majeure has occurred.
+                  </p>
+                  
+                  <p>
+                    Any notification pursuant to this article of the Agreement shall include a detailed description of the obligation(s) affected by such Force Majeure event, as well as details of any contingency plans, alternative or other mutually agreed means that the Affected Party will use to minimize the impact of the Force Majeure event.
+                  </p>
+                  
+                  <p>
+                    Notwithstanding the foregoing, the Affected Party shall use reasonable efforts to mitigate the effect of an event of Force Majeure on the performance of its own obligations and shall continue the Agreement if it is not terminated when and to the extent that such event of Force Majeure ceases.
+                  </p>
+                  
+                  <p>
+                    In the event of Force Majeure, the time for the performance of the obligations shall be adjusted on a day-to-day basis in the context of the event of Force Majeure. In addition, the Parties shall consult regularly with the aim of minimizing any significant delay in the performance of the Agreement. Any delay attributable to an event of Force Majeure shall be formalized in writing without delay.
+                  </p>
+                </div>
+                </div>
+
+                {/* Article 12 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  12. Right of audit
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    During the term of this Agreement and for a period of twelve (12) months after its termination (regardless of the reason for termination of the Agreement), the Customer shall keep detailed, complete, and accurate written records relating to the performance of this Agreement.
+                  </p>
+                  
+                  <p>
+                    The Customer hereby grants FINIT SOLUTIONS permission, upon prior request, to inspect all documents relating to the performance of this Agreement or to have them inspected by an auditor appointed by FINIT SOLUTIONS. The Customer shall provide all reasonable assistance for the performance of the audit.
+                  </p>
+                  
+                  <p>
+                    FINIT SOLUTIONS and its authorized auditor(s) shall keep all information obtained during the audit strictly confidential and shall not use this information for any purpose other than the actual purpose of the audit and its follow-up.
+                  </p>
+                  
+                  <p>
+                    FINIT SOLUTIONS shall bear the costs of audits pursuant to this article of the Agreement, except in the event that the audit establishes non-compliance with the Agreement on the part of the Customer, in which case the costs of the audit shall be borne by the Customer.
+                  </p>
+                </div>
                 {/* Contact Information */}
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <h4 className="font-semibold mb-2">Contact Information</h4>
