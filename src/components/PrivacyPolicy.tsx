@@ -344,6 +344,164 @@ const PrivacyPolicy: React.FC = () => {
             </div>
           </div>
         </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Minors</h3>
+          
+          <p className="leading-relaxed mb-6">
+            We do not intend to collect personal data from persons under the age of 16. These minors may not provide us with personal data or a declaration of consent without the permission of the person holding parental authority.
+          </p>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Cookies</h3>
+          
+          <p className="leading-relaxed mb-6">
+            We also use cookies, mainly to continuously optimize our platform for users. For more specific information about the cookies we use, you can consult our cookie statement: [HYPERLINK].
+          </p>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Your privacy rights</h3>
+          
+          <p className="leading-relaxed mb-6">
+            To give you more control over the processing of your personal data, you have a number of rights. These rights are, among others, laid down in Articles 15-22 GDPR.
+          </p>
+
+          <p className="leading-relaxed mb-6">
+            You have the following rights:
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right of access to the personal data we process about you (Article 15 GDPR):</strong><br />
+            You have the right to know at any time whether or not we process your personal data. If we do, you have the right to access these personal data and to receive additional information regarding:
+          </p>
+
+          <ul className="list-disc list-inside mb-6 ml-4 space-y-1">
+            <li>the purposes of the processing;</li>
+            <li>the categories of personal data concerned;</li>
+            <li>the recipients or categories of recipients (in particular recipients in third countries);</li>
+            <li>the retention period or, if that is not possible, the criteria used to determine that period;</li>
+            <li>the existence of your privacy rights;</li>
+            <li>the right to lodge a complaint with the supervisory authority;</li>
+            <li>the source of the personal data if we obtained personal data from a third party;</li>
+            <li>the existence of automated decision-making.</li>
+          </ul>
+
+          <p className="leading-relaxed mb-6">
+            If we cannot give you access to your personal data (for example due to legal obligations), we will inform you why this is not possible.
+            You may also obtain a free copy of the processed personal data in an intelligible form. Please note, however, that we may charge a reasonable fee to cover our administrative costs for each additional copy you request.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right to erasure ("right to be forgotten") (Article 17 GDPR):</strong><br />
+            In certain cases, you may request us to erase your personal data. Please note that your right to erasure is not absolute. We are entitled to continue to retain your personal data where necessary for, among other things, the performance of the contract, compliance with a legal obligation, or the establishment, exercise, or defense of legal claims. We will inform you further about this in our response to your request.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right to rectification (Article 16 GDPR):</strong><br />
+            When your personal data are incorrect, outdated, or incomplete, you may ask us to rectify these inaccuracies or complete the data.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right to data portability (Article 20 GDPR):</strong><br />
+            You also have the right, under certain conditions, to have the personal data you have provided to us for the performance of the contract or for which you have given consent, transmitted to another controller. Where technically feasible, we will transfer your personal data directly to the new controller.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right to restriction of processing (Article 18 GDPR):</strong><br />
+            If one of the following applies, you may request us to restrict the processing of your personal data:
+          </p>
+
+          <ul className="list-disc list-inside mb-6 ml-4 space-y-1">
+            <li>you contest the accuracy of those personal data (in this case, their use will be restricted for a period enabling us to verify their accuracy);</li>
+            <li>the processing of your personal data is unlawful;</li>
+            <li>we no longer need your personal data for the original purposes, but you need them for the establishment, exercise, or defense of legal claims;</li>
+            <li>as long as no decision has been made regarding the exercise of your right to object to processing, you may request restriction of the use of your personal data.</li>
+          </ul>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right to object (Article 21 GDPR):</strong><br />
+            On grounds relating to your particular situation, you may object to the processing of your personal data if that processing is based on our legitimate interest or the performance of a task carried out in the public interest. In such case, we will cease processing your personal data, unless we demonstrate compelling legitimate grounds for the processing which override your interests, rights and freedoms, or where the processing is related to the establishment, exercise, or defense of legal claims.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right not to be subject to automated decision-making (Article 22 GDPR):</strong><br />
+            You have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning you or significantly affects you, and which is made without substantial human involvement.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            In three situations you cannot rely on this right:
+          </p>
+
+          <ul className="list-disc list-inside mb-6 ml-4 space-y-1">
+            <li>where such decision-making is authorized by law (e.g. to prevent tax fraud);</li>
+            <li>where the decision-making is based on the explicit consent of the data subject; or</li>
+            <li>where this is necessary for entering into, or performance of, a contract (note that in such cases we will always assess on a case-by-case basis whether less privacy-intrusive methods exist to conclude or perform the contract).</li>
+          </ul>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right to withdraw consent (Article 7 GDPR):</strong><br />
+            Where your personal data are processed based on your consent, you may withdraw that consent at any time upon simple request.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            <strong>Right to lodge a complaint with the supervisory authority (Article 77(1) GDPR):</strong><br />
+            You may lodge a complaint with the supervisory authority for data protection. A list of supervisory authorities within the European Union can be found via the following hyperlink: <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl</a>.
+          </p>
+
+          <p className="leading-relaxed mb-4">
+            The authority supervising our organization is the Data Protection Authority, with the following contact details:
+          </p>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+            <h4 className="font-semibold text-blue-900 mb-3">Data Protection Authority</h4>
+            <div className="space-y-2">
+              <p>
+                <span className="font-medium">Website:</span>{' '}
+                <a href="https://www.gegevensbeschermingsautoriteit.be" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  https://www.gegevensbeschermingsautoriteit.be
+                </a>
+              </p>
+              <div>
+                <span className="font-medium">Contact details:</span>
+                <div className="ml-4">
+                  <p>Gegevensbeschermingsautoriteit</p>
+                  <p>Drukpersstraat 35, 1000 Brussels</p>
+                  <p>+32 (0)2 274 48 00</p>
+                  <p>+32 (0)2 274 48 35</p>
+                  <a href="mailto:contact@apd-gba.be" className="text-blue-600 hover:underline">
+                    contact@apd-gba.be
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Exercising your rights</h3>
+          
+          <p className="leading-relaxed mb-6">
+            To exercise these rights, you can contact us via the contact details under the heading "Who are we?". To verify your identity, we ask you to send us a copy of the front of your identity card. We request that you render your national register number and photograph illegible. In any case, we will only process the identity card data for the purpose of verifying your identity and will not store or register them in our systems.
+          </p>
+
+          <p className="leading-relaxed mb-6">
+            You can exercise all these rights free of charge, unless your request is manifestly unfounded or excessive (for example, due to its repetitive nature). In such case, we are entitled to charge you a reasonable fee or to refuse to comply with your request.
+          </p>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Retention of your personal data</h3>
+          
+          <p className="leading-relaxed mb-6">
+            We retain your personal data for as long as necessary to achieve the intended purpose. You should note that many (legal) retention periods require personal data to be kept. Where no retention obligation exists, the data are routinely erased once the purpose for which they were collected has been achieved.
+          </p>
+
+          <p className="leading-relaxed mb-6">
+            In addition, we may retain personal data if you have given us consent for this, or if it is possible that we need these data in the context of legal proceedings. In the latter case, we must use certain personal data as evidence. For that purpose, we retain certain personal data in accordance with the statutory limitation period, which may be up to thirty years; the usual limitation period for personal legal claims is ten years.
+          </p>
+        </div>
       </div>
     </div>
   );
