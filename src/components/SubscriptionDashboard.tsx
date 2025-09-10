@@ -54,7 +54,7 @@ export const SubscriptionDashboard: React.FC = () => {
                 </div>
                 <div className="text-left">
                   <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                    Welcome back, {user?.name?.split(' ')[0] || 'Premium User'}!
+                    Welcome back, {user?.user_info.first_name|| 'Premium User'}!
                   </h1>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
                     Your VoiceLink Pro subscription is active
