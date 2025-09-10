@@ -172,19 +172,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               />
             )}
             
-            {(isCustom && selectedUsers >= 100) && (
-              <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <p className="text-sm text-blue-800 font-medium mb-2">
-                  Large team? Let's discuss custom pricing
-                </p>
-                <p className="text-xs text-blue-600 mb-3">
-                  Get volume discounts, dedicated support, and custom integrations
-                </p>
-                <button className="text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md transition-colors">
-                  Contact Sales Team
-                </button>
-              </div>
-            )}
           </div>
 
           {pricing.isEnterprise ? (
