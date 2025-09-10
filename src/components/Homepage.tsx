@@ -248,7 +248,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* Main Content Grid */}
-          <div className="grid lg:grid-cols-2 gap-20 items-start mb-20">
+          <div className="grid lg:grid-cols-[2fr_1fr] gap-16 items-start mb-20">
             {/* Left Side - Animated Use Cases */}
             <div className="space-y-8">
               <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
@@ -289,81 +289,43 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </div>
 
             {/* Right Side - Technology Showcase */}
-            <div className="relative">
-              <div className="bg-white rounded-3xl p-10 shadow-sm border border-gray-100">
-                
-                <div>
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
-                      <Zap className="w-10 h-10" style={{ color: '#1C2C55' }} />
-                    </div>
-                    <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Connect Any CRM</h3>
-                    <p className="text-gray-600">We integrate with any system that has an API</p>
+            <div className="sticky top-8">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div className="text-center mb-6">
+                  <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
+                    <Zap className="w-6 h-6" style={{ color: '#1C2C55' }} />
                   </div>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>Connect Any CRM</h3>
+                  <p className="text-sm text-gray-600">We integrate with any system that has an API</p>
+                </div>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                        <span className="font-medium text-gray-800">HubSpot</span>
-                      </div>
-                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                        <span className="font-medium text-gray-800">Salesforce</span>
-                      </div>
-                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                        </div>
-                        <span className="font-medium text-gray-800">ERP Systems</span>
-                      </div>
-                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                        </div>
-                        <span className="font-medium text-gray-800">Project Management</span>
-                      </div>
-                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                        </div>
-                        <span className="font-medium text-gray-800">Inventory Systems</span>
-                      </div>
-                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#1C2C55' }}></div>
-                        </div>
-                        <span className="font-medium text-gray-800">Custom Databases</span>
-                      </div>
-                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    </div>
-
-                    <div className="text-center mt-6 p-4 rounded-xl" style={{ backgroundColor: 'rgba(247, 230, 155, 0.1)' }}>
-                      <p className="text-sm font-medium" style={{ color: '#1C2C55' }}>
-                        + Any system with REST API, GraphQL, or webhooks
-                      </p>
-                    </div>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-800">HubSpot</span>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
                   </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-800">Salesforce</span>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-800">ERP Systems</span>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-800">Project Management</span>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-800">Custom Databases</span>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  </div>
+                </div>
+
+                <div className="text-center mt-4 p-3 rounded-lg" style={{ backgroundColor: 'rgba(247, 230, 155, 0.1)' }}>
+                  <p className="text-xs font-medium" style={{ color: '#1C2C55' }}>
+                    + Any system with REST API, GraphQL, or webhooks
+                  </p>
                 </div>
               </div>
             </div>
