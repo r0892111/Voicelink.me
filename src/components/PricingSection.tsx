@@ -168,11 +168,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 €{pricing.price.toFixed(2)}
               </span>
               <span className="text-xl text-gray-600">
-                /{billingPeriod === 'monthly' ? 'month' : 'year'}
+                /{billingPeriod}
               </span>
             </div>
             <p className="text-gray-600">
-              €{pricing.pricePerUser.toFixed(2)}/user/{billingPeriod === 'monthly' ? 'month' : 'year'} • {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
+              €{pricing.pricePerUser.toFixed(2)}/user/month • {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
             </p>
             {pricing.savings > 0 && (
               <p className="text-green-600 font-medium mt-2">
