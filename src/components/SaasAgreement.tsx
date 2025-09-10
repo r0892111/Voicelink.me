@@ -1,109 +1,155 @@
-import React from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable react/no-unescaped-entities */
+"use client";
 
-export const SaasAgreement: React.FC = () => {
-  const navigate = useNavigate();
+import { motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 
+export default function SaasAgreementPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-4xl mx-auto px-6">
-        {/* Header */}
-        <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
-          
-          <div className="flex items-center space-x-3 mb-4">
-            <img 
-              src="/Finit Voicelink Blue.svg" 
-              alt="VoiceLink" 
-              className="h-8 w-auto"
-            />
-          </div>
-          
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Software as a Service Agreement
-          </h1>
-          <p className="text-gray-600">
-            Last updated: [DATE TO BE ADDED]
-          </p>
-        </div>
+    <main className="pt-20">
+      <section className="relative py-16 md:py-24 bg-background">
+        <div className="container relative mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            {/* Badge */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary mb-6"
+            >
+              <span>Software as a Service Agreement</span>
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </motion.p>
 
-        {/* Agreement Content */}
-        <div className="bg-white rounded-xl shadow-sm p-8">
-          <div className="prose max-w-none">
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-              <p className="text-yellow-800 text-sm font-medium">
-                📝 Template Notice: This is a template SaaS agreement. Please customize the content according to your specific terms and conditions.
+            {/* Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-4xl font-bold mb-2"
+            >
+              {/* PASTE EXACT DOCUMENT TITLE HERE (no edits) */}
+            </motion.h1>
+
+            {/* Meta line (optional: version/date) */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="text-muted-foreground mb-8"
+            >
+              {/* If you want a version/date line, paste it here exactly as-is */}
+            </motion.p>
+
+            {/* Body */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="prose prose-lg dark:prose-invert max-w-none"
+            >
+              {/* ===== Start of Part 1 text (paste verbatim) ===== */}
+
+              {/* Section: BETWEEN */}
+              <h2 className="text-2xl font-semibold mt-8 mb-4" id="between">BETWEEN:</h2>
+              <p>
+                {/* Paste clause 1 exactly as provided (Finit Solutions identification) */}
               </p>
-            </div>
-
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Agreement Overview</h2>
-            <p className="text-gray-700 mb-6">
-              This Software as a Service Agreement ("Agreement") is entered into between Finit Solutions ("Company", "we", "us") 
-              and the customer ("Customer", "you") for the use of VoiceLink services.
-            </p>
-
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Service Description</h2>
-            <p className="text-gray-700 mb-6">
-              VoiceLink provides voice-to-CRM integration services, allowing users to send WhatsApp voice notes that are 
-              automatically processed and synchronized with supported CRM platforms.
-            </p>
-
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Subscription Terms</h2>
-            <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-              <li>Subscription fees are billed monthly in advance</li>
-              <li>Pricing is per user per month as displayed on our website</li>
-              <li>Free trial period of 14 days is provided for new customers</li>
-              <li>Subscriptions automatically renew unless cancelled</li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Data Privacy and Security</h2>
-            <p className="text-gray-700 mb-6">
-              We are committed to protecting your data. All voice recordings and CRM data are processed securely and 
-              in accordance with applicable data protection regulations including GDPR.
-            </p>
-
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Service Availability</h2>
-            <p className="text-gray-700 mb-6">
-              We strive to maintain 99.9% uptime for our services. Scheduled maintenance will be communicated in advance 
-              when possible.
-            </p>
-
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Limitation of Liability</h2>
-            <p className="text-gray-700 mb-6">
-              [TO BE CUSTOMIZED] - Standard limitation of liability clauses will be added here.
-            </p>
-
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Termination</h2>
-            <p className="text-gray-700 mb-6">
-              Either party may terminate this agreement with 30 days written notice. Upon termination, 
-              access to the service will be discontinued.
-            </p>
-
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Contact Information</h2>
-            <p className="text-gray-700 mb-6">
-              For questions about this agreement, please contact us at:
-              <br />
-              Email: [CONTACT EMAIL TO BE ADDED]
-              <br />
-              Address: [COMPANY ADDRESS TO BE ADDED]
-            </p>
-
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Need Help?</h3>
-              <p className="text-gray-600 text-sm">
-                If you have any questions about this SaaS Agreement, please don't hesitate to contact our support team.
+              <p>
+                {/* Paste clause 2 exactly as provided (Customer) */}
               </p>
-            </div>
+
+              {/* Section: CONSIDERING THAT */}
+              <h2 className="text-2xl font-semibold mt-8 mb-4" id="considering">CONSIDERING THAT:</h2>
+              <ol>
+                <li>
+                  {/* (i) Paste exactly */}
+                </li>
+                <li>
+                  {/* (ii) Paste exactly */}
+                </li>
+                <li>
+                  {/* (iii) Paste exactly */}
+                </li>
+                <li>
+                  {/* (iv) Paste exactly */}
+                </li>
+              </ol>
+
+              <h2 className="text-2xl font-semibold mt-8 mb-4" id="agreement-open">
+                THE PARTIES AGREE AS FOLLOWS:
+              </h2>
+
+              {/* Article 1 */}
+              <h3 className="text-xl font-semibold mt-8 mb-3" id="article-1">
+                Article 1 Monthly fee
+              </h3>
+              <p>
+                {/* Paste the introductory sentence exactly */}
+              </p>
+
+              {/* Pricing Table (VoiceLink tiers) */}
+              <div className="overflow-x-auto mt-4">
+                <table className="w-full text-sm border border-border">
+                  <thead className="bg-muted/50">
+                    <tr>
+                      <th className="p-3 text-left">VoiceLink</th>
+                      <th className="p-3 text-left">Users</th>
+                      <th className="p-3 text-left">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Replace each row with the exact tier lines you provide */}
+                    <tr className="border-t">
+                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top">From 1 user</td>
+                      <td className="p-3 align-top">29 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top">From 5 users</td>
+                      <td className="p-3 align-top">25 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top">From 10 users</td>
+                      <td className="p-3 align-top">22 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top">From 25 users</td>
+                      <td className="p-3 align-top">19 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top">From 50 users</td>
+                      <td className="p-3 align-top">17 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="p-3 align-top">VoiceLink</td>
+                      <td className="p-3 align-top">From 100 users</td>
+                      <td className="p-3 align-top">14 EUR per month per user</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Article 2 */}
+              <h3 className="text-xl font-semibold mt-8 mb-3" id="article-2">
+                Article 2 Method of concluding the Agreement
+              </h3>
+              <p>
+                {/* Paste the Article 2 paragraph(s) exactly */}
+              </p>
+              <p>
+                {/* Paste the sentence about Agreement & Annexes delivery exactly */}
+              </p>
+
+              {/* ===== End of Part 1 text ===== */}
+            </motion.div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
-};
+}
