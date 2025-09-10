@@ -1,35 +1,23 @@
 import React from 'react';
-import { Users, Zap, Settings, X } from 'lucide-react';
+import { Routes, Route } from 'react-router-dom';
+import { Users, LogOut, User, Menu, X } from 'lucide-react';
+import { AuthModal } from './components/AuthModal';
+import { AuthCallback } from './components/AuthCallback';
+import { Dashboard } from './components/Dashboard';
+import { BuyButton } from './components/BuyButton';
+import { SuccessPage } from './components/SuccessPage';
+import { Homepage } from './components/Homepage';
+import SaasAgreement from './components/SaasAgreement';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import Disclaimer from './components/Disclaimer';
+import CookiePolicy from './components/CookiePolicy';
+import Support from './components/Support';
+import { useAuth } from './hooks/useAuth';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-
-  const handleSignIn = async (platform: string) => {
-    try {
-      let authUrl = '';
-      
-      switch (platform) {
-        case 'Teamleader':
-          authUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/teamleader-auth`;
-          break;
-        case 'Pipedrive':
-          authUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/pipedrive-auth`;
-          break;
-        case 'Odoo':
-          authUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/odoo-auth`;
-          break;
-        default:
-          console.error('Unknown platform:', platform);
-          return;
-      }
-
-      // Redirect to the authentication endpoint
-      window.location.href = authUrl;
-      
-    } catch (error) {
-      console.error(`Error signing in with ${platform}:`, error);
-    }
-  };
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const { user, loading, signOut } = useAuth();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -39,91 +27,111 @@ function App() {
     setIsModalOpen(false);
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Users className="w-8 h-8 text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">CRM Hub</span>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={openModal}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 hover:shadow-md"
-            >
-              Sign In
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content Area - Blank */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Content will go here */}
-      </main>
-
-      {/* Sign-in Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 relative">
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Platform</h2>
-              <p className="text-gray-600">Sign in with your preferred CRM platform</p>
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              {/* Blue logo on light background */}
+              <img 
+                src="/Finit Voicelink Blue.svg" 
+                alt="VoiceLink" 
+                className="h-10 w-auto"
+              />
             </div>
-
-            {/* Sign-in Options */}
-            <div className="space-y-4">
-              {/* Teamleader Button */}
-              <button
-                onClick={() => handleSignIn('Teamleader')}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3"
-              >
-                <div className="w-6 h-6 bg-white rounded flex items-center justify-center">
-                  <span className="text-emerald-600 font-bold text-sm">T</span>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+              <a href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
+              
+              {user ? (
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                      <User className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-gray-900 font-medium">{user.name}</span>
+                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full capitalize">
+                      {user.platform}
+                    </span>
+                  </div>
+                  <button
+                    onClick={signOut}
+                    className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Sign Out</span>
+                  </button>
                 </div>
-                <span>Sign in with Teamleader</span>
-              </button>
-
-              {/* Pipedrive Button */}
-              <button
-                onClick={() => handleSignIn('Pipedrive')}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3"
-              >
-                <Zap className="w-6 h-6" />
-                <span>Sign in with Pipedrive</span>
-              </button>
-
-              {/* Odoo Button */}
-              <button
-                onClick={() => handleSignIn('Odoo')}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center space-x-3"
-              >
-                <Settings className="w-6 h-6" />
-                <span>Sign in with Odoo</span>
-              </button>
+              ) : (
+                <button
+                  onClick={openModal}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-xl transition-all duration-200 hover:shadow-lg"
+                >
+                  Sign In
+                </button>
+              )}
             </div>
 
-            {/* Footer */}
-            <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-              <p className="text-sm text-gray-500">
-                Secure authentication powered by OAuth 2.0
-              </p>
-            </div>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-gray-600 hover:text-gray-900"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
+              <div className="flex flex-col space-y-4 pt-4">
+                <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+                <a href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
+                {!user && (
+                  <button
+                    onClick={openModal}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-xl transition-all duration-200 text-left"
+                  >
+                    Sign In
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </nav>
+
+      {/* Routes */}
+      <Routes>
+        <Route path="/" element={
+          user ? <Dashboard /> : <Homepage openModal={openModal} />
+        } />
+        <Route path="/auth/:platform/callback" element={<AuthCallback />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/success" element={<SuccessPage />} />
+        <Route path="/saas-agreement" element={<SaasAgreement />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/support" element={<Support />} />
+      </Routes>
+
+      {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
     </div>
   );
 }
