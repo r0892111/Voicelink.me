@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, Check, Loader2, AlertCircle, X, Clock } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { createClient } from '@supabase/supabase-js';
@@ -8,19 +8,64 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
+interface WhatsAppStatus {
+  whatsapp_number: string | null;
+  whatsapp_status: 'not_set' | 'pending' | 'active';
+}
+
 export const WhatsAppVerification: React.FC = () => {
   const { user } = useAuth();
   const [whatsappInput, setWhatsappInput] = useState('');
   const [otpCode, setOtpCode] = useState('');
   const [otpStep, setOtpStep] = useState<'input' | 'verify'>('input');
   const [loading, setLoading] = useState(false);
+  const [fetchingStatus, setFetchingStatus] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [otpExpiresAt, setOtpExpiresAt] = useState<string | null>(null);
+  const [whatsappStatus, setWhatsappStatus] = useState<WhatsAppStatus>({
+    whatsapp_number: null,
+    whatsapp_status: 'not_set'
+  });
 
-  // Get current WhatsApp status from user data
-  const whatsappStatus = user?.user_info?.whatsapp_status || 'not_set';
-  const currentNumber = user?.user_info?.whatsapp_number;
+  // Fetch WhatsApp status from the appropriate table based on platform
+  const fetchWhatsAppStatus = async () => {
+    if (!user) return;
+
+    setFetchingStatus(true);
+    try {
+      const platform = user.platform;
+      const tableName = `${platform}_users`;
+      
+      const { data, error } = await supabase
+        .from(tableName)
+        .select('whatsapp_number, whatsapp_status')
+        .eq('user_id', user.id)
+        .is('deleted_at', null)
+        .single();
+
+      if (error) {
+        console.error('Error fetching WhatsApp status:', error);
+        return;
+      }
+
+      if (data) {
+        setWhatsappStatus({
+          whatsapp_number: data.whatsapp_number,
+          whatsapp_status: data.whatsapp_status || 'not_set'
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching WhatsApp status:', error);
+    } finally {
+      setFetchingStatus(false);
+    }
+  };
+
+  // Fetch status on component mount and when user changes
+  useEffect(() => {
+    fetchWhatsAppStatus();
+  }, [user]);
 
   // Phone number validation
   const phoneRegex = /^\+[1-9]\d{1,14}$/;
@@ -44,24 +89,22 @@ export const WhatsAppVerification: React.FC = () => {
     setError(null);
 
     try {
-      // Get user platform and ID
-      const platform = user.platform
+      const platform = user.platform;
       if (!platform) {
         throw new Error('User platform not found');
       }
 
       // Get CRM user ID based on platform
       let crmUserId;
-      console.log('User info:', user);
       switch (platform) {
         case 'teamleader':
-          crmUserId = user.id;
+          crmUserId = user.user_info?.id || user.id;
           break;
         case 'pipedrive':
-          crmUserId = user.id;
+          crmUserId = user.user_info?.id || user.id;
           break;
         case 'odoo':
-          crmUserId = user.user_info?.user_id;
+          crmUserId = user.user_info?.user_id || user.id;
           break;
         default:
           throw new Error('Unknown platform');
@@ -93,6 +136,12 @@ export const WhatsAppVerification: React.FC = () => {
       const result = await response.json();
       setOtpExpiresAt(result.expires_at);
       setOtpStep('verify');
+      
+      // Update local status to pending
+      setWhatsappStatus(prev => ({
+        ...prev,
+        whatsapp_status: 'pending'
+      }));
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to send verification code');
     } finally {
@@ -115,7 +164,7 @@ export const WhatsAppVerification: React.FC = () => {
     setError(null);
 
     try {
-      const platform = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
+      const platform = user.platform;
       if (!platform) {
         throw new Error('User platform not found');
       }
@@ -124,13 +173,13 @@ export const WhatsAppVerification: React.FC = () => {
       let crmUserId;
       switch (platform) {
         case 'teamleader':
-          crmUserId = user.id;
+          crmUserId = user.user_info?.id || user.id;
           break;
         case 'pipedrive':
-          crmUserId = user.id;
+          crmUserId = user.user_info?.id || user.id;
           break;
         case 'odoo':
-          crmUserId = user.user_info?.user_id;
+          crmUserId = user.user_info?.user_id || user.id;
           break;
         default:
           throw new Error('Unknown platform');
@@ -168,9 +217,16 @@ export const WhatsAppVerification: React.FC = () => {
       setOtpCode('');
       setOtpExpiresAt(null);
 
-      // Refresh the page to update user data
+      // Update local status to active
+      setWhatsappStatus({
+        whatsapp_number: whatsappInput.trim(),
+        whatsapp_status: 'active'
+      });
+
+      // Refresh status from database to ensure consistency
       setTimeout(() => {
-        window.location.reload();
+        fetchWhatsAppStatus();
+        setSuccess(false);
       }, 2000);
 
     } catch (error) {
@@ -207,7 +263,20 @@ export const WhatsAppVerification: React.FC = () => {
     setError(null);
   };
 
-  if (whatsappStatus === 'active' && currentNumber) {
+  // Show loading state while fetching status
+  if (fetchingStatus) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="flex items-center justify-center py-8">
+          <Loader2 className="w-6 h-6 animate-spin text-green-600 mr-3" />
+          <span className="text-gray-600">Loading WhatsApp status...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Show verified state
+  if (whatsappStatus.whatsapp_status === 'active' && whatsappStatus.whatsapp_number) {
     return (
       <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="flex items-center space-x-3 mb-4">
@@ -216,16 +285,55 @@ export const WhatsAppVerification: React.FC = () => {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">WhatsApp Verified</h3>
-            <p className="text-sm text-gray-600">Connected to {currentNumber}</p>
+            <p className="text-sm text-gray-600">Connected to {whatsappStatus.whatsapp_number}</p>
           </div>
         </div>
-        <p className="text-gray-600 text-sm">
-          Your WhatsApp number is verified and ready to receive notifications.
-        </p>
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="flex items-center space-x-2 mb-2">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+            <span className="text-sm font-medium text-green-800">Active & Ready</span>
+          </div>
+          <p className="text-sm text-green-700">
+            Your WhatsApp number is verified and ready to receive voice note confirmations. 
+            You can now send voice messages to VoiceLink!
+          </p>
+        </div>
       </div>
     );
   }
 
+  // Show pending state
+  if (whatsappStatus.whatsapp_status === 'pending') {
+    return (
+      <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+            <Clock className="w-6 h-6 text-yellow-600" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">WhatsApp Verification Pending</h3>
+            <p className="text-sm text-gray-600">Verification in progress</p>
+          </div>
+        </div>
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <p className="text-sm text-yellow-700">
+            Your WhatsApp verification is pending. Please complete the verification process to start using VoiceLink.
+          </p>
+          <button
+            onClick={() => {
+              setWhatsappStatus(prev => ({ ...prev, whatsapp_status: 'not_set' }));
+              fetchWhatsAppStatus();
+            }}
+            className="mt-3 text-sm text-yellow-600 hover:text-yellow-800 underline"
+          >
+            Refresh Status
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Show verification form
   return (
     <div className="bg-white rounded-xl shadow-sm p-6">
       <div className="flex items-center space-x-3 mb-6">
