@@ -256,7 +256,7 @@ export default function SaasAgreementPage() {
                   
                   <div className="ml-6 space-y-3">
                     <p>
-                      <strong>i.</strong> use the Software and Services and/or allow them to be used by the Users solely for the Customer's independent internal use, with the sole purpose of optimizing the Customer's business processes;
+                      <strong>i.</strong> use the Software and Services and/or allow them to be used by the Users solely for the Customer's independent internal use, with the sole purpose of optimizing the Customer\'s business processes;
                     </p>
                     
                     <p>
