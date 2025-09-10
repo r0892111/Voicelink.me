@@ -160,6 +160,188 @@ const PrivacyPolicy: React.FC = () => {
                 Legal obligation: the processing is necessary for compliance with a legal obligation to which we, as the data controller, are subject.
               </p>
             </div>
+
+            {/* Privacy Data Table */}
+            <div className="overflow-x-auto mt-8">
+              <table className="w-full text-sm border border-gray-300">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="p-3 text-left border-b border-gray-300">Categories of Personal Data</th>
+                    <th className="p-3 text-left border-b border-gray-300">Purposes</th>
+                    <th className="p-3 text-left border-b border-gray-300">Legal Basis</th>
+                    <th className="p-3 text-left border-b border-gray-300">Retention Period</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      (Electronic) identification data; and Device data
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To provide you with access to our platform
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Consent for non-essential cookies; Legitimate interest of Finit
+                      Solutions to present itself with a well-functioning platform and
+                      in your own interest to be able to use it smoothly
+                    </td>
+                    <td className="p-3 align-top">
+                      Until the end of your visit to our platform or until the relevant
+                      cookie is automatically deleted
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Identification and contact details; Password; Employment-related
+                      data; and Financial data
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To allow you to create an account on our platform
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">Contract</td>
+                    <td className="p-3 align-top">
+                      For the period your account remains active and up to 1 year
+                      thereafter
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Identification and contact details; Content of your message; and
+                      Employment-related data
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To respond to your request or message to create a tailor-made
+                      solution and to prepare a customized quotation
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">Consent</td>
+                    <td className="p-3 align-top">
+                      For the duration of processing your request or message
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Identification and contact details; Password; Employment-related
+                      data; and Financial data (via Stripe: card details, transaction
+                      references, payment status, subscription details)
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To enable you to conclude a subscription for one of our solutions
+                      and to execute the payment thereof
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Contract and legal obligation (accounting and tax legislation)
+                    </td>
+                    <td className="p-3 align-top">
+                      For as long as you use one of our solutions via subscription and
+                      up to 7 years thereafter (tax retention period)
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      CRM identification data (such as user ID, tokens, API keys, refresh
+                      tokens)
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To grant you access to your CRM and to establish the connection
+                      with our solution
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">Contract</td>
+                    <td className="p-3 align-top">
+                      For the duration of your active account or until the connection is
+                      revoked
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Telephone number and verification code (WhatsApp verification)
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To link and verify your WhatsApp account
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">Contract</td>
+                    <td className="p-3 align-top">
+                      For the duration of your active account
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Identification and contact details; Content of WhatsApp messages
+                      and voice notes; Usage data; and other customer information you
+                      voluntarily dictate (such as phone numbers, emails, names, notes,
+                      conversation content)
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To deliver the solution you use, to automatically process your
+                      messages and to place them in your CRM
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">Contract</td>
+                    <td className="p-3 align-top">
+                      As short as possible; raw audio messages are automatically deleted
+                      within 7 days after processing; only the output forwarded to your
+                      CRM is retained in accordance with your CRM's retention periods
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">Identification and contact details</td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To send you service emails in case of malfunctions, security
+                      updates or upgrades
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">Contract</td>
+                    <td className="p-3 align-top">
+                      For as long as you use one of our solutions
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      (Electronic) identification and contact details; logs
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To record and store logs in order to detect fraud and abuse
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Legitimate interest (to detect fraud and misuse of our solutions
+                      and to take appropriate action)
+                    </td>
+                    <td className="p-3 align-top">
+                      For 30 days following the registration of the logs; If an anomaly
+                      is detected, up to 10 years after registration or until any legal
+                      proceedings are concluded
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Identification and contact details to establish your identity (with
+                      official documents and photo)
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To handle your request to exercise your rights
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Legal obligation (Article 12(2) GDPR)
+                    </td>
+                    <td className="p-3 align-top">
+                      As long as necessary to process your request (and in the event of
+                      legal proceedings: until their conclusion)
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Identification and contact details; all data necessary to defend
+                      our rights
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">To defend our rights</td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Legitimate interest (legal defense)
+                    </td>
+                    <td className="p-3 align-top">
+                      Until the end of the legal claim or for as long as a legal claim
+                      may be possible
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
