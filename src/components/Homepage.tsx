@@ -134,7 +134,7 @@ const PricingCalculator: React.FC = () => {
   );
 };
 
-export const LandingPage: React.FC<{ openModal: () => void }> = ({ openModal }) => {
+export const Homepage: React.FC<{ openModal: () => void }> = ({ openModal }) => {
   const visibleSections = useScrollAnimation();
 
   return (
@@ -828,4 +828,3 @@ export const LandingPage: React.FC<{ openModal: () => void }> = ({ openModal }) 
       </footer>
     </div>
   );
-};
