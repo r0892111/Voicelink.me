@@ -589,11 +589,7 @@ export default function SaasAgreementPage() {
                   <p>
                     FINIT SOLUTIONS shall bear the costs of audits pursuant to this article of the Agreement, except in the event that the audit establishes non-compliance with the Agreement on the part of the Customer, in which case the costs of the audit shall be borne by the Customer.
                   </p>
-                </div>
-                {/* Contact Information */}
-                <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-                  <h4 className="font-semibold mb-2">Contact Information</h4>
-                </div>
+               
 
                 {/* Article 13 */}
                 <h3 className="text-lg font-semibold mt-8 mb-4 underline">
