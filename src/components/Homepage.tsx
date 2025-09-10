@@ -876,4 +876,83 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
         id="final-cta"
         data-animate-section
         className={`py-20 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('final-cta') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className={`transition-all duration-1000 delay-200 ${
+            visibleSections.has('final-cta') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
+            <h2 className="text-4xl font-bold mb-6" style={{ color: '#1C2C55' }}>
+              Ready to Transform Your Workflow?
+            </h2>
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Join thousands of professionals who are already using voice technology to streamline their CRM processes.
+            </p>
+            <button
+              onClick={openModal}
+              className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2 mx-auto"
+              style={{ backgroundColor: '#1C2C55' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+            >
+              <span>Start Your Free Trial</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <p className="text-sm text-gray-500 mt-4">
+              14-day free trial • No credit card required • Cancel anytime
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer 
+        id="footer"
+        data-animate-section
+        className={`py-16 border-t border-gray-200 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('footer') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className={`text-center transition-all duration-1000 delay-200 ${
+            visibleSections.has('footer') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
+            <div className="flex justify-center items-center space-x-8 mb-8">
+              <a 
+                href="#" 
+                className="text-gray-600 hover:text-gray-900 transition-colors hover:translate-x-1 transform duration-300"
+              >
+                Privacy Policy
+              </a>
+              <a 
+                href="#" 
+                className="text-gray-600 hover:text-gray-900 transition-colors hover:translate-x-1 transform duration-300"
+              >
+                Terms of Service
+              </a>
+              <a 
+                href="#" 
+                className="text-gray-600 hover:text-gray-900 transition-colors hover:translate-x-1 transform duration-300"
+              >
+                Support
+              </a>
+            </div>
+            <p className="text-gray-500">
+              © 2024 VoiceLink. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
           
