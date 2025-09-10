@@ -320,6 +320,247 @@ export const SubscriptionDashboard: React.FC = () => {
             </>
           )}
 
+          {/* User Guide Section - Only show when WhatsApp is active */}
+          {!loadingWhatsApp && whatsappStatus === 'active' && (
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+              <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                    <MessageCircle className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                  </div>
+                  <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                    Daily Usage Guide
+                  </h2>
+                  <p className="text-xl" style={{ color: '#6B7280' }}>
+                    VoiceLink works best when you speak your updates in a structured and clear manner
+                  </p>
+                </div>
+
+                <div className="max-w-4xl mx-auto space-y-8">
+                  {/* Contact Recording */}
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <Users className="w-6 h-6" />
+                      <span>1. Recording Contacts</span>
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Start with:</h4>
+                        <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderColor: '#1C2C55' }}>
+                          <p className="font-medium">"Just called/spoke with [NAME]"</p>
+                          <p className="font-medium">or "[NAME] just visited"</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Names:</h4>
+                          <p className="text-sm text-gray-700">Speak slowly and spell difficult names letter by letter</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Phone/Email:</h4>
+                          <p className="text-sm text-gray-700">Optional, but always spell when in doubt</p>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <p className="text-sm text-yellow-800">
+                          <strong>New vs. Existing Contacts:</strong> VoiceLink automatically searches for existing records and creates new contacts when needed.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Conversation Information */}
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <MessageCircle className="w-6 h-6" />
+                      <span>2. Conversation Information</span>
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <p className="text-gray-700">Share important information as if you're telling a colleague.</p>
+                      
+                      <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderColor: '#25D366' }}>
+                        <p className="font-medium text-gray-800">Example:</p>
+                        <p className="italic text-gray-700 mt-2">
+                          "He's interested in product X, wants a demo next week, and asked me to send the price list."
+                        </p>
+                      </div>
+                      
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p className="text-sm text-blue-800">
+                          <strong>Tip:</strong> The more details you provide, the better VoiceLink can fill your CRM. 
+                          The system automatically creates tags and reports as annotations.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Calendar & Task Management */}
+                  <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <Calendar className="w-6 h-6" />
+                      <span>3. Calendar & Task Management</span>
+                    </h3>
+                    
+                    <p className="text-gray-700 mb-4">VoiceLink can automatically create or update appointments and tasks.</p>
+                    
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>📞 Callbacks:</h4>
+                          <div className="bg-white rounded-lg p-3 text-sm">
+                            <p>"I need to call him back Monday at 3 PM"</p>
+                            <p>"I should call him tomorrow morning"</p>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>📅 Appointments:</h4>
+                          <div className="bg-white rounded-lg p-3 text-sm">
+                            <p>"He's coming next Tuesday at 2 PM"</p>
+                            <p>"Meeting in Tremelo on May 29th at 1 PM"</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>✅ Tasks:</h4>
+                          <div className="bg-white rounded-lg p-3 text-sm">
+                            <p>"Send catalog tomorrow"</p>
+                            <p>"Prepare quote for Friday 2 PM"</p>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>🔄 Updates:</h4>
+                          <div className="bg-white rounded-lg p-3 text-sm">
+                            <p>"Meeting with Marianna moved to Tuesday 12 PM"</p>
+                            <p>"Jeff didn't answer, try again tomorrow"</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Best Practices */}
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <CheckCircle className="w-6 h-6" />
+                      <span>4. Best Practices for Optimal Use</span>
+                    </h3>
+                    
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
+                            <span className="text-white text-sm">🗣️</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Speak Clearly</h4>
+                            <p className="text-sm text-gray-700">Speak clearly and slowly in standard English</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
+                            <span className="text-white text-sm">📱</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Spelling Mode</h4>
+                            <p className="text-sm text-gray-700">Spell letters for names, emails, and phone numbers when in doubt</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
+                            <span className="text-white text-sm">⏰</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Auto-Scheduling</h4>
+                            <p className="text-sm text-gray-700">No time mentioned? VoiceLink finds a suitable time automatically</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
+                            <span className="text-white text-sm">🎯</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Keep It Focused</h4>
+                            <p className="text-sm text-gray-700">One update per message is most reliable</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                      <p className="text-sm text-red-800">
+                        <strong>Important:</strong> You can only update one contact per message. 
+                        Want to update multiple people in your CRM? Record them with separate voice notes on WhatsApp.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Troubleshooting */}
+                  <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <Settings className="w-6 h-6" />
+                      <span>5. Troubleshooting</span>
+                    </h3>
+                    
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className="bg-white rounded-lg p-4">
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>No Connection?</h4>
+                        <p className="text-sm text-gray-700">Check internet connection and API settings</p>
+                      </div>
+                      
+                      <div className="bg-white rounded-lg p-4">
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Wrong Input?</h4>
+                        <p className="text-sm text-gray-700">Send corrections via new voice message</p>
+                      </div>
+                      
+                      <div className="bg-white rounded-lg p-4">
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Transcription Errors?</h4>
+                        <p className="text-sm text-gray-700">Speak clearly without background noise</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Support */}
+                  <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 text-center">
+                    <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                      Need Help?
+                    </h3>
+                    
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                      <a
+                        href="mailto:contact@finitsolutions.be"
+                        className="flex items-center space-x-2 px-4 py-2 bg-white rounded-lg hover:shadow-md transition-shadow"
+                      >
+                        <Mail className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                        <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>contact@finitsolutions.be</span>
+                      </a>
+                      
+                      <a
+                        href="/support"
+                        className="flex items-center space-x-2 px-4 py-2 bg-white rounded-lg hover:shadow-md transition-shadow"
+                      >
+                        <Headphones className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                        <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Support Center</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
           {/* Odoo API Key Input - Only for Odoo users */}
           {user?.platform === 'odoo' && (
             <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
