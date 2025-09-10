@@ -213,7 +213,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <p className="text-lg text-gray-600 mb-4">
                 We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.
               </p>
-              <p className="text-base text-gray-500 mb-6">
+              <p className="text-base text-gray-500 mb-6 font-bold">
                 Don't see your CRM? We build custom integrations for any platform with an API.
               </p>
               <button className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-gray-300 rounded-full hover:border-gray-400 transition-colors group">
