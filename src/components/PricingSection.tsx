@@ -201,10 +201,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 <div className="space-y-3 mb-4">
                   <div className="flex items-center justify-center space-x-2 text-sm text-gray-700">
                     <span>✓</span>
-                    <span>Volume discounts up to 50%</span>
-                  </div>
-                  <div className="flex items-center justify-center space-x-2 text-sm text-gray-700">
-                    <span>✓</span>
                     <span>Dedicated account manager</span>
                   </div>
                   <div className="flex items-center justify-center space-x-2 text-sm text-gray-700">
