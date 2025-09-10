@@ -153,6 +153,7 @@ interface HomepageProps {
 
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
   const visibleSections = useScrollAnimation();
+  const [isAnnual, setIsAnnual] = React.useState(false);
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -527,9 +528,14 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               visibleSections.has('pricing') 
                 ? 'opacity-100 translate-y-0' 
                 : 'opacity-0 translate-y-8'
+            }`}>
+              {/* Left side - Pricing Calculator */}
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-500 group">
+                <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
+                <div className="p-8">
                   <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
                   <p className="text-gray-600 mb-6 group-hover:text-gray-700 transition-colors">Automatic discounts applied based on team size</p>
-              <div className={`bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-1000 delay-500 ${
+                  
                   <div className="space-y-4 mb-8">
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg group-hover:bg-gray-100 transition-colors">
                       <div>
@@ -595,26 +601,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                         <div className="text-sm text-gray-500">per user</div>
                       </div>
                     </div>
-              }`}>
-                <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
-                    </div>
+                  </div>
+                  
+                  <div className="space-y-3 mb-8">
                     <div className="flex items-center space-x-3">
                       <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
                       <span style={{ color: '#202226' }}>Multi-language support</span>
                     </div>
-                      <span>Multi-language support</span>
-                    </li>
-                    Contact Sales
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ backgroundColor: '#F7E69B' }}>
-                  <p className="text-center text-sm text-gray-500 mt-3">
-                    All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support
-                  </p>
-                        <span className="text-xs font-bold" style={{ color: '#1C2C55' }}>✓</span>
-                      </div>
-                      <span>Priority support</span>
+                    <div className="flex items-center space-x-3">
                       <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
                       <span style={{ color: '#202226' }}>Priority support</span>
-                    </div>
                     </div>
                   </div>
 
@@ -622,11 +618,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   <div className="text-center">
                     <PricingCalculator />
                   </div>
-                    Start Free Trial
                 </div>
-                  <p className="text-center text-sm text-gray-500 mt-3">
-                    14-day free trial • No credit card required
-                  </p>
               </div>
 
               {/* Right side - Volume Discount Tiers Table */}
