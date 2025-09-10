@@ -4,9 +4,47 @@ import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, BarChart3, Hea
 import { UserInfoCard } from './UserInfoCard';
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
+  const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
+  const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
+
+  // Fetch WhatsApp status
+  React.useEffect(() => {
+    const fetchWhatsAppStatus = async () => {
+      if (!user) return;
+
+      setLoadingWhatsApp(true);
+      try {
+        const platform = user.platform;
+        const tableName = `${platform}_users`;
+        
+        const { data, error } = await supabase
+          .from(tableName)
+          .select('whatsapp_status')
+          .eq('user_id', user.id)
+          .is('deleted_at', null)
+          .maybeSingle();
+
+        if (data) {
+          setWhatsappStatus(data.whatsapp_status || 'not_set');
+        }
+      } catch (error) {
+        console.error('Error fetching WhatsApp status:', error);
+      } finally {
+        setLoadingWhatsApp(false);
+      }
+    };
+
+    fetchWhatsAppStatus();
+  }, [user]);
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
@@ -171,65 +209,116 @@ export const SubscriptionDashboard: React.FC = () => {
             </div>
           </section>
 
-          {/* Getting Started Guide */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                  Ready to Get Started?
-                </h2>
-                <p className="text-xl" style={{ color: '#6B7280' }}>
-                  Follow these simple steps to start using VoiceLink
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-8 mb-8">
-                {/* Step 1 */}
-                <div className="text-center">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
+          {/* Conditional Content Based on WhatsApp Status */}
+          {!loadingWhatsApp && (
+            <>
+              {whatsappStatus === 'active' ? (
+                /* Ready to Use Section */
+                <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                  <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
+                    <div className="text-center">
+                      <div className="w-20 h-20 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(37, 211, 102, 0.1)' }}>
+                        <CheckCircle className="w-10 h-10 text-green-600" />
+                      </div>
+                      <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                        🎉 You're All Set!
+                      </h2>
+                      <p className="text-xl mb-6" style={{ color: '#6B7280' }}>
+                        Your WhatsApp is connected and VoiceLink is ready to use
+                      </p>
+                      
+                      <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-2xl p-6 mb-6">
+                        <div className="flex items-center justify-center space-x-3 mb-3">
+                          <MessageCircle className="w-6 h-6 text-green-600" />
+                          <h3 className="text-lg font-semibold" style={{ color: '#1C2C55' }}>
+                            Start Sending Voice Notes
+                          </h3>
+                        </div>
+                        <p className="text-gray-700 leading-relaxed">
+                          Simply send a voice message to VoiceLink on WhatsApp and watch as your CRM gets updated automatically with structured data, follow-up tasks, and contact information.
+                        </p>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
+                        <div className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                          <span>WhatsApp Connected</span>
+                        </div>
+                        <div className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                          <span>CRM Integration Active</span>
+                        </div>
+                        <div className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                          <span>AI Processing Ready</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                    Verify WhatsApp
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Connect your WhatsApp number to receive voice note confirmations
-                  </p>
-                </div>
+                </section>
+              ) : (
+                /* Getting Started Guide */
+                <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                  <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
+                    <div className="text-center mb-8">
+                      <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                        Ready to Get Started?
+                      </h2>
+                      <p className="text-xl" style={{ color: '#6B7280' }}>
+                        Follow these simple steps to start using VoiceLink
+                      </p>
+                    </div>
 
-                {/* Step 2 */}
-                <div className="text-center">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
+                    <div className="grid md:grid-cols-3 gap-8 mb-8">
+                      {/* Step 1 */}
+                      <div className="text-center">
+                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                          Verify WhatsApp
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          Connect your WhatsApp number to receive voice note confirmations
+                        </p>
+                      </div>
+
+                      {/* Step 2 */}
+                      <div className="text-center">
+                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                          Send Voice Note
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          Record your thoughts naturally through WhatsApp voice messages
+                        </p>
+                      </div>
+
+                      {/* Step 3 */}
+                      <div className="text-center">
+                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                          Watch Magic Happen
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          AI processes your voice and syncs structured data to your CRM
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* WhatsApp Integration Embedded */}
+                    <div className="border-t border-gray-200 pt-8">
+                      <WhatsAppVerification />
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                    Send Voice Note
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Record your thoughts naturally through WhatsApp voice messages
-                  </p>
-                </div>
-
-                {/* Step 3 */}
-                <div className="text-center">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                    Watch Magic Happen
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    AI processes your voice and syncs structured data to your CRM
-                  </p>
-                </div>
-              </div>
-
-              {/* WhatsApp Integration Embedded */}
-              <div className="border-t border-gray-200 pt-8">
-                <WhatsAppVerification />
-              </div>
-            </div>
-          </section>
+                </section>
+              )}
+            </>
+          )}
 
           {/* Odoo API Key Input - Only for Odoo users */}
           {user?.platform === 'odoo' && (
