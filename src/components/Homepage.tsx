@@ -1,7 +1,11 @@
 import React from 'react';
-import { Star, Users, Zap, Shield, Globe, MessageCircle, Play } from 'lucide-react';
+import { Star, Users, Zap, Shield, Globe, MessageCircle, Play, ArrowRight, CheckCircle, Settings } from 'lucide-react';
 import { HeroDemo } from './HeroDemo';
 import { PricingSection } from './PricingSection';
+
+interface HomepageProps {
+  openModal: () => void;
+}
 
 // Custom hook for scroll-triggered animations
 const useScrollAnimation = () => {
@@ -113,8 +117,15 @@ const PricingCalculator: React.FC = () => {
             €{totalPrice.toFixed(2)}
           </span>
           <span className="text-lg" style={{ color: '#202226' }}>/month</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
+  const visibleSections = useScrollAnimation();
+  const [selectedUsers, setSelectedUsers] = React.useState(1);
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -431,11 +442,21 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
       {/* Pricing Section */}
       <section 
+        id="pricing" 
+        data-animate-section
+        className={`py-20 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('pricing') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <PricingSection 
           selectedUsers={selectedUsers}
           setSelectedUsers={setSelectedUsers}
           openModal={openModal}
         />
+      </section>
+      
       <section 
         id="custom-solutions" 
         data-animate-section
@@ -756,4 +777,4 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </footer>
     </div>
   );
-};}
+};
