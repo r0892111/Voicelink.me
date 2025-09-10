@@ -557,7 +557,36 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   ? 'opacity-100 translate-x-0' 
                   : 'opacity-0 translate-x-8'
               }`}>
-                <div className="p-6">
+                <div className="p-6 relative">
+                  {/* Monthly/Annual Toggle */}
+                  <div className="absolute top-4 right-4 flex items-center space-x-2">
+                    <span className={`text-sm font-medium transition-colors ${!isAnnual ? 'text-blue-600' : 'text-gray-500'}`}>
+                      Monthly
+                    </span>
+                    <button
+                      onClick={() => setIsAnnual(!isAnnual)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                        isAnnual ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          isAnnual ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                    <div className="flex flex-col items-end">
+                      <span className={`text-sm font-medium transition-colors ${isAnnual ? 'text-blue-600' : 'text-gray-500'}`}>
+                        Annual
+                      </span>
+                      {isAnnual && (
+                        <span className="text-xs text-green-600 font-medium">
+                          Save up to 40%
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
                     <p className="text-gray-600">Automatic discounts applied based on team size</p>
@@ -673,28 +702,50 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* Main Content Grid */}
-          <div className={`grid lg:grid-cols-[2fr_1fr] gap-16 items-start mb-20 transition-all duration-1000 delay-300 ${
-            visibleSections.has('custom-solutions') 
+                    <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
+                      VoiceLink Pro
+                    </h3>
+                    <p className="text-gray-600 mb-6 group-hover:text-gray-700 transition-colors">
+                      Perfect for growing teams
+                    </p>
               ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-8'
-          }`}>
+                    <div className="text-5xl font-bold mb-2 group-hover:scale-105 transition-transform" style={{ color: '#1C2C55' }}>
+                      €{isAnnual ? '299.00' : '29.90'}
+                    </div>
+                    <div className="text-gray-500 mb-2">
+                      {isAnnual ? '/user/year' : '/user/month'}
+                    </div>
+                    {isAnnual && (
+                      <div className="text-sm text-green-600 mb-6">
+                        €29.90/user/month • Save €59.80/year
+                      </div>
+                    )}
+                    {!isAnnual && (
+                      <div className="text-sm text-gray-500 mb-6">
+                            €{isAnnual ? '270.00' : '27.00'}
+                      </div>
+                          <div className="text-sm text-blue-600">/user/{isAnnual ? 'year' : 'month'}</div>
             {/* Left Side - Animated Use Cases */}
             <div className="space-y-8">
-             <div className={`text-center lg:text-left mb-8 transition-all duration-1000 delay-500 ${
+                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
                visibleSections.has('custom-solutions') 
-                 ? 'opacity-100 -translate-x-0' 
+                        <span>Unlimited WhatsApp voice notes</span>
                  : 'opacity-0 -translate-x-8'
-             }`}>
+                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Two examples:</h3>
-               <p className="text-gray-600">VoiceLink adapts to any industry or workflow that needs voice-to-data conversion.</p>
+                        <span>Real-time CRM sync</span>
              </div>
-             
+                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
               <div className={`bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-1000 delay-600 ${
-                visibleSections.has('custom-solutions') 
-                  ? 'opacity-100 -translate-x-0' 
-                  : 'opacity-0 -translate-x-8'
-              }`}>
-                <div className="flex items-start space-x-6 mb-6">
+                        <span>Native WhatsApp integration</span>
+                            €{isAnnual ? '240.00' : '24.00'}
+                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
+                          <div className="text-sm text-green-600">/user/{isAnnual ? 'year' : 'month'}</div>
+                        <span>Multi-language support</span>
+                      </li>
+                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
+                        <CheckCircle className="w-5 h-5 text-green-500" />
+                        <span>Priority support</span>
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
@@ -703,10 +754,13 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     <p className="text-gray-600 mb-4 leading-relaxed">
                       Technicians speak service reports while driving between jobs. Voice notes automatically 
                       generate structured reports with job details, parts used, and time spent.
-                    </p>
+                            €{isAnnual ? '210.00' : '21.00'}
                     <div className="text-sm text-gray-500">
-                      Custom report formats • Real-time sync • Mobile-first
+                          <div className="text-sm text-purple-600">/user/{isAnnual ? 'year' : 'month'}</div>
                     </div>
+                    <p className="text-sm text-gray-500 mt-3">
+                      14-day free trial • No credit card required
+                    </p>
                   </div>
                 </div>
               </div>
@@ -716,16 +770,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   ? 'opacity-100 -translate-x-0' 
                   : 'opacity-0 -translate-x-8'
               }`}>
-                <div className="flex items-start space-x-6 mb-6">
+                            €{isAnnual ? '180.00' : '18.00'}
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
-                      <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                          <div className="text-sm text-orange-600">/user/{isAnnual ? 'year' : 'month'}</div>
                   </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Property Management</h3>
                     <p className="text-gray-600 mb-4 leading-relaxed">
-                      Property managers record maintenance requests, tenant interactions, and inspection notes via voice. 
+                            €{isAnnual ? '299.00' : '29.90'}
                       AI automatically creates work orders, updates tenant records, and schedules follow-ups.
-                    </p>
+                          <div className="text-sm text-gray-500">/user/{isAnnual ? 'year' : 'month'}</div>
                     <div className="text-sm text-gray-500">
                       Work order creation • Tenant communication • Maintenance scheduling
                     </div>
