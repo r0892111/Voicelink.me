@@ -369,6 +369,98 @@ export default function SaasAgreementPage() {
                   </p>
                 </div>
                 </div>
+                {/* Article 6 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  6. Duration and termination
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    This Agreement shall enter into force on the date of its acceptance and shall be valid for an initial term of one (1) month. Unless the Agreement is terminated by one of the Parties by written notice to the other Party no later than the month preceding the month in which termination is intended, it shall be tacitly renewed for successive periods of one (1) year.
+                  </p>
+                  
+                  <p>
+                    Either Party may terminate this Agreement without liability and with immediate effect by giving written notice to the other Party if that Party:
+                  </p>
+                  
+                  <div className="ml-6 space-y-3">
+                    <p>
+                      <strong>a)</strong> breaches a material provision of the Agreement and the breach is not:
+                    </p>
+                    <div className="ml-6 space-y-2">
+                      <p>
+                        <strong>i.</strong> cured within thirty (30) calendar days after receipt of a notice from the first Party requesting it to remedy the breach; or
+                      </p>
+                      <p>
+                        <strong>ii.</strong> can be remedied;
+                      </p>
+                    </div>
+                    
+                    <p>
+                      <strong>b)</strong> becomes insolvent or bankrupt, is placed under administration or guardianship, initiates liquidation proceedings, enters into a voluntary arrangement with its creditors, or in the event of a similar occurrence under the law of its place of residence; or
+                    </p>
+                    
+                    <p>
+                      <strong>c)</strong> is unable to perform a material obligation under the Agreement for three (3) months or longer as a result of Force Majeure.
+                    </p>
+                  </div>
+                  
+                  <p>
+                    Upon termination of the Agreement for any reason:
+                  </p>
+                  
+                  <div className="ml-6 space-y-2">
+                    <p>
+                      <strong>•</strong> The Customer and Users shall immediately cease using the Software and Services;
+                    </p>
+                    <p>
+                      <strong>•</strong> All outstanding amounts shall become immediately due and payable to FINIT SOLUTIONS.
+                    </p>
+                  </div>
+                  
+                  <p>
+                    Since VoiceLink acts solely as a processing and transmission channel and does not structurally store any data, the platform does not provide a separate export functionality. All data processed via VoiceLink is stored directly in the Customer's CRM. It is the sole responsibility of the Customer to ensure that, at the end of the Agreement, the data is stored and/or exported in its own CRM. FINIT SOLUTIONS is not liable for any loss of data after termination of the Agreement.
+                  </p>
+                  
+                  <p>
+                    Provisions which, by their nature, are intended to continue even after the termination or dissolution of the Agreement shall remain in force after the termination or dissolution of the Agreement.
+                  </p>
+                </div>
+
+                {/* Article 7 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  7. Liability
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    FINIT SOLUTIONS will perform the Agreement in accordance with applicable Belgian regulations and current industry standards. FINIT SOLUTIONS' obligations under the Agreement are best efforts obligations and not result obligations, unless otherwise agreed in writing between the Parties.
+                  </p>
+                  
+                  <p>
+                    FINIT SOLUTIONS shall endeavor to ensure the availability of the Software and the Services, but in no event guarantees uninterrupted availability of the Software and the Services. FINIT SOLUTIONS shall strive for 99% availability of the Software and the Services ("uptime"). The Software and Services will not be available in the event of (i) maintenance of the Software, (ii) development of the Software, and (iii) Force Majeure as further defined in Article 11 of the Agreement, in which case the Customer will be notified of such unavailability in a timely manner. In the event of maintenance or development of the Software, the Customer will be notified at least seven (7) days in advance of the unavailability. The Customer cannot hold FINIT SOLUTIONS liable for the unavailability of the Software or the Services, except in the event of intent or gross negligence on the part of FINIT SOLUTIONS or its appointees.
+                  </p>
+                  
+                  <p>
+                    Unless expressly agreed otherwise in this Agreement, FINIT SOLUTIONS makes no express or implied warranties with respect to the Software and the Services, including, without limitation, any warranty of fitness for a particular purpose, availability, or error-free, virus-free, and/or uninterrupted operation of the Software or the Services.
+                  </p>
+                  
+                  <p>
+                    FINIT SOLUTIONS cannot be held liable for indirect or consequential damages, including but not limited to loss of profits, loss of goodwill, any damage resulting from or caused by the loss, interruption or damage of data, loss of income, loss of turnover, damage to reputation, loss of opportunities, business interruptions or loss of expected savings.
+                  </p>
+                  
+                  <p>
+                    To the extent permitted by law, FINIT SOLUTIONS' liability is limited to (i) a maximum of the monthly fee actually paid by the Customer to FINIT SOLUTIONS during the six (6) months prior to the event causing the damage, or (ii) a maximum amount of twenty-five thousand (25,000) EUR, whichever is lower. This limitation of liability applies regardless of whether the act or omission is attributable to FINIT SOLUTIONS itself or to its employees or subcontractors and applies regardless of the applicable liability regime, including, but not limited to, contractual liability, liability in tort, criminal liability, or strict liability.
+                  </p>
+                  
+                  <p>
+                    FINIT SOLUTIONS' liability under this Agreement may only be invoked if FINIT SOLUTIONS is notified in writing by the Customer of the damage as soon as reasonably possible, and in any case no later than thirty (30) days after the alleged damage occurred. Such notification does not affect the Customer's obligation to take all reasonable measures to limit the damage suffered as much as possible.
+                  </p>
+                  
+                  <p>
+                    FINIT SOLUTIONS's agents shall not be liable under this Agreement, and any claim for breach of the Agreement by FINIT SOLUTIONS or its agents shall be brought directly against FINIT SOLUTIONS.
+                  </p>
+                </div>
                 {/* Contact Information */}
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <h4 className="font-semibold mb-2">Contact Information</h4>
