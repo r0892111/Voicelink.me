@@ -88,9 +88,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         <h2 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: '#1C2C55' }}>
           Volume Pricing That Scales With You
         </h2>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
           Per user pricing. Start free, upgrade when you're ready. No hidden fees.
         </p>
+      </div>
+      
+      <div className="flex items-center justify-center mb-12">
         <BillingPeriodSwitch 
           billingPeriod={billingPeriod}
           onBillingPeriodChange={setBillingPeriod}
