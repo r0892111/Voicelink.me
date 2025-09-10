@@ -153,7 +153,6 @@ interface HomepageProps {
 
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
   const visibleSections = useScrollAnimation();
-  const [isAnnual, setIsAnnual] = React.useState(false);
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -558,36 +557,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   ? 'opacity-100 translate-x-0' 
                   : 'opacity-0 translate-x-8'
               }`}>
-                <div className="p-6 relative">
-                  {/* Monthly/Annual Toggle */}
-                  <div className="absolute top-4 right-4 flex items-center space-x-2">
-                    <span className={`text-sm font-medium transition-colors ${!isAnnual ? 'text-blue-600' : 'text-gray-500'}`}>
-                      Monthly
-                    </span>
-                    <button
-                      onClick={() => setIsAnnual(!isAnnual)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                        isAnnual ? 'bg-blue-600' : 'bg-gray-200'
-                      }`}
-                    >
-                      <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          isAnnual ? 'translate-x-6' : 'translate-x-1'
-                        }`}
-                      />
-                    </button>
-                    <div className="flex flex-col items-end">
-                      <span className={`text-sm font-medium transition-colors ${isAnnual ? 'text-blue-600' : 'text-gray-500'}`}>
-                        Annual
-                      </span>
-                      {isAnnual && (
-                        <span className="text-xs text-green-600 font-medium">
-                          Save up to 40%
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
+                <div className="p-6">
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
                     <p className="text-gray-600">Automatic discounts applied based on team size</p>
@@ -703,25 +673,30 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* Main Content Grid */}
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className={`grid lg:grid-cols-[2fr_1fr] gap-16 items-start mb-20 transition-all duration-1000 delay-300 ${
+            visibleSections.has('custom-solutions') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             {/* Left Side - Animated Use Cases */}
             <div className="space-y-8">
-              <div className={`transition-all duration-1000 delay-400 ${
-                visibleSections.has('custom-solutions') 
-                  ? 'opacity-100 -translate-x-0' 
-                  : 'opacity-0 -translate-x-8'
-              }`}>
-                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Two examples:</h3>
-              </div>
-              
+             <div className={`text-center lg:text-left mb-8 transition-all duration-1000 delay-500 ${
+               visibleSections.has('custom-solutions') 
+                 ? 'opacity-100 -translate-x-0' 
+                 : 'opacity-0 -translate-x-8'
+             }`}>
+               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Two examples:</h3>
+               <p className="text-gray-600">VoiceLink adapts to any industry or workflow that needs voice-to-data conversion.</p>
+             </div>
+             
               <div className={`bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-1000 delay-600 ${
                 visibleSections.has('custom-solutions') 
                   ? 'opacity-100 -translate-x-0' 
                   : 'opacity-0 -translate-x-8'
               }`}>
-                <div className="flex items-start space-x-6">
+                <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
-                    <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                      <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Field Technicians</h3>
@@ -730,7 +705,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       generate structured reports with job details, parts used, and time spent.
                     </p>
                     <div className="text-sm text-gray-500">
-                      Service reports • Parts tracking • Time logging
+                      Custom report formats • Real-time sync • Mobile-first
                     </div>
                   </div>
                 </div>
@@ -741,14 +716,14 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   ? 'opacity-100 -translate-x-0' 
                   : 'opacity-0 -translate-x-8'
               }`}>
-                <div className="flex items-start space-x-6">
+                <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
-                    <Users className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                      <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Property Management</h3>
                     <p className="text-gray-600 mb-4 leading-relaxed">
-                      Property managers record tenant issues and maintenance requests on-the-go. 
+                      Property managers record maintenance requests, tenant interactions, and inspection notes via voice. 
                       AI automatically creates work orders, updates tenant records, and schedules follow-ups.
                     </p>
                     <div className="text-sm text-gray-500">
@@ -880,32 +855,75 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
         }`}
+        style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)' }}
       >
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className={`transition-all duration-1000 delay-200 ${
+        <div className={`max-w-4xl mx-auto px-6 text-center transition-all duration-1000 delay-200 ${
+          visibleSections.has('final-cta') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}>
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+            Ready to Transform Your Workflow?
+          </h2>
+          <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
+            The more users you add, the more you save. Start free, scale affordably.
+            Connect your WhatsApp and start your free trial today.
+          </p>
+          
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-300 ${
             visibleSections.has('final-cta') 
               ? 'opacity-100 translate-y-0' 
               : 'opacity-0 translate-y-8'
           }`}>
-            <h2 className="text-4xl font-bold mb-6" style={{ color: '#1C2C55' }}>
-              Ready to Transform Your Workflow?
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join thousands of professionals who are already using voice technology to streamline their CRM processes.
-            </p>
             <button
               onClick={openModal}
-              className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2 mx-auto"
-              style={{ backgroundColor: '#1C2C55' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+              className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
+              style={{ color: '#1C2C55' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7E69B'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
             >
-              <span>Start Your Free Trial</span>
+              {/* Small logo icon in CTA button */}
+              <img 
+                src="/Finit Voicelink Blue.svg" 
+                alt="" 
+                className="w-5 h-5 mr-1"
+              />
+              <span>Start Free Trial</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
-            <p className="text-sm text-gray-500 mt-4">
-              14-day free trial • No credit card required • Cancel anytime
-            </p>
+            <button 
+              className="group border-2 border-white text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#FFFFFF';
+                e.currentTarget.style.color = '#1C2C55';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = '#FFFFFF';
+              }}
+            >
+              <Play className="w-5 h-5" />
+              <span>Watch Demo</span>
+            </button>
+          </div>
+
+          <div className={`mt-8 flex items-center justify-center space-x-8 text-white opacity-90 transition-all duration-1000 delay-500 ${
+            visibleSections.has('final-cta') 
+              ? 'opacity-90 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
+            <div className="flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4" />
+              <span className="text-sm">14-day free trial</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4" />
+              <span className="text-sm">No setup fees</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4" />
+              <span className="text-sm">Cancel anytime</span>
+            </div>
           </div>
         </div>
       </section>
@@ -914,45 +932,39 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       <footer 
         id="footer"
         data-animate-section
-        className={`py-16 border-t border-gray-200 relative z-10 transition-all duration-1000 ${
+        className={`text-white py-12 relative z-10 transition-all duration-1000 ${
           visibleSections.has('footer') 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
         }`}
+        style={{ backgroundColor: '#202226' }}
       >
-        <div className="max-w-7xl mx-auto px-6">
-          <div className={`text-center transition-all duration-1000 delay-200 ${
-            visibleSections.has('footer') 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-8'
-          }`}>
-            <div className="flex justify-center items-center space-x-8 mb-8">
-              <a 
-                href="#" 
-                className="text-gray-600 hover:text-gray-900 transition-colors hover:translate-x-1 transform duration-300"
-              >
-                Privacy Policy
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-600 hover:text-gray-900 transition-colors hover:translate-x-1 transform duration-300"
-              >
-                Terms of Service
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-600 hover:text-gray-900 transition-colors hover:translate-x-1 transform duration-300"
-              >
-                Support
-              </a>
+        <div className={`max-w-7xl mx-auto px-6 transition-all duration-1000 delay-200 ${
+          visibleSections.has('footer') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}>
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center space-x-3 mb-4 md:mb-0">
+              {/* White logo on dark background */}
+              <img 
+                src="/Finit Voicelink White.svg" 
+                alt="VoiceLink" 
+                className="h-8 w-auto"
+              />
             </div>
-            <p className="text-gray-500">
-              © 2024 VoiceLink. All rights reserved.
-            </p>
+            
+            <div className="flex items-center space-x-6 text-sm text-white opacity-70">
+              <span>© 2025 Finit Solutions</span>
+              <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy</a>
+              <a href="/saas-agreement" className="hover:text-white transition-colors">SaaS Agreement</a>
+              <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
+              <a href="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</a>
+              <a href="/support" className="hover:text-white transition-colors">Support</a>
+            </div>
           </div>
         </div>
       </footer>
     </div>
   );
 };
-          
