@@ -447,7 +447,7 @@ const PrivacyPolicy: React.FC = () => {
 
           <p className="leading-relaxed mb-4">
             <strong>Right to lodge a complaint with the supervisory authority (Article 77(1) GDPR):</strong><br />
-            You may lodge a complaint with the supervisory authority for data protection. A list of supervisory authorities within the European Union can be found via the following hyperlink: <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl</a>.
+            You may lodge a complaint with the supervisory authority for data protection. A list of supervisory authorities within the European Union can be found via the following hyperlink: <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_en" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">https://www.edpb.europa.eu/about-edpb/about-edpb/members_en</a>.
           </p>
 
           <p className="leading-relaxed mb-4">
