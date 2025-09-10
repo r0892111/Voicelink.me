@@ -163,17 +163,18 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </div>
 
           <div className="text-center mb-8">
-            <p className="text-gray-600 mb-2">
-              €{pricing.pricePerUser.toFixed(2)}/user/month • {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
-            </p>
             <div className="flex items-baseline justify-center space-x-2 mb-2">
               <span className="text-5xl font-bold" style={{ color: '#1C2C55' }}>
-                €{pricing.price.toFixed(2)}
+                €{pricing.pricePerUser.toFixed(2)}
               </span>
-              <span className="text-xl text-gray-600">
-                /{billingPeriod}
-              </span>
+              <span className="text-xl text-gray-600">/user/month</span>
             </div>
+            <p className="text-gray-600 mb-2">
+              {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
+            </p>
+            <p className="text-sm text-gray-500">
+              Total: €{pricing.price.toFixed(2)}/{billingPeriod}
+            </p>
             {pricing.savings > 0 && (
               <p className="text-green-600 font-medium mt-2">
                 Save €{pricing.savings.toFixed(2)}/{billingPeriod === 'monthly' ? 'month' : 'year'} vs starter pricing
