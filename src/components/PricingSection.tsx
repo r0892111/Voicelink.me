@@ -185,14 +185,14 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               Total: €{(billingPeriod === 'yearly' ? pricing.price * 12 : pricing.price).toFixed(2)}/{billingPeriod}
             </p>
             {pricing.savings > 0 && (
-              <p className="text-green-600 font-medium mt-2">
-                Save €{pricing.savings.toFixed(2)}/year vs monthly billing
-              </p>
-            )}
-            {billingPeriod === 'yearly' && (
-              <p className="text-blue-600 font-medium mt-1">
-                💰 20% discount applied for yearly billing
-              </p>
+              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-green-800 font-semibold text-sm">
+                  Annual Savings: €{pricing.savings.toFixed(2)}
+                </p>
+                <p className="text-green-600 text-xs mt-1">
+                  20% discount applied for yearly billing
+                </p>
+              </div>
             )}
           </div>
 
