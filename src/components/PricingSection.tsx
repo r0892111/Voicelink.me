@@ -56,7 +56,31 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   openModal
 }) => {
   const [billingPeriod, setBillingPeriod] = React.useState<BillingPeriod>('monthly');
+  const [customInput, setCustomInput] = React.useState('');
+  const [isCustom, setIsCustom] = React.useState(false);
   const pricing = calculatePricing(selectedUsers, billingPeriod);
+
+  // Predefined user options
+  const predefinedOptions = [1, 2, 3, 5, 10, 25, 50, 100];
+  
+  const handleUserCountChange = (value: string) => {
+    if (value === 'custom') {
+      setIsCustom(true);
+      setCustomInput('');
+    } else {
+      setIsCustom(false);
+      setSelectedUsers(parseInt(value));
+    }
+  };
+  
+  const handleCustomInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomInput(value);
+    const numValue = parseInt(value);
+    if (!isNaN(numValue) && numValue > 0) {
+      setSelectedUsers(numValue);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-6">
@@ -111,16 +135,28 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </label>
             <select
               id="users"
-              value={selectedUsers}
-              onChange={(e) => setSelectedUsers(Number(e.target.value))}
+              value={isCustom ? 'custom' : selectedUsers.toString()}
+              onChange={(e) => handleUserCountChange(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
             >
-              {Array.from({ length: 100 }, (_, i) => i + 1).map(num => (
+              {predefinedOptions.map(num => (
                 <option key={num} value={num}>
                   {num} user{num !== 1 ? 's' : ''}
                 </option>
               ))}
+              <option value="custom">Custom amount</option>
             </select>
+            
+            {isCustom && (
+              <input
+                type="number"
+                min="1"
+                value={customInput}
+                onChange={handleCustomInputChange}
+                placeholder="Enter number of users"
+                className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+              />
+            )}
           </div>
 
           <div className="text-center mb-8">
