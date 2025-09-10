@@ -543,7 +543,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                         <tr>
                           <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Enterprise</td>
                           <td className="py-4 px-6 text-gray-600">100+ users</td>
-                          <td className="py-4 px-6 font-semibold">€15.00+</td>
+                          <td className="py-4 px-6 font-semibold">€15.00</td>
                           <td className="py-4 px-6">
                             <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-full">
                               50%+ off
