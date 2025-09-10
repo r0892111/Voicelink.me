@@ -510,53 +510,143 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300">
-              <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
-              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
-              
-              <div className="p-8 relative">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                  {/* Left side - Product info */}
-                  <div className="text-center md:text-left">
-                  {/* VoiceLink logo in pricing card - blue version on white background */}
-                  <img 
-                    src="/Finit Voicelink Blue.svg" 
-                    alt="VoiceLink Pro" 
-                    className="h-12 w-auto mx-auto md:mx-0 mb-4"
-                  />
-                  <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>VoiceLink Pro</h3>
-                  <p className="mb-6" style={{ color: '#202226' }}>Perfect for growing teams</p>
-                  
-                  <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Unlimited WhatsApp voice notes</span>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-[1fr_1fr] gap-8 items-start">
+              {/* Left side - VoiceLink Pro Card */}
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300">
+                <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
+                <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
+                
+                <div className="p-8 relative">
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    {/* Left side - Product info */}
+                    <div className="text-center md:text-left">
+                    {/* VoiceLink logo in pricing card - blue version on white background */}
+                    <img 
+                      src="/Finit Voicelink Blue.svg" 
+                      alt="VoiceLink Pro" 
+                      className="h-12 w-auto mx-auto md:mx-0 mb-4"
+                    />
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>VoiceLink Pro</h3>
+                    <p className="mb-6" style={{ color: '#202226' }}>Perfect for growing teams</p>
+                    
+                    <div className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
+                      <span style={{ color: '#202226' }}>Unlimited WhatsApp voice notes</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
+                      <span style={{ color: '#202226' }}>Real-time CRM sync</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
+                      <span style={{ color: '#202226' }}>Native WhatsApp integration</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
+                      <span style={{ color: '#202226' }}>Multi-language support</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
+                      <span style={{ color: '#202226' }}>Priority support</span>
+                    </div>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Real-time CRM sync</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Native WhatsApp integration</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Multi-language support</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#1C2C55' }} />
-                    <span style={{ color: '#202226' }}>Priority support</span>
-                  </div>
+
+                  {/* Right side - Pricing and purchase */}
+                  <div className="text-center">
+                    <PricingCalculator />
                   </div>
                 </div>
-
-                {/* Right side - Pricing and purchase */}
-                <div className="text-center">
-                  <PricingCalculator />
                 </div>
               </div>
+
+              {/* Right side - Volume Discount Tiers Table */}
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div className="p-6">
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
+                    <p className="text-gray-600">Automatic discounts applied based on team size</p>
+                  </div>
+                  
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-gray-200" style={{ backgroundColor: '#F8FAFC' }}>
+                          <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Plan</th>
+                          <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Team Size</th>
+                          <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Price per User</th>
+                          <th className="text-left py-4 px-6 font-semibold" style={{ color: '#1C2C55' }}>Discount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Starter</td>
+                          <td className="py-4 px-6 text-gray-600">1–4 users</td>
+                          <td className="py-4 px-6 font-semibold">€29.90</td>
+                          <td className="py-4 px-6 text-gray-500">—</td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Team</td>
+                          <td className="py-4 px-6 text-gray-600">5–9 users</td>
+                          <td className="py-4 px-6 font-semibold">€27.00</td>
+                          <td className="py-4 px-6">
+                            <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                              10% off
+                            </span>
+                          </td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Business</td>
+                          <td className="py-4 px-6 text-gray-600">10–24 users</td>
+                          <td className="py-4 px-6 font-semibold">€24.00</td>
+                          <td className="py-4 px-6">
+                            <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                              20% off
+                            </span>
+                          </td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Growth</td>
+                          <td className="py-4 px-6 text-gray-600">25–49 users</td>
+                          <td className="py-4 px-6 font-semibold">€21.00</td>
+                          <td className="py-4 px-6">
+                            <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                              30% off
+                            </span>
+                          </td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Scale</td>
+                          <td className="py-4 px-6 text-gray-600">50–99 users</td>
+                          <td className="py-4 px-6 font-semibold">€18.00</td>
+                          <td className="py-4 px-6">
+                            <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                              40% off
+                            </span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="py-4 px-6 font-medium" style={{ color: '#1C2C55' }}>Enterprise</td>
+                          <td className="py-4 px-6 text-gray-600">100+ users</td>
+                          <td className="py-4 px-6 font-semibold">€15.00+</td>
+                          <td className="py-4 px-6">
+                            <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-full">
+                              50%+ off
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div className="text-center mt-6">
+                    <p className="text-sm text-gray-500">
+                      All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
