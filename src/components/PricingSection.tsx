@@ -1,5 +1,6 @@
 import React from 'react';
 import { Check, ArrowRight } from 'lucide-react';
+import { BillingPeriodSwitch, BillingPeriod } from './BillingPeriodSwitch';
 
 interface PricingSectionProps {
   selectedUsers: number;
@@ -11,17 +12,18 @@ interface PricingTier {
   name: string;
   minUsers: number;
   maxUsers: number | null;
-  pricePerUser: number;
+  monthlyPricePerUser: number;
+  yearlyPricePerUser: number;
   discount: number;
 }
 
 const pricingTiers: PricingTier[] = [
-  { name: 'Starter', minUsers: 1, maxUsers: 4, pricePerUser: 29.90, discount: 0 },
-  { name: 'Team', minUsers: 5, maxUsers: 9, pricePerUser: 27.00, discount: 10 },
-  { name: 'Business', minUsers: 10, maxUsers: 24, pricePerUser: 24.00, discount: 20 },
-  { name: 'Growth', minUsers: 25, maxUsers: 49, pricePerUser: 21.00, discount: 30 },
-  { name: 'Scale', minUsers: 50, maxUsers: 99, pricePerUser: 18.00, discount: 40 },
-  { name: 'Enterprise', minUsers: 100, maxUsers: null, pricePerUser: 15.00, discount: 50 },
+  { name: 'Starter', minUsers: 1, maxUsers: 4, monthlyPricePerUser: 29.90, yearlyPricePerUser: 23.92, discount: 0 },
+  { name: 'Team', minUsers: 5, maxUsers: 9, monthlyPricePerUser: 27.00, yearlyPricePerUser: 21.60, discount: 10 },
+  { name: 'Business', minUsers: 10, maxUsers: 24, monthlyPricePerUser: 24.00, yearlyPricePerUser: 19.20, discount: 20 },
+  { name: 'Growth', minUsers: 25, maxUsers: 49, monthlyPricePerUser: 21.00, yearlyPricePerUser: 16.80, discount: 30 },
+  { name: 'Scale', minUsers: 50, maxUsers: 99, monthlyPricePerUser: 18.00, yearlyPricePerUser: 14.40, discount: 40 },
+  { name: 'Enterprise', minUsers: 100, maxUsers: null, monthlyPricePerUser: 15.00, yearlyPricePerUser: 12.00, discount: 50 },
 ];
 
 const getCurrentTier = (users: number): PricingTier => {
@@ -30,18 +32,21 @@ const getCurrentTier = (users: number): PricingTier => {
   ) || pricingTiers[0];
 };
 
-const calculatePricing = (users: number) => {
+const calculatePricing = (users: number, billingPeriod: BillingPeriod) => {
   const tier = getCurrentTier(users);
-  const monthlyPrice = tier.pricePerUser * users;
-  const originalPrice = 29.90 * users;
-  const savings = originalPrice - monthlyPrice;
+  const pricePerUser = billingPeriod === 'monthly' ? tier.monthlyPricePerUser : tier.yearlyPricePerUser;
+  const price = pricePerUser * users;
+  const originalMonthlyPrice = 29.90 * users;
+  const originalPrice = billingPeriod === 'monthly' ? originalMonthlyPrice : originalMonthlyPrice * 12;
+  const savings = originalPrice - (billingPeriod === 'monthly' ? price : price * 12);
   
   return {
     tier,
-    monthlyPrice,
+    price,
     originalPrice,
     savings,
-    pricePerUser: tier.pricePerUser
+    pricePerUser,
+    billingPeriod
   };
 };
 
@@ -50,7 +55,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   setSelectedUsers,
   openModal
 }) => {
-  const pricing = calculatePricing(selectedUsers);
+  const [billingPeriod, setBillingPeriod] = React.useState<BillingPeriod>('monthly');
+  const pricing = calculatePricing(selectedUsers, billingPeriod);
 
   return (
     <div className="max-w-7xl mx-auto px-6">
@@ -61,6 +67,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           Per user pricing. Start free, upgrade when you're ready. No hidden fees.
         </p>
+        <BillingPeriodSwitch 
+          billingPeriod={billingPeriod}
+          onBillingPeriodChange={setBillingPeriod}
+        />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -116,16 +126,23 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           <div className="text-center mb-8">
             <div className="flex items-baseline justify-center space-x-2 mb-2">
               <span className="text-5xl font-bold" style={{ color: '#1C2C55' }}>
-                €{pricing.monthlyPrice.toFixed(2)}
+                €{pricing.price.toFixed(2)}
               </span>
-              <span className="text-xl text-gray-600">/month</span>
+              <span className="text-xl text-gray-600">
+                /{billingPeriod === 'monthly' ? 'month' : 'year'}
+              </span>
             </div>
             <p className="text-gray-600">
-              €{pricing.pricePerUser.toFixed(2)}/user/month • {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
+              €{pricing.pricePerUser.toFixed(2)}/user/{billingPeriod === 'monthly' ? 'month' : 'year'} • {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
             </p>
             {pricing.savings > 0 && (
               <p className="text-green-600 font-medium mt-2">
-                Save €{pricing.savings.toFixed(2)}/month vs starter pricing
+                Save €{pricing.savings.toFixed(2)}/{billingPeriod === 'monthly' ? 'month' : 'year'} vs starter pricing
+              </p>
+            )}
+            {billingPeriod === 'yearly' && (
+              <p className="text-blue-600 font-medium mt-1">
+                💰 20% discount applied for yearly billing
               </p>
             )}
           </div>
@@ -195,7 +212,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       <td className={`px-6 py-4 font-semibold ${
                         isCurrentTier ? 'text-blue-900' : 'text-gray-900'
                       }`}>
-                        €{tier.pricePerUser.toFixed(2)}
+                        €{(billingPeriod === 'monthly' ? tier.monthlyPricePerUser : tier.yearlyPricePerUser).toFixed(2)}
                       </td>
                       <td className="px-6 py-4">
                         {tier.discount > 0 ? (
@@ -219,7 +236,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
           <div className="mt-8 p-4 bg-gray-50 rounded-xl">
             <p className="text-sm text-gray-600 text-center">
-              All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support
+              All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support.
+              {billingPeriod === 'yearly' && ' Yearly plans include 20% discount and priority onboarding.'}
             </p>
           </div>
         </div>
