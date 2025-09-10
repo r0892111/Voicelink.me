@@ -42,10 +42,14 @@ export const WhatsAppVerification: React.FC = () => {
         .select('whatsapp_number, whatsapp_status')
         .eq('user_id', user.id)
         .is('deleted_at', null)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching WhatsApp status:', error);
+        setWhatsappStatus({
+          whatsapp_number: null,
+          whatsapp_status: 'not_set'
+        });
         return;
       }
 
@@ -54,9 +58,19 @@ export const WhatsAppVerification: React.FC = () => {
           whatsapp_number: data.whatsapp_number,
           whatsapp_status: data.whatsapp_status || 'not_set'
         });
+      } else {
+        // No data found, set default state
+        setWhatsappStatus({
+          whatsapp_number: null,
+          whatsapp_status: 'not_set'
+        });
       }
     } catch (error) {
       console.error('Error fetching WhatsApp status:', error);
+      setWhatsappStatus({
+        whatsapp_number: null,
+        whatsapp_status: 'not_set'
+      });
     } finally {
       setFetchingStatus(false);
     }

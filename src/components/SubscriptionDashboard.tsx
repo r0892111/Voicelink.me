@@ -33,11 +33,21 @@ export const SubscriptionDashboard: React.FC = () => {
           .is('deleted_at', null)
           .maybeSingle();
 
+        if (error) {
+          console.error('Error fetching WhatsApp status:', error);
+          setWhatsappStatus('not_set');
+          return;
+        }
+
         if (data) {
           setWhatsappStatus(data.whatsapp_status || 'not_set');
+        } else {
+          // No data found, set default state
+          setWhatsappStatus('not_set');
         }
       } catch (error) {
         console.error('Error fetching WhatsApp status:', error);
+        setWhatsappStatus('not_set');
       } finally {
         setLoadingWhatsApp(false);
       }
