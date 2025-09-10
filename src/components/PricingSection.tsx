@@ -35,15 +35,24 @@ const getCurrentTier = (users: number): PricingTier => {
 const calculatePricing = (users: number, billingPeriod: BillingPeriod) => {
   const tier = getCurrentTier(users);
   const pricePerUser = billingPeriod === 'monthly' ? tier.monthlyPricePerUser : tier.yearlyPricePerUser;
-  const price = pricePerUser * users;
+  const monthlyPrice = pricePerUser * users;
   const originalMonthlyPrice = 29.90 * users;
-  const originalPrice = billingPeriod === 'monthly' ? originalMonthlyPrice : originalMonthlyPrice * 12;
-  const savings = originalPrice - (billingPeriod === 'monthly' ? price : price * 12);
+  const originalYearlyPrice = originalMonthlyPrice * 12;
+  
+  let savings = 0;
+  if (billingPeriod === 'monthly') {
+    // Monthly savings: difference between starter price and current tier price per month
+    savings = originalMonthlyPrice - monthlyPrice;
+  } else {
+    // Yearly savings: difference between starter yearly price and current tier yearly price
+    const currentYearlyPrice = monthlyPrice * 12;
+    savings = originalYearlyPrice - currentYearlyPrice;
+  }
   
   return {
     tier,
-    price,
-    originalPrice,
+    price: monthlyPrice,
+    originalPrice: billingPeriod === 'monthly' ? originalMonthlyPrice : originalYearlyPrice,
     savings,
     pricePerUser,
     billingPeriod
