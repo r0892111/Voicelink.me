@@ -256,6 +256,54 @@ export const WhatsAppVerification: React.FC = () => {
     }
   };
 
+  const disconnectWhatsApp = async () => {
+    if (!user) {
+      setError('User not authenticated');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const platform = user.platform;
+      const tableName = `${platform}_users`;
+      
+      const { error } = await supabase
+        .from(tableName)
+        .update({ 
+          whatsapp_number: null,
+          whatsapp_status: 'not_set',
+          whatsapp_otp_code: null,
+          whatsapp_otp_expires_at: null,
+          whatsapp_otp_phone: null,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      // Update local state
+      setWhatsappStatus({
+        whatsapp_number: null,
+        whatsapp_status: 'not_set'
+      });
+
+      setSuccess(false);
+      setWhatsappInput('');
+      setOtpCode('');
+      setOtpStep('input');
+      setOtpExpiresAt(null);
+
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to disconnect WhatsApp');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const cancelOTP = () => {
     setOtpStep('input');
     setOtpCode('');
@@ -296,6 +344,29 @@ export const WhatsAppVerification: React.FC = () => {
           <p className="text-sm text-green-700">
             Your WhatsApp number is verified and ready to receive voice note confirmations. 
             You can now send voice messages to VoiceLink!
+          </p>
+        </div>
+        
+        <div className="mt-4 pt-4 border-t border-gray-200">
+          <button
+            onClick={disconnectWhatsApp}
+            disabled={loading}
+            className="text-sm text-red-600 hover:text-red-800 hover:underline disabled:opacity-50 flex items-center space-x-1"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Disconnecting...</span>
+              </>
+            ) : (
+              <>
+                <X className="w-4 h-4" />
+                <span>Disconnect WhatsApp</span>
+              </>
+            )}
+          </button>
+          <p className="text-xs text-gray-500 mt-1">
+            This will remove your WhatsApp connection and allow you to connect a different number
           </p>
         </div>
       </div>
