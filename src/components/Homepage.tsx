@@ -634,6 +634,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <span>© 2025 Finit Solutions</span>
               <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy</a>
               <a href="/saas-agreement" className="hover:text-white transition-colors">SaaS Agreement</a>
+              <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
               <a href="#" className="hover:text-white transition-colors">Support</a>
             </div>
           </div>

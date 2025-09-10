@@ -9,6 +9,7 @@ import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
 import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import Disclaimer from './components/Disclaimer';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
@@ -123,6 +124,7 @@ function App() {
         <Route path="/success" element={<SuccessPage />} />
         <Route path="/saas-agreement" element={<SaasAgreement />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
       </Routes>
 
       {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
