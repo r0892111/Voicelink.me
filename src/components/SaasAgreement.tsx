@@ -320,13 +320,6 @@ export default function SaasAgreementPage() {
                 {/* Contact Information */}
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <h4 className="font-semibold mb-2">Contact Information</h4>
-                  <p className="text-sm">
-                    <strong>FINIT SOLUTIONS</strong><br />
-                    Guldensporenlaan 9<br />
-                    3120 Tremelo, Belgium<br />
-                    Enterprise Number: 1020.600.643 (RPR Leuven)
-                  </p>
-                </div>
               </div>
             </div>
           </div>
@@ -334,4 +327,6 @@ export default function SaasAgreementPage() {
       </section>
     </main>
   );
+}
+  )
 }
