@@ -317,6 +317,58 @@ export default function SaasAgreementPage() {
                   </p>
                 </div>
 
+                {/* Article 4 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  4. Compensation
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    The Customer shall pay a monthly fee, consisting of a fixed price per Solution, per User for the Services and the Software. The effective monthly fee owed by the Customer to FINIT SOLUTIONS shall be determined at the end of each month based on the actual formula (i.e., the effective applicable fixed fee, the number of users, and the Solutions) purchased by the Customer in the previous month. If FINIT SOLUTIONS determines that certain actions or behaviors are being taken that circumvent or attempt to circumvent the calculation of the monthly fee, FINIT SOLUTIONS has the right to charge the Customer a higher fee, after prior written notification to the Customer.
+                  </p>
+                  
+                  <p>
+                    FINIT SOLUTIONS' invoices are payable immediately and are processed exclusively via the Stripe payment platform. The Customer may use the payment methods supported by Stripe for this purpose. Payment constitutes an essential obligation under this Agreement.
+                  </p>
+                  
+                  <p>
+                    If an automatic payment via Stripe fails, access to the Software and Services will be automatically suspended until the payment has been successfully completed. In that case, FINIT SOLUTIONS is not obliged to continue providing the Services.
+                  </p>
+                  
+                  <p>
+                    Without limiting its other rights or remedies, FINIT SOLUTIONS has the right to suspend or terminate access to the Software and Services in whole or in part in the event that the Customer pays any invoice late, without the Customer being able to claim compensation from FINIT SOLUTIONS for any interruption in availability.
+                  </p>
+                  
+                  <p>
+                    The amount of the monthly fee is inclusive of VAT. The Customer is responsible for the payment of all other taxes and/or costs relating to the Software and the Services, including, but not limited to, hardware costs and internet connection costs.
+                  </p>
+                  
+                  <p>
+                    The prices stated in this Agreement may be adjusted by FINIT SOLUTIONS at any time if necessary to compensate for an increase in its own costs. FINIT SOLUTIONS shall notify the Customer of the price change at least one (1) month before the date on which the new prices take effect. If the Customer does not agree with the intended price change, it may notify FINIT SOLUTIONS thereof within a period of seven (7) days after receipt of the notification of the price change. If the Parties fail to reach agreement on the price change, the Customer is entitled to terminate the Agreement with due observance of Article 6 of this Agreement.
+                  </p>
+                {/* Article 5 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  5. Developments and integrations
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    Unless otherwise agreed in writing between the Parties, the Customer agrees and accepts that FINIT SOLUTIONS has no obligation to upgrade or update the Software, or to provide any or specific information relating to the Software. FINIT SOLUTIONS and/or the owners of any Information may remove such Information from time to time without prior notice, to the extent permitted by applicable law.
+                  </p>
+                  
+                  <p>
+                    The Customer will receive all updates, upgrades, and new functionalities of the Software free of charge, unless FINIT SOLUTIONS releases the new functionalities as a separate module. FINIT SOLUTIONS reserves the right to modify the functionalities of the Software and Services at any time in order to improve the quality and/or user experience of the Software and Services.
+                  </p>
+                  
+                  <p>
+                    The Customer may also subscribe to the FINIT SOLUTIONS mailing list without obligation to receive a newsletter informing them of updates and changes to the Software and Services. This communication is optional and does not form an essential part of the service provision.
+                  </p>
+                  
+                  <p>
+                    If FINIT SOLUTIONS integrates certain functionalities into the Software that have been produced by another supplier (so-called "software integrations"), FINIT SOLUTIONS does not provide any guarantees to the Customer other than those provided by that supplier.
+                  </p>
+                </div>
+                </div>
                 {/* Contact Information */}
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <h4 className="font-semibold mb-2">Contact Information</h4>
