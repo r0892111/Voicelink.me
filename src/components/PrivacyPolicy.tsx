@@ -580,6 +580,14 @@ const PrivacyPolicy: React.FC = () => {
           <p className="leading-relaxed mb-6">
             In order to take into account feedback or to reflect changes in our processing activities, we may amend this privacy statement from time to time. We therefore invite you to always consult the latest version of this privacy statement on our platform.
           </p>
+
+          <p className="leading-relaxed mb-6">
+            <strong>Language of the Agreement</strong> – The Dutch version of this Agreement shall at all times be the binding and official version. Any translations of this Agreement are provided for convenience and informational purposes only. Users may request a copy of the official Dutch version by contacting us at{' '}
+            <a href="mailto:contact@finitsolutions.be" className="text-blue-600 hover:underline">
+              contact@finitsolutions.be
+            </a>
+            .
+          </p>
         </div>
       </div>
     </div>
