@@ -168,30 +168,6 @@ export const SubscriptionDashboard: React.FC = () => {
                               {user.user_info.email_verification_status}
                             </span>
                           </div>
-                          {user.user_info.preferences && (
-                            <>
-                              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                                <span className="text-sm text-gray-600">Invoiceable</span>
-                                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                                  user.user_info.preferences.invoiceable 
-                                    ? 'bg-green-100 text-green-800' 
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}>
-                                  {user.user_info.preferences.invoiceable ? 'Yes' : 'No'}
-                                </span>
-                              </div>
-                              <div className="flex justify-between items-center py-2">
-                                <span className="text-sm text-gray-600">Whitelabeling</span>
-                                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                                  user.user_info.preferences.whitelabeling 
-                                    ? 'bg-green-100 text-green-800' 
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}>
-                                  {user.user_info.preferences.whitelabeling ? 'Enabled' : 'Disabled'}
-                                </span>
-                              </div>
-                            </>
-                          )}
                         </div>
                       </div>
                     </div>
