@@ -2,6 +2,35 @@ import React from 'react';
 import { MessageCircle, Zap, Shield, ArrowRight, Star, CheckCircle, Play, Users, Mic, Settings } from 'lucide-react';
 import { HeroDemo } from './HeroDemo';
 
+// Custom hook for scroll-triggered animations
+const useScrollAnimation = () => {
+  const [visibleSections, setVisibleSections] = React.useState<Set<string>>(new Set());
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections(prev => new Set([...prev, entry.target.id]));
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -10% 0px'
+      }
+    );
+
+    // Observe all sections
+    const sections = document.querySelectorAll('[data-animate-section]');
+    sections.forEach(section => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
+  return visibleSections;
+};
+
 // Pricing Calculator Component
 const PricingCalculator: React.FC = () => {
   const [userCount, setUserCount] = React.useState(1);
@@ -123,6 +152,8 @@ interface HomepageProps {
 }
 
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
+  const visibleSections = useScrollAnimation();
+
   return (
     <div className="min-h-screen bg-white relative">
       {/* Continuous Background Gradient */}
@@ -140,9 +171,21 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-16 relative z-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+      <section 
+        id="features" 
+        data-animate-section
+        className={`py-16 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('features') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className={`text-center mb-12 transition-all duration-1000 delay-200 ${
+            visibleSections.has('features') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             <h2 className="text-5xl font-bold mb-6 tracking-tight" style={{ color: '#1C2C55' }}>
               CRM Integrations
             </h2>
@@ -153,7 +196,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
           {/* CRM Logos */}
           <div className="flex justify-center items-center space-x-16 mb-12">
-            <div className="group cursor-pointer animate-scale-in" style={{ animationDelay: '0.5s' }}>
+            <div className={`group cursor-pointer transition-all duration-800 delay-500 ${
+              visibleSections.has('features') 
+                ? 'opacity-100 scale-100' 
+                : 'opacity-0 scale-95'
+            }`}>
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/Teamleader_Icon.svg" 
@@ -166,7 +213,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </div>
             </div>
             
-            <div className="group cursor-pointer animate-scale-in" style={{ animationDelay: '0.7s' }}>
+            <div className={`group cursor-pointer transition-all duration-800 delay-700 ${
+              visibleSections.has('features') 
+                ? 'opacity-100 scale-100' 
+                : 'opacity-0 scale-95'
+            }`}>
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/Pipedrive_id-7ejZnwv_0.svg" 
@@ -179,7 +230,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </div>
             </div>
             
-            <div className="group cursor-pointer animate-scale-in" style={{ animationDelay: '0.9s' }}>
+            <div className={`group cursor-pointer transition-all duration-800 delay-[900ms] ${
+              visibleSections.has('features') 
+                ? 'opacity-100 scale-100' 
+                : 'opacity-0 scale-95'
+            }`}>
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/odoo_logo.svg" 
@@ -196,7 +251,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           {/* Feature list */}
           <div className="text-center mb-12">
             <div className="flex justify-center space-x-8 mb-8">
-              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '1.1s' }}>
+              <div className={`group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-800 delay-[1100ms] hover:bg-gray-50 ${
+                visibleSections.has('features') 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-4'
+              }`}>
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -207,7 +266,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">One-click setup</div>
               </div>
               
-              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '1.3s' }}>
+              <div className={`group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-800 delay-[1300ms] hover:bg-gray-50 ${
+                visibleSections.has('features') 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-4'
+              }`}>
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <div className="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -218,7 +281,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">Real-time sync</div>
               </div>
               
-              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '1.5s' }}>
+              <div className={`group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-800 delay-[1500ms] hover:bg-gray-50 ${
+                visibleSections.has('features') 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-4'
+              }`}>
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <div className="w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -232,7 +299,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* More integrations coming */}
-          <div className="text-center animate-fade-in-up" style={{ animationDelay: '1.7s' }}>
+          <div className={`text-center transition-all duration-800 delay-[1700ms] ${
+            visibleSections.has('features') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-4'
+          }`}>
             <div className="max-w-3xl mx-auto">
               <p className="text-lg text-gray-600 mb-4">
                 We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.
@@ -252,9 +323,21 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* How It Works */}
-      <section className="py-32 relative z-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+      <section 
+        id="how-it-works"
+        data-animate-section
+        className={`py-32 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('how-it-works') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-24 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className={`text-center mb-24 transition-all duration-1000 delay-200 ${
+            visibleSections.has('how-it-works') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             <h2 className="text-5xl font-bold mb-6 leading-tight tracking-tight" style={{ color: '#1C2C55' }}>
               How WhatsApp Voice Notes Work
             </h2>
@@ -265,13 +348,21 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
           <div className="max-w-6xl mx-auto">
             {/* Professional Process Flow */}
-            <div className="relative animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <div className={`relative transition-all duration-1000 delay-300 ${
+              visibleSections.has('how-it-works') 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}>
               {/* Connection Line */}
               <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-200 to-transparent transform -translate-y-1/2 hidden lg:block"></div>
               
               <div className="grid lg:grid-cols-3 gap-12 lg:gap-8">
                 {/* Step 1 - Voice Input */}
-                <div className="group relative animate-fade-in-left" style={{ animationDelay: '0.4s' }}>
+                <div className={`group relative transition-all duration-1000 delay-500 ${
+                  visibleSections.has('how-it-works') 
+                    ? 'opacity-100 -translate-x-0' 
+                    : 'opacity-0 -translate-x-8'
+                }`}>
                   <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
@@ -303,7 +394,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 </div>
 
                 {/* Step 2 - AI Processing */}
-                <div className="group relative animate-scale-in" style={{ animationDelay: '0.6s' }}>
+                <div className={`group relative transition-all duration-1000 delay-700 ${
+                  visibleSections.has('how-it-works') 
+                    ? 'opacity-100 scale-100' 
+                    : 'opacity-0 scale-95'
+                }`}>
                   <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
@@ -335,7 +430,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 </div>
 
                 {/* Step 3 - CRM Integration */}
-                <div className="group relative animate-fade-in-right" style={{ animationDelay: '0.8s' }}>
+                <div className={`group relative transition-all duration-1000 delay-[900ms] ${
+                  visibleSections.has('how-it-works') 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`}>
                   <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
@@ -363,9 +462,21 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 relative z-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+      <section 
+        id="pricing" 
+        data-animate-section
+        className={`py-20 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('pricing') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className={`text-center mb-16 transition-all duration-1000 delay-200 ${
+            visibleSections.has('pricing') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
             Volume Pricing That Scales With You
             </h2>
@@ -375,9 +486,17 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-[1fr_1fr] gap-8 items-start animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <div className={`grid lg:grid-cols-[1fr_1fr] gap-8 items-start transition-all duration-1000 delay-300 ${
+              visibleSections.has('pricing') 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}>
               {/* Left side - VoiceLink Pro Card */}
-              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-300 animate-fade-in-left" style={{ animationDelay: '0.4s' }}>
+              <div className={`bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden relative hover:shadow-2xl transition-all duration-1000 delay-500 ${
+                visibleSections.has('pricing') 
+                  ? 'opacity-100 -translate-x-0' 
+                  : 'opacity-0 -translate-x-8'
+              }`}>
                 <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #1C2C55 0%, #F7E69B 100%)' }}></div>
                 <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(247, 230, 155, 0.02) 0%, rgba(28, 44, 85, 0.01) 100%)' }}></div>
                 
@@ -427,7 +546,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </div>
 
               {/* Right side - Volume Discount Tiers Table */}
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden animate-fade-in-right" style={{ animationDelay: '0.6s' }}>
+              <div className={`bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-1000 delay-700 ${
+                visibleSections.has('pricing') 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 translate-x-8'
+              }`}>
                 <div className="p-6">
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>Volume Discount Tiers</h3>
@@ -518,10 +641,22 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Custom Solutions Section */}
-      <section id="custom-solutions" className="py-20 relative z-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+      <section 
+        id="custom-solutions" 
+        data-animate-section
+        className={`py-20 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('custom-solutions') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-6">
           {/* Header Section */}
-          <div className="text-center mb-20 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className={`text-center mb-20 transition-all duration-1000 delay-200 ${
+            visibleSections.has('custom-solutions') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             <h2 className="text-5xl font-bold mb-6 leading-tight tracking-tight" style={{ color: '#1C2C55' }}>
               Want a custom VoiceLink solution?
             </h2>
@@ -532,15 +667,27 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* Main Content Grid */}
-          <div className="grid lg:grid-cols-[2fr_1fr] gap-16 items-start mb-20 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className={`grid lg:grid-cols-[2fr_1fr] gap-16 items-start mb-20 transition-all duration-1000 delay-300 ${
+            visibleSections.has('custom-solutions') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             {/* Left Side - Animated Use Cases */}
             <div className="space-y-8">
-             <div className="text-center lg:text-left mb-8 animate-fade-in-left" style={{ animationDelay: '0.4s' }}>
+             <div className={`text-center lg:text-left mb-8 transition-all duration-1000 delay-500 ${
+               visibleSections.has('custom-solutions') 
+                 ? 'opacity-100 -translate-x-0' 
+                 : 'opacity-0 -translate-x-8'
+             }`}>
                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Two examples:</h3>
                <p className="text-gray-600">VoiceLink adapts to any industry or workflow that needs voice-to-data conversion.</p>
              </div>
              
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 animate-fade-in-left" style={{ animationDelay: '0.5s' }}>
+              <div className={`bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-1000 delay-600 ${
+                visibleSections.has('custom-solutions') 
+                  ? 'opacity-100 -translate-x-0' 
+                  : 'opacity-0 -translate-x-8'
+              }`}>
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
@@ -558,7 +705,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 animate-fade-in-left" style={{ animationDelay: '0.7s' }}>
+              <div className={`bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-1000 delay-800 ${
+                visibleSections.has('custom-solutions') 
+                  ? 'opacity-100 -translate-x-0' 
+                  : 'opacity-0 -translate-x-8'
+              }`}>
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
@@ -578,8 +729,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </div>
 
             {/* Right Side - Technology Showcase */}
-            <div className="sticky top-8 animate-fade-in-right" style={{ animationDelay: '0.6s' }}>
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 animate-scale-in" style={{ animationDelay: '0.8s' }}>
+            <div className={`sticky top-8 transition-all duration-1000 delay-700 ${
+              visibleSections.has('custom-solutions') 
+                ? 'opacity-100 translate-x-0' 
+                : 'opacity-0 translate-x-8'
+            }`}>
+              <div className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 transition-all duration-1000 delay-[900ms] ${
+                visibleSections.has('custom-solutions') 
+                  ? 'opacity-100 scale-100' 
+                  : 'opacity-0 scale-95'
+              }`}>
                 <div className="text-center mb-6">
                   <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                     <Zap className="w-6 h-6" style={{ color: '#1C2C55' }} />
@@ -621,7 +780,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* Bottom CTA Section */}
-          <div className="text-center bg-gradient-to-r from-gray-50 to-white rounded-3xl p-12 shadow-lg border border-gray-100 relative overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
+          <div className={`text-center bg-gradient-to-r from-gray-50 to-white rounded-3xl p-12 shadow-lg border border-gray-100 relative overflow-hidden transition-all duration-1000 delay-[1000ms] ${
+            visibleSections.has('custom-solutions') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-20"></div>
             <div className="relative z-10">
               <h3 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
@@ -678,8 +841,21 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 relative z-10 animate-fade-in-up" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)', animationDelay: '0.1s' }}>
-        <div className="max-w-4xl mx-auto px-6 text-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+      <section 
+        id="final-cta"
+        data-animate-section
+        className={`py-20 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('final-cta') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+        style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)' }}
+      >
+        <div className={`max-w-4xl mx-auto px-6 text-center transition-all duration-1000 delay-200 ${
+          visibleSections.has('final-cta') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}>
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
             Ready to Transform Your Workflow?
           </h2>
@@ -688,7 +864,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             Connect your WhatsApp and start your free trial today.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-300 ${
+            visibleSections.has('final-cta') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             <button
               onClick={openModal}
               className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
@@ -721,7 +901,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </button>
           </div>
 
-          <div className="mt-8 flex items-center justify-center space-x-8 text-white opacity-90 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className={`mt-8 flex items-center justify-center space-x-8 text-white opacity-90 transition-all duration-1000 delay-500 ${
+            visibleSections.has('final-cta') 
+              ? 'opacity-90 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
             <div className="flex items-center space-x-2">
               <CheckCircle className="w-4 h-4" />
               <span className="text-sm">14-day free trial</span>
@@ -739,8 +923,21 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Footer */}
-      <footer className="text-white py-12 relative z-10 animate-fade-in-up" style={{ backgroundColor: '#202226', animationDelay: '0.1s' }}>
-        <div className="max-w-7xl mx-auto px-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+      <footer 
+        id="footer"
+        data-animate-section
+        className={`text-white py-12 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('footer') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+        style={{ backgroundColor: '#202226' }}
+      >
+        <div className={`max-w-7xl mx-auto px-6 transition-all duration-1000 delay-200 ${
+          visibleSections.has('footer') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}>
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
               {/* White logo on dark background */}
