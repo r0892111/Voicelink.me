@@ -272,16 +272,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
-                      <Users className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                      <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Sales Teams</h3>
+                    <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Property Management</h3>
                     <p className="text-gray-600 mb-4 leading-relaxed">
-                      Sales reps record client meetings and follow-ups via voice. AI extracts key insights, 
-                      next steps, and contact details, automatically updating your CRM with structured data.
+                      Property managers record maintenance requests, tenant interactions, and inspection notes via voice. 
+                      AI automatically creates work orders, updates tenant records, and schedules follow-ups.
                     </p>
                     <div className="text-sm text-gray-500">
-                      Lead scoring • Follow-up reminders • Deal tracking
+                      Work order creation • Tenant communication • Maintenance scheduling
                     </div>
                   </div>
                 </div>
