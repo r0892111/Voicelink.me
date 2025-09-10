@@ -1,6 +1,7 @@
 import React from 'react';
 import { MessageCircle, Zap, Shield, ArrowRight, Star, CheckCircle, Play, Users, Mic, Settings } from 'lucide-react';
 import { HeroDemo } from './HeroDemo';
+import { PricingSection } from './PricingSection';
 
 // Custom hook for scroll-triggered animations
 const useScrollAnimation = () => {
@@ -123,36 +124,6 @@ const PricingCalculator: React.FC = () => {
                 {tierInfo.tier} Plan • {tierInfo.discount}% discount
               </span>
               <p className="text-xs text-green-600 mt-1">
-                Save €{savings.toFixed(2)}/month vs Starter pricing
-              </p>
-            </div>
-          )}
-        </div>
-        
-        <button
-          className="w-full text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
-          style={{ backgroundColor: '#1C2C55' }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
-        >
-          <span>Start Free Trial</span>
-          <ArrowRight className="w-5 h-5" />
-        </button>
-        
-        <p className="text-xs text-gray-500 mt-3">
-          14-day free trial • No credit card required
-        </p>
-      </div>
-    </div>
-  );
-};
-
-interface HomepageProps {
-  openModal: () => void;
-}
-
-export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
-  const visibleSections = useScrollAnimation();
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -229,194 +200,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 <div className="text-lg font-medium text-gray-900">Pipedrive</div>
               </div>
             </div>
-            
-            <div className={`group cursor-pointer transition-all duration-800 delay-[900ms] ${
-              visibleSections.has('features') 
-                ? 'opacity-100 scale-100' 
-                : 'opacity-0 scale-95'
-            }`}>
-              <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
-                <img 
-                  src="/odoo_logo.svg" 
-                  alt="Odoo" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-medium text-gray-900">Odoo</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Feature list */}
-          <div className="text-center mb-12">
-            <div className="flex justify-center space-x-8 mb-8">
-              <div className={`group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-800 delay-[1100ms] hover:bg-gray-50 ${
-                visibleSections.has('features') 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-4'
-              }`}>
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">One-click setup</div>
-              </div>
-              
-              <div className={`group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-800 delay-[1300ms] hover:bg-gray-50 ${
-                visibleSections.has('features') 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-4'
-              }`}>
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">Real-time sync</div>
-              </div>
-              
-              <div className={`group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-800 delay-[1500ms] hover:bg-gray-50 ${
-                visibleSections.has('features') 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-4'
-              }`}>
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <div className="w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">Secure OAuth</div>
-              </div>
-            </div>
-          </div>
-
-          {/* More integrations coming */}
-          <div className={`text-center transition-all duration-800 delay-[1700ms] ${
-            visibleSections.has('features') 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-4'
-          }`}>
-            <div className="max-w-3xl mx-auto">
-              <p className="text-lg text-gray-600 mb-4">
-                We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.
-              </p>
-              <p className="text-base text-gray-500 mb-6 font-bold">
-                Don't see your CRM? We build custom integrations for any platform with an API.
-              </p>
               <button className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-gray-300 rounded-full hover:border-gray-400 transition-colors group">
-                <span className="text-base font-medium text-gray-700">Contact Us for Custom Integration</span>
-                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-              </button>
-              <a
-                href="https://www.youtube.com/watch?v=wVaR0NwPNHc"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section 
-        id="how-it-works"
-        data-animate-section
-        className={`py-32 relative z-10 transition-all duration-1000 ${
-          visibleSections.has('how-it-works') 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6">
-          <div className={`text-center mb-24 transition-all duration-1000 delay-200 ${
-            visibleSections.has('how-it-works') 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-8'
-          }`}>
-            <h2 className="text-5xl font-bold mb-6 leading-tight tracking-tight" style={{ color: '#1C2C55' }}>
-              How WhatsApp Voice Notes Work
-            </h2>
-            <p className="text-2xl font-light max-w-3xl mx-auto leading-relaxed" style={{ color: '#6B7280' }}>
-              Three simple steps to transform voice into structured data
-            </p>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            {/* Professional Process Flow */}
-            <div className={`relative transition-all duration-1000 delay-300 ${
-              visibleSections.has('how-it-works') 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-8'
-            }`}>
-              {/* Connection Line */}
-              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gray-200 to-transparent transform -translate-y-1/2 hidden lg:block"></div>
-              
-              <div className="grid lg:grid-cols-3 gap-12 lg:gap-8">
-                {/* Step 1 - Voice Input */}
-                <div className={`group relative transition-all duration-1000 delay-500 ${
-                  visibleSections.has('how-it-works') 
-                    ? 'opacity-100 -translate-x-0' 
-                    : 'opacity-0 -translate-x-8'
-                }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                        <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                        </svg>
-                      </div>
-                      <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
-                        Step 1
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                      Voice Input
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      Record your thoughts naturally through WhatsApp voice messages
-                    </p>
-                  </div>
-                  
-                  {/* Animated Arrow */}
-                  <div className="hidden lg:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
-                    <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Step 2 - AI Processing */}
-                <div className={`group relative transition-all duration-1000 delay-700 ${
-                  visibleSections.has('how-it-works') 
-                    ? 'opacity-100 scale-100' 
-                    : 'opacity-0 scale-95'
-                }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                        <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                          <circle cx="12" cy="9" r="2" fill="currentColor"/>
-                        </svg>
-                      </div>
-                      <div className="text-sm font-medium px-3 py-1 rounded-full" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)', color: '#1C2C55' }}>
-                        Step 2
-                      </div>
-                    </div>
+      {/* Pricing Section */}
+      <PricingSection openModal={openModal} />
                     <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
                       AI Processing
                     </h3>
