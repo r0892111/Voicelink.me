@@ -137,11 +137,7 @@ export const WhatsAppVerification: React.FC = () => {
       setOtpExpiresAt(result.expires_at);
       setOtpStep('verify');
       
-      // Update local status to pending
-      setWhatsappStatus(prev => ({
-        ...prev,
-        whatsapp_status: 'pending'
-      }));
+      // Don't update status to pending - keep it as 'not_set' to show the verification form
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to send verification code');
     } finally {
