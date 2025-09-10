@@ -828,3 +828,4 @@ export const Homepage: React.FC<{ openModal: () => void }> = ({ openModal }) => 
       </footer>
     </div>
   );
+};
