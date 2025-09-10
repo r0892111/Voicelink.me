@@ -36,23 +36,23 @@ const calculatePricing = (users: number, billingPeriod: BillingPeriod) => {
   const tier = getCurrentTier(users);
   const pricePerUser = billingPeriod === 'monthly' ? tier.monthlyPricePerUser : tier.yearlyPricePerUser;
   const monthlyPrice = pricePerUser * users;
-  const originalMonthlyPrice = 29.90 * users;
-  const originalYearlyPrice = originalMonthlyPrice * 12;
+  const monthlyEquivalent = tier.monthlyPricePerUser * users;
+  const yearlyEquivalent = monthlyEquivalent * 12;
   
   let savings = 0;
   if (billingPeriod === 'monthly') {
-    // Monthly savings: difference between starter price and current tier price per month
-    savings = originalMonthlyPrice - monthlyPrice;
+    // No savings for monthly billing
+    savings = 0;
   } else {
-    // Yearly savings: difference between starter yearly price and current tier yearly price
+    // Yearly savings: difference between paying monthly vs yearly
     const currentYearlyPrice = monthlyPrice * 12;
-    savings = originalYearlyPrice - currentYearlyPrice;
+    savings = yearlyEquivalent - currentYearlyPrice;
   }
   
   return {
     tier,
     price: monthlyPrice,
-    originalPrice: billingPeriod === 'monthly' ? originalMonthlyPrice : originalYearlyPrice,
+    originalPrice: billingPeriod === 'monthly' ? monthlyEquivalent : yearlyEquivalent,
     savings,
     pricePerUser,
     billingPeriod
@@ -186,7 +186,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </p>
             {pricing.savings > 0 && (
               <p className="text-green-600 font-medium mt-2">
-                Save €{pricing.savings.toFixed(2)}/{billingPeriod === 'monthly' ? 'month' : 'year'} vs starter pricing
+                Save €{pricing.savings.toFixed(2)}/year vs monthly billing
               </p>
             )}
             {billingPeriod === 'yearly' && (
