@@ -240,6 +240,83 @@ export default function SaasAgreementPage() {
                   </p>
                 </div>
 
+                {/* Article 3 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  3. Conditions and restrictions on the right of access
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    <strong>A.</strong> Upon explicit acceptance of this Agreement, FINIT SOLUTIONS will grant the Customer and Users access to the Platform, where the Software and Services are made available under the terms and conditions set out in this Agreement.
+                  </p>
+                  
+                  <p>
+                    <strong>B.</strong> The Customer undertakes to:
+                  </p>
+                  
+                  <div className="ml-6 space-y-3">
+                    <p>
+                      <strong>i.</strong> use the Software and Services and/or allow them to be used by the Users solely for the Customer's independent internal use, with the sole purpose of optimizing the Customer's business processes;
+                    </p>
+                    
+                    <p>
+                      <strong>ii.</strong> ensure that the Users comply fully with the provisions of this Agreement insofar as relevant;
+                    </p>
+                    
+                    <p>
+                      <strong>iii.</strong> keep the access data to the Platform, including CRM authentication (tokens, API keys, or single sign-on data), strictly personal and not disclose it, as well as ensure that Users keep their access data strictly personal and do not disclose it;
+                    </p>
+                    
+                    <p>
+                      <strong>iv.</strong> not to make any modifications or changes to the Software and not to create any derivative works based on the Software;
+                    </p>
+                    
+                    <p>
+                      <strong>v.</strong> not to copy, resell, license, lend, or otherwise commercialize any part of the Software and Services without the prior explicit and written consent of FINIT SOLUTIONS;
+                    </p>
+                    
+                    <p>
+                      <strong>vi.</strong> not to attempt to gain unauthorized access to any part of the Software or the systems and/or networks of FINIT SOLUTIONS;
+                    </p>
+                    
+                    <p>
+                      <strong>vii.</strong> not reverse engineer, decompile, decode, disassemble, or derive any source code from the Software;
+                    </p>
+                    
+                    <p>
+                      <strong>viii.</strong> not use scripts, bots, spiders, or other automated mechanisms to collect information or otherwise interact with the Software without the prior written consent of FINIT SOLUTIONS;
+                    </p>
+                    
+                    <p>
+                      <strong>ix.</strong> not interfere with or damage any part of the Software, including, without limitation, through the use of poorly secured systems, viruses, bots, Trojan horses, malicious code, flood pings, (distributed) denial-of-service attacks, packet or IP spoofing, falsified routing or electronic mail address information, or similar methods or technology;
+                    </p>
+                    
+                    <p>
+                      <strong>x.</strong> not to remove, modify, or obscure any trademarks or other indications of Intellectual Property Rights in the Software;
+                    </p>
+                    
+                    <p>
+                      <strong>xi.</strong> to use the Software and Services only in a manner that complies with all applicable laws, regulations, rules, and codes;
+                    </p>
+                    
+                    <p>
+                      <strong>xii.</strong> not to use the Software and Services in any manner that could damage the name, reputation, or rights of FINIT SOLUTIONS;
+                    </p>
+                    
+                    <p>
+                      <strong>xiii.</strong> not to use the Software and Services to interfere with other customers of FINIT SOLUTIONS or other internet users or to cause damage to the systems or networks of FINIT SOLUTIONS or its customers;
+                    </p>
+                    
+                    <p>
+                      <strong>xiv.</strong> to impose obligations and conditions at least equivalent to those set out in this Article 3.B on the Users.
+                    </p>
+                  </div>
+                  
+                  <p>
+                    <strong>C.</strong> The Customer shall indemnify and hold FINIT SOLUTIONS harmless for any breaches caused by itself or the Users of the provisions of Article 3.B, which are considered essential terms of this Agreement, or for any other breach of this Agreement.
+                  </p>
+                </div>
+
                 {/* Contact Information */}
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <h4 className="font-semibold mb-2">Contact Information</h4>
