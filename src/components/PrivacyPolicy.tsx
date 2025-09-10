@@ -88,6 +88,78 @@ const PrivacyPolicy: React.FC = () => {
                 We always strive to process your personal data in accordance with the applicable legal provisions on the protection of personal data, including Regulation (EU) 2016/679 of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (hereinafter, the "GDPR"), as well as the applicable national implementing legislation.
               </p>
             </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Some definitions explained</h3>
+              
+              <p className="leading-relaxed mb-6">
+                For the purposes of this privacy statement, "personal data" means: all information relating to an identified or identifiable natural person ("the data subject"). A natural person is considered identifiable if he or she can be identified, directly or indirectly, in particular by reference to an identifier such as a name, identification number, location data, an online identifier or to one or more elements specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person. In other words, it concerns all information on the basis of which a person can be identified. This includes, for example, your name, first name, date of birth, telephone number and e-mail address, but also your IP address.
+              </p>
+
+              <p className="leading-relaxed mb-6">
+                The concept of "processing" is very broad and covers, among other things, the collection, recording, organization, storage, updating, modification, retrieval, consultation, use, disclosure, combination, archiving and deletion of data.
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Controller of your personal data ("data controller")</h3>
+              
+              <p className="leading-relaxed mb-4">
+                Finit Solutions is responsible for processing your personal data.
+              </p>
+              
+              <p className="leading-relaxed mb-6">
+                As referred to in the GDPR, we are the "data controller" of your personal data. This means concretely that Finit Solutions, possibly together with others, determines the purpose and means of processing your personal data.
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Which personal data do we process, why and on what legal basis?</h3>
+              
+              <p className="leading-relaxed mb-4">
+                In the table below you will find:
+              </p>
+
+              <p className="leading-relaxed mb-4">
+                column 1: which categories of personal data we process (the "Categories of personal data");
+              </p>
+
+              <p className="leading-relaxed mb-4">
+                column 2: why we do this (the "Purposes");
+              </p>
+
+              <p className="leading-relaxed mb-4">
+                column 3: on which legal basis the processing activity is based (the "Legal basis"); and
+              </p>
+
+              <p className="leading-relaxed mb-6">
+                column 4: how long we process your personal data (the "Retention period").
+              </p>
+
+              <p className="leading-relaxed mb-4">
+                Each processing activity of your personal data is carried out for one or more specific purposes.
+              </p>
+              
+              <p className="leading-relaxed mb-4">
+                In addition, there is always a demonstrable legal basis for each processing. The applicable legal basis, which you will find in the third column "Legal basis", has the following meaning:
+              </p>
+
+              <p className="leading-relaxed mb-4">
+                Consent: you have given consent to the processing of personal data for one or more specific purposes;
+              </p>
+
+              <p className="leading-relaxed mb-4">
+                Legitimate interest: the processing is necessary for the purposes of the legitimate interests pursued by us or by a third party, except where your interests or fundamental rights and freedoms which require protection of personal data override those interests;
+              </p>
+
+              <p className="leading-relaxed mb-4">
+                Contract: the processing is necessary for the performance of a contract to which you are a party, or in order to take steps at your request prior to entering into a contract;
+              </p>
+
+              <p className="leading-relaxed mb-6">
+                Legal obligation: the processing is necessary for compliance with a legal obligation to which we, as the data controller, are subject.
+              </p>
+            </div>
           </div>
         </div>
       </div>
