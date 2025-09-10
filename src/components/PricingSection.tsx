@@ -169,6 +169,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               </span>
               <span className="text-xl text-gray-600">/user/month</span>
             </div>
+            <p className="text-gray-600 mb-2">
+              {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
+            </p>
             <p className="text-sm text-gray-500">
               Total: €{pricing.price.toFixed(2)}/{billingPeriod}
             </p>
