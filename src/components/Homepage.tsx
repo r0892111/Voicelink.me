@@ -153,6 +153,7 @@ interface HomepageProps {
 
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
   const visibleSections = useScrollAnimation();
+  const [isAnnual, setIsAnnual] = React.useState(false);
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -702,65 +703,35 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* Main Content Grid */}
-                    <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
-                      VoiceLink Pro
-                    </h3>
-                    <p className="text-gray-600 mb-6 group-hover:text-gray-700 transition-colors">
-                      Perfect for growing teams
-                    </p>
-              ? 'opacity-100 translate-y-0' 
-                    <div className="text-5xl font-bold mb-2 group-hover:scale-105 transition-transform" style={{ color: '#1C2C55' }}>
-                      €{isAnnual ? '299.00' : '29.90'}
-                    </div>
-                    <div className="text-gray-500 mb-2">
-                      {isAnnual ? '/user/year' : '/user/month'}
-                    </div>
-                    {isAnnual && (
-                      <div className="text-sm text-green-600 mb-6">
-                        €29.90/user/month • Save €59.80/year
-                      </div>
-                    )}
-                    {!isAnnual && (
-                      <div className="text-sm text-gray-500 mb-6">
-                            €{isAnnual ? '270.00' : '27.00'}
-                      </div>
-                          <div className="text-sm text-blue-600">/user/{isAnnual ? 'year' : 'month'}</div>
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             {/* Left Side - Animated Use Cases */}
             <div className="space-y-8">
-                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
-               visibleSections.has('custom-solutions') 
-                        <span>Unlimited WhatsApp voice notes</span>
-                 : 'opacity-0 -translate-x-8'
-                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
-               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Two examples:</h3>
-                        <span>Real-time CRM sync</span>
-             </div>
-                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
+              <div className={`transition-all duration-1000 delay-400 ${
+                visibleSections.has('custom-solutions') 
+                  ? 'opacity-100 -translate-x-0' 
+                  : 'opacity-0 -translate-x-8'
+              }`}>
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Two examples:</h3>
+              </div>
+              
               <div className={`bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-1000 delay-600 ${
-                        <span>Native WhatsApp integration</span>
-                            €{isAnnual ? '240.00' : '24.00'}
-                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
-                          <div className="text-sm text-green-600">/user/{isAnnual ? 'year' : 'month'}</div>
-                        <span>Multi-language support</span>
-                      </li>
-                      <li className="flex items-center space-x-3 group-hover:text-gray-700 transition-colors">
-                        <CheckCircle className="w-5 h-5 text-green-500" />
-                        <span>Priority support</span>
+                visibleSections.has('custom-solutions') 
+                  ? 'opacity-100 -translate-x-0' 
+                  : 'opacity-0 -translate-x-8'
+              }`}>
+                <div className="flex items-start space-x-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
-                      <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                    <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Field Technicians</h3>
                     <p className="text-gray-600 mb-4 leading-relaxed">
                       Technicians speak service reports while driving between jobs. Voice notes automatically 
                       generate structured reports with job details, parts used, and time spent.
-                            €{isAnnual ? '210.00' : '21.00'}
-                    <div className="text-sm text-gray-500">
-                          <div className="text-sm text-purple-600">/user/{isAnnual ? 'year' : 'month'}</div>
-                    </div>
-                    <p className="text-sm text-gray-500 mt-3">
-                      14-day free trial • No credit card required
                     </p>
+                    <div className="text-sm text-gray-500">
+                      Service reports • Parts tracking • Time logging
+                    </div>
                   </div>
                 </div>
               </div>
@@ -770,16 +741,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   ? 'opacity-100 -translate-x-0' 
                   : 'opacity-0 -translate-x-8'
               }`}>
-                            €{isAnnual ? '180.00' : '18.00'}
+                <div className="flex items-start space-x-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
-                          <div className="text-sm text-orange-600">/user/{isAnnual ? 'year' : 'month'}</div>
+                    <Users className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Property Management</h3>
                     <p className="text-gray-600 mb-4 leading-relaxed">
-                            €{isAnnual ? '299.00' : '29.90'}
+                      Property managers record tenant issues and maintenance requests on-the-go. 
                       AI automatically creates work orders, updates tenant records, and schedules follow-ups.
-                          <div className="text-sm text-gray-500">/user/{isAnnual ? 'year' : 'month'}</div>
+                    </p>
                     <div className="text-sm text-gray-500">
                       Work order creation • Tenant communication • Maintenance scheduling
                     </div>
@@ -905,120 +876,4 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
         id="final-cta"
         data-animate-section
         className={`py-20 relative z-10 transition-all duration-1000 ${
-          visibleSections.has('final-cta') 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}
-        style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)' }}
-      >
-        <div className={`max-w-4xl mx-auto px-6 text-center transition-all duration-1000 delay-200 ${
-          visibleSections.has('final-cta') 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}>
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Transform Your Workflow?
-          </h2>
-          <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
-            The more users you add, the more you save. Start free, scale affordably.
-            Connect your WhatsApp and start your free trial today.
-          </p>
           
-          <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-300 ${
-            visibleSections.has('final-cta') 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-8'
-          }`}>
-            <button
-              onClick={openModal}
-              className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
-              style={{ color: '#1C2C55' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7E69B'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
-            >
-              {/* Small logo icon in CTA button */}
-              <img 
-                src="/Finit Voicelink Blue.svg" 
-                alt="" 
-                className="w-5 h-5 mr-1"
-              />
-              <span>Start Free Trial</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button 
-              className="group border-2 border-white text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#FFFFFF';
-                e.currentTarget.style.color = '#1C2C55';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = '#FFFFFF';
-              }}
-            >
-              <Play className="w-5 h-5" />
-              <span>Watch Demo</span>
-            </button>
-          </div>
-
-          <div className={`mt-8 flex items-center justify-center space-x-8 text-white opacity-90 transition-all duration-1000 delay-500 ${
-            visibleSections.has('final-cta') 
-              ? 'opacity-90 translate-y-0' 
-              : 'opacity-0 translate-y-8'
-          }`}>
-            <div className="flex items-center space-x-2">
-              <CheckCircle className="w-4 h-4" />
-              <span className="text-sm">14-day free trial</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <CheckCircle className="w-4 h-4" />
-              <span className="text-sm">No setup fees</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <CheckCircle className="w-4 h-4" />
-              <span className="text-sm">Cancel anytime</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer 
-        id="footer"
-        data-animate-section
-        className={`text-white py-12 relative z-10 transition-all duration-1000 ${
-          visibleSections.has('footer') 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}
-        style={{ backgroundColor: '#202226' }}
-      >
-        <div className={`max-w-7xl mx-auto px-6 transition-all duration-1000 delay-200 ${
-          visibleSections.has('footer') 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}>
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              {/* White logo on dark background */}
-              <img 
-                src="/Finit Voicelink White.svg" 
-                alt="VoiceLink" 
-                className="h-8 w-auto"
-              />
-            </div>
-            
-            <div className="flex items-center space-x-6 text-sm text-white opacity-70">
-              <span>© 2025 Finit Solutions</span>
-              <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy</a>
-              <a href="/saas-agreement" className="hover:text-white transition-colors">SaaS Agreement</a>
-              <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
-              <a href="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</a>
-              <a href="/support" className="hover:text-white transition-colors">Support</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
