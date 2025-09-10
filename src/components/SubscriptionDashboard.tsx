@@ -44,7 +44,7 @@ export const SubscriptionDashboard: React.FC = () => {
       </div>
 
       <div className="relative z-10 pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-6 space-y-12">
+        <div className="max-w-7xl mx-auto px-6 space-y-12 pt-8">
           {/* Premium Hero Section */}
           <section className="text-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <div className="relative inline-block mb-6">
@@ -54,7 +54,7 @@ export const SubscriptionDashboard: React.FC = () => {
                 </div>
                 <div className="text-left">
                   <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                    Welcome back, {user?.user_info.first_name|| 'Premium User'}!
+                    Welcome back, {user?.user_info?.first_name || 'Premium User'}!
                   </h1>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
                     Your VoiceLink subscription is active
@@ -68,45 +68,136 @@ export const SubscriptionDashboard: React.FC = () => {
 
           {/* Platform Connection Status */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-white shadow-sm border border-gray-100">
-                  {user?.platform === 'teamleader' && (
-                    <img src="/Teamleader_Icon.svg" alt="TeamLeader" className="w-10 h-10" />
-                  )}
-                  {user?.platform === 'pipedrive' && (
-                    <img src="/Pipedrive_id-7ejZnwv_0.svg" alt="Pipedrive" className="w-10 h-10" />
-                  )}
-                  {user?.platform === 'odoo' && (
-                    <img src="/odoo_logo.svg" alt="Odoo" className="w-10 h-10" />
-                  )}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <h2 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>
-                      Connected to {getPlatformName(user?.platform || '')}
-                    </h2>
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                      <span className="text-sm font-medium text-green-600">Active</span>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Platform Connection Card */}
+              <div className="lg:col-span-1">
+                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 h-full">
+                  <div className="text-center">
+                    <div className="w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center bg-white shadow-sm border border-gray-100">
+                      {user?.platform === 'teamleader' && (
+                        <img src="/Teamleader_Icon.svg" alt="TeamLeader" className="w-12 h-12" />
+                      )}
+                      {user?.platform === 'pipedrive' && (
+                        <img src="/Pipedrive_id-7ejZnwv_0.svg" alt="Pipedrive" className="w-12 h-12" />
+                      )}
+                      {user?.platform === 'odoo' && (
+                        <img src="/odoo_logo.svg" alt="Odoo" className="w-12 h-12" />
+                      )}
                     </div>
+                    <h3 className="text-xl font-bold mb-2" style={{ color: '#1C2C55' }}>
+                      {getPlatformName(user?.platform || '')}
+                    </h3>
+                    <div className="flex items-center justify-center space-x-2 mb-3">
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                      <span className="text-sm font-medium text-green-600">Connected & Active</span>
+                    </div>
+                    <p className="text-sm text-gray-600">
+                      Integration is live and ready for voice notes
+                    </p>
                   </div>
-                  <p className="text-gray-600">
-                    Your CRM integration is live and ready for voice notes
-                  </p>
                 </div>
               </div>
 
-              {/* User Info Card */}
-              {user?.user_info && (
-                <div className="mt-8">
-                  <UserInfoCard 
-                    platform={user.platform}
-                    userInfo={user.user_info}
-                    email={user.email}
-                  />
+              {/* User Profile Card */}
+              <div className="lg:col-span-2">
+                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 h-full">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                      <Users className="w-6 h-6" style={{ color: '#1C2C55' }} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold" style={{ color: '#1C2C55' }}>Account Profile</h3>
+                      <p className="text-sm text-gray-600">Your CRM account information</p>
+                    </div>
+                  </div>
+
+                  {user?.user_info && (
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {/* Personal Information */}
+                      <div className="space-y-4">
+                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Personal Information</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Full Name</span>
+                            <span className="text-sm font-medium text-gray-900">
+                              {user.user_info.first_name} {user.user_info.last_name}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Email</span>
+                            <span className="text-sm font-medium text-gray-900">{user.email}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Language</span>
+                            <span className="text-sm font-medium text-gray-900">{user.user_info.language}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Time Zone</span>
+                            <span className="text-sm font-medium text-gray-900">{user.user_info.time_zone}</span>
+                          </div>
+                          {user.user_info.telephones && user.user_info.telephones.length > 0 && (
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                              <span className="text-sm text-gray-600">Phone</span>
+                              <span className="text-sm font-medium text-gray-900">
+                                +{user.user_info.telephones[0].number}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Account Information */}
+                      <div className="space-y-4">
+                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Account Details</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Account ID</span>
+                            <span className="text-xs font-mono text-gray-700 bg-gray-100 px-2 py-1 rounded">
+                              {user.user_info.account?.id}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Account Type</span>
+                            <span className="text-sm font-medium text-gray-900 capitalize">
+                              {user.user_info.account?.type}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Email Status</span>
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              {user.user_info.email_verification_status}
+                            </span>
+                          </div>
+                          {user.user_info.preferences && (
+                            <>
+                              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span className="text-sm text-gray-600">Invoiceable</span>
+                                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                  user.user_info.preferences.invoiceable 
+                                    ? 'bg-green-100 text-green-800' 
+                                    : 'bg-gray-100 text-gray-800'
+                                }`}>
+                                  {user.user_info.preferences.invoiceable ? 'Yes' : 'No'}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center py-2">
+                                <span className="text-sm text-gray-600">Whitelabeling</span>
+                                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                  user.user_info.preferences.whitelabeling 
+                                    ? 'bg-green-100 text-green-800' 
+                                    : 'bg-gray-100 text-gray-800'
+                                }`}>
+                                  {user.user_info.preferences.whitelabeling ? 'Enabled' : 'Disabled'}
+                                </span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </section>
 
@@ -165,23 +256,6 @@ export const SubscriptionDashboard: React.FC = () => {
                 <div className="mt-4 flex items-center space-x-2">
                   <CheckCircle className="w-4 h-4 text-blue-500" />
                   <span className="text-xs text-blue-600 font-medium">Live Updates</span>
-                </div>
-              </div>
-
-              {/* Advanced Analytics */}
-              <div className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
-                <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(147, 51, 234, 0.1)' }}>
-                  <BarChart3 className="w-6 h-6 text-purple-600" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>
-                  Advanced Analytics
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Detailed insights and reports on your voice note usage
-                </p>
-                <div className="mt-4 flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-purple-500" />
-                  <span className="text-xs text-purple-600 font-medium">Pro Analytics</span>
                 </div>
               </div>
 
