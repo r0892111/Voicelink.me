@@ -171,6 +171,14 @@ const Disclaimer: React.FC = () => {
               </p>
             </div>
           </div>
+
+          <p className="leading-relaxed mb-6">
+            <strong>Language of the Disclaimer</strong> – The Dutch version of this Disclaimer shall at all times be the binding and official version. Any translations of this Disclaimer are provided for convenience and informational purposes only. Users may request a copy of the official Dutch version by contacting us at{' '}
+            <a href="mailto:contact@finitsolutions.be" className="text-blue-600 hover:underline">
+              contact@finitsolutions.be
+            </a>
+            .
+          </p>
         </div>
       </div>
     </div>
