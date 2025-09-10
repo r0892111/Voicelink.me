@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone, TrendingUp, Calendar } from 'lucide-react';
+import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone, TrendingUp, Calendar, Settings } from 'lucide-react';
 import { HeroDemo } from './HeroDemo';
 import { PricingVisuals } from './PricingVisuals';
 
@@ -152,6 +152,111 @@ interface HomepageProps {
   openModal: () => void;
 }
 
+const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
+  const visibleSections = useScrollAnimation();
+  const [selectedUsers, setSelectedUsers] = React.useState(1);
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section 
+        id="hero"
+        data-animate-section
+        className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-all duration-1000 ${
+          visibleSections.has('hero') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+        style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #F7E69B 100%)' }}
+      >
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+          {/* Left side - Text content */}
+          <div className={`text-white transition-all duration-1000 delay-200 ${
+            visibleSections.has('hero') 
+              ? 'opacity-100 -translate-x-0' 
+              : 'opacity-0 -translate-x-8'
+          }`}>
+            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              Turn WhatsApp Voice Notes Into CRM Data
+            </h1>
+            <p className="text-xl mb-8 opacity-90 leading-relaxed">
+              Speak naturally, sync automatically. VoiceLink transforms your voice messages into structured CRM entries in real-time.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <button
+                onClick={openModal}
+                className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
+                style={{ color: '#1C2C55' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7E69B'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
+              >
+                <span>Start Free Trial</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button 
+                className="group border-2 border-white text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#FFFFFF';
+                  e.currentTarget.style.color = '#1C2C55';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = '#FFFFFF';
+                }}
+              >
+                <Play className="w-5 h-5" />
+                <span>Watch Demo</span>
+              </button>
+            </div>
+
+            <div className="flex items-center space-x-8 text-white opacity-90">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-4 h-4" />
+                <span className="text-sm">14-day free trial</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-4 h-4" />
+                <span className="text-sm">No setup required</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-4 h-4" />
+                <span className="text-sm">Cancel anytime</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right side - Demo component */}
+          <div className={`transition-all duration-1000 delay-400 ${
+            visibleSections.has('hero') 
+              ? 'opacity-100 translate-x-0' 
+              : 'opacity-0 translate-x-8'
+          }`}>
+            <HeroDemo />
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section 
+        id="features"
+        data-animate-section
+        className={`py-32 bg-gray-50 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('features') 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className={`text-center mb-20 transition-all duration-1000 delay-200 ${
+            visibleSections.has('features') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}>
+            <h2 className="text-5xl font-bold mb-6 leading-tight tracking-tight" style={{ color: '#1C2C55' }}>
+              Seamless CRM Integration
+            </h2>
+            <p className="text-2xl font-light max-w-3xl mx-auto leading-relaxed" style={{ color: '#6B7280' }}>
               Connect instantly. Sync automatically.
             </p>
             <div className={`group cursor-pointer transition-all duration-800 delay-500 ${
@@ -431,6 +536,13 @@ interface HomepageProps {
         setSelectedUsers={setSelectedUsers}
         openModal={openModal}
       />
+
+      {/* Custom Solutions Section */}
+      <section 
+        id="custom-solutions"
+        data-animate-section
+        className={`py-32 bg-gray-50 relative z-10 transition-all duration-1000 ${
+          visibleSections.has('custom-solutions') 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
         }`}
@@ -747,3 +859,5 @@ interface HomepageProps {
     </div>
   );
 };
+
+export default Homepage;
