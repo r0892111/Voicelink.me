@@ -140,9 +140,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-16 relative z-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+      <section id="features" className="py-16 relative z-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="text-center mb-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <h2 className="text-5xl font-bold mb-6 tracking-tight" style={{ color: '#1C2C55' }}>
               CRM Integrations
             </h2>
@@ -152,7 +152,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* CRM Logos */}
-          <div className="flex justify-center items-center space-x-16 mb-12 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="flex justify-center items-center space-x-16 mb-12">
             <div className="group cursor-pointer animate-scale-in" style={{ animationDelay: '0.5s' }}>
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
@@ -166,7 +166,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </div>
             </div>
             
-            <div className="group cursor-pointer animate-scale-in" style={{ animationDelay: '0.6s' }}>
+            <div className="group cursor-pointer animate-scale-in" style={{ animationDelay: '0.7s' }}>
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/Pipedrive_id-7ejZnwv_0.svg" 
@@ -179,7 +179,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </div>
             </div>
             
-            <div className="group cursor-pointer animate-scale-in" style={{ animationDelay: '0.7s' }}>
+            <div className="group cursor-pointer animate-scale-in" style={{ animationDelay: '0.9s' }}>
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/odoo_logo.svg" 
@@ -194,9 +194,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* Feature list */}
-          <div className="text-center mb-12 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+          <div className="text-center mb-12">
             <div className="flex justify-center space-x-8 mb-8">
-              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
+              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '1.1s' }}>
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -207,7 +207,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">One-click setup</div>
               </div>
               
-              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '1.0s' }}>
+              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '1.3s' }}>
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <div className="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -218,7 +218,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">Real-time sync</div>
               </div>
               
-              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '1.1s' }}>
+              <div className="group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-300 hover:bg-gray-50 animate-fade-in-up" style={{ animationDelay: '1.5s' }}>
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <div className="w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -232,7 +232,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* More integrations coming */}
-          <div className="text-center animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
+          <div className="text-center animate-fade-in-up" style={{ animationDelay: '1.7s' }}>
             <div className="max-w-3xl mx-auto">
               <p className="text-lg text-gray-600 mb-4">
                 We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.
