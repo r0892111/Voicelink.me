@@ -33,11 +33,11 @@ const CookiePolicy: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-8">
-                We, Finit Solutions, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1020.600.643 (RPR Leuven) (hereinafter "Finit Solutions", "we" or "us"), wish to inform visitors of our platform through this cookie statement about which cookies and/or similar technologies are used on our platform, why we use them, and how you can delete or disable cookies.
+                We, Finit Solutions, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1020.600.643 (RPR Leuven) (hereinafter "Finit Solutions", "we" or "us"), wish to inform visitors to our platform through this cookie statement about which cookies and/or similar technologies are used on our platform, why we do so and how you can delete or disable cookies.
               </p>
 
               <p className="leading-relaxed mb-8">
-                This cookie statement may be updated by us if new developments give cause to do so. The most current version of the cookie statement can always be found on our platform.
+                This cookie statement may be amended by us if new developments give cause to do so. You can always find the most current version of the cookie statement on our platform.
               </p>
             </div>
 
@@ -45,7 +45,7 @@ const CookiePolicy: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">What is a cookie?</h3>
 
               <p className="leading-relaxed mb-6">
-                A cookie is generally a small text and number file that we send and store in your web browser or on your mobile device during a visit to our platform. When you next visit our platform with the same web browser or device, this information is sent back to our platform. Cookies help us to, for example, remember your preferences when using our platform (e.g. your language choice), unless you have adjusted your browser settings to refuse such cookies.
+                A cookie is, in general, a small text and number file that we send and store in your web browser or on your mobile device during a visit to our platform. When you next visit our platform with the same web browser or the same device, this information is sent back to our platform. Cookies help us, for example, to remember your preferences when using our platform (e.g. your language choice), unless you have adjusted your browser settings so that it will refuse those cookies.
               </p>
             </div>
 
@@ -53,27 +53,27 @@ const CookiePolicy: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Types of cookies</h3>
 
               <p className="leading-relaxed mb-4">
-                Cookies can be divided according to their origin:
+                There are different types of cookies. Cookies can be classified according to their origin:
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>First party cookies</strong> are technical cookies placed by us that ensure our platform functions properly. This improves the quality of our products and services.
+                <strong>First party cookies</strong> are technical cookies that are placed by us and that ensure that our platform functions properly. This increases the quality of our products and services.
               </p>
 
               <p className="leading-relaxed mb-6">
-                <strong>Third party cookies</strong> are cookies placed by a domain name other than that of our platform. If a user visits a website and a third party places a cookie via that website, that is a third party cookie. For cookies placed by third parties, we refer you to the statements these parties provide on their respective websites. Please note: we have no influence on the content of these statements or the content of the cookies of such third parties.
+                <strong>Third party cookies</strong> are cookies that are placed by a domain name other than that of our platform. If a user visits a website and a third party places a cookie via that website, then that is a third party cookie. For cookies placed by third parties, we kindly refer you to the statements that these parties provide on their respective websites. Please note: we cannot exert any influence on the content of those statements nor on the content of the cookies of these third parties.
               </p>
 
               <p className="leading-relaxed mb-4">
-                Cookies can also be categorized by function:
+                Cookies can also be divided according to function, including:
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Essential or strictly necessary cookies</strong> are (as the name suggests) necessary to enable the platform to function properly or to provide a service you request, e.g. to establish a particular connection. We may place these cookies without your prior consent.
+                <strong>Essential or strictly necessary cookies</strong> are (as their name indicates) necessary to enable the platform to function properly or to provide a service requested by you, e.g. by establishing a specific connection. We may place these cookies without your prior consent;
               </p>
 
-              <p className="leading-relaxed mb-4">
-                <strong>Non-essential cookies</strong> are cookies that may be placed for statistical, social, targeting and commercial purposes. They are not related to the purely technical support of the platform. Non-essential cookies may be first party or third party cookies and may only be placed and used by us if you have given your prior consent via the cookie banner.
+              <p className="leading-relaxed mb-6">
+                <strong>Non-essential cookies</strong> are cookies that may be placed for statistical, social, targeting and commercial purposes. They are not related to the purely technical support of the platform. Non-essential cookies can be first party or third party cookies and may only be placed and used by us insofar as you have given us your prior consent via the cookie banner.
               </p>
 
               <p className="leading-relaxed mb-4">
@@ -85,19 +85,19 @@ const CookiePolicy: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Statistical cookies</strong> allow us to determine which pages of the platform you visit, where your computer is located, etc.
+                <strong>Cookies for statistical purposes</strong> allow, among other things, to determine which pages of the platform you visit, where your computer is located, etc.
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Social cookies</strong> enable users to directly share the content of the platform visited with others via social media.
+                <strong>Cookies for social purposes</strong> make it possible for the user to directly share the content of the visited platform with others via social media.
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Targeting cookies</strong> allow a profile to be built based on your browsing behavior so that displayed ads are tailored to your interests.
+                <strong>Cookies for targeting purposes</strong> allow a profile to be built based on your browsing behavior so that the displayed advertisements are tailored to your interests.
               </p>
 
               <p className="leading-relaxed mb-6">
-                <strong>Tracking cookies</strong> allow your internet behavior to be followed over time.
+                <strong>Cookies for tracking purposes</strong> allow your internet behavior to be followed over time.
               </p>
 
               <p className="leading-relaxed mb-4">
@@ -105,7 +105,7 @@ const CookiePolicy: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Persistent cookies:</strong> These cookies remain on the user's device for the duration specified in the cookie. They are activated each time the user visits the platform that placed that cookie. Most non-essential cookies are persistent cookies.
+                <strong>Fixed-duration cookies:</strong> These cookies remain on the user's device for the duration determined in the cookie. They are activated each time the user visits the platform that placed this cookie. Most non-essential cookies are fixed-duration cookies.
               </p>
 
               <p className="leading-relaxed mb-6">
@@ -145,7 +145,7 @@ const CookiePolicy: React.FC = () => {
               </div>
 
               <p className="leading-relaxed mb-6">
-                Please read our privacy statement ([HYPERLINK]) to learn more about how we process and protect personal data, how long we retain them, and what privacy rights you have.
+                Please read our privacy statement ([HYPERLINK]) to learn about how we process personal data, how we secure them, how long we retain them and what privacy rights you have.
               </p>
             </div>
 
@@ -153,11 +153,11 @@ const CookiePolicy: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Accepting cookies</h3>
 
               <p className="leading-relaxed mb-4">
-                On your first visit to our platform, a cookie banner appears. Through this banner, we inform you about which cookies we use and ask whether we may use certain cookies. You are free to agree or not.
+                On your first visit to our platform, a cookie banner appears. By means of this cookie banner, we inform you about which cookies we use, and we ask you whether we may use certain cookies. You are free to agree to this or not.
               </p>
 
               <p className="leading-relaxed mb-6">
-                Please note that some functionalities of our platform may not work or may not work fully if not all cookies are accepted.
+                Please note that some functionalities on our platform may not work or may not work fully if not all cookies are accepted.
               </p>
             </div>
 
@@ -165,7 +165,7 @@ const CookiePolicy: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Managing cookies (deleting or disabling)</h3>
 
               <p className="leading-relaxed mb-4">
-                If you do not want websites to place cookies on your computer, or if you wish to delete your cookies, you can change your cookie settings in your web browser.
+                If you do not want websites to place cookies on your computer or if you wish to delete your cookies, you can change your cookie settings in your web browser.
               </p>
 
               <p className="leading-relaxed mb-4">
@@ -173,14 +173,11 @@ const CookiePolicy: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-4">
-                To better understand these settings, the following links may be useful. Otherwise, consult the 'Help' function in your web browser for more details.
+                To better understand these settings, the following links may be useful. If not, you should consult the 'Help' function in your web browser for more details.
               </p>
 
               <p className="leading-relaxed mb-4">
-                Useful information about cookies can be found at:
-              </p>
-
-              <p className="leading-relaxed mb-4">
+                Useful information about cookies can be found at:{' '}
                 <a
                   href="http://www.allaboutcookies.org/"
                   className="text-blue-600 hover:underline"
@@ -188,10 +185,8 @@ const CookiePolicy: React.FC = () => {
                   rel="noopener noreferrer"
                 >
                   http://www.allaboutcookies.org/
-                </a>
-              </p>
-
-              <p className="leading-relaxed mb-6">
+                </a>{' '}
+                and{' '}
                 <a
                   href="http://www.youronlinechoices.com/be-nl/"
                   className="text-blue-600 hover:underline"
@@ -200,6 +195,7 @@ const CookiePolicy: React.FC = () => {
                 >
                   http://www.youronlinechoices.com/be-nl/
                 </a>
+                .
               </p>
             </div>
 
@@ -213,39 +209,82 @@ const CookiePolicy: React.FC = () => {
               <p className="leading-relaxed mb-4">You have the following rights:</p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Right of access (Article 15 GDPR):</strong> You have the right to know at any time whether or not we process your personal data. If we do, you have the right to access them and to receive additional information about the purposes, categories of data, recipients, retention period, existence of rights, right to lodge a complaint, source of the data (if obtained from third parties), and the existence of automated decision-making. If we cannot provide access (e.g. due to legal obligations), we will inform you why. You may also obtain a free copy of the processed personal data in an intelligible form (we may charge a reasonable fee for administrative costs for additional copies).
+                <strong>The right of access to the personal data that we process about you (Art. 15 GDPR):</strong><br />
+                You have the right to know from us at any time whether or not we process your personal data. If we process them, then you have the right to access these personal data and to receive additional information regarding:
+              </p>
+
+              <ul className="list-disc list-inside mb-6 ml-4 space-y-1">
+                <li>the purposes of the processing;</li>
+                <li>the categories of personal data concerned;</li>
+                <li>the recipients or categories of recipients (in particular recipients in third countries);</li>
+                <li>the retention period or, if that is not possible, the criteria used to determine that period;</li>
+                <li>the existence of your privacy rights;</li>
+                <li>the right to lodge a complaint with the supervisory authority;</li>
+                <li>the source of the personal data if we obtain personal data via a third party;</li>
+                <li>the existence of automated decision-making.</li>
+              </ul>
+
+              <p className="leading-relaxed mb-6">
+                If we cannot give you access to your personal data (for example due to legal obligations), we will inform you why that is not possible.
+                You can also obtain a free copy of the processed personal data in an intelligible form. Please note, we may charge a reasonable fee to cover our administrative costs for each additional copy you request.
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Right to erasure ("right to be forgotten") (Article 17 GDPR):</strong> You may request erasure of your personal data in certain cases. This right is not absolute; we may retain personal data if necessary for the performance of the contract, compliance with a legal obligation, or the establishment, exercise, or defense of legal claims.
+                <strong>Right to erasure ('right to be forgotten') (Art. 17 GDPR):</strong><br />
+                In certain cases, you can ask us to erase your personal data. Please also note that your right to be forgotten is not absolute. We have the right to continue to retain your personal data where this is necessary for, among other things, the performance of the contract, compliance with a legal obligation or the establishment, exercise or defense of legal claims. We will inform you further about this in our response to your request.
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Right to rectification (Article 16 GDPR):</strong> If your personal data are inaccurate, outdated or incomplete, you may request us to correct or complete them.
+                <strong>The right to rectification and completion (Art. 16 GDPR):</strong><br />
+                When your personal data are incorrect, outdated or incomplete, you can ask us to rectify these inaccuracies or incompleteness.
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Right to data portability (Article 20 GDPR):</strong> Under certain conditions, you have the right to have the personal data you provided to us transferred to another controller, or to receive them yourself. Where technically feasible, we will transfer them directly to the new controller.
+                <strong>The right to data portability (Art. 20 GDPR):</strong><br />
+                You also have the right, under certain conditions, to have the personal data that you have provided to us for the performance of the contract or for which you have given consent, transferred by us to another controller. Insofar as technically possible, we will provide your personal data directly to the new controller.
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Right to restriction of processing (Article 18 GDPR):</strong> You may request restriction of processing if (i) you contest the accuracy of the data, (ii) the processing is unlawful, (iii) we no longer need the data but you require them for legal claims, or (iv) a decision is pending on your objection to processing.
+                <strong>The right to restriction of processing (Art. 18 GDPR):</strong><br />
+                If one of the following elements applies, you can ask us to restrict the processing of your personal data:
+              </p>
+
+              <ul className="list-disc list-inside mb-6 ml-4 space-y-1">
+                <li>you contest the accuracy of those personal data (in this case, their use will be restricted for a period enabling us to verify the accuracy of the personal data);</li>
+                <li>the processing of your personal data is unlawful;</li>
+                <li>we no longer need your personal data for the original processing purposes, but you need them for the establishment, exercise or defense of legal claims;</li>
+                <li>as long as no decision has been taken on the exercise of your right to object to the processing, you can request restriction of the use of your personal data.</li>
+              </ul>
+
+              <p className="leading-relaxed mb-4">
+                <strong>The right to object (Art. 21 GDPR):</strong><br />
+                On grounds relating to your particular situation, you can object to the processing of your personal data if this processing is based on our legitimate interest or the performance of a task carried out in the public interest. In that case, we will cease the processing of your personal data, unless we can demonstrate compelling and legitimate grounds for the processing which override yours, or where the processing of the personal data is related to the establishment, exercise or defense of legal claims.
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Right to object (Article 21 GDPR):</strong> You may object to processing of your personal data on grounds relating to your particular situation, if the processing is based on legitimate interest or on a task carried out in the public interest. We will cease processing unless we demonstrate compelling legitimate grounds, or the processing is related to legal claims.
+                <strong>The right not to be subject to automated decision-making (Article 22 GDPR):</strong><br />
+                You have the right not to be subject to a decision that is made solely on the basis of automated data processing and that significantly affects you or has legal consequences and that is taken without substantial human intervention.
               </p>
 
               <p className="leading-relaxed mb-4">
-                <strong>Right not to be subject to automated decision-making (Article 22 GDPR):</strong> You have the right not to be subject to a decision based solely on automated processing (including profiling) that significantly affects you or produces legal effects, without substantial human involvement. Exceptions apply if permitted by law, based on explicit consent, or necessary for contract performance (always assessed case by case).
+                In three situations you cannot rely on this right:
               </p>
 
+              <ul className="list-disc list-inside mb-6 ml-4 space-y-1">
+                <li>if a law permits this (for example to prevent tax fraud);</li>
+                <li>if the decision-making is based on the explicit consent of the data subject; or</li>
+                <li>if this is necessary for entering into, or the performance of, a contract (note that in such cases we will always assess on a case-by-case basis whether there are less privacy-intrusive methods to conclude or perform the contract).</li>
+              </ul>
+
               <p className="leading-relaxed mb-4">
-                <strong>Right to withdraw consent (Article 7 GDPR):</strong> Where processing is based on consent, you may withdraw that consent at any time by simple request.
+                <strong>The right to withdraw your consent (Art. 7 GDPR):</strong><br />
+                Where your personal data are processed on the basis of your consent, you can withdraw this consent at any time upon simple request.
               </p>
 
               <p className="leading-relaxed mb-6">
-                <strong>Right to lodge a complaint (Article 77(1) GDPR):</strong> You may lodge a complaint with the supervisory authority for data protection. A list of EU supervisory authorities is available here:{' '}
+                <strong>The right to lodge a complaint with the supervisory authority (Art. 77(1) GDPR):</strong><br />
+                We do our utmost to protect your personal data. If you have a complaint about the way we process your personal data, you can notify us via our contact details as stated under the heading "Questions?", so that we can address it as quickly as possible.
+                You can also lodge a complaint with the supervisory authority for data protection. A list of the supervisory authorities within the European Union can be consulted via the following hyperlink:{' '}
                 <a
                   href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl"
                   className="text-blue-600 hover:underline"
@@ -253,7 +292,8 @@ const CookiePolicy: React.FC = () => {
                   rel="noopener noreferrer"
                 >
                   https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl
-                </a>.
+                </a>
+                .
               </p>
             </div>
 
@@ -261,11 +301,11 @@ const CookiePolicy: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Exercising your rights</h3>
 
               <p className="leading-relaxed mb-4">
-                To exercise these rights, you can contact us via the contact details under "Questions?". To verify your identity, we may ask you to send us a copy of the front of your identity card. We request that you make your national register number and photo illegible. In any case, we will process such ID data solely to verify your identity and will not store or register them in our systems.
+                To exercise these rights, you can contact us via the contact details included under the heading "Questions?". To verify your identity, we ask you to send a copy of the front of your identity card. We ask you to make your national register number and photograph on your identity card illegible. In any case, we will process your identity card data solely to verify your identity and will neither store nor register them in our systems.
               </p>
 
               <p className="leading-relaxed mb-6">
-                You may exercise all these rights free of charge, unless your request is manifestly unfounded or excessive (e.g. repetitive). In such case, we are entitled to charge a reasonable fee or to refuse your request.
+                You can exercise all these rights free of charge, unless your request is manifestly unfounded or excessive (for example due to its repetitive character). In that case, we have the right to charge you a reasonable fee or to refuse to comply with your request.
               </p>
             </div>
 
@@ -298,7 +338,7 @@ const CookiePolicy: React.FC = () => {
                 </div>
               </div>
 
-              {/* Optional: Language note */}
+              {/* Language note */}
               <div className="text-sm text-gray-600">
                 <strong>Language of the Cookie Statement —</strong> The Dutch version of this Cookie Statement shall at all times be the binding and official version. Any translations are provided for convenience only. You may request a copy of the official Dutch version by contacting us at{' '}
                 <a href="mailto:contact@finitsolutions.be" className="text-blue-600 hover:underline">
