@@ -245,6 +245,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           <div className="grid lg:grid-cols-[2fr_1fr] gap-16 items-start mb-20">
             {/* Left Side - Animated Use Cases */}
             <div className="space-y-8">
+             <div className="text-center lg:text-left mb-8">
+               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Here are two examples:</h3>
+               <p className="text-gray-600">VoiceLink adapts to any industry or workflow that needs voice-to-data conversion.</p>
+             </div>
+             
               <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
