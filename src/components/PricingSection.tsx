@@ -173,7 +173,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
             </p>
             <p className="text-sm text-gray-500">
-              Total: €{pricing.price.toFixed(2)}/{billingPeriod}
+              Total: €{(billingPeriod === 'yearly' ? pricing.price * 12 : pricing.price).toFixed(2)}/{billingPeriod}
             </p>
             {pricing.savings > 0 && (
               <p className="text-green-600 font-medium mt-2">
