@@ -756,4 +756,4 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       </footer>
     </div>
   );
-};
+};}
