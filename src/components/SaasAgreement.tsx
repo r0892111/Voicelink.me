@@ -1,7 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-"use client";
-
-import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
 export default function SaasAgreementPage() {
@@ -11,32 +8,17 @@ export default function SaasAgreementPage() {
         <div className="container relative mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             {/* Badge */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary mb-6"
-            >
+            <p className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-600 mb-6">
               <span>Software as a Service Agreement</span>
               <ChevronRight className="h-4 w-4 ml-1" />
-            </motion.p>
+            </p>
 
             {/* Title */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl font-bold mb-2"
-            >
+            <h1 className="text-4xl font-bold mb-2">
               SOFTWARE AS A SERVICE AGREEMENT
-            </motion.h1>
+            </h1>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="prose prose-lg dark:prose-invert max-w-none"
-            >
+            <div className="prose prose-lg dark:prose-invert max-w-none">
               {/* BETWEEN */}
               <h2 className="text-2xl font-semibold mt-8 mb-4" id="between">
                 BETWEEN:
@@ -150,7 +132,7 @@ export default function SaasAgreementPage() {
               <p>
                 This Agreement and its Annexes will be delivered to the Customer prior to the completion of the order. 
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
