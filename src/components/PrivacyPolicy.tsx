@@ -357,7 +357,7 @@ const PrivacyPolicy: React.FC = () => {
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Cookies</h3>
           
           <p className="leading-relaxed mb-6">
-            We also use cookies, mainly to continuously optimize our platform for users. For more specific information about the cookies we use, you can consult our cookie statement: [HYPERLINK].
+            We also use cookies, mainly to continuously optimize our platform for users. For more specific information about the cookies we use, you can consult our cookie statement: <a href="/cookie-policy" className="text-blue-600 hover:underline">Cookie Policy</a>.
           </p>
         </div>
 
