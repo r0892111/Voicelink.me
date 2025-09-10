@@ -44,7 +44,7 @@ export const SubscriptionDashboard: React.FC = () => {
       </div>
 
       <div className="relative z-10 pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-6 space-y-12">
+        <div className="max-w-7xl mx-auto px-6 space-y-12 pt-8">
           {/* Premium Hero Section */}
           <section className="text-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <div className="relative inline-block mb-6">
@@ -54,7 +54,7 @@ export const SubscriptionDashboard: React.FC = () => {
                 </div>
                 <div className="text-left">
                   <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                    Welcome back, {user?.user_info.first_name|| 'Premium User'}!
+                    Welcome back, {user?.user_info?.first_name || 'Premium User'}!
                   </h1>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
                     Your VoiceLink Pro subscription is active
