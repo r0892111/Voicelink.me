@@ -49,7 +49,7 @@ const PricingCalculator: React.FC = () => {
     if (users >= 10 && users <= 24) return { tier: 'Business', pricePerUser: 24.00, discount: 20 };
     if (users >= 25 && users <= 49) return { tier: 'Growth', pricePerUser: 21.00, discount: 30 };
     if (users >= 50 && users <= 99) return { tier: 'Scale', pricePerUser: 18.00, discount: 40 };
-    return { tier: 'Enterprise', pricePerUser: 15.00, discount: 50 }; // 100+ users
+    return { tier: 'Enterprise', pricePerUser: 15.00, discount: 50+ }; // 100+ users
   };
   
   const tierInfo = getTierInfo(userCount);
