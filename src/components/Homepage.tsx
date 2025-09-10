@@ -556,7 +556,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             Ready to Transform Your Workflow?
           </h2>
           <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
-            Join hundreds of teams already using WhatsApp voice notes to streamline their CRM processes. 
+            Transform your CRM workflow with WhatsApp voice notes that automatically sync to your system. 
             Connect your WhatsApp and start your free trial today.
           </p>
           
