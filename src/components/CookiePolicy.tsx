@@ -17,7 +17,7 @@ const CookiePolicy: React.FC = () => {
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Home</span>
           </button>
-          
+
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Cookie Statement</h1>
             <p className="text-sm text-gray-600">Version 20.08.2025</p>
@@ -31,7 +31,7 @@ const CookiePolicy: React.FC = () => {
               <p className="text-lg leading-relaxed mb-6">
                 Thank you for visiting our platform!
               </p>
-              
+
               <p className="leading-relaxed mb-8">
                 We, Finit Solutions, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1020.600.643 (RPR Leuven) (hereinafter "Finit Solutions", "we" or "us"), wish to inform visitors of our platform through this cookie statement about which cookies and/or similar technologies are used on our platform, why we use them, and how you can delete or disable cookies.
               </p>
@@ -43,7 +43,7 @@ const CookiePolicy: React.FC = () => {
 
             <div className="mb-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">What is a cookie?</h3>
-              
+
               <p className="leading-relaxed mb-6">
                 A cookie is generally a small text and number file that we send and store in your web browser or on your mobile device during a visit to our platform. When you next visit our platform with the same web browser or device, this information is sent back to our platform. Cookies help us to, for example, remember your preferences when using our platform (e.g. your language choice), unless you have adjusted your browser settings to refuse such cookies.
               </p>
@@ -51,7 +51,7 @@ const CookiePolicy: React.FC = () => {
 
             <div className="mb-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Types of cookies</h3>
-              
+
               <p className="leading-relaxed mb-4">
                 Cookies can be divided according to their origin:
               </p>
@@ -115,7 +115,7 @@ const CookiePolicy: React.FC = () => {
 
             <div className="mb-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Information about the use of cookies on our platform</h3>
-              
+
               <p className="leading-relaxed mb-6">
                 When you use the platform, the following cookies are used:
               </p>
@@ -151,7 +151,7 @@ const CookiePolicy: React.FC = () => {
 
             <div className="mb-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Accepting cookies</h3>
-              
+
               <p className="leading-relaxed mb-4">
                 On your first visit to our platform, a cookie banner appears. Through this banner, we inform you about which cookies we use and ask whether we may use certain cookies. You are free to agree or not.
               </p>
@@ -163,7 +163,7 @@ const CookiePolicy: React.FC = () => {
 
             <div className="mb-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Managing cookies (deleting or disabling)</h3>
-              
+
               <p className="leading-relaxed mb-4">
                 If you do not want websites to place cookies on your computer, or if you wish to delete your cookies, you can change your cookie settings in your web browser.
               </p>
@@ -181,13 +181,23 @@ const CookiePolicy: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-4">
-                <a href="http://www.allaboutcookies.org/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="http://www.allaboutcookies.org/"
+                  className="text-blue-600 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   http://www.allaboutcookies.org/
                 </a>
               </p>
 
               <p className="leading-relaxed mb-6">
-                <a href="http://www.youronlinechoices.com/be-nl/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="http://www.youronlinechoices.com/be-nl/"
+                  className="text-blue-600 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   http://www.youronlinechoices.com/be-nl/
                 </a>
               </p>
@@ -195,14 +205,12 @@ const CookiePolicy: React.FC = () => {
 
             <div className="mb-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Your rights</h3>
-              
+
               <p className="leading-relaxed mb-6">
                 To give you more control over the processing of your personal data, you have a number of rights. These rights are, among others, laid down in Articles 15-22 GDPR.
               </p>
 
-              <p className="leading-relaxed mb-4">
-                You have the following rights:
-              </p>
+              <p className="leading-relaxed mb-4">You have the following rights:</p>
 
               <p className="leading-relaxed mb-4">
                 <strong>Right of access (Article 15 GDPR):</strong> You have the right to know at any time whether or not we process your personal data. If we do, you have the right to access them and to receive additional information about the purposes, categories of data, recipients, retention period, existence of rights, right to lodge a complaint, source of the data (if obtained from third parties), and the existence of automated decision-making. If we cannot provide access (e.g. due to legal obligations), we will inform you why. You may also obtain a free copy of the processed personal data in an intelligible form (we may charge a reasonable fee for administrative costs for additional copies).
@@ -237,13 +245,21 @@ const CookiePolicy: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-6">
-                <strong>Right to lodge a complaint (Article 77(1) GDPR):</strong> You may lodge a complaint with the supervisory authority for data protection. A list of EU supervisory authorities is available here: <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl" className=\"text-blue-600 hover:underline" target=\"_blank" rel="noopener noreferrer">https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl</a>.
+                <strong>Right to lodge a complaint (Article 77(1) GDPR):</strong> You may lodge a complaint with the supervisory authority for data protection. A list of EU supervisory authorities is available here:{' '}
+                <a
+                  href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl"
+                  className="text-blue-600 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  https://www.edpb.europa.eu/about-edpb/about-edpb/members_nl
+                </a>.
               </p>
             </div>
 
             <div className="mb-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Exercising your rights</h3>
-              
+
               <p className="leading-relaxed mb-4">
                 To exercise these rights, you can contact us via the contact details under "Questions?". To verify your identity, we may ask you to send us a copy of the front of your identity card. We request that you make your national register number and photo illegible. In any case, we will process such ID data solely to verify your identity and will not store or register them in our systems.
               </p>
@@ -255,7 +271,7 @@ const CookiePolicy: React.FC = () => {
 
             <div className="mb-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Questions?</h3>
-              
+
               <p className="leading-relaxed mb-4">
                 You can always contact us via the following contact details:
               </p>
@@ -280,6 +296,14 @@ const CookiePolicy: React.FC = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Optional: Language note */}
+              <div className="text-sm text-gray-600">
+                <strong>Language of the Cookie Statement —</strong> The Dutch version of this Cookie Statement shall at all times be the binding and official version. Any translations are provided for convenience only. You may request a copy of the official Dutch version by contacting us at{' '}
+                <a href="mailto:contact@finitsolutions.be" className="text-blue-600 hover:underline">
+                  contact@finitsolutions.be
+                </a>.
               </div>
             </div>
           </div>
