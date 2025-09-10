@@ -456,6 +456,66 @@ export default function SaasAgreementPage() {
                     FINIT SOLUTIONS's agents shall not be liable under this Agreement, and any claim for breach of the Agreement by FINIT SOLUTIONS or its agents shall be brought directly against FINIT SOLUTIONS.
                   </p>
                 </div>
+                {/* Article 8 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  8. Confidential Information
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    The Parties undertake to treat the Confidential Information of the other Party as confidential and to protect it with measures that they apply to their own confidential information, but in no case with less protection than commercially reasonable measures. Neither Party shall disclose the Confidential Information it has obtained in the context of the performance of this Agreement to third parties (except for its employees, independent service providers, (legal) advisors, and directors) without the prior written consent of the other Party. Both Parties undertake to limit access to the other Party's Confidential Information to those persons who reasonably need to have access to the other Party's Confidential Information and also undertake to take the necessary steps to ensure that those persons undertake not to disclose the other Party's Confidential Information to third parties.
+                  </p>
+                  
+                  <p>
+                    However, the foregoing confidentiality obligation shall not apply to information:
+                  </p>
+                  
+                  <div className="ml-6 space-y-3">
+                    <p>
+                      <strong>a)</strong> that was in the public domain before it was transferred to a Party, or after such transfer, without negligence or fault on its part; or
+                    </p>
+                    
+                    <p>
+                      <strong>b)</strong> which was lawfully received from a third party without any restriction, in the absence of any breach of this Agreement; or
+                    </p>
+                    
+                    <p>
+                      <strong>c)</strong> that was independently and in good faith developed by a Party's employees who did not have access to the aforementioned Confidential Information; or
+                    </p>
+                    
+                    <p>
+                      <strong>d)</strong> that must be disclosed to comply with mandatory legal requirements, a court or official order or decree, provided that timely written prior notice of such legal action is given to the disclosing Party (unless prohibited by law) to enable the disclosing Party to seek appropriate legal remedy. If no appropriate legal remedy is available before or on the date the receiving Party is required to comply with the request, the disclosing Party shall be entitled to disclose that portion of the Confidential Information that it determines it is legally required to disclose.
+                    </p>
+                  </div>
+                  
+                  <p>
+                    The receiving Party may not disclose Confidential Information consisting of a combination of information solely because one or more elements of the information fall under the above exceptions, if the combination itself does not.
+                  </p>
+                  
+                  <p>
+                    The obligations set forth in this article of the Agreement shall remain in effect throughout the term of this Agreement and for a period of five (5) years after its termination.
+                  </p>
+                </div>
+
+                {/* Article 9 */}
+                <h3 className="text-lg font-semibold mt-8 mb-4 underline">
+                  9. Intellectual Property Rights
+                </h3>
+                
+                <div className="space-y-4">
+                  <p>
+                    All IP owned by a Party prior to the entry into force of this Agreement or created by a Party outside the scope of this Agreement (without using Confidential Information) shall remain the property of that Party. Neither Party shall be entitled to use the other Party's IP without permission. All IP relating to the Software and Services shall remain the exclusive property of FINIT SOLUTIONS and/or its licensors and shall not be transferred to the Customer and/or Users. The Customer and/or Users may not derive any rights from the Software and Services other than those expressly granted in this Agreement.
+                  </p>
+                  
+                  <p>
+                    All IP developed or otherwise created in the context of the Agreement shall be the exclusive property of FINIT SOLUTIONS from the moment of its creation. At the request of FINIT SOLUTIONS, the Customer shall, without additional compensation, assist FINIT SOLUTIONS with all appropriate and legal means to obtain, maintain, protect, and enforce its IP, including executing and issuing all instruments or affidavits that FINIT SOLUTIONS deems necessary to obtain, maintain, protect, and enforce such rights.
+                  </p>
+                  
+                  <p>
+                    The Customer hereby grants FINIT SOLUTIONS a worldwide, royalty-free, non-exclusive, perpetual, and irrevocable license to use, copy, modify, or otherwise exploit the Feedback for any purpose, including incorporating or implementing the Feedback into the Software and/or Services. The Customer agrees that FINIT SOLUTIONS may exploit all Feedback without any restriction or obligation due to intellectual, industrial or other (property) rights or otherwise. For the avoidance of doubt, Feedback shall not be considered Confidential Information of the Customer, and nothing in this Agreement shall limit FINIT SOLUTIONS' right to independently use, develop, evaluate or market products and services, whether or not the Feedback is incorporated therein or otherwise.
+                  </p>
+                </div>
+
                 {/* Contact Information */}
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <h4 className="font-semibold mb-2">Contact Information</h4>
