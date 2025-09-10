@@ -171,9 +171,64 @@ export const SubscriptionDashboard: React.FC = () => {
             </div>
           </section>
 
-          {/* WhatsApp Integration */}
+          {/* Getting Started Guide */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <WhatsAppVerification />
+            <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                  Ready to Get Started?
+                </h2>
+                <p className="text-xl" style={{ color: '#6B7280' }}>
+                  Follow these simple steps to start using VoiceLink
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8 mb-8">
+                {/* Step 1 */}
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                    Verify WhatsApp
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Connect your WhatsApp number to receive voice note confirmations
+                  </p>
+                </div>
+
+                {/* Step 2 */}
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                    Send Voice Note
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Record your thoughts naturally through WhatsApp voice messages
+                  </p>
+                </div>
+
+                {/* Step 3 */}
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                    Watch Magic Happen
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    AI processes your voice and syncs structured data to your CRM
+                  </p>
+                </div>
+              </div>
+
+              {/* WhatsApp Integration Embedded */}
+              <div className="border-t border-gray-200 pt-8">
+                <WhatsAppVerification />
+              </div>
+            </div>
           </section>
 
           {/* Odoo API Key Input - Only for Odoo users */}
@@ -244,74 +299,6 @@ export const SubscriptionDashboard: React.FC = () => {
                   <CheckCircle className="w-4 h-4 text-amber-500" />
                   <span className="text-xs text-amber-600 font-medium">24/7 Support</span>
                 </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Getting Started Guide */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                  Ready to Get Started?
-                </h2>
-                <p className="text-xl" style={{ color: '#6B7280' }}>
-                  Follow these simple steps to start using VoiceLink
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                {/* Step 1 */}
-                <div className="text-center">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                    Verify WhatsApp
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Connect your WhatsApp number to receive voice note confirmations
-                  </p>
-                </div>
-
-                {/* Step 2 */}
-                <div className="text-center">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                    Send Voice Note
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Record your thoughts naturally through WhatsApp voice messages
-                  </p>
-                </div>
-
-                {/* Step 3 */}
-                <div className="text-center">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                    Watch Magic Happen
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    AI processes your voice and syncs structured data to your CRM
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center mt-8">
-                <button
-                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2 mx-auto"
-                  style={{ backgroundColor: '#1C2C55' }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  <span>Start Sending Voice Notes</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
               </div>
             </div>
           </section>
