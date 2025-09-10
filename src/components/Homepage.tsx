@@ -130,34 +130,43 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           </div>
 
           {/* CRM Logos */}
-          <div className="flex justify-center items-center space-x-20 mb-16">
+          <div className="flex justify-center items-center space-x-16 mb-16">
             <div className="group cursor-pointer">
-              <div className="w-24 h-24 flex items-center justify-center bg-white rounded-3xl shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300 p-5">
+              <div className="w-20 h-20 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/Teamleader_Icon.svg" 
                   alt="TeamLeader" 
                   className="w-full h-full object-contain"
                 />
               </div>
+              <div className="text-center">
+                <div className="text-sm font-medium text-gray-900">TeamLeader</div>
+              </div>
             </div>
             
             <div className="group cursor-pointer">
-              <div className="w-24 h-24 flex items-center justify-center bg-white rounded-3xl shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300 p-5">
+              <div className="w-20 h-20 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/Pipedrive_id-7ejZnwv_0.svg" 
                   alt="Pipedrive" 
                   className="w-full h-full object-contain"
                 />
               </div>
+              <div className="text-center">
+                <div className="text-sm font-medium text-gray-900">Pipedrive</div>
+              </div>
             </div>
             
             <div className="group cursor-pointer">
-              <div className="w-24 h-24 flex items-center justify-center bg-white rounded-3xl shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300 p-5">
+              <div className="w-20 h-20 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/odoo_logo.svg" 
                   alt="Odoo" 
                   className="w-full h-full object-contain"
                 />
+              </div>
+              <div className="text-center">
+                <div className="text-sm font-medium text-gray-900">Odoo</div>
               </div>
             </div>
           </div>
@@ -171,15 +180,27 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </div>
           </div>
 
-          {/* Coming soon - minimal */}
+          {/* More integrations coming */}
           <div className="text-center">
-            <div className="inline-flex items-center space-x-3 px-6 py-3 bg-gray-50 rounded-full border border-gray-200">
+            <div className="inline-flex items-center space-x-3 px-6 py-3 bg-gray-50 rounded-full border border-gray-200 mb-6">
               <div className="flex space-x-1.5">
                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
               </div>
               <span className="text-sm font-medium text-gray-600">HubSpot, Salesforce, Zoho & more</span>
+            </div>
+            
+            <div className="max-w-2xl mx-auto">
+              <p className="text-gray-600 mb-4">
+                Don't see your CRM? We build custom integrations for any platform with an API.
+              </p>
+              <button className="inline-flex items-center space-x-2 px-6 py-3 bg-white border border-gray-300 rounded-full hover:border-gray-400 transition-colors">
+                <span className="text-sm font-medium text-gray-700">Request Custom Integration</span>
+                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
