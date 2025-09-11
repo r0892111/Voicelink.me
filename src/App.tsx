@@ -16,6 +16,7 @@ import { useAuth } from './hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ConsentProvider } from './contexts/ConsentContext';
 import { CookieBanner } from './components/CookieBanner';
+import { CookieSettingsModal } from './components/CookieSettingsModal';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -147,6 +148,9 @@ function App() {
         
         {/* Cookie Banner */}
         <CookieBanner />
+        
+        {/* Cookie Settings Modal - Always available */}
+        <CookieSettingsModal />
       </div>
     </ConsentProvider>
   );
