@@ -767,8 +767,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <a href="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</a>
               <button 
                 onClick={() => {
-                  // Dispatch custom event to open cookie settings
-                  window.dispatchEvent(new CustomEvent('openCookieSettings'));
+                  openSettings();
                 }}
                 className="hover:text-white transition-colors cursor-pointer"
               >
