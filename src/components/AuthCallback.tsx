@@ -14,7 +14,6 @@ export const AuthCallback: React.FC = () => {
 
   useEffect(() => {
     if (hasProcessedRef.current) return;
-    console.log('AuthCallback mounted with platform:', platform);
     handleCallback();
   }, [platform, navigate]);
 

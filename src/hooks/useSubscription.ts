@@ -45,7 +45,6 @@ export const useSubscription = () => {
       const result = await response.json();
 
       if (!result.success || !result.subscription) {
-        console.log('No subscription found:', result.message || result.error);
         setSubscription(null);
         return;
       }

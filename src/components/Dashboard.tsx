@@ -41,24 +41,6 @@ export const Dashboard: React.FC = () => {
   }
 
   // Show regular dashboard for users without subscription
-  // Show loading state while checking subscription
-  if (subscriptionLoading) {
-    return (
-      <div className="flex items-center justify-center py-16">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Show subscription dashboard if user has active subscription
-  if (hasActiveSubscription) {
-    return <SubscriptionDashboard />;
-  }
-
-  // Show regular dashboard for users without subscription
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
@@ -98,7 +80,6 @@ export const Dashboard: React.FC = () => {
         <UserInfoCard 
           platform={user.platform}
           userInfo={user.user_info}
-          email={user.email}
         />
       )}
 

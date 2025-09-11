@@ -15,7 +15,6 @@ export const SubscriptionDashboard: React.FC = () => {
   const fetchWhatsAppStatus = React.useCallback(async () => {
     if (!user || isFetchingRef.current) return;
 
-    console.log('🔄 Fetching WhatsApp status for user:', user.id);
     isFetchingRef.current = true;
     setLoadingWhatsApp(true);
     
@@ -37,11 +36,9 @@ export const SubscriptionDashboard: React.FC = () => {
       }
 
       if (data) {
-        console.log('✅ WhatsApp status fetched:', data.whatsapp_status);
         setWhatsappStatus(data.whatsapp_status || 'not_set');
       } else {
         // No data found, set default state
-        console.log('ℹ️ No WhatsApp data found, setting to not_set');
         setWhatsappStatus('not_set');
       }
     } catch (error) {

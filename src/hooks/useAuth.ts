@@ -26,11 +26,8 @@ export const useAuth = () => {
 
   const checkAuth = useCallback(async () => {
     if (isCheckingAuthRef.current) {
-      console.log('🔐 checkAuth already in progress, skipping');
       return;
     }
-    
-    console.log('🔐 checkAuth called');
     isCheckingAuthRef.current = true;
     
     try {

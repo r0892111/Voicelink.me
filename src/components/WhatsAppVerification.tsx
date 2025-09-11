@@ -155,9 +155,6 @@ export const WhatsAppVerification: React.FC = () => {
   };
 
   const verifyOTP = async () => {
-
-    console.log(user)
-
     if (!otpCode.trim() || otpCode.length !== 6) {
       setError('Please enter a valid 6-digit code');
       return;

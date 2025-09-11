@@ -1,4 +1,3 @@
-import { supabase } from '../lib/supabase';
 
 export interface AuthResult {
   success: boolean;

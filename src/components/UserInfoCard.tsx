@@ -4,10 +4,9 @@ import { User, Mail, Calendar, Building, Settings } from 'lucide-react';
 interface UserInfoCardProps {
   platform: 'teamleader' | 'pipedrive' | 'odoo';
   userInfo: any;
-  email: string;
 }
 
-export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo, email }) => {
+export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo }) => {
   const renderTeamleaderInfo = () => {
     const user = userInfo?.user || {};
     const account = userInfo?.account || {};
