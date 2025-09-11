@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Key, Save, Check, AlertCircle, Loader2, Database } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import { supabase } from '../lib/supabase';
 
 export const OdooApiKeyInput: React.FC = () => {
   const { user } = useAuth();

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { supabase } from '../lib/supabase';
 
 interface AuthUser {
   id: string;
@@ -9,14 +9,10 @@ interface AuthUser {
   user_info: any;
 }
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
-
 export const useAuth = () => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const isCheckingAuthRef = useRef(false);
 
   const setUserPlatformStorage = (platform: string | null) => {
     if (platform) {
@@ -28,21 +24,15 @@ export const useAuth = () => {
     }
   };
 
-  useEffect(() => {
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event) => {
-        if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
-          checkAuth();
-        }
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
+    if (isCheckingAuthRef.current) {
+      console.log('🔐 checkAuth already in progress, skipping');
+      return;
+    }
+    
+    console.log('🔐 checkAuth called');
+    isCheckingAuthRef.current = true;
+    
     try {
       const { data: { session } } = await supabase.auth.getSession();
 
@@ -61,7 +51,7 @@ export const useAuth = () => {
         // Only query the platform-specific table
         const { data: userData } = await supabase
           .from(`${platform}_users`)
-          .select('*')
+          .select('id, user_info')
           .eq('user_id', userId)
           .is('deleted_at', null)
           .single();
@@ -69,12 +59,12 @@ export const useAuth = () => {
         if (userData) {
           setUserPlatformStorage(platform);
 
-          const userName = getUserName(platform, userData.user_info);
+          const userName = getUserName(platform as AuthUser['platform'], userData.user_info);
           setUser({
             id: userId,
             email: session.user.email || '',
             name: userName,
-            platform: platform as 'teamleader' | 'pipedrive' | 'odoo',
+            platform: platform as AuthUser['platform'],
             user_info: userData.user_info,
           });
 
@@ -89,7 +79,7 @@ export const useAuth = () => {
       for (const platformName of platforms) {
         const { data: userData } = await supabase
           .from(`${platformName}_users`)
-          .select('*')
+          .select('id, user_info')
           .eq('user_id', userId)
           .is('deleted_at', null)
           .single();
@@ -120,8 +110,23 @@ export const useAuth = () => {
       setUserPlatformStorage(null);
     } finally {
       setLoading(false);
+      isCheckingAuthRef.current = false;
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    checkAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event) => {
+        if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+          checkAuth();
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, [checkAuth]);
 
   const getUserName = (platform: AuthUser['platform'], userInfo: any) => {
     switch (platform) {

@@ -1,73 +1,62 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, BarChart3, Headphones, ArrowRight } from 'lucide-react';
-import { UserInfoCard } from './UserInfoCard';
+import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail } from 'lucide-react';
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import { supabase } from '../lib/supabase';
 
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
+  const isFetchingRef = React.useRef(false);
 
   // Fetch WhatsApp status
-  React.useEffect(() => {
-    const fetchWhatsAppStatus = async () => {
-      if (!user) return;
+  const fetchWhatsAppStatus = React.useCallback(async () => {
+    if (!user || isFetchingRef.current) return;
 
-      setLoadingWhatsApp(true);
-      try {
-        const platform = user.platform;
-        const tableName = `${platform}_users`;
-        
-        const { data, error } = await supabase
-          .from(tableName)
-          .select('whatsapp_status')
-          .eq('user_id', user.id)
-          .is('deleted_at', null)
-          .maybeSingle();
+    console.log('🔄 Fetching WhatsApp status for user:', user.id);
+    isFetchingRef.current = true;
+    setLoadingWhatsApp(true);
+    
+    try {
+      const platform = user.platform;
+      const tableName = `${platform}_users`;
+      
+      const { data, error } = await supabase
+        .from(tableName)
+        .select('whatsapp_status')
+        .eq('user_id', user.id)
+        .is('deleted_at', null)
+        .maybeSingle();
 
-        if (error) {
-          console.error('Error fetching WhatsApp status:', error);
-          setWhatsappStatus('not_set');
-          return;
-        }
-
-        if (data) {
-          setWhatsappStatus(data.whatsapp_status || 'not_set');
-        } else {
-          // No data found, set default state
-          setWhatsappStatus('not_set');
-        }
-      } catch (error) {
+      if (error) {
         console.error('Error fetching WhatsApp status:', error);
         setWhatsappStatus('not_set');
-      } finally {
-        setLoadingWhatsApp(false);
+        return;
       }
-    };
 
-    fetchWhatsAppStatus();
+      if (data) {
+        console.log('✅ WhatsApp status fetched:', data.whatsapp_status);
+        setWhatsappStatus(data.whatsapp_status || 'not_set');
+      } else {
+        // No data found, set default state
+        console.log('ℹ️ No WhatsApp data found, setting to not_set');
+        setWhatsappStatus('not_set');
+      }
+    } catch (error) {
+      console.error('Error fetching WhatsApp status:', error);
+      setWhatsappStatus('not_set');
+    } finally {
+      setLoadingWhatsApp(false);
+      isFetchingRef.current = false;
+    }
   }, [user]);
 
-  const getPlatformIcon = (platform: string) => {
-    switch (platform) {
-      case 'teamleader':
-        return <Users className="w-6 h-6 text-emerald-600" />;
-      case 'pipedrive':
-        return <Zap className="w-6 h-6 text-orange-500" />;
-      case 'odoo':
-        return <Settings className="w-6 h-6 text-purple-600" />;
-      default:
-        return <Users className="w-6 h-6 text-gray-600" />;
-    }
-  };
+  React.useEffect(() => {
+    fetchWhatsAppStatus();
+  }, [fetchWhatsAppStatus]);
+
 
   const getPlatformName = (platform: string) => {
     switch (platform) {
@@ -177,7 +166,14 @@ export const SubscriptionDashboard: React.FC = () => {
                           </div>
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
                             <span className="text-sm text-gray-600">Language</span>
-                            <span className="text-sm font-medium text-gray-900">{user.user_info.language}</span>
+                            <span className="text-sm font-medium text-gray-900">
+                              {typeof user.user_info.language === 'string' 
+                                ? user.user_info.language 
+                                : user.user_info.language?.language_code 
+                                  ? `${user.user_info.language.language_code}-${user.user_info.language.country_code}`
+                                  : 'N/A'
+                              }
+                            </span>
                           </div>
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
                             <span className="text-sm text-gray-600">Time Zone</span>

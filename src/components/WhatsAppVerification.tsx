@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle, Check, Loader2, AlertCircle, X, Clock } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import { supabase } from '../lib/supabase';
 
 interface WhatsAppStatus {
   whatsapp_number: string | null;
@@ -112,13 +107,13 @@ export const WhatsAppVerification: React.FC = () => {
       let crmUserId;
       switch (platform) {
         case 'teamleader':
-          crmUserId = user.user_info?.id || user.id;
+          crmUserId = user.id;
           break;
         case 'pipedrive':
-          crmUserId = user.user_info?.id || user.id;
+          crmUserId = user.id;
           break;
         case 'odoo':
-          crmUserId = user.user_info?.user_id || user.id;
+          crmUserId = user.id
           break;
         default:
           throw new Error('Unknown platform');
@@ -160,6 +155,9 @@ export const WhatsAppVerification: React.FC = () => {
   };
 
   const verifyOTP = async () => {
+
+    console.log(user)
+
     if (!otpCode.trim() || otpCode.length !== 6) {
       setError('Please enter a valid 6-digit code');
       return;
@@ -183,13 +181,13 @@ export const WhatsAppVerification: React.FC = () => {
       let crmUserId;
       switch (platform) {
         case 'teamleader':
-          crmUserId = user.user_info?.id || user.id;
+          crmUserId = user.id;
           break;
         case 'pipedrive':
-          crmUserId = user.user_info?.id || user.id;
+          crmUserId = user.id;
           break;
         case 'odoo':
-          crmUserId = user.user_info?.user_id || user.id;
+          crmUserId = user.id;
           break;
         default:
           throw new Error('Unknown platform');

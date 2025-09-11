@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../lib/supabase';
 
 type CallbackStatus = 'loading' | 'success' | 'error';
 
@@ -11,13 +11,6 @@ export const AuthCallback: React.FC = () => {
   const { platform } = useParams<{ platform: string }>();
   const navigate = useNavigate();
   const hasProcessedRef = React.useRef(false);
-
-  const supabase = React.useMemo(() => {
-    return createClient(
-      import.meta.env.VITE_SUPABASE_URL,
-      import.meta.env.VITE_SUPABASE_ANON_KEY
-    );
-  }, []);
 
   useEffect(() => {
     if (hasProcessedRef.current) return;

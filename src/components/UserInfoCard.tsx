@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Mail, Phone, Globe, Calendar, Building, Settings } from 'lucide-react';
+import { User, Mail, Calendar, Building, Settings } from 'lucide-react';
 
 interface UserInfoCardProps {
   platform: 'teamleader' | 'pipedrive' | 'odoo';
@@ -22,7 +22,7 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo, 
             </div>
             <div className="space-y-2 text-sm">
               <p><span className="font-medium">Name:</span> {user.first_name} {user.last_name}</p>
-              <p><span className="font-medium">Language:</span> {user.language}</p>
+              <p><span className="font-medium">Language:</span> {user.language || 'N/A'}</p>
               <p><span className="font-medium">Time Zone:</span> {user.time_zone}</p>
             </div>
           </div>
@@ -100,7 +100,7 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo, 
             </div>
             <div className="space-y-2 text-sm">
               <p><span className="font-medium">Name:</span> {user.name}</p>
-              <p><span className="font-medium">Language:</span> {user.language?.language_code}-{user.language?.country_code}</p>
+              <p><span className="font-medium">Language:</span> {user.language?.language_code ? `${user.language.language_code}-${user.language.country_code}` : 'N/A'}</p>
               <p><span className="font-medium">Locale:</span> {user.locale}</p>
               <p><span className="font-medium">Time Zone:</span> {user.timezone_name}</p>
               <p><span className="font-medium">Admin:</span> {user.is_admin ? 'Yes' : 'No'}</p>
