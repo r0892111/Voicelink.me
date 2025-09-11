@@ -6,39 +6,32 @@ import { CookieSettingsModal } from './CookieSettingsModal';
 export const CookieBanner: React.FC = () => {
   const { showBanner, acceptAll, rejectAll, openSettings, closeBanner } = useConsent();
 
-  // Debug logging - more detailed
-  console.log('=== CookieBanner Render ===');
-  console.log('showBanner from context:', showBanner);
-  console.log('Will render banner?', showBanner ? 'YES' : 'NO');
+  // Force show banner for debugging
+  console.log('🍪 CookieBanner render - showBanner:', showBanner);
 
-  if (!showBanner) {
-    console.log('🚫 CookieBanner: showBanner is false - returning null (no banner)');
-    return null;
-  }
-
-  console.log('✅ CookieBanner: Rendering banner - showBanner is true');
+  // TEMPORARILY FORCE SHOW BANNER
+  // if (!showBanner) {
+  //   return null;
+  // }
 
   const handleAcceptAll = () => {
-    console.log('🟢 Accept All clicked');
     acceptAll();
   };
 
   const handleRejectAll = () => {
-    console.log('🔴 Reject All clicked');
     rejectAll();
   };
 
   const handleOpenSettings = () => {
-    console.log('⚙️ Settings clicked');
     openSettings();
   };
 
   const handleCloseBanner = () => {
-    console.log('❌ Close banner clicked');
     closeBanner();
   };
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-white border-t border-gray-200 shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-white border-t border-gray-200 shadow-lg" style={{ display: 'block' }}>
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Content */}
