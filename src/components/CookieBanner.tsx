@@ -11,15 +11,12 @@ export const CookieBanner: React.FC = () => {
   console.log('CookieBanner showBanner state:', showBanner);
   console.log('CookieBanner useConsent hook result:', { showBanner, acceptAll, rejectAll, openSettings, closeBanner });
 
-  // TEMPORARY: Force show banner for testing
-  const forceShow = true;
-
-  if (!showBanner && !forceShow) {
+  if (!showBanner) {
     console.log('CookieBanner: showBanner is false, returning null');
     return null;
   }
 
-  console.log('CookieBanner: Rendering banner (forceShow:', forceShow, ')');
+  console.log('CookieBanner: Rendering banner, showBanner:', showBanner);
 
   const handleAcceptAll = () => {
     console.log('handleAcceptAll clicked');

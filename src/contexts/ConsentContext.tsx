@@ -53,8 +53,10 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     console.log('saveConsent called with:', newConsent);
     setConsent(newConsent);
     localStorage.setItem('cookie-consent', JSON.stringify(newConsent));
+    console.log('Setting showBanner to false');
     setShowBanner(false);
     setShowSettings(false);
+    console.log('Banner should now be hidden, showBanner:', false);
   };
 
   const acceptAll = () => {
