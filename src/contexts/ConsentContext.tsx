@@ -29,36 +29,39 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
-  const [hasCheckedConsent, setHasCheckedConsent] = useState(false);
 
-  // Debug logging
-  console.log('ConsentProvider rendered, showBanner:', showBanner);
+  // Debug logging - more detailed
+  console.log('ConsentProvider rendered');
+  console.log('- showBanner:', showBanner);
+  console.log('- showSettings:', showSettings);
+  console.log('- consent:', consent);
 
   useEffect(() => {
-    console.log('ConsentProvider useEffect running');
+    console.log('=== ConsentProvider useEffect running ===');
     // Check if user has already made a consent choice
     const savedConsent = localStorage.getItem('cookie-consent');
-    console.log('Saved consent from localStorage:', savedConsent);
+    console.log('Checking localStorage for cookie-consent:', savedConsent);
+    
     if (savedConsent) {
-      console.log('Found existing consent, hiding banner');
+      console.log('✅ Found existing consent - hiding banner');
       setConsent(JSON.parse(savedConsent));
       setShowBanner(false);
     } else {
       // Show banner if no consent found
-      console.log('No existing consent found, showing banner');
+      console.log('❌ No existing consent found - SHOWING BANNER');
       setShowBanner(true);
     }
-    setHasCheckedConsent(true);
   }, []);
 
   const saveConsent = (newConsent: Record<string, boolean>) => {
-    console.log('saveConsent called with:', newConsent);
+    console.log('=== saveConsent called ===');
+    console.log('New consent:', newConsent);
     setConsent(newConsent);
     localStorage.setItem('cookie-consent', JSON.stringify(newConsent));
-    console.log('Setting showBanner to false');
+    console.log('Saving to localStorage and hiding banner');
     setShowBanner(false);
     setShowSettings(false);
-    console.log('Banner should now be hidden, showBanner:', false);
+    console.log('Banner hidden - showBanner set to false');
   };
 
   const acceptAll = () => {

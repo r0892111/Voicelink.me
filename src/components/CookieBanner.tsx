@@ -6,35 +6,35 @@ import { CookieSettingsModal } from './CookieSettingsModal';
 export const CookieBanner: React.FC = () => {
   const { showBanner, acceptAll, rejectAll, openSettings, closeBanner } = useConsent();
 
-  // Debug logging
-  console.log('CookieBanner component rendered');
-  console.log('CookieBanner showBanner state:', showBanner);
-  console.log('CookieBanner useConsent hook result:', { showBanner, acceptAll, rejectAll, openSettings, closeBanner });
+  // Debug logging - more detailed
+  console.log('=== CookieBanner Render ===');
+  console.log('showBanner from context:', showBanner);
+  console.log('Will render banner?', showBanner ? 'YES' : 'NO');
 
   if (!showBanner) {
-    console.log('CookieBanner: showBanner is false, returning null');
+    console.log('🚫 CookieBanner: showBanner is false - returning null (no banner)');
     return null;
   }
 
-  console.log('CookieBanner: Rendering banner, showBanner:', showBanner);
+  console.log('✅ CookieBanner: Rendering banner - showBanner is true');
 
   const handleAcceptAll = () => {
-    console.log('handleAcceptAll clicked');
+    console.log('🟢 Accept All clicked');
     acceptAll();
   };
 
   const handleRejectAll = () => {
-    console.log('handleRejectAll clicked');
+    console.log('🔴 Reject All clicked');
     rejectAll();
   };
 
   const handleOpenSettings = () => {
-    console.log('handleOpenSettings clicked');
+    console.log('⚙️ Settings clicked');
     openSettings();
   };
 
   const handleCloseBanner = () => {
-    console.log('handleCloseBanner clicked');
+    console.log('❌ Close banner clicked');
     closeBanner();
   };
   return (
