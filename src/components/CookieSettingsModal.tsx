@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useConsent } from '../contexts/ConsentContext';
-import { X, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, X } from 'lucide-react';
 
 interface ConsentChoices {
   essential: boolean;
-  statistics: boolean;
+  analytics: boolean;
   marketing: boolean;
-  social: boolean;
+  preferences: boolean;
 }
 
 interface CategoryInfo {
@@ -20,48 +20,84 @@ interface CategoryInfo {
 const categories: CategoryInfo[] = [
   {
     key: 'essential',
-    title: 'Essentieel (altijd actief)',
-    description: 'Nodig om de site te laten werken (beveiliging, load balancing, cookievoorkeuren).',
+    title: 'Essential (always active)',
+    description: 'Necessary for the site to function (security, load balancing, cookie preferences).',
     required: true,
-    cookies: ['fs_cookie_consent_v1', 'fs_cookie_consent_log_v1', 'PHPSESSID', '__Secure-*']
+    cookies: ['cookie-consent', 'session-id', '__Secure-*', 'PHPSESSID']
   },
   {
-    key: 'statistics',
-    title: 'Statistieken',
-    description: 'Helpen ons te begrijpen hoe de site gebruikt wordt (anonieme statistieken).',
+    key: 'analytics',
+    title: 'Analytics',
+    description: 'Help us understand how the site is used (anonymous statistics).',
     required: false,
     cookies: ['_ga', '_ga_*', '_gid', '_gat', '_gtag_*']
   },
   {
     key: 'marketing',
     title: 'Marketing',
-    description: 'Maakt gepersonaliseerde advertenties en metingen mogelijk.',
+    description: 'Enables personalized advertisements and measurements.',
     required: false,
     cookies: ['_fbp', '_fbc', 'fr', 'ads/ga-audiences', 'IDE', 'test_cookie']
   },
   {
-    key: 'social',
-    title: 'Sociaal',
-    description: 'Voor het laden van externe media en deelknoppen.',
+    key: 'preferences',
+    title: 'Preferences',
+    description: 'For loading external media and sharing buttons.',
     required: false,
     cookies: ['VISITOR_INFO1_LIVE', 'YSC', 'CONSENT', 'SOCS']
   }
 ];
 
-interface CookieSettingsModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+// Custom Switch Component
+interface SwitchProps {
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
+  'aria-label'?: string;
 }
 
-export const CookieSettingsModal: React.FC<CookieSettingsModalProps> = ({ isOpen, onClose }) => {
-  const { acceptAll, rejectAll } = useConsent();
+const Switch: React.FC<SwitchProps> = ({ checked, onCheckedChange, 'aria-label': ariaLabel }) => {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={ariaLabel}
+      onClick={() => onCheckedChange(!checked)}
+      className={`
+        relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+        ${checked ? 'bg-blue-600' : 'bg-gray-200'}
+      `}
+    >
+      <span
+        className={`
+          inline-block h-4 w-4 transform rounded-full bg-white transition-transform
+          ${checked ? 'translate-x-6' : 'translate-x-1'}
+        `}
+      />
+    </button>
+  );
+};
+
+export const CookieSettingsModal: React.FC = () => {
+  const { showSettings, closeSettings, acceptAll, rejectAll, hasConsent } = useConsent();
   const [localChoices, setLocalChoices] = useState<ConsentChoices>({
     essential: true,
-    statistics: false,
-    marketing: false,
-    social: false,
+    analytics: hasConsent('analytics'),
+    marketing: hasConsent('marketing'),
+    preferences: hasConsent('preferences'),
   });
   const [expandedCategories, setExpandedCategories] = useState<{[key: string]: boolean}>({});
+
+  useEffect(() => {
+    if (showSettings) {
+      setLocalChoices({
+        essential: true,
+        analytics: hasConsent('analytics'),
+        marketing: hasConsent('marketing'),
+        preferences: hasConsent('preferences'),
+      });
+    }
+  }, [showSettings, hasConsent]);
 
   const handleToggle = (category: keyof ConsentChoices, value: boolean) => {
     setLocalChoices(prev => ({
@@ -71,26 +107,24 @@ export const CookieSettingsModal: React.FC<CookieSettingsModalProps> = ({ isOpen
   };
 
   const handleSave = () => {
-    // Save the specific choices
-    const consentData = {
-      essential: true, // Always true
-      analytics: localChoices.statistics,
+    const newConsent = {
+      essential: true,
+      analytics: localChoices.analytics,
       marketing: localChoices.marketing,
-      preferences: localChoices.social,
+      preferences: localChoices.preferences,
     };
-    
-    localStorage.setItem('cookie-consent', JSON.stringify(consentData));
-    onClose();
+    localStorage.setItem('cookie-consent', JSON.stringify(newConsent));
+    closeSettings();
+    // Reload page to apply new settings
+    window.location.reload();
   };
 
   const handleAcceptAll = () => {
     acceptAll();
-    onClose();
   };
 
   const handleRejectAll = () => {
     rejectAll();
-    onClose();
   };
 
   const toggleCategoryExpansion = (categoryKey: string) => {
@@ -100,26 +134,27 @@ export const CookieSettingsModal: React.FC<CookieSettingsModalProps> = ({ isOpen
     }));
   };
 
-  if (!isOpen) return null;
+  if (!showSettings) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Cookie-instellingen</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Cookie Settings</h2>
             <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              onClick={closeSettings}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Close settings"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 text-gray-500" />
             </button>
           </div>
           
           <div className="space-y-6">
             <p className="text-sm text-gray-600">
-              Maak je keuze per categorie. Je kan dit later altijd aanpassen via 'Cookie-instellingen' onderaan de pagina.
+              Make your choice per category. You can always change this later via 'Cookie Settings' at the bottom of the page.
             </p>
 
             {/* Categories */}
@@ -138,19 +173,14 @@ export const CookieSettingsModal: React.FC<CookieSettingsModalProps> = ({ isOpen
                     <div className="ml-4">
                       {category.required ? (
                         <div className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-                          Altijd actief
+                          Always active
                         </div>
                       ) : (
-                        <label className="relative inline-flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={localChoices[category.key]}
-                            onChange={(e) => handleToggle(category.key, e.target.checked)}
-                            className="sr-only peer"
-                            aria-label={`${category.title} toestaan`}
-                          />
-                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                        </label>
+                        <Switch
+                          checked={localChoices[category.key]}
+                          onCheckedChange={(checked) => handleToggle(category.key, checked)}
+                          aria-label={`Allow ${category.title}`}
+                        />
                       )}
                     </div>
                   </div>
@@ -161,7 +191,7 @@ export const CookieSettingsModal: React.FC<CookieSettingsModalProps> = ({ isOpen
                     className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 transition-colors"
                     aria-expanded={expandedCategories[category.key]}
                   >
-                    <span>Bekijk cookies</span>
+                    <span>View cookies</span>
                     {expandedCategories[category.key] ? (
                       <ChevronUp className="h-4 w-4" />
                     ) : (
@@ -171,7 +201,7 @@ export const CookieSettingsModal: React.FC<CookieSettingsModalProps> = ({ isOpen
 
                   {expandedCategories[category.key] && (
                     <div className="mt-3 p-3 bg-gray-50 rounded border">
-                      <h5 className="text-sm font-medium text-gray-900 mb-2">Cookies in deze categorie:</h5>
+                      <h5 className="text-sm font-medium text-gray-900 mb-2">Cookies in this category:</h5>
                       <ul className="text-xs text-gray-600 space-y-1">
                         {category.cookies.map((cookie, index) => (
                           <li key={index} className="font-mono">
@@ -193,7 +223,7 @@ export const CookieSettingsModal: React.FC<CookieSettingsModalProps> = ({ isOpen
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Cookieverklaring
+                Cookie Policy
               </a>
             </div>
 
@@ -203,22 +233,22 @@ export const CookieSettingsModal: React.FC<CookieSettingsModalProps> = ({ isOpen
                 onClick={handleRejectAll}
                 className="px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 rounded-lg transition-colors font-medium"
               >
-                Alles weigeren
+                Reject All
               </button>
               <button
                 onClick={handleSave}
                 className="px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
               >
-                Opslaan
+                Save Settings
               </button>
               <button
                 onClick={handleAcceptAll}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+                className="px-4 py-2 text-white rounded-lg transition-colors font-medium"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
               >
-                Alles accepteren
+                Accept All
               </button>
             </div>
           </div>
