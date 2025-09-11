@@ -4,6 +4,19 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 
+// Handle client-side routing for GitHub Pages and similar static hosts
+if (typeof window !== 'undefined') {
+  const search = window.location.search;
+  if (search) {
+    const q = new URLSearchParams(search);
+    const path = q.get('/');
+    if (path) {
+      const newUrl = window.location.pathname + path.replace(/~and~/g, '&') + window.location.hash;
+      window.history.replaceState(null, '', newUrl);
+    }
+  }
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
