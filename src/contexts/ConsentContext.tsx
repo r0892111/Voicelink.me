@@ -30,84 +30,54 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
 
-  // Debug logging - more detailed
-  console.log('ConsentProvider rendered');
-  console.log('- showBanner:', showBanner);
-  console.log('- showSettings:', showSettings);
-  console.log('- consent:', consent);
-
   useEffect(() => {
-    console.log('=== ConsentProvider useEffect running ===');
     // Check if user has already made a consent choice
     const savedConsent = localStorage.getItem('cookie-consent');
-    console.log('Checking localStorage for cookie-consent:', savedConsent);
-    
-    if (savedConsent && savedConsent !== 'null') {
-      console.log('✅ Found existing consent - hiding banner');
-      try {
-        setConsent(JSON.parse(savedConsent));
-      } catch (e) {
-        console.error('Error parsing saved consent:', e);
-        setConsent({});
-        setShowBanner(true);
-        return;
-      }
+    if (savedConsent) {
+      setConsent(JSON.parse(savedConsent));
       setShowBanner(false);
     } else {
-      // Show banner if no consent found
-      console.log('❌ No existing consent found - SHOWING BANNER');
-      setConsent({});
-      setShowBanner(true);
+      // Show banner after a short delay to avoid flash
+      setTimeout(() => setShowBanner(true), 1000);
     }
   }, []);
 
   const saveConsent = (newConsent: Record<string, boolean>) => {
-    console.log('=== saveConsent called ===');
-    console.log('New consent:', newConsent);
     setConsent(newConsent);
     localStorage.setItem('cookie-consent', JSON.stringify(newConsent));
-    console.log('Saving to localStorage and hiding banner');
     setShowBanner(false);
-    setShowSettings(false);
-    console.log('Banner hidden - showBanner set to false');
   };
 
   const acceptAll = () => {
-    console.log('acceptAll called');
     const allConsent = {
       essential: true,
       analytics: true,
       marketing: true,
       preferences: true,
     };
-    console.log('Saving consent:', allConsent);
     saveConsent(allConsent);
   };
 
   const rejectAll = () => {
-    console.log('rejectAll called');
     const essentialOnly = {
       essential: true,
       analytics: false,
       marketing: false,
       preferences: false,
     };
-    console.log('Saving essential only consent:', essentialOnly);
     saveConsent(essentialOnly);
   };
 
   const openSettings = () => {
-    console.log('openSettings called');
     setShowSettings(true);
+    setShowBanner(false);
   };
 
   const closeSettings = () => {
-    console.log('closeSettings called');
     setShowSettings(false);
   };
 
   const closeBanner = () => {
-    console.log('closeBanner called');
     setShowBanner(false);
   };
 

@@ -109,9 +109,9 @@ export const HeroDemo: React.FC = () => {
                     </div>
                     <div className="flex items-center space-x-4">
                       <img 
-                        src="/whatsapp.svg" 
+                        src="/whatsapp-white-icon.webp" 
                         alt="WhatsApp" 
-                        className="w-6 h-6"
+                        className="w-6 h-6 text-white"
                       />
                       <div className="text-white text-lg font-bold">⋮</div>
                     </div>

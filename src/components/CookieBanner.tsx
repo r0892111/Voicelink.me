@@ -6,40 +6,10 @@ import { CookieSettingsModal } from './CookieSettingsModal';
 export const CookieBanner: React.FC = () => {
   const { showBanner, acceptAll, rejectAll, openSettings, closeBanner } = useConsent();
 
-  // Debug logging - more detailed
-  console.log('=== CookieBanner Render ===');
-  console.log('showBanner from context:', showBanner);
-  console.log('localStorage cookie-consent:', localStorage.getItem('cookie-consent'));
-  console.log('Will render banner?', showBanner ? 'YES - BANNER WILL SHOW' : 'NO - BANNER HIDDEN');
+  if (!showBanner) return null;
 
-  if (!showBanner) {
-    console.log('🚫 CookieBanner: showBanner is false - returning null (no banner)');
-    return null;
-  }
-
-  console.log('✅ CookieBanner: RENDERING BANNER NOW - showBanner is true');
-
-  const handleAcceptAll = () => {
-    console.log('🟢 Accept All clicked');
-    acceptAll();
-  };
-
-  const handleRejectAll = () => {
-    console.log('🔴 Reject All clicked');
-    rejectAll();
-  };
-
-  const handleOpenSettings = () => {
-    console.log('⚙️ Settings clicked');
-    openSettings();
-  };
-
-  const handleCloseBanner = () => {
-    console.log('❌ Close banner clicked');
-    closeBanner();
-  };
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-white border-t border-gray-200 shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Content */}
@@ -61,20 +31,23 @@ export const CookieBanner: React.FC = () => {
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-3 lg:flex-shrink-0">
             <button
-              onClick={handleRejectAll}
+              onClick={rejectAll}
               className="px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 rounded-lg transition-colors font-medium"
             >
               Reject All
             </button>
             <button
-              onClick={handleOpenSettings}
+              onClick={openSettings}
               className="px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
             >
               Settings
             </button>
             <button
-              onClick={handleAcceptAll}
+              onClick={acceptAll}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+              style={{ backgroundColor: '#1C2C55' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
             >
               Accept All
             </button>
@@ -82,7 +55,7 @@ export const CookieBanner: React.FC = () => {
 
           {/* Close button */}
           <button
-            onClick={handleCloseBanner}
+            onClick={closeBanner}
             className="absolute top-4 right-4 lg:relative lg:top-0 lg:right-0 p-1 text-gray-400 hover:text-gray-600 transition-colors"
             aria-label="Close cookie banner"
           >
