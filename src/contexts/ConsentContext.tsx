@@ -33,18 +33,12 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   useEffect(() => {
     // Check if user has already made a consent choice
     const savedConsent = localStorage.getItem('cookie-consent');
-    if (savedConsent && savedConsent !== 'null') {
-      try {
-        setConsent(JSON.parse(savedConsent));
-      } catch (error) {
-        console.error('Error parsing saved consent:', error);
-        setShowBanner(true);
-        return;
-      }
+    if (savedConsent) {
+      setConsent(JSON.parse(savedConsent));
       setShowBanner(false);
     } else {
-      // Show banner immediately when no consent exists
-      setShowBanner(true);
+      // Show banner after a short delay to avoid flash
+      setTimeout(() => setShowBanner(true), 1000);
     }
   }, []);
 

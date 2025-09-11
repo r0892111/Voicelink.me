@@ -16,6 +16,7 @@ import { useAuth } from './hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ConsentProvider } from './contexts/ConsentContext';
 import { CookieBanner } from './components/CookieBanner';
+import { CookieSettingsLink } from './components/CookieSettingsLink';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -108,6 +109,7 @@ function App() {
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
+              <CookieSettingsLink />
             </div>
 
             {/* Mobile Menu */}
