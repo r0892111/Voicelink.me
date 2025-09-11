@@ -82,76 +82,70 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo }
 
   const renderPipedriveInfo = () => {
     const user = userInfo || {};
-    const company = user.company_name ? {
-      name: user.company_name,
-      domain: user.company_domain,
-      country: user.company_country,
-      currency: user.default_currency
-    } : null;
     
     return (
       <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-orange-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <User className="w-4 h-4 text-orange-500" />
-              <h3 className="font-medium text-gray-900">Personal Info</h3>
-            </div>
-            <div className="space-y-2 text-sm">
-              <p><span className="font-medium">Name:</span> {user.name}</p>
-              <p><span className="font-medium">Language:</span> {user.language?.language_code ? `${user.language.language_code}-${user.language.country_code}` : 'N/A'}</p>
-              <p><span className="font-medium">Locale:</span> {user.locale}</p>
-              <p><span className="font-medium">Time Zone:</span> {user.timezone_name}</p>
-              <p><span className="font-medium">Admin:</span> {user.is_admin ? 'Yes' : 'No'}</p>
-            </div>
+        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Personal Information</h4>
+        <div className="space-y-3">
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Full Name</span>
+            <span className="text-sm font-medium text-gray-900">{user.name}</span>
           </div>
-          
-          <div className="p-4 bg-orange-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <Mail className="w-4 h-4 text-orange-500" />
-              <h3 className="font-medium text-gray-900">Contact</h3>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Email</span>
+            <span className="text-sm font-medium text-gray-900">{user.email}</span>
+          </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Language</span>
+            <span className="text-sm font-medium text-gray-900">
+              {user.language?.language_code ? `${user.language.language_code}-${user.language.country_code}` : 'N/A'}
+            </span>
+          </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Time Zone</span>
+            <span className="text-sm font-medium text-gray-900">{user.timezone_name}</span>
+          </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Locale</span>
+            <span className="text-sm font-medium text-gray-900">{user.locale}</span>
+          </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Admin Status</span>
+            <span className="text-sm font-medium text-gray-900">{user.is_admin ? 'Admin' : 'User'}</span>
+          </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Account Status</span>
+            <span className="text-sm font-medium text-gray-900">{user.active_flag ? 'Active' : 'Inactive'}</span>
+          </div>
+          {user.phone && (
+            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+              <span className="text-sm text-gray-600">Phone</span>
+              <span className="text-sm font-medium text-gray-900">{user.phone}</span>
             </div>
-            <div className="space-y-2 text-sm">
-              <p><span className="font-medium">Email:</span> {user.email}</p>
-              <p><span className="font-medium">Status:</span> {user.active_flag ? 'Active' : 'Inactive'}</p>
-              {user.phone && (
-                <p><span className="font-medium">Phone:</span> {user.phone}</p>
-              )}
-              <p><span className="font-medium">Last Login:</span> {user.last_login}</p>
+          )}
+          {user.company_name && (
+            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+              <span className="text-sm text-gray-600">Company</span>
+              <span className="text-sm font-medium text-gray-900">{user.company_name}</span>
             </div>
+          )}
+          {user.company_domain && (
+            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+              <span className="text-sm text-gray-600">Company Domain</span>
+              <span className="text-sm font-medium text-gray-900">{user.company_domain}</span>
+            </div>
+          )}
+          {user.default_currency && (
+            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+              <span className="text-sm text-gray-600">Default Currency</span>
+              <span className="text-sm font-medium text-gray-900">{user.default_currency}</span>
+            </div>
+          )}
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Last Login</span>
+            <span className="text-sm font-medium text-gray-900">{user.last_login || 'N/A'}</span>
           </div>
         </div>
-
-        {company && (
-          <div className="p-4 bg-orange-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <Building className="w-4 h-4 text-orange-500" />
-              <h3 className="font-medium text-gray-900">Company</h3>
-            </div>
-            <div className="space-y-2 text-sm">
-              <p><span className="font-medium">Company:</span> {company.name}</p>
-              <p><span className="font-medium">Domain:</span> {company.domain}</p>
-              <p><span className="font-medium">Country:</span> {company.country}</p>
-              <p><span className="font-medium">Currency:</span> {company.currency}</p>
-            </div>
-          </div>
-        )}
-
-        {user.access && user.access.length > 0 && (
-          <div className="p-4 bg-orange-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <Settings className="w-4 h-4 text-orange-500" />
-              <h3 className="font-medium text-gray-900">Permissions</h3>
-            </div>
-            <div className="space-y-2 text-sm">
-              {user.access.map((access: any, index: number) => (
-                <p key={index}>
-                  <span className="font-medium">{access.app}:</span> {access.admin ? 'Admin' : 'User'}
-                </p>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     );
   };
@@ -161,45 +155,41 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo }
     
     return (
       <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-purple-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <User className="w-4 h-4 text-purple-600" />
-              <h3 className="font-medium text-gray-900">Personal Info</h3>
-            </div>
-            <div className="space-y-2 text-sm">
-              <p><span className="font-medium">Name:</span> {user.name}</p>
-              <p><span className="font-medium">User ID:</span> {user.user_id}</p>
-              <p><span className="font-medium">Support Access:</span> {user.support ? 'Yes' : 'No'}</p>
-            </div>
+        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Personal Information</h4>
+        <div className="space-y-3">
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Full Name</span>
+            <span className="text-sm font-medium text-gray-900">{user.name}</span>
           </div>
-          
-          <div className="p-4 bg-purple-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <Mail className="w-4 h-4 text-purple-600" />
-              <h3 className="font-medium text-gray-900">Contact</h3>
-            </div>
-            <div className="space-y-2 text-sm">
-              <p><span className="font-medium">Email:</span> {user.email}</p>
-              <p><span className="font-medium">Scope:</span> {user.scope}</p>
-            </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Email</span>
+            <span className="text-sm font-medium text-gray-900">{user.email}</span>
           </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">User ID</span>
+            <span className="text-sm font-medium text-gray-900">{user.user_id}</span>
+          </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Support Access</span>
+            <span className="text-sm font-medium text-gray-900">{user.support ? 'Yes' : 'No'}</span>
+          </div>
+          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+            <span className="text-sm text-gray-600">Scope</span>
+            <span className="text-sm font-medium text-gray-900">{user.scope}</span>
+          </div>
+          {user.audience && (
+            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+              <span className="text-sm text-gray-600">Audience</span>
+              <span className="text-sm font-medium text-gray-900">{user.audience}</span>
+            </div>
+          )}
+          {user.expires_in && (
+            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+              <span className="text-sm text-gray-600">Token Expires</span>
+              <span className="text-sm font-medium text-gray-900">{Math.floor(user.expires_in / 60)} minutes</span>
+            </div>
+          )}
         </div>
-
-        {user.audience && (
-          <div className="p-4 bg-purple-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <Settings className="w-4 h-4 text-purple-600" />
-              <h3 className="font-medium text-gray-900">OAuth Details</h3>
-            </div>
-            <div className="space-y-2 text-sm">
-              <p><span className="font-medium">Audience:</span> {user.audience}</p>
-              {user.expires_in && (
-                <p><span className="font-medium">Token Expires:</span> {Math.floor(user.expires_in / 60)} minutes</p>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     );
   };
