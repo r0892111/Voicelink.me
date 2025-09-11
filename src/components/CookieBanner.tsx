@@ -1,6 +1,7 @@
 import React from 'react';
 import { useConsent } from '../contexts/ConsentContext';
 import { X } from 'lucide-react';
+import { CookieSettingsModal } from './CookieSettingsModal';
 
 export const CookieBanner: React.FC = () => {
   const { showBanner, acceptAll, rejectAll, openSettings, closeBanner } = useConsent();
@@ -62,6 +63,9 @@ export const CookieBanner: React.FC = () => {
           </button>
         </div>
       </div>
+      
+      {/* Settings Modal */}
+      <CookieSettingsModal />
     </div>
   );
 };
