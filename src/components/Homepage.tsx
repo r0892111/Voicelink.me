@@ -763,6 +763,16 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <a href="/saas-agreement" className="hover:text-white transition-colors">SaaS Agreement</a>
               <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
               <a href="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</a>
+              <button 
+                onClick={() => {
+                  const { openSettings } = require('../contexts/ConsentContext');
+                  // We need to access the context properly
+                  window.dispatchEvent(new CustomEvent('openCookieSettings'));
+                }}
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                Cookie Settings
+              </button>
               <a href="/support" className="hover:text-white transition-colors">Support</a>
             </div>
           </div>

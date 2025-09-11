@@ -30,6 +30,16 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
 
+  // Listen for custom event to open settings
+  useEffect(() => {
+    const handleOpenSettings = () => {
+      setShowSettings(true);
+    };
+
+    window.addEventListener('openCookieSettings', handleOpenSettings);
+    return () => window.removeEventListener('openCookieSettings', handleOpenSettings);
+  }, []);
+
   useEffect(() => {
     // Check if user has already made a consent choice
     const savedConsent = localStorage.getItem('cookie-consent');
