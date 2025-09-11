@@ -26,9 +26,20 @@ interface ConsentProviderProps {
 }
 
 export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) => {
-  const [showBanner, setShowBanner] = useState(true); // Start with true
+  const [showBanner, setShowBanner] = useState(false); // Start with false initially
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
+
+  // Listen for custom event to open settings
+  useEffect(() => {
+    const handleOpenSettings = () => {
+      console.log('Opening cookie settings modal'); // Debug log
+      setShowSettings(true);
+    };
+
+    window.addEventListener('openCookieSettings', handleOpenSettings);
+    return () => window.removeEventListener('openCookieSettings', handleOpenSettings);
+  }, []);
 
   useEffect(() => {
     // Check if user has already made a consent choice
@@ -78,6 +89,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   };
 
   const openSettings = () => {
+    console.log('openSettings called'); // Debug log
     setShowSettings(true);
   };
 

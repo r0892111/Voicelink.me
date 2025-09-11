@@ -2,6 +2,7 @@ import React from 'react';
 import { Zap, MessageCircle, Play, ArrowRight, CheckCircle, Settings } from 'lucide-react';
 import { HeroDemo } from './HeroDemo';
 import { PricingSection } from './PricingSection';
+import { useConsent } from '../contexts/ConsentContext';
 
 interface HomepageProps {
   openModal: () => void;
@@ -124,6 +125,7 @@ const PricingCalculator: React.FC = () => {
 export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
   const visibleSections = useScrollAnimation();
   const [selectedUsers, setSelectedUsers] = React.useState(1);
+  const { openSettings } = useConsent();
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -763,6 +765,15 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <a href="/saas-agreement" className="hover:text-white transition-colors">SaaS Agreement</a>
               <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
               <a href="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</a>
+              <button 
+                onClick={() => {
+                  console.log('Cookie Settings button clicked'); // Debug log
+                  openSettings();
+                }}
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                Cookie Settings
+              </button>
               <a href="/support" className="hover:text-white transition-colors">Support</a>
             </div>
           </div>
