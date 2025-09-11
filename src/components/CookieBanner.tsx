@@ -9,14 +9,15 @@ export const CookieBanner: React.FC = () => {
   // Debug logging - more detailed
   console.log('=== CookieBanner Render ===');
   console.log('showBanner from context:', showBanner);
-  console.log('Will render banner?', showBanner ? 'YES' : 'NO');
+  console.log('localStorage cookie-consent:', localStorage.getItem('cookie-consent'));
+  console.log('Will render banner?', showBanner ? 'YES - BANNER WILL SHOW' : 'NO - BANNER HIDDEN');
 
   if (!showBanner) {
     console.log('🚫 CookieBanner: showBanner is false - returning null (no banner)');
     return null;
   }
 
-  console.log('✅ CookieBanner: Rendering banner - showBanner is true');
+  console.log('✅ CookieBanner: RENDERING BANNER NOW - showBanner is true');
 
   const handleAcceptAll = () => {
     console.log('🟢 Accept All clicked');

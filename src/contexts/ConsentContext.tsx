@@ -42,13 +42,21 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     const savedConsent = localStorage.getItem('cookie-consent');
     console.log('Checking localStorage for cookie-consent:', savedConsent);
     
-    if (savedConsent) {
+    if (savedConsent && savedConsent !== 'null') {
       console.log('✅ Found existing consent - hiding banner');
-      setConsent(JSON.parse(savedConsent));
+      try {
+        setConsent(JSON.parse(savedConsent));
+      } catch (e) {
+        console.error('Error parsing saved consent:', e);
+        setConsent({});
+        setShowBanner(true);
+        return;
+      }
       setShowBanner(false);
     } else {
       // Show banner if no consent found
       console.log('❌ No existing consent found - SHOWING BANNER');
+      setConsent({});
       setShowBanner(true);
     }
   }, []);
