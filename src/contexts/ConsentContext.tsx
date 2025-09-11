@@ -29,6 +29,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
+  const [hasCheckedConsent, setHasCheckedConsent] = useState(false);
 
   // Debug logging
   console.log('ConsentProvider rendered, showBanner:', showBanner);
@@ -47,6 +48,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
       console.log('No existing consent found, showing banner');
       setShowBanner(true);
     }
+    setHasCheckedConsent(true);
   }, []);
 
   const saveConsent = (newConsent: Record<string, boolean>) => {
