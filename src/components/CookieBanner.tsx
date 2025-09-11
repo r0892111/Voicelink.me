@@ -1,14 +1,28 @@
 import React from 'react';
 import { useConsent } from '../contexts/ConsentContext';
 import { X } from 'lucide-react';
+import { CookieSettingsModal } from './CookieSettingsModal';
 
 export const CookieBanner: React.FC = () => {
   const { showBanner, acceptAll, rejectAll, openSettings, closeBanner } = useConsent();
 
-  if (!showBanner) return null;
+  // Debug logging
+  console.log('CookieBanner component rendered');
+  console.log('CookieBanner showBanner state:', showBanner);
+  console.log('CookieBanner useConsent hook result:', { showBanner, acceptAll, rejectAll, openSettings, closeBanner });
+
+  // TEMPORARY: Force show banner for testing
+  const forceShow = true;
+
+  if (!showBanner && !forceShow) {
+    console.log('CookieBanner: showBanner is false, returning null');
+    return null;
+  }
+
+  console.log('CookieBanner: Rendering banner (forceShow:', forceShow, ')');
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-white border-t border-gray-200 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Content */}
@@ -62,6 +76,9 @@ export const CookieBanner: React.FC = () => {
           </button>
         </div>
       </div>
+      
+      {/* Settings Modal */}
+      <CookieSettingsModal />
     </div>
   );
 };

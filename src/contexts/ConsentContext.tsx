@@ -2,9 +2,11 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface ConsentContextType {
   showBanner: boolean;
+  showSettings: boolean;
   acceptAll: () => void;
   rejectAll: () => void;
   openSettings: () => void;
+  closeSettings: () => void;
   closeBanner: () => void;
   hasConsent: (category: string) => boolean;
 }
@@ -25,17 +27,25 @@ interface ConsentProviderProps {
 
 export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) => {
   const [showBanner, setShowBanner] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
 
+  // Debug logging
+  console.log('ConsentProvider rendered, showBanner:', showBanner);
+
   useEffect(() => {
+    console.log('ConsentProvider useEffect running');
     // Check if user has already made a consent choice
     const savedConsent = localStorage.getItem('cookie-consent');
+    console.log('Saved consent from localStorage:', savedConsent);
     if (savedConsent) {
+      console.log('Found existing consent, hiding banner');
       setConsent(JSON.parse(savedConsent));
       setShowBanner(false);
     } else {
-      // Show banner after a short delay to avoid flash
-      setTimeout(() => setShowBanner(true), 1000);
+      // Show banner if no consent found
+      console.log('No existing consent found, showing banner');
+      setShowBanner(true);
     }
   }, []);
 
@@ -66,8 +76,12 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   };
 
   const openSettings = () => {
-    // For now, just accept all - you can implement a settings modal later
-    acceptAll();
+    setShowSettings(true);
+    setShowBanner(false);
+  };
+
+  const closeSettings = () => {
+    setShowSettings(false);
   };
 
   const closeBanner = () => {
@@ -82,9 +96,11 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     <ConsentContext.Provider
       value={{
         showBanner,
+        showSettings,
         acceptAll,
         rejectAll,
         openSettings,
+        closeSettings,
         closeBanner,
         hasConsent,
       }}
