@@ -50,9 +50,11 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   }, []);
 
   const saveConsent = (newConsent: Record<string, boolean>) => {
+    console.log('saveConsent called with:', newConsent);
     setConsent(newConsent);
     localStorage.setItem('cookie-consent', JSON.stringify(newConsent));
     setShowBanner(false);
+    setShowSettings(false);
   };
 
   const acceptAll = () => {
@@ -65,29 +67,32 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     };
     console.log('Saving consent:', allConsent);
     saveConsent(allConsent);
-    setShowSettings(false);
   };
 
   const rejectAll = () => {
+    console.log('rejectAll called');
     const essentialOnly = {
       essential: true,
       analytics: false,
       marketing: false,
       preferences: false,
     };
+    console.log('Saving essential only consent:', essentialOnly);
     saveConsent(essentialOnly);
   };
 
   const openSettings = () => {
+    console.log('openSettings called');
     setShowSettings(true);
-    setShowBanner(false);
   };
 
   const closeSettings = () => {
+    console.log('closeSettings called');
     setShowSettings(false);
   };
 
   const closeBanner = () => {
+    console.log('closeBanner called');
     setShowBanner(false);
   };
 
