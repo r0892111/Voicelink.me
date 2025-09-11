@@ -2,11 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface ConsentContextType {
   showBanner: boolean;
-  showSettings: boolean;
   acceptAll: () => void;
   rejectAll: () => void;
   openSettings: () => void;
-  closeSettings: () => void;
   closeBanner: () => void;
   hasConsent: (category: string) => boolean;
 }
@@ -27,7 +25,6 @@ interface ConsentProviderProps {
 
 export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) => {
   const [showBanner, setShowBanner] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -69,12 +66,8 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   };
 
   const openSettings = () => {
-    setShowSettings(true);
-    setShowBanner(false);
-  };
-
-  const closeSettings = () => {
-    setShowSettings(false);
+    // For now, just accept all - you can implement a settings modal later
+    acceptAll();
   };
 
   const closeBanner = () => {
@@ -89,11 +82,9 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     <ConsentContext.Provider
       value={{
         showBanner,
-        showSettings,
         acceptAll,
         rejectAll,
         openSettings,
-        closeSettings,
         closeBanner,
         hasConsent,
       }}
