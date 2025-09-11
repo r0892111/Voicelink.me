@@ -130,8 +130,6 @@ function App() {
           </div>
         </nav>
 
-      {/* Routes */}
-      <Routes>
         {/* Routes */}
         <Routes>
           <Route path="/" element={<Homepage openModal={openModal} />} />
