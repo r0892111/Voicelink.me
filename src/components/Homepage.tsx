@@ -740,10 +740,13 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       <footer 
         id="footer"
         data-animate-section
+
         className="text-white py-12 relative z-10"
         style={{ backgroundColor: '#202226' }}
       >
         <div className="max-w-7xl mx-auto px-6">
+
+          
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
               {/* White logo on dark background */}
