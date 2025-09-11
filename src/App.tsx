@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Users, LogOut, User, Menu, X } from 'lucide-react';
+import { Users, LogOut, User, Menu, X, ArrowLeft } from 'lucide-react';
 import { AuthModal } from './components/AuthModal';
 import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
@@ -13,11 +13,17 @@ import Disclaimer from './components/Disclaimer';
 import CookiePolicy from './components/CookiePolicy';
 import Support from './components/Support';
 import { useAuth } from './hooks/useAuth';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const { user, loading, signOut } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if we're on the homepage
+  const isHomepage = location.pathname === '/';
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -44,12 +50,17 @@ function App() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => navigate('/')}>
+              {!isHomepage && (
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors">
+                  <ArrowLeft className="w-4 h-4 text-gray-600" />
+                </div>
+              )}
               {/* Blue logo on light background */}
               <img 
                 src="/Finit Voicelink Blue.svg" 
                 alt="VoiceLink" 
-                className="h-10 w-auto"
+                className="h-10 w-auto group-hover:opacity-80 transition-opacity"
               />
             </div>
             

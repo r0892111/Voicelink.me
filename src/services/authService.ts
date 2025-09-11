@@ -1,4 +1,3 @@
-import { supabase } from '../lib/supabase';
 
 export interface AuthResult {
   success: boolean;
@@ -92,7 +91,11 @@ export class AuthService {
   }
 
   private async initiateOdooAuth(): Promise<AuthResult> {
-    const clientId = import.meta.env.VITE_ODOO_CLIENT_ID || '9849446b-87d1-4901-863b-a756148ee670';
+    const clientId = import.meta.env.VITE_ODOO_CLIENT_ID;
+    
+    if (!clientId) {
+      return { success: false, error: 'Odoo client ID not configured' };
+    }
     const redirectUri = `${window.location.protocol}//${window.location.host}/auth/odoo/callback`;
 
     // Clear any existing auth state to ensure fresh authentication

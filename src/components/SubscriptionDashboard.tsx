@@ -1,93 +1,689 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Crown, Users, Zap, Settings } from 'lucide-react';
-import { UserInfoCard } from './UserInfoCard';
+import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail } from 'lucide-react';
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
+import { supabase } from '../lib/supabase';
 
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
+  const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
+  const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
+  const isFetchingRef = React.useRef(false);
 
-  const getPlatformIcon = (platform: string) => {
+  // Fetch WhatsApp status
+  const fetchWhatsAppStatus = React.useCallback(async () => {
+    if (!user || isFetchingRef.current) return;
+
+    isFetchingRef.current = true;
+    setLoadingWhatsApp(true);
+    
+    try {
+      const platform = user.platform;
+      const tableName = `${platform}_users`;
+      
+      const { data, error } = await supabase
+        .from(tableName)
+        .select('whatsapp_status')
+        .eq('user_id', user.id)
+        .is('deleted_at', null)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error fetching WhatsApp status:', error);
+        setWhatsappStatus('not_set');
+        return;
+      }
+
+      if (data) {
+        setWhatsappStatus(data.whatsapp_status || 'not_set');
+      } else {
+        // No data found, set default state
+        setWhatsappStatus('not_set');
+      }
+    } catch (error) {
+      console.error('Error fetching WhatsApp status:', error);
+      setWhatsappStatus('not_set');
+    } finally {
+      setLoadingWhatsApp(false);
+      isFetchingRef.current = false;
+    }
+  }, [user]);
+
+  React.useEffect(() => {
+    fetchWhatsAppStatus();
+  }, [fetchWhatsAppStatus]);
+
+
+  const getPlatformName = (platform: string) => {
     switch (platform) {
       case 'teamleader':
-        return <Users className="w-6 h-6 text-emerald-600" />;
+        return 'TeamLeader';
       case 'pipedrive':
-        return <Zap className="w-6 h-6 text-orange-500" />;
+        return 'Pipedrive';
       case 'odoo':
-        console.log('Rendering Odoo icon');
-        return <Settings className="w-6 h-6 text-purple-600" />;
+        return 'Odoo';
       default:
-        return <Users className="w-6 h-6 text-gray-600" />;
+        return 'Unknown';
     }
   };
 
   return (
-    <div className="space-y-8">
-      {/* Premium Welcome Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-sm p-8 text-white">
-        <div className="flex items-center space-x-3 mb-4">
-          <Crown className="w-8 h-8 text-yellow-300" />
-          <h1 className="text-3xl font-bold">
-            Welcome back, {user?.name || 'Premium User'}!
-          </h1>
-        </div>
-        <p className="text-blue-100">
-          You have an active subscription. Enjoy all premium features including WhatsApp integration.
-        </p>
+    <div className="min-h-screen bg-white relative">
+      {/* Continuous Background Gradient - Same as Homepage */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #1C2C55 0%, #FFFFFF 50%, #F7E69B 100%)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(45deg, transparent 0%, rgba(247, 230, 155, 0.1) 20%, transparent 40%, rgba(28, 44, 85, 0.05) 60%, transparent 80%, rgba(247, 230, 155, 0.08) 100%)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(28, 44, 85, 0.02) 0%, transparent 30%, rgba(247, 230, 155, 0.03) 50%, transparent 70%, rgba(28, 44, 85, 0.02) 100%)' }}></div>
       </div>
 
-      {/* Platform Info */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
-        <div className="flex items-center space-x-3 mb-4">
-          {user && getPlatformIcon(user.platform)}
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">
-              Connected Platform: {user?.platform ? user.platform.charAt(0).toUpperCase() + user.platform.slice(1) : 'Unknown'}
-            </h2>
-            <p className="text-gray-600">Your CRM integration is active</p>
-          </div>
-        </div>
-        {user?.user_info && (
-          <UserInfoCard 
-            platform={user.platform}
-            userInfo={user.user_info}
-            email={user.email}
-          />
-        )}
-      </div>
-
-      {/* WhatsApp Integration */}
-      <WhatsAppVerification />
-
-      {/* Odoo API Key Input - Only for Odoo users */}
-      {user?.platform === 'odoo' && <OdooApiKeyInput />}
-
-      {/* Premium Features */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Premium Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 bg-green-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="font-medium text-green-800">WhatsApp Notifications</span>
+      <div className="relative z-10 pt-24 pb-16">
+        <div className="max-w-7xl mx-auto px-6 space-y-12 pt-8">
+          {/* Premium Hero Section */}
+          <section className="text-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <div className="relative inline-block mb-6">
+              <div className="flex items-center justify-center space-x-3 mb-4">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
+                  <Crown className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                </div>
+                <div className="text-left">
+                  <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
+                    Welcome back, {user?.user_info?.first_name || 'Premium User'}!
+                  </h1>
+                  <p className="text-xl" style={{ color: '#6B7280' }}>
+                    Your VoiceLink subscription is active
+                  </p>
+                </div>
+              </div>
+              {/* Subtle background glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-20 transform scale-110 -z-10"></div>
             </div>
-            <p className="text-sm text-green-600">Get instant updates via WhatsApp</p>
-          </div>
-          <div className="p-4 bg-blue-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="font-medium text-blue-800">Advanced Analytics</span>
+          </section>
+
+          {/* Platform Connection Status */}
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Platform Connection Card */}
+              <div className="lg:col-span-1">
+                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 h-full">
+                  <div className="text-center">
+                    <div className="w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center bg-white shadow-sm border border-gray-100">
+                      {user?.platform === 'teamleader' && (
+                        <img src="/Teamleader_Icon.svg" alt="TeamLeader" className="w-12 h-12" />
+                      )}
+                      {user?.platform === 'pipedrive' && (
+                        <img src="/Pipedrive_id-7ejZnwv_0.svg" alt="Pipedrive" className="w-12 h-12" />
+                      )}
+                      {user?.platform === 'odoo' && (
+                        <img src="/odoo_logo.svg" alt="Odoo" className="w-12 h-12" />
+                      )}
+                    </div>
+                    <h3 className="text-xl font-bold mb-2" style={{ color: '#1C2C55' }}>
+                      {getPlatformName(user?.platform || '')}
+                    </h3>
+                    <div className="flex items-center justify-center space-x-2 mb-3">
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                      <span className="text-sm font-medium text-green-600">Connected & Active</span>
+                    </div>
+                    <p className="text-sm text-gray-600">
+                      Integration is live and ready for voice notes
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* User Profile Card */}
+              <div className="lg:col-span-2">
+                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 h-full">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                      <Users className="w-6 h-6" style={{ color: '#1C2C55' }} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold" style={{ color: '#1C2C55' }}>Account Profile</h3>
+                      <p className="text-sm text-gray-600">Your CRM account information</p>
+                    </div>
+                  </div>
+
+                  {user?.user_info && (
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {/* Personal Information */}
+                      <div className="space-y-4">
+                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Personal Information</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Full Name</span>
+                            <span className="text-sm font-medium text-gray-900">
+                              {user.user_info.first_name} {user.user_info.last_name}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Email</span>
+                            <span className="text-sm font-medium text-gray-900">{user.email}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Language</span>
+                            <span className="text-sm font-medium text-gray-900">
+                              {typeof user.user_info.language === 'string' 
+                                ? user.user_info.language 
+                                : user.user_info.language?.language_code 
+                                  ? `${user.user_info.language.language_code}-${user.user_info.language.country_code}`
+                                  : 'N/A'
+                              }
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Time Zone</span>
+                            <span className="text-sm font-medium text-gray-900">{user.user_info.time_zone}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">WhatsApp Status</span>
+                            <span className={`text-sm font-medium inline-flex items-center px-2 py-1 rounded-full text-xs ${
+                              whatsappStatus === 'active' 
+                                ? 'bg-green-100 text-green-800' 
+                                : whatsappStatus === 'pending'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-gray-100 text-gray-800'
+                            }`}>
+                              {whatsappStatus === 'active' && '✅ '}
+                              {whatsappStatus === 'pending' && '⏳ '}
+                              {whatsappStatus === 'not_set' && '❌ '}
+                              {whatsappStatus === 'active' ? 'Connected' : 
+                               whatsappStatus === 'pending' ? 'Pending' : 'Not Connected'}
+                            </span>
+                          </div>
+                          {user.user_info.telephones && user.user_info.telephones.length > 0 && (
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                              <span className="text-sm text-gray-600">Phone</span>
+                              <span className="text-sm font-medium text-gray-900">
+                                +{user.user_info.telephones[0].number}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Account Information */}
+                      <div className="space-y-4">
+                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Account Details</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Account ID</span>
+                            <span className="text-xs font-mono text-gray-700 bg-gray-100 px-2 py-1 rounded">
+                              {user.user_info.account?.id}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">Email Status</span>
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              {user.user_info.email_verification_status}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-            <p className="text-sm text-blue-600">Detailed insights and reports</p>
-          </div>
-          <div className="p-4 bg-purple-50 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <span className="font-medium text-purple-800">Priority Support</span>
+          </section>
+
+          {/* Conditional Content Based on WhatsApp Status */}
+          {!loadingWhatsApp && (
+            <>
+              {whatsappStatus === 'active' ? (
+                /* Ready to Use Section */
+                <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                  <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
+                    <div className="text-center">
+                      <div className="w-20 h-20 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(37, 211, 102, 0.1)' }}>
+                        <CheckCircle className="w-10 h-10 text-green-600" />
+                      </div>
+                      <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                        🎉 You're All Set!
+                      </h2>
+                      <p className="text-xl mb-6" style={{ color: '#6B7280' }}>
+                        Your WhatsApp is connected and VoiceLink is ready to use
+                      </p>
+                      
+                      <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-2xl p-6 mb-6">
+                        <div className="flex items-center justify-center space-x-3 mb-3">
+                          <MessageCircle className="w-6 h-6 text-green-600" />
+                          <h3 className="text-lg font-semibold" style={{ color: '#1C2C55' }}>
+                            Start Sending Voice Notes
+                          </h3>
+                        </div>
+                        <p className="text-gray-700 leading-relaxed">
+                          Simply send a voice message to VoiceLink on WhatsApp and watch as your CRM gets updated automatically with structured data, follow-up tasks, and contact information.
+                        </p>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
+                        <div className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                          <span>WhatsApp Connected</span>
+                        </div>
+                        <div className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                          <span>CRM Integration Active</span>
+                        </div>
+                        <div className="flex items-center justify-center space-x-2">
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                          <span>AI Processing Ready</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              ) : (
+                /* Getting Started Guide */
+                <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                  <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
+                    <div className="text-center mb-8">
+                      <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                        Ready to Get Started?
+                      </h2>
+                      <p className="text-xl" style={{ color: '#6B7280' }}>
+                        Follow these simple steps to start using VoiceLink
+                      </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8 mb-8">
+                      {/* Step 1 */}
+                      <div className="text-center">
+                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                          Verify WhatsApp
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          Connect your WhatsApp number to receive voice note confirmations
+                        </p>
+                      </div>
+
+                      {/* Step 2 */}
+                      <div className="text-center">
+                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                          Send Voice Note
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          Record your thoughts naturally through WhatsApp voice messages
+                        </p>
+                      </div>
+
+                      {/* Step 3 */}
+                      <div className="text-center">
+                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                          Watch Magic Happen
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          AI processes your voice and syncs structured data to your CRM
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* WhatsApp Integration Embedded */}
+                    <div className="border-t border-gray-200 pt-8">
+                      <WhatsAppVerification />
+                    </div>
+                  </div>
+                </section>
+              )}
+            </>
+          )}
+
+          {/* User Guide Section - Only show when WhatsApp is active */}
+          {!loadingWhatsApp && whatsappStatus === 'active' && (
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+              <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                    <MessageCircle className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                  </div>
+                  <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                    Daily Usage Guide
+                  </h2>
+                  <p className="text-xl" style={{ color: '#6B7280' }}>
+                    VoiceLink works best when you speak your updates in a structured and clear manner
+                  </p>
+                </div>
+
+                <div className="max-w-4xl mx-auto space-y-8">
+                  {/* Contact Recording */}
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <Users className="w-6 h-6" />
+                      <span>1. Recording Contacts</span>
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Start with:</h4>
+                        <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderColor: '#1C2C55' }}>
+                          <p className="font-medium">"Just called/spoke with [NAME]"</p>
+                          <p className="font-medium">or "[NAME] just visited"</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Names:</h4>
+                          <p className="text-sm text-gray-700">Speak slowly and spell difficult names letter by letter</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Phone/Email:</h4>
+                          <p className="text-sm text-gray-700">Optional, but always spell when in doubt</p>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <p className="text-sm text-yellow-800">
+                          <strong>New vs. Existing Contacts:</strong> VoiceLink automatically searches for existing records and creates new contacts when needed.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Conversation Information */}
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <MessageCircle className="w-6 h-6" />
+                      <span>2. Conversation Information</span>
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <p className="text-gray-700">Share important information as if you're telling a colleague.</p>
+                      
+                      <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderColor: '#25D366' }}>
+                        <p className="font-medium text-gray-800">Example:</p>
+                        <p className="italic text-gray-700 mt-2">
+                          "He's interested in product X, wants a demo next week, and asked me to send the price list."
+                        </p>
+                      </div>
+                      
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p className="text-sm text-blue-800">
+                          <strong>Tip:</strong> The more details you provide, the better VoiceLink can fill your CRM. 
+                          The system automatically creates tags and reports as annotations.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Calendar & Task Management */}
+                  <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <Calendar className="w-6 h-6" />
+                      <span>3. Calendar & Task Management</span>
+                    </h3>
+                    
+                    <p className="text-gray-700 mb-4">VoiceLink can automatically create or update appointments and tasks.</p>
+                    
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>📞 Callbacks:</h4>
+                          <div className="bg-white rounded-lg p-3 text-sm">
+                            <p>"I need to call him back Monday at 3 PM"</p>
+                            <p>"I should call him tomorrow morning"</p>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>📅 Appointments:</h4>
+                          <div className="bg-white rounded-lg p-3 text-sm">
+                            <p>"He's coming next Tuesday at 2 PM"</p>
+                            <p>"Meeting in Tremelo on May 29th at 1 PM"</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>✅ Tasks:</h4>
+                          <div className="bg-white rounded-lg p-3 text-sm">
+                            <p>"Send catalog tomorrow"</p>
+                            <p>"Prepare quote for Friday 2 PM"</p>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>🔄 Updates:</h4>
+                          <div className="bg-white rounded-lg p-3 text-sm">
+                            <p>"Meeting with Marianna moved to Tuesday 12 PM"</p>
+                            <p>"Jeff didn't answer, try again tomorrow"</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Best Practices */}
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <CheckCircle className="w-6 h-6" />
+                      <span>4. Best Practices for Optimal Use</span>
+                    </h3>
+                    
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
+                            <span className="text-white text-sm">🗣️</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Speak Clearly</h4>
+                            <p className="text-sm text-gray-700">Speak clearly and slowly in standard English</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
+                            <span className="text-white text-sm">📱</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Spelling Mode</h4>
+                            <p className="text-sm text-gray-700">Spell letters for names, emails, and phone numbers when in doubt</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
+                            <span className="text-white text-sm">⏰</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Auto-Scheduling</h4>
+                            <p className="text-sm text-gray-700">No time mentioned? VoiceLink finds a suitable time automatically</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-3">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
+                            <span className="text-white text-sm">🎯</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Keep It Focused</h4>
+                            <p className="text-sm text-gray-700">One update per message is most reliable</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                      <p className="text-sm text-red-800">
+                        <strong>Important:</strong> You can only update one contact per message. 
+                        Want to update multiple people in your CRM? Record them with separate voice notes on WhatsApp.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Troubleshooting */}
+                  <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
+                      <Settings className="w-6 h-6" />
+                      <span>5. Troubleshooting</span>
+                    </h3>
+                    
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className="bg-white rounded-lg p-4">
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>No Connection?</h4>
+                        <p className="text-sm text-gray-700">Check internet connection and API settings</p>
+                      </div>
+                      
+                      <div className="bg-white rounded-lg p-4">
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Wrong Input?</h4>
+                        <p className="text-sm text-gray-700">Send corrections via new voice message</p>
+                      </div>
+                      
+                      <div className="bg-white rounded-lg p-4">
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Transcription Errors?</h4>
+                        <p className="text-sm text-gray-700">Speak clearly without background noise</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Support */}
+                  <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 text-center">
+                    <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                      Need Help?
+                    </h3>
+                    
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                      <a
+                        href="mailto:contact@finitsolutions.be"
+                        className="flex items-center space-x-2 px-4 py-2 bg-white rounded-lg hover:shadow-md transition-shadow"
+                      >
+                        <Mail className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                        <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>contact@finitsolutions.be</span>
+                      </a>
+                      
+                      <a
+                        href="/support"
+                        className="flex items-center space-x-2 px-4 py-2 bg-white rounded-lg hover:shadow-md transition-shadow"
+                      >
+                        <Headphones className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                        <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Support Center</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Odoo API Key Input - Only for Odoo users */}
+          {user?.platform === 'odoo' && (
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+              <OdooApiKeyInput />
+            </section>
+          )}
+
+          {/* Premium Features Grid */}
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                Your Premium Features
+              </h2>
+              <p className="text-xl" style={{ color: '#6B7280' }}>
+                Everything you need to transform voice into structured CRM data
+              </p>
             </div>
-            <p className="text-sm text-purple-600">24/7 dedicated assistance</p>
-          </div>
+
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* WhatsApp Integration */}
+              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                  <MessageCircle className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                </div>
+                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                  WhatsApp Voice Notes
+                </h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Send unlimited voice messages directly to your CRM via WhatsApp
+                </p>
+                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Unlimited Usage</span>
+                </div>
+              </div>
+
+              {/* Real-time Sync */}
+              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                  <Zap className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                </div>
+                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                  Real-time Sync
+                </h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Instant synchronization with your CRM platform
+                </p>
+                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Live Updates</span>
+                </div>
+              </div>
+
+              {/* Priority Support */}
+              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                  <Headphones className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                </div>
+                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                  Priority Support
+                </h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  24/7 dedicated assistance from our expert team
+                </p>
+                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
+                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>24/7 Support</span>
+                </div>
+              </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Support Section */}
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
+            <div className="text-center bg-gradient-to-r from-gray-50 to-white rounded-3xl p-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                Need Help Getting Started?
+              </h3>
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Our support team is here to help you make the most of VoiceLink. 
+                Get personalized assistance with setup and optimization.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/support"
+                  className="group border-2 font-semibold py-3 px-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                  style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#F7E69B';
+                    e.currentTarget.style.borderColor = '#1C2C55';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.borderColor = '#1C2C55';
+                  }}
+                >
+                  <Headphones className="w-5 h-5" />
+                  <span>Contact Support</span>
+                </a>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
