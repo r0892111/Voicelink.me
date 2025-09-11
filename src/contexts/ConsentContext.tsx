@@ -37,8 +37,8 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
       setConsent(JSON.parse(savedConsent));
       setShowBanner(false);
     } else {
-      // Show banner after a short delay to avoid flash
-      setTimeout(() => setShowBanner(true), 1000);
+      // Show banner immediately if no consent found
+      setShowBanner(true);
     }
   }, []);
 
