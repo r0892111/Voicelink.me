@@ -26,26 +26,25 @@ interface ConsentProviderProps {
 }
 
 export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) => {
-  const [showBanner, setShowBanner] = useState(false);
+  const [showBanner, setShowBanner] = useState(true); // Start with true
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
 
-  // Debug logging
-  console.log('ConsentProvider rendered, showBanner:', showBanner);
-
   useEffect(() => {
-    console.log('ConsentProvider useEffect running');
     // Check if user has already made a consent choice
     const savedConsent = localStorage.getItem('cookie-consent');
-    console.log('Saved consent from localStorage:', savedConsent);
+    
     if (savedConsent) {
-      console.log('Found existing consent, hiding banner');
-      setConsent(JSON.parse(savedConsent));
-      setShowBanner(false);
+      try {
+        const parsedConsent = JSON.parse(savedConsent);
+        setConsent(parsedConsent);
+        setShowBanner(false); // Hide banner if consent exists
+      } catch (error) {
+        console.error('Error parsing consent:', error);
+        setShowBanner(true); // Show banner on error
+      }
     } else {
-      // Show banner if no consent found
-      console.log('No existing consent found, showing banner');
-      setShowBanner(true);
+      setShowBanner(true); // Show banner if no consent found
     }
   }, []);
 
@@ -53,6 +52,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     setConsent(newConsent);
     localStorage.setItem('cookie-consent', JSON.stringify(newConsent));
     setShowBanner(false);
+    setShowSettings(false);
   };
 
   const acceptAll = () => {
@@ -63,6 +63,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
       preferences: true,
     };
     saveConsent(allConsent);
+    setShowBanner(false);
   };
 
   const rejectAll = () => {
@@ -73,11 +74,11 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
       preferences: false,
     };
     saveConsent(essentialOnly);
+    setShowBanner(false);
   };
 
   const openSettings = () => {
     setShowSettings(true);
-    setShowBanner(false);
   };
 
   const closeSettings = () => {
@@ -86,6 +87,14 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
 
   const closeBanner = () => {
     setShowBanner(false);
+    // Also save essential-only consent when closing
+    const essentialOnly = {
+      essential: true,
+      analytics: false,
+      marketing: false,
+      preferences: false,
+    };
+    localStorage.setItem('cookie-consent', JSON.stringify(essentialOnly));
   };
 
   const hasConsent = (category: string): boolean => {
