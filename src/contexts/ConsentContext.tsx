@@ -63,6 +63,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
       preferences: true,
     };
     saveConsent(allConsent);
+    setShowBanner(false);
   };
 
   const rejectAll = () => {
@@ -73,6 +74,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
       preferences: false,
     };
     saveConsent(essentialOnly);
+    setShowBanner(false);
   };
 
   const openSettings = () => {
@@ -85,6 +87,14 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
 
   const closeBanner = () => {
     setShowBanner(false);
+    // Also save essential-only consent when closing
+    const essentialOnly = {
+      essential: true,
+      analytics: false,
+      marketing: false,
+      preferences: false,
+    };
+    localStorage.setItem('cookie-consent', JSON.stringify(essentialOnly));
   };
 
   const hasConsent = (category: string): boolean => {

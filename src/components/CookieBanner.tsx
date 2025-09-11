@@ -16,10 +16,20 @@ export const CookieBanner: React.FC = () => {
 
   const handleAcceptAll = () => {
     acceptAll();
+    // Force hide banner immediately
+    const banner = document.querySelector('[data-cookie-banner]');
+    if (banner) {
+      (banner as HTMLElement).style.display = 'none';
+    }
   };
 
   const handleRejectAll = () => {
     rejectAll();
+    // Force hide banner immediately
+    const banner = document.querySelector('[data-cookie-banner]');
+    if (banner) {
+      (banner as HTMLElement).style.display = 'none';
+    }
   };
 
   const handleOpenSettings = () => {
@@ -28,10 +38,19 @@ export const CookieBanner: React.FC = () => {
 
   const handleCloseBanner = () => {
     closeBanner();
+    // Force hide banner immediately
+    const banner = document.querySelector('[data-cookie-banner]');
+    if (banner) {
+      (banner as HTMLElement).style.display = 'none';
+    }
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-white border-t border-gray-200 shadow-lg" style={{ display: 'block' }}>
+    <div 
+      data-cookie-banner
+      className="fixed bottom-0 left-0 right-0 z-[9999] bg-white border-t border-gray-200 shadow-lg" 
+      style={{ display: 'block' }}
+    >
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Content */}
