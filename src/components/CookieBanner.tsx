@@ -6,10 +6,20 @@ import { CookieSettingsModal } from './CookieSettingsModal';
 export const CookieBanner: React.FC = () => {
   const { showBanner, acceptAll, rejectAll, openSettings, closeBanner } = useConsent();
 
-  // Debug: log the banner state
-  console.log('Cookie banner showBanner:', showBanner);
+  // Debug logging
+  console.log('CookieBanner component rendered');
+  console.log('CookieBanner showBanner state:', showBanner);
+  console.log('CookieBanner useConsent hook result:', { showBanner, acceptAll, rejectAll, openSettings, closeBanner });
 
-  if (!showBanner) return null;
+  // TEMPORARY: Force show banner for testing
+  const forceShow = true;
+
+  if (!showBanner && !forceShow) {
+    console.log('CookieBanner: showBanner is false, returning null');
+    return null;
+  }
+
+  console.log('CookieBanner: Rendering banner (forceShow:', forceShow, ')');
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-white border-t border-gray-200 shadow-lg">

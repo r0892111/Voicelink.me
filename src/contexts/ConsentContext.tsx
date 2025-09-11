@@ -30,14 +30,21 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
 
+  // Debug logging
+  console.log('ConsentProvider rendered, showBanner:', showBanner);
+
   useEffect(() => {
+    console.log('ConsentProvider useEffect running');
     // Check if user has already made a consent choice
     const savedConsent = localStorage.getItem('cookie-consent');
+    console.log('Saved consent from localStorage:', savedConsent);
     if (savedConsent) {
+      console.log('Found existing consent, hiding banner');
       setConsent(JSON.parse(savedConsent));
       setShowBanner(false);
     } else {
-      // Show banner immediately if no consent found
+      // Show banner if no consent found
+      console.log('No existing consent found, showing banner');
       setShowBanner(true);
     }
   }, []);
