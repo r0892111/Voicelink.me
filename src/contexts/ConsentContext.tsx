@@ -56,13 +56,16 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   };
 
   const acceptAll = () => {
+    console.log('acceptAll called');
     const allConsent = {
       essential: true,
       analytics: true,
       marketing: true,
       preferences: true,
     };
+    console.log('Saving consent:', allConsent);
     saveConsent(allConsent);
+    setShowSettings(false);
   };
 
   const rejectAll = () => {

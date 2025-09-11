@@ -58,9 +58,6 @@ export const CookieBanner: React.FC = () => {
             <button
               onClick={acceptAll}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
-              style={{ backgroundColor: '#1C2C55' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
             >
               Accept All
             </button>
