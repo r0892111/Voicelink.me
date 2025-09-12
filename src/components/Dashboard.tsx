@@ -94,7 +94,7 @@ export const Dashboard: React.FC = () => {
           <BuyButton
             priceId="price_1S5o6zLPohnizGblsQq7OYCT"
             productName="Premium Monthly"
-            price="€29.99/mo"
+            price="€29.90/mo"
             description="Advanced CRM features and priority support"
           />
           
