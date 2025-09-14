@@ -147,7 +147,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       <section 
         id="features" 
         data-animate-section
-        className={`py-16 relative z-10 transition-all duration-1000 ${
+        className={`py-16 relative z-10 transition-all duration-1000 scroll-mt-24 ${
           visibleSections.has('features') 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
@@ -305,7 +305,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       <section 
         id="how-it-works"
         data-animate-section
-        className={`py-32 relative z-10 transition-all duration-1000 ${
+        className={`py-32 relative z-10 transition-all duration-1000 scroll-mt-24 ${
           visibleSections.has('how-it-works') 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
@@ -444,7 +444,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       <section 
         id="pricing" 
         data-animate-section
-        className={`py-20 relative z-10 transition-all duration-1000 ${
+        className={`py-20 relative z-10 transition-all duration-1000 scroll-mt-24 ${
           visibleSections.has('pricing') 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
