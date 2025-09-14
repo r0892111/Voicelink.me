@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail } from 'lucide-react';
+import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail, CreditCard, ExternalLink } from 'lucide-react';
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
 import { supabase } from '../lib/supabase';
@@ -288,10 +288,7 @@ export const SubscriptionDashboard: React.FC = () => {
                           Simply send a voice message to VoiceLink on WhatsApp and watch as your CRM gets updated automatically with structured data, follow-up tasks, and contact information.
                         </p>
                       </div>
-                                            {/* WhatsApp Management - Always visible when active */}
-        <div className="mt-8">
-          <WhatsAppVerification onStatusChange={setWhatsappStatus} />
-        </div>
+                      
                       <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
                         <div className="flex items-center justify-center space-x-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
@@ -308,7 +305,6 @@ export const SubscriptionDashboard: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  
                 </section>
               ) : (
                 /* Getting Started Guide */
@@ -622,6 +618,66 @@ export const SubscriptionDashboard: React.FC = () => {
             </section>
           )}
 
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                Manage Your Subscription
+              </h2>
+              <p className="text-xl" style={{ color: '#6B7280' }}>
+                Access your billing information and manage your subscription
+              </p>
+            </div>
+
+            <div className="max-w-2xl mx-auto mb-16">
+              <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                    <CreditCard className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                    Customer Portal
+                  </h3>
+                  <p className="text-gray-600 mb-8 leading-relaxed">
+                    Access your billing history, update payment methods, download invoices, and manage your subscription settings through our secure customer portal.
+                  </p>
+                  
+                  <a
+                    href="https://billing.stripe.com/p/login/cNifZi74c1OQepfcYAdMI00"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center space-x-3 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1"
+                    style={{ backgroundColor: '#1C2C55' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+                  >
+                    <CreditCard className="w-5 h-5" />
+                    <span>Access Customer Portal</span>
+                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                  
+                  <div className="mt-6 grid grid-cols-2 gap-4 text-sm text-gray-600">
+                    <div className="flex items-center justify-center space-x-2">
+                      <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                      <span>View billing history</span>
+                    </div>
+                    <div className="flex items-center justify-center space-x-2">
+                      <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                      <span>Update payment methods</span>
+                    </div>
+                    <div className="flex items-center justify-center space-x-2">
+                      <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                      <span>Download invoices</span>
+                    </div>
+                    <div className="flex items-center justify-center space-x-2">
+                      <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+                      <span>Manage subscription</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Premium Features Grid */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
             <div className="text-center mb-16">
@@ -721,7 +777,10 @@ export const SubscriptionDashboard: React.FC = () => {
           </section>
         </div>
         
-  
+        {/* WhatsApp Management - Always visible when active */}
+        <div className="mt-8">
+          <WhatsAppVerification onStatusChange={setWhatsappStatus} />
+        </div>
       </div>
     </div>
   );
