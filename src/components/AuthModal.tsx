@@ -119,8 +119,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* Sign-in Options */}
         <div className="space-y-4 mb-8">
           {authProviders.map((provider) => {
-            const IconComponent = provider.icon;
             const isLoading = loadingProvider === provider.name;
+            
+            // Get the appropriate logo image for each CRM
+            const getProviderLogo = (providerName: string) => {
+              switch (providerName) {
+                case 'teamleader':
+                  return '/Teamleader_Icon.svg';
+                case 'pipedrive':
+                  return '/Pipedrive_id-7ejZnwv_0.svg';
+                case 'odoo':
+                  return '/odoo_logo.svg';
+                default:
+                  return null;
+              }
+            };
             
             return (
               <button
@@ -136,7 +149,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </>
                 ) : (
                   <>
-                    <IconComponent className="w-7 h-7" />
+                    <img 
+                      src={getProviderLogo(provider.name)} 
+                      alt={provider.displayName} 
+                      className="w-7 h-7 object-contain"
+                    />
                     <span className="text-lg">Connect {provider.displayName}</span>
                   </>
                 )}
