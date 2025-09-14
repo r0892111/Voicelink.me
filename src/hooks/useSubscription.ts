@@ -33,11 +33,8 @@ export const useSubscription = () => {
         return;
       }
 
-      // Get CRM provider from localStorage
-      const crmProvider = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider') || 'unknown';
-      
-      // Call your edge function with provider parameter
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=${encodeURIComponent(crmProvider)}`, {
+      // Call your edge function
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${session.access_token}`,
