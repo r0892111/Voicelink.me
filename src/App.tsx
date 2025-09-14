@@ -160,17 +160,19 @@ function App() {
         </nav>
 
         {/* Routes */}
-        <Routes>
-          <Route path="/" element={<Homepage openModal={openModal} />} />
-          <Route path="/auth/:platform/callback" element={<AuthCallback />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/success" element={<SuccessPage />} />
-          <Route path="/saas-agreement" element={<SaasAgreement />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/disclaimer" element={<Disclaimer />} />
-          <Route path="/cookie-policy" element={<CookiePolicy />} />
-          <Route path="/support" element={<Support />} />
-        </Routes>
+        <div className="pt-20">
+          <Routes>
+            <Route path="/" element={<Homepage openModal={openModal} />} />
+            <Route path="/auth/:platform/callback" element={<AuthCallback />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/success" element={<SuccessPage />} />
+            <Route path="/saas-agreement" element={<SaasAgreement />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/support" element={<Support />} />
+          </Routes>
+        </div>
 
         {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
         
