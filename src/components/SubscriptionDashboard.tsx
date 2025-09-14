@@ -716,6 +716,11 @@ export const SubscriptionDashboard: React.FC = () => {
             </div>
           </section>
         </div>
+        
+        {/* WhatsApp Management - Always visible when active */}
+        <div className="mt-8">
+          <WhatsAppVerification onStatusChange={setWhatsappStatus} />
+        </div>
       </div>
     </div>
   );
