@@ -113,7 +113,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
       <div className="grid lg:grid-cols-2 gap-12 items-stretch">
         {/* Pricing Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-left" style={{ animationDelay: '0.4s' }}>
+        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-left h-full flex flex-col" style={{ animationDelay: '0.4s' }}>
           <div className="flex items-center space-x-3 mb-6">
             <img 
               src="/Finit Icon Blue.svg" 
@@ -126,7 +126,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </div>
           </div>
 
-          <div className="space-y-4 mb-8">
+          <div className="space-y-4 mb-8 flex-grow">
             {[
               'Unlimited WhatsApp voice notes',
               'Real-time CRM sync',
@@ -175,7 +175,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </div>
 
           {pricing.isEnterprise ? (
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 mt-auto">
               <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-2xl">
                 <div className="mb-4">
                   <h4 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>
@@ -201,7 +201,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               </div>
             </div>
           ) : (
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 mt-auto">
               <div className="flex items-baseline justify-center space-x-2 mb-2">
                 <span className="text-5xl font-bold" style={{ color: '#1C2C55' }}>
                   €{pricing.pricePerUser.toFixed(2)}
@@ -228,7 +228,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           )}
 
           {!pricing.isEnterprise && (
-            <>
+            <div className="mt-auto">
               <button
                 onClick={openModal}
                 className="w-full text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2 group"
@@ -243,12 +243,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               <p className="text-center text-sm text-gray-500 mt-4">
                 14-day free trial • No credit card required
               </p>
-            </>
+            </div>
           )}
         </div>
 
         {/* Volume Discount Table */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-right" style={{ animationDelay: '0.6s' }}>
+        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-right h-full flex flex-col" style={{ animationDelay: '0.6s' }}>
           <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: '#1C2C55' }}>
             Volume Discount Tiers
           </h3>
@@ -256,7 +256,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             Automatic discounts applied based on team size
           </p>
 
-          <div className="overflow-hidden rounded-2xl border border-gray-200">
+          <div className="overflow-hidden rounded-2xl border border-gray-200 flex-grow">
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
