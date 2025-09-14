@@ -8,7 +8,11 @@ interface WhatsAppStatus {
   whatsapp_status: 'not_set' | 'pending' | 'active';
 }
 
-export const WhatsAppVerification: React.FC = () => {
+interface WhatsAppVerificationProps {
+  onStatusChange?: (status: 'not_set' | 'pending' | 'active') => void;
+}
+
+export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = ({ onStatusChange }) => {
   const { user } = useAuth();
   const [whatsappInput, setWhatsappInput] = useState('');
   const [otpCode, setOtpCode] = useState('');
@@ -53,12 +57,21 @@ export const WhatsAppVerification: React.FC = () => {
           whatsapp_number: data.whatsapp_number,
           whatsapp_status: data.whatsapp_status || 'not_set'
         });
+        
+        // Notify parent component of status change
+        if (onStatusChange) {
+          onStatusChange(data.whatsapp_status || 'not_set');
+        }
       } else {
         // No data found, set default state
         setWhatsappStatus({
           whatsapp_number: null,
           whatsapp_status: 'not_set'
         });
+        
+        if (onStatusChange) {
+          onStatusChange('not_set');
+        }
       }
     } catch (error) {
       console.error('Error fetching WhatsApp status:', error);
@@ -66,6 +79,10 @@ export const WhatsAppVerification: React.FC = () => {
         whatsapp_number: null,
         whatsapp_status: 'not_set'
       });
+      
+      if (onStatusChange) {
+        onStatusChange('not_set');
+      }
     } finally {
       setFetchingStatus(false);
     }
@@ -227,6 +244,11 @@ export const WhatsAppVerification: React.FC = () => {
         whatsapp_number: whatsappInput.trim(),
         whatsapp_status: 'active'
       });
+      
+      // Notify parent component immediately
+      if (onStatusChange) {
+        onStatusChange('active');
+      }
 
       // Refresh status from database to ensure consistency
       setTimeout(() => {
@@ -295,6 +317,11 @@ export const WhatsAppVerification: React.FC = () => {
         whatsapp_number: null,
         whatsapp_status: 'not_set'
       });
+      
+      // Notify parent component
+      if (onStatusChange) {
+        onStatusChange('not_set');
+      }
 
       setSuccess(false);
       setWhatsappInput('');

@@ -10,6 +10,7 @@ export const SubscriptionDashboard: React.FC = () => {
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
   const isFetchingRef = React.useRef(false);
+  const statusCheckIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
 
   // Fetch WhatsApp status
   const fetchWhatsAppStatus = React.useCallback(async () => {
@@ -52,7 +53,37 @@ export const SubscriptionDashboard: React.FC = () => {
 
   React.useEffect(() => {
     fetchWhatsAppStatus();
+    
+    // Set up polling for WhatsApp status updates when status is pending
+    const setupStatusPolling = () => {
+      if (statusCheckIntervalRef.current) {
+        clearInterval(statusCheckIntervalRef.current);
+      }
+      
+      if (whatsappStatus === 'pending' || whatsappStatus === 'not_set') {
+        statusCheckIntervalRef.current = setInterval(() => {
+          fetchWhatsAppStatus();
+        }, 5000); // Check every 5 seconds
+      }
+    };
+    
+    setupStatusPolling();
+    
+    // Cleanup interval on unmount or when status becomes active
+    return () => {
+      if (statusCheckIntervalRef.current) {
+        clearInterval(statusCheckIntervalRef.current);
+      }
+    };
   }, [fetchWhatsAppStatus]);
+  
+  // Stop polling when status becomes active
+  React.useEffect(() => {
+    if (whatsappStatus === 'active' && statusCheckIntervalRef.current) {
+      clearInterval(statusCheckIntervalRef.current);
+      statusCheckIntervalRef.current = null;
+    }
+  }, [whatsappStatus]);
 
 
   const getPlatformName = (platform: string) => {
@@ -331,7 +362,7 @@ export const SubscriptionDashboard: React.FC = () => {
 
                     {/* WhatsApp Integration Embedded */}
                     <div className="border-t border-gray-200 pt-8">
-                      <WhatsAppVerification />
+                      <WhatsAppVerification onStatusChange={setWhatsappStatus} />
                     </div>
                   </div>
                 </section>
