@@ -69,8 +69,16 @@ function App() {
               
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-8">
-                <a href="#features" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">Features</a>
-                <a href="#pricing" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">Pricing</a>
+                {isHomepage && (
+                  <>
+                    {isHomepage && (
+                      <>
+                        <a href="#features" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">Features</a>
+                        <a href="#pricing" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">Pricing</a>
+                      </>
+                    )}
+                  </>
+                )}
                 
                 {user ? (
                   <div className="flex items-center space-x-6">
