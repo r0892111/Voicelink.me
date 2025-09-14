@@ -51,7 +51,7 @@ function App() {
     <ConsentProvider>
       <div className="min-h-screen bg-white">
         {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <nav className="fixed top-0 left-0 right-0 z-[9999] bg-white/80 backdrop-blur-md border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => navigate('/')}>
