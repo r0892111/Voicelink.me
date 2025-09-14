@@ -111,7 +111,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         />
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-12 items-start">
+      <div className="grid lg:grid-cols-2 gap-12 items-stretch">
         {/* Pricing Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-left" style={{ animationDelay: '0.4s' }}>
           <div className="flex items-center space-x-3 mb-6">
