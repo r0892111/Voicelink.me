@@ -33,8 +33,14 @@ export const useSubscription = () => {
         return;
       }
 
-      // Call your edge function
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`, {
+      // Get provider from localStorage or URL params
+      const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform');
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlProvider = urlParams.get('provider');
+      const finalProvider = urlProvider || provider;
+
+      // Call your edge function with provider parameter
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=${finalProvider || 'unknown'}`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${session.access_token}`,
@@ -44,6 +50,7 @@ export const useSubscription = () => {
 
       const result = await response.json();
 
+      console.log(result);
       if (!result.success || !result.subscription) {
         setSubscription(null);
         return;
@@ -62,7 +69,7 @@ export const useSubscription = () => {
     checkSubscription();
   }, [checkSubscription]);
 
-  const hasActiveSubscription = subscription?.subscription_status === 'active';
+  const hasActiveSubscription = subscription?.subscription_status === 'active' || subscription?.subscription_status === 'trialing';
 
   return { subscription, loading, hasActiveSubscription, checkSubscription };
 };

@@ -19,7 +19,13 @@ export const AuthCallback: React.FC = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return false;
 
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`, {
+      // Get provider from localStorage or URL params
+      const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform');
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlProvider = urlParams.get('provider');
+      const finalProvider = urlProvider || provider;
+
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=${finalProvider || 'unknown'}`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${session.access_token}`,
@@ -28,7 +34,7 @@ export const AuthCallback: React.FC = () => {
       });
 
       const result = await response.json();
-      return result.success && result.subscription?.subscription_status === 'active';
+      return result.success && (result.subscription?.subscription_status === 'active' || result.subscription?.subscription_status === 'trialing');
     } catch (error) {
       console.error('Error checking subscription:', error);
       return false;
@@ -233,7 +239,7 @@ export const AuthCallback: React.FC = () => {
         )}
 
         {status === 'success' && (
-          <p className="text-sm text-gray-500">Redirecting to dashboard...</p>
+          <p className="text-sm text-gray-500">Redirecting to checkout...</p>
         )}
       </div>
     </div>
