@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { MessageCircle, Check, Loader2, AlertCircle, X, Clock } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../lib/supabase';
@@ -12,7 +12,7 @@ interface WhatsAppVerificationProps {
   onStatusChange?: (status: 'not_set' | 'pending' | 'active') => void;
 }
 
-export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = ({ onStatusChange }) => {
+export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({ onStatusChange }) => {
   const { user } = useAuth();
   const [whatsappInput, setWhatsappInput] = useState('');
   const [otpCode, setOtpCode] = useState('');
@@ -28,7 +28,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = ({ onSt
   });
 
   // Fetch WhatsApp status from the appropriate table based on platform
-  const fetchWhatsAppStatus = async () => {
+  const fetchWhatsAppStatus = useCallback(async () => {
     if (!user) return;
 
     setFetchingStatus(true);
@@ -86,12 +86,14 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = ({ onSt
     } finally {
       setFetchingStatus(false);
     }
-  };
+  }, [user, onStatusChange]);
 
-  // Fetch status on component mount and when user changes
+  // Fetch status on component mount and when user ID changes
   useEffect(() => {
-    fetchWhatsAppStatus();
-  }, [user]);
+    if (user?.id) {
+      fetchWhatsAppStatus();
+    }
+  }, [user?.id]); // Only depend on user ID, not the entire user object
 
   // Phone number validation
   const phoneRegex = /^\+[1-9]\d{1,14}$/;
@@ -581,4 +583,4 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = ({ onSt
       )}
     </div>
   );
-};
+});

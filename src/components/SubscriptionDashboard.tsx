@@ -11,13 +11,22 @@ export const SubscriptionDashboard: React.FC = () => {
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
   const isFetchingRef = React.useRef(false);
   const statusCheckIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
+  const lastFetchTimeRef = React.useRef<number>(0);
+  const lastStatusRef = React.useRef<string>('');
 
-  // Fetch WhatsApp status
-  const fetchWhatsAppStatus = React.useCallback(async () => {
+  // Fetch WhatsApp status with throttling and change detection
+  const fetchWhatsAppStatus = React.useCallback(async (force = false) => {
     if (!user || isFetchingRef.current) return;
+
+    // Throttle requests - only fetch if 2+ seconds have passed or forced
+    const now = Date.now();
+    if (!force && now - lastFetchTimeRef.current < 2000) {
+      return;
+    }
 
     isFetchingRef.current = true;
     setLoadingWhatsApp(true);
+    lastFetchTimeRef.current = now;
     
     try {
       const platform = user.platform;
@@ -36,11 +45,12 @@ export const SubscriptionDashboard: React.FC = () => {
         return;
       }
 
-      if (data) {
-        setWhatsappStatus(data.whatsapp_status || 'not_set');
-      } else {
-        // No data found, set default state
-        setWhatsappStatus('not_set');
+      const newStatus = data?.whatsapp_status || 'not_set';
+      
+      // Only update state if status actually changed
+      if (newStatus !== lastStatusRef.current) {
+        setWhatsappStatus(newStatus);
+        lastStatusRef.current = newStatus;
       }
     } catch (error) {
       console.error('Error fetching WhatsApp status:', error);
@@ -51,40 +61,71 @@ export const SubscriptionDashboard: React.FC = () => {
     }
   }, [user]);
 
+  // Initial fetch only - no polling
   React.useEffect(() => {
-    fetchWhatsAppStatus();
+    if (!user) return;
+    fetchWhatsAppStatus(true);
     
-    // Set up polling for WhatsApp status updates when status is pending
-    const setupStatusPolling = () => {
-      if (statusCheckIntervalRef.current) {
-        clearInterval(statusCheckIntervalRef.current);
-      }
-      
-      if (whatsappStatus === 'pending' || whatsappStatus === 'not_set') {
-        statusCheckIntervalRef.current = setInterval(() => {
-          fetchWhatsAppStatus();
-        }, 5000); // Check every 5 seconds
-      }
-    };
-    
-    setupStatusPolling();
-    
-    // Cleanup interval on unmount or when status becomes active
+    // Cleanup on unmount
     return () => {
       if (statusCheckIntervalRef.current) {
         clearInterval(statusCheckIntervalRef.current);
+        statusCheckIntervalRef.current = null;
       }
     };
-  }, [fetchWhatsAppStatus]);
-  
-  // Stop polling when status becomes active
-  React.useEffect(() => {
-    if (whatsappStatus === 'active' && statusCheckIntervalRef.current) {
-      clearInterval(statusCheckIntervalRef.current);
-      statusCheckIntervalRef.current = null;
-    }
-  }, [whatsappStatus]);
+  }, [user?.id]); // Removed fetchWhatsAppStatus from dependencies
 
+
+  // Manual refresh function
+  const refreshWhatsAppStatus = React.useCallback(() => {
+    if (!user || isFetchingRef.current) return;
+
+    // Throttle requests - only fetch if 2+ seconds have passed
+    const now = Date.now();
+    if (now - lastFetchTimeRef.current < 2000) {
+      return;
+    }
+
+    isFetchingRef.current = true;
+    setLoadingWhatsApp(true);
+    lastFetchTimeRef.current = now;
+    
+    const fetchData = async () => {
+      try {
+        const platform = user.platform;
+        const tableName = `${platform}_users`;
+        
+        const { data, error } = await supabase
+          .from(tableName)
+          .select('whatsapp_status')
+          .eq('user_id', user.id)
+          .is('deleted_at', null)
+          .maybeSingle();
+
+        if (error) {
+          console.error('Error fetching WhatsApp status:', error);
+          setWhatsappStatus('not_set');
+          return;
+        }
+
+        const newStatus = data?.whatsapp_status || 'not_set';
+        
+        // Only update state if status actually changed
+        if (newStatus !== lastStatusRef.current) {
+          setWhatsappStatus(newStatus);
+          lastStatusRef.current = newStatus;
+        }
+      } catch (error) {
+        console.error('Error fetching WhatsApp status:', error);
+        setWhatsappStatus('not_set');
+      } finally {
+        setLoadingWhatsApp(false);
+        isFetchingRef.current = false;
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   const getPlatformName = (platform: string) => {
     switch (platform) {
@@ -289,7 +330,11 @@ export const SubscriptionDashboard: React.FC = () => {
                         </p>
                                                       {/* WhatsApp Management - Always visible when active */}
         <div className="mt-8">
-          <WhatsAppVerification onStatusChange={setWhatsappStatus} />
+          <WhatsAppVerification onStatusChange={(status) => {
+            setWhatsappStatus(status);
+            // Refresh status after change
+            setTimeout(() => refreshWhatsAppStatus(), 1000);
+          }} />
         </div>
                       </div>
                       
@@ -366,7 +411,11 @@ export const SubscriptionDashboard: React.FC = () => {
 
                     {/* WhatsApp Integration Embedded */}
                     <div className="border-t border-gray-200 pt-8">
-                      <WhatsAppVerification onStatusChange={setWhatsappStatus} />
+                      <WhatsAppVerification onStatusChange={(status) => {
+                        setWhatsappStatus(status);
+                        // Refresh status after change
+                        setTimeout(() => refreshWhatsAppStatus(), 1000);
+                      }} />
                     </div>
                   </div>
                 </section>
