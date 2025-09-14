@@ -612,6 +612,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
+                  onClick={openModal}
                   className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
                   style={{ backgroundColor: '#1C2C55' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
@@ -686,7 +687,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               : 'opacity-0 translate-y-8'
           }`}>
             <button
-              onClick={openModal}
               onClick={openModal}
               className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
               style={{ color: '#1C2C55' }}
