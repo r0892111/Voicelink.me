@@ -128,29 +128,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="pt-6 border-t border-gray-200 text-center">
-          <div className="grid grid-cols-3 gap-4 mb-4">
-            <div className="text-center">
-              <div className="w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-              </div>
-              <p className="text-xs text-gray-600">Secure OAuth</p>
-            </div>
-            <div className="text-center">
-              <div className="w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-              </div>
-              <p className="text-xs text-gray-600">No Setup Fees</p>
-            </div>
-            <div className="text-center">
-              <div className="w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-              </div>
-              <p className="text-xs text-gray-600">Cancel Anytime</p>
-            </div>
-          </div>
-          <p className="text-xs text-gray-500">
-            By connecting your CRM, you agree to our Terms of Service and Privacy Policy
+        <div className="mt-6 pt-4 border-t border-gray-200 text-center">
+          <p className="text-sm text-gray-500">
+            Secure authentication powered by OAuth 2.0
           </p>
         </div>
       </div>
