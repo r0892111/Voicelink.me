@@ -97,9 +97,12 @@ function App() {
                 ) : (
                   <button
                     onClick={openModal}
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 px-6 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105 transform"
+                    className="group text-white font-semibold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                    style={{ backgroundColor: '#1C2C55' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
                   >
-                    Get Started Free
+                    <span>Get Started Free</span>
                   </button>
                 )}
               </div>
@@ -142,9 +145,12 @@ function App() {
                   ) : (
                     <button
                       onClick={openModal}
-                      className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 text-left shadow-lg"
+                      className="group text-white font-semibold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                      style={{ backgroundColor: '#1C2C55' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
                     >
-                      Get Started Free
+                      <span>Get Started Free</span>
                     </button>
                   )}
                 </div>
