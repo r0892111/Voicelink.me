@@ -152,55 +152,6 @@ function App() {
             )}
           </div>
         </nav>
-                        {user.platform}
-                      </span>
-                    </div>
-                    <button
-                      onClick={signOut}
-                      className="flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={openModal}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-xl transition-all duration-200 hover:shadow-lg"
-                  >
-                    Sign In
-                  </button>
-                )}
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 text-gray-600 hover:text-gray-900"
-              >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-              <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
-                <div className="flex flex-col space-y-4 pt-4">
-                  <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
-                  <a href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
-                  {!user && (
-                    <button
-                      onClick={openModal}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-xl transition-all duration-200 text-left"
-                    >
-                      Sign In
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        </nav>
 
         {/* Routes */}
         <Routes>
