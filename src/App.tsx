@@ -70,17 +70,88 @@ function App() {
               
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-8">
-                <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
-                <a href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
+                <a href="#features" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">Features</a>
+                <a href="#pricing" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">Pricing</a>
                 
                 {user ? (
-                  <div className="flex items-center space-x-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <div className="flex items-center space-x-6">
+                    <div className="flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm border border-gray-200">
+                      <div className="w-7 h-7 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-sm">
                         <User className="w-4 h-4 text-white" />
                       </div>
-                      <span className="text-gray-900 font-medium">{user.name}</span>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full capitalize">
+                      <div className="flex flex-col">
+                        <span className="text-gray-900 font-semibold text-sm leading-tight">{user.name}</span>
+                        <span className="text-xs text-gray-500 capitalize leading-tight">
+                          {user.platform}
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={signOut}
+                      className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-red-50 font-medium"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={openModal}
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 px-6 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105 transform"
+                  >
+                    Sign In
+                  </button>
+                )}
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
+              <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
+                <div className="flex flex-col space-y-4 pt-4">
+                  <a href="#features" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">Features</a>
+                  <a href="#pricing" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">Pricing</a>
+                  
+                  {user ? (
+                    <div className="flex flex-col space-y-3 pt-2 border-t border-gray-100">
+                      <div className="flex items-center space-x-3 px-3 py-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
+                          <User className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <div className="text-gray-900 font-semibold text-sm">{user.name}</div>
+                          <div className="text-xs text-gray-500 capitalize">{user.platform}</div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={signOut}
+                        className="flex items-center space-x-2 text-red-600 hover:text-red-700 transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-red-50 font-medium text-left"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={openModal}
+                      className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 text-left shadow-lg"
+                    >
+                      Sign In
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </nav>
                         {user.platform}
                       </span>
                     </div>
