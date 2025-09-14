@@ -74,6 +74,14 @@ function App() {
                 
                 {user ? (
                   <div className="flex items-center space-x-6">
+                   {isHomepage && (
+                     <button
+                       onClick={() => navigate('/dashboard')}
+                       className="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-50"
+                     >
+                       Go to Dashboard
+                     </button>
+                   )}
                     <div className="flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm border border-gray-200">
                       <div className="w-7 h-7 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-sm">
                         <User className="w-4 h-4 text-white" />
@@ -124,6 +132,14 @@ function App() {
                   
                   {user ? (
                     <div className="flex flex-col space-y-3 pt-2 border-t border-gray-100">
+                     {isHomepage && (
+                       <button
+                         onClick={() => navigate('/dashboard')}
+                         className="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-50 text-left"
+                       >
+                         Go to Dashboard
+                       </button>
+                     )}
                       <div className="flex items-center space-x-3 px-3 py-2">
                         <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
                           <User className="w-4 h-4 text-white" />
