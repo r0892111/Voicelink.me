@@ -139,7 +139,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden z-10 pt-48 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
         <div className="w-full">
-          <HeroDemo />
+          <HeroDemo openModal={openModal} />
         </div>
       </section>
 
