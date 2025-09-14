@@ -178,6 +178,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
         {/* Footer */}
         <div className="pt-6 border-t border-gray-200">
+          {/* Sign In Option */}
+          <div className="text-center mb-6">
+            <p className="text-sm text-gray-600 mb-2">
+              Already have an account?
+            </p>
+            <p className="text-xs text-gray-500">
+              Simply connect with your CRM platform above to sign in
+            </p>
+          </div>
+          
           <div className="grid grid-cols-3 gap-4 text-center mb-4">
             <div className="flex flex-col items-center space-y-1">
               <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
