@@ -127,6 +127,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
   const [selectedUsers, setSelectedUsers] = React.useState(1);
   const { openSettings } = useConsent();
 
+  const handleWatchDemo = () => {
+    // You can replace this URL with your actual demo video
+    window.open('https://www.youtube.com/watch?v=wVaR0NwPNHc', '_blank', 'noopener,noreferrer');
+  };
   return (
     <div className="min-h-screen bg-white relative">
       {/* Continuous Background Gradient */}
@@ -687,6 +691,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           }`}>
             <button
               onClick={openModal}
+              onClick={openModal}
               className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
               style={{ color: '#1C2C55' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7E69B'}
@@ -702,6 +707,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button 
+              onClick={handleWatchDemo}
               className="group border-2 border-white text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2"
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = '#FFFFFF';
@@ -757,6 +763,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 alt="VoiceLink" 
                 className="h-8 w-auto"
               />
+                onClick={openModal}
             </div>
             
             <div className="flex items-center space-x-6 text-sm text-white opacity-70">
@@ -766,6 +773,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
               <a href="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</a>
               <button 
+                onClick={handleWatchDemo}
                 onClick={() => {
                   console.log('Cookie Settings button clicked'); // Debug log
                   openSettings();
