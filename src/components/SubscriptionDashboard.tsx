@@ -288,7 +288,10 @@ export const SubscriptionDashboard: React.FC = () => {
                           Simply send a voice message to VoiceLink on WhatsApp and watch as your CRM gets updated automatically with structured data, follow-up tasks, and contact information.
                         </p>
                       </div>
-                      
+                                            {/* WhatsApp Management - Always visible when active */}
+        <div className="mt-8">
+          <WhatsAppVerification onStatusChange={setWhatsappStatus} />
+        </div>
                       <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
                         <div className="flex items-center justify-center space-x-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
@@ -305,6 +308,7 @@ export const SubscriptionDashboard: React.FC = () => {
                       </div>
                     </div>
                   </div>
+                  
                 </section>
               ) : (
                 /* Getting Started Guide */
@@ -717,10 +721,7 @@ export const SubscriptionDashboard: React.FC = () => {
           </section>
         </div>
         
-        {/* WhatsApp Management - Always visible when active */}
-        <div className="mt-8">
-          <WhatsAppVerification onStatusChange={setWhatsappStatus} />
-        </div>
+  
       </div>
     </div>
   );
