@@ -1,10 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Users, LogOut, User, Menu, X, ArrowLeft } from 'lucide-react';
+import { LogOut, User, Menu, X, ArrowLeft, Cookie } from 'lucide-react';
 import { AuthModal } from './components/AuthModal';
 import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
-import { BuyButton } from './components/BuyButton';
 import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
 import SaasAgreement from './components/SaasAgreement';
@@ -181,6 +180,18 @@ function App() {
         
         {/* Cookie Settings Modal - Always available */}
         <CookieSettingsModal />
+
+        {/* Cookie Settings Footer Link */}
+        <div className="fixed bottom-4 right-4 z-40">
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('openCookieSettings'))}
+            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 text-sm font-medium text-gray-700 hover:text-gray-900"
+            aria-label="Open cookie settings"
+          >
+            <Cookie className="w-4 h-4" />
+            <span className="hidden sm:inline">Cookie Settings</span>
+          </button>
+        </div>
       </div>
     </ConsentProvider>
   );

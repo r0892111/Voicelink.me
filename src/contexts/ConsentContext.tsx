@@ -33,7 +33,6 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   // Listen for custom event to open settings
   useEffect(() => {
     const handleOpenSettings = () => {
-      console.log('Opening cookie settings modal'); // Debug log
       setShowSettings(true);
     };
 
@@ -89,7 +88,6 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   };
 
   const openSettings = () => {
-    console.log('openSettings called'); // Debug log
     setShowSettings(true);
   };
 
