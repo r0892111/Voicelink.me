@@ -99,7 +99,7 @@ function App() {
                     onClick={openModal}
                     className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 px-6 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105 transform"
                   >
-                    Sign In
+                    Get Started Free
                   </button>
                 )}
               </div>
@@ -144,7 +144,7 @@ function App() {
                       onClick={openModal}
                       className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 text-left shadow-lg"
                     >
-                      Sign In
+                      Get Started Free
                     </button>
                   )}
                 </div>
