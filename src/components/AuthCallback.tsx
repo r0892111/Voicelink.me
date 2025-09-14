@@ -178,7 +178,7 @@ export const AuthCallback: React.FC = () => {
         
         // Use the starter tier price ID for single user
         await StripeService.createCheckoutSession({
-          priceId: 'price_1S2ZQPLPohnizGblvhj9qbK3', // Replace with your actual single user price ID
+          priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
           quantity: 1,
           successUrl: `${window.location.origin}/dashboard`,
           cancelUrl: `${window.location.origin}/dashboard`,
