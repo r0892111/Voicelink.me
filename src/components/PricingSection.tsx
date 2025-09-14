@@ -64,10 +64,10 @@ const calculatePricing = (users: number, billingPeriod: BillingPeriod) => {
 export const PricingSection: React.FC<PricingSectionProps> = ({
   selectedUsers,
   setSelectedUsers,
-  openModal
+                        className={`border-b border-gray-100 transition-all duration-300 ${
 }) => {
   const [billingPeriod, setBillingPeriod] = React.useState<BillingPeriod>('monthly');
-  const [customInput, setCustomInput] = React.useState('');
+                            : isStarterTier ? 'hover:bg-gray-50' : 'bg-gray-50 opacity-60'
   const [isCustom, setIsCustom] = React.useState(false);
   const pricing = calculatePricing(selectedUsers, billingPeriod);
 
@@ -79,6 +79,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
       setIsCustom(true);
       setCustomInput('');
     } else {
+                          {!isStarterTier && (
+                            <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                              Coming Soon
+                            </span>
+                          )}
       setIsCustom(false);
       setSelectedUsers(parseInt(value));
     }
@@ -96,7 +101,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-        <h2 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: '#1C2C55' }}>
+                            <button className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-400 text-white cursor-not-allowed" disabled>
           Volume Pricing That Scales With You
         </h2>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
@@ -120,7 +125,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               alt="VoiceLink" 
               className="w-12 h-12"
             />
-            <div>
+                Currently only single user plans are available. Multi-user plans with volume discounts coming soon!
               <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>VoiceLink Pro</h3>
               <p className="text-gray-600">Perfect for growing teams</p>
             </div>
@@ -240,6 +245,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               
+              {selectedUsers > 1 && (
+                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <p className="text-yellow-800 text-sm font-medium">
+                    🚧 Multi-user plans coming soon! Currently only single user subscriptions are available.
+                  </p>
+                </div>
+              )}
               <p className="text-center text-sm text-gray-500 mt-4">
                 14-day free trial • No credit card required
               </p>
@@ -255,6 +267,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           <p className="text-gray-600 text-center mb-8">
             Automatic discounts applied based on team size
           </p>
+                    <div className="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      Coming Soon
+                    </div>
 
           <div className="overflow-hidden rounded-2xl border border-gray-200 flex-grow">
             <table className="w-full">
@@ -275,7 +290,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       key={tier.name}
                       className={`border-b border-gray-100 transition-all duration-300 ${
                         isCurrentTier 
-                          ? 'bg-blue-50 border-blue-200 shadow-sm' 
+                  <button className="bg-gray-400 cursor-not-allowed text-white font-semibold px-6 py-3 rounded-xl" disabled>
                           : 'hover:bg-gray-50'
                       }`}
                     >
@@ -311,17 +326,22 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                         ) : tier.discount > 0 ? (
                           <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
                             tier.discount >= 50 ? 'bg-blue-100 text-blue-800' :
-                            tier.discount >= 30 ? 'bg-green-100 text-green-800' :
+                  disabled={selectedUsers > 1}
+                  className={`w-full font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 group ${
+                    selectedUsers > 1 
+                      ? 'bg-gray-400 text-white cursor-not-allowed' 
+                      : 'text-white hover:shadow-xl hover:scale-105 hover:-translate-y-1'
+                  }`}
                             'bg-yellow-100 text-yellow-800'
                           }`}>
                             {tier.discount}% off
                           </span>
-                        ) : (
+                  <span>{selectedUsers > 1 ? 'Coming Soon' : 'Start Free Trial'}</span>
                           <span className="text-gray-400">—</span>
                         )}
                       </td>
                     </tr>
-                  );
+                  {selectedUsers > 1 ? 'Multi-user plans launching soon' : '14-day free trial • No credit card required'}
                 })}
               </tbody>
             </table>
@@ -330,7 +350,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           <div className="mt-8 p-4 bg-gray-50 rounded-xl">
             <p className="text-sm text-gray-600 text-center">
               All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support.
-              {billingPeriod === 'yearly' && ' Yearly plans include 20% discount and priority onboarding.'}
+              Automatic discounts applied based on team size (Coming Soon)
             </p>
           </div>
         </div>
@@ -344,3 +364,4 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     </div>
   );
 };
+                    const isStarterTier = tier.name === 'Starter';
