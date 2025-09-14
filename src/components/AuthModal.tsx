@@ -140,21 +140,35 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 key={provider.name}
                 onClick={() => handleSignIn(provider)}
                 disabled={loadingProvider !== null}
-                className={`w-full ${provider.color} ${provider.hoverColor} text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transform`}
+                className={`group w-full bg-white border-2 border-gray-200 hover:border-gray-300 text-gray-800 font-semibold py-5 px-8 rounded-2xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transform relative overflow-hidden`}
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-7 h-7 animate-spin" />
-                    <span className="text-lg">Connecting to {provider.displayName}...</span>
+                    <div className="flex items-center justify-center w-full">
+                      <Loader2 className="w-6 h-6 animate-spin text-gray-600 mr-3" />
+                      <span className="text-lg text-gray-600">Connecting to {provider.displayName}...</span>
+                    </div>
                   </>
                 ) : (
                   <>
-                    <img 
-                      src={getProviderLogo(provider.name)} 
-                      alt={provider.displayName} 
-                      className="w-7 h-7 object-contain"
-                    />
-                    <span className="text-lg">Connect {provider.displayName}</span>
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-colors">
+                        <img 
+                          src={getProviderLogo(provider.name)} 
+                          alt={provider.displayName} 
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-lg font-semibold text-gray-900">Connect {provider.displayName}</div>
+                        <div className="text-sm text-gray-500">Start your free trial instantly</div>
+                      </div>
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </>
                 )}
               </button>
