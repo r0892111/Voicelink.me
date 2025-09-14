@@ -545,7 +545,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </div>
 
             {/* Right Side - Technology Showcase */}
-            <div className={`sticky top-24 transition-all duration-1000 delay-700 ${
+            <div className={`sticky top-8 transition-all duration-1000 delay-700 ${
               visibleSections.has('custom-solutions') 
                 ? 'opacity-100 translate-x-0' 
                 : 'opacity-0 translate-x-8'
