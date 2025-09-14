@@ -1,7 +1,11 @@
 import React from 'react';
 import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone, TrendingUp, Calendar } from 'lucide-react';
 
-export const HeroDemo: React.FC = () => {
+interface HeroDemoProps {
+  openModal: () => void;
+}
+
+export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
   return (
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
@@ -34,6 +38,7 @@ export const HeroDemo: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
               <button
+                onClick={openModal}
                 className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}

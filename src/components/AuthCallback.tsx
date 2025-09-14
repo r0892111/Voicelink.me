@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { StripeService } from '../services/stripeService';
 
 type CallbackStatus = 'loading' | 'success' | 'error';
 
@@ -11,6 +12,34 @@ export const AuthCallback: React.FC = () => {
   const { platform } = useParams<{ platform: string }>();
   const navigate = useNavigate();
   const hasProcessedRef = React.useRef(false);
+
+  // Check if user has active subscription
+  const checkSubscriptionStatus = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return false;
+
+      // Get provider from localStorage or URL params
+      const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform');
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlProvider = urlParams.get('provider');
+      const finalProvider = urlProvider || provider;
+
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=${finalProvider || 'unknown'}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await response.json();
+      return result.success && (result.subscription?.subscription_status === 'active' || result.subscription?.subscription_status === 'trialing');
+    } catch (error) {
+      console.error('Error checking subscription:', error);
+      return false;
+    }
+  };
 
   useEffect(() => {
     if (hasProcessedRef.current) return;
@@ -131,14 +160,40 @@ export const AuthCallback: React.FC = () => {
       setStatus('success');
       setMessage(`Successfully authenticated with ${platform}!`);
 
-      // Redirect after a short delay
+      // Check subscription status and redirect accordingly
       setTimeout(() => {
-        navigate('/dashboard');
+        checkSubscriptionAndRedirect();
       }, 2000);
 
     } catch (err) {
       setStatus('error');
       setMessage(err instanceof Error ? err.message : 'An unexpected error occurred');
+    }
+  };
+
+  const checkSubscriptionAndRedirect = async () => {
+    try {
+      const hasActiveSubscription = await checkSubscriptionStatus();
+      
+      if (hasActiveSubscription) {
+        // User has active subscription, go to dashboard
+        navigate('/dashboard');
+      } else {
+        // User doesn't have subscription, redirect to Stripe checkout
+        setMessage('Redirecting to subscription checkout...');
+        
+        // Use the starter tier price ID for single user
+        await StripeService.createCheckoutSession({
+          priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+          quantity: 1,
+          successUrl: `${window.location.origin}/dashboard`,
+          cancelUrl: `${window.location.origin}/dashboard`,
+        });
+      }
+    } catch (error) {
+      console.error('Error during subscription check/redirect:', error);
+      // Fallback to dashboard if there's an error
+      navigate('/dashboard');
     }
   };
 
@@ -184,7 +239,7 @@ export const AuthCallback: React.FC = () => {
         )}
 
         {status === 'success' && (
-          <p className="text-sm text-gray-500">Redirecting to dashboard...</p>
+          <p className="text-sm text-gray-500">Redirecting to checkout...</p>
         )}
       </div>
     </div>

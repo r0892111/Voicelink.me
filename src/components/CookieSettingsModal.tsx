@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useConsent } from '../contexts/ConsentContext';
-import { ChevronDown, ChevronUp, X } from 'lucide-react';
+import { ChevronDown, ChevronUp, X, Cookie } from 'lucide-react';
 
 interface ConsentChoices {
   essential: boolean;
@@ -137,15 +137,20 @@ export const CookieSettingsModal: React.FC = () => {
   if (!showSettings) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom-4 duration-300">
+        <div className="p-8">
           {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Cookie Settings</h2>
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <Cookie className="w-5 h-5 text-blue-600" />
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-900">Cookie Settings</h2>
+            </div>
             <button
               onClick={closeSettings}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 hover:scale-110"
               aria-label="Close settings"
             >
               <X className="w-5 h-5 text-gray-500" />
@@ -228,22 +233,22 @@ export const CookieSettingsModal: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+            <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
               <button
                 onClick={handleRejectAll}
-                className="px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 rounded-lg transition-colors font-medium"
+                className="px-6 py-3 text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 rounded-lg transition-all duration-200 font-medium hover:shadow-sm"
               >
                 Reject All
               </button>
               <button
                 onClick={handleSave}
-                className="px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
+                className="px-6 py-3 border border-blue-600 text-blue-600 hover:bg-blue-50 hover:border-blue-700 rounded-lg transition-all duration-200 font-medium hover:shadow-sm"
               >
                 Save Settings
               </button>
               <button
                 onClick={handleAcceptAll}
-                className="px-4 py-2 text-white rounded-lg transition-colors font-medium"
+                className="px-6 py-3 text-white rounded-lg transition-all duration-200 font-medium hover:shadow-lg hover:scale-105"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}

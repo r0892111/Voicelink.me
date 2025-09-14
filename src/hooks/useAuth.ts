@@ -62,7 +62,7 @@ export const useAuth = () => {
             email: session.user.email || '',
             name: userName,
             platform: platform as AuthUser['platform'],
-            user_info: userData.user_info,
+            user_info: userData,
           });
 
           setLoading(false);
@@ -125,12 +125,15 @@ export const useAuth = () => {
     return () => subscription.unsubscribe();
   }, [checkAuth]);
 
+
+  
   const getUserName = (platform: AuthUser['platform'], userInfo: any) => {
+    console.log(userInfo);
     switch (platform) {
       case 'teamleader':
-        return userInfo?.user?.first_name && userInfo?.user?.last_name
-          ? `${userInfo.user.first_name} ${userInfo.user.last_name}`
-          : userInfo?.user?.email || 'TeamLeader User';
+        return userInfo?.first_name && userInfo?.last_name
+          ? `${userInfo.first_name} ${userInfo.last_name}`
+          : userInfo?.email || 'TeamLeader User';
       case 'pipedrive':
         return userInfo?.name || userInfo?.email || 'Pipedrive User';
       case 'odoo':

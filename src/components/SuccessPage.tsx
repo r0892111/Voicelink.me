@@ -1,25 +1,20 @@
 import React, { useEffect } from 'react';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useSubscription } from '../hooks/useSubscription';
 
 export const SuccessPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const productName = searchParams.get('product');
-  const { checkSubscription } = useSubscription();
 
   useEffect(() => {
-    // Trigger subscription check immediately when success page loads
-    checkSubscription();
-    
-    // Auto-redirect to dashboard after 3 seconds
+    // Auto-redirect after 5 seconds
     const timer = setTimeout(() => {
-      navigate('/dashboard');
-    }, 3000);
+      navigate('/');
+    }, 5000);
 
     return () => clearTimeout(timer);
-  }, [navigate, checkSubscription]);
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -43,15 +38,15 @@ export const SuccessPage: React.FC = () => {
         
         <div className="space-y-3">
           <button
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/')}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Go to Dashboard</span>
+            <span>Return to Dashboard</span>
           </button>
           
           <p className="text-sm text-gray-500">
-            Redirecting to dashboard in 3 seconds...
+            Redirecting automatically in 5 seconds...
           </p>
         </div>
       </div>
