@@ -687,6 +687,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           }`}>
             <button
               onClick={openModal}
+              onClick={openModal}
               className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
               style={{ color: '#1C2C55' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7E69B'}
