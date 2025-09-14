@@ -126,7 +126,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </div>
           </div>
 
-          <div className="space-y-4 mb-8 flex-grow h-full flex flex-col justify-center">
+          <div className="space-y-6 mb-8 flex-grow h-full flex flex-col justify-center">
             {[
               'Unlimited WhatsApp voice notes',
               'Real-time CRM sync',
