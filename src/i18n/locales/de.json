@@ -50,7 +50,74 @@
   "dashboard": {
     "welcome": "Willkommen zurück, {{name}}!",
     "welcomeDefault": "Willkommen zurück, Premium-Benutzer!",
-    "subscriptionActive": "Ihr VoiceLink-Abonnement ist aktiv"
+    "subscriptionActive": "Ihr VoiceLink-Abonnement ist aktiv",
+    "customerPortal": {
+      "title": "Verwalten Sie Ihr Abonnement",
+      "subtitle": "Zugriff auf Ihre Rechnungsinformationen und verwalten Sie Ihr Abonnement",
+      "portalTitle": "Kundenportal",
+      "portalDescription": "Zugriff auf Ihre Rechnungshistorie, Aktualisierung von Zahlungsmethoden, Download von Rechnungen und Verwaltung Ihrer Abonnementeinstellungen über unser sicheres Kundenportal.",
+      "accessPortal": "Zugriff auf Kundenportal",
+      "viewBillingHistory": "Rechnungshistorie anzeigen",
+      "updatePaymentMethods": "Zahlungsmethoden aktualisieren",
+      "updatePaymentMethod": "Zahlungsmethode aktualisieren",
+      "downloadInvoices": "Rechnungen herunterladen",
+      "manageSubscription": "Abonnement verwalten"
+    },
+    "premiumFeatures": {
+      "title": "Ihre Premium-Funktionen",
+      "subtitle": "Alles was Sie brauchen, um Sprache in strukturierte CRM-Daten zu verwandeln",
+      "whatsappVoiceNotes": {
+        "title": "WhatsApp Sprachnotizen",
+        "description": "Senden Sie unbegrenzte Sprachnachrichten direkt an Ihr CRM über WhatsApp",
+        "unlimitedUsage": "Unbegrenzte Nutzung",
+        "instantProcessing": "Sofortige Verarbeitung",
+        "multiLanguage": "Mehrsprachige Unterstützung"
+      },
+      "realtimeSync": {
+        "title": "Echtzeit-Synchronisation",
+        "description": "Sofortige Synchronisation mit Ihrer CRM-Plattform",
+        "liveUpdates": "Live-Updates"
+      },
+      "prioritySupport": {
+        "title": "Prioritäts-Support",
+        "description": "24/7 dedizierte Unterstützung von unserem Expertenteam",
+        "support24x7": "24/7 Support"
+      },
+      "aiProcessing": {
+        "title": "KI-Verarbeitung",
+        "description": "Fortschrittliche KI extrahiert und strukturiert wichtige Informationen aus Ihrer Sprache",
+        "smartExtraction": "Intelligente Datenextraktion",
+        "autoScheduling": "Automatische Terminplanung",
+        "contextAware": "Kontextbewusste Verarbeitung"
+      },
+      "crmIntegration": {
+        "title": "CRM-Integration",
+        "description": "Nahtlose Integration mit Ihrer bestehenden CRM-Plattform",
+        "realTimeSync": "Echtzeit-Sync",
+        "autoContactCreation": "Automatische Kontakterstellung",
+        "taskManagement": "Aufgabenverwaltung"
+      }
+    },
+    "support": {
+      "title": "Hilfe beim Einstieg Benötigt?",
+      "subtitle": "Unser Support-Team ist da, um Ihnen zu helfen, das Beste aus VoiceLink herauszuholen. Erhalten Sie personalisierte Unterstützung bei Setup und Optimierung.",
+      "description": "Unser Support-Team ist da, um Ihnen zu helfen, das Beste aus VoiceLink herauszuholen. Erhalten Sie personalisierte Unterstützung bei Setup und Optimierung.",
+      "contactSupport": "Support Kontaktieren",
+      "email": {
+        "title": "E-Mail-Support",
+        "description": "Hilfe per E-Mail mit detaillierten Antworten innerhalb von 24 Stunden"
+      },
+      "liveChat": {
+        "title": "Live-Chat",
+        "description": "Chatten Sie mit unserem Support-Team in Echtzeit",
+        "startChat": "Chat Starten"
+      },
+      "consultation": {
+        "title": "Kostenlose Beratung",
+        "description": "Vereinbaren Sie einen kostenlosen Beratungstermin mit unseren Experten",
+        "bookCall": "Termin Buchen"
+      }
+    }
   },
   "whatsapp": {
     "integration": "WhatsApp Integration",
@@ -70,5 +137,16 @@
     "save20": "20% Sparen",
     "startFreeTrial": "Kostenlose Testversion Starten",
     "comingSoon": "Demnächst Verfügbar"
+  },
+  "finalCta": {
+    "title": "Bereit, Ihren Workflow zu Transformieren?",
+    "subtitle": "Je mehr Benutzer Sie hinzufügen, desto mehr sparen Sie. Starten Sie kostenlos, skalieren Sie erschwinglich. Verbinden Sie Ihr WhatsApp und starten Sie heute Ihre kostenlose Testversion.",
+    "startFreeTrial": "Kostenlose Testversion Starten",
+    "watchDemo": "Demo Ansehen",
+    "freeTrialFeatures": {
+      "freeTrialDays": "14-tägige kostenlose Testversion",
+      "noSetupFees": "Keine Einrichtungsgebühren",
+      "cancelAnytime": "Jederzeit kündbar"
+    }
   }
 }

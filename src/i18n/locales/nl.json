@@ -59,7 +59,74 @@
   "dashboard": {
     "welcome": "Welkom terug, {{name}}!",
     "welcomeDefault": "Welkom terug, Premium Gebruiker!",
-    "subscriptionActive": "Je VoiceLink abonnement is actief"
+    "subscriptionActive": "Je VoiceLink abonnement is actief",
+    "customerPortal": {
+      "title": "Beheer Je Abonnement",
+      "subtitle": "Toegang tot je factuurinformatie en beheer je abonnement",
+      "portalTitle": "Klantportaal",
+      "portalDescription": "Toegang tot je factuurgeschiedenis, update betaalmethoden, download facturen en beheer je abonnementsinstellingen via ons beveiligde klantportaal.",
+      "accessPortal": "Toegang tot Klantportaal",
+      "viewBillingHistory": "Bekijk factuurgeschiedenis",
+      "updatePaymentMethods": "Update betaalmethoden",
+      "updatePaymentMethod": "Update betaalmethode",
+      "downloadInvoices": "Download facturen",
+      "manageSubscription": "Beheer abonnement"
+    },
+    "premiumFeatures": {
+      "title": "Je Premium Functies",
+      "subtitle": "Alles wat je nodig hebt om spraak om te zetten in gestructureerde CRM data",
+      "whatsappVoiceNotes": {
+        "title": "WhatsApp Spraaknotities",
+        "description": "Stuur onbeperkte spraakberichten direct naar je CRM via WhatsApp",
+        "unlimitedUsage": "Onbeperkt Gebruik",
+        "instantProcessing": "Directe Verwerking",
+        "multiLanguage": "Meertalige Ondersteuning"
+      },
+      "realtimeSync": {
+        "title": "Real-time Synchronisatie",
+        "description": "Directe synchronisatie met je CRM platform",
+        "liveUpdates": "Live Updates"
+      },
+      "prioritySupport": {
+        "title": "Prioriteit Support",
+        "description": "24/7 toegewijde hulp van ons expert team",
+        "support24x7": "24/7 Support"
+      },
+      "aiProcessing": {
+        "title": "AI Verwerking",
+        "description": "Geavanceerde AI extraheert en structureert belangrijke informatie uit je spraak",
+        "smartExtraction": "Slimme Data Extractie",
+        "autoScheduling": "Auto-Inplanning",
+        "contextAware": "Contextbewuste Verwerking"
+      },
+      "crmIntegration": {
+        "title": "CRM Integratie",
+        "description": "Naadloze integratie met je bestaande CRM platform",
+        "realTimeSync": "Real-time Sync",
+        "autoContactCreation": "Auto Contact Aanmaak",
+        "taskManagement": "Taakbeheer"
+      }
+    },
+    "support": {
+      "title": "Hulp Nodig om te Beginnen?",
+      "subtitle": "Ons support team is er om je te helpen het meeste uit VoiceLink te halen. Krijg persoonlijke hulp bij setup en optimalisatie.",
+      "description": "Ons support team is er om je te helpen het meeste uit VoiceLink te halen. Krijg persoonlijke hulp bij setup en optimalisatie.",
+      "contactSupport": "Contact Support",
+      "email": {
+        "title": "Email Support",
+        "description": "Krijg hulp via email met gedetailleerde antwoorden binnen 24 uur"
+      },
+      "liveChat": {
+        "title": "Live Chat",
+        "description": "Chat met ons support team in real-time",
+        "startChat": "Start Chat"
+      },
+      "consultation": {
+        "title": "Gratis Consultatie",
+        "description": "Plan een gratis consultatiegesprek met onze experts",
+        "bookCall": "Boek Gesprek"
+      }
+    }
   },
   "whatsapp": {
     "integration": "WhatsApp Integratie",
@@ -79,5 +146,16 @@
     "save20": "Bespaar 20%",
     "startFreeTrial": "Start Gratis Proefperiode",
     "comingSoon": "Binnenkort Beschikbaar"
+  },
+  "finalCta": {
+    "title": "Klaar om je Workflow te Transformeren?",
+    "subtitle": "Hoe meer gebruikers je toevoegt, hoe meer je bespaart. Start gratis, schaal betaalbaar. Verbind je WhatsApp en start vandaag je gratis proefperiode.",
+    "startFreeTrial": "Start Gratis Proefperiode",
+    "watchDemo": "Bekijk Demo",
+    "freeTrialFeatures": {
+      "freeTrialDays": "14-dagen gratis proefperiode",
+      "noSetupFees": "Geen installatiekosten",
+      "cancelAnytime": "Altijd opzegbaar"
+    }
   }
 }

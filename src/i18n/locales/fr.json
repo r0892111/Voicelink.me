@@ -50,7 +50,74 @@
   "dashboard": {
     "welcome": "Bon retour, {{name}} !",
     "welcomeDefault": "Bon retour, Utilisateur Premium !",
-    "subscriptionActive": "Votre abonnement VoiceLink est actif"
+    "subscriptionActive": "Votre abonnement VoiceLink est actif",
+    "customerPortal": {
+      "title": "Gérez Votre Abonnement",
+      "subtitle": "Accédez à vos informations de facturation et gérez votre abonnement",
+      "portalTitle": "Portail Client",
+      "portalDescription": "Accédez à votre historique de facturation, mettez à jour les méthodes de paiement, téléchargez les factures et gérez vos paramètres d'abonnement via notre portail client sécurisé.",
+      "accessPortal": "Accéder au Portail Client",
+      "viewBillingHistory": "Voir l'historique de facturation",
+      "updatePaymentMethods": "Mettre à jour les méthodes de paiement",
+      "updatePaymentMethod": "Mettre à jour la méthode de paiement",
+      "downloadInvoices": "Télécharger les factures",
+      "manageSubscription": "Gérer l'abonnement"
+    },
+    "premiumFeatures": {
+      "title": "Vos Fonctionnalités Premium",
+      "subtitle": "Tout ce dont vous avez besoin pour transformer la voix en données CRM structurées",
+      "whatsappVoiceNotes": {
+        "title": "Notes Vocales WhatsApp",
+        "description": "Envoyez des messages vocaux illimités directement à votre CRM via WhatsApp",
+        "unlimitedUsage": "Utilisation Illimitée",
+        "instantProcessing": "Traitement Instantané",
+        "multiLanguage": "Support Multi-langues"
+      },
+      "realtimeSync": {
+        "title": "Synchronisation en Temps Réel",
+        "description": "Synchronisation instantanée avec votre plateforme CRM",
+        "liveUpdates": "Mises à Jour en Direct"
+      },
+      "prioritySupport": {
+        "title": "Support Prioritaire",
+        "description": "Assistance dédiée 24/7 de notre équipe d'experts",
+        "support24x7": "Support 24/7"
+      },
+      "aiProcessing": {
+        "title": "Traitement IA",
+        "description": "L'IA avancée extrait et structure les informations clés de votre voix",
+        "smartExtraction": "Extraction Intelligente de Données",
+        "autoScheduling": "Planification Automatique",
+        "contextAware": "Traitement Sensible au Contexte"
+      },
+      "crmIntegration": {
+        "title": "Intégration CRM",
+        "description": "Intégration transparente avec votre plateforme CRM existante",
+        "realTimeSync": "Sync Temps Réel",
+        "autoContactCreation": "Création Automatique de Contacts",
+        "taskManagement": "Gestion des Tâches"
+      }
+    },
+    "support": {
+      "title": "Besoin d'Aide pour Commencer ?",
+      "subtitle": "Notre équipe de support est là pour vous aider à tirer le meilleur parti de VoiceLink. Obtenez une assistance personnalisée pour la configuration et l'optimisation.",
+      "description": "Notre équipe de support est là pour vous aider à tirer le meilleur parti de VoiceLink. Obtenez une assistance personnalisée pour la configuration et l'optimisation.",
+      "contactSupport": "Contacter le Support",
+      "email": {
+        "title": "Support Email",
+        "description": "Obtenez de l'aide par email avec des réponses détaillées dans les 24 heures"
+      },
+      "liveChat": {
+        "title": "Chat en Direct",
+        "description": "Chattez avec notre équipe de support en temps réel",
+        "startChat": "Commencer le Chat"
+      },
+      "consultation": {
+        "title": "Consultation Gratuite",
+        "description": "Planifiez un appel de consultation gratuit avec nos experts",
+        "bookCall": "Réserver un Appel"
+      }
+    }
   },
   "whatsapp": {
     "integration": "Intégration WhatsApp",
@@ -70,5 +137,16 @@
     "save20": "Économisez 20%",
     "startFreeTrial": "Commencer l'Essai Gratuit",
     "comingSoon": "Bientôt Disponible"
+  },
+  "finalCta": {
+    "title": "Prêt à Transformer Votre Flux de Travail ?",
+    "subtitle": "Plus vous ajoutez d'utilisateurs, plus vous économisez. Commencez gratuitement, évoluez à un prix abordable. Connectez votre WhatsApp et commencez votre essai gratuit aujourd'hui.",
+    "startFreeTrial": "Commencer l'Essai Gratuit",
+    "watchDemo": "Voir la Démo",
+    "freeTrialFeatures": {
+      "freeTrialDays": "Essai gratuit de 14 jours",
+      "noSetupFees": "Aucuns frais d'installation",
+      "cancelAnytime": "Annuler à tout moment"
+    }
   }
 }

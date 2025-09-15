@@ -127,6 +127,7 @@
       "accessPortal": "Access Customer Portal",
       "viewBillingHistory": "View billing history",
       "updatePaymentMethods": "Update payment methods",
+      "updatePaymentMethod": "Update payment method",
       "downloadInvoices": "Download invoices",
       "manageSubscription": "Manage subscription"
     },
@@ -136,7 +137,9 @@
       "whatsappVoiceNotes": {
         "title": "WhatsApp Voice Notes",
         "description": "Send unlimited voice messages directly to your CRM via WhatsApp",
-        "unlimitedUsage": "Unlimited Usage"
+        "unlimitedUsage": "Unlimited Usage",
+        "instantProcessing": "Instant Processing",
+        "multiLanguage": "Multi-language Support"
       },
       "realtimeSync": {
         "title": "Real-time Sync",
@@ -147,12 +150,41 @@
         "title": "Priority Support",
         "description": "24/7 dedicated assistance from our expert team",
         "support24x7": "24/7 Support"
+      },
+      "aiProcessing": {
+        "title": "AI Processing",
+        "description": "Advanced AI extracts and structures key information from your voice",
+        "smartExtraction": "Smart Data Extraction",
+        "autoScheduling": "Auto-Scheduling",
+        "contextAware": "Context-Aware Processing"
+      },
+      "crmIntegration": {
+        "title": "CRM Integration",
+        "description": "Seamless integration with your existing CRM platform",
+        "realTimeSync": "Real-time Sync",
+        "autoContactCreation": "Auto Contact Creation",
+        "taskManagement": "Task Management"
       }
     },
     "support": {
       "title": "Need Help Getting Started?",
+      "subtitle": "Our support team is here to help you make the most of VoiceLink. Get personalized assistance with setup and optimization.",
       "description": "Our support team is here to help you make the most of VoiceLink. Get personalized assistance with setup and optimization.",
-      "contactSupport": "Contact Support"
+      "contactSupport": "Contact Support",
+      "email": {
+        "title": "Email Support",
+        "description": "Get help via email with detailed responses within 24 hours"
+      },
+      "liveChat": {
+        "title": "Live Chat",
+        "description": "Chat with our support team in real-time",
+        "startChat": "Start Chat"
+      },
+      "consultation": {
+        "title": "Free Consultation",
+        "description": "Schedule a free consultation call with our experts",
+        "bookCall": "Book Call"
+      }
     }
   },
   "whatsapp": {
@@ -286,6 +318,8 @@
   "finalCta": {
     "title": "Ready to Transform Your Workflow?",
     "subtitle": "The more users you add, the more you save. Start free, scale affordably. Connect your WhatsApp and start your free trial today.",
+    "startFreeTrial": "Start Free Trial",
+    "watchDemo": "Watch Demo",
     "freeTrialFeatures": {
       "freeTrialDays": "14-day free trial",
       "noSetupFees": "No setup fees",
