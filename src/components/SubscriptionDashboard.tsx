@@ -662,28 +662,37 @@ export const SubscriptionDashboard: React.FC = () => {
               </div>
             </section>
           )}
-
+                <div className="mb-4 p-3 bg-green-500 bg-opacity-20 border border-green-300 rounded-lg flex items-center space-x-2 text-white">
           {/* Multi-User CTA Section */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                  <span className="text-sm">Team member invited successfully!</span>
             <div className="bg-white rounded-xl shadow-sm p-8">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                   <Users className="w-5 h-5 text-blue-600" />
-                </div>
+                <div className="mb-4 p-3 bg-red-500 bg-opacity-20 border border-red-300 rounded-lg flex items-center space-x-2 text-white">
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900">Add Team Members</h2>
-                  <p className="text-sm text-gray-600">Invite up to 4 additional users to your trial account</p>
+                  <h3 className="text-2xl font-bold text-white mb-1">Team Management</h3>
+                  <p className="text-blue-100">{subscriptionDescription}</p>
                 </div>
               </div>
-
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              {/* Subscription Info Banner */}
+              <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4 mb-4 border border-white border-opacity-20">
                 <div className="flex items-center space-x-2 mb-2">
                   <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                  <span className="text-sm font-medium text-blue-800">Trial Account Benefits</span>
+                  <span className="font-semibold text-white">{subscriptionType}</span>
                 </div>
-                <p className="text-sm text-blue-700">
-                  Add up to 4 team members to your trial account at no extra cost. They'll get full access to VoiceLink features during your trial period.
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-blue-100 text-sm">
+                    {!subscription 
+                      ? 'Team members get full access during your trial period at no extra cost.'
+                      : 'Upgrade your subscription to add team members and unlock collaboration features.'
+                    }
+                  </p>
+                  <div className="text-right">
+                    <div className="text-white font-semibold">{addedTeamMembers.length + 1}/{totalUsers}</div>
+                    <div className="text-blue-200 text-xs">Users</div>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-4">
@@ -822,7 +831,7 @@ export const SubscriptionDashboard: React.FC = () => {
                     </div>
                     <div className="flex items-center justify-center space-x-2">
                       <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>{t('dashboard.customerPortal.updatePaymentMethods')}</span>
+              <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-3 mb-4 border border-white border-opacity-20">
                     </div>
                     <div className="flex items-center justify-center space-x-2">
                       <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
@@ -852,92 +861,135 @@ export const SubscriptionDashboard: React.FC = () => {
             <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* WhatsApp Integration */}
-              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
-                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                  <MessageCircle className="w-8 h-8" style={{ color: '#1C2C55' }} />
+              {/* Added Team Members List */}
+              {addedTeamMembers.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="text-white font-semibold mb-2">Team Members ({addedTeamMembers.length})</h4>
+                  <div className="space-y-2">
+                    {addedTeamMembers.map((member) => (
+                      <div key={member.id} className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-3 border border-white border-opacity-20 flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                            <Users className="w-4 h-4 text-white" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-white text-sm">{member.name}</div>
+                            <div className="text-blue-200 text-xs">{member.email}</div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => removeMember(member.id!)}
+                          className="w-6 h-6 bg-red-500 bg-opacity-20 hover:bg-opacity-40 rounded-full flex items-center justify-center transition-all duration-200"
+                        >
+                          <X className="w-3 h-3 text-red-300" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                  {t('dashboard.premiumFeatures.whatsappVoiceNotes.title')}
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  {t('dashboard.premiumFeatures.whatsappVoiceNotes.description')}
-                </p>
-                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
-                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
+              )}
+
+              {/* Add New Team Member Form */}
+              {canAddMore ? (
+                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4 mb-4 border border-white border-opacity-20">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                      <UserPlus className="w-5 h-5 text-white" />
                   <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.whatsappVoiceNotes.unlimitedUsage')}</span>
-                </div>
-              </div>
-
-              {/* Real-time Sync */}
-              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
-                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                  <Zap className="w-8 h-8" style={{ color: '#1C2C55' }} />
-                </div>
-                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                  {t('dashboard.premiumFeatures.realtimeSync.title')}
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  {t('dashboard.premiumFeatures.realtimeSync.description')}
-                </p>
-                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
-                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.realtimeSync.liveUpdates')}</span>
-                </div>
-              </div>
-
-              {/* Priority Support */}
-              <div className="group bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 text-center">
-                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                  <Headphones className="w-8 h-8" style={{ color: '#1C2C55' }} />
-                </div>
-                <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                  {t('dashboard.premiumFeatures.prioritySupport.title')}
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  {t('dashboard.premiumFeatures.prioritySupport.description')}
-                </p>
-                <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
-                  <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.prioritySupport.support24x7')}</span>
-                </div>
-              </div>
-              </div>
-            </div>
-          </section>
-
+                    <div>
+                      <div className="font-semibold text-white">Add Team Member</div>
+                      <div className="text-blue-200 text-sm">{remainingSlots} slot{remainingSlots !== 1 ? 's' : ''} remaining</div>
           {/* Support Section */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
-            <div className="text-center bg-gradient-to-r from-gray-50 to-white rounded-3xl p-8 shadow-lg border border-gray-100">
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                {t('dashboard.support.title')}
-              </h3>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                {t('dashboard.support.description')}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="/support"
-                  className="group border-2 font-semibold py-3 px-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
-                  style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#F7E69B';
-                    e.currentTarget.style.borderColor = '#1C2C55';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.borderColor = '#1C2C55';
-                  }}
-                >
-                  <Headphones className="w-5 h-5" />
-                  <span>{t('dashboard.support.contactSupport')}</span>
-                </a>
-              </div>
+                  
+                  <div className="space-y-3 mb-4">
+                    <div>
+                      <label className="block text-blue-200 text-xs font-medium mb-1">Full Name</label>
+                      <input
+                        type="text"
+                        value={currentMember.name}
+                        onChange={(e) => updateCurrentMember('name', e.target.value)}
+                        placeholder="Enter full name"
+                        className="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-blue-200 text-xs font-medium mb-1">
+                        <Mail className="w-3 h-3 inline mr-1" />
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        value={currentMember.email}
+                        onChange={(e) => updateCurrentMember('email', e.target.value)}
+                        placeholder="Enter email address"
+                        className="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-blue-200 text-xs font-medium mb-1">
+                        <Phone className="w-3 h-3 inline mr-1" />
+                        WhatsApp Number
+                      </label>
+                      <input
+                        type="tel"
+                        value={currentMember.whatsapp_number}
+                        onChange={(e) => updateCurrentMember('whatsapp_number', e.target.value)}
+                        placeholder="+32 123 456 789"
+                        className="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={saveAndInviteMember}
+                      disabled={inviting || !isCurrentMemberValid()}
+                      className="flex-1 bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg hover:bg-blue-50 transition-all duration-200 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                    >
+                      {inviting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Inviting...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Check className="w-4 h-4" />
+                          <span>Save & Invite</span>
+                        </>
+                      )}
+                    </button>
+                    
+                    <button
+                      onClick={addNewUser}
+                      disabled={!isCurrentMemberValid()}
+                      className="px-4 py-2 border border-white border-opacity-30 text-white font-medium rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                    >
+                      <UserPlus className="w-4 h-4" />
+                      <span>Add New User</span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4 mb-4 border border-white border-opacity-20 text-center">
+                  <div className="text-white font-medium mb-2">Team Limit Reached</div>
+                  <p className="text-blue-200 text-sm mb-3">
+                    {!subscription 
+                      ? `You've reached the trial limit of ${totalUsers} users. Upgrade to add more team members.`
+                      : 'Upgrade your subscription to add more team members.'
+                    }
+                  </p>
+                  <button className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg hover:bg-blue-50 transition-all duration-200">
+              )}
             </div>
           </section>
         </div>
         
 
       </div>
-    </div>
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white border-opacity-20">
   );
 };
