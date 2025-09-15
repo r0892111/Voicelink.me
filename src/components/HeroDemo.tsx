@@ -1,11 +1,14 @@
 import React from 'react';
 import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone, TrendingUp, Calendar } from 'lucide-react';
+import { useI18n } from '../hooks/useI18n';
 
 interface HeroDemoProps {
   openModal: () => void;
 }
 
 export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
+  const { t } = useI18n();
+
   return (
     <div className="w-full">
       {/* Hero Content - Text Left, Phone Right */}
@@ -16,7 +19,7 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
             <div className="space-y-6" style={{ animationDelay: '0.2s' }}>
               <div className="relative">
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-4 animate-fade-in-up" style={{ color: '#1C2C55', animationDelay: '0.2s' }}>
-                  Just...
+                  {t('hero.title')}
                 </h1>
                 <div className="relative inline-block">
                   <h1 className="text-6xl lg:text-7xl font-black tracking-tight relative z-10 animate-scale-in" style={{ 
@@ -24,15 +27,15 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                     textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
                     animationDelay: '0.4s'
                   }}>
-                    Talk to your CRM
+                    {t('hero.mainTitle')}
                   </h1>
                   {/* Subtle background glow */}
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 rounded-2xl blur-xl opacity-30 transform scale-110 -z-10 animate-fade-in" style={{ animationDelay: '0.6s' }}></div>
                 </div>
               </div>
               <div className="text-xl leading-relaxed space-y-2" style={{ color: '#202226' }}>
-                <p className="animate-fade-in-up" style={{ animationDelay: '0.8s' }}>Send voice notes via WhatsApp and watch them automatically sync with your CRM.</p>
-                <p className="animate-fade-in-up" style={{ animationDelay: '1.0s' }}>Turn voice messages into structured data instantly.</p>
+                <p className="animate-fade-in-up" style={{ animationDelay: '0.8s' }}>{t('hero.subtitle1')}</p>
+                <p className="animate-fade-in-up" style={{ animationDelay: '1.0s' }}>{t('hero.subtitle2')}</p>
               </div>
             </div>
             
@@ -44,7 +47,7 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
               >
-                <span>Get Started Free</span>
+                <span>{t('hero.getStartedFree')}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button 
@@ -60,19 +63,19 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 }}
               >
                 <Play className="w-5 h-5" />
-                <span>Watch Demo</span>
+                <span>{t('hero.watchDemo')}</span>
               </button>
             </div>
 
             <div className="flex items-center space-x-6 text-sm text-gray-500 animate-fade-in-up" style={{ animationDelay: '1.4s' }}>
               <div className="flex items-center space-x-2 animate-fade-in-up" style={{ animationDelay: '1.6s' }}>
                 <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                <span>One-click CRM Connection</span>
+                <span>{t('hero.oneClickSetup')}</span>
               </div>
               <span>·</span>
               <div className="flex items-center space-x-2 animate-fade-in-up" style={{ animationDelay: '1.8s' }}>
                 <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                <span>Connect WhatsApp in 2 minutes</span>
+                <span>{t('hero.whatsappSetup')}</span>
               </div>
             </div>
           </div>

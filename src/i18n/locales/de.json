@@ -1,0 +1,336 @@
+{
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Vorherige",
+    "submit": "Absenden",
+    "confirm": "Bestätigen",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "dashboard": "Dashboard",
+    "support": "Support",
+    "signOut": "Abmelden",
+    "getStarted": "Kostenlos starten",
+    "backToHome": "Zurück zur Startseite"
+  },
+  "hero": {
+    "title": "Einfach...",
+    "mainTitle": "Sprich mit deinem CRM",
+    "subtitle1": "Sende Sprachnachrichten über WhatsApp und sie synchronisieren sich automatisch mit deinem CRM.",
+    "subtitle2": "Verwandle Sprachnachrichten sofort in strukturierte Daten.",
+    "getStartedFree": "Kostenlos starten",
+    "watchDemo": "Demo ansehen",
+    "oneClickSetup": "Ein-Klick-CRM-Verbindung",
+    "whatsappSetup": "WhatsApp in 2 Minuten verbinden"
+  },
+  "auth": {
+    "modal": {
+      "title": "Starte deine kostenlose Testversion",
+      "subtitle": "Verbinde dein CRM und beginne sofort mit VoiceLink",
+      "freeTrialBanner": "14-tägige kostenlose Testversion startet jetzt",
+      "freeTrialDescription": "Deine kostenlose Testphase beginnt sofort nach der Verbindung mit deinem CRM. Keine Kreditkarte erforderlich.",
+      "connectTeamleader": "Teamleader verbinden",
+      "connectPipedrive": "Pipedrive verbinden",
+      "connectOdoo": "Odoo verbinden",
+      "startTrialInstantly": "Starte deine Testversion sofort",
+      "alreadyHaveAccount": "Hast du schon ein Konto?",
+      "signInDescription": "Melde dich einfach über deine CRM-Plattform oben an",
+      "secureOauth": "Sichere OAuth-Anmeldung",
+      "noSetupFees": "Keine Einrichtungsgebühren",
+      "cancelAnytime": "Jederzeit kündbar",
+      "termsAgreement": "Durch die Verbindung deines CRM stimmst du unseren {{termsLink}} und {{privacyLink}} zu",
+      "termsOfService": "Nutzungsbedingungen",
+      "privacyPolicy": "Datenschutzrichtlinie"
+    },
+    "callback": {
+      "authenticating": "Authentifizierung läuft...",
+      "authenticationSuccessful": "Authentifizierung erfolgreich!",
+      "authenticationFailed": "Authentifizierung fehlgeschlagen",
+      "processingAuth": "Verarbeite {{platform}}-Authentifizierung...",
+      "completingAuth": "Authentifizierung wird abgeschlossen...",
+      "successfullyAuthenticated": "Erfolgreich mit {{platform}} authentifiziert!",
+      "redirectingToCheckout": "Weiterleitung zum Abo-Checkout...",
+      "returnToHome": "Zurück zur Startseite"
+    }
+  },
+  "dashboard": {
+    "welcome": "Willkommen zurück, {{name}}!",
+    "welcomeDefault": "Willkommen zurück, Premium-Benutzer!",
+    "subscriptionActive": "Dein VoiceLink-Abo ist aktiv",
+    "platformConnection": {
+      "title": "{{platform}}",
+      "connectedActive": "Verbunden & aktiv",
+      "integrationReady": "Integration ist live und bereit für Sprachnachrichten"
+    },
+    "accountProfile": {
+      "title": "Konto-Profil",
+      "subtitle": "Deine CRM-Kontoinformationen",
+      "personalInfo": "Persönliche Informationen",
+      "accountDetails": "Kontodetails",
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail",
+      "language": "Sprache",
+      "timeZone": "Zeitzone",
+      "whatsappStatus": "WhatsApp-Status",
+      "phone": "Telefon",
+      "accountId": "Konto-ID",
+      "emailStatus": "E-Mail-Status"
+    },
+    "whatsappStatus": {
+      "connected": "Verbunden",
+      "pending": "Ausstehend",
+      "notConnected": "Nicht verbunden"
+    },
+    "allSet": {
+      "title": "🎉 Alles erledigt!",
+      "subtitle": "Dein WhatsApp ist verbunden und VoiceLink ist einsatzbereit",
+      "startSending": "Sprachnachrichten senden",
+      "description": "Sende einfach eine Sprachnachricht an VoiceLink über WhatsApp und sieh zu, wie dein CRM automatisch mit strukturierten Daten, Follow-up-Aufgaben und Kontaktinformationen aktualisiert wird.",
+      "whatsappConnected": "WhatsApp verbunden",
+      "crmIntegrationActive": "CRM-Integration aktiv",
+      "aiProcessingReady": "KI-Verarbeitung bereit"
+    },
+    "gettingStarted": {
+      "title": "Bereit loszulegen?",
+      "subtitle": "Befolge diese einfachen Schritte, um mit VoiceLink zu starten",
+      "step1": {
+        "title": "WhatsApp verifizieren",
+        "description": "Verbinde deine WhatsApp-Nummer, um Sprachnachrichten-Bestätigungen zu erhalten"
+      },
+      "step2": {
+        "title": "Sprachnachricht senden",
+        "description": "Sprich deine Gedanken ganz natürlich in WhatsApp-Sprachnachrichten"
+      },
+      "step3": {
+        "title": "Magie erleben",
+        "description": "KI verarbeitet deine Stimme und synchronisiert strukturierte Daten mit deinem CRM"
+      }
+    },
+    "customerPortal": {
+      "title": "Verwalte dein Abo",
+      "subtitle": "Greife auf deine Rechnungsinformationen zu und verwalte dein Abo",
+      "portalTitle": "Kundenportal",
+      "portalDescription": "Greife auf deine Rechnungsverläufe zu, aktualisiere Zahlungsmethoden, lade Rechnungen herunter und verwalte deine Abo-Einstellungen über unser sicheres Kundenportal.",
+      "accessPortal": "Kundenportal öffnen",
+      "viewBillingHistory": "Rechnungsverlauf anzeigen",
+      "updatePaymentMethods": "Zahlungsmethoden aktualisieren",
+      "downloadInvoices": "Rechnungen herunterladen",
+      "manageSubscription": "Abo verwalten"
+    },
+    "premiumFeatures": {
+      "title": "Deine Premium-Funktionen",
+      "subtitle": "Alles, was du brauchst, um Sprache in strukturierte CRM-Daten zu verwandeln",
+      "whatsappVoiceNotes": {
+        "title": "WhatsApp-Sprachnachrichten",
+        "description": "Sende unbegrenzt Sprachnachrichten direkt in dein CRM über WhatsApp",
+        "unlimitedUsage": "Unbegrenzte Nutzung"
+      },
+      "realtimeSync": {
+        "title": "Echtzeit-Synchronisation",
+        "description": "Sofortige Synchronisation mit deiner CRM-Plattform",
+        "liveUpdates": "Live-Updates"
+      },
+      "prioritySupport": {
+        "title": "Prioritäts-Support",
+        "description": "Rund um die Uhr engagierte Unterstützung durch unser Expertenteam",
+        "support24x7": "24/7-Support"
+      }
+    },
+    "support": {
+      "title": "Brauchst du Hilfe beim Start?",
+      "description": "Unser Support-Team hilft dir, das Beste aus VoiceLink herauszuholen. Erhalte persönliche Unterstützung bei Einrichtung und Optimierung.",
+      "contactSupport": "Support kontaktieren"
+    }
+  },
+  "whatsapp": {
+    "integration": "WhatsApp-Integration",
+    "verified": "WhatsApp verifiziert",
+    "connectedTo": "Verbunden mit {{number}}",
+    "activeReady": "Aktiv & bereit",
+    "readyDescription": "Deine WhatsApp-Nummer ist verifiziert und bereit, Sprachnachrichten-Bestätigungen zu empfangen. Du kannst jetzt Sprachnachrichten an VoiceLink senden!",
+    "changeNumber": "WhatsApp-Nummer ändern",
+    "changeDescription": "Trenne die Verbindung, um eine andere WhatsApp-Nummer zu verbinden",
+    "disconnect": "Verbindung trennen",
+    "disconnecting": "Verbindung wird getrennt...",
+    "verificationPending": "WhatsApp-Verifizierung ausstehend",
+    "pendingDescription": "Deine WhatsApp-Verifizierung ist ausstehend. Bitte schließe den Verifizierungsprozess ab, um VoiceLink nutzen zu können.",
+    "refreshStatus": "Status aktualisieren",
+    "whatsappNumber": "WhatsApp-Nummer",
+    "includeCountryCode": "Bitte mit Ländercode eingeben (z. B. +49 für Deutschland)",
+    "validPhoneRequired": "Bitte gib eine gültige internationale Telefonnummer ein",
+    "sendVerificationCode": "Verifizierungscode senden",
+    "sending": "Wird gesendet...",
+    "verificationCodeSent": "Verifizierungscode gesendet",
+    "codeSentTo": "Wir haben einen 6-stelligen Code an {{number}} gesendet",
+    "codeExpires": "Code läuft um {{time}} ab",
+    "verificationCode": "Verifizierungscode",
+    "enterCode": "6-stelligen Code eingeben",
+    "verifying": "Überprüfung läuft...",
+    "verify": "Überprüfen",
+    "resendCode": "Code erneut senden",
+    "verifiedSuccessfully": "WhatsApp-Nummer erfolgreich verifiziert!"
+  },
+  "pricing": {
+    "title": "Volumenbasierte Preise, die mit dir wachsen",
+    "subtitle": "Preis pro Benutzer. Starte kostenlos, upgrade, wenn du bereit bist. Keine versteckten Gebühren.",
+    "monthly": "Monatlich",
+    "yearly": "Jährlich",
+    "save20": "Spare 20%",
+    "voicelinkPro": "VoiceLink Pro",
+    "perfectForTeams": "Perfekt für wachsende Teams",
+    "features": {
+      "unlimitedVoiceNotes": "Unbegrenzte WhatsApp-Sprachnachrichten",
+      "realtimeCrmSync": "Echtzeit-CRM-Synchronisation",
+      "nativeWhatsappIntegration": "Native WhatsApp-Integration",
+      "multiLanguageSupport": "Mehrsprachige Unterstützung",
+      "prioritySupport": "Prioritäts-Support"
+    },
+    "numberOfUsers": "Anzahl der Benutzer",
+    "customAmount": "Benutzerdefinierte Anzahl",
+    "enterNumberOfUsers": "Benutzeranzahl eingeben",
+    "perUserPerMonth": "/Benutzer/Monat",
+    "users": "{{count}} Benutzer",
+    "users_plural": "{{count}} Benutzer",
+    "total": "Gesamt: €{{amount}}/{{period}}",
+    "annualSavings": "Jährliche Ersparnis: €{{amount}}",
+    "yearlyDiscount": "20% Rabatt bei jährlicher Abrechnung",
+    "startFreeTrial": "Kostenlose Testversion starten",
+    "comingSoon": "Demnächst verfügbar",
+    "multiUserPlansComingSoon": "🚧 Multi-Benutzerpläne kommen bald! Derzeit sind nur Einzelbenutzer-Abos verfügbar.",
+    "multiUserPlansLaunching": "Multi-Benutzerpläne starten bald",
+    "freeTrialNoCreditCard": "14 Tage kostenlos testen • Keine Kreditkarte erforderlich",
+    "volumeDiscountTiers": "Volumenrabatt-Stufen",
+    "automaticDiscounts": "Automatische Rabatte basierend auf Teamgröße",
+    "currentlyOnlySingleUser": "Derzeit sind nur Einzelbenutzerpläne verfügbar. Multi-Benutzerpläne mit Mengenrabatten kommen bald!",
+    "plan": "Plan",
+    "teamSize": "Teamgröße",
+    "pricePerUser": "Preis pro Benutzer",
+    "discount": "Rabatt",
+    "current": "Aktuell",
+    "contactUs": "Kontaktiere uns",
+    "off": "{{percent}}% Rabatt",
+    "custom": "Individuell",
+    "enterprisePricing": "Unternehmenspreise",
+    "customPricingFor": "Individuelle Preise für {{count}}+ Benutzer",
+    "dedicatedAccountManager": "Persönlicher Account-Manager",
+    "customIntegrations": "Individuelle Integrationen & Funktionen",
+    "getCustomQuote": "Individuelles Angebot anfordern",
+    "allPlansInclude": "Alle Pläne beinhalten unbegrenzte WhatsApp-Sprachnachrichten, Echtzeit-CRM-Synchronisation und Prioritäts-Support.",
+    "automaticDiscountsComingSoon": "Automatische Rabatte basierend auf Teamgröße (Demnächst verfügbar)"
+  },
+  "features": {
+    "title": "CRM-Integrationen",
+    "subtitle": "Sofort verbinden. Automatisch synchronisieren.",
+    "oneClickSetup": "Ein-Klick-Einrichtung",
+    "realtimeSync": "Echtzeit-Synchronisation",
+    "secureOauth": "Sichere OAuth-Anmeldung",
+    "moreIntegrations": "Wir arbeiten ständig an neuen CRM-Integrationen wie HubSpot, Salesforce, Zoho & mehr, um VoiceLink für alle verfügbar zu machen.",
+    "dontSeeYourCrm": "Dein CRM nicht dabei? Wir erstellen individuelle Integrationen für jede Plattform mit API.",
+    "contactForCustom": "Kontaktiere uns für eine individuelle Integration"
+  },
+  "howItWorks": {
+    "title": "Wie WhatsApp-Sprachnachrichten funktionieren",
+    "subtitle": "Drei einfache Schritte, um Sprache in strukturierte Daten zu verwandeln",
+    "step1": {
+      "title": "Spracheingabe",
+      "description": "Sprich deine Gedanken ganz natürlich in WhatsApp-Sprachnachrichten"
+    },
+    "step2": {
+      "title": "KI-Verarbeitung",
+      "description": "Fortschrittliche KI extrahiert und strukturiert wichtige Informationen aus deiner Sprache"
+    },
+    "step3": {
+      "title": "CRM-Integration",
+      "description": "Strukturierte Daten synchronisieren sich automatisch mit deinem CRM-System"
+    }
+  },
+  "customSolutions": {
+    "title": "Möchtest du eine individuelle VoiceLink-Lösung?",
+    "subtitle": "Wir entwickeln maßgeschneiderte Sprachlösungen für jedes CRM oder Geschäftssystem. Wenn es eine API hat, können wir es verbinden.",
+    "twoExamples": "Zwei Beispiele:",
+    "adaptsToAnyIndustry": "VoiceLink passt sich jeder Branche oder jedem Workflow an, der Sprache in Daten verwandeln muss.",
+    "fieldTechnicians": {
+      "title": "Servicetechniker",
+      "description": "Techniker sprechen Serviceberichte während der Fahrt zwischen Aufträgen. Sprachnachrichten erzeugen automatisch strukturierte Berichte mit Auftragsdetails, verwendeten Teilen und aufgewendeter Zeit.",
+      "features": "Individuelle Berichtformate • Echtzeit-Synchronisation • Mobil optimiert"
+    },
+    "propertyManagement": {
+      "title": "Immobilienverwaltung",
+      "description": "Immobilienverwalter nehmen Wartungsanfragen, Mieterinteraktionen und Inspektionsnotizen per Sprache auf. KI erstellt automatisch Arbeitsaufträge, aktualisiert Mieterdaten und plant Nachverfolgungen.",
+      "features": "Arbeitsaufträge • Mieterkommunikation • Wartungsplanung"
+    },
+    "connectAnyCrm": "Jedes CRM verbinden",
+    "integrateWithAnySystem": "Wir integrieren jedes System mit API",
+    "apiSupport": "+ Jedes System mit REST API, GraphQL oder Webhooks",
+    "readyToBuild": "Bereit, deine individuelle Lösung zu entwickeln?",
+    "customSolutionDescription": "Erzähle uns von deinem Workflow und wir zeigen dir, wie Sprachtechnologie deine Geschäftsprozesse transformieren kann. Jede Lösung wird exakt auf deine Bedürfnisse zugeschnitten.",
+    "scheduleCustomDemo": "Individuelle Demo vereinbaren",
+    "discussYourNeeds": "Sprich mit uns über deine Anforderungen",
+    "freeConsultation": "Kostenlose Beratung",
+    "customProofOfConcept": "Individueller Proof of Concept",
+    "tailoredImplementation": "Maßgeschneiderte Implementierung"
+  },
+  "finalCta": {
+    "title": "Bereit, deinen Workflow zu transformieren?",
+    "subtitle": "Je mehr Benutzer du hinzufügst, desto mehr sparst du. Starte kostenlos, wachse günstig. Verbinde dein WhatsApp und starte noch heute deine kostenlose Testversion.",
+    "startFreeTrial": "Kostenlose Testversion starten",
+    "watchDemo": "Demo ansehen",
+    "freeTrialFeatures": {
+      "freeTrialDays": "14 Tage kostenlose Testversion",
+      "noSetupFees": "Keine Einrichtungsgebühren",
+      "cancelAnytime": "Jederzeit kündbar"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 Finit Solutions",
+    "privacy": "Datenschutz",
+    "saasAgreement": "SaaS-Vereinbarung",
+    "disclaimer": "Haftungsausschluss",
+    "cookiePolicy": "Cookie-Richtlinie",
+    "cookieSettings": "Cookie-Einstellungen",
+    "support": "Support"
+  },
+  "errors": {
+    "authenticationFailed": "Authentifizierung fehlgeschlagen",
+    "invalidCredentials": "Ungültige Anmeldedaten",
+    "networkError": "Netzwerkfehler aufgetreten",
+    "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten",
+    "tryAgain": "Bitte versuche es erneut"
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein",
+    "invalidPhone": "Bitte gib eine gültige Telefonnummer ein",
+    "minLength": "Muss mindestens {{min}} Zeichen lang sein",
+    "maxLength": "Darf höchstens {{max}} Zeichen lang sein"
+  },
+  "dates": {
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "tomorrow": "Morgen",
+    "thisWeek": "Diese Woche",
+    "lastWeek": "Letzte Woche",
+    "nextWeek": "Nächste Woche",
+    "thisMonth": "Diesen Monat",
+    "lastMonth": "Letzten Monat",
+    "nextMonth": "Nächsten Monat"
+  },
+  "numbers": {
+    "currency": "€{{amount}}",
+    "percentage": "{{value}}%",
+    "decimal": "{{value}}"
+  }
+}

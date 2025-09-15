@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from '../hooks/useI18n';
 
 export type BillingPeriod = 'monthly' | 'yearly';
 
@@ -11,6 +12,8 @@ export const BillingPeriodSwitch: React.FC<BillingPeriodSwitchProps> = ({
   billingPeriod,
   onBillingPeriodChange
 }) => {
+  const { t } = useI18n();
+
   return (
     <div className="flex items-center justify-center mb-8">
       <div className="bg-gray-100 rounded-full p-1 flex items-center">
@@ -22,7 +25,7 @@ export const BillingPeriodSwitch: React.FC<BillingPeriodSwitchProps> = ({
               : 'text-gray-600 hover:text-gray-900'
           }`}
         >
-          Monthly
+          {t('pricing.monthly')}
         </button>
         <button
           onClick={() => onBillingPeriodChange('yearly')}
@@ -32,9 +35,9 @@ export const BillingPeriodSwitch: React.FC<BillingPeriodSwitchProps> = ({
               : 'text-gray-600 hover:text-gray-900'
           }`}
         >
-          Yearly
+          {t('pricing.yearly')}
           <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
-            Save 20%
+            {t('pricing.save20')}
           </span>
         </button>
       </div>
