@@ -153,6 +153,82 @@
       "title": "Besoin d'aide pour démarrer ?",
       "description": "Notre équipe d'assistance est là pour vous aider à tirer le meilleur parti de VoiceLink. Obtenez de l'aide personnalisée pour l'installation et l'optimisation.",
       "contactSupport": "Contacter le support"
+    },
+    "userGuide": {
+      "title": "Guide d'utilisation quotidienne",
+      "subtitle": "VoiceLink fonctionne mieux lorsque vous exprimez vos mises à jour de manière structurée et claire",
+      "contactRecording": {
+        "title": "1. Enregistrement des contacts",
+        "startWith": "Commencez par :",
+        "example1": "\"Vient d'appeler/parler avec [NOM]\"",
+        "example2": "ou \"[NOM] vient de visiter\"",
+        "names": "Noms :",
+        "namesTip": "Parlez lentement et épellez les noms difficiles lettre par lettre",
+        "phoneEmail": "Téléphone/E-mail :",
+        "phoneEmailTip": "Optionnel, mais épellez toujours en cas de doute",
+        "newVsExisting": "Nouveaux vs. Contacts existants :",
+        "newVsExistingTip": "VoiceLink recherche automatiquement les enregistrements existants et crée de nouveaux contacts si nécessaire."
+      },
+      "conversationInfo": {
+        "title": "2. Informations de conversation",
+        "description": "Partagez des informations importantes comme si vous les racontiez à un collègue.",
+        "example": "Exemple :",
+        "exampleText": "\"Il est intéressé par le produit X, veut une démo la semaine prochaine et m'a demandé d'envoyer la liste de prix.\"",
+        "tip": "Conseil :",
+        "tipText": "Plus vous donnez de détails, mieux VoiceLink peut remplir votre CRM. Le système crée automatiquement des tags et des rapports comme annotations."
+      },
+      "calendarTasks": {
+        "title": "3. Gestion du calendrier et des tâches",
+        "description": "VoiceLink peut automatiquement créer ou mettre à jour des rendez-vous et des tâches.",
+        "callbacks": "📞 Rappels :",
+        "callback1": "\"Je dois le rappeler lundi à 15h\"",
+        "callback2": "\"Je devrais l'appeler demain matin\"",
+        "appointments": "📅 Rendez-vous :",
+        "appointment1": "\"Il vient mardi prochain à 14h\"",
+        "appointment2": "\"Réunion à Tremelo le 29 mai à 13h\"",
+        "tasks": "✅ Tâches :",
+        "task1": "\"Envoyer le catalogue demain\"",
+        "task2": "\"Préparer le devis pour vendredi 14h\"",
+        "updates": "🔄 Mises à jour :",
+        "update1": "\"Réunion avec Marianna déplacée à mardi 12h\"",
+        "update2": "\"Jeff n'a pas répondu, réessayer demain\""
+      },
+      "bestPractices": {
+        "title": "4. Meilleures pratiques pour une utilisation optimale",
+        "speakClearly": {
+          "title": "Parlez clairement",
+          "description": "Parlez clairement et lentement en anglais standard"
+        },
+        "spellingMode": {
+          "title": "Mode épellation",
+          "description": "Épellez les lettres pour les noms, e-mails et numéros de téléphone en cas de doute"
+        },
+        "autoScheduling": {
+          "title": "Planification automatique",
+          "description": "Aucune heure mentionnée ? VoiceLink trouve automatiquement un moment approprié"
+        },
+        "keepFocused": {
+          "title": "Restez concentré",
+          "description": "Une mise à jour par message est la plus fiable"
+        },
+        "important": "Important :",
+        "importantText": "Vous ne pouvez mettre à jour qu'un seul contact par message. Voulez-vous mettre à jour plusieurs personnes dans votre CRM ? Enregistrez-les avec des notes vocales séparées sur WhatsApp."
+      },
+      "troubleshooting": {
+        "title": "5. Dépannage",
+        "noConnection": {
+          "title": "Pas de connexion ?",
+          "description": "Vérifiez la connexion internet et les paramètres API"
+        },
+        "wrongInput": {
+          "title": "Mauvaise saisie ?",
+          "description": "Envoyez des corrections via un nouveau message vocal"
+        },
+        "transcriptionErrors": {
+          "title": "Erreurs de transcription ?",
+          "description": "Parlez clairement sans bruit de fond"
+        }
+      }
     }
   },
   "whatsapp": {

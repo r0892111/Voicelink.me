@@ -153,6 +153,82 @@
       "title": "Brauchst du Hilfe beim Start?",
       "description": "Unser Support-Team hilft dir, das Beste aus VoiceLink herauszuholen. Erhalte persönliche Unterstützung bei Einrichtung und Optimierung.",
       "contactSupport": "Support kontaktieren"
+    },
+    "userGuide": {
+      "title": "Täglicher Nutzungsleitfaden",
+      "subtitle": "VoiceLink funktioniert am besten, wenn du deine Updates strukturiert und klar ausdrückst",
+      "contactRecording": {
+        "title": "1. Kontakte aufnehmen",
+        "startWith": "Beginne mit:",
+        "example1": "\"Gerade angerufen/gesprochen mit [NAME]\"",
+        "example2": "oder \"[NAME] war gerade da\"",
+        "names": "Namen:",
+        "namesTip": "Sprich langsam und buchstabiere schwierige Namen Buchstabe für Buchstabe",
+        "phoneEmail": "Telefon/E-Mail:",
+        "phoneEmailTip": "Optional, aber buchstabiere immer bei Zweifeln",
+        "newVsExisting": "Neue vs. Bestehende Kontakte:",
+        "newVsExistingTip": "VoiceLink sucht automatisch nach bestehenden Datensätzen und erstellt neue Kontakte bei Bedarf."
+      },
+      "conversationInfo": {
+        "title": "2. Gesprächsinformationen",
+        "description": "Teile wichtige Informationen, als würdest du sie einem Kollegen erzählen.",
+        "example": "Beispiel:",
+        "exampleText": "\"Er ist an Produkt X interessiert, möchte nächste Woche eine Demo und hat mich gebeten, die Preisliste zu senden.\"",
+        "tip": "Tipp:",
+        "tipText": "Je mehr Details du angibst, desto besser kann VoiceLink dein CRM füllen. Das System erstellt automatisch Tags und Berichte als Anmerkungen."
+      },
+      "calendarTasks": {
+        "title": "3. Kalender- und Aufgabenverwaltung",
+        "description": "VoiceLink kann automatisch Termine und Aufgaben erstellen oder aktualisieren.",
+        "callbacks": "📞 Rückrufe:",
+        "callback1": "\"Ich muss ihn Montag um 15:00 zurückrufen\"",
+        "callback2": "\"Ich sollte ihn morgen früh anrufen\"",
+        "appointments": "📅 Termine:",
+        "appointment1": "\"Er kommt nächsten Dienstag um 14:00\"",
+        "appointment2": "\"Meeting in Tremelo am 29. Mai um 13:00\"",
+        "tasks": "✅ Aufgaben:",
+        "task1": "\"Katalog morgen senden\"",
+        "task2": "\"Angebot für Freitag 14:00 vorbereiten\"",
+        "updates": "🔄 Updates:",
+        "update1": "\"Meeting mit Marianna auf Dienstag 12:00 verschoben\"",
+        "update2": "\"Jeff hat nicht abgenommen, morgen nochmal versuchen\""
+      },
+      "bestPractices": {
+        "title": "4. Best Practices für optimale Nutzung",
+        "speakClearly": {
+          "title": "Klar sprechen",
+          "description": "Sprich klar und langsam in Standard-Englisch"
+        },
+        "spellingMode": {
+          "title": "Buchstabier-Modus",
+          "description": "Buchstabiere Namen, E-Mails und Telefonnummern bei Zweifeln"
+        },
+        "autoScheduling": {
+          "title": "Automatische Terminplanung",
+          "description": "Keine Zeit erwähnt? VoiceLink findet automatisch eine passende Zeit"
+        },
+        "keepFocused": {
+          "title": "Fokussiert bleiben",
+          "description": "Ein Update pro Nachricht ist am zuverlässigsten"
+        },
+        "important": "Wichtig:",
+        "importantText": "Du kannst nur einen Kontakt pro Nachricht aktualisieren. Möchtest du mehrere Personen in deinem CRM aktualisieren? Nimm sie mit separaten Sprachnachrichten auf WhatsApp auf."
+      },
+      "troubleshooting": {
+        "title": "5. Fehlerbehebung",
+        "noConnection": {
+          "title": "Keine Verbindung?",
+          "description": "Prüfe Internetverbindung und API-Einstellungen"
+        },
+        "wrongInput": {
+          "title": "Falsche Eingabe?",
+          "description": "Sende Korrekturen über neue Sprachnachricht"
+        },
+        "transcriptionErrors": {
+          "title": "Transkriptionsfehler?",
+          "description": "Sprich klar ohne Hintergrundgeräusche"
+        }
+      }
     }
   },
   "whatsapp": {

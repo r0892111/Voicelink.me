@@ -397,10 +397,10 @@ export const SubscriptionDashboard: React.FC = () => {
                     <MessageCircle className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                    Daily Usage Guide
+                    {t('dashboard.userGuide.title')}
                   </h2>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
-                    VoiceLink works best when you speak your updates in a structured and clear manner
+                    {t('dashboard.userGuide.subtitle')}
                   </p>
                 </div>
 
@@ -409,32 +409,32 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <Users className="w-6 h-6" />
-                      <span>1. Recording Contacts</span>
+                      <span>{t('dashboard.userGuide.contactRecording.title')}</span>
                     </h3>
                     
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Start with:</h4>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.contactRecording.startWith')}</h4>
                         <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderColor: '#1C2C55' }}>
-                          <p className="font-medium">"Just called/spoke with [NAME]"</p>
-                          <p className="font-medium">or "[NAME] just visited"</p>
+                          <p className="font-medium">{t('dashboard.userGuide.contactRecording.example1')}</p>
+                          <p className="font-medium">{t('dashboard.userGuide.contactRecording.example2')}</p>
                         </div>
                       </div>
                       
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Names:</h4>
-                          <p className="text-sm text-gray-700">Speak slowly and spell difficult names letter by letter</p>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.contactRecording.names')}</h4>
+                          <p className="text-sm text-gray-700">{t('dashboard.userGuide.contactRecording.namesTip')}</p>
                         </div>
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Phone/Email:</h4>
-                          <p className="text-sm text-gray-700">Optional, but always spell when in doubt</p>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.contactRecording.phoneEmail')}</h4>
+                          <p className="text-sm text-gray-700">{t('dashboard.userGuide.contactRecording.phoneEmailTip')}</p>
                         </div>
                       </div>
                       
                       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                         <p className="text-sm text-yellow-800">
-                          <strong>New vs. Existing Contacts:</strong> VoiceLink automatically searches for existing records and creates new contacts when needed.
+                          <strong>{t('dashboard.userGuide.contactRecording.newVsExisting')}</strong> {t('dashboard.userGuide.contactRecording.newVsExistingTip')}
                         </p>
                       </div>
                     </div>
@@ -444,23 +444,22 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <MessageCircle className="w-6 h-6" />
-                      <span>2. Conversation Information</span>
+                      <span>{t('dashboard.userGuide.conversationInfo.title')}</span>
                     </h3>
                     
                     <div className="space-y-4">
-                      <p className="text-gray-700">Share important information as if you're telling a colleague.</p>
+                      <p className="text-gray-700">{t('dashboard.userGuide.conversationInfo.description')}</p>
                       
                       <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderColor: '#25D366' }}>
-                        <p className="font-medium text-gray-800">Example:</p>
+                        <p className="font-medium text-gray-800">{t('dashboard.userGuide.conversationInfo.example')}</p>
                         <p className="italic text-gray-700 mt-2">
-                          "He's interested in product X, wants a demo next week, and asked me to send the price list."
+                          {t('dashboard.userGuide.conversationInfo.exampleText')}
                         </p>
                       </div>
                       
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <p className="text-sm text-blue-800">
-                          <strong>Tip:</strong> The more details you provide, the better VoiceLink can fill your CRM. 
-                          The system automatically creates tags and reports as annotations.
+                          <strong>{t('dashboard.userGuide.conversationInfo.tip')}</strong> {t('dashboard.userGuide.conversationInfo.tipText')}
                         </p>
                       </div>
                     </div>
@@ -470,44 +469,44 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <Calendar className="w-6 h-6" />
-                      <span>3. Calendar & Task Management</span>
+                      <span>{t('dashboard.userGuide.calendarTasks.title')}</span>
                     </h3>
                     
-                    <p className="text-gray-700 mb-4">VoiceLink can automatically create or update appointments and tasks.</p>
+                    <p className="text-gray-700 mb-4">{t('dashboard.userGuide.calendarTasks.description')}</p>
                     
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>📞 Callbacks:</h4>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.calendarTasks.callbacks')}</h4>
                           <div className="bg-white rounded-lg p-3 text-sm">
-                            <p>"I need to call him back Monday at 3 PM"</p>
-                            <p>"I should call him tomorrow morning"</p>
+                            <p>{t('dashboard.userGuide.calendarTasks.callback1')}</p>
+                            <p>{t('dashboard.userGuide.calendarTasks.callback2')}</p>
                           </div>
                         </div>
                         
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>📅 Appointments:</h4>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.calendarTasks.appointments')}</h4>
                           <div className="bg-white rounded-lg p-3 text-sm">
-                            <p>"He's coming next Tuesday at 2 PM"</p>
-                            <p>"Meeting in Tremelo on May 29th at 1 PM"</p>
+                            <p>{t('dashboard.userGuide.calendarTasks.appointment1')}</p>
+                            <p>{t('dashboard.userGuide.calendarTasks.appointment2')}</p>
                           </div>
                         </div>
                       </div>
                       
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>✅ Tasks:</h4>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.calendarTasks.tasks')}</h4>
                           <div className="bg-white rounded-lg p-3 text-sm">
-                            <p>"Send catalog tomorrow"</p>
-                            <p>"Prepare quote for Friday 2 PM"</p>
+                            <p>{t('dashboard.userGuide.calendarTasks.task1')}</p>
+                            <p>{t('dashboard.userGuide.calendarTasks.task2')}</p>
                           </div>
                         </div>
                         
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>🔄 Updates:</h4>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.calendarTasks.updates')}</h4>
                           <div className="bg-white rounded-lg p-3 text-sm">
-                            <p>"Meeting with Marianna moved to Tuesday 12 PM"</p>
-                            <p>"Jeff didn't answer, try again tomorrow"</p>
+                            <p>{t('dashboard.userGuide.calendarTasks.update1')}</p>
+                            <p>{t('dashboard.userGuide.calendarTasks.update2')}</p>
                           </div>
                         </div>
                       </div>
@@ -518,7 +517,7 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <CheckCircle className="w-6 h-6" />
-                      <span>4. Best Practices for Optimal Use</span>
+                      <span>{t('dashboard.userGuide.bestPractices.title')}</span>
                     </h3>
                     
                     <div className="grid md:grid-cols-2 gap-6">
@@ -528,8 +527,8 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-white text-sm">🗣️</span>
                           </div>
                           <div>
-                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Speak Clearly</h4>
-                            <p className="text-sm text-gray-700">Speak clearly and slowly in standard English</p>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.bestPractices.speakClearly.title')}</h4>
+                            <p className="text-sm text-gray-700">{t('dashboard.userGuide.bestPractices.speakClearly.description')}</p>
                           </div>
                         </div>
                         
@@ -538,8 +537,8 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-white text-sm">📱</span>
                           </div>
                           <div>
-                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Spelling Mode</h4>
-                            <p className="text-sm text-gray-700">Spell letters for names, emails, and phone numbers when in doubt</p>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.bestPractices.spellingMode.title')}</h4>
+                            <p className="text-sm text-gray-700">{t('dashboard.userGuide.bestPractices.spellingMode.description')}</p>
                           </div>
                         </div>
                       </div>
@@ -550,8 +549,8 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-white text-sm">⏰</span>
                           </div>
                           <div>
-                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Auto-Scheduling</h4>
-                            <p className="text-sm text-gray-700">No time mentioned? VoiceLink finds a suitable time automatically</p>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.bestPractices.autoScheduling.title')}</h4>
+                            <p className="text-sm text-gray-700">{t('dashboard.userGuide.bestPractices.autoScheduling.description')}</p>
                           </div>
                         </div>
                         
@@ -560,8 +559,8 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-white text-sm">🎯</span>
                           </div>
                           <div>
-                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Keep It Focused</h4>
-                            <p className="text-sm text-gray-700">One update per message is most reliable</p>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.bestPractices.keepFocused.title')}</h4>
+                            <p className="text-sm text-gray-700">{t('dashboard.userGuide.bestPractices.keepFocused.description')}</p>
                           </div>
                         </div>
                       </div>
@@ -569,8 +568,7 @@ export const SubscriptionDashboard: React.FC = () => {
                     
                     <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4">
                       <p className="text-sm text-red-800">
-                        <strong>Important:</strong> You can only update one contact per message. 
-                        Want to update multiple people in your CRM? Record them with separate voice notes on WhatsApp.
+                        <strong>{t('dashboard.userGuide.bestPractices.important')}</strong> {t('dashboard.userGuide.bestPractices.importantText')}
                       </p>
                     </div>
                   </div>
@@ -579,23 +577,23 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <Settings className="w-6 h-6" />
-                      <span>5. Troubleshooting</span>
+                      <span>{t('dashboard.userGuide.troubleshooting.title')}</span>
                     </h3>
                     
                     <div className="grid md:grid-cols-3 gap-4">
                       <div className="bg-white rounded-lg p-4">
-                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>No Connection?</h4>
-                        <p className="text-sm text-gray-700">Check internet connection and API settings</p>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.troubleshooting.noConnection.title')}</h4>
+                        <p className="text-sm text-gray-700">{t('dashboard.userGuide.troubleshooting.noConnection.description')}</p>
                       </div>
                       
                       <div className="bg-white rounded-lg p-4">
-                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Wrong Input?</h4>
-                        <p className="text-sm text-gray-700">Send corrections via new voice message</p>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.troubleshooting.wrongInput.title')}</h4>
+                        <p className="text-sm text-gray-700">{t('dashboard.userGuide.troubleshooting.wrongInput.description')}</p>
                       </div>
                       
                       <div className="bg-white rounded-lg p-4">
-                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Transcription Errors?</h4>
-                        <p className="text-sm text-gray-700">Speak clearly without background noise</p>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.troubleshooting.transcriptionErrors.title')}</h4>
+                        <p className="text-sm text-gray-700">{t('dashboard.userGuide.troubleshooting.transcriptionErrors.description')}</p>
                       </div>
                     </div>
                   </div>

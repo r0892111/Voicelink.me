@@ -152,6 +152,82 @@
       "title": "Need Help Getting Started?",
       "description": "Our support team is here to help you make the most of VoiceLink. Get personalized assistance with setup and optimization.",
       "contactSupport": "Contact Support"
+    },
+    "userGuide": {
+      "title": "Daily Usage Guide",
+      "subtitle": "VoiceLink works best when you speak your updates in a structured and clear manner",
+      "contactRecording": {
+        "title": "1. Recording Contacts",
+        "startWith": "Start with:",
+        "example1": "\"Just called/spoke with [NAME]\"",
+        "example2": "or \"[NAME] just visited\"",
+        "names": "Names:",
+        "namesTip": "Speak slowly and spell difficult names letter by letter",
+        "phoneEmail": "Phone/Email:",
+        "phoneEmailTip": "Optional, but always spell when in doubt",
+        "newVsExisting": "New vs. Existing Contacts:",
+        "newVsExistingTip": "VoiceLink automatically searches for existing records and creates new contacts when needed."
+      },
+      "conversationInfo": {
+        "title": "2. Conversation Information",
+        "description": "Share important information as if you're telling a colleague.",
+        "example": "Example:",
+        "exampleText": "\"He's interested in product X, wants a demo next week, and asked me to send the price list.\"",
+        "tip": "Tip:",
+        "tipText": "The more details you provide, the better VoiceLink can fill your CRM. The system automatically creates tags and reports as annotations."
+      },
+      "calendarTasks": {
+        "title": "3. Calendar & Task Management",
+        "description": "VoiceLink can automatically create or update appointments and tasks.",
+        "callbacks": "📞 Callbacks:",
+        "callback1": "\"I need to call him back Monday at 3 PM\"",
+        "callback2": "\"I should call him tomorrow morning\"",
+        "appointments": "📅 Appointments:",
+        "appointment1": "\"He's coming next Tuesday at 2 PM\"",
+        "appointment2": "\"Meeting in Tremelo on May 29th at 1 PM\"",
+        "tasks": "✅ Tasks:",
+        "task1": "\"Send catalog tomorrow\"",
+        "task2": "\"Prepare quote for Friday 2 PM\"",
+        "updates": "🔄 Updates:",
+        "update1": "\"Meeting with Marianna moved to Tuesday 12 PM\"",
+        "update2": "\"Jeff didn't answer, try again tomorrow\""
+      },
+      "bestPractices": {
+        "title": "4. Best Practices for Optimal Use",
+        "speakClearly": {
+          "title": "Speak Clearly",
+          "description": "Speak clearly and slowly in standard English"
+        },
+        "spellingMode": {
+          "title": "Spelling Mode",
+          "description": "Spell letters for names, emails, and phone numbers when in doubt"
+        },
+        "autoScheduling": {
+          "title": "Auto-Scheduling",
+          "description": "No time mentioned? VoiceLink finds a suitable time automatically"
+        },
+        "keepFocused": {
+          "title": "Keep It Focused",
+          "description": "One update per message is most reliable"
+        },
+        "important": "Important:",
+        "importantText": "You can only update one contact per message. Want to update multiple people in your CRM? Record them with separate voice notes on WhatsApp."
+      },
+      "troubleshooting": {
+        "title": "5. Troubleshooting",
+        "noConnection": {
+          "title": "No Connection?",
+          "description": "Check internet connection and API settings"
+        },
+        "wrongInput": {
+          "title": "Wrong Input?",
+          "description": "Send corrections via new voice message"
+        },
+        "transcriptionErrors": {
+          "title": "Transcription Errors?",
+          "description": "Speak clearly without background noise"
+        }
+      }
     }
   },
   "whatsapp": {

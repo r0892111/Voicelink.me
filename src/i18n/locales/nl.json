@@ -153,6 +153,82 @@
       "title": "Hulp nodig bij de start?",
       "description": "Ons ondersteuningsteam helpt je graag om het meeste uit VoiceLink te halen. Krijg persoonlijke hulp bij installatie en optimalisatie.",
       "contactSupport": "Contact opnemen met support"
+    },
+    "userGuide": {
+      "title": "Dagelijkse gebruiksgids",
+      "subtitle": "VoiceLink werkt het beste wanneer je je updates op een gestructureerde en duidelijke manier uitspreekt",
+      "contactRecording": {
+        "title": "1. Contacten opnemen",
+        "startWith": "Begin met:",
+        "example1": "\"Net gebeld/gesproken met [NAAM]\"",
+        "example2": "of \"[NAAM] is net langs geweest\"",
+        "names": "Namen:",
+        "namesTip": "Spreek langzaam en spel moeilijke namen letter voor letter",
+        "phoneEmail": "Telefoon/E-mail:",
+        "phoneEmailTip": "Optioneel, maar spel altijd wanneer je twijfelt",
+        "newVsExisting": "Nieuwe vs. Bestaande Contacten:",
+        "newVsExistingTip": "VoiceLink zoekt automatisch naar bestaande records en maakt nieuwe contacten aan wanneer nodig."
+      },
+      "conversationInfo": {
+        "title": "2. Gespreksinformatie",
+        "description": "Deel belangrijke informatie alsof je het aan een collega vertelt.",
+        "example": "Voorbeeld:",
+        "exampleText": "\"Hij is geïnteresseerd in product X, wil volgende week een demo en vroeg me om de prijslijst te sturen.\"",
+        "tip": "Tip:",
+        "tipText": "Hoe meer details je geeft, hoe beter VoiceLink je CRM kan vullen. Het systeem maakt automatisch tags en rapporten aan als annotaties."
+      },
+      "calendarTasks": {
+        "title": "3. Agenda & Taakbeheer",
+        "description": "VoiceLink kan automatisch afspraken en taken aanmaken of bijwerken.",
+        "callbacks": "📞 Terugbellen:",
+        "callback1": "\"Ik moet hem maandag om 15:00 terugbellen\"",
+        "callback2": "\"Ik moet hem morgenochtend bellen\"",
+        "appointments": "📅 Afspraken:",
+        "appointment1": "\"Hij komt volgende dinsdag om 14:00\"",
+        "appointment2": "\"Vergadering in Tremelo op 29 mei om 13:00\"",
+        "tasks": "✅ Taken:",
+        "task1": "\"Catalogus morgen versturen\"",
+        "task2": "\"Offerte voorbereiden voor vrijdag 14:00\"",
+        "updates": "🔄 Updates:",
+        "update1": "\"Vergadering met Marianna verplaatst naar dinsdag 12:00\"",
+        "update2": "\"Jeff nam niet op, probeer morgen opnieuw\""
+      },
+      "bestPractices": {
+        "title": "4. Beste praktijken voor optimaal gebruik",
+        "speakClearly": {
+          "title": "Spreek duidelijk",
+          "description": "Spreek duidelijk en langzaam in standaard Engels"
+        },
+        "spellingMode": {
+          "title": "Spelling modus",
+          "description": "Spel letters voor namen, e-mails en telefoonnummers wanneer je twijfelt"
+        },
+        "autoScheduling": {
+          "title": "Automatische planning",
+          "description": "Geen tijd genoemd? VoiceLink vindt automatisch een geschikte tijd"
+        },
+        "keepFocused": {
+          "title": "Houd het gefocust",
+          "description": "Eén update per bericht is het meest betrouwbaar"
+        },
+        "important": "Belangrijk:",
+        "importantText": "Je kunt slechts één contact per bericht bijwerken. Wil je meerdere mensen in je CRM bijwerken? Neem ze op met aparte spraaknotities op WhatsApp."
+      },
+      "troubleshooting": {
+        "title": "5. Probleemoplossing",
+        "noConnection": {
+          "title": "Geen verbinding?",
+          "description": "Controleer internetverbinding en API-instellingen"
+        },
+        "wrongInput": {
+          "title": "Verkeerde invoer?",
+          "description": "Stuur correcties via nieuw spraakbericht"
+        },
+        "transcriptionErrors": {
+          "title": "Transcriptiefouten?",
+          "description": "Spreek duidelijk zonder achtergrondgeluid"
+        }
+      }
     }
   },
   "whatsapp": {
