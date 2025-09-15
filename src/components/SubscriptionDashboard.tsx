@@ -525,6 +525,193 @@ export const SubscriptionDashboard: React.FC = () => {
             </>
           )}
 
+          {/* Team Management Section - Only show when WhatsApp is active */}
+          {!loadingWhatsApp && whatsappStatus === 'active' && (
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+              <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                      <Users className="w-6 h-6" style={{ color: '#1C2C55' }} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>Team Management</h3>
+                      <p className="text-gray-600">Manage your team members and invitations</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-gray-500">Team Size</div>
+                    <div className="text-2xl font-bold" style={{ color: '#1C2C55' }}>
+                      {addedTeamMembers.length + 1}/{totalUsers}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {remainingSlots} slots remaining
+                    </div>
+                  </div>
+                </div>
+
+                {/* Account Owner */}
+                <div className="mb-8">
+                  <h4 className="text-lg font-semibold mb-4" style={{ color: '#1C2C55' }}>Account Owner</h4>
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                          <Users className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900">{user?.name}</div>
+                          <div className="text-sm text-gray-600">{user?.email}</div>
+                        </div>
+                      </div>
+                      <div className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                        Admin
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Team Members */}
+                {addedTeamMembers.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold mb-4" style={{ color: '#1C2C55' }}>Team Members</h4>
+                    <div className="space-y-3">
+                      {addedTeamMembers.map((member) => (
+                        <div key={member.id} className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                              <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+                                <Users className="w-5 h-5 text-gray-600" />
+                              </div>
+                              <div>
+                                <div className="font-semibold text-gray-900">{member.name}</div>
+                                <div className="text-sm text-gray-600">{member.email}</div>
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
+                                Pending
+                              </div>
+                              <button
+                                onClick={() => removeMember(member.id!)}
+                                className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Add New Team Member Form */}
+                {canAddMore ? (
+                  <div className="space-y-6">
+                    <h4 className="text-lg font-semibold" style={{ color: '#1C2C55' }}>Add New Team Member</h4>
+                    
+                    {inviteSuccess && (
+                      <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2 text-green-700">
+                        <CheckCircle className="w-5 h-5" />
+                        <span>Team member invited successfully!</span>
+                      </div>
+                    )}
+
+                    {inviteError && (
+                      <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
+                        <AlertCircle className="w-5 h-5" />
+                        <span>{inviteError}</span>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Full Name
+                        </label>
+                        <input
+                          type="text"
+                          value={currentMember.name}
+                          onChange={(e) => updateCurrentMember('name', e.target.value)}
+                          placeholder="Enter full name"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <Mail className="w-4 h-4 inline mr-1" />
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          value={currentMember.email}
+                          onChange={(e) => updateCurrentMember('email', e.target.value)}
+                          placeholder="Enter email address"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <Phone className="w-4 h-4 inline mr-1" />
+                          WhatsApp Number
+                        </label>
+                        <input
+                          type="tel"
+                          value={currentMember.whatsapp_number}
+                          onChange={(e) => updateCurrentMember('whatsapp_number', e.target.value)}
+                          placeholder="+32 123 456 789"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex space-x-4">
+                      <button
+                        onClick={addNewUser}
+                        disabled={!isCurrentMemberValid() || inviting}
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2"
+                      >
+                        {inviting ? (
+                          <>
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                            <span>Sending Invitation...</span>
+                          </>
+                        ) : (
+                          <>
+                            <UserPlus className="w-5 h-5" />
+                            <span>Save & Invite</span>
+                          </>
+                        )}
+                      </button>
+                      
+                      <button
+                        onClick={() => setCurrentMember({ name: '', email: '', whatsapp_number: '' })}
+                        disabled={inviting}
+                        className="px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-colors disabled:opacity-50"
+                      >
+                        Add New User
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center p-8 bg-gray-50 rounded-xl">
+                    <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Team Limit Reached</h4>
+                    <p className="text-gray-600 mb-4">
+                      You've reached your team limit of {totalUsers} users. Upgrade your subscription to add more team members.
+                    </p>
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors">
+                      Upgrade Subscription
+                    </button>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
           {/* User Guide Section - Only show when WhatsApp is active */}
           {!loadingWhatsApp && whatsappStatus === 'active' && (
             <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
