@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail, CreditCard, ExternalLink } from 'lucide-react';
+import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail, CreditCard, ExternalLink, Check } from 'lucide-react';
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
 import { supabase } from '../lib/supabase';
@@ -668,145 +668,108 @@ export const SubscriptionDashboard: React.FC = () => {
 
           {/* Multi-User CTA Section */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="relative bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 lg:p-12 text-white overflow-hidden">
-              {/* Background decorative elements */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full transform translate-x-32 -translate-y-32"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full transform -translate-x-24 translate-y-24"></div>
-              
-              <div className="relative z-10">
-                <div className="text-center mb-12">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center bg-white bg-opacity-20">
-                    <Users className="w-8 h-8 text-white" />
+            <div className="bg-white rounded-xl shadow-sm p-8">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                  <Users className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900">Add Team Members</h2>
+                  <p className="text-sm text-gray-600">Invite up to 4 additional users to your trial account</p>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                  <span className="text-sm font-medium text-blue-800">Trial Account Benefits</span>
+                </div>
+                <p className="text-sm text-blue-700">
+                  Add up to 4 team members to your trial account at no extra cost. They'll get full access to VoiceLink features during your trial period.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Team Member Slots (4 available)</h3>
+                
+                {/* Current User */}
+                <div className="flex items-center space-x-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <Check className="w-5 h-5 text-green-600" />
                   </div>
-                  <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                    Ready to Scale Your Team?
-                  </h2>
-                  <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-                    Add team members and unlock volume discounts. The more users you add, the more you save!
-                  </p>
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-900">{user?.name || 'You'}</div>
+                    <div className="text-sm text-gray-600">{user?.email} (Account Owner)</div>
+                  </div>
+                  <div className="text-sm font-medium text-green-700">Active</div>
                 </div>
 
-                {/* Volume Discount Preview */}
-                <div className="grid md:grid-cols-3 gap-6 mb-12">
-                  <div className="bg-white bg-opacity-10 rounded-2xl p-6 text-center backdrop-blur-sm">
-                    <div className="text-2xl font-bold mb-2">5-9 Users</div>
-                    <div className="text-blue-100 mb-3">€27.00/user/month</div>
-                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-500 text-white text-sm font-medium">
-                      Save €14.50/month
+                {/* 4 Open Slots */}
+                {[1, 2, 3, 4].map((slot) => (
+                  <div key={slot} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                      <Users className="w-5 h-5 text-gray-400" />
                     </div>
+                    <div className="flex-1 space-y-3">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <label htmlFor={`name-${slot}`} className="block text-sm font-medium text-gray-700 mb-1">
+                            Team Member Name
+                          </label>
+                          <input
+                            type="text"
+                            id={`name-${slot}`}
+                            placeholder="Enter full name"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor={`phone-${slot}`} className="block text-sm font-medium text-gray-700 mb-1">
+                            WhatsApp Phone Number
+                          </label>
+                          <input
+                            type="tel"
+                            id={`phone-${slot}`}
+                            placeholder="+32 123 456 789"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label htmlFor={`email-${slot}`} className="block text-sm font-medium text-gray-700 mb-1">
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          id={`email-${slot}`}
+                          placeholder="team.member@company.com"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                        />
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-500">Slot {slot}</div>
                   </div>
-                  
-                  <div className="bg-white bg-opacity-20 rounded-2xl p-6 text-center backdrop-blur-sm border-2 border-white border-opacity-30 relative">
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-yellow-400 text-blue-900 px-3 py-1 rounded-full text-xs font-bold">
-                        MOST POPULAR
-                      </span>
-                    </div>
-                    <div className="text-2xl font-bold mb-2">10-24 Users</div>
-                    <div className="text-blue-100 mb-3">€24.00/user/month</div>
-                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-500 text-white text-sm font-medium">
-                      Save €59.00/month
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white bg-opacity-10 rounded-2xl p-6 text-center backdrop-blur-sm">
-                    <div className="text-2xl font-bold mb-2">25+ Users</div>
-                    <div className="text-blue-100 mb-3">€21.00/user/month</div>
-                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-500 text-white text-sm font-medium">
-                      Save €222.50/month
-                    </div>
-                  </div>
-                </div>
+                ))}
+              </div>
 
-                {/* Benefits Grid */}
-                <div className="grid md:grid-cols-2 gap-8 mb-12">
-                  <div>
-                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2">
-                      <Users className="w-5 h-5" />
-                      <span>Team Benefits</span>
-                    </h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-300" />
-                        <span>Shared workspace for all team members</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-300" />
-                        <span>Centralized voice note updates</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-300" />
-                        <span>Team dashboard and analytics</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-300" />
-                        <span>Unified CRM synchronization</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-xl font-bold mb-4 flex items-center space-x-2">
-                      <CreditCard className="w-5 h-5" />
-                      <span>Volume Savings</span>
-                    </h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-300" />
-                        <span>Automatic volume discounts</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-300" />
-                        <span>Up to 50% savings on large teams</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-300" />
-                        <span>Increased team productivity</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-300" />
-                        <span>Scalable pricing as you grow</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h4 className="text-sm font-medium text-gray-900 mb-2">What happens next?</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Team members will receive an invitation email with setup instructions</li>
+                  <li>• They'll need to verify their WhatsApp number to start using VoiceLink</li>
+                  <li>• All team members get full access during your 14-day trial</li>
+                  <li>• After trial, you can upgrade to a team plan with volume discounts</li>
+                </ul>
+              </div>
 
-                {/* CTA Buttons */}
-                <div className="text-center">
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                    <a
-                      href="mailto:contact@finitsolutions.be?subject=Add Team Members to VoiceLink Account&body=Hi,%0D%0A%0D%0AI'd like to add team members to my VoiceLink account.%0D%0A%0D%0ACurrent users: 1%0D%0ADesired team size: [Please specify]%0D%0A%0D%0APlease send me information about volume pricing and team setup.%0D%0A%0D%0AThank you!"
-                      className="group bg-white text-blue-600 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
-                    >
-                      <Users className="w-5 h-5" />
-                      <span>Add Team Members</span>
-                      <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                    
-                    <a
-                      href="mailto:contact@finitsolutions.be?subject=Volume Pricing Inquiry&body=Hi,%0D%0A%0D%0AI'm interested in volume pricing for my team.%0D%0A%0D%0ATeam size: [Please specify]%0D%0AIndustry: [Please specify]%0D%0A%0D%0APlease send me a custom quote.%0D%0A%0D%0AThank you!"
-                      className="group border-2 border-white text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:bg-white hover:text-blue-600 flex items-center justify-center space-x-2"
-                    >
-                      <CreditCard className="w-5 h-5" />
-                      <span>Get Volume Pricing</span>
-                    </a>
-                  </div>
-                  
-                  <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-sm text-blue-100">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Free team onboarding</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Dedicated account manager</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Custom training sessions</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="flex flex-col sm:flex-row gap-4 mt-6">
+                <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2">
+                  <Users className="w-5 h-5" />
+                  <span>Send Invitations</span>
+                </button>
+                <button className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-3 px-6 rounded-lg transition-colors">
+                  Save as Draft
+                </button>
               </div>
             </div>
           </section>
