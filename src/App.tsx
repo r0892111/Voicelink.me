@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { LogOut, User, Menu, X, ArrowLeft, Cookie } from 'lucide-react';
+import { LogOut, User, Menu, X, ArrowLeft, Cookie, ArrowRight } from 'lucide-react';
 import { AuthModal } from './components/AuthModal';
 import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
@@ -126,6 +126,7 @@ function App() {
                       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
                     >
                       <span>{t('navigation.getStarted')}</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
                   )}
                 </div>
@@ -187,6 +188,7 @@ function App() {
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
                       >
                         <span>{t('navigation.getStarted')}</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </button>
                     )}
                   </div>
