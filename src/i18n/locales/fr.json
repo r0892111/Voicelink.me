@@ -1,0 +1,74 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "submit": "Soumettre",
+    "confirm": "Confirmer",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "dashboard": "Tableau de bord",
+    "support": "Support",
+    "signOut": "Se déconnecter",
+    "getStarted": "Commencer Gratuitement",
+    "backToHome": "Retour à l'accueil"
+  },
+  "hero": {
+    "title": "Simplement...",
+    "mainTitle": "Parlez à votre CRM",
+    "subtitle1": "Envoyez des notes vocales via WhatsApp et regardez-les se synchroniser automatiquement avec votre CRM.",
+    "subtitle2": "Transformez les messages vocaux en données structurées instantanément.",
+    "getStartedFree": "Commencer Gratuitement",
+    "watchDemo": "Voir la Démo",
+    "oneClickSetup": "Connexion CRM en un clic",
+    "whatsappSetup": "Connectez WhatsApp en 2 minutes"
+  },
+  "auth": {
+    "modal": {
+      "title": "Commencez Votre Essai Gratuit",
+      "subtitle": "Connectez votre CRM et commencez à utiliser VoiceLink instantanément",
+      "freeTrialBanner": "Essai Gratuit de 14 Jours Commence Maintenant",
+      "freeTrialDescription": "Votre essai gratuit commence immédiatement après la connexion de votre CRM. Aucune carte de crédit requise.",
+      "connectTeamleader": "Connecter Teamleader",
+      "connectPipedrive": "Connecter Pipedrive",
+      "connectOdoo": "Connecter Odoo"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bon retour, {{name}} !",
+    "welcomeDefault": "Bon retour, Utilisateur Premium !",
+    "subscriptionActive": "Votre abonnement VoiceLink est actif"
+  },
+  "whatsapp": {
+    "integration": "Intégration WhatsApp",
+    "verified": "WhatsApp Vérifié",
+    "connectedTo": "Connecté à {{number}}",
+    "whatsappNumber": "Numéro WhatsApp",
+    "includeCountryCode": "Inclure l'indicatif pays (ex: +33 pour la France)",
+    "sendVerificationCode": "Envoyer le Code de Vérification",
+    "verificationCode": "Code de Vérification",
+    "verify": "Vérifier"
+  },
+  "pricing": {
+    "title": "Tarification Volume Qui S'Adapte",
+    "subtitle": "Prix par utilisateur. Commencez gratuitement, mettez à niveau quand vous êtes prêt. Pas de frais cachés.",
+    "monthly": "Mensuel",
+    "yearly": "Annuel",
+    "save20": "Économisez 20%",
+    "startFreeTrial": "Commencer l'Essai Gratuit",
+    "comingSoon": "Bientôt Disponible"
+  }
+}

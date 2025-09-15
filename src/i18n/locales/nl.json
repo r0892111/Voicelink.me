@@ -1,0 +1,83 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Succes",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "close": "Sluiten",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "submit": "Verzenden",
+    "confirm": "Bevestigen",
+    "yes": "Ja",
+    "no": "Nee"
+  },
+  "navigation": {
+    "home": "Home",
+    "features": "Functies",
+    "pricing": "Prijzen",
+    "dashboard": "Dashboard",
+    "support": "Ondersteuning",
+    "signOut": "Uitloggen",
+    "getStarted": "Gratis Beginnen",
+    "backToHome": "Terug naar Home"
+  },
+  "hero": {
+    "title": "Gewoon...",
+    "mainTitle": "Praat met je CRM",
+    "subtitle1": "Stuur spraakberichten via WhatsApp en zie ze automatisch synchroniseren met je CRM.",
+    "subtitle2": "Zet spraakberichten direct om in gestructureerde data.",
+    "getStartedFree": "Gratis Beginnen",
+    "watchDemo": "Bekijk Demo",
+    "oneClickSetup": "Eén-klik CRM Verbinding",
+    "whatsappSetup": "Verbind WhatsApp in 2 minuten"
+  },
+  "auth": {
+    "modal": {
+      "title": "Start Je Gratis Proefperiode",
+      "subtitle": "Verbind je CRM en begin direct met VoiceLink",
+      "freeTrialBanner": "14-Dagen Gratis Proefperiode Begint Nu",
+      "freeTrialDescription": "Je gratis proefperiode begint direct na het verbinden van je CRM. Geen creditcard vereist.",
+      "connectTeamleader": "Verbind Teamleader",
+      "connectPipedrive": "Verbind Pipedrive",
+      "connectOdoo": "Verbind Odoo",
+      "startTrialInstantly": "Start je gratis proefperiode direct",
+      "alreadyHaveAccount": "Heb je al een account?",
+      "signInDescription": "Verbind gewoon met je CRM platform hierboven om in te loggen",
+      "secureOauth": "Veilige OAuth",
+      "noSetupFees": "Geen Installatiekosten",
+      "cancelAnytime": "Altijd Opzegbaar",
+      "termsAgreement": "Door je CRM te verbinden, ga je akkoord met onze {{termsLink}} en {{privacyLink}}",
+      "termsOfService": "Servicevoorwaarden",
+      "privacyPolicy": "Privacybeleid"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welkom terug, {{name}}!",
+    "welcomeDefault": "Welkom terug, Premium Gebruiker!",
+    "subscriptionActive": "Je VoiceLink abonnement is actief"
+  },
+  "whatsapp": {
+    "integration": "WhatsApp Integratie",
+    "verified": "WhatsApp Geverifieerd",
+    "connectedTo": "Verbonden met {{number}}",
+    "whatsappNumber": "WhatsApp Nummer",
+    "includeCountryCode": "Inclusief landcode (bijv. +32 voor België)",
+    "sendVerificationCode": "Verstuur Verificatiecode",
+    "verificationCode": "Verificatiecode",
+    "verify": "Verifiëren"
+  },
+  "pricing": {
+    "title": "Volume Prijzen Die Meeschalen",
+    "subtitle": "Per gebruiker prijzen. Start gratis, upgrade wanneer je klaar bent. Geen verborgen kosten.",
+    "monthly": "Maandelijks",
+    "yearly": "Jaarlijks",
+    "save20": "Bespaar 20%",
+    "startFreeTrial": "Start Gratis Proefperiode",
+    "comingSoon": "Binnenkort Beschikbaar"
+  }
+}

@@ -1,0 +1,336 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "navigation": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "dashboard": "Dashboard",
+    "support": "Support",
+    "signOut": "Sign Out",
+    "getStarted": "Get Started Free",
+    "backToHome": "Back to Home"
+  },
+  "hero": {
+    "title": "Just...",
+    "mainTitle": "Talk to your CRM",
+    "subtitle1": "Send voice notes via WhatsApp and watch them automatically sync with your CRM.",
+    "subtitle2": "Turn voice messages into structured data instantly.",
+    "getStartedFree": "Get Started Free",
+    "watchDemo": "Watch Demo",
+    "oneClickSetup": "One-click CRM Connection",
+    "whatsappSetup": "Connect WhatsApp in 2 minutes"
+  },
+  "auth": {
+    "modal": {
+      "title": "Start Your Free Trial",
+      "subtitle": "Connect your CRM and begin using VoiceLink instantly",
+      "freeTrialBanner": "14-Day Free Trial Starts Now",
+      "freeTrialDescription": "Your free trial begins immediately upon connecting your CRM. No credit card required.",
+      "connectTeamleader": "Connect Teamleader",
+      "connectPipedrive": "Connect Pipedrive",
+      "connectOdoo": "Connect Odoo",
+      "startTrialInstantly": "Start your free trial instantly",
+      "alreadyHaveAccount": "Already have an account?",
+      "signInDescription": "Simply connect with your CRM platform above to sign in",
+      "secureOauth": "Secure OAuth",
+      "noSetupFees": "No Setup Fees",
+      "cancelAnytime": "Cancel Anytime",
+      "termsAgreement": "By connecting your CRM, you agree to our {{termsLink}} and {{privacyLink}}",
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "callback": {
+      "authenticating": "Authenticating...",
+      "authenticationSuccessful": "Authentication Successful!",
+      "authenticationFailed": "Authentication Failed",
+      "processingAuth": "Processing {{platform}} authentication...",
+      "completingAuth": "Completing authentication...",
+      "successfullyAuthenticated": "Successfully authenticated with {{platform}}!",
+      "redirectingToCheckout": "Redirecting to subscription checkout...",
+      "returnToHome": "Return to Home"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {{name}}!",
+    "welcomeDefault": "Welcome back, Premium User!",
+    "subscriptionActive": "Your VoiceLink subscription is active",
+    "platformConnection": {
+      "title": "{{platform}}",
+      "connectedActive": "Connected & Active",
+      "integrationReady": "Integration is live and ready for voice notes"
+    },
+    "accountProfile": {
+      "title": "Account Profile",
+      "subtitle": "Your CRM account information",
+      "personalInfo": "Personal Information",
+      "accountDetails": "Account Details",
+      "fullName": "Full Name",
+      "email": "Email",
+      "language": "Language",
+      "timeZone": "Time Zone",
+      "whatsappStatus": "WhatsApp Status",
+      "phone": "Phone",
+      "accountId": "Account ID",
+      "emailStatus": "Email Status"
+    },
+    "whatsappStatus": {
+      "connected": "Connected",
+      "pending": "Pending",
+      "notConnected": "Not Connected"
+    },
+    "allSet": {
+      "title": "🎉 You're All Set!",
+      "subtitle": "Your WhatsApp is connected and VoiceLink is ready to use",
+      "startSending": "Start Sending Voice Notes",
+      "description": "Simply send a voice message to VoiceLink on WhatsApp and watch as your CRM gets updated automatically with structured data, follow-up tasks, and contact information.",
+      "whatsappConnected": "WhatsApp Connected",
+      "crmIntegrationActive": "CRM Integration Active",
+      "aiProcessingReady": "AI Processing Ready"
+    },
+    "gettingStarted": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Follow these simple steps to start using VoiceLink",
+      "step1": {
+        "title": "Verify WhatsApp",
+        "description": "Connect your WhatsApp number to receive voice note confirmations"
+      },
+      "step2": {
+        "title": "Send Voice Note",
+        "description": "Record your thoughts naturally through WhatsApp voice messages"
+      },
+      "step3": {
+        "title": "Watch Magic Happen",
+        "description": "AI processes your voice and syncs structured data to your CRM"
+      }
+    },
+    "customerPortal": {
+      "title": "Manage Your Subscription",
+      "subtitle": "Access your billing information and manage your subscription",
+      "portalTitle": "Customer Portal",
+      "portalDescription": "Access your billing history, update payment methods, download invoices, and manage your subscription settings through our secure customer portal.",
+      "accessPortal": "Access Customer Portal",
+      "viewBillingHistory": "View billing history",
+      "updatePaymentMethods": "Update payment methods",
+      "downloadInvoices": "Download invoices",
+      "manageSubscription": "Manage subscription"
+    },
+    "premiumFeatures": {
+      "title": "Your Premium Features",
+      "subtitle": "Everything you need to transform voice into structured CRM data",
+      "whatsappVoiceNotes": {
+        "title": "WhatsApp Voice Notes",
+        "description": "Send unlimited voice messages directly to your CRM via WhatsApp",
+        "unlimitedUsage": "Unlimited Usage"
+      },
+      "realtimeSync": {
+        "title": "Real-time Sync",
+        "description": "Instant synchronization with your CRM platform",
+        "liveUpdates": "Live Updates"
+      },
+      "prioritySupport": {
+        "title": "Priority Support",
+        "description": "24/7 dedicated assistance from our expert team",
+        "support24x7": "24/7 Support"
+      }
+    },
+    "support": {
+      "title": "Need Help Getting Started?",
+      "description": "Our support team is here to help you make the most of VoiceLink. Get personalized assistance with setup and optimization.",
+      "contactSupport": "Contact Support"
+    }
+  },
+  "whatsapp": {
+    "integration": "WhatsApp Integration",
+    "verified": "WhatsApp Verified",
+    "connectedTo": "Connected to {{number}}",
+    "activeReady": "Active & Ready",
+    "readyDescription": "Your WhatsApp number is verified and ready to receive voice note confirmations. You can now send voice messages to VoiceLink!",
+    "changeNumber": "Change WhatsApp Number",
+    "changeDescription": "Disconnect to connect a different WhatsApp number",
+    "disconnect": "Disconnect",
+    "disconnecting": "Disconnecting...",
+    "verificationPending": "WhatsApp Verification Pending",
+    "pendingDescription": "Your WhatsApp verification is pending. Please complete the verification process to start using VoiceLink.",
+    "refreshStatus": "Refresh Status",
+    "whatsappNumber": "WhatsApp Number",
+    "includeCountryCode": "Include country code (e.g., +32 for Belgium)",
+    "validPhoneRequired": "Please enter a valid international phone number",
+    "sendVerificationCode": "Send Verification Code",
+    "sending": "Sending...",
+    "verificationCodeSent": "Verification Code Sent",
+    "codeSentTo": "We've sent a 6-digit code to {{number}}",
+    "codeExpires": "Code expires at {{time}}",
+    "verificationCode": "Verification Code",
+    "enterCode": "Enter 6-digit code",
+    "verifying": "Verifying...",
+    "verify": "Verify",
+    "resendCode": "Resend Code",
+    "verifiedSuccessfully": "WhatsApp number verified successfully!"
+  },
+  "pricing": {
+    "title": "Volume Pricing That Scales With You",
+    "subtitle": "Per user pricing. Start free, upgrade when you're ready. No hidden fees.",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save20": "Save 20%",
+    "voicelinkPro": "VoiceLink Pro",
+    "perfectForTeams": "Perfect for growing teams",
+    "features": {
+      "unlimitedVoiceNotes": "Unlimited WhatsApp voice notes",
+      "realtimeCrmSync": "Real-time CRM sync",
+      "nativeWhatsappIntegration": "Native WhatsApp integration",
+      "multiLanguageSupport": "Multi-language support",
+      "prioritySupport": "Priority support"
+    },
+    "numberOfUsers": "Number of Users",
+    "customAmount": "Custom amount",
+    "enterNumberOfUsers": "Enter number of users",
+    "perUserPerMonth": "/user/month",
+    "users": "{{count}} user",
+    "users_plural": "{{count}} users",
+    "total": "Total: €{{amount}}/{{period}}",
+    "annualSavings": "Annual Savings: €{{amount}}",
+    "yearlyDiscount": "20% discount applied for yearly billing",
+    "startFreeTrial": "Start Free Trial",
+    "comingSoon": "Coming Soon",
+    "multiUserPlansComingSoon": "🚧 Multi-user plans coming soon! Currently only single user subscriptions are available.",
+    "multiUserPlansLaunching": "Multi-user plans launching soon",
+    "freeTrialNoCreditCard": "14-day free trial • No credit card required",
+    "volumeDiscountTiers": "Volume Discount Tiers",
+    "automaticDiscounts": "Automatic discounts applied based on team size",
+    "currentlyOnlySingleUser": "Currently only single user plans are available. Multi-user plans with volume discounts coming soon!",
+    "plan": "Plan",
+    "teamSize": "Team Size",
+    "pricePerUser": "Price per User",
+    "discount": "Discount",
+    "current": "Current",
+    "contactUs": "Contact Us",
+    "off": "{{percent}}% off",
+    "custom": "Custom",
+    "enterprisePricing": "Enterprise Pricing",
+    "customPricingFor": "Custom pricing for {{count}}+ users",
+    "dedicatedAccountManager": "Dedicated account manager",
+    "customIntegrations": "Custom integrations & features",
+    "getCustomQuote": "Get Custom Quote",
+    "allPlansInclude": "All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support.",
+    "automaticDiscountsComingSoon": "Automatic discounts applied based on team size (Coming Soon)"
+  },
+  "features": {
+    "title": "CRM Integrations",
+    "subtitle": "Connect instantly. Sync automatically.",
+    "oneClickSetup": "One-click setup",
+    "realtimeSync": "Real-time sync",
+    "secureOauth": "Secure OAuth",
+    "moreIntegrations": "We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.",
+    "dontSeeYourCrm": "Don't see your CRM? We build custom integrations for any platform with an API.",
+    "contactForCustom": "Contact Us for Custom Integration"
+  },
+  "howItWorks": {
+    "title": "How WhatsApp Voice Notes Work",
+    "subtitle": "Three simple steps to transform voice into structured data",
+    "step1": {
+      "title": "Voice Input",
+      "description": "Record your thoughts naturally through WhatsApp voice messages"
+    },
+    "step2": {
+      "title": "AI Processing",
+      "description": "Advanced AI extracts and structures key information from your voice"
+    },
+    "step3": {
+      "title": "CRM Integration",
+      "description": "Structured data syncs automatically to your CRM system"
+    }
+  },
+  "customSolutions": {
+    "title": "Want a custom VoiceLink solution?",
+    "subtitle": "We build tailored voice solutions for any CRM or business system. If it has an API, we can connect to it.",
+    "twoExamples": "Two examples:",
+    "adaptsToAnyIndustry": "VoiceLink adapts to any industry or workflow that needs voice-to-data conversion.",
+    "fieldTechnicians": {
+      "title": "Field Technicians",
+      "description": "Technicians speak service reports while driving between jobs. Voice notes automatically generate structured reports with job details, parts used, and time spent.",
+      "features": "Custom report formats • Real-time sync • Mobile-first"
+    },
+    "propertyManagement": {
+      "title": "Property Management",
+      "description": "Property managers record maintenance requests, tenant interactions, and inspection notes via voice. AI automatically creates work orders, updates tenant records, and schedules follow-ups.",
+      "features": "Work order creation • Tenant communication • Maintenance scheduling"
+    },
+    "connectAnyCrm": "Connect Any CRM",
+    "integrateWithAnySystem": "We integrate with any system that has an API",
+    "apiSupport": "+ Any system with REST API, GraphQL, or webhooks",
+    "readyToBuild": "Ready to Build Your Custom Solution?",
+    "customSolutionDescription": "Tell us about your workflow, and we'll show you how voice technology can transform your business operations. Every solution is tailored to your exact needs.",
+    "scheduleCustomDemo": "Schedule Custom Demo",
+    "discussYourNeeds": "Discuss Your Needs",
+    "freeConsultation": "Free consultation",
+    "customProofOfConcept": "Custom proof of concept",
+    "tailoredImplementation": "Tailored implementation"
+  },
+  "finalCta": {
+    "title": "Ready to Transform Your Workflow?",
+    "subtitle": "The more users you add, the more you save. Start free, scale affordably. Connect your WhatsApp and start your free trial today.",
+    "startFreeTrial": "Start Free Trial",
+    "watchDemo": "Watch Demo",
+    "freeTrialFeatures": {
+      "freeTrialDays": "14-day free trial",
+      "noSetupFees": "No setup fees",
+      "cancelAnytime": "Cancel anytime"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 Finit Solutions",
+    "privacy": "Privacy",
+    "saasAgreement": "SaaS Agreement",
+    "disclaimer": "Disclaimer",
+    "cookiePolicy": "Cookie Policy",
+    "cookieSettings": "Cookie Settings",
+    "support": "Support"
+  },
+  "errors": {
+    "authenticationFailed": "Authentication failed",
+    "invalidCredentials": "Invalid credentials",
+    "networkError": "Network error occurred",
+    "unexpectedError": "An unexpected error occurred",
+    "tryAgain": "Please try again"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPhone": "Please enter a valid phone number",
+    "minLength": "Must be at least {{min}} characters",
+    "maxLength": "Must be no more than {{max}} characters"
+  },
+  "dates": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "thisWeek": "This week",
+    "lastWeek": "Last week",
+    "nextWeek": "Next week",
+    "thisMonth": "This month",
+    "lastMonth": "Last month",
+    "nextMonth": "Next month"
+  },
+  "numbers": {
+    "currency": "€{{amount}}",
+    "percentage": "{{value}}%",
+    "decimal": "{{value}}"
+  }
+}

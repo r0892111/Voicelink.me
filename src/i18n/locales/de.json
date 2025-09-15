@@ -1,0 +1,74 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "submit": "Senden",
+    "confirm": "Bestätigen",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "dashboard": "Dashboard",
+    "support": "Support",
+    "signOut": "Abmelden",
+    "getStarted": "Kostenlos Starten",
+    "backToHome": "Zurück zur Startseite"
+  },
+  "hero": {
+    "title": "Einfach...",
+    "mainTitle": "Sprechen Sie mit Ihrem CRM",
+    "subtitle1": "Senden Sie Sprachnachrichten über WhatsApp und sehen Sie zu, wie sie automatisch mit Ihrem CRM synchronisiert werden.",
+    "subtitle2": "Verwandeln Sie Sprachnachrichten sofort in strukturierte Daten.",
+    "getStartedFree": "Kostenlos Starten",
+    "watchDemo": "Demo Ansehen",
+    "oneClickSetup": "Ein-Klick CRM Verbindung",
+    "whatsappSetup": "WhatsApp in 2 Minuten verbinden"
+  },
+  "auth": {
+    "modal": {
+      "title": "Starten Sie Ihre Kostenlose Testversion",
+      "subtitle": "Verbinden Sie Ihr CRM und beginnen Sie sofort mit VoiceLink",
+      "freeTrialBanner": "14-Tage Kostenlose Testversion Beginnt Jetzt",
+      "freeTrialDescription": "Ihre kostenlose Testversion beginnt sofort nach der Verbindung Ihres CRM. Keine Kreditkarte erforderlich.",
+      "connectTeamleader": "Teamleader Verbinden",
+      "connectPipedrive": "Pipedrive Verbinden",
+      "connectOdoo": "Odoo Verbinden"
+    }
+  },
+  "dashboard": {
+    "welcome": "Willkommen zurück, {{name}}!",
+    "welcomeDefault": "Willkommen zurück, Premium-Benutzer!",
+    "subscriptionActive": "Ihr VoiceLink-Abonnement ist aktiv"
+  },
+  "whatsapp": {
+    "integration": "WhatsApp Integration",
+    "verified": "WhatsApp Verifiziert",
+    "connectedTo": "Verbunden mit {{number}}",
+    "whatsappNumber": "WhatsApp Nummer",
+    "includeCountryCode": "Ländercode einschließen (z.B. +49 für Deutschland)",
+    "sendVerificationCode": "Bestätigungscode Senden",
+    "verificationCode": "Bestätigungscode",
+    "verify": "Verifizieren"
+  },
+  "pricing": {
+    "title": "Volumen-Preise Die Mitwachsen",
+    "subtitle": "Pro-Benutzer-Preise. Starten Sie kostenlos, upgraden Sie wenn Sie bereit sind. Keine versteckten Gebühren.",
+    "monthly": "Monatlich",
+    "yearly": "Jährlich",
+    "save20": "20% Sparen",
+    "startFreeTrial": "Kostenlose Testversion Starten",
+    "comingSoon": "Demnächst Verfügbar"
+  }
+}
