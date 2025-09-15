@@ -162,7 +162,7 @@ export const SubscriptionDashboard: React.FC = () => {
                 </div>
                 <div className="text-left">
                   <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.welcome', { name: user?.user_info?.first_name || t('dashboard.welcomeDefault') })}
+                    {t('dashboard.welcome', { name: user?.name|| t('dashboard.welcomeDefault') })}
                   </h1>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
                     {t('dashboard.subscriptionActive')}

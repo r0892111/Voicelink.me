@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useSubscription } from '../hooks/useSubscription';
+import { useI18n } from '../hooks/useI18n';
 import { Users, Zap, Settings, ShoppingBag } from 'lucide-react';
 import { UserInfoCard } from './UserInfoCard';
 import { BuyButton } from './BuyButton';
@@ -9,6 +10,7 @@ import { SubscriptionDashboard } from './SubscriptionDashboard';
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
+  const { t } = useI18n();
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
@@ -48,7 +50,7 @@ export const Dashboard: React.FC = () => {
         <div className="flex items-center space-x-3 mb-4">
           {user && getPlatformIcon(user.platform)}
           <h1 className="text-3xl font-bold text-gray-900">
-            Welcome back, {user?.name || 'User'}!
+            {t('dashboard.welcome', { name: user?.name || 'User' })}
           </h1>
         </div>
         <p className="text-gray-600">
