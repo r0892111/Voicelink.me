@@ -168,11 +168,41 @@ export const SubscriptionDashboard: React.FC = () => {
   const isCurrentMemberValid = () => {
     return currentMember.name.trim() && currentMember.email.trim() && currentMember.whatsapp_number.trim();
   };
+      // Get current session for authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('Authentication required');
+      }
 
-  const addNewUser = () => {
+      // Send invitation via edge function
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/invite-team-members`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          crm_provider: user.platform,
+          team_member: currentMember
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send invitation');
+      }
+
+      const result = await response.json();
     if (isCurrentMemberValid() && canAddMore) {
-      const newMember = { ...currentMember, id: Date.now().toString() };
-      setAddedTeamMembers(prev => [...prev, newMember]);
+      // Add the new team member to the local state
+      setAddedMembers(prev => [...prev, {
+        id: result.team_member.id,
+        name: result.team_member.name,
+        email: result.team_member.email,
+        whatsapp_number: result.team_member.whatsapp_number
+      }]);
+      
+      // Clear the form
       setCurrentMember({ name: '', email: '', whatsapp_number: '' });
     }
   };
