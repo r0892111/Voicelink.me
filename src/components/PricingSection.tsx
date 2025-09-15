@@ -1,6 +1,7 @@
 import React from 'react';
 import { Check, ArrowRight } from 'lucide-react';
 import { BillingPeriodSwitch, BillingPeriod } from './BillingPeriodSwitch';
+import { useI18n } from '../hooks/useI18n';
 
 interface PricingSectionProps {
   selectedUsers: number;
@@ -66,6 +67,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   setSelectedUsers,
   openModal
 }) => {
+  const { t } = useI18n();
   const [billingPeriod, setBillingPeriod] = React.useState<BillingPeriod>('monthly');
   const [isCustom, setIsCustom] = React.useState(false);
   const [customInput, setCustomInput] = React.useState('');
@@ -97,10 +99,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
         <h2 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: '#1C2C55' }}>
-          Volume Pricing That Scales With You
+          {t('pricing.title')}
         </h2>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-          Per user pricing. Start free, upgrade when you're ready. No hidden fees.
+          {t('pricing.subtitle')}
         </p>
       </div>
       
@@ -121,18 +123,18 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               className="w-12 h-12"
             />
             <div>
-              <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>VoiceLink Pro</h3>
-              <p className="text-gray-600">Perfect for growing teams</p>
+              <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>{t('pricing.voicelinkPro')}</h3>
+              <p className="text-gray-600">{t('pricing.perfectForTeams')}</p>
             </div>
           </div>
 
           <div className="space-y-6 mb-8 flex-grow h-full flex flex-col justify-center">
             {[
-              'Unlimited WhatsApp voice notes',
-              'Real-time CRM sync',
-              'Native WhatsApp integration',
-              'Multi-language support',
-              'Priority support'
+              t('pricing.features.unlimitedVoiceNotes'),
+              t('pricing.features.realtimeCrmSync'),
+              t('pricing.features.nativeWhatsappIntegration'),
+              t('pricing.features.multiLanguageSupport'),
+              t('pricing.features.prioritySupport')
             ].map((feature, index) => (
               <div key={index} className="flex items-center space-x-3">
                 <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
@@ -145,7 +147,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
           <div className="mb-6">
             <label htmlFor="users" className="block text-sm font-medium text-gray-700 mb-3">
-              Number of Users
+              {t('pricing.numberOfUsers')}
             </label>
             <select
               id="users"
@@ -155,10 +157,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             >
               {predefinedOptions.map(num => (
                 <option key={num} value={num}>
-                  {num} user{num !== 1 ? 's' : ''}
+                  {t('pricing.users', { count: num })}
                 </option>
               ))}
-              <option value="custom">Custom amount</option>
+              <option value="custom">{t('pricing.customAmount')}</option>
             </select>
             
             {isCustom && (
@@ -167,7 +169,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 min="1"
                 value={customInput}
                 onChange={handleCustomInputChange}
-                placeholder="Enter number of users"
+                placeholder={t('pricing.enterNumberOfUsers')}
                 className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
               />
             )}
@@ -179,24 +181,24 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-2xl">
                 <div className="mb-4">
                   <h4 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>
-                    Enterprise Pricing
+                    {t('pricing.enterprisePricing')}
                   </h4>
                   <p className="text-gray-600">
-                    Custom pricing for {selectedUsers}+ users
+                    {t('pricing.customPricingFor', { count: selectedUsers })}
                   </p>
                 </div>
                 <div className="space-y-3 mb-4">
                   <div className="flex items-center justify-center space-x-2 text-sm text-gray-700">
                     <span>✓</span>
-                    <span>Dedicated account manager</span>
+                    <span>{t('pricing.dedicatedAccountManager')}</span>
                   </div>
                   <div className="flex items-center justify-center space-x-2 text-sm text-gray-700">
                     <span>✓</span>
-                    <span>Custom integrations & features</span>
+                    <span>{t('pricing.customIntegrations')}</span>
                   </div>
                 </div>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
-                  Get Custom Quote
+                  {t('pricing.getCustomQuote')}
                 </button>
               </div>
             </div>
@@ -206,21 +208,24 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 <span className="text-5xl font-bold" style={{ color: '#1C2C55' }}>
                   €{pricing.pricePerUser.toFixed(2)}
                 </span>
-                <span className="text-xl text-gray-600">/user/month</span>
+                <span className="text-xl text-gray-600">{t('pricing.perUserPerMonth')}</span>
               </div>
               <p className="text-gray-600 mb-2">
-                {selectedUsers} user{selectedUsers !== 1 ? 's' : ''}
+                {t('pricing.users', { count: selectedUsers })}
               </p>
               <p className="text-sm text-gray-500">
-                Total: €{(billingPeriod === 'yearly' ? pricing.price * 12 : pricing.price).toFixed(2)}/{billingPeriod}
+                {t('pricing.total', { 
+                  amount: (billingPeriod === 'yearly' ? pricing.price * 12 : pricing.price).toFixed(2),
+                  period: billingPeriod === 'yearly' ? t('pricing.yearly') : t('pricing.monthly')
+                })}
               </p>
               {pricing.savings > 0 && (
                 <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
                   <p className="text-green-800 font-semibold text-sm">
-                    Annual Savings: €{pricing.savings.toFixed(2)}
+                    {t('pricing.annualSavings', { amount: pricing.savings.toFixed(2) })}
                   </p>
                   <p className="text-green-600 text-xs mt-1">
-                    20% discount applied for yearly billing
+                    {t('pricing.yearlyDiscount')}
                   </p>
                 </div>
               )}
@@ -241,19 +246,19 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 onMouseEnter={(e) => selectedUsers <= 1 && (e.currentTarget.style.backgroundColor = '#0F1A3A')}
                 onMouseLeave={(e) => selectedUsers <= 1 && (e.currentTarget.style.backgroundColor = '#1C2C55')}
               >
-                <span>{selectedUsers > 1 ? 'Coming Soon' : 'Start Free Trial'}</span>
+                <span>{selectedUsers > 1 ? t('pricing.comingSoon') : t('pricing.startFreeTrial')}</span>
                 {selectedUsers <= 1 && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
               </button>
               
               {selectedUsers > 1 && (
                 <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                   <p className="text-yellow-800 text-sm font-medium">
-                    🚧 Multi-user plans coming soon! Currently only single user subscriptions are available.
+                    {t('pricing.multiUserPlansComingSoon')}
                   </p>
                 </div>
               )}
               <p className="text-center text-sm text-gray-500 mt-4">
-                {selectedUsers > 1 ? 'Multi-user plans launching soon' : '14-day free trial • No credit card required'}
+                {selectedUsers > 1 ? t('pricing.multiUserPlansLaunching') : t('pricing.freeTrialNoCreditCard')}
               </p>
             </div>
           )}
@@ -262,17 +267,17 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         {/* Volume Discount Table */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-right h-full flex flex-col" style={{ animationDelay: '0.6s' }}>
           <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: '#1C2C55' }}>
-            Volume Discount Tiers
+            {t('pricing.volumeDiscountTiers')}
           </h3>
           <p className="text-gray-600 text-center mb-8">
-            Automatic discounts applied based on team size
+            {t('pricing.automaticDiscounts')}
           </p>
           <div className="text-center mb-6">
             <p className="text-sm text-yellow-800 font-medium">
-              Currently only single user plans are available. Multi-user plans with volume discounts coming soon!
+              {t('pricing.currentlyOnlySingleUser')}
             </p>
             <div className="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-              Coming Soon
+              {t('pricing.comingSoon')}
             </div>
           </div>
 
@@ -280,10 +285,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Plan</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Team Size</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Price per User</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Discount</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t('pricing.plan')}</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t('pricing.teamSize')}</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t('pricing.pricePerUser')}</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t('pricing.discount')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -306,12 +311,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                         {tier.name}
                         {isCurrentTier && (
                           <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            Current
+                            {t('pricing.current')}
                           </span>
                         )}
                         {!isStarterTier && (
                           <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                            Coming Soon
+                            {t('pricing.comingSoon')}
                           </span>
                         )}
                       </td>
@@ -324,7 +329,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                         isCurrentTier ? 'text-blue-900' : 'text-gray-900'
                       }`}>
                         {isEnterpriseTier ? (
-                          <span className="text-gray-500">Custom</span>
+                          <span className="text-gray-500">{t('pricing.custom')}</span>
                         ) : (
                           `€${(billingPeriod === 'monthly' ? tier.monthlyPricePerUser : tier.yearlyPricePerUser).toFixed(2)}`
                         )}
@@ -332,7 +337,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       <td className="px-6 py-4">
                         {isEnterpriseTier ? (
                           <button className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors">
-                            Contact Us
+                            {t('pricing.contactUs')}
                           </button>
                         ) : tier.discount > 0 ? (
                           <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
@@ -340,7 +345,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                             tier.discount >= 30 ? 'bg-green-100 text-green-800' :
                             'bg-yellow-100 text-yellow-800'
                           }`}>
-                            {tier.discount}% off
+                            {t('pricing.off', { percent: tier.discount })}
                           </span>
                         ) : (
                           <span className="text-gray-400">—</span>
@@ -355,8 +360,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
           <div className="mt-8 p-4 bg-gray-50 rounded-xl">
             <p className="text-sm text-gray-600 text-center">
-              All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support.
-              Automatic discounts applied based on team size (Coming Soon)
+              {t('pricing.allPlansInclude')}
+              {t('pricing.automaticDiscountsComingSoon')}
             </p>
           </div>
         </div>

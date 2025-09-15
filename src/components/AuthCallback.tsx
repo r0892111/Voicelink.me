@@ -3,12 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
+import { useI18n } from '../hooks/useI18n';
 
 type CallbackStatus = 'loading' | 'success' | 'error';
 
 export const AuthCallback: React.FC = () => {
+  const { t } = useI18n();
   const [status, setStatus] = useState<CallbackStatus>('loading');
-  const [message, setMessage] = useState('Processing authentication...');
+  const [message, setMessage] = useState(t('auth.callback.processingAuth', { platform: '' }));
   const { platform } = useParams<{ platform: string }>();
   const navigate = useNavigate();
   const hasProcessedRef = React.useRef(false);
@@ -102,6 +104,7 @@ export const AuthCallback: React.FC = () => {
       else localStorage.removeItem(`${platform}_oauth_state`);
 
       setMessage(`Processing ${platform} authentication...`);
+      setMessage(t('auth.callback.processingAuth', { platform }));
 
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth`,
@@ -158,7 +161,7 @@ export const AuthCallback: React.FC = () => {
       }
 
       setStatus('success');
-      setMessage(`Successfully authenticated with ${platform}!`);
+      setMessage(t('auth.callback.successfullyAuthenticated', { platform }));
 
       // Check subscription status and redirect accordingly
       setTimeout(() => {
@@ -168,6 +171,7 @@ export const AuthCallback: React.FC = () => {
     } catch (err) {
       setStatus('error');
       setMessage(err instanceof Error ? err.message : 'An unexpected error occurred');
+      setMessage(err instanceof Error ? err.message : t('errors.unexpectedError'));
     }
   };
 
@@ -180,7 +184,7 @@ export const AuthCallback: React.FC = () => {
         navigate('/dashboard');
       } else {
         // User doesn't have subscription, redirect to Stripe checkout
-        setMessage('Redirecting to subscription checkout...');
+        setMessage(t('auth.callback.redirectingToCheckout'));
         
         // Use the starter tier price ID for single user
         await StripeService.createCheckoutSession({
@@ -222,9 +226,9 @@ export const AuthCallback: React.FC = () => {
         <div className="flex justify-center mb-6">{getIcon()}</div>
 
         <h1 className={`text-2xl font-bold mb-4 ${getStatusColor()}`}>
-          {status === 'loading' && 'Authenticating...'}
-          {status === 'success' && 'Authentication Successful!'}
-          {status === 'error' && 'Authentication Failed'}
+          {status === 'loading' && t('auth.callback.authenticating')}
+          {status === 'success' && t('auth.callback.authenticationSuccessful')}
+          {status === 'error' && t('auth.callback.authenticationFailed')}
         </h1>
 
         <p className="text-gray-600 mb-6">{message}</p>
@@ -234,12 +238,12 @@ export const AuthCallback: React.FC = () => {
             onClick={() => navigate('/')}
             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
           >
-            Return to Home
+            {t('auth.callback.returnToHome')}
           </button>
         )}
 
         {status === 'success' && (
-          <p className="text-sm text-gray-500">Redirecting to checkout...</p>
+          <p className="text-sm text-gray-500">{t('auth.callback.redirectingToCheckout')}</p>
         )}
       </div>
     </div>

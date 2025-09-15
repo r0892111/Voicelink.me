@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, memo } from 'react';
 import { MessageCircle, Check, Loader2, AlertCircle, X, Clock } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../lib/supabase';
+import { useI18n } from '../hooks/useI18n';
 
 interface WhatsAppStatus {
   whatsapp_number: string | null;
@@ -14,6 +15,7 @@ interface WhatsAppVerificationProps {
 
 export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({ onStatusChange }) => {
   const { user } = useAuth();
+  const { t } = useI18n();
   const [whatsappInput, setWhatsappInput] = useState('');
   const [otpCode, setOtpCode] = useState('');
   const [otpStep, setOtpStep] = useState<'input' | 'verify'>('input');
@@ -351,7 +353,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
       <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="flex items-center justify-center py-8">
           <Loader2 className="w-6 h-6 animate-spin text-green-600 mr-3" />
-          <span className="text-gray-600">Loading WhatsApp status...</span>
+          <span className="text-gray-600">{t('common.loading')} WhatsApp status...</span>
         </div>
       </div>
     );
@@ -366,18 +368,17 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
             <Check className="w-6 h-6 text-green-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">WhatsApp Verified</h3>
-            <p className="text-sm text-gray-600">Connected to {whatsappStatus.whatsapp_number}</p>
+            <h3 className="text-lg font-semibold text-gray-900">{t('whatsapp.verified')}</h3>
+            <p className="text-sm text-gray-600">{t('whatsapp.connectedTo', { number: whatsappStatus.whatsapp_number })}</p>
           </div>
         </div>
         <div className="bg-green-50 border border-green-200 rounded-lg p-4">
           <div className="flex items-center space-x-2 mb-2">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-            <span className="text-sm font-medium text-green-800">Active & Ready</span>
+            <span className="text-sm font-medium text-green-800">{t('whatsapp.activeReady')}</span>
           </div>
           <p className="text-sm text-green-700">
-            Your WhatsApp number is verified and ready to receive voice note confirmations. 
-            You can now send voice messages to VoiceLink!
+            {t('whatsapp.readyDescription')}
           </p>
         </div>
         
@@ -385,9 +386,9 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
           <div className="bg-gray-50 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <h4 className="text-sm font-medium text-gray-900 mb-1">Change WhatsApp Number</h4>
+                <h4 className="text-sm font-medium text-gray-900 mb-1">{t('whatsapp.changeNumber')}</h4>
                 <p className="text-xs text-gray-600">
-                  Disconnect to connect a different WhatsApp number
+                  {t('whatsapp.changeDescription')}
                 </p>
               </div>
               <button
@@ -398,12 +399,12 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    <span>Disconnecting...</span>
+                    <span>{t('whatsapp.disconnecting')}</span>
                   </>
                 ) : (
                   <>
                     <X className="w-4 h-4 mr-2" />
-                    <span>Disconnect</span>
+                    <span>{t('whatsapp.disconnect')}</span>
                   </>
                 )}
               </button>
@@ -423,14 +424,14 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
             <Clock className="w-6 h-6 text-yellow-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">WhatsApp Verification Pending</h3>
-            <p className="text-sm text-gray-600">Verification in progress</p>
+           <h3 className="text-lg font-semibold text-gray-900">{t('whatsapp.verificationPending')}</h3>
+           <p className="text-sm text-gray-600">{t('whatsapp.pendingDescription')}</p>
           </div>
         </div>
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <p className="text-sm text-yellow-700">
-            Your WhatsApp verification is pending. Please complete the verification process to start using VoiceLink.
-          </p>
+         <p className="text-sm text-yellow-700">
+           {t('whatsapp.pendingDescription')}
+         </p>
           <button
             onClick={() => {
               setWhatsappStatus(prev => ({ ...prev, whatsapp_status: 'not_set' }));
@@ -438,7 +439,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
             }}
             className="mt-3 text-sm text-yellow-600 hover:text-yellow-800 underline"
           >
-            Refresh Status
+           {t('whatsapp.refreshStatus')}
           </button>
         </div>
       </div>
@@ -450,13 +451,13 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
     <div className="bg-white rounded-xl shadow-sm p-6">
       <div className="flex items-center space-x-3 mb-6">
         <MessageCircle className="w-6 h-6 text-green-600" />
-        <h3 className="text-lg font-semibold text-gray-900">WhatsApp Integration</h3>
+        <h3 className="text-lg font-semibold text-gray-900">{t('whatsapp.integration')}</h3>
       </div>
 
       {success && (
         <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2 text-green-700">
           <Check className="w-5 h-5" />
-          <span className="text-sm">WhatsApp number verified successfully!</span>
+          <span className="text-sm">{t('whatsapp.verifiedSuccessfully')}</span>
         </div>
       )}
 
@@ -470,28 +471,28 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
       {otpStep === 'input' ? (
         <div className="space-y-4">
           <div>
-            <label htmlFor="whatsapp" className="block text-sm font-medium text-gray-700 mb-2">
-              WhatsApp Number
-            </label>
+           <label htmlFor="whatsapp" className="block text-sm font-medium text-gray-700 mb-2">
+             {t('whatsapp.whatsappNumber')}
+           </label>
             <input
               type="tel"
               id="whatsapp"
               value={whatsappInput}
               onChange={(e) => setWhatsappInput(e.target.value)}
-              placeholder="+32 123 456 789"
+             placeholder="+32 123 456 789"
               className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                 whatsappInput.trim() && !isValidPhoneNumber(whatsappInput.trim())
                   ? 'border-red-300'
                   : 'border-gray-300'
               }`}
             />
-            <p className="text-xs text-gray-500 mt-1">
-              Include country code (e.g., +32 for Belgium)
-            </p>
+           <p className="text-xs text-gray-500 mt-1">
+             {t('whatsapp.includeCountryCode')}
+           </p>
             {whatsappInput.trim() && !isValidPhoneNumber(whatsappInput.trim()) && (
-              <p className="text-xs text-red-500 mt-1">
-                Please enter a valid international phone number
-              </p>
+             <p className="text-xs text-red-500 mt-1">
+               {t('whatsapp.validPhoneRequired')}
+             </p>
             )}
           </div>
           
@@ -503,12 +504,12 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Sending...</span>
+                <span>{t('whatsapp.sending')}</span>
               </>
             ) : (
               <>
                 <MessageCircle className="w-4 h-4" />
-                <span>Send Verification Code</span>
+                <span>{t('whatsapp.sendVerificationCode')}</span>
               </>
             )}
           </button>
@@ -518,28 +519,28 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
             <div className="flex items-center space-x-2 mb-2">
               <Clock className="w-5 h-5 text-yellow-600" />
-              <span className="font-medium text-yellow-800">Verification Code Sent</span>
+              <span className="font-medium text-yellow-800">{t('whatsapp.verificationCodeSent')}</span>
             </div>
             <p className="text-sm text-yellow-700">
-              We've sent a 6-digit code to <strong>{whatsappInput}</strong>
+              {t('whatsapp.codeSentTo', { number: whatsappInput })}
             </p>
             {otpExpiresAt && (
               <p className="text-xs text-yellow-600 mt-1">
-                Code expires at {new Date(otpExpiresAt).toLocaleTimeString()}
+                {t('whatsapp.codeExpires', { time: new Date(otpExpiresAt).toLocaleTimeString() })}
               </p>
             )}
           </div>
 
           <div>
             <label htmlFor="otp" className="block text-sm font-medium text-gray-700 mb-2">
-              Verification Code
+              {t('whatsapp.verificationCode')}
             </label>
             <input
               type="text"
               id="otp"
               value={otpCode}
               onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-              placeholder="Enter 6-digit code"
+              placeholder={t('whatsapp.enterCode')}
               maxLength={6}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-lg font-mono tracking-widest"
             />
@@ -561,12 +562,12 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Verifying...</span>
+                  <span>{t('whatsapp.verifying')}</span>
                 </>
               ) : (
                 <>
                   <Check className="w-4 h-4" />
-                  <span>Verify</span>
+                  <span>{t('whatsapp.verify')}</span>
                 </>
               )}
             </button>
@@ -577,7 +578,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
             disabled={loading}
             className="w-full text-sm text-blue-600 hover:underline disabled:opacity-50"
           >
-            {loading ? 'Sending...' : 'Resend Code'}
+            {loading ? t('whatsapp.sending') : t('whatsapp.resendCode')}
           </button>
         </div>
       )}

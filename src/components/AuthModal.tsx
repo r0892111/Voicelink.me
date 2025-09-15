@@ -3,6 +3,7 @@ import { X, Loader2, AlertCircle } from 'lucide-react';
 import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
+import { useI18n } from '../hooks/useI18n';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useI18n();
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const processingRef = React.useRef(false);
@@ -94,17 +96,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               className="h-8 w-auto"
             />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">Start Your Free Trial</h2>
-          <p className="text-lg text-gray-600 mb-4">Connect your CRM and begin using VoiceLink instantly</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('auth.modal.title')}</h2>
+          <p className="text-lg text-gray-600 mb-4">{t('auth.modal.subtitle')}</p>
           
           {/* Free Trial Banner */}
           <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
             <div className="flex items-center justify-center space-x-2 mb-2">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-green-800 font-semibold text-lg">14-Day Free Trial Starts Now</span>
+              <span className="text-green-800 font-semibold text-lg">{t('auth.modal.freeTrialBanner')}</span>
             </div>
             <p className="text-green-700 text-sm">
-              Your free trial begins immediately upon connecting your CRM. No credit card required.
+              {t('auth.modal.freeTrialDescription')}
             </p>
           </div>
           
@@ -160,8 +162,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         />
                       </div>
                       <div className="text-left">
-                        <div className="text-lg font-semibold text-gray-900">Connect {provider.displayName}</div>
-                        <div className="text-sm text-gray-500">Start your free trial instantly</div>
+                        <div className="text-lg font-semibold text-gray-900">
+                          {provider.name === 'teamleader' && t('auth.modal.connectTeamleader')}
+                          {provider.name === 'pipedrive' && t('auth.modal.connectPipedrive')}
+                          {provider.name === 'odoo' && t('auth.modal.connectOdoo')}
+                        </div>
+                        <div className="text-sm text-gray-500">{t('auth.modal.startTrialInstantly')}</div>
                       </div>
                     </div>
                     <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
@@ -181,10 +187,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           {/* Sign In Option */}
           <div className="text-center mb-6">
             <p className="text-sm text-gray-600 mb-2">
-              Already have an account?
+              {t('auth.modal.alreadyHaveAccount')}
             </p>
             <p className="text-xs text-gray-500">
-              Simply connect with your CRM platform above to sign in
+              {t('auth.modal.signInDescription')}
             </p>
           </div>
           
@@ -195,7 +201,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-xs text-gray-600 font-medium">Secure OAuth</span>
+              <span className="text-xs text-gray-600 font-medium">{t('auth.modal.secureOauth')}</span>
             </div>
             <div className="flex flex-col items-center space-y-1">
               <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
@@ -203,7 +209,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-xs text-gray-600 font-medium">No Setup Fees</span>
+              <span className="text-xs text-gray-600 font-medium">{t('auth.modal.noSetupFees')}</span>
             </div>
             <div className="flex flex-col items-center space-y-1">
               <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
@@ -211,18 +217,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-xs text-gray-600 font-medium">Cancel Anytime</span>
+              <span className="text-xs text-gray-600 font-medium">{t('auth.modal.cancelAnytime')}</span>
             </div>
           </div>
           <p className="text-center text-xs text-gray-500">
-            By connecting your CRM, you agree to our{' '}
-            <a href="/saas-agreement" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
-              Terms of Service
-            </a>{' '}
-            and{' '}
-            <a href="/privacy-policy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
-              Privacy Policy
-            </a>
+            {t('auth.modal.termsAgreement', {
+              termsLink: <a href="/saas-agreement" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{t('auth.modal.termsOfService')}</a>,
+              privacyLink: <a href="/privacy-policy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{t('auth.modal.privacyPolicy')}</a>
+            })}
           </p>
         </div>
       </div>

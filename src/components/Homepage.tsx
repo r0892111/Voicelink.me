@@ -3,6 +3,7 @@ import { Zap, MessageCircle, Play, ArrowRight, CheckCircle, Settings } from 'luc
 import { HeroDemo } from './HeroDemo';
 import { PricingSection } from './PricingSection';
 import { useConsent } from '../contexts/ConsentContext';
+import { useI18n } from '../hooks/useI18n';
 
 interface HomepageProps {
   openModal: () => void;
@@ -126,6 +127,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
   const visibleSections = useScrollAnimation();
   const [selectedUsers, setSelectedUsers] = React.useState(1);
   const { openSettings } = useConsent();
+  const { t } = useI18n();
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -160,10 +162,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               : 'opacity-0 translate-y-8'
           }`}>
             <h2 className="text-5xl font-bold mb-6 tracking-tight" style={{ color: '#1C2C55' }}>
-              CRM Integrations
+              {t('features.title')}
             </h2>
             <p className="text-xl max-w-2xl mx-auto font-light" style={{ color: '#6B7280' }}>
-              Connect instantly. Sync automatically.
+              {t('features.subtitle')}
             </p>
           </div>
 
@@ -237,6 +239,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   </div>
                 </div>
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">One-click setup</div>
+                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">{t('features.oneClickSetup')}</div>
               </div>
               
               <div className={`group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-800 delay-[1300ms] hover:bg-gray-50 ${
@@ -252,6 +255,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   </div>
                 </div>
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">Real-time sync</div>
+                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">{t('features.realtimeSync')}</div>
               </div>
               
               <div className={`group flex flex-col items-center space-y-2 p-3 rounded-xl transition-all duration-800 delay-[1500ms] hover:bg-gray-50 ${
@@ -267,6 +271,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   </div>
                 </div>
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">Secure OAuth</div>
+                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">{t('features.secureOauth')}</div>
               </div>
             </div>
           </div>
@@ -279,13 +284,13 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           }`}>
             <div className="max-w-3xl mx-auto">
               <p className="text-lg text-gray-600 mb-4">
-                We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.
+                {t('features.moreIntegrations')}
               </p>
               <p className="text-base text-gray-500 mb-6 font-bold">
-                Don't see your CRM? We build custom integrations for any platform with an API.
+                {t('features.dontSeeYourCrm')}
               </p>
               <button className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-gray-300 rounded-full hover:border-gray-400 transition-colors group">
-                <span className="text-base font-medium text-gray-700">Contact Us for Custom Integration</span>
+                <span className="text-base font-medium text-gray-700">{t('features.contactForCustom')}</span>
                 <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
@@ -318,10 +323,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               : 'opacity-0 translate-y-8'
           }`}>
             <h2 className="text-5xl font-bold mb-6 leading-tight tracking-tight" style={{ color: '#1C2C55' }}>
-              How WhatsApp Voice Notes Work
+              {t('howItWorks.title')}
             </h2>
             <p className="text-2xl font-light max-w-3xl mx-auto leading-relaxed" style={{ color: '#6B7280' }}>
-              Three simple steps to transform voice into structured data
+              {t('howItWorks.subtitle')}
             </p>
           </div>
 
@@ -355,10 +360,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       </div>
                     </div>
                     <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                      Voice Input
+                      {t('howItWorks.step1.title')}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Record your thoughts naturally through WhatsApp voice messages
+                      {t('howItWorks.step1.description')}
                     </p>
                   </div>
                   
@@ -391,10 +396,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       </div>
                     </div>
                     <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                      AI Processing
+                      {t('howItWorks.step2.title')}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Advanced AI extracts and structures key information from your voice
+                      {t('howItWorks.step2.description')}
                     </p>
                   </div>
                   
@@ -427,10 +432,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       </div>
                     </div>
                     <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                      CRM Integration
+                      {t('howItWorks.step3.title')}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Structured data syncs automatically to your CRM system
+                      {t('howItWorks.step3.description')}
                     </p>
                   </div>
                 </div>
@@ -474,11 +479,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               : 'opacity-0 translate-y-8'
           }`}>
             <h2 className="text-5xl font-bold mb-6 leading-tight tracking-tight" style={{ color: '#1C2C55' }}>
-              Want a custom VoiceLink solution?
+              {t('customSolutions.title')}
             </h2>
             <p className="text-xl leading-relaxed max-w-3xl mx-auto" style={{ color: '#6B7280' }}>
-              We build tailored voice solutions for any CRM or business system. 
-              If it has an API, we can connect to it.
+              {t('customSolutions.subtitle')}
             </p>
           </div>
 
@@ -495,8 +499,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                  ? 'opacity-100 -translate-x-0' 
                  : 'opacity-0 -translate-x-8'
              }`}>
-               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>Two examples:</h3>
-               <p className="text-gray-600">VoiceLink adapts to any industry or workflow that needs voice-to-data conversion.</p>
+               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('customSolutions.twoExamples')}</h3>
+               <p className="text-gray-600">{t('customSolutions.adaptsToAnyIndustry')}</p>
              </div>
              
               <div className={`bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-1000 delay-600 ${
@@ -509,13 +513,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Field Technicians</h3>
+                    <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>{t('customSolutions.fieldTechnicians.title')}</h3>
                     <p className="text-gray-600 mb-4 leading-relaxed">
-                      Technicians speak service reports while driving between jobs. Voice notes automatically 
-                      generate structured reports with job details, parts used, and time spent.
+                      {t('customSolutions.fieldTechnicians.description')}
                     </p>
                     <div className="text-sm text-gray-500">
-                      Custom report formats • Real-time sync • Mobile-first
+                      {t('customSolutions.fieldTechnicians.features')}
                     </div>
                   </div>
                 </div>
@@ -531,13 +534,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>Property Management</h3>
+                    <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1C2C55' }}>{t('customSolutions.propertyManagement.title')}</h3>
                     <p className="text-gray-600 mb-4 leading-relaxed">
-                      Property managers record maintenance requests, tenant interactions, and inspection notes via voice. 
-                      AI automatically creates work orders, updates tenant records, and schedules follow-ups.
+                      {t('customSolutions.propertyManagement.description')}
                     </p>
                     <div className="text-sm text-gray-500">
-                      Work order creation • Tenant communication • Maintenance scheduling
+                      {t('customSolutions.propertyManagement.features')}
                     </div>
                   </div>
                 </div>
@@ -560,7 +562,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     <Zap className="w-6 h-6" style={{ color: '#1C2C55' }} />
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>Connect Any CRM</h3>
-                  <p className="text-sm text-gray-600">We integrate with any system that has an API</p>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('customSolutions.connectAnyCrm')}</h3>
+                  <p className="text-sm text-gray-600">{t('customSolutions.integrateWithAnySystem')}</p>
                 </div>
 
                 <div className="space-y-3">
@@ -588,7 +591,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
 
                 <div className="text-center mt-4 p-3 rounded-lg" style={{ backgroundColor: 'rgba(247, 230, 155, 0.1)' }}>
                   <p className="text-xs font-medium" style={{ color: '#1C2C55' }}>
-                    + Any system with REST API, GraphQL, or webhooks
+                    {t('customSolutions.apiSupport')}
                   </p>
                 </div>
               </div>
@@ -604,11 +607,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-20"></div>
             <div className="relative z-10">
               <h3 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                Ready to Build Your Custom Solution?
+                {t('customSolutions.readyToBuild')}
               </h3>
               <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                Tell us about your workflow, and we'll show you how voice technology can transform your business operations. 
-                Every solution is tailored to your exact needs.
+                {t('customSolutions.customSolutionDescription')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
@@ -617,7 +619,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
                 >
-                  <span>Schedule Custom Demo</span>
+                  <span>{t('customSolutions.scheduleCustomDemo')}</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button 
@@ -633,22 +635,22 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   }}
                 >
                   <MessageCircle className="w-5 h-5" />
-                  <span>Discuss Your Needs</span>
+                  <span>{t('customSolutions.discussYourNeeds')}</span>
                 </button>
               </div>
               
               <div className="mt-8 flex items-center justify-center space-x-8 text-sm text-gray-500">
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span>Free consultation</span>
+                  <span>{t('customSolutions.freeConsultation')}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span>Custom proof of concept</span>
+                  <span>{t('customSolutions.customProofOfConcept')}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span>Tailored implementation</span>
+                  <span>{t('customSolutions.tailoredImplementation')}</span>
                 </div>
               </div>
             </div>
@@ -673,11 +675,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             : 'opacity-0 translate-y-8'
         }`}>
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Transform Your Workflow?
+            {t('finalCta.title')}
           </h2>
           <p className="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
-            The more users you add, the more you save. Start free, scale affordably.
-            Connect your WhatsApp and start your free trial today.
+            {t('finalCta.subtitle')}
           </p>
           
           <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-300 ${
@@ -698,7 +699,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 alt="" 
                 className="w-5 h-5 mr-1"
               />
-              <span>Start Free Trial</span>
+              <span>{t('finalCta.startFreeTrial')}</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button 
@@ -713,7 +714,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               }}
             >
               <Play className="w-5 h-5" />
-              <span>Watch Demo</span>
+              <span>{t('finalCta.watchDemo')}</span>
             </button>
           </div>
 
@@ -724,15 +725,15 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
           }`}>
             <div className="flex items-center space-x-2">
               <CheckCircle className="w-4 h-4" />
-              <span className="text-sm">14-day free trial</span>
+              <span className="text-sm">{t('finalCta.freeTrialFeatures.freeTrialDays')}</span>
             </div>
             <div className="flex items-center space-x-2">
               <CheckCircle className="w-4 h-4" />
-              <span className="text-sm">No setup fees</span>
+              <span className="text-sm">{t('finalCta.freeTrialFeatures.noSetupFees')}</span>
             </div>
             <div className="flex items-center space-x-2">
               <CheckCircle className="w-4 h-4" />
-              <span className="text-sm">Cancel anytime</span>
+              <span className="text-sm">{t('finalCta.freeTrialFeatures.cancelAnytime')}</span>
             </div>
           </div>
         </div>
@@ -760,11 +761,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
             </div>
             
             <div className="flex items-center space-x-6 text-sm text-white opacity-70">
-              <span>© 2025 Finit Solutions</span>
-              <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy</a>
-              <a href="/saas-agreement" className="hover:text-white transition-colors">SaaS Agreement</a>
-              <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
-              <a href="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</a>
+              <span>{t('footer.copyright')}</span>
+              <a href="/privacy-policy" className="hover:text-white transition-colors">{t('footer.privacy')}</a>
+              <a href="/saas-agreement" className="hover:text-white transition-colors">{t('footer.saasAgreement')}</a>
+              <a href="/disclaimer" className="hover:text-white transition-colors">{t('footer.disclaimer')}</a>
+              <a href="/cookie-policy" className="hover:text-white transition-colors">{t('footer.cookiePolicy')}</a>
               <button 
                 onClick={() => {
                   console.log('Cookie Settings button clicked'); // Debug log
@@ -772,9 +773,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 }}
                 className="hover:text-white transition-colors cursor-pointer"
               >
-                Cookie Settings
+                {t('footer.cookieSettings')}
               </button>
-              <a href="/support" className="hover:text-white transition-colors">Support</a>
+              <a href="/support" className="hover:text-white transition-colors">{t('footer.support')}</a>
             </div>
           </div>
         </div>
