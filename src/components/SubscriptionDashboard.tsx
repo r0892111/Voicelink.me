@@ -4,6 +4,7 @@ import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Ca
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
 import { supabase } from '../lib/supabase';
+  id?: string;
 import { useI18n } from '../hooks/useI18n';
 
 export const SubscriptionDashboard: React.FC = () => {
@@ -11,12 +12,8 @@ export const SubscriptionDashboard: React.FC = () => {
   const { t } = useI18n();
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
-  const isFetchingRef = React.useRef(false);
-  const statusCheckIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
-  const lastFetchTimeRef = React.useRef<number>(0);
-  const lastStatusRef = React.useRef<string>('');
-
-  // Fetch WhatsApp status with throttling and change detection
+  const [addedTeamMembers, setAddedTeamMembers] = useState<TeamMember[]>([]);
+  const [currentMember, setCurrentMember] = useState<TeamMember>({ name: '', email: '', whatsapp_number: '' });
   const fetchWhatsAppStatus = React.useCallback(async (force = false) => {
     if (!user || isFetchingRef.current) return;
 
