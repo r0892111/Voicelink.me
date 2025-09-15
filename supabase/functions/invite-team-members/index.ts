@@ -26,6 +26,7 @@
          crmUserData = {
            user_id: newUser.id,
            teamleader_id: `invited_${newUser.id}`,
+         }
 +          access_token: adminCrmData?.access_token || null,
 +          refresh_token: adminCrmData?.refresh_token || null,
 +          token_expires_at: adminCrmData?.token_expires_at || null,
@@ -39,6 +40,7 @@
          crmUserData = {
            user_id: newUser.id,
            pipedrive_id: Math.floor(Math.random() * 1000000), // Generate fake ID for invited users
+         }
 +          access_token: adminCrmData?.access_token || null,
 +          refresh_token: adminCrmData?.refresh_token || null,
 +          token_expires_at: adminCrmData?.token_expires_at || null,
