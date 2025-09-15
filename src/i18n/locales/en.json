@@ -68,7 +68,6 @@
   },
   "dashboard": {
     "welcome": "Welcome back, {{name}}!",
-    "welcomeDefault": "Welcome back, Premium User!",
     "subscriptionActive": "Your VoiceLink subscription is active",
     "platformConnection": {
       "title": "{{platform}}",

@@ -162,7 +162,7 @@ export const SubscriptionDashboard: React.FC = () => {
                 </div>
                 <div className="text-left">
                   <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.welcome', { name: user?.user_info?.first_name || t('dashboard.welcomeDefault') })}
+                    {t('dashboard.welcome', { name: user?.name || 'Premium User' })}
                   </h1>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
                     {t('dashboard.subscriptionActive')}
@@ -219,81 +219,44 @@ export const SubscriptionDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  {user?.user_info && (
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {/* Personal Information */}
-                      <div className="space-y-4">
-                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{t('dashboard.accountProfile.personalInfo')}</h4>
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.fullName')}</span>
-                            <span className="text-sm font-medium text-gray-900">
-                              {user.user_info.first_name} {user.user_info.last_name}
-                            </span>
-                          </div>
-                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.email')}</span>
-                            <span className="text-sm font-medium text-gray-900">{user.email}</span>
-                          </div>
-                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.language')}</span>
-                            <span className="text-sm font-medium text-gray-900">
-                              {typeof user.user_info.language === 'string' 
-                                ? user.user_info.language 
-                                : user.user_info.language?.language_code 
-                                  ? `${user.user_info.language.language_code}-${user.user_info.language.country_code}`
-                                  : 'N/A'
-                              }
-                            </span>
-                          </div>
-                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.timeZone')}</span>
-                            <span className="text-sm font-medium text-gray-900">{user.user_info.time_zone}</span>
-                          </div>
-                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.whatsappStatus')}</span>
-                            <span className={`text-sm font-medium inline-flex items-center px-2 py-1 rounded-full text-xs ${
-                              whatsappStatus === 'active' 
-                                ? 'bg-green-100 text-green-800' 
-                                : whatsappStatus === 'pending'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-gray-100 text-gray-800'
-                            }`}>
-                              {whatsappStatus === 'active' && '✅ '}
-                              {whatsappStatus === 'pending' && '⏳ '}
-                              {whatsappStatus === 'not_set' && '❌ '}
-                              {whatsappStatus === 'active' ? t('dashboard.whatsappStatus.connected') : 
-                               whatsappStatus === 'pending' ? t('dashboard.whatsappStatus.pending') : t('dashboard.whatsappStatus.notConnected')}
-                            </span>
-                          </div>
-                          {user.user_info.telephones && user.user_info.telephones.length > 0 && (
-                            <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                              <span className="text-sm text-gray-600">{t('dashboard.accountProfile.phone')}</span>
-                              <span className="text-sm font-medium text-gray-900">
-                                +{user.user_info.telephones[0].number}
-                              </span>
-                            </div>
-                          )}
+                  {user && (
+                    <div className="space-y-4">
+                      <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{t('dashboard.accountProfile.personalInfo')}</h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                          <span className="text-sm text-gray-600">{t('dashboard.accountProfile.fullName')}</span>
+                          <span className="text-sm font-medium text-gray-900">
+                            {user.name}
+                          </span>
                         </div>
-                      </div>
-
-                      {/* Account Information */}
-                      <div className="space-y-4">
-                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{t('dashboard.accountProfile.accountDetails')}</h4>
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.accountId')}</span>
-                            <span className="text-xs font-mono text-gray-700 bg-gray-100 px-2 py-1 rounded">
-                              {user.user_info.account?.id}
-                            </span>
-                          </div>
-                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.emailStatus')}</span>
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                              {user.user_info.email_verification_status}
-                            </span>
-                          </div>
+                        <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                          <span className="text-sm text-gray-600">{t('dashboard.accountProfile.email')}</span>
+                          <span className="text-sm font-medium text-gray-900">{user.email}</span>
                         </div>
+                        <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                          <span className="text-sm text-gray-600">{t('dashboard.accountProfile.whatsappStatus')}</span>
+                          <span className={`text-sm font-medium inline-flex items-center px-2 py-1 rounded-full text-xs ${
+                            whatsappStatus === 'active' 
+                              ? 'bg-green-100 text-green-800' 
+                              : whatsappStatus === 'pending'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}>
+                            {whatsappStatus === 'active' && '✅ '}
+                            {whatsappStatus === 'pending' && '⏳ '}
+                            {whatsappStatus === 'not_set' && '❌ '}
+                            {whatsappStatus === 'active' ? t('dashboard.whatsappStatus.connected') : 
+                             whatsappStatus === 'pending' ? t('dashboard.whatsappStatus.pending') : t('dashboard.whatsappStatus.notConnected')}
+                          </span>
+                        </div>
+                        {user.user_info?.telephones && user.user_info.telephones.length > 0 && (
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.phone')}</span>
+                            <span className="text-sm font-medium text-gray-900">
+                              +{user.user_info.telephones[0].number}
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
