@@ -169,16 +169,61 @@ export const SubscriptionDashboard: React.FC = () => {
     return currentMember.name.trim() && currentMember.email.trim() && currentMember.whatsapp_number.trim();
   };
 
-  const addNewUser = () => {
-    if (isCurrentMemberValid() && canAddMore) {
-      const newMember = { ...currentMember, id: Date.now().toString() };
-      setAddedTeamMembers(prev => [...prev, newMember]);
+  const addNewUser = async () => {
+    if (!isCurrentMemberValid() || !canAddMore) return;
+    
+    try {
+      // Get current session for authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('Authentication required');
+      }
+
+      // Send invitation via edge function
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/invite-team-members`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          crm_provider: user.platform,
+          team_member: currentMember
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send invitation');
+      }
+
+      const result = await response.json();
+      
+      // Add the new team member to the local state
+      setAddedTeamMembers(prev => [...prev, {
+        id: result.team_member.id,
+        name: result.team_member.name,
+        email: result.team_member.email,
+        whatsapp_number: result.team_member.whatsapp_number
+      }]);
+      
+      // Clear the form
       setCurrentMember({ name: '', email: '', whatsapp_number: '' });
+    } catch (error) {
+      console.error('Error adding team member:', error);
+      setInviteError(error.message || 'Failed to add team member');
+      setTimeout(() => setInviteError(''), 5000);
     }
   };
 
   const removeMember = (id: string) => {
+    // TODO: Implement actual removal from database
+    // For now, just remove from local state
     setAddedTeamMembers(prev => prev.filter(member => member.id !== id));
+    
+    // Show confirmation
+    setInviteSuccess(true);
+    setTimeout(() => setInviteSuccess(false), 2000);
   };
 
   const saveAndInviteMember = async () => {
@@ -720,439 +765,6 @@ export const SubscriptionDashboard: React.FC = () => {
               </div>
             </section>
           )}
-
-          {/* Team Management Section */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                  <Users className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Team Management</h3>
-                  <p className="text-gray-600">{subscriptionDescription}</p>
-                </div>
-              </div>
-
-              {/* Success/Error Messages */}
-              {inviteSuccess && (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2 text-green-700">
-                  <Check className="w-5 h-5" />
-                  <span className="text-sm">Team member invited successfully!</span>
-                </div>
-              )}
-
-              {inviteError && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
-                  <AlertCircle className="w-5 h-5" />
-                  <span className="text-sm">{inviteError}</span>
-                </div>
-              )}
-
-              {/* Subscription Info Banner */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                    <span className="font-semibold text-blue-900">{subscriptionType}</span>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-blue-900 font-semibold">{addedTeamMembers.length + 1}/{totalUsers}</div>
-                    <div className="text-blue-600 text-xs">Users</div>
-                  </div>
-                </div>
-                <p className="text-blue-700 text-sm mt-2">
-                  {!subscription
-                    ? 'Team members get full access during your trial period at no extra cost.'
-                    : 'Upgrade your subscription to add team members and unlock collaboration features.'
-                  }
-                </p>
-              </div>
-
-              {/* Current User Display */}
-              <div className="mb-6">
-                <h4 className="text-lg font-medium text-gray-900 mb-3">Account Owner</h4>
-                <div className="flex items-center space-x-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                    <Check className="w-5 h-5 text-green-600" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-900">{user?.name || 'You'}</div>
-                    <div className="text-sm text-gray-600">{user?.email}</div>
-                  </div>
-                  <div className="text-sm font-medium text-green-700">Active</div>
-                </div>
-              </div>
-
-              {/* Added Team Members List */}
-              {addedTeamMembers.length > 0 && (
-                <div className="mb-6">
-                  <h4 className="text-lg font-medium text-gray-900 mb-3">Team Members ({addedTeamMembers.length})</h4>
-                  <div className="space-y-2">
-                    {addedTeamMembers.map((member) => (
-                      <div key={member.id} className="flex items-center space-x-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                          <Users className="w-5 h-5 text-blue-600" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="font-medium text-gray-900">{member.name}</div>
-                          <div className="text-sm text-gray-600">{member.email}</div>
-                        </div>
-                        <button
-                          onClick={() => removeMember(member.id!)}
-                          className="w-8 h-8 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-all duration-200"
-                        >
-                          <X className="w-4 h-4 text-red-600" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Add New Team Member Form */}
-              {canAddMore ? (
-                <div className="border border-gray-200 rounded-lg p-6">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <UserPlus className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-gray-900">Add Team Member</div>
-                      <div className="text-gray-600 text-sm">{remainingSlots} slot{remainingSlots !== 1 ? 's' : ''} remaining</div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                      <input
-                        type="text"
-                        value={currentMember.name}
-                        onChange={(e) => updateCurrentMember('name', e.target.value)}
-                        placeholder="Enter full name"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        <Mail className="w-4 h-4 inline mr-1" />
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        value={currentMember.email}
-                        onChange={(e) => updateCurrentMember('email', e.target.value)}
-                        placeholder="Enter email address"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        <Phone className="w-4 h-4 inline mr-1" />
-                        WhatsApp Number
-                      </label>
-                      <input
-                        type="tel"
-                        value={currentMember.whatsapp_number}
-                        onChange={(e) => updateCurrentMember('whatsapp_number', e.target.value)}
-                        placeholder="+32 123 456 789"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <button
-                      onClick={saveAndInviteMember}
-                      disabled={inviting || !isCurrentMemberValid()}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                    >
-                      {inviting ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          <span>Inviting...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Check className="w-4 h-4" />
-                          <span>Save & Invite</span>
-                        </>
-                      )}
-                    </button>
-                    
-                    <button
-                      onClick={addNewUser}
-                      disabled={!isCurrentMemberValid()}
-                      className="px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                    >
-                      <UserPlus className="w-4 h-4" />
-                      <span>Add New User</span>
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="border border-gray-200 rounded-lg p-6 text-center">
-                  <div className="text-gray-900 font-medium mb-2">Team Limit Reached</div>
-                  <p className="text-gray-600 text-sm mb-4">
-                    {!subscription
-                      ? `You've reached the trial limit of ${totalUsers} users. Upgrade to add more team members.`
-                      : 'Upgrade your subscription to add more team members.'
-                    }
-                  </p>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200">
-                    Upgrade Plan
-                  </button>
-                </div>
-              )}
-
-              {/* What happens next info */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <h4 className="text-sm font-medium text-gray-900 mb-2">What happens next?</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Team members will receive an invitation email with setup instructions</li>
-                  <li>• They'll need to verify their WhatsApp number to start using VoiceLink</li>
-                  <li>• All team members get full access during your 14-day trial</li>
-                  <li>• After trial, you can upgrade to a team plan with volume discounts</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Odoo API Key Input - Only for Odoo users */}
-          {user?.platform === 'odoo' && (
-            <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <OdooApiKeyInput />
-            </section>
-          )}
-
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                {t('dashboard.customerPortal.title')}
-              </h2>
-              <p className="text-xl" style={{ color: '#6B7280' }}>
-                {t('dashboard.customerPortal.subtitle')}
-              </p>
-            </div>
-
-            <div className="max-w-2xl mx-auto mb-16">
-              <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
-                <div className="text-center">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <CreditCard className="w-8 h-8" style={{ color: '#1C2C55' }} />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.customerPortal.portalTitle')}
-                  </h3>
-                  <p className="text-gray-600 mb-8 leading-relaxed">
-                    {t('dashboard.customerPortal.portalDescription')}
-                  </p>
-                  
-                  <a
-                    href="https://billing.stripe.com/p/login/cNifZi74c1OQepfcYAdMI00"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center space-x-3 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1"
-                    style={{ backgroundColor: '#1C2C55' }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
-                  >
-                    <CreditCard className="w-5 h-5" />
-                    <span>{t('dashboard.customerPortal.accessPortal')}</span>
-                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                  
-                  <div className="mt-6 grid grid-cols-2 gap-4 text-sm text-gray-600">
-                    <div className="flex items-center justify-center space-x-2">
-                      <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>{t('dashboard.customerPortal.viewBillingHistory')}</span>
-                    </div>
-                    <div className="flex items-center justify-center space-x-2">
-                      <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>{t('dashboard.customerPortal.updatePaymentMethod')}</span>
-                    </div>
-                    <div className="flex items-center justify-center space-x-2">
-                      <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>{t('dashboard.customerPortal.downloadInvoices')}</span>
-                    </div>
-                    <div className="flex items-center justify-center space-x-2">
-                      <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>{t('dashboard.customerPortal.manageSubscription')}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Premium Features Grid */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                {t('dashboard.premiumFeatures.title')}
-              </h2>
-              <p className="text-xl" style={{ color: '#6B7280' }}>
-                {t('dashboard.premiumFeatures.subtitle')}
-              </p>
-            </div>
-
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* WhatsApp Integration */}
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-                  <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(37, 211, 102, 0.1)' }}>
-                    <MessageCircle className="w-6 h-6 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.premiumFeatures.whatsappVoiceNotes.title')}
-                  </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">
-                    {t('dashboard.premiumFeatures.whatsappVoiceNotes.description')}
-                  </p>
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.whatsappVoiceNotes.unlimitedUsage')}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.whatsappVoiceNotes.instantProcessing')}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.whatsappVoiceNotes.multiLanguage')}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* AI Processing */}
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-                  <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <Zap className="w-6 h-6" style={{ color: '#1C2C55' }} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.premiumFeatures.aiProcessing.title')}
-                  </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">
-                    {t('dashboard.premiumFeatures.aiProcessing.description')}
-                  </p>
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.aiProcessing.smartExtraction')}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.aiProcessing.autoScheduling')}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.aiProcessing.contextAware')}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* CRM Integration */}
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-                  <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <Settings className="w-6 h-6" style={{ color: '#1C2C55' }} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.premiumFeatures.crmIntegration.title')}
-                  </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">
-                    {t('dashboard.premiumFeatures.crmIntegration.description')}
-                  </p>
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.crmIntegration.realTimeSync')}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.crmIntegration.autoContactCreation')}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.crmIntegration.taskManagement')}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Support Section */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                {t('dashboard.support.title')}
-              </h2>
-              <p className="text-xl" style={{ color: '#6B7280' }}>
-                {t('dashboard.support.subtitle')}
-              </p>
-            </div>
-
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white border-opacity-20">
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 text-center">
-                  <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <Mail className="w-6 h-6" style={{ color: '#1C2C55' }} />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.support.email.title')}
-                  </h3>
-                  <p className="text-gray-600 mb-4 text-sm">
-                    {t('dashboard.support.email.description')}
-                  </p>
-                  <a
-                    href="mailto:contact@finitsolutions.be"
-                    className="inline-flex items-center space-x-2 text-sm font-medium hover:underline"
-                    style={{ color: '#1C2C55' }}
-                  >
-                    <span>contact@finitsolutions.be</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 text-center">
-                  <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <Headphones className="w-6 h-6" style={{ color: '#1C2C55' }} />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.support.liveChat.title')}
-                  </h3>
-                  <p className="text-gray-600 mb-4 text-sm">
-                    {t('dashboard.support.liveChat.description')}
-                  </p>
-                  <button className="inline-flex items-center space-x-2 text-sm font-medium hover:underline" style={{ color: '#1C2C55' }}>
-                    <span>{t('dashboard.support.liveChat.startChat')}</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </button>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 text-center">
-                  <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <Calendar className="w-6 h-6" style={{ color: '#1C2C55' }} />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.support.consultation.title')}
-                  </h3>
-                  <p className="text-gray-600 mb-4 text-sm">
-                    {t('dashboard.support.consultation.description')}
-                  </p>
-                  <button className="inline-flex items-center space-x-2 text-sm font-medium hover:underline" style={{ color: '#1C2C55' }}>
-                    <span>{t('dashboard.support.consultation.bookCall')}</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
         </div>
       </div>
     </div>
