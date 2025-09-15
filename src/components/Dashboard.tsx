@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useSubscription } from '../hooks/useSubscription';
 import { Users, Zap, Settings, ShoppingBag } from 'lucide-react';
@@ -9,20 +8,7 @@ import { SubscriptionDashboard } from './SubscriptionDashboard';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
-
-  // Redirect non-authenticated users to homepage
-  React.useEffect(() => {
-    if (!user) {
-      navigate('/', { replace: true });
-    }
-  }, [user, navigate]);
-
-  // Don't render anything for non-authenticated users
-  if (!user) {
-    return null;
-  }
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {

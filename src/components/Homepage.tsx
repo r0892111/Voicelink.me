@@ -238,6 +238,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     </svg>
                   </div>
                 </div>
+                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">One-click setup</div>
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">{t('features.oneClickSetup')}</div>
               </div>
               
@@ -253,6 +254,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     </svg>
                   </div>
                 </div>
+                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">Real-time sync</div>
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">{t('features.realtimeSync')}</div>
               </div>
               
@@ -268,6 +270,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                     </svg>
                   </div>
                 </div>
+                <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">Secure OAuth</div>
                 <div className="text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">{t('features.secureOauth')}</div>
               </div>
             </div>

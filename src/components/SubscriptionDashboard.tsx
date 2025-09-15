@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail, CreditCard, ExternalLink } from 'lucide-react';
 import { WhatsAppVerification } from './WhatsAppVerification';
@@ -9,7 +8,6 @@ import { useI18n } from '../hooks/useI18n';
 
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const { t } = useI18n();
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
@@ -17,18 +15,6 @@ export const SubscriptionDashboard: React.FC = () => {
   const statusCheckIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
   const lastFetchTimeRef = React.useRef<number>(0);
   const lastStatusRef = React.useRef<string>('');
-
-  // Redirect non-authenticated users to homepage
-  React.useEffect(() => {
-    if (!user) {
-      navigate('/', { replace: true });
-    }
-  }, [user, navigate]);
-
-  // Don't render anything for non-authenticated users
-  if (!user) {
-    return null;
-  }
 
   // Fetch WhatsApp status with throttling and change detection
   const fetchWhatsAppStatus = React.useCallback(async (force = false) => {
@@ -176,7 +162,7 @@ export const SubscriptionDashboard: React.FC = () => {
                 </div>
                 <div className="text-left">
                   <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.welcome', { name: user?.name || 'Premium User' })}
+                    {t('dashboard.welcome', { name: user?.user_info?.first_name || t('dashboard.welcomeDefault') })}
                   </h1>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
                     {t('dashboard.subscriptionActive')}
@@ -233,44 +219,81 @@ export const SubscriptionDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  {user && (
-                    <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{t('dashboard.accountProfile.personalInfo')}</h4>
-                      <div className="space-y-3">
-                        <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                          <span className="text-sm text-gray-600">{t('dashboard.accountProfile.fullName')}</span>
-                          <span className="text-sm font-medium text-gray-900">
-                            {user.name}
-                          </span>
-                        </div>
-                        <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                          <span className="text-sm text-gray-600">{t('dashboard.accountProfile.email')}</span>
-                          <span className="text-sm font-medium text-gray-900">{user.email}</span>
-                        </div>
-                        <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                          <span className="text-sm text-gray-600">{t('dashboard.accountProfile.whatsappStatus')}</span>
-                          <span className={`text-sm font-medium inline-flex items-center px-2 py-1 rounded-full text-xs ${
-                            whatsappStatus === 'active' 
-                              ? 'bg-green-100 text-green-800' 
-                              : whatsappStatus === 'pending'
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-gray-100 text-gray-800'
-                          }`}>
-                            {whatsappStatus === 'active' && '✅ '}
-                            {whatsappStatus === 'pending' && '⏳ '}
-                            {whatsappStatus === 'not_set' && '❌ '}
-                            {whatsappStatus === 'active' ? t('dashboard.whatsappStatus.connected') : 
-                             whatsappStatus === 'pending' ? t('dashboard.whatsappStatus.pending') : t('dashboard.whatsappStatus.notConnected')}
-                          </span>
-                        </div>
-                        {user.user_info?.telephones && user.user_info.telephones.length > 0 && (
+                  {user?.user_info && (
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {/* Personal Information */}
+                      <div className="space-y-4">
+                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{t('dashboard.accountProfile.personalInfo')}</h4>
+                        <div className="space-y-3">
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.phone')}</span>
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.fullName')}</span>
                             <span className="text-sm font-medium text-gray-900">
-                              +{user.user_info.telephones[0].number}
+                              {user.user_info.first_name} {user.user_info.last_name}
                             </span>
                           </div>
-                        )}
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.email')}</span>
+                            <span className="text-sm font-medium text-gray-900">{user.email}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.language')}</span>
+                            <span className="text-sm font-medium text-gray-900">
+                              {typeof user.user_info.language === 'string' 
+                                ? user.user_info.language 
+                                : user.user_info.language?.language_code 
+                                  ? `${user.user_info.language.language_code}-${user.user_info.language.country_code}`
+                                  : 'N/A'
+                              }
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.timeZone')}</span>
+                            <span className="text-sm font-medium text-gray-900">{user.user_info.time_zone}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.whatsappStatus')}</span>
+                            <span className={`text-sm font-medium inline-flex items-center px-2 py-1 rounded-full text-xs ${
+                              whatsappStatus === 'active' 
+                                ? 'bg-green-100 text-green-800' 
+                                : whatsappStatus === 'pending'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-gray-100 text-gray-800'
+                            }`}>
+                              {whatsappStatus === 'active' && '✅ '}
+                              {whatsappStatus === 'pending' && '⏳ '}
+                              {whatsappStatus === 'not_set' && '❌ '}
+                              {whatsappStatus === 'active' ? t('dashboard.whatsappStatus.connected') : 
+                               whatsappStatus === 'pending' ? t('dashboard.whatsappStatus.pending') : t('dashboard.whatsappStatus.notConnected')}
+                            </span>
+                          </div>
+                          {user.user_info.telephones && user.user_info.telephones.length > 0 && (
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                              <span className="text-sm text-gray-600">{t('dashboard.accountProfile.phone')}</span>
+                              <span className="text-sm font-medium text-gray-900">
+                                +{user.user_info.telephones[0].number}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Account Information */}
+                      <div className="space-y-4">
+                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{t('dashboard.accountProfile.accountDetails')}</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.accountId')}</span>
+                            <span className="text-xs font-mono text-gray-700 bg-gray-100 px-2 py-1 rounded">
+                              {user.user_info.account?.id}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.emailStatus')}</span>
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              {user.user_info.email_verification_status}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -411,10 +434,10 @@ export const SubscriptionDashboard: React.FC = () => {
                     <MessageCircle className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                    {t('dashboard.userGuide.title')}
+                    Daily Usage Guide
                   </h2>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
-                    {t('dashboard.userGuide.subtitle')}
+                    VoiceLink works best when you speak your updates in a structured and clear manner
                   </p>
                 </div>
 
@@ -423,32 +446,32 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <Users className="w-6 h-6" />
-                      <span>{t('dashboard.userGuide.contactRecording.title')}</span>
+                      <span>1. Recording Contacts</span>
                     </h3>
                     
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.contactRecording.startWith')}</h4>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Start with:</h4>
                         <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderColor: '#1C2C55' }}>
-                          <p className="font-medium">{t('dashboard.userGuide.contactRecording.example1')}</p>
-                          <p className="font-medium">{t('dashboard.userGuide.contactRecording.example2')}</p>
+                          <p className="font-medium">"Just called/spoke with [NAME]"</p>
+                          <p className="font-medium">or "[NAME] just visited"</p>
                         </div>
                       </div>
                       
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.contactRecording.names')}</h4>
-                          <p className="text-sm text-gray-700">{t('dashboard.userGuide.contactRecording.namesTip')}</p>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Names:</h4>
+                          <p className="text-sm text-gray-700">Speak slowly and spell difficult names letter by letter</p>
                         </div>
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.contactRecording.phoneEmail')}</h4>
-                          <p className="text-sm text-gray-700">{t('dashboard.userGuide.contactRecording.phoneEmailTip')}</p>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Phone/Email:</h4>
+                          <p className="text-sm text-gray-700">Optional, but always spell when in doubt</p>
                         </div>
                       </div>
                       
                       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                         <p className="text-sm text-yellow-800">
-                          <strong>{t('dashboard.userGuide.contactRecording.newVsExisting')}</strong> {t('dashboard.userGuide.contactRecording.newVsExistingTip')}
+                          <strong>New vs. Existing Contacts:</strong> VoiceLink automatically searches for existing records and creates new contacts when needed.
                         </p>
                       </div>
                     </div>
@@ -458,22 +481,23 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <MessageCircle className="w-6 h-6" />
-                      <span>{t('dashboard.userGuide.conversationInfo.title')}</span>
+                      <span>2. Conversation Information</span>
                     </h3>
                     
                     <div className="space-y-4">
-                      <p className="text-gray-700">{t('dashboard.userGuide.conversationInfo.description')}</p>
+                      <p className="text-gray-700">Share important information as if you're telling a colleague.</p>
                       
                       <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderColor: '#25D366' }}>
-                        <p className="font-medium text-gray-800">{t('dashboard.userGuide.conversationInfo.example')}</p>
+                        <p className="font-medium text-gray-800">Example:</p>
                         <p className="italic text-gray-700 mt-2">
-                          {t('dashboard.userGuide.conversationInfo.exampleText')}
+                          "He's interested in product X, wants a demo next week, and asked me to send the price list."
                         </p>
                       </div>
                       
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <p className="text-sm text-blue-800">
-                          <strong>{t('dashboard.userGuide.conversationInfo.tip')}</strong> {t('dashboard.userGuide.conversationInfo.tipText')}
+                          <strong>Tip:</strong> The more details you provide, the better VoiceLink can fill your CRM. 
+                          The system automatically creates tags and reports as annotations.
                         </p>
                       </div>
                     </div>
@@ -483,44 +507,44 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <Calendar className="w-6 h-6" />
-                      <span>{t('dashboard.userGuide.calendarTasks.title')}</span>
+                      <span>3. Calendar & Task Management</span>
                     </h3>
                     
-                    <p className="text-gray-700 mb-4">{t('dashboard.userGuide.calendarTasks.description')}</p>
+                    <p className="text-gray-700 mb-4">VoiceLink can automatically create or update appointments and tasks.</p>
                     
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.calendarTasks.callbacks')}</h4>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>📞 Callbacks:</h4>
                           <div className="bg-white rounded-lg p-3 text-sm">
-                            <p>{t('dashboard.userGuide.calendarTasks.callback1')}</p>
-                            <p>{t('dashboard.userGuide.calendarTasks.callback2')}</p>
+                            <p>"I need to call him back Monday at 3 PM"</p>
+                            <p>"I should call him tomorrow morning"</p>
                           </div>
                         </div>
                         
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.calendarTasks.appointments')}</h4>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>📅 Appointments:</h4>
                           <div className="bg-white rounded-lg p-3 text-sm">
-                            <p>{t('dashboard.userGuide.calendarTasks.appointment1')}</p>
-                            <p>{t('dashboard.userGuide.calendarTasks.appointment2')}</p>
+                            <p>"He's coming next Tuesday at 2 PM"</p>
+                            <p>"Meeting in Tremelo on May 29th at 1 PM"</p>
                           </div>
                         </div>
                       </div>
                       
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.calendarTasks.tasks')}</h4>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>✅ Tasks:</h4>
                           <div className="bg-white rounded-lg p-3 text-sm">
-                            <p>{t('dashboard.userGuide.calendarTasks.task1')}</p>
-                            <p>{t('dashboard.userGuide.calendarTasks.task2')}</p>
+                            <p>"Send catalog tomorrow"</p>
+                            <p>"Prepare quote for Friday 2 PM"</p>
                           </div>
                         </div>
                         
                         <div>
-                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.calendarTasks.updates')}</h4>
+                          <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>🔄 Updates:</h4>
                           <div className="bg-white rounded-lg p-3 text-sm">
-                            <p>{t('dashboard.userGuide.calendarTasks.update1')}</p>
-                            <p>{t('dashboard.userGuide.calendarTasks.update2')}</p>
+                            <p>"Meeting with Marianna moved to Tuesday 12 PM"</p>
+                            <p>"Jeff didn't answer, try again tomorrow"</p>
                           </div>
                         </div>
                       </div>
@@ -531,7 +555,7 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <CheckCircle className="w-6 h-6" />
-                      <span>{t('dashboard.userGuide.bestPractices.title')}</span>
+                      <span>4. Best Practices for Optimal Use</span>
                     </h3>
                     
                     <div className="grid md:grid-cols-2 gap-6">
@@ -541,8 +565,8 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-white text-sm">🗣️</span>
                           </div>
                           <div>
-                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.bestPractices.speakClearly.title')}</h4>
-                            <p className="text-sm text-gray-700">{t('dashboard.userGuide.bestPractices.speakClearly.description')}</p>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Speak Clearly</h4>
+                            <p className="text-sm text-gray-700">Speak clearly and slowly in standard English</p>
                           </div>
                         </div>
                         
@@ -551,8 +575,8 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-white text-sm">📱</span>
                           </div>
                           <div>
-                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.bestPractices.spellingMode.title')}</h4>
-                            <p className="text-sm text-gray-700">{t('dashboard.userGuide.bestPractices.spellingMode.description')}</p>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Spelling Mode</h4>
+                            <p className="text-sm text-gray-700">Spell letters for names, emails, and phone numbers when in doubt</p>
                           </div>
                         </div>
                       </div>
@@ -563,8 +587,8 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-white text-sm">⏰</span>
                           </div>
                           <div>
-                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.bestPractices.autoScheduling.title')}</h4>
-                            <p className="text-sm text-gray-700">{t('dashboard.userGuide.bestPractices.autoScheduling.description')}</p>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Auto-Scheduling</h4>
+                            <p className="text-sm text-gray-700">No time mentioned? VoiceLink finds a suitable time automatically</p>
                           </div>
                         </div>
                         
@@ -573,8 +597,8 @@ export const SubscriptionDashboard: React.FC = () => {
                             <span className="text-white text-sm">🎯</span>
                           </div>
                           <div>
-                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.bestPractices.keepFocused.title')}</h4>
-                            <p className="text-sm text-gray-700">{t('dashboard.userGuide.bestPractices.keepFocused.description')}</p>
+                            <h4 className="font-semibold" style={{ color: '#1C2C55' }}>Keep It Focused</h4>
+                            <p className="text-sm text-gray-700">One update per message is most reliable</p>
                           </div>
                         </div>
                       </div>
@@ -582,7 +606,8 @@ export const SubscriptionDashboard: React.FC = () => {
                     
                     <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4">
                       <p className="text-sm text-red-800">
-                        <strong>{t('dashboard.userGuide.bestPractices.important')}</strong> {t('dashboard.userGuide.bestPractices.importantText')}
+                        <strong>Important:</strong> You can only update one contact per message. 
+                        Want to update multiple people in your CRM? Record them with separate voice notes on WhatsApp.
                       </p>
                     </div>
                   </div>
@@ -591,23 +616,23 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center space-x-2" style={{ color: '#1C2C55' }}>
                       <Settings className="w-6 h-6" />
-                      <span>{t('dashboard.userGuide.troubleshooting.title')}</span>
+                      <span>5. Troubleshooting</span>
                     </h3>
                     
                     <div className="grid md:grid-cols-3 gap-4">
                       <div className="bg-white rounded-lg p-4">
-                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.troubleshooting.noConnection.title')}</h4>
-                        <p className="text-sm text-gray-700">{t('dashboard.userGuide.troubleshooting.noConnection.description')}</p>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>No Connection?</h4>
+                        <p className="text-sm text-gray-700">Check internet connection and API settings</p>
                       </div>
                       
                       <div className="bg-white rounded-lg p-4">
-                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.troubleshooting.wrongInput.title')}</h4>
-                        <p className="text-sm text-gray-700">{t('dashboard.userGuide.troubleshooting.wrongInput.description')}</p>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Wrong Input?</h4>
+                        <p className="text-sm text-gray-700">Send corrections via new voice message</p>
                       </div>
                       
                       <div className="bg-white rounded-lg p-4">
-                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('dashboard.userGuide.troubleshooting.transcriptionErrors.title')}</h4>
-                        <p className="text-sm text-gray-700">{t('dashboard.userGuide.troubleshooting.transcriptionErrors.description')}</p>
+                        <h4 className="font-semibold mb-2" style={{ color: '#1C2C55' }}>Transcription Errors?</h4>
+                        <p className="text-sm text-gray-700">Speak clearly without background noise</p>
                       </div>
                     </div>
                   </div>
@@ -640,158 +665,6 @@ export const SubscriptionDashboard: React.FC = () => {
               </div>
             </section>
           )}
-
-          {/* Multi-User CTA Section */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 lg:p-10 border border-blue-200 relative overflow-hidden">
-              {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30 transform translate-x-8 -translate-y-8"></div>
-              
-              <div className="relative z-10">
-                <div className="text-center mb-8">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <Users className="w-8 h-8" style={{ color: '#1C2C55' }} />
-                  </div>
-                  <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                    Scale Your Team with VoiceLink
-                  </h2>
-                  <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Add team members and save up to 50% with volume discounts. The more users you add, the more you save.
-                  </p>
-                </div>
-
-                {/* Volume Discount Preview */}
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
-                  <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
-                    <div className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>5-9 Users</div>
-                    <div className="text-lg font-semibold text-green-600 mb-2">10% Off</div>
-                    <div className="text-sm text-gray-600">€27.00/user/month</div>
-                    <div className="text-xs text-gray-500 mt-1">Save €14.50/month</div>
-                  </div>
-                  
-                  <div className="bg-white rounded-2xl p-6 text-center shadow-sm border-2 border-blue-200">
-                    <div className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>10-24 Users</div>
-                    <div className="text-lg font-semibold text-green-600 mb-2">20% Off</div>
-                    <div className="text-sm text-gray-600">€24.00/user/month</div>
-                    <div className="text-xs text-gray-500 mt-1">Save €59.00/month</div>
-                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs px-3 py-1 rounded-full">
-                      Most Popular
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
-                    <div className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>25+ Users</div>
-                    <div className="text-lg font-semibold text-green-600 mb-2">Up to 50% Off</div>
-                    <div className="text-sm text-gray-600">From €15.00/user/month</div>
-                    <div className="text-xs text-gray-500 mt-1">Save €372.50/month</div>
-                  </div>
-                </div>
-
-                {/* Benefits Grid */}
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold mb-4" style={{ color: '#1C2C55' }}>Team Benefits</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                        <span className="text-gray-700">Shared WhatsApp workspace</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                        <span className="text-gray-700">Centralized CRM updates</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                        <span className="text-gray-700">Team activity dashboard</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                        <span className="text-gray-700">Advanced analytics</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold mb-4" style={{ color: '#1C2C55' }}>Volume Savings</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: '#1C2C55' }}>
-                          %
-                        </div>
-                        <span className="text-gray-700">Automatic discounts up to 50%</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: '#1C2C55' }}>
-                          €
-                        </div>
-                        <span className="text-gray-700">Save thousands annually</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: '#1C2C55' }}>
-                          ⚡
-                        </div>
-                        <span className="text-gray-700">Instant team productivity boost</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: '#1C2C55' }}>
-                          📈
-                        </div>
-                        <span className="text-gray-700">Scale without complexity</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* CTA Buttons */}
-                <div className="text-center">
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a
-                      href="mailto:contact@finitsolutions.be?subject=Add Team Members to VoiceLink&body=Hi, I'd like to add more team members to my VoiceLink account. Please help me upgrade my plan."
-                      className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
-                      style={{ backgroundColor: '#1C2C55' }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
-                    >
-                      <Users className="w-5 h-5" />
-                      <span>Add Team Members</span>
-                      <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                    <a
-                      href="mailto:contact@finitsolutions.be?subject=VoiceLink Volume Pricing&body=Hi, I'm interested in learning more about volume pricing for my team."
-                      className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
-                      style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = '#F7E69B';
-                        e.currentTarget.style.borderColor = '#1C2C55';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                        e.currentTarget.style.borderColor = '#1C2C55';
-                      }}
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      <span>Get Volume Pricing</span>
-                    </a>
-                  </div>
-                  
-                  <div className="mt-6 flex items-center justify-center space-x-8 text-sm text-gray-600">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span>Free team onboarding</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span>Dedicated account manager</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span>Custom training sessions</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
 
           {/* Odoo API Key Input - Only for Odoo users */}
           {user?.platform === 'odoo' && (

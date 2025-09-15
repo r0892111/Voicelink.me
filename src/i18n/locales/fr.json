@@ -21,242 +21,54 @@
     "features": "Fonctionnalités",
     "pricing": "Tarifs",
     "dashboard": "Tableau de bord",
-    "support": "Assistance",
+    "support": "Support",
     "signOut": "Se déconnecter",
-    "getStarted": "Commencer gratuitement",
+    "getStarted": "Commencer Gratuitement",
     "backToHome": "Retour à l'accueil"
   },
   "hero": {
-    "title": "Juste...",
+    "title": "Simplement...",
     "mainTitle": "Parlez à votre CRM",
     "subtitle1": "Envoyez des notes vocales via WhatsApp et regardez-les se synchroniser automatiquement avec votre CRM.",
-    "subtitle2": "Transformez instantanément vos messages vocaux en données structurées.",
-    "getStartedFree": "Commencer gratuitement",
-    "watchDemo": "Voir la démo",
+    "subtitle2": "Transformez les messages vocaux en données structurées instantanément.",
+    "getStartedFree": "Commencer Gratuitement",
+    "watchDemo": "Voir la Démo",
     "oneClickSetup": "Connexion CRM en un clic",
     "whatsappSetup": "Connectez WhatsApp en 2 minutes"
   },
   "auth": {
     "modal": {
-      "title": "Commencez votre essai gratuit",
-      "subtitle": "Connectez votre CRM et commencez à utiliser VoiceLink immédiatement",
-      "freeTrialBanner": "Essai gratuit de 14 jours commence maintenant",
-      "freeTrialDescription": "Votre essai gratuit commence dès que vous connectez votre CRM. Aucune carte bancaire requise.",
+      "title": "Commencez Votre Essai Gratuit",
+      "subtitle": "Connectez votre CRM et commencez à utiliser VoiceLink instantanément",
+      "freeTrialBanner": "Essai Gratuit de 14 Jours Commence Maintenant",
+      "freeTrialDescription": "Votre essai gratuit commence immédiatement après la connexion de votre CRM. Aucune carte de crédit requise.",
       "connectTeamleader": "Connecter Teamleader",
       "connectPipedrive": "Connecter Pipedrive",
-      "connectOdoo": "Connecter Odoo",
-      "startTrialInstantly": "Commencez votre essai immédiatement",
-      "alreadyHaveAccount": "Vous avez déjà un compte ?",
-      "signInDescription": "Connectez-vous simplement via votre plateforme CRM ci-dessus",
-      "secureOauth": "OAuth sécurisé",
-      "noSetupFees": "Aucun frais de configuration",
-      "cancelAnytime": "Annuler à tout moment",
-      "termsAgreement": "En connectant votre CRM, vous acceptez nos {{termsLink}} et {{privacyLink}}",
-      "termsOfService": "Conditions d'utilisation",
-      "privacyPolicy": "Politique de confidentialité"
-    },
-    "callback": {
-      "authenticating": "Authentification...",
-      "authenticationSuccessful": "Authentification réussie !",
-      "authenticationFailed": "Échec de l'authentification",
-      "processingAuth": "Traitement de l'authentification {{platform}}...",
-      "completingAuth": "Finalisation de l'authentification...",
-      "successfullyAuthenticated": "Authentification réussie avec {{platform}} !",
-      "redirectingToCheckout": "Redirection vers le paiement de l'abonnement...",
-      "returnToHome": "Retour à l'accueil"
+      "connectOdoo": "Connecter Odoo"
     }
   },
   "dashboard": {
     "welcome": "Bon retour, {{name}} !",
-    "welcomeDefault": "Bon retour, utilisateur Premium !",
-    "subscriptionActive": "Votre abonnement VoiceLink est actif",
-    "platformConnection": {
-      "title": "{{platform}}",
-      "connectedActive": "Connecté & Actif",
-      "integrationReady": "Intégration en direct et prête pour les notes vocales"
-    },
-    "accountProfile": {
-      "title": "Profil du compte",
-      "subtitle": "Informations de votre compte CRM",
-      "personalInfo": "Informations personnelles",
-      "accountDetails": "Détails du compte",
-      "fullName": "Nom complet",
-      "email": "Email",
-      "language": "Langue",
-      "timeZone": "Fuseau horaire",
-      "whatsappStatus": "Statut WhatsApp",
-      "phone": "Téléphone",
-      "accountId": "ID du compte",
-      "emailStatus": "Statut de l'email"
-    },
-    "whatsappStatus": {
-      "connected": "Connecté",
-      "pending": "En attente",
-      "notConnected": "Non connecté"
-    },
-    "allSet": {
-      "title": "🎉 Tout est prêt !",
-      "subtitle": "Votre WhatsApp est connecté et VoiceLink est prêt à l'emploi",
-      "startSending": "Commencez à envoyer des notes vocales",
-      "description": "Envoyez simplement un message vocal à VoiceLink via WhatsApp et regardez votre CRM se mettre à jour automatiquement avec des données structurées, des tâches de suivi et des informations sur les contacts.",
-      "whatsappConnected": "WhatsApp connecté",
-      "crmIntegrationActive": "Intégration CRM active",
-      "aiProcessingReady": "Traitement AI prêt"
-    },
-    "gettingStarted": {
-      "title": "Prêt à commencer ?",
-      "subtitle": "Suivez ces étapes simples pour utiliser VoiceLink",
-      "step1": {
-        "title": "Vérifiez WhatsApp",
-        "description": "Connectez votre numéro WhatsApp pour recevoir les confirmations des notes vocales"
-      },
-      "step2": {
-        "title": "Envoyez une note vocale",
-        "description": "Enregistrez vos pensées naturellement via les messages vocaux WhatsApp"
-      },
-      "step3": {
-        "title": "Regardez la magie opérer",
-        "description": "L'IA traite votre voix et synchronise les données structurées avec votre CRM"
-      }
-    },
-    "customerPortal": {
-      "title": "Gérez votre abonnement",
-      "subtitle": "Accédez à vos informations de facturation et gérez votre abonnement",
-      "portalTitle": "Portail client",
-      "portalDescription": "Accédez à votre historique de facturation, mettez à jour les méthodes de paiement, téléchargez les factures et gérez vos paramètres d'abonnement via notre portail client sécurisé.",
-      "accessPortal": "Accéder au portail client",
-      "viewBillingHistory": "Voir l'historique des factures",
-      "updatePaymentMethods": "Mettre à jour les méthodes de paiement",
-      "downloadInvoices": "Télécharger les factures",
-      "manageSubscription": "Gérer l'abonnement"
-    },
-    "premiumFeatures": {
-      "title": "Vos fonctionnalités premium",
-      "subtitle": "Tout ce dont vous avez besoin pour transformer la voix en données CRM structurées",
-      "whatsappVoiceNotes": {
-        "title": "Notes vocales WhatsApp",
-        "description": "Envoyez des messages vocaux illimités directement vers votre CRM via WhatsApp",
-        "unlimitedUsage": "Usage illimité"
-      },
-      "realtimeSync": {
-        "title": "Synchronisation en temps réel",
-        "description": "Synchronisation instantanée avec votre plateforme CRM",
-        "liveUpdates": "Mises à jour en direct"
-      },
-      "prioritySupport": {
-        "title": "Support prioritaire",
-        "description": "Assistance dédiée 24/7 par notre équipe d'experts",
-        "support24x7": "Support 24/7"
-      }
-    },
-    "support": {
-      "title": "Besoin d'aide pour démarrer ?",
-      "description": "Notre équipe d'assistance est là pour vous aider à tirer le meilleur parti de VoiceLink. Obtenez de l'aide personnalisée pour l'installation et l'optimisation.",
-      "contactSupport": "Contacter le support"
-    },
-    "userGuide": {
-      "title": "Guide d'utilisation quotidienne",
-      "subtitle": "VoiceLink fonctionne mieux lorsque vous exprimez vos mises à jour de manière structurée et claire",
-      "contactRecording": {
-        "title": "1. Enregistrement des contacts",
-        "startWith": "Commencez par :",
-        "example1": "\"Vient d'appeler/parler avec [NOM]\"",
-        "example2": "ou \"[NOM] vient de visiter\"",
-        "names": "Noms :",
-        "namesTip": "Parlez lentement et épellez les noms difficiles lettre par lettre",
-        "phoneEmail": "Téléphone/E-mail :",
-        "phoneEmailTip": "Optionnel, mais épellez toujours en cas de doute",
-        "newVsExisting": "Nouveaux vs. Contacts existants :",
-        "newVsExistingTip": "VoiceLink recherche automatiquement les enregistrements existants et crée de nouveaux contacts si nécessaire."
-      },
-      "conversationInfo": {
-        "title": "2. Informations de conversation",
-        "description": "Partagez des informations importantes comme si vous les racontiez à un collègue.",
-        "example": "Exemple :",
-        "exampleText": "\"Il est intéressé par le produit X, veut une démo la semaine prochaine et m'a demandé d'envoyer la liste de prix.\"",
-        "tip": "Conseil :",
-        "tipText": "Plus vous donnez de détails, mieux VoiceLink peut remplir votre CRM. Le système crée automatiquement des tags et des rapports comme annotations."
-      },
-      "calendarTasks": {
-        "title": "3. Gestion du calendrier et des tâches",
-        "description": "VoiceLink peut automatiquement créer ou mettre à jour des rendez-vous et des tâches.",
-        "callbacks": "📞 Rappels :",
-        "callback1": "\"Je dois le rappeler lundi à 15h\"",
-        "callback2": "\"Je devrais l'appeler demain matin\"",
-        "appointments": "📅 Rendez-vous :",
-        "appointment1": "\"Il vient mardi prochain à 14h\"",
-        "appointment2": "\"Réunion à Tremelo le 29 mai à 13h\"",
-        "tasks": "✅ Tâches :",
-        "task1": "\"Envoyer le catalogue demain\"",
-        "task2": "\"Préparer le devis pour vendredi 14h\"",
-        "updates": "🔄 Mises à jour :",
-        "update1": "\"Réunion avec Marianna déplacée à mardi 12h\"",
-        "update2": "\"Jeff n'a pas répondu, réessayer demain\""
-      },
-      "bestPractices": {
-        "title": "4. Meilleures pratiques pour une utilisation optimale",
-        "speakClearly": {
-          "title": "Parlez clairement",
-          "description": "Parlez clairement et lentement en anglais standard"
-        },
-        "spellingMode": {
-          "title": "Mode épellation",
-          "description": "Épellez les lettres pour les noms, e-mails et numéros de téléphone en cas de doute"
-        },
-        "autoScheduling": {
-          "title": "Planification automatique",
-          "description": "Aucune heure mentionnée ? VoiceLink trouve automatiquement un moment approprié"
-        },
-        "keepFocused": {
-          "title": "Restez concentré",
-          "description": "Une mise à jour par message est la plus fiable"
-        },
-        "important": "Important :",
-        "importantText": "Vous ne pouvez mettre à jour qu'un seul contact par message. Voulez-vous mettre à jour plusieurs personnes dans votre CRM ? Enregistrez-les avec des notes vocales séparées sur WhatsApp."
-      },
-      "troubleshooting": {
-        "title": "5. Dépannage",
-        "noConnection": {
-          "title": "Pas de connexion ?",
-          "description": "Vérifiez la connexion internet et les paramètres API"
-        },
-        "wrongInput": {
-          "title": "Mauvaise saisie ?",
-          "description": "Envoyez des corrections via un nouveau message vocal"
-        },
-        "transcriptionErrors": {
-          "title": "Erreurs de transcription ?",
-          "description": "Parlez clairement sans bruit de fond"
-        }
-      }
-    }
+    "welcomeDefault": "Bon retour, Utilisateur Premium !",
+    "subscriptionActive": "Votre abonnement VoiceLink est actif"
   },
   "whatsapp": {
     "integration": "Intégration WhatsApp",
-    "verified": "WhatsApp vérifié",
+    "verified": "WhatsApp Vérifié",
     "connectedTo": "Connecté à {{number}}",
-    "activeReady": "Actif & prêt",
-    "readyDescription": "Votre numéro WhatsApp est vérifié et prêt à recevoir les confirmations des notes vocales. Vous pouvez maintenant envoyer des messages vocaux à VoiceLink !",
-    "changeNumber": "Changer le numéro WhatsApp",
-    "changeDescription": "Déconnectez pour connecter un autre numéro WhatsApp",
-    "disconnect": "Déconnecter",
-    "disconnecting": "Déconnexion en cours...",
-    "verificationPending": "Vérification WhatsApp en attente",
-    "pendingDescription": "La vérification de votre WhatsApp est en attente. Veuillez terminer le processus pour utiliser VoiceLink.",
-    "refreshStatus": "Actualiser le statut",
     "whatsappNumber": "Numéro WhatsApp",
-    "includeCountryCode": "Inclure l’indicatif pays (ex. +32 pour la Belgique)",
-    "validPhoneRequired": "Veuillez saisir un numéro de téléphone international valide",
-    "sendVerificationCode": "Envoyer le code de vérification",
-    "sending": "Envoi...",
-    "verificationCodeSent": "Code de vérification envoyé",
-    "codeSentTo": "Nous avons envoyé un code à 6 chiffres à {{number}}",
-    "codeExpires": "Le code expire à {{time}}",
-    "verificationCode": "Code de vérification",
-    "enterCode": "Saisissez le code à 6 chiffres",
-    "verifying": "Vérification...",
-    "verify": "Vérifier",
-    "resendCode": "Renvoyer le code",
-    "verifiedSuccessfully": "Numéro WhatsApp vérifié avec succès !"
+    "includeCountryCode": "Inclure l'indicatif pays (ex: +33 pour la France)",
+    "sendVerificationCode": "Envoyer le Code de Vérification",
+    "verificationCode": "Code de Vérification",
+    "verify": "Vérifier"
+  },
+  "pricing": {
+    "title": "Tarification Volume Qui S'Adapte",
+    "subtitle": "Prix par utilisateur. Commencez gratuitement, mettez à niveau quand vous êtes prêt. Pas de frais cachés.",
+    "monthly": "Mensuel",
+    "yearly": "Annuel",
+    "save20": "Économisez 20%",
+    "startFreeTrial": "Commencer l'Essai Gratuit",
+    "comingSoon": "Bientôt Disponible"
   }
 }
