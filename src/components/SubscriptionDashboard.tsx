@@ -6,23 +6,10 @@ import { OdooApiKeyInput } from './OdooApiKeyInput';
 import { supabase } from '../lib/supabase';
 import { useI18n } from '../hooks/useI18n';
 
-interface TeamMember {
-  name: string;
-  email: string;
-  whatsapp_number: string;
-  id?: string;
-}
-
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
   const { t } = useI18n();
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
-  const [teamMembers, setTeamMembers] = React.useState<TeamMember[]>([]);
-  const [currentMember, setCurrentMember] = React.useState<TeamMember>({ name: '', email: '', whatsapp_number: '' });
-  const [inviting, setInviting] = React.useState(false);
-  const [inviteError, setInviteError] = React.useState<string | null>(null);
-  const [inviteSuccess, setInviteSuccess] = React.useState(false);
-  const [saving, setSaving] = React.useState(false);
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
   const isFetchingRef = React.useRef(false);
   const statusCheckIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
