@@ -641,6 +641,158 @@ export const SubscriptionDashboard: React.FC = () => {
             </section>
           )}
 
+          {/* Multi-User CTA Section */}
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 lg:p-10 border border-blue-200 relative overflow-hidden">
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30 transform translate-x-8 -translate-y-8"></div>
+              
+              <div className="relative z-10">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                    <Users className="w-8 h-8" style={{ color: '#1C2C55' }} />
+                  </div>
+                  <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
+                    Scale Your Team with VoiceLink
+                  </h2>
+                  <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Add team members and save up to 50% with volume discounts. The more users you add, the more you save.
+                  </p>
+                </div>
+
+                {/* Volume Discount Preview */}
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                  <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
+                    <div className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>5-9 Users</div>
+                    <div className="text-lg font-semibold text-green-600 mb-2">10% Off</div>
+                    <div className="text-sm text-gray-600">€27.00/user/month</div>
+                    <div className="text-xs text-gray-500 mt-1">Save €14.50/month</div>
+                  </div>
+                  
+                  <div className="bg-white rounded-2xl p-6 text-center shadow-sm border-2 border-blue-200">
+                    <div className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>10-24 Users</div>
+                    <div className="text-lg font-semibold text-green-600 mb-2">20% Off</div>
+                    <div className="text-sm text-gray-600">€24.00/user/month</div>
+                    <div className="text-xs text-gray-500 mt-1">Save €59.00/month</div>
+                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs px-3 py-1 rounded-full">
+                      Most Popular
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
+                    <div className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>25+ Users</div>
+                    <div className="text-lg font-semibold text-green-600 mb-2">Up to 50% Off</div>
+                    <div className="text-sm text-gray-600">From €15.00/user/month</div>
+                    <div className="text-xs text-gray-500 mt-1">Save €372.50/month</div>
+                  </div>
+                </div>
+
+                {/* Benefits Grid */}
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold mb-4" style={{ color: '#1C2C55' }}>Team Benefits</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                        <span className="text-gray-700">Shared WhatsApp workspace</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                        <span className="text-gray-700">Centralized CRM updates</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                        <span className="text-gray-700">Team activity dashboard</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                        <span className="text-gray-700">Advanced analytics</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold mb-4" style={{ color: '#1C2C55' }}>Volume Savings</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: '#1C2C55' }}>
+                          %
+                        </div>
+                        <span className="text-gray-700">Automatic discounts up to 50%</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: '#1C2C55' }}>
+                          €
+                        </div>
+                        <span className="text-gray-700">Save thousands annually</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: '#1C2C55' }}>
+                          ⚡
+                        </div>
+                        <span className="text-gray-700">Instant team productivity boost</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: '#1C2C55' }}>
+                          📈
+                        </div>
+                        <span className="text-gray-700">Scale without complexity</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="text-center">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a
+                      href="mailto:contact@finitsolutions.be?subject=Add Team Members to VoiceLink&body=Hi, I'd like to add more team members to my VoiceLink account. Please help me upgrade my plan."
+                      className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                      style={{ backgroundColor: '#1C2C55' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+                    >
+                      <Users className="w-5 h-5" />
+                      <span>Add Team Members</span>
+                      <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                    <a
+                      href="mailto:contact@finitsolutions.be?subject=VoiceLink Volume Pricing&body=Hi, I'm interested in learning more about volume pricing for my team."
+                      className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                      style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#F7E69B';
+                        e.currentTarget.style.borderColor = '#1C2C55';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.borderColor = '#1C2C55';
+                      }}
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      <span>Get Volume Pricing</span>
+                    </a>
+                  </div>
+                  
+                  <div className="mt-6 flex items-center justify-center space-x-8 text-sm text-gray-600">
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <span>Free team onboarding</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <span>Dedicated account manager</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <span>Custom training sessions</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Odoo API Key Input - Only for Odoo users */}
           {user?.platform === 'odoo' && (
             <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
