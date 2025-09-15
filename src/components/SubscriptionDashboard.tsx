@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail, CreditCard, ExternalLink } from 'lucide-react';
 import { WhatsAppVerification } from './WhatsAppVerification';
@@ -8,6 +9,7 @@ import { useI18n } from '../hooks/useI18n';
 
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { t } = useI18n();
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
@@ -15,6 +17,18 @@ export const SubscriptionDashboard: React.FC = () => {
   const statusCheckIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
   const lastFetchTimeRef = React.useRef<number>(0);
   const lastStatusRef = React.useRef<string>('');
+
+  // Redirect non-authenticated users to homepage
+  React.useEffect(() => {
+    if (!user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
+
+  // Don't render anything for non-authenticated users
+  if (!user) {
+    return null;
+  }
 
   // Fetch WhatsApp status with throttling and change detection
   const fetchWhatsAppStatus = React.useCallback(async (force = false) => {
