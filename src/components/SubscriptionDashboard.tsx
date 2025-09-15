@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail, CreditCard, ExternalLink, Check, UserPlus, Phone, Loader2, X } from 'lucide-react';
+import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail, CreditCard, ExternalLink, Check, UserPlus, Phone, Loader2, X, AlertCircle } from 'lucide-react';
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
 import { supabase } from '../lib/supabase';
@@ -22,6 +22,8 @@ export const SubscriptionDashboard: React.FC = () => {
   const [addedTeamMembers, setAddedTeamMembers] = useState<TeamMember[]>([]);
   const [currentMember, setCurrentMember] = useState<TeamMember>({ name: '', email: '', whatsapp_number: '' });
   const [inviting, setInviting] = useState(false);
+  const [inviteSuccess, setInviteSuccess] = useState(false);
+  const [inviteError, setInviteError] = useState('');
   const [subscription, setSubscription] = useState(null);
   const [subscriptionType, setSubscriptionType] = useState('Trial');
   const [subscriptionDescription, setSubscriptionDescription] = useState('14-day free trial');
@@ -721,147 +723,86 @@ export const SubscriptionDashboard: React.FC = () => {
 
           {/* Team Management Section */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="bg-gradient-to-br from-blue-600 to-purple-700 rounded-3xl shadow-2xl p-8 lg:p-10 text-white">
-              <div className="mb-4 p-3 bg-green-500 bg-opacity-20 border border-green-300 rounded-lg flex items-center space-x-2 text-white">
-                <span className="text-sm">Team member invited successfully!</span>
+            <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                  <Users className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">Team Management</h3>
+                  <p className="text-gray-600">{subscriptionDescription}</p>
+                </div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm p-8">
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Users className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div className="mb-4 p-3 bg-red-500 bg-opacity-20 border border-red-300 rounded-lg flex items-center space-x-2 text-white">
-                    <div>
-                      <h3 className="text-2xl font-bold text-white mb-1">Team Management</h3>
-                      <p className="text-blue-100">{subscriptionDescription}</p>
-                    </div>
-                  </div>
+
+              {/* Success/Error Messages */}
+              {inviteSuccess && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2 text-green-700">
+                  <Check className="w-5 h-5" />
+                  <span className="text-sm">Team member invited successfully!</span>
                 </div>
-                {/* Subscription Info Banner */}
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4 mb-4 border border-white border-opacity-20">
-                  <div className="flex items-center space-x-2 mb-2">
+              )}
+
+              {inviteError && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
+                  <AlertCircle className="w-5 h-5" />
+                  <span className="text-sm">{inviteError}</span>
+                </div>
+              )}
+
+              {/* Subscription Info Banner */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                    <span className="font-semibold text-white">{subscriptionType}</span>
+                    <span className="font-semibold text-blue-900">{subscriptionType}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-blue-100 text-sm">
-                      {!subscription 
-                        ? 'Team members get full access during your trial period at no extra cost.'
-                        : 'Upgrade your subscription to add team members and unlock collaboration features.'
-                      }
-                    </p>
-                    <div className="text-right">
-                      <div className="text-white font-semibold">{addedTeamMembers.length + 1}/{totalUsers}</div>
-                      <div className="text-blue-200 text-xs">Users</div>
-                    </div>
+                  <div className="text-right">
+                    <div className="text-blue-900 font-semibold">{addedTeamMembers.length + 1}/{totalUsers}</div>
+                    <div className="text-blue-600 text-xs">Users</div>
                   </div>
                 </div>
+                <p className="text-blue-700 text-sm mt-2">
+                  {!subscription
+                    ? 'Team members get full access during your trial period at no extra cost.'
+                    : 'Upgrade your subscription to add team members and unlock collaboration features.'
+                  }
+                </p>
+              </div>
 
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">Team Member Slots (4 available)</h3>
-                  
-                  {/* Current User */}
-                  <div className="flex items-center space-x-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                      <Check className="w-5 h-5 text-green-600" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-medium text-gray-900">{user?.name || 'You'}</div>
-                      <div className="text-sm text-gray-600">{user?.email} (Account Owner)</div>
-                    </div>
-                    <div className="text-sm font-medium text-green-700">Active</div>
+              {/* Current User Display */}
+              <div className="mb-6">
+                <h4 className="text-lg font-medium text-gray-900 mb-3">Account Owner</h4>
+                <div className="flex items-center space-x-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <Check className="w-5 h-5 text-green-600" />
                   </div>
-
-                  {/* 4 Open Slots */}
-                  {[1, 2, 3, 4].map((slot) => (
-                    <div key={slot} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
-                      <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                        <Users className="w-5 h-5 text-gray-400" />
-                      </div>
-                      <div className="flex-1 space-y-3">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <div>
-                            <label htmlFor={`name-${slot}`} className="block text-sm font-medium text-gray-700 mb-1">
-                              Team Member Name
-                            </label>
-                            <input
-                              type="text"
-                              id={`name-${slot}`}
-                              placeholder="Enter full name"
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor={`phone-${slot}`} className="block text-sm font-medium text-gray-700 mb-1">
-                              WhatsApp Phone Number
-                            </label>
-                            <input
-                              type="tel"
-                              id={`phone-${slot}`}
-                              placeholder="+32 123 456 789"
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <label htmlFor={`email-${slot}`} className="block text-sm font-medium text-gray-700 mb-1">
-                            Email Address
-                          </label>
-                          <input
-                            type="email"
-                            id={`email-${slot}`}
-                            placeholder="team.member@company.com"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                          />
-                        </div>
-                      </div>
-                      <div className="text-sm text-gray-500">Slot {slot}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">What happens next?</h4>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• Team members will receive an invitation email with setup instructions</li>
-                    <li>• They'll need to verify their WhatsApp number to start using VoiceLink</li>
-                    <li>• All team members get full access during your 14-day trial</li>
-                    <li>• After trial, you can upgrade to a team plan with volume discounts</li>
-                  </ul>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 mt-6">
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2">
-                    <Users className="w-5 h-5" />
-                    <span>Send Invitations</span>
-                  </button>
-                  <button className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-3 px-6 rounded-lg transition-colors">
-                    Save as Draft
-                  </button>
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-900">{user?.name || 'You'}</div>
+                    <div className="text-sm text-gray-600">{user?.email}</div>
+                  </div>
+                  <div className="text-sm font-medium text-green-700">Active</div>
                 </div>
               </div>
 
               {/* Added Team Members List */}
               {addedTeamMembers.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="text-white font-semibold mb-2">Team Members ({addedTeamMembers.length})</h4>
+                <div className="mb-6">
+                  <h4 className="text-lg font-medium text-gray-900 mb-3">Team Members ({addedTeamMembers.length})</h4>
                   <div className="space-y-2">
                     {addedTeamMembers.map((member) => (
-                      <div key={member.id} className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-3 border border-white border-opacity-20 flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                            <Users className="w-4 h-4 text-white" />
-                          </div>
-                          <div>
-                            <div className="font-medium text-white text-sm">{member.name}</div>
-                            <div className="text-blue-200 text-xs">{member.email}</div>
-                          </div>
+                      <div key={member.id} className="flex items-center space-x-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                          <Users className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-900">{member.name}</div>
+                          <div className="text-sm text-gray-600">{member.email}</div>
                         </div>
                         <button
                           onClick={() => removeMember(member.id!)}
-                          className="w-6 h-6 bg-red-500 bg-opacity-20 hover:bg-opacity-40 rounded-full flex items-center justify-center transition-all duration-200"
+                          className="w-8 h-8 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-all duration-200"
                         >
-                          <X className="w-3 h-3 text-red-300" />
+                          <X className="w-4 h-4 text-red-600" />
                         </button>
                       </div>
                     ))}
@@ -871,32 +812,32 @@ export const SubscriptionDashboard: React.FC = () => {
 
               {/* Add New Team Member Form */}
               {canAddMore ? (
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4 mb-4 border border-white border-opacity-20">
+                <div className="border border-gray-200 rounded-lg p-6">
                   <div className="flex items-center space-x-3 mb-4">
-                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                      <UserPlus className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                      <UserPlus className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                      <div className="font-semibold text-white">Add Team Member</div>
-                      <div className="text-blue-200 text-sm">{remainingSlots} slot{remainingSlots !== 1 ? 's' : ''} remaining</div>
+                      <div className="font-semibold text-gray-900">Add Team Member</div>
+                      <div className="text-gray-600 text-sm">{remainingSlots} slot{remainingSlots !== 1 ? 's' : ''} remaining</div>
                     </div>
                   </div>
                   
-                  <div className="space-y-3 mb-4">
+                  <div className="space-y-4 mb-6">
                     <div>
-                      <label className="block text-blue-200 text-xs font-medium mb-1">Full Name</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                       <input
                         type="text"
                         value={currentMember.name}
                         onChange={(e) => updateCurrentMember('name', e.target.value)}
                         placeholder="Enter full name"
-                        className="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-blue-200 text-xs font-medium mb-1">
-                        <Mail className="w-3 h-3 inline mr-1" />
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <Mail className="w-4 h-4 inline mr-1" />
                         Email Address
                       </label>
                       <input
@@ -904,13 +845,13 @@ export const SubscriptionDashboard: React.FC = () => {
                         value={currentMember.email}
                         onChange={(e) => updateCurrentMember('email', e.target.value)}
                         placeholder="Enter email address"
-                        className="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-blue-200 text-xs font-medium mb-1">
-                        <Phone className="w-3 h-3 inline mr-1" />
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <Phone className="w-4 h-4 inline mr-1" />
                         WhatsApp Number
                       </label>
                       <input
@@ -918,7 +859,7 @@ export const SubscriptionDashboard: React.FC = () => {
                         value={currentMember.whatsapp_number}
                         onChange={(e) => updateCurrentMember('whatsapp_number', e.target.value)}
                         placeholder="+32 123 456 789"
-                        className="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     </div>
                   </div>
@@ -928,7 +869,7 @@ export const SubscriptionDashboard: React.FC = () => {
                     <button
                       onClick={saveAndInviteMember}
                       disabled={inviting || !isCurrentMemberValid()}
-                      className="flex-1 bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg hover:bg-blue-50 transition-all duration-200 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                     >
                       {inviting ? (
                         <>
@@ -946,7 +887,7 @@ export const SubscriptionDashboard: React.FC = () => {
                     <button
                       onClick={addNewUser}
                       disabled={!isCurrentMemberValid()}
-                      className="px-4 py-2 border border-white border-opacity-30 text-white font-medium rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                      className="px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                     >
                       <UserPlus className="w-4 h-4" />
                       <span>Add New User</span>
@@ -954,19 +895,30 @@ export const SubscriptionDashboard: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4 mb-4 border border-white border-opacity-20 text-center">
-                  <div className="text-white font-medium mb-2">Team Limit Reached</div>
-                  <p className="text-blue-200 text-sm mb-3">
-                    {!subscription 
+                <div className="border border-gray-200 rounded-lg p-6 text-center">
+                  <div className="text-gray-900 font-medium mb-2">Team Limit Reached</div>
+                  <p className="text-gray-600 text-sm mb-4">
+                    {!subscription
                       ? `You've reached the trial limit of ${totalUsers} users. Upgrade to add more team members.`
                       : 'Upgrade your subscription to add more team members.'
                     }
                   </p>
-                  <button className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg hover:bg-blue-50 transition-all duration-200">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200">
                     Upgrade Plan
                   </button>
                 </div>
               )}
+
+              {/* What happens next info */}
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h4 className="text-sm font-medium text-gray-900 mb-2">What happens next?</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Team members will receive an invitation email with setup instructions</li>
+                  <li>• They'll need to verify their WhatsApp number to start using VoiceLink</li>
+                  <li>• All team members get full access during your 14-day trial</li>
+                  <li>• After trial, you can upgrade to a team plan with volume discounts</li>
+                </ul>
+              </div>
             </div>
           </section>
 
