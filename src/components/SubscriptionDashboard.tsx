@@ -4,9 +4,11 @@ import { Crown, Users, Zap, Settings, CheckCircle, MessageCircle, Headphones, Ca
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
 import { supabase } from '../lib/supabase';
+import { useI18n } from '../hooks/useI18n';
 
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
+  const { t } = useI18n();
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
   const isFetchingRef = React.useRef(false);
@@ -160,10 +162,10 @@ export const SubscriptionDashboard: React.FC = () => {
                 </div>
                 <div className="text-left">
                   <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#1C2C55' }}>
-                    Welcome back, {user?.user_info?.first_name || 'Premium User'}!
+                    {t('dashboard.welcome', { name: user?.user_info?.first_name || t('dashboard.welcomeDefault') })}
                   </h1>
                   <p className="text-xl" style={{ color: '#6B7280' }}>
-                    Your VoiceLink subscription is active
+                    {t('dashboard.subscriptionActive')}
                   </p>
                 </div>
               </div>
@@ -195,10 +197,10 @@ export const SubscriptionDashboard: React.FC = () => {
                     </h3>
                     <div className="flex items-center justify-center space-x-2 mb-3">
                       <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                      <span className="text-sm font-medium text-green-600">Connected & Active</span>
+                      <span className="text-sm font-medium text-green-600">{t('dashboard.platformConnection.connectedActive')}</span>
                     </div>
                     <p className="text-sm text-gray-600">
-                      Integration is live and ready for voice notes
+                      {t('dashboard.platformConnection.integrationReady')}
                     </p>
                   </div>
                 </div>
@@ -212,8 +214,8 @@ export const SubscriptionDashboard: React.FC = () => {
                       <Users className="w-6 h-6" style={{ color: '#1C2C55' }} />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold" style={{ color: '#1C2C55' }}>Account Profile</h3>
-                      <p className="text-sm text-gray-600">Your CRM account information</p>
+                      <h3 className="text-xl font-bold" style={{ color: '#1C2C55' }}>{t('dashboard.accountProfile.title')}</h3>
+                      <p className="text-sm text-gray-600">{t('dashboard.accountProfile.subtitle')}</p>
                     </div>
                   </div>
 
@@ -221,20 +223,20 @@ export const SubscriptionDashboard: React.FC = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                       {/* Personal Information */}
                       <div className="space-y-4">
-                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Personal Information</h4>
+                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{t('dashboard.accountProfile.personalInfo')}</h4>
                         <div className="space-y-3">
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">Full Name</span>
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.fullName')}</span>
                             <span className="text-sm font-medium text-gray-900">
                               {user.user_info.first_name} {user.user_info.last_name}
                             </span>
                           </div>
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">Email</span>
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.email')}</span>
                             <span className="text-sm font-medium text-gray-900">{user.email}</span>
                           </div>
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">Language</span>
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.language')}</span>
                             <span className="text-sm font-medium text-gray-900">
                               {typeof user.user_info.language === 'string' 
                                 ? user.user_info.language 
@@ -245,11 +247,11 @@ export const SubscriptionDashboard: React.FC = () => {
                             </span>
                           </div>
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">Time Zone</span>
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.timeZone')}</span>
                             <span className="text-sm font-medium text-gray-900">{user.user_info.time_zone}</span>
                           </div>
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">WhatsApp Status</span>
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.whatsappStatus')}</span>
                             <span className={`text-sm font-medium inline-flex items-center px-2 py-1 rounded-full text-xs ${
                               whatsappStatus === 'active' 
                                 ? 'bg-green-100 text-green-800' 
@@ -260,13 +262,13 @@ export const SubscriptionDashboard: React.FC = () => {
                               {whatsappStatus === 'active' && '✅ '}
                               {whatsappStatus === 'pending' && '⏳ '}
                               {whatsappStatus === 'not_set' && '❌ '}
-                              {whatsappStatus === 'active' ? 'Connected' : 
-                               whatsappStatus === 'pending' ? 'Pending' : 'Not Connected'}
+                              {whatsappStatus === 'active' ? t('dashboard.whatsappStatus.connected') : 
+                               whatsappStatus === 'pending' ? t('dashboard.whatsappStatus.pending') : t('dashboard.whatsappStatus.notConnected')}
                             </span>
                           </div>
                           {user.user_info.telephones && user.user_info.telephones.length > 0 && (
                             <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                              <span className="text-sm text-gray-600">Phone</span>
+                              <span className="text-sm text-gray-600">{t('dashboard.accountProfile.phone')}</span>
                               <span className="text-sm font-medium text-gray-900">
                                 +{user.user_info.telephones[0].number}
                               </span>
@@ -277,16 +279,16 @@ export const SubscriptionDashboard: React.FC = () => {
 
                       {/* Account Information */}
                       <div className="space-y-4">
-                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Account Details</h4>
+                        <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{t('dashboard.accountProfile.accountDetails')}</h4>
                         <div className="space-y-3">
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">Account ID</span>
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.accountId')}</span>
                             <span className="text-xs font-mono text-gray-700 bg-gray-100 px-2 py-1 rounded">
                               {user.user_info.account?.id}
                             </span>
                           </div>
                           <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span className="text-sm text-gray-600">Email Status</span>
+                            <span className="text-sm text-gray-600">{t('dashboard.accountProfile.emailStatus')}</span>
                             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                               {user.user_info.email_verification_status}
                             </span>
@@ -312,21 +314,21 @@ export const SubscriptionDashboard: React.FC = () => {
                         <CheckCircle className="w-10 h-10 text-green-600" />
                       </div>
                       <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                        🎉 You're All Set!
+                        {t('dashboard.allSet.title')}
                       </h2>
                       <p className="text-xl mb-6" style={{ color: '#6B7280' }}>
-                        Your WhatsApp is connected and VoiceLink is ready to use
+                        {t('dashboard.allSet.subtitle')}
                       </p>
                       
                       <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-2xl p-6 mb-6">
                         <div className="flex items-center justify-center space-x-3 mb-3">
                           <MessageCircle className="w-6 h-6 text-green-600" />
                           <h3 className="text-lg font-semibold" style={{ color: '#1C2C55' }}>
-                            Start Sending Voice Notes
+                            {t('dashboard.allSet.startSending')}
                           </h3>
                         </div>
                         <p className="text-gray-700 leading-relaxed">
-                          Simply send a voice message to VoiceLink on WhatsApp and watch as your CRM gets updated automatically with structured data, follow-up tasks, and contact information.
+                          {t('dashboard.allSet.description')}
                         </p>
                                                       {/* WhatsApp Management - Always visible when active */}
         <div className="mt-8">
@@ -341,15 +343,15 @@ export const SubscriptionDashboard: React.FC = () => {
                       <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
                         <div className="flex items-center justify-center space-x-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span>WhatsApp Connected</span>
+                          <span>{t('dashboard.allSet.whatsappConnected')}</span>
                         </div>
                         <div className="flex items-center justify-center space-x-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span>CRM Integration Active</span>
+                          <span>{t('dashboard.allSet.crmIntegrationActive')}</span>
                         </div>
                         <div className="flex items-center justify-center space-x-2">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          <span>AI Processing Ready</span>
+                          <span>{t('dashboard.allSet.aiProcessingReady')}</span>
                         </div>
                       </div>
                     </div>
@@ -361,10 +363,10 @@ export const SubscriptionDashboard: React.FC = () => {
                   <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100">
                     <div className="text-center mb-8">
                       <h2 className="text-3xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                        Ready to Get Started?
+                        {t('dashboard.gettingStarted.title')}
                       </h2>
                       <p className="text-xl" style={{ color: '#6B7280' }}>
-                        Follow these simple steps to start using VoiceLink
+                        {t('dashboard.gettingStarted.subtitle')}
                       </p>
                     </div>
 
@@ -375,10 +377,10 @@ export const SubscriptionDashboard: React.FC = () => {
                           <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
                         </div>
                         <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                          Verify WhatsApp
+                          {t('dashboard.gettingStarted.step1.title')}
                         </h3>
                         <p className="text-gray-600 leading-relaxed">
-                          Connect your WhatsApp number to receive voice note confirmations
+                          {t('dashboard.gettingStarted.step1.description')}
                         </p>
                       </div>
 
@@ -388,10 +390,10 @@ export const SubscriptionDashboard: React.FC = () => {
                           <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
                         </div>
                         <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                          Send Voice Note
+                          {t('dashboard.gettingStarted.step2.title')}
                         </h3>
                         <p className="text-gray-600 leading-relaxed">
-                          Record your thoughts naturally through WhatsApp voice messages
+                          {t('dashboard.gettingStarted.step2.description')}
                         </p>
                       </div>
 
@@ -401,10 +403,10 @@ export const SubscriptionDashboard: React.FC = () => {
                           <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
                         </div>
                         <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                          Watch Magic Happen
+                          {t('dashboard.gettingStarted.step3.title')}
                         </h3>
                         <p className="text-gray-600 leading-relaxed">
-                          AI processes your voice and syncs structured data to your CRM
+                          {t('dashboard.gettingStarted.step3.description')}
                         </p>
                       </div>
                     </div>
@@ -674,10 +676,10 @@ export const SubscriptionDashboard: React.FC = () => {
           <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                Manage Your Subscription
+                {t('dashboard.customerPortal.title')}
               </h2>
               <p className="text-xl" style={{ color: '#6B7280' }}>
-                Access your billing information and manage your subscription
+                {t('dashboard.customerPortal.subtitle')}
               </p>
             </div>
 
@@ -688,10 +690,10 @@ export const SubscriptionDashboard: React.FC = () => {
                     <CreditCard className="w-8 h-8" style={{ color: '#1C2C55' }} />
                   </div>
                   <h3 className="text-2xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                    Customer Portal
+                    {t('dashboard.customerPortal.portalTitle')}
                   </h3>
                   <p className="text-gray-600 mb-8 leading-relaxed">
-                    Access your billing history, update payment methods, download invoices, and manage your subscription settings through our secure customer portal.
+                    {t('dashboard.customerPortal.portalDescription')}
                   </p>
                   
                   <a
@@ -704,26 +706,26 @@ export const SubscriptionDashboard: React.FC = () => {
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
                   >
                     <CreditCard className="w-5 h-5" />
-                    <span>Access Customer Portal</span>
+                    <span>{t('dashboard.customerPortal.accessPortal')}</span>
                     <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </a>
                   
                   <div className="mt-6 grid grid-cols-2 gap-4 text-sm text-gray-600">
                     <div className="flex items-center justify-center space-x-2">
                       <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>View billing history</span>
+                      <span>{t('dashboard.customerPortal.viewBillingHistory')}</span>
                     </div>
                     <div className="flex items-center justify-center space-x-2">
                       <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>Update payment methods</span>
+                      <span>{t('dashboard.customerPortal.updatePaymentMethods')}</span>
                     </div>
                     <div className="flex items-center justify-center space-x-2">
                       <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>Download invoices</span>
+                      <span>{t('dashboard.customerPortal.downloadInvoices')}</span>
                     </div>
                     <div className="flex items-center justify-center space-x-2">
                       <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                      <span>Manage subscription</span>
+                      <span>{t('dashboard.customerPortal.manageSubscription')}</span>
                     </div>
                   </div>
                 </div>
@@ -735,10 +737,10 @@ export const SubscriptionDashboard: React.FC = () => {
           <section className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                Your Premium Features
+                {t('dashboard.premiumFeatures.title')}
               </h2>
               <p className="text-xl" style={{ color: '#6B7280' }}>
-                Everything you need to transform voice into structured CRM data
+                {t('dashboard.premiumFeatures.subtitle')}
               </p>
             </div>
 
@@ -750,14 +752,14 @@ export const SubscriptionDashboard: React.FC = () => {
                   <MessageCircle className="w-8 h-8" style={{ color: '#1C2C55' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                  WhatsApp Voice Notes
+                  {t('dashboard.premiumFeatures.whatsappVoiceNotes.title')}
                 </h3>
                 <p className="text-gray-600 leading-relaxed mb-6">
-                  Send unlimited voice messages directly to your CRM via WhatsApp
+                  {t('dashboard.premiumFeatures.whatsappVoiceNotes.description')}
                 </p>
                 <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
                   <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Unlimited Usage</span>
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.whatsappVoiceNotes.unlimitedUsage')}</span>
                 </div>
               </div>
 
@@ -767,14 +769,14 @@ export const SubscriptionDashboard: React.FC = () => {
                   <Zap className="w-8 h-8" style={{ color: '#1C2C55' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                  Real-time Sync
+                  {t('dashboard.premiumFeatures.realtimeSync.title')}
                 </h3>
                 <p className="text-gray-600 leading-relaxed mb-6">
-                  Instant synchronization with your CRM platform
+                  {t('dashboard.premiumFeatures.realtimeSync.description')}
                 </p>
                 <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
                   <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Live Updates</span>
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.realtimeSync.liveUpdates')}</span>
                 </div>
               </div>
 
@@ -784,14 +786,14 @@ export const SubscriptionDashboard: React.FC = () => {
                   <Headphones className="w-8 h-8" style={{ color: '#1C2C55' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                  Priority Support
+                  {t('dashboard.premiumFeatures.prioritySupport.title')}
                 </h3>
                 <p className="text-gray-600 leading-relaxed mb-6">
-                  24/7 dedicated assistance from our expert team
+                  {t('dashboard.premiumFeatures.prioritySupport.description')}
                 </p>
                 <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(247, 230, 155, 0.2)' }}>
                   <CheckCircle className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>24/7 Support</span>
+                  <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.premiumFeatures.prioritySupport.support24x7')}</span>
                 </div>
               </div>
               </div>
@@ -802,11 +804,10 @@ export const SubscriptionDashboard: React.FC = () => {
           <section className="animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
             <div className="text-center bg-gradient-to-r from-gray-50 to-white rounded-3xl p-8 shadow-lg border border-gray-100">
               <h3 className="text-2xl font-bold mb-4" style={{ color: '#1C2C55' }}>
-                Need Help Getting Started?
+                {t('dashboard.support.title')}
               </h3>
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                Our support team is here to help you make the most of VoiceLink. 
-                Get personalized assistance with setup and optimization.
+                {t('dashboard.support.description')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
@@ -823,7 +824,7 @@ export const SubscriptionDashboard: React.FC = () => {
                   }}
                 >
                   <Headphones className="w-5 h-5" />
-                  <span>Contact Support</span>
+                  <span>{t('dashboard.support.contactSupport')}</span>
                 </a>
               </div>
             </div>
