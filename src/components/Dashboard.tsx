@@ -14,10 +14,10 @@ export const Dashboard: React.FC = () => {
 
   // Redirect non-authenticated users to homepage
   React.useEffect(() => {
-    if (!loading && !user) {
+    if (!user) {
       navigate('/', { replace: true });
     }
-  }, [user, loading, navigate]);
+  }, [user, navigate]);
 
   // Don't render anything for non-authenticated users
   if (!user) {
