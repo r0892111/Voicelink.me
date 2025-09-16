@@ -83,7 +83,7 @@ export default function SaasAgreementPage() {
                 THE PARTIES AGREE AS FOLLOWS:
               </h2>
 
-              {/* Article 1 */}
+              {/* Article 1a */}
               <h3 className="text-xl font-semibold mt-8 mb-3 underline">
                 Article 1 - Monthly fee
               </h3>
@@ -129,13 +129,13 @@ export default function SaasAgreementPage() {
                   </tbody>
                 </table>
               </div>
-{/* Article 1 */}
+{/* Article 1b */}
               <h3 className="text-xl font-semibold mt-8 mb-3 underline">
-                Article 1 - Monthly fee
+                Article 1 - Yearly fee
               </h3>
               
               <p className="mb-4">
-                The monthly fee charged to the Customer for the Software and Services consists of:
+                The yearly fee charged to the Customer for the Software and Services consists of:
               </p>
 
               {/* Pricing Table */}
@@ -145,27 +145,27 @@ export default function SaasAgreementPage() {
                     <tr className="border-b">
                       <td className="p-3 border-r font-semibold bg-gray-50">VoiceLink</td>
                       <td className="p-3 border-r">1-4 users</td>
-                      <td className="p-3">29,90 EUR per month per user</td>
+                      <td className="p-3">23.92 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
                       <td className="p-3 border-r">5-9 users</td>
-                      <td className="p-3">27 EUR per month per user</td>
+                      <td className="p-3">21.60 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
                       <td className="p-3 border-r">10-24 users</td>
-                      <td className="p-3">24 EUR per month per user</td>
+                      <td className="p-3">19.20 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
                       <td className="p-3 border-r">25-49 users</td>
-                      <td className="p-3">21 EUR per month per user</td>
+                      <td className="p-3">16.80 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
                       <td className="p-3 border-r">50-99 users</td>
-                      <td className="p-3">18 EUR per month per user</td>
+                      <td className="p-3">14.40 EUR per month per user</td>
                     </tr>
                     <tr>
                       <td className="p-3 border-r"></td>
