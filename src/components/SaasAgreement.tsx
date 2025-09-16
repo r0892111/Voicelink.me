@@ -129,7 +129,52 @@ export default function SaasAgreementPage() {
                   </tbody>
                 </table>
               </div>
+{/* Article 1 */}
+              <h3 className="text-xl font-semibold mt-8 mb-3 underline">
+                Article 1 - Monthly fee
+              </h3>
+              
+              <p className="mb-4">
+                The monthly fee charged to the Customer for the Software and Services consists of:
+              </p>
 
+              {/* Pricing Table */}
+              <div className="overflow-x-auto mt-4 mb-6">
+                <table className="w-full border border-gray-300 text-sm">
+                  <tbody>
+                    <tr className="border-b">
+                      <td className="p-3 border-r font-semibold bg-gray-50">VoiceLink</td>
+                      <td className="p-3 border-r">1-4 users</td>
+                      <td className="p-3">29,90 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r"></td>
+                      <td className="p-3 border-r">5-9 users</td>
+                      <td className="p-3">27 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r"></td>
+                      <td className="p-3 border-r">10-24 users</td>
+                      <td className="p-3">24 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r"></td>
+                      <td className="p-3 border-r">25-49 users</td>
+                      <td className="p-3">21 EUR per month per user</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r"></td>
+                      <td className="p-3 border-r">50-99 users</td>
+                      <td className="p-3">18 EUR per month per user</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 border-r"></td>
+                      <td className="p-3 border-r">From 100 users</td>
+                      <td className="p-3">Enterprise - Custom Pricing</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               {/* Article 2 */}
               <h3 className="text-xl font-semibold mt-8 mb-3 underline">
                 Article 2 - Method of concluding the Agreement
