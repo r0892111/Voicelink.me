@@ -258,7 +258,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 </div>
               )}
               <p className="text-center text-sm text-gray-500 mt-4">
-                {selectedUsers > 1 ? t('pricing.multiUserPlansLaunching') : t('pricing.freeTrialNoCreditCard')}
+                {selectedUsers > 1 ? t('pricing.multiUserPlansLaunching') : t('pricing.freeTrial')}
               </p>
             </div>
           )}
