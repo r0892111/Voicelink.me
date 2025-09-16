@@ -88,7 +88,7 @@
       "signInDescription": "Simply connect with your CRM platform above to sign in",
       "secureOauth": "Secure OAuth",
       "noSetupFees": "No Setup Fees",
-      "cancelAnytime": "Cancel Anytime",
+      "cancelAnytime": "Cancel Anytime"
     },
     "callback": {
       "authenticating": "Authenticating...",
