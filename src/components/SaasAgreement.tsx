@@ -99,7 +99,7 @@ export default function SaasAgreementPage() {
                     <tr className="border-b">
                       <td className="p-3 border-r font-semibold bg-gray-50">VoiceLink</td>
                       <td className="p-3 border-r">1-4 users</td>
-                      <td className="p-3">29,90 EUR per month per user</td>
+                      <td className="p-3">29.90 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
