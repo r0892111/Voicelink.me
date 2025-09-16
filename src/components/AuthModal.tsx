@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Loader2, AlertCircle } from 'lucide-react';
+import { X, Loader2, AlertCircle, Download } from 'lucide-react';
 import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
@@ -212,6 +212,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </a>
               </span>
             </label>
+            
+            {/* Download Options */}
+            <div className="mt-3 ml-7 flex items-center space-x-4 text-xs text-gray-600">
+              <span>Download:</span>
+              <a
+                href="/SaaS Agreement en-US.pdf"
+                download="SaaS_Agreement_English.pdf"
+                className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+              >
+                <Download className="w-3 h-3" />
+                <span>English Version</span>
+              </a>
+              <a
+                href="/SaaS Overeenkomst.docx.pdf"
+                download="SaaS_Overeenkomst_Dutch.pdf"
+                className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+              >
+                <Download className="w-3 h-3" />
+                <span>Dutch Version (Official)</span>
+              </a>
+            </div>
           </div>
 
           {/* Privacy Policy Notice */}
