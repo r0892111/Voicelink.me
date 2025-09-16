@@ -14,7 +14,155 @@
     "submit": "Soumettre",
     "confirm": "Confirmer",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "enterNumberOfUsers": "Entrez le nombre d'utilisateurs",
+    "premiumMonthly": "Premium Mensuel",
+    "advancedCrmFeatures": "Fonctionnalités CRM avancées et support prioritaire",
+    "updateDatabaseName": "Mettre à jour le nom de la base de données",
+    "enterOdooDatabaseName": "Entrez votre nom de base de données Odoo",
+    "enterNewApiKey": "Entrez une nouvelle clé API pour mettre à jour",
+    "enterOdooApiKey": "Entrez votre clé API Odoo",
+    "selectUserAccount": "Sélectionnez votre compte utilisateur",
+    "accessRightsTab": "Dans l'onglet \"Droits d'accès\", trouvez la section \"Clé API\"",
+    "generateOrCopyApiKey": "Générez ou copiez votre clé API existante",
+    "loadingDashboard": "Chargement du tableau de bord...",
+    "teamMemberInvitedSuccessfully": "Membre de l'équipe invité avec succès !",
+    "changeLanguage": "Changer de langue",
+    "voiceLink": "VoiceLink"
+  },
+  "platforms": {
+    "teamleader": "TeamLeader",
+    "pipedrive": "Pipedrive",
+    "odoo": "Odoo",
+    "unknown": "Inconnu"
+  },
+  "validation": {
+    "enterValidApiKey": "Veuillez entrer une clé API valide",
+    "enterOdooDatabaseName": "Veuillez entrer votre nom de base de données Odoo",
+    "userNotAuthenticated": "Utilisateur non authentifié",
+    "failedToSaveApiKey": "Échec de la sauvegarde de la clé API",
+    "enterValidPhoneNumber": "Veuillez entrer un numéro de téléphone international valide",
+    "enterValidSixDigitCode": "Veuillez entrer un code à 6 chiffres valide",
+    "failedToSendVerificationCode": "Échec de l'envoi du code de vérification",
+    "failedToVerifyCode": "Échec de la vérification du code",
+    "failedToDisconnectWhatsapp": "Échec de la déconnexion WhatsApp",
+    "pleaseSignInToPurchase": "Veuillez vous connecter pour effectuer un achat",
+    "purchaseFailed": "Échec de l'achat"
+  },
+  "auth": {
+    "invalidAuthenticationPlatform": "Plateforme d'authentification invalide",
+    "authenticationFailed": "Échec de l'authentification",
+    "missingAuthenticationParameters": "Paramètres d'authentification manquants",
+    "invalidStateParameter": "Paramètre d'état invalide",
+    "failedToEstablishSession": "Échec de l'établissement de la session",
+    "completingAuthentication": "Finalisation de l'authentification...",
+    "authenticationFailedFor": "Échec de l'authentification pour {{provider}}"
+  },
+  "teamManagement": {
+    "title": "Gestion d'Équipe",
+    "subtitle": "Gérez vos membres d'équipe et invitations",
+    "accountOwner": "Propriétaire du Compte",
+    "admin": "Admin",
+    "teamMembers": "Membres d'Équipe",
+    "pending": "En Attente",
+    "addNewMember": "Ajouter un Nouveau Membre",
+    "selectCompanyUser": "Sélectionner un Utilisateur de l'Entreprise",
+    "loadingUsers": "Chargement des utilisateurs de l'entreprise...",
+    "selectedUserDetails": "Détails de l'Utilisateur Sélectionné",
+    "name": "Nom",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "notProvided": "Non fourni",
+    "whatsappNumber": "Numéro WhatsApp (si différent du téléphone)",
+    "whatsappNumberPlaceholder": "+33 1 23 45 67 89",
+    "fullName": "Nom Complet",
+    "fullNamePlaceholder": "Entrez le nom complet",
+    "emailAddress": "Adresse E-mail",
+    "emailPlaceholder": "Entrez l'adresse e-mail",
+    "sendingInvitation": "Envoi de l'Invitation...",
+    "saveAndInvite": "Sauvegarder et Inviter",
+    "clearSelection": "Effacer la Sélection",
+    "addNewUser": "Ajouter un Nouvel Utilisateur",
+    "teamLimitReached": "Limite d'Équipe Atteinte",
+    "teamLimitMessage": "Vous avez atteint votre limite d'équipe de {{total}} utilisateurs. Mettez à niveau votre abonnement pour ajouter plus de membres d'équipe.",
+    "upgradeSubscription": "Mettre à Niveau l'Abonnement"
+  },
+  "userGuide": {
+    "title": "Guide d'Utilisation Quotidienne",
+    "subtitle": "VoiceLink fonctionne mieux quand vous parlez de vos mises à jour de manière structurée et claire",
+    "recordingContacts": {
+      "title": "1. Enregistrement des Contacts",
+      "startWith": "Commencez par :",
+      "example1": "\"Vient d'appeler/parlé avec [NOM]\"",
+      "example2": "ou \"[NOM] vient de visiter\"",
+      "names": "Noms :",
+      "namesTip": "Parlez lentement et épellez les noms difficiles lettre par lettre",
+      "phoneEmail": "Téléphone/E-mail :",
+      "phoneEmailTip": "Optionnel, mais épellez toujours en cas de doute",
+      "newVsExisting": "Nouveaux vs. Contacts Existants :",
+      "newVsExistingTip": "VoiceLink recherche automatiquement les enregistrements existants et crée de nouveaux contacts quand nécessaire."
+    },
+    "conversationInfo": {
+      "title": "2. Informations de Conversation",
+      "description": "Partagez des informations importantes comme si vous les racontiez à un collègue.",
+      "example": "Exemple :",
+      "exampleText": "\"Il est intéressé par le produit X, veut une démo la semaine prochaine, et m'a demandé d'envoyer la liste de prix.\"",
+      "tip": "Conseil :",
+      "tipText": "Plus vous donnez de détails, mieux VoiceLink peut remplir votre CRM. Le système crée automatiquement des tags et des rapports comme annotations."
+    },
+    "calendarTasks": {
+      "title": "3. Gestion du Calendrier et des Tâches",
+      "description": "VoiceLink peut automatiquement créer ou mettre à jour des rendez-vous et des tâches.",
+      "callbacks": "📞 Rappels :",
+      "callback1": "\"Je dois le rappeler lundi à 15h\"",
+      "callback2": "\"Je devrais l'appeler demain matin\"",
+      "appointments": "📅 Rendez-vous :",
+      "appointment1": "\"Il vient mardi prochain à 14h\"",
+      "appointment2": "\"Réunion à Tremelo le 29 mai à 13h\"",
+      "tasks": "✅ Tâches :",
+      "task1": "\"Envoyer le catalogue demain\"",
+      "task2": "\"Préparer le devis pour vendredi 14h\"",
+      "updates": "🔄 Mises à jour :",
+      "update1": "\"Réunion avec Marianna déplacée à mardi 12h\"",
+      "update2": "\"Jeff n'a pas répondu, réessayer demain\""
+    },
+    "bestPractices": {
+      "title": "4. Meilleures Pratiques pour une Utilisation Optimale",
+      "speakClearly": {
+        "title": "Parler Clairement",
+        "description": "Parlez clairement et lentement en anglais standard"
+      },
+      "spellingMode": {
+        "title": "Mode Épellation",
+        "description": "Épellez les lettres pour les noms, e-mails et numéros de téléphone en cas de doute"
+      },
+      "autoScheduling": {
+        "title": "Planification Automatique",
+        "description": "Aucune heure mentionnée ? VoiceLink trouve automatiquement un moment approprié"
+      },
+      "keepFocused": {
+        "title": "Rester Concentré",
+        "description": "Une mise à jour par message est la plus fiable"
+      },
+      "important": "Important :",
+      "importantText": "Vous ne pouvez mettre à jour qu'un contact par message. Voulez-vous mettre à jour plusieurs personnes dans votre CRM ? Enregistrez-les avec des notes vocales séparées sur WhatsApp."
+    },
+    "troubleshooting": {
+      "title": "5. Dépannage",
+      "noConnection": {
+        "title": "Pas de Connexion ?",
+        "description": "Vérifiez la connexion internet et les paramètres API"
+      },
+      "wrongInput": {
+        "title": "Mauvaise Entrée ?",
+        "description": "Envoyez les corrections via un nouveau message vocal"
+      },
+      "transcriptionErrors": {
+        "title": "Erreurs de Transcription ?",
+        "description": "Parlez clairement sans bruit de fond"
+      }
+    },
+    "needHelp": "Besoin d'Aide ?"
   },
   "navigation": {
     "home": "Accueil",
@@ -117,6 +265,83 @@
         "description": "Planifiez un appel de consultation gratuit avec nos experts",
         "bookCall": "Réserver un Appel"
       }
+    },
+    "userGuide": {
+      "title": "Guide d'Utilisation Quotidienne",
+      "subtitle": "VoiceLink fonctionne mieux lorsque vous parlez de vos mises à jour de manière structurée et claire",
+      "recordingContacts": {
+        "title": "1. Enregistrement des Contacts",
+        "startWith": "Commencez par :",
+        "example1": "\"Vient d'appeler/parler avec [NOM]\"",
+        "example2": "ou \"[NOM] vient de visiter\"",
+        "names": "Noms :",
+        "namesTip": "Parlez lentement et épellez les noms difficiles lettre par lettre",
+        "phoneEmail": "Téléphone/E-mail :",
+        "phoneEmailTip": "Optionnel, mais épellez toujours quand vous avez un doute",
+        "newVsExisting": "Nouveaux vs. Contacts Existants",
+        "newVsExistingTip": "VoiceLink recherche automatiquement les enregistrements existants et crée de nouveaux contacts quand nécessaire."
+      },
+      "conversationInfo": {
+        "title": "2. Informations de Conversation",
+        "description": "Partagez des informations importantes comme si vous les racontiez à un collègue.",
+        "example": "Exemple :",
+        "exampleText": "\"Il est intéressé par le produit X, veut une démo la semaine prochaine, et m'a demandé d'envoyer la liste de prix.\"",
+        "tip": "Conseil :",
+        "tipText": "Plus vous donnez de détails, mieux VoiceLink peut remplir votre CRM. Le système crée automatiquement des tags et des rapports comme annotations."
+      },
+      "calendarTasks": {
+        "title": "3. Gestion du Calendrier et des Tâches",
+        "description": "VoiceLink peut automatiquement créer ou mettre à jour des rendez-vous et des tâches.",
+        "callbacks": "📞 Rappels :",
+        "callback1": "\"Je dois le rappeler lundi à 15h\"",
+        "callback2": "\"Je devrais l'appeler demain matin\"",
+        "appointments": "📅 Rendez-vous :",
+        "appointment1": "\"Il vient mardi prochain à 14h\"",
+        "appointment2": "\"Réunion à Tremelo le 29 mai à 13h\"",
+        "tasks": "✅ Tâches :",
+        "task1": "\"Envoyer le catalogue demain\"",
+        "task2": "\"Préparer le devis pour vendredi 14h\"",
+        "updates": "🔄 Mises à jour :",
+        "update1": "\"Réunion avec Marianna déplacée à mardi 12h\"",
+        "update2": "\"Jeff n'a pas répondu, réessayer demain\""
+      },
+      "bestPractices": {
+        "title": "4. Meilleures Pratiques pour une Utilisation Optimale",
+        "speakClearly": {
+          "title": "Parlez Clairement",
+          "description": "Parlez clairement et lentement en anglais standard"
+        },
+        "spellingMode": {
+          "title": "Mode Orthographe",
+          "description": "Épellez les lettres pour les noms, e-mails et numéros de téléphone quand vous avez un doute"
+        },
+        "autoScheduling": {
+          "title": "Planification Automatique",
+          "description": "Aucune heure mentionnée ? VoiceLink trouve automatiquement un moment approprié"
+        },
+        "keepFocused": {
+          "title": "Restez Concentré",
+          "description": "Une mise à jour par message est la plus fiable"
+        },
+        "important": "Important :",
+        "importantText": "Vous ne pouvez mettre à jour qu'un seul contact par message. Voulez-vous mettre à jour plusieurs personnes dans votre CRM ? Enregistrez-les avec des notes vocales séparées sur WhatsApp."
+      },
+      "troubleshooting": {
+        "title": "5. Dépannage",
+        "noConnection": {
+          "title": "Pas de Connexion ?",
+          "description": "Vérifiez la connexion internet et les paramètres API"
+        },
+        "wrongInput": {
+          "title": "Mauvaise Saisie ?",
+          "description": "Envoyez les corrections via un nouveau message vocal"
+        },
+        "transcriptionErrors": {
+          "title": "Erreurs de Transcription ?",
+          "description": "Parlez clairement sans bruit de fond"
+        }
+      },
+      "needHelp": "Besoin d'Aide ?"
     }
   },
   "whatsapp": {

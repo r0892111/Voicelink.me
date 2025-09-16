@@ -106,12 +106,12 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
 
   const sendOTP = async () => {
     if (!whatsappInput.trim() || !isValidPhoneNumber(whatsappInput.trim())) {
-      setError('Please enter a valid international phone number');
+      setError(t('validation.enterValidPhoneNumber'));
       return;
     }
 
     if (!user) {
-      setError('User not authenticated');
+      setError(t('validation.userNotAuthenticated'));
       return;
     }
 
@@ -169,7 +169,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
       
       // Don't update status to pending - keep it as 'not_set' to show the verification form
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to send verification code');
+      setError(error instanceof Error ? error.message : t('validation.failedToSendVerificationCode'));
     } finally {
       setLoading(false);
     }
@@ -177,12 +177,12 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
 
   const verifyOTP = async () => {
     if (!otpCode.trim() || otpCode.length !== 6) {
-      setError('Please enter a valid 6-digit code');
+      setError(t('validation.enterValidSixDigitCode'));
       return;
     }
 
     if (!user) {
-      setError('User not authenticated');
+      setError(t('validation.userNotAuthenticated'));
       return;
     }
 
@@ -261,7 +261,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
       }, 2000);
 
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to verify code');
+      setError(error instanceof Error ? error.message : t('validation.failedToVerifyCode'));
     } finally {
       setLoading(false);
     }
@@ -289,7 +289,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
 
   const disconnectWhatsApp = async () => {
     if (!user) {
-      setError('User not authenticated');
+      setError(t('validation.userNotAuthenticated'));
       return;
     }
 
@@ -334,7 +334,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
       setOtpExpiresAt(null);
 
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to disconnect WhatsApp');
+      setError(error instanceof Error ? error.message : t('validation.failedToDisconnectWhatsapp'));
     } finally {
       setLoading(false);
     }

@@ -31,7 +31,7 @@ export const Dashboard: React.FC = () => {
       <div className="flex items-center justify-center py-16">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
+          <p className="text-gray-600">{t('common.loadingDashboard')}</p>
         </div>
       </div>
     );
@@ -95,9 +95,9 @@ export const Dashboard: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <BuyButton
             priceId="price_1S2ZQPLPohnizGblvhj9qbK3"
-            productName="Premium Monthly"
+            productName={t('common.premiumMonthly')}
             price="€29.99/mo"
-            description="Advanced CRM features and priority support"
+            description={t('common.advancedCrmFeatures')}
           />
           
         </div>

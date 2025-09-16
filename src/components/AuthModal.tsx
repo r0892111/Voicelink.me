@@ -49,7 +49,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     const result = await authService.initiateAuth();
 
     if (!result.success && result.error) {
-      setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
+      setError(`${t('auth.authenticationFailedFor', { provider: provider.displayName })}: ${result.error}`);
       // Clear platform if auth failed
       localStorage.removeItem('userPlatform');
       localStorage.removeItem('auth_provider');
@@ -92,7 +92,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <div className="flex items-center justify-center space-x-3 mb-4">
             <img 
               src="/Finit Voicelink Blue.svg" 
-              alt="VoiceLink" 
+              alt={t('common.voiceLink')} 
               className="h-8 w-auto"
             />
           </div>

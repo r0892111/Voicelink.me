@@ -17,7 +17,7 @@ const languages: Language[] = [
 ];
 
 export const LanguageSwitcher: React.FC = () => {
-  const { currentLanguage, changeLanguage } = useI18n();
+  const { currentLanguage, changeLanguage, t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   
   const currentLang = languages.find(lang => lang.code === currentLanguage) || languages[0];
@@ -32,7 +32,7 @@ export const LanguageSwitcher: React.FC = () => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
-        aria-label="Change language"
+        aria-label={t('common.changeLanguage')}
       >
         <Globe className="w-4 h-4 text-gray-600" />
         <span className="text-sm font-medium text-gray-700">

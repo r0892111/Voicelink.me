@@ -119,7 +119,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           <div className="flex items-center space-x-3 mb-6">
             <img 
               src="/Finit Icon Blue.svg" 
-              alt="VoiceLink" 
+              alt={t('common.voiceLink')} 
               className="w-12 h-12"
             />
             <div>

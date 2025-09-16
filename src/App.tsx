@@ -67,7 +67,7 @@ function App() {
                   {/* Blue logo on light background */}
                   <img 
                     src="/Finit Voicelink Blue.svg" 
-                    alt="VoiceLink" 
+                    alt={t('common.voiceLink')} 
                     className="h-10 w-auto group-hover:opacity-80 transition-opacity"
                   />
                 </div>
@@ -225,7 +225,7 @@ function App() {
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('openCookieSettings'))}
               className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 text-sm font-medium text-gray-700 hover:text-gray-900"
-              aria-label="Open cookie settings"
+              aria-label={t('common.changeLanguage')}
             >
               <Cookie className="w-4 h-4" />
               <span className="hidden sm:inline">Cookie Settings</span>

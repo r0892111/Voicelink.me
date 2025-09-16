@@ -56,16 +56,16 @@ export const OdooApiKeyInput: React.FC = () => {
 
   const saveApiKey = async () => {
     if (!apiKey.trim()) {
-      setError('Please enter a valid API key');
+      setError(t('validation.enterValidApiKey'));
       return;
     }
 
     if (!databaseName.trim()) {
-      setError('Please enter your Odoo database name');
+      setError(t('validation.enterOdooDatabaseName'));
       return;
     }
     if (!user) {
-      setError('User not authenticated');
+      setError(t('validation.userNotAuthenticated'));
       return;
     }
 
@@ -97,7 +97,7 @@ export const OdooApiKeyInput: React.FC = () => {
       }, 2000);
 
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to save API key');
+      setError(error instanceof Error ? error.message : t('validation.failedToSaveApiKey'));
     } finally {
       setSaving(false);
     }
@@ -167,7 +167,7 @@ export const OdooApiKeyInput: React.FC = () => {
               id="odoo-database"
               value={databaseName}
               onChange={handleDatabaseChange}
-              placeholder={hasExistingDatabase ? "Update database name" : "Enter your Odoo database name"}
+              placeholder={hasExistingDatabase ? t('common.updateDatabaseName') : t('common.enterOdooDatabaseName')}
               className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
             />
             <Database className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -187,7 +187,7 @@ export const OdooApiKeyInput: React.FC = () => {
               id="odoo-api-key"
               value={apiKey}
               onChange={handleInputChange}
-              placeholder={hasExistingKey ? "Enter new API key to update" : "Enter your Odoo API key"}
+              placeholder={hasExistingKey ? t('common.enterNewApiKey') : t('common.enterOdooApiKey')}
               className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
             />
             <Key className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -220,9 +220,9 @@ export const OdooApiKeyInput: React.FC = () => {
           <ol className="text-xs text-purple-700 space-y-1 list-decimal list-inside">
             <li>Log into your Odoo instance as an administrator</li>
             <li>Go to Settings → Users & Companies → Users</li>
-            <li>Select your user account</li>
-            <li>In the "Access Rights" tab, find the "API Key" section</li>
-            <li>Generate or copy your existing API key</li>
+            <li>{t('common.selectUserAccount')}</li>
+            <li>{t('common.accessRightsTab')}</li>
+            <li>{t('common.generateOrCopyApiKey')}</li>
             <li>Your database name is typically found in your Odoo URL (e.g., "mycompany" from mycompany.odoo.com)</li>
           </ol>
         </div>

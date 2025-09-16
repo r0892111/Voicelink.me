@@ -104,7 +104,7 @@ const PricingCalculator: React.FC = () => {
             min="1"
             value={customInput}
             onChange={handleCustomInputChange}
-            placeholder="Enter number of users"
+            placeholder={t('common.enterNumberOfUsers')}
             className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center font-medium"
             style={{ color: '#1C2C55' }}
           />
@@ -179,7 +179,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/Teamleader_Icon.svg" 
-                  alt="TeamLeader" 
+                  alt={t('platforms.teamleader')} 
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -196,7 +196,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/Pipedrive_id-7ejZnwv_0.svg" 
-                  alt="Pipedrive" 
+                  alt={t('platforms.pipedrive')} 
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -213,7 +213,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <div className="w-24 h-24 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-lg transition-all duration-300 p-4 mb-3">
                 <img 
                   src="/odoo_logo.svg" 
-                  alt="Odoo" 
+                  alt={t('platforms.odoo')} 
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -693,7 +693,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               {/* Small logo icon in CTA button */}
               <img 
                 src="/Finit Voicelink Blue.svg" 
-                alt="" 
+                alt={t('common.voiceLink')} 
                 className="w-5 h-5 mr-1"
               />
               <span>{t('finalCta.startFreeTrial')}</span>
@@ -752,7 +752,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               {/* White logo on dark background */}
               <img 
                 src="/Finit Voicelink White.svg" 
-                alt="VoiceLink" 
+                alt={t('common.voiceLink')} 
                 className="h-8 w-auto"
               />
             </div>

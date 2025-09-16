@@ -24,7 +24,7 @@ export const BuyButton: React.FC<BuyButtonProps> = ({
 
   const handlePurchase = async () => {
     if (!user) {
-      setError('Please sign in to make a purchase');
+      setError(t('validation.pleaseSignInToPurchase'));
       return;
     }
 
@@ -40,7 +40,7 @@ export const BuyButton: React.FC<BuyButtonProps> = ({
       });
       
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Purchase failed');
+      setError(error instanceof Error ? error.message : t('validation.purchaseFailed'));
       setLoading(false);
     }
   };
