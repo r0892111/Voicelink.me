@@ -14,12 +14,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const { t } = useI18n();
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
+  const [agreedToTerms, setAgreedToTerms] = React.useState(false);
   const processingRef = React.useRef(false);
 
   const handleSignIn = async (provider: AuthProvider) => {
   // Prevent double calls using ref
   if (processingRef.current || loadingProvider) return;
 
+  // Check if user agreed to terms
+  if (!agreedToTerms) {
+    setError('Please agree to the SaaS Agreement to continue');
+    return;
+  }
   try {
     processingRef.current = true;
     setLoadingProvider(provider.name);
@@ -71,6 +77,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       processingRef.current = false;
       setLoadingProvider(null);
       setError(null);
+      setAgreedToTerms(false);
     }
   }, [isOpen]);
 
@@ -184,6 +191,44 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
         {/* Footer */}
         <div className="pt-6 border-t border-gray-200">
+          {/* Terms Agreement Checkbox */}
+          <div className="mb-6">
+            <label className="flex items-start space-x-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreedToTerms}
+                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <span className="text-sm text-gray-700">
+                I agree to the{' '}
+                <a 
+                  href="/saas-agreement" 
+                  className="text-blue-600 hover:underline font-medium" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  SaaS Agreement
+                </a>
+              </span>
+            </label>
+          </div>
+
+          {/* Privacy Policy Notice */}
+          <div className="mb-6">
+            <p className="text-xs text-gray-500 text-center">
+              By connecting your CRM, you acknowledge our{' '}
+              <a 
+                href="/privacy-policy" 
+                className="text-blue-600 hover:underline" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Privacy Policy
+              </a>
+            </p>
+          </div>
+
           {/* Sign In Option */}
           <div className="text-center mb-6">
             <p className="text-sm text-gray-600 mb-2">
@@ -220,12 +265,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <span className="text-xs text-gray-600 font-medium">{t('auth.modal.cancelAnytime')}</span>
             </div>
           </div>
-          <p className="text-center text-xs text-gray-500">
-            {t('auth.modal.termsAgreement', {
-              termsLink: <a href="/saas-agreement" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{t('auth.modal.termsOfService')}</a>,
-              privacyLink: <a href="/privacy-policy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{t('auth.modal.privacyPolicy')}</a>
-            })}
-          </p>
         </div>
       </div>
     </div>

@@ -89,9 +89,6 @@
       "secureOauth": "Secure OAuth",
       "noSetupFees": "No Setup Fees",
       "cancelAnytime": "Cancel Anytime",
-      "termsAgreement": "By connecting your CRM, you agree to our {{termsLink}} and {{privacyLink}}",
-      "termsOfService": "Terms of Service",
-      "privacyPolicy": "Privacy Policy"
     },
     "callback": {
       "authenticating": "Authenticating...",
