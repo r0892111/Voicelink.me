@@ -61,6 +61,7 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                   e.currentTarget.style.backgroundColor = 'transparent';
                   e.currentTarget.style.borderColor = '#1C2C55';
                 }}
+                onClick={() => window.open('https://youtu.be/wVaR0NwPNHc', '_blank')}
               >
                 <Play className="w-5 h-5" />
                 <span>{t('hero.watchDemo')}</span>

@@ -709,6 +709,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                 e.currentTarget.style.backgroundColor = 'transparent';
                 e.currentTarget.style.color = '#FFFFFF';
               }}
+              onClick={() => window.open('https://youtu.be/wVaR0NwPNHc', '_blank')}
             >
               <Play className="w-5 h-5" />
               <span>{t('finalCta.watchDemo')}</span>
