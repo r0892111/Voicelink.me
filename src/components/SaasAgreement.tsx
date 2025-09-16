@@ -85,7 +85,7 @@ export default function SaasAgreementPage() {
 
               {/* Article 1a */}
               <h3 className="text-xl font-semibold mt-8 mb-3 underline">
-                Article 1 - Monthly fee
+                Article 1a - Monthly fee
               </h3>
               
               <p className="mb-4">
@@ -131,7 +131,7 @@ export default function SaasAgreementPage() {
               </div>
 {/* Article 1b */}
               <h3 className="text-xl font-semibold mt-8 mb-3 underline">
-                Article 1 - Yearly fee
+                Article 1b - Yearly fee
               </h3>
               
               <p className="mb-4">
