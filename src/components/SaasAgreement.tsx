@@ -98,33 +98,33 @@ export default function SaasAgreementPage() {
                   <tbody>
                     <tr className="border-b">
                       <td className="p-3 border-r font-semibold bg-gray-50">VoiceLink</td>
-                      <td className="p-3 border-r">From 1 user</td>
-                      <td className="p-3">29 EUR per month per user</td>
+                      <td className="p-3 border-r">1-4 users</td>
+                      <td className="p-3">29,90 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">From 5 users</td>
-                      <td className="p-3">25 EUR per month per user</td>
+                      <td className="p-3 border-r">5-9 users</td>
+                      <td className="p-3">27 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">From 10 users</td>
-                      <td className="p-3">22 EUR per month per user</td>
+                      <td className="p-3 border-r">10-24 users</td>
+                      <td className="p-3">24 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">From 25 users</td>
-                      <td className="p-3">19 EUR per month per user</td>
+                      <td className="p-3 border-r">25-49 users</td>
+                      <td className="p-3">21 EUR per month per user</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">From 50 users</td>
+                      <td className="p-3 border-r">50-99 users</td>
                       <td className="p-3">17 EUR per month per user</td>
                     </tr>
                     <tr>
                       <td className="p-3 border-r"></td>
                       <td className="p-3 border-r">From 100 users</td>
-                      <td className="p-3">14 EUR per month per user</td>
+                      <td className="p-3">Enterprise - Custom Pricing</td>
                     </tr>
                   </tbody>
                 </table>
