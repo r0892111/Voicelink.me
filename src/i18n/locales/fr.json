@@ -480,7 +480,7 @@
     "verificationCode": "Code de Vérification",
     "enterCode": "Entrez le code à 6 chiffres",
     "verifying": "Vérification...",
-    "verify": "Vérifier"
+    "verify": "Vérifier",
     "resendCode": "Renvoyer le Code",
     "verifiedSuccessfully": "Numéro WhatsApp vérifié avec succès !"
   },
