@@ -33,6 +33,11 @@ const getCurrentTier = (users: number): PricingTier => {
   ) || pricingTiers[0];
 };
 
+const getTierDisplayName = (users: number): string => {
+  const tier = getCurrentTier(users);
+  return `VoiceLink ${tier.name}`;
+};
+
 const calculatePricing = (users: number, billingPeriod: BillingPeriod) => {
   const tier = getCurrentTier(users);
   const pricePerUser = billingPeriod === 'monthly' ? tier.monthlyPricePerUser : tier.yearlyPricePerUser;
@@ -123,7 +128,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               className="w-12 h-12"
             />
             <div>
-              <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>{t('pricing.voicelinkPro')}</h3>
+              <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>{getTierDisplayName(selectedUsers)}</h3>
               <p className="text-gray-600">{t('pricing.perfectForTeams')}</p>
             </div>
           </div>
