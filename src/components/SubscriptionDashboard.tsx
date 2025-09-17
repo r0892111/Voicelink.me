@@ -1112,7 +1112,7 @@ export const SubscriptionDashboard: React.FC = () => {
                   </div>
                 </div>
               </div>
-            {t('dashboard.welcome', { name: getFirstName(user?.name || 'User') })}
+            </div>
           </section>
         </div>
       </div>
