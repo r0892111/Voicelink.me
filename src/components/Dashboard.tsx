@@ -54,24 +54,25 @@ export const Dashboard: React.FC = () => {
           </h1>
         </div>
         <p className="text-gray-600">
-          You're connected to {user?.platform && user.platform.charAt(0).toUpperCase() + user.platform.slice(1)}. 
-          Your CRM data and tools are ready to use.
+          {t('dashboard.connectedToPlatform', { 
+            platform: user?.platform && user.platform.charAt(0).toUpperCase() + user.platform.slice(1) 
+          })}
         </p>
       </div>
 
       {/* Platform Info */}
       <div className="bg-white rounded-xl shadow-sm p-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Platform Information</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">{t('dashboard.platformInformation')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="font-medium text-gray-900 mb-2">Platform</h3>
+            <h3 className="font-medium text-gray-900 mb-2">{t('common.platform')}</h3>
             <div className="flex items-center space-x-2">
               {user && getPlatformIcon(user.platform)}
               <span className="capitalize font-medium">{user?.platform}</span>
             </div>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="font-medium text-gray-900 mb-2">Email</h3>
+            <h3 className="font-medium text-gray-900 mb-2">{t('userInfo.emailAddress')}</h3>
             <p className="text-gray-600">{user?.email}</p>
           </div>
         </div>
@@ -90,6 +91,7 @@ export const Dashboard: React.FC = () => {
         <div className="flex items-center space-x-2 mb-6">
           <ShoppingBag className="w-6 h-6 text-blue-600" />
           <h2 className="text-xl font-semibold text-gray-900">Upgrade Your Experience</h2>
+          <h2 className="text-xl font-semibold text-gray-900">{t('dashboard.upgradeExperience')}</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

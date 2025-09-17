@@ -229,6 +229,9 @@
   },
   "dashboard": {
     "welcome": "Welkom terug, {{name}}!",
+    "connectedToPlatform": "Je bent verbonden met {{platform}}. Je CRM-gegevens en tools zijn klaar voor gebruik.",
+    "platformInformation": "Platform Informatie",
+    "upgradeExperience": "Upgrade Je Ervaring",
     "welcomeDefault": "Welkom terug, Premium Gebruiker!",
     "subscriptionActive": "Je VoiceLink abonnement is actief",
     "platformConnection": {

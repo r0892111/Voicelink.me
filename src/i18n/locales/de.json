@@ -330,6 +330,9 @@
   },
   "dashboard": {
     "welcome": "Willkommen zurück, {{name}}!",
+    "connectedToPlatform": "Sie sind mit {{platform}} verbunden. Ihre CRM-Daten und Tools sind einsatzbereit.",
+    "platformInformation": "Plattform-Informationen",
+    "upgradeExperience": "Verbessern Sie Ihre Erfahrung",
     "welcomeDefault": "Willkommen zurück, Premium-Benutzer!",
     "subscriptionActive": "Ihr VoiceLink-Abonnement ist aktiv",
     "customerPortal": {
