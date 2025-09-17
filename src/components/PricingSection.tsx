@@ -204,7 +204,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     <span>{t('pricing.customIntegrations')}</span>
                   </div>
                 </div>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
                 <button 
                   onClick={openContactModal}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
@@ -348,7 +347,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       <td className="px-6 py-4">
                         {isEnterpriseTier ? (
                           <button 
-                           onClick={openModal}
+                           onClick={openContactModal}
                            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer">
                             {t('pricing.contactUs')}
                           </button>
