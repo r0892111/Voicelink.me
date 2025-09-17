@@ -120,7 +120,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
       <div className="grid lg:grid-cols-2 gap-12 items-stretch">
         {/* Pricing Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-left h-full flex flex-col" style={{ animationDelay: '0.4s' }}>
+        <div className="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 border border-gray-100 animate-fade-in-left h-full flex flex-col" style={{ animationDelay: '0.4s' }}>
           <div className="flex items-center space-x-3 mb-6">
             <img 
               src="/Finit Icon Blue.svg" 
@@ -133,7 +133,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </div>
           </div>
 
-          <div className="space-y-6 mb-8 flex-grow h-full flex flex-col justify-center">
+          <div className="space-y-4 mb-6">
             {[
               t('pricing.features.unlimitedVoiceNotes'),
               t('pricing.features.realtimeCrmSync'),
@@ -150,7 +150,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             ))}
           </div>
 
-          <div className="mb-6">
+          <div className="mb-4">
             <label htmlFor="users" className="block text-sm font-medium text-gray-700 mb-3">
               {t('pricing.numberOfUsers')}
             </label>
@@ -182,7 +182,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </div>
 
           {pricing.isEnterprise ? (
-            <div className="text-center mb-8 mt-auto">
+            <div className="text-center mb-6 mt-auto">
               <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-2xl">
                 <div className="mb-4">
                   <h4 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>
@@ -208,7 +208,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               </div>
             </div>
           ) : (
-            <div className="text-center mb-8 mt-auto">
+            <div className="text-center mb-6 mt-auto">
               <div className="flex items-baseline justify-center space-x-2 mb-2">
                 <span className="text-5xl font-bold" style={{ color: '#1C2C55' }}>
                   €{pricing.pricePerUser.toFixed(2)}
@@ -270,11 +270,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         </div>
 
         {/* Volume Discount Table */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-right h-full flex flex-col" style={{ animationDelay: '0.6s' }}>
+        <div className="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 border border-gray-100 animate-fade-in-right h-full flex flex-col" style={{ animationDelay: '0.6s' }}>
           <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: '#1C2C55' }}>
             {t('pricing.volumeDiscountTiers')}
           </h3>
-          <p className="text-gray-600 text-center mb-8">
+          <p className="text-gray-600 text-center mb-6">
             {t('pricing.automaticDiscounts')}
           </p>
           <div className="text-center mb-6">
@@ -286,7 +286,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-gray-200 flex-grow">
+          <div className="overflow-hidden rounded-2xl border border-gray-200 flex-grow mb-4">
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
@@ -363,7 +363,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </table>
           </div>
 
-          <div className="mt-8 p-4 bg-gray-50 rounded-xl">
+          <div className="p-4 bg-gray-50 rounded-xl">
             <p className="text-sm text-gray-600 text-center">
               {t('pricing.allPlansInclude')}
               {t('pricing.automaticDiscountsComingSoon')}
