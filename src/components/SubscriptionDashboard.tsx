@@ -29,6 +29,12 @@ export const SubscriptionDashboard: React.FC = () => {
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
   const [addedTeamMembers, setAddedTeamMembers] = useState<TeamMember[]>([]);
+  // Extract first name from user name
+  const getFirstName = (fullName: string): string => {
+    if (!fullName) return 'User';
+    return fullName.split(' ')[0];
+  };
+
   const [currentMember, setCurrentMember] = useState<TeamMember>({ name: '', email: '', whatsapp_number: '' });
   const [inviting] = useState(false);
   const [inviteSuccess, setInviteSuccess] = useState(false);
@@ -1106,7 +1112,7 @@ export const SubscriptionDashboard: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            {t('dashboard.welcome', { name: getFirstName(user?.name || 'User') })}
           </section>
         </div>
       </div>

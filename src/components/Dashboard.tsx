@@ -12,6 +12,12 @@ export const Dashboard: React.FC = () => {
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
   const { t } = useI18n();
 
+  // Extract first name from user name
+  const getFirstName = (fullName: string): string => {
+    if (!fullName) return 'User';
+    return fullName.split(' ')[0];
+  };
+
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
       case 'teamleader':
@@ -50,7 +56,7 @@ export const Dashboard: React.FC = () => {
         <div className="flex items-center space-x-3 mb-4">
           {user && getPlatformIcon(user.platform)}
           <h1 className="text-3xl font-bold text-gray-900">
-            {t('dashboard.welcome', { name: user?.name || 'User' })}
+            {t('dashboard.welcome', { name: getFirstName(user?.name || 'User') })}
           </h1>
         </div>
         <p className="text-gray-600">
