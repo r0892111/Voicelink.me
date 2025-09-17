@@ -418,7 +418,7 @@
     "pricePerUser": "Prijs per Gebruiker",
     "discount": "Korting",
     "current": "Huidig",
-    "contactUs": "Contact Ons",
+    "contactUs": "Contacteer Ons",
     "off": "{{percent}}% korting",
     "custom": "Aangepast",
     "enterprisePricing": "Enterprise Prijzen",
@@ -437,7 +437,7 @@
     "secureOauth": "Veilige OAuth",
     "moreIntegrations": "We werken voortdurend aan het toevoegen van nieuwe CRM integraties zoals HubSpot, Salesforce, Zoho & meer om VoiceLink voor iedereen beschikbaar te maken.",
     "dontSeeYourCrm": "Zie je je CRM niet? We bouwen aangepaste integraties voor elk platform met een API.",
-    "contactForCustom": "Contact Ons voor Aangepaste Integratie"
+    "contactForCustom": "Contacteer Ons voor Aangepaste Integratie"
   },
   "howItWorks": {
     "title": "Hoe WhatsApp Spraaknotities Werken",
@@ -509,7 +509,7 @@
     "nextMonth": "Volgende maand"
   },
   "contact": {
-    "title": "Contact Ons",
+    "title": "Contacteer Ons",
     "subtitle": "Neem contact op met ons team voor persoonlijke hulp",
     "fullName": "Volledige Naam",
     "fullNamePlaceholder": "Voer uw volledige naam in",
