@@ -30,6 +30,14 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Handle modal animation
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+    }
+  }, [isOpen]);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -90,18 +98,28 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
 
   const handleClose = () => {
     if (!isSubmitting) {
-      setFormData({ name: '', email: '', phone: '', message: '' });
-      setErrors({});
-      setIsSubmitted(false);
-      onClose();
+      setIsAnimating(false);
+      // Delay actual close to allow exit animation
+      setTimeout(() => {
+        setFormData({ name: '', email: '', phone: '', message: '' });
+        setErrors({});
+        setIsSubmitted(false);
+        onClose();
+      }, 200);
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative transform transition-all duration-300 scale-100 max-h-[90vh] overflow-y-auto">
+    <div className={`fixed inset-0 bg-black backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-300 ${
+      isAnimating ? 'bg-opacity-60' : 'bg-opacity-0'
+    }`}>
+      <div className={`bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative max-h-[90vh] overflow-y-auto transition-all duration-300 ease-out ${
+        isAnimating 
+          ? 'scale-100 opacity-100 translate-y-0' 
+          : 'scale-95 opacity-0 translate-y-4'
+      }`}>
         {/* Close Button */}
         <button
           onClick={handleClose}
