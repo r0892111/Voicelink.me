@@ -25,6 +25,8 @@
     "selectUserAccount": "Selecteer uw gebruikersaccount",
     "accessRightsTab": "In het \"Toegangsrechten\" tabblad, vind de \"API-sleutel\" sectie",
     "generateOrCopyApiKey": "Genereer of kopieer uw bestaande API-sleutel",
+    "function": "Functie",
+    "autofill": "Automatisch invullen",
     "loadingDashboard": "Dashboard laden...",
     "teamMemberInvitedSuccessfully": "Teamlid succesvol uitgenodigd!",
     "changeLanguage": "Taal wijzigen",

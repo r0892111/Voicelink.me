@@ -28,7 +28,19 @@
     "loadingDashboard": "Loading dashboard...",
     "teamMemberInvitedSuccessfully": "Team member invited successfully!",
     "changeLanguage": "Change language",
-    "voiceLink": "VoiceLink"
+    "voiceLink": "VoiceLink",
+    "active": "Active",
+    "inactive": "Inactive",
+    "notProvided": "Not provided",
+    "updateDatabaseName": "Update database name",
+    "enterOdooDatabaseName": "Enter Odoo database name",
+    "enterNewApiKey": "Enter new API key",
+    "enterOdooApiKey": "Enter Odoo API key",
+    "selectUserAccount": "Select your user account",
+    "accessRightsTab": "Go to the 'Access Rights' tab",
+    "generateOrCopyApiKey": "Generate or copy your API key",
+    "function": "Function",
+    "autofill": "Autofill"
   },
   "platforms": {
     "teamleader": "TeamLeader",

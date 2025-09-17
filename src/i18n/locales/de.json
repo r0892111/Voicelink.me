@@ -25,6 +25,8 @@
     "selectUserAccount": "Wählen Sie Ihr Benutzerkonto aus",
     "accessRightsTab": "Im \"Zugriffsrechte\"-Tab finden Sie den \"API-Schlüssel\"-Bereich",
     "generateOrCopyApiKey": "Generieren oder kopieren Sie Ihren bestehenden API-Schlüssel",
+    "function": "Funktion",
+    "autofill": "Automatisch ausfüllen",
     "loadingDashboard": "Dashboard wird geladen...",
     "teamMemberInvitedSuccessfully": "Teammitglied erfolgreich eingeladen!",
     "changeLanguage": "Sprache ändern",

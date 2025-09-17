@@ -25,6 +25,8 @@
     "selectUserAccount": "Sélectionnez votre compte utilisateur",
     "accessRightsTab": "Dans l'onglet \"Droits d'accès\", trouvez la section \"Clé API\"",
     "generateOrCopyApiKey": "Générez ou copiez votre clé API existante",
+    "function": "Fonction",
+    "autofill": "Remplissage automatique",
     "loadingDashboard": "Chargement du tableau de bord...",
     "teamMemberInvitedSuccessfully": "Membre de l'équipe invité avec succès !",
     "changeLanguage": "Changer de langue",

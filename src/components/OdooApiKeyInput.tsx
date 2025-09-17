@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Key, Save, Check, AlertCircle, Loader2, Database } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { useI18n } from '../hooks/useI18n';
 import { supabase } from '../lib/supabase';
 
 export const OdooApiKeyInput: React.FC = () => {
   const { user } = useAuth();
+  const { t } = useI18n();
   const [apiKey, setApiKey] = useState('');
   const [databaseName, setDatabaseName] = useState('');
   const [loading, setLoading] = useState(false);
