@@ -48,6 +48,8 @@
     "failedToDisconnectWhatsapp": "WhatsApp ontkoppelen mislukt",
     "pleaseSignInToPurchase": "Meld u aan om een aankoop te doen",
     "purchaseFailed": "Aankoop mislukt"
+    "purchaseFailed": "Aankoop mislukt",
+    "agreeToTerms": "Ga akkoord met de SaaS Overeenkomst om door te gaan"
   },
   "navigation": {
     "home": "Home",
@@ -519,4 +521,29 @@
       "cancelAnytime": "Altijd opzegbaar"
     }
   }
+  },
+  "contact": {
+    "title": "Contact Ons",
+    "subtitle": "Neem contact op met ons team voor persoonlijke hulp",
+    "form": {
+      "fullName": "Volledige Naam",
+      "fullNamePlaceholder": "Voer uw volledige naam in",
+      "emailAddress": "E-mailadres",
+      "emailPlaceholder": "Voer uw e-mailadres in",
+      "phoneNumber": "Telefoonnummer",
+      "phonePlaceholder": "+31 123 456 789",
+      "message": "Bericht",
+      "messagePlaceholder": "Vertel ons over uw behoeften of stel vragen...",
+      "sendMessage": "Bericht Versturen",
+      "sendingMessage": "Bericht Versturen...",
+      "required": "*",
+      "responseTime": "We reageren binnen 24 uur tijdens werkdagen"
+    },
+    "success": {
+      "title": "Bericht Verstuurd!",
+      "description": "Bedankt voor uw bericht. We nemen binnen 24 uur contact met u op."
+    },
+    "errors": {
+      "submitFailed": "Bericht versturen mislukt. Probeer opnieuw of neem direct contact met ons op."
+    }
 }

@@ -48,6 +48,8 @@
     "failedToDisconnectWhatsapp": "Échec de la déconnexion WhatsApp",
     "pleaseSignInToPurchase": "Veuillez vous connecter pour effectuer un achat",
     "purchaseFailed": "Échec de l'achat"
+    "purchaseFailed": "Échec de l'achat",
+    "agreeToTerms": "Veuillez accepter l'Accord SaaS pour continuer"
   },
   "auth": {
     "invalidAuthenticationPlatform": "Plateforme d'authentification invalide",
@@ -374,4 +376,29 @@
       "cancelAnytime": "Annuler à tout moment"
     }
   }
+  },
+  "contact": {
+    "title": "Contactez-Nous",
+    "subtitle": "Contactez notre équipe pour une assistance personnalisée",
+    "form": {
+      "fullName": "Nom Complet",
+      "fullNamePlaceholder": "Entrez votre nom complet",
+      "emailAddress": "Adresse E-mail",
+      "emailPlaceholder": "Entrez votre adresse e-mail",
+      "phoneNumber": "Numéro de Téléphone",
+      "phonePlaceholder": "+33 1 23 45 67 89",
+      "message": "Message",
+      "messagePlaceholder": "Parlez-nous de vos besoins ou posez vos questions...",
+      "sendMessage": "Envoyer le Message",
+      "sendingMessage": "Envoi du Message...",
+      "required": "*",
+      "responseTime": "Nous répondons dans les 24 heures pendant les jours ouvrables"
+    },
+    "success": {
+      "title": "Message Envoyé !",
+      "description": "Merci de nous avoir contactés. Nous vous répondrons dans les 24 heures."
+    },
+    "errors": {
+      "submitFailed": "Échec de l'envoi du message. Veuillez réessayer ou nous contacter directement."
+    }
 }

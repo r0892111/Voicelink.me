@@ -48,6 +48,8 @@
     "failedToDisconnectWhatsapp": "WhatsApp trennen fehlgeschlagen",
     "pleaseSignInToPurchase": "Bitte melden Sie sich an, um einen Kauf zu tätigen",
     "purchaseFailed": "Kauf fehlgeschlagen"
+    "purchaseFailed": "Kauf fehlgeschlagen",
+    "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren"
   },
   "auth": {
     "invalidAuthenticationPlatform": "Ungültige Authentifizierungsplattform",
@@ -297,4 +299,29 @@
       "cancelAnytime": "Jederzeit kündbar"
     }
   }
+  },
+  "contact": {
+    "title": "Kontaktieren Sie Uns",
+    "subtitle": "Kontaktieren Sie unser Team für persönliche Unterstützung",
+    "form": {
+      "fullName": "Vollständiger Name",
+      "fullNamePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+      "emailAddress": "E-Mail-Adresse",
+      "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
+      "phoneNumber": "Telefonnummer",
+      "phonePlaceholder": "+49 123 456 789",
+      "message": "Nachricht",
+      "messagePlaceholder": "Erzählen Sie uns von Ihren Bedürfnissen oder stellen Sie Fragen...",
+      "sendMessage": "Nachricht Senden",
+      "sendingMessage": "Nachricht Senden...",
+      "required": "*",
+      "responseTime": "Wir antworten innerhalb von 24 Stunden an Werktagen"
+    },
+    "success": {
+      "title": "Nachricht Gesendet!",
+      "description": "Vielen Dank für Ihre Kontaktaufnahme. Wir melden uns innerhalb von 24 Stunden bei Ihnen."
+    },
+    "errors": {
+      "submitFailed": "Nachricht senden fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
+    }
 }
