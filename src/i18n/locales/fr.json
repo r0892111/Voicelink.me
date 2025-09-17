@@ -47,7 +47,6 @@
     "failedToVerifyCode": "Échec de la vérification du code",
     "failedToDisconnectWhatsapp": "Échec de la déconnexion WhatsApp",
     "pleaseSignInToPurchase": "Veuillez vous connecter pour effectuer un achat",
-    "purchaseFailed": "Échec de l'achat"
     "purchaseFailed": "Échec de l'achat",
     "agreeToTerms": "Veuillez accepter l'Accord SaaS pour continuer"
   },
