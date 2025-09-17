@@ -466,5 +466,21 @@
       "noSetupFees": "Keine Einrichtungsgebühren",
       "cancelAnytime": "Jederzeit kündbar"
     }
+  },
+  "phoneMockup": {
+    "voiceLink": "VoiceLink",
+    "online": "online",
+    "typeMessage": "Nachricht eingeben",
+    "aiProcessing": "KI Verarbeitet Sprachnotiz...",
+    "updatedCrm": "✅ CRM Aktualisiert mit:",
+    "followUpCall": "Nachfass-Anruf",
+    "keyNotes": "Wichtige Notizen:",
+    "actionItems": "Aktionspunkte:",
+    "sendProposal": "Angebot bis Freitag senden",
+    "includeRoi": "ROI-Berechnungen einschließen",
+    "discussPremium": "Premium-Paket Preise und Implementierungszeitplan besprechen",
+    "budgetIncreased": "Budget um 40% für digitale Tools erhöht",
+    "strongInterest": "Starkes Interesse an WhatsApp-Integration",
+    "prefersThursday": "Bevorzugt Donnerstag-Nachmittag-Anrufe"
   }
 }

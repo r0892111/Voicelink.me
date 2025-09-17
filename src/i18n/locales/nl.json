@@ -537,5 +537,21 @@
       "noSetupFees": "Geen installatiekosten",
       "cancelAnytime": "Altijd opzegbaar"
     }
+  },
+  "phoneMockup": {
+    "voiceLink": "VoiceLink",
+    "online": "online",
+    "typeMessage": "Typ een bericht",
+    "aiProcessing": "AI Verwerkt Spraaknotitie...",
+    "updatedCrm": "✅ CRM Bijgewerkt met:",
+    "followUpCall": "Follow-up Gesprek",
+    "keyNotes": "Belangrijke Notities:",
+    "actionItems": "Actiepunten:",
+    "sendProposal": "Voorstel versturen voor vrijdag",
+    "includeRoi": "ROI berekeningen bijvoegen",
+    "discussPremium": "Bespreek premium pakket prijzen en implementatie tijdlijn",
+    "budgetIncreased": "Budget verhoogd met 40% voor digitale tools",
+    "strongInterest": "Sterke interesse in WhatsApp integratie",
+    "prefersThursday": "Voorkeur voor donderdag middag gesprekken"
   }
 }

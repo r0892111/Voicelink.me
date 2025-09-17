@@ -493,6 +493,22 @@
       "cancelAnytime": "Cancel anytime"
     }
   },
+  "phoneMockup": {
+    "voiceLink": "VoiceLink",
+    "online": "online",
+    "typeMessage": "Type a message",
+    "aiProcessing": "AI Processing Voice Note...",
+    "updatedCrm": "✅ Updated CRM with:",
+    "followUpCall": "Follow-up Call",
+    "keyNotes": "Key Notes:",
+    "actionItems": "Action Items:",
+    "sendProposal": "Send proposal by Friday",
+    "includeRoi": "Include ROI calculations",
+    "discussPremium": "Discuss premium package pricing and implementation timeline",
+    "budgetIncreased": "Budget increased 40% for digital tools",
+    "strongInterest": "Strong interest in WhatsApp integration",
+    "prefersThursday": "Prefers Thursday PM calls"
+  },
   "footer": {
     "copyright": "© 2025 Finit Solutions",
     "privacy": "Privacy",

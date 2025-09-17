@@ -595,6 +595,22 @@
       "cancelAnytime": "Annuler à tout moment"
     }
   },
+  "phoneMockup": {
+    "voiceLink": "VoiceLink",
+    "online": "en ligne",
+    "typeMessage": "Tapez un message",
+    "aiProcessing": "IA Traite la Note Vocale...",
+    "updatedCrm": "✅ CRM Mis à Jour avec :",
+    "followUpCall": "Appel de Suivi",
+    "keyNotes": "Notes Clés :",
+    "actionItems": "Éléments d'Action :",
+    "sendProposal": "Envoyer la proposition avant vendredi",
+    "includeRoi": "Inclure les calculs de ROI",
+    "discussPremium": "Discuter des prix du package premium et du calendrier d'implémentation",
+    "budgetIncreased": "Budget augmenté de 40% pour les outils numériques",
+    "strongInterest": "Fort intérêt pour l'intégration WhatsApp",
+    "prefersThursday": "Préfère les appels du jeudi après-midi"
+  },
   "contact": {
     "title": "Contactez-Nous",
     "subtitle": "Entrez en contact avec notre équipe pour une assistance personnalisée",
