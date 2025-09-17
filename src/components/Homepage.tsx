@@ -461,6 +461,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
           selectedUsers={selectedUsers}
           setSelectedUsers={setSelectedUsers}
           openModal={openModal}
+          openContactModal={openContactModal}
         />
       </section>
       

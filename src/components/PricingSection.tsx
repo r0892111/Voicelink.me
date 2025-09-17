@@ -7,6 +7,7 @@ interface PricingSectionProps {
   selectedUsers: number;
   setSelectedUsers: (users: number) => void;
   openModal: () => void;
+  openContactModal: () => void;
 }
 
 interface PricingTier {
@@ -70,7 +71,8 @@ const calculatePricing = (users: number, billingPeriod: BillingPeriod) => {
 export const PricingSection: React.FC<PricingSectionProps> = ({
   selectedUsers,
   setSelectedUsers,
-  openModal
+  openModal,
+  openContactModal
 }) => {
   const { t } = useI18n();
   const [billingPeriod, setBillingPeriod] = React.useState<BillingPeriod>('monthly');
@@ -354,7 +356,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           </span>
                         ) : (
                           <span className="text-gray-400">—</span>
-                        )}
+                           onClick={openContactModal}
+                           className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
                       </td>
                     </tr>
                   );
