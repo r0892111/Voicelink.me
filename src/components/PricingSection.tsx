@@ -343,7 +343,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       </td>
                       <td className="px-6 py-4">
                         {isEnterpriseTier ? (
-                          <button className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                          <button 
+                           onClick={openContactModal}
+                           className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer">
                             {t('pricing.contactUs')}
                           </button>
                         ) : tier.discount > 0 ? (
@@ -356,8 +358,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           </span>
                         ) : (
                           <span className="text-gray-400">—</span>
-                           onClick={openContactModal}
-                           className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
+                        )}
                       </td>
                     </tr>
                   );
