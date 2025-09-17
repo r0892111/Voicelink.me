@@ -47,6 +47,7 @@
     "failedToVerifyCode": "Code verifiëren mislukt",
     "failedToDisconnectWhatsapp": "WhatsApp ontkoppelen mislukt",
     "pleaseSignInToPurchase": "Meld u aan om een aankoop te doen",
+    "purchaseFailed": "Aankoop mislukt"
     "purchaseFailed": "Aankoop mislukt",
     "agreeToTerms": "Ga akkoord met de SaaS Overeenkomst om door te gaan"
   },
@@ -520,7 +521,6 @@
       "cancelAnytime": "Altijd opzegbaar"
     }
   }
-}
   },
   "contact": {
     "title": "Contact Ons",

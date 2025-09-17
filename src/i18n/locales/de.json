@@ -47,6 +47,7 @@
     "failedToVerifyCode": "Code verifizieren fehlgeschlagen",
     "failedToDisconnectWhatsapp": "WhatsApp trennen fehlgeschlagen",
     "pleaseSignInToPurchase": "Bitte melden Sie sich an, um einen Kauf zu tätigen",
+    "purchaseFailed": "Kauf fehlgeschlagen"
     "purchaseFailed": "Kauf fehlgeschlagen",
     "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren"
   },
@@ -297,6 +298,7 @@
       "noSetupFees": "Keine Einrichtungsgebühren",
       "cancelAnytime": "Jederzeit kündbar"
     }
+  }
   },
   "contact": {
     "title": "Kontaktieren Sie Uns",
@@ -322,5 +324,4 @@
     "errors": {
       "submitFailed": "Nachricht senden fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
     }
-  }
 }
