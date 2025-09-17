@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, User, Mail, Phone, MessageSquare, Send, Loader2 } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
 
