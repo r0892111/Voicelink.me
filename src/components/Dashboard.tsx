@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useSubscription } from '../hooks/useSubscription';
+import { useI18n } from '../hooks/useI18n';
 import { Users, Zap, Settings, ShoppingBag } from 'lucide-react';
 import { UserInfoCard } from './UserInfoCard';
 import { BuyButton } from './BuyButton';
@@ -9,6 +10,7 @@ import { SubscriptionDashboard } from './SubscriptionDashboard';
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
+  const { t } = useI18n();
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
@@ -29,7 +31,7 @@ export const Dashboard: React.FC = () => {
       <div className="flex items-center justify-center py-16">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
+          <p className="text-gray-600">{t('common.loadingDashboard')}</p>
         </div>
       </div>
     );
@@ -48,28 +50,29 @@ export const Dashboard: React.FC = () => {
         <div className="flex items-center space-x-3 mb-4">
           {user && getPlatformIcon(user.platform)}
           <h1 className="text-3xl font-bold text-gray-900">
-            Welcome back, {user?.name || 'User'}!
+            {t('dashboard.welcome', { name: user?.name || 'User' })}
           </h1>
         </div>
         <p className="text-gray-600">
-          You're connected to {user?.platform && user.platform.charAt(0).toUpperCase() + user.platform.slice(1)}. 
-          Your CRM data and tools are ready to use.
+          {t('dashboard.connectedToPlatform', { 
+            platform: user?.platform && user.platform.charAt(0).toUpperCase() + user.platform.slice(1) 
+          })}
         </p>
       </div>
 
       {/* Platform Info */}
       <div className="bg-white rounded-xl shadow-sm p-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Platform Information</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">{t('dashboard.platformInformation')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="font-medium text-gray-900 mb-2">Platform</h3>
+            <h3 className="font-medium text-gray-900 mb-2">{t('common.platform')}</h3>
             <div className="flex items-center space-x-2">
               {user && getPlatformIcon(user.platform)}
               <span className="capitalize font-medium">{user?.platform}</span>
             </div>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="font-medium text-gray-900 mb-2">Email</h3>
+            <h3 className="font-medium text-gray-900 mb-2">{t('userInfo.emailAddress')}</h3>
             <p className="text-gray-600">{user?.email}</p>
           </div>
         </div>
@@ -88,14 +91,15 @@ export const Dashboard: React.FC = () => {
         <div className="flex items-center space-x-2 mb-6">
           <ShoppingBag className="w-6 h-6 text-blue-600" />
           <h2 className="text-xl font-semibold text-gray-900">Upgrade Your Experience</h2>
+          <h2 className="text-xl font-semibold text-gray-900">{t('dashboard.upgradeExperience')}</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <BuyButton
             priceId="price_1S2ZQPLPohnizGblvhj9qbK3"
-            productName="Premium Monthly"
+            productName={t('common.premiumMonthly')}
             price="€29.99/mo"
-            description="Advanced CRM features and priority support"
+            description={t('common.advancedCrmFeatures')}
           />
           
         </div>

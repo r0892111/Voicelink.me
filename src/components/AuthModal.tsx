@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Loader2, AlertCircle } from 'lucide-react';
+import { X, Loader2, AlertCircle, Download } from 'lucide-react';
 import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
@@ -14,12 +14,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const { t } = useI18n();
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
+  const [agreedToTerms, setAgreedToTerms] = React.useState(false);
+  const [isAnimating, setIsAnimating] = React.useState(false);
   const processingRef = React.useRef(false);
+
+  // Handle modal animation
+  React.useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+    }
+  }, [isOpen]);
 
   const handleSignIn = async (provider: AuthProvider) => {
   // Prevent double calls using ref
   if (processingRef.current || loadingProvider) return;
 
+  // Check if user agreed to terms
+  if (!agreedToTerms) {
+    setError(t('validation.agreeToTerms'));
+    return;
+  }
   try {
     processingRef.current = true;
     setLoadingProvider(provider.name);
@@ -49,7 +63,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     const result = await authService.initiateAuth();
 
     if (!result.success && result.error) {
-      setError(`Authentication failed for ${provider.displayName}: ${result.error}`);
+      setError(`${t('auth.authenticationFailedFor', { provider: provider.displayName })}: ${result.error}`);
       // Clear platform if auth failed
       localStorage.removeItem('userPlatform');
       localStorage.removeItem('auth_provider');
@@ -68,17 +82,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   // Reset processing state when modal closes
   React.useEffect(() => {
     if (!isOpen) {
+      setIsAnimating(false);
       processingRef.current = false;
       setLoadingProvider(null);
       setError(null);
+      setAgreedToTerms(false);
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative transform transition-all duration-300 scale-100">
+    <div className={`fixed inset-0 bg-black backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-300 ${
+      isAnimating ? 'bg-opacity-60' : 'bg-opacity-0'
+    }`}>
+      <div className={`bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative transition-all duration-300 ease-out ${
+        isAnimating 
+          ? 'scale-100 opacity-100 translate-y-0' 
+          : 'scale-95 opacity-0 translate-y-4'
+      }`}>
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -92,7 +114,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <div className="flex items-center justify-center space-x-3 mb-4">
             <img 
               src="/Finit Voicelink Blue.svg" 
-              alt="VoiceLink" 
+              alt={t('common.voiceLink')} 
               className="h-8 w-auto"
             />
           </div>
@@ -184,6 +206,65 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
         {/* Footer */}
         <div className="pt-6 border-t border-gray-200">
+          {/* Terms Agreement Checkbox */}
+          <div className="mb-6">
+            <label className="flex items-start space-x-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreedToTerms}
+                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <span className="text-sm text-gray-700">
+                I agree to the{' '}
+                <a 
+                  href="/saas-agreement" 
+                  className="text-blue-600 hover:underline font-medium" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  SaaS Agreement
+                </a>
+              </span>
+            </label>
+            
+            {/* Download Options */}
+            <div className="mt-3 ml-7 flex items-center space-x-4 text-xs text-gray-600">
+              <span>Download:</span>
+              <a
+                href="/SaaS Agreement en-US.pdf"
+                download="SaaS_Agreement_English.pdf"
+                className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+              >
+                <Download className="w-3 h-3" />
+                <span>English Version</span>
+              </a>
+              <a
+                href="/SaaS Overeenkomst.docx.pdf"
+                download="SaaS_Overeenkomst_Dutch.pdf"
+                className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+              >
+                <Download className="w-3 h-3" />
+                <span>Dutch Version (Official)</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Privacy Policy Notice */}
+          <div className="mb-6">
+            <p className="text-xs text-gray-500 text-center">
+              By connecting your CRM, you acknowledge our{' '}
+              <a 
+                href="/privacy-policy" 
+                className="text-blue-600 hover:underline" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Privacy Policy
+              </a>
+            </p>
+          </div>
+
           {/* Sign In Option */}
           <div className="text-center mb-6">
             <p className="text-sm text-gray-600 mb-2">
@@ -220,12 +301,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <span className="text-xs text-gray-600 font-medium">{t('auth.modal.cancelAnytime')}</span>
             </div>
           </div>
-          <p className="text-center text-xs text-gray-500">
-            {t('auth.modal.termsAgreement', {
-              termsLink: <a href="/saas-agreement" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{t('auth.modal.termsOfService')}</a>,
-              privacyLink: <a href="/privacy-policy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{t('auth.modal.privacyPolicy')}</a>
-            })}
-          </p>
         </div>
       </div>
     </div>

@@ -14,7 +14,46 @@
     "submit": "Verzenden",
     "confirm": "Bevestigen",
     "yes": "Ja",
-    "no": "Nee"
+    "no": "Nee",
+    "enterNumberOfUsers": "Voer aantal gebruikers in",
+    "premiumMonthly": "Premium Maandelijks",
+    "advancedCrmFeatures": "Geavanceerde CRM-functies en prioriteitsondersteuning",
+    "updateDatabaseName": "Database naam bijwerken",
+    "enterOdooDatabaseName": "Voer uw Odoo database naam in",
+    "enterNewApiKey": "Voer nieuwe API-sleutel in om bij te werken",
+    "enterOdooApiKey": "Voer uw Odoo API-sleutel in",
+    "selectUserAccount": "Selecteer uw gebruikersaccount",
+    "accessRightsTab": "In het \"Toegangsrechten\" tabblad, vind de \"API-sleutel\" sectie",
+    "generateOrCopyApiKey": "Genereer of kopieer uw bestaande API-sleutel",
+    "loadingDashboard": "Dashboard laden...",
+    "teamMemberInvitedSuccessfully": "Teamlid succesvol uitgenodigd!",
+    "changeLanguage": "Taal wijzigen",
+    "voiceLink": "VoiceLink"
+  },
+  "platforms": {
+    "teamleader": "TeamLeader",
+    "pipedrive": "Pipedrive",
+    "odoo": "Odoo",
+    "unknown": "Onbekend"
+  },
+  "validation": {
+    "enterValidApiKey": "Voer een geldige API-sleutel in",
+    "enterOdooDatabaseName": "Voer uw Odoo database naam in",
+    "userNotAuthenticated": "Gebruiker niet geverifieerd",
+    "failedToSaveApiKey": "API-sleutel opslaan mislukt",
+    "enterValidPhoneNumber": "Voer een geldig internationaal telefoonnummer in",
+    "enterValidSixDigitCode": "Voer een geldige 6-cijferige code in",
+    "failedToSendVerificationCode": "Verificatiecode verzenden mislukt",
+    "failedToVerifyCode": "Code verifiëren mislukt",
+    "failedToDisconnectWhatsapp": "WhatsApp ontkoppelen mislukt",
+    "pleaseSignInToPurchase": "Meld u aan om een aankoop te doen",
+    "purchaseFailed": "Aankoop mislukt",
+    "required": "Dit veld is verplicht",
+    "invalidEmail": "Voer een geldig e-mailadres in",
+    "invalidPhone": "Voer een geldig telefoonnummer in",
+    "minLength": "Moet minimaal {{min}} karakters bevatten",
+    "maxLength": "Mag maximaal {{max}} karakters bevatten",
+    "agreeToTerms": "Ga akkoord met de SaaS Overeenkomst om door te gaan"
   },
   "navigation": {
     "home": "Home",
@@ -23,53 +62,184 @@
     "dashboard": "Dashboard",
     "support": "Ondersteuning",
     "signOut": "Uitloggen",
-    "getStarted": "Gratis starten",
+    "getStarted": "Gratis Beginnen",
     "backToHome": "Terug naar Home"
   },
   "hero": {
     "title": "Gewoon...",
     "mainTitle": "Praten met je CRM",
-    "subtitle1": "Stuur spraaknotities via WhatsApp en zie hoe ze automatisch synchroniseren met je CRM.",
-    "subtitle2": "Zet spraakberichten direct om in gestructureerde gegevens.",
-    "getStartedFree": "Gratis starten",
-    "watchDemo": "Bekijk demo",
-    "oneClickSetup": "Één-klik CRM-verbinding",
+    "subtitle1": "Stuur spraakberichten via WhatsApp en zie ze automatisch synchroniseren met je CRM.",
+    "subtitle2": "Zet spraakberichten direct om in gestructureerde data.",
+    "getStartedFree": "Gratis Beginnen",
+    "watchDemo": "Bekijk Demo",
+    "oneClickSetup": "Eén-klik CRM Verbinding",
     "whatsappSetup": "Verbind WhatsApp in 2 minuten"
   },
   "auth": {
     "modal": {
-      "title": "Start je gratis proefperiode",
+      "title": "Start Je Gratis Proefperiode",
       "subtitle": "Verbind je CRM en begin direct met VoiceLink",
-      "freeTrialBanner": "14 dagen gratis proefperiode start nu",
-      "freeTrialDescription": "Je gratis proefperiode begint direct bij het verbinden van je CRM. Geen creditcard nodig.",
+      "freeTrialBanner": "14-Dagen Gratis Proefperiode Begint Nu",
+      "freeTrialDescription": "Je gratis proefperiode begint direct na het verbinden van je CRM.",
       "connectTeamleader": "Verbind Teamleader",
       "connectPipedrive": "Verbind Pipedrive",
       "connectOdoo": "Verbind Odoo",
-      "startTrialInstantly": "Start direct je gratis proefperiode",
+      "startTrialInstantly": "Start je gratis proefperiode direct",
       "alreadyHaveAccount": "Heb je al een account?",
-      "signInDescription": "Log eenvoudig in via je CRM-platform hierboven",
+      "signInDescription": "Verbind gewoon met je CRM platform hierboven om in te loggen",
       "secureOauth": "Veilige OAuth",
-      "noSetupFees": "Geen installatiekosten",
-      "cancelAnytime": "Op elk moment annuleren",
-      "termsAgreement": "Door je CRM te verbinden ga je akkoord met onze {{termsLink}} en {{privacyLink}}",
-      "termsOfService": "Servicevoorwaarden",
-      "privacyPolicy": "Privacybeleid"
+      "noSetupFees": "Geen Installatiekosten",
+      "cancelAnytime": "Altijd Opzegbaar"
     },
     "callback": {
       "authenticating": "Authenticeren...",
-      "authenticationSuccessful": "Authenticatie geslaagd!",
-      "authenticationFailed": "Authenticatie mislukt",
+      "authenticationSuccessful": "Authenticatie Succesvol!",
+      "authenticationFailed": "Authenticatie Mislukt",
       "processingAuth": "{{platform}} authenticatie verwerken...",
       "completingAuth": "Authenticatie voltooien...",
       "successfullyAuthenticated": "Succesvol geauthenticeerd met {{platform}}!",
-      "redirectingToCheckout": "Doorsturen naar abonnement afrekenen...",
+      "redirectingToCheckout": "Doorverwijzen naar abonnement checkout...",
       "returnToHome": "Terug naar Home"
-    }
+    },
+    "modal": {
+      "title": "Start Je Gratis Proefperiode",
+      "subtitle": "Verbind je CRM en begin direct met VoiceLink",
+      "freeTrialBanner": "14-Dagen Gratis Proefperiode Begint Nu",
+      "freeTrialDescription": "Je gratis proefperiode begint direct na het verbinden van je CRM.",
+      "connectTeamleader": "Verbind Teamleader",
+      "connectPipedrive": "Verbind Pipedrive",
+      "connectOdoo": "Verbind Odoo",
+      "startTrialInstantly": "Start je gratis proefperiode direct",
+      "alreadyHaveAccount": "Heb je al een account?",
+      "signInDescription": "Verbind gewoon met je CRM platform hierboven om in te loggen",
+      "secureOauth": "Veilige OAuth",
+      "noSetupFees": "Geen Installatiekosten",
+      "cancelAnytime": "Altijd Opzegbaar",
+      "termsAgreement": "Door je CRM te verbinden, ga je akkoord met onze {{termsLink}} en {{privacyLink}}",
+      "termsOfService": "Servicevoorwaarden",
+      "privacyPolicy": "Privacybeleid"
+    },
+    "invalidAuthenticationPlatform": "Ongeldig authenticatieplatform",
+    "authenticationFailed": "Authenticatie mislukt",
+    "missingAuthenticationParameters": "Ontbrekende authenticatieparameters",
+    "invalidStateParameter": "Ongeldige state parameter",
+    "failedToEstablishSession": "Sessie opzetten mislukt",
+    "completingAuthentication": "Authenticatie voltooien...",
+    "authenticationFailedFor": "Authenticatie mislukt voor {{provider}}"
+  },
+  "teamManagement": {
+    "title": "Teambeheer",
+    "subtitle": "Beheer je teamleden en uitnodigingen",
+    "accountOwner": "Accounteigenaar",
+    "admin": "Admin",
+    "teamMembers": "Teamleden",
+    "pending": "In Behandeling",
+    "addNewMember": "Nieuw Teamlid Toevoegen",
+    "selectCompanyUser": "Bedrijfsgebruiker Selecteren",
+    "loadingUsers": "Bedrijfsgebruikers laden...",
+    "selectedUserDetails": "Geselecteerde Gebruiker Details",
+    "name": "Naam",
+    "email": "E-Mail",
+    "phone": "Telefoon",
+    "notProvided": "Niet opgegeven",
+    "whatsappNumber": "WhatsApp-Nummer (indien anders dan telefoon)",
+    "whatsappNumberPlaceholder": "+31 123 456 789",
+    "fullName": "Volledige Naam",
+    "fullNamePlaceholder": "Voer volledige naam in",
+    "emailAddress": "E-mailadres",
+    "emailPlaceholder": "Voer e-mailadres in",
+    "sendingInvitation": "Uitnodiging verzenden...",
+    "saveAndInvite": "Opslaan & Uitnodigen",
+    "clearSelection": "Selectie Wissen",
+    "addNewUser": "Nieuwe Gebruiker Toevoegen",
+    "teamLimitReached": "Team Limiet Bereikt",
+    "teamLimitMessage": "Je hebt je team limiet van {{total}} gebruikers bereikt. Upgrade je abonnement om meer teamleden toe te voegen.",
+    "upgradeSubscription": "Abonnement Upgraden"
+  },
+  "userGuide": {
+    "title": "Dagelijkse Gebruikshandleiding",
+    "subtitle": "VoiceLink werkt het beste wanneer je je updates gestructureerd en duidelijk spreekt",
+    "recordingContacts": {
+      "title": "1. Contacten Opnemen",
+      "startWith": "Begin met:",
+      "example1": "\"Net gebeld/gesproken met [NAAM]\"",
+      "example2": "of \"[NAAM] heeft net bezocht\"",
+      "names": "Namen:",
+      "namesTip": "Spreek langzaam en spel moeilijke namen letter voor letter",
+      "phoneEmail": "Telefoon/E-mail:",
+      "phoneEmailTip": "Optioneel, maar spel altijd bij twijfel",
+      "newVsExisting": "Nieuwe vs. Bestaande Contacten:",
+      "newVsExistingTip": "VoiceLink zoekt automatisch naar bestaande records en maakt nieuwe contacten aan wanneer nodig."
+    },
+    "conversationInfo": {
+      "title": "2. Gespreksinformatie",
+      "description": "Deel belangrijke informatie alsof je het aan een collega vertelt.",
+      "example": "Voorbeeld:",
+      "exampleText": "\"Hij is geïnteresseerd in product X, wil volgende week een demo en vroeg me de prijslijst te sturen.\"",
+      "tip": "Tip:",
+      "tipText": "Hoe meer details je geeft, hoe beter VoiceLink je CRM kan vullen. Het systeem maakt automatisch tags en rapporten als aantekeningen."
+    },
+    "calendarTasks": {
+      "title": "3. Kalender- en Taakbeheer",
+      "description": "VoiceLink kan automatisch afspraken en taken aanmaken of bijwerken.",
+      "callbacks": "📞 Terugbellen:",
+      "callback1": "\"Ik moet hem maandag om 15:00 terugbellen\"",
+      "callback2": "\"Ik zou hem morgenochtend moeten bellen\"",
+      "appointments": "📅 Afspraken:",
+      "appointment1": "\"Hij komt volgende dinsdag om 14:00\"",
+      "appointment2": "\"Meeting in Tremelo op 29 mei om 13:00\"",
+      "tasks": "✅ Taken:",
+      "task1": "\"Catalogus morgen versturen\"",
+      "task2": "\"Offerte voorbereiden voor vrijdag 14:00\"",
+      "updates": "🔄 Updates:",
+      "update1": "\"Meeting met Marianna verplaatst naar dinsdag 12:00\"",
+      "update2": "\"Jeff heeft niet geantwoord, morgen opnieuw proberen\""
+    },
+    "bestPractices": {
+      "title": "4. Beste Praktijken voor Optimaal Gebruik",
+      "speakClearly": {
+        "title": "Duidelijk Spreken",
+        "description": "Spreek duidelijk en langzaam in standaard Engels"
+      },
+      "spellingMode": {
+        "title": "Spellingsmodus",
+        "description": "Spel letters voor namen, e-mails en telefoonnummers bij twijfel"
+      },
+      "autoScheduling": {
+        "title": "Auto-Planning",
+        "description": "Geen tijd genoemd? VoiceLink vindt automatisch een geschikte tijd"
+      },
+      "keepFocused": {
+        "title": "Gefocust Blijven",
+        "description": "Eén update per bericht is het meest betrouwbaar"
+      },
+      "important": "Belangrijk:",
+      "importantText": "Je kunt slechts één contact per bericht bijwerken. Wil je meerdere personen in je CRM bijwerken? Neem ze op met aparte spraaknotities op WhatsApp."
+    },
+    "troubleshooting": {
+      "title": "5. Probleemoplossing",
+      "noConnection": {
+        "title": "Geen Verbinding?",
+        "description": "Controleer internetverbinding en API-instellingen"
+      },
+      "wrongInput": {
+        "title": "Verkeerde Invoer?",
+        "description": "Stuur correcties via nieuw spraakbericht"
+      },
+      "transcriptionErrors": {
+        "title": "Transcriptiefouten?",
+        "description": "Spreek duidelijk zonder achtergrondgeluid"
+      }
+    },
+    "needHelp": "Hulp Nodig?"
   },
   "dashboard": {
     "welcome": "Welkom terug, {{name}}!",
-    "welcomeDefault": "Welkom terug, Premium gebruiker!",
-    "subscriptionActive": "Je VoiceLink-abonnement is actief",
+    "connectedToPlatform": "Je bent verbonden met {{platform}}. Je CRM-gegevens en tools zijn klaar voor gebruik.",
+    "platformInformation": "Platform Informatie",
+    "upgradeExperience": "Upgrade Je Ervaring",
+    "welcomeDefault": "Welkom terug, Premium Gebruiker!",
+    "subscriptionActive": "Je VoiceLink abonnement is actief",
     "platformConnection": {
       "title": "{{platform}}",
       "connectedActive": "Verbonden & Actief",
@@ -77,231 +247,326 @@
     },
     "accountProfile": {
       "title": "Accountprofiel",
-      "subtitle": "Je CRM-accountinformatie",
-      "personalInfo": "Persoonlijke informatie",
-      "accountDetails": "Accountgegevens",
-      "fullName": "Volledige naam",
+      "subtitle": "Je CRM accountinformatie",
+      "personalInfo": "Persoonlijke Informatie",
+      "accountDetails": "Accountdetails",
+      "fullName": "Volledige Naam",
       "email": "E-mail",
       "language": "Taal",
       "timeZone": "Tijdzone",
-      "whatsappStatus": "WhatsApp-status",
+      "whatsappStatus": "WhatsApp Status",
       "phone": "Telefoon",
-      "accountId": "Account-ID",
-      "emailStatus": "E-mailstatus"
+      "accountId": "Account ID",
+      "emailStatus": "E-mail Status"
     },
     "whatsappStatus": {
       "connected": "Verbonden",
-      "pending": "In behandeling",
-      "notConnected": "Niet verbonden"
+      "pending": "In Behandeling",
+      "notConnected": "Niet Verbonden"
     },
     "allSet": {
-      "title": "🎉 Alles is geregeld!",
+      "title": "🎉 Je bent Helemaal Klaar!",
       "subtitle": "Je WhatsApp is verbonden en VoiceLink is klaar voor gebruik",
-      "startSending": "Begin met spraaknotities verzenden",
-      "description": "Stuur eenvoudig een spraakbericht naar VoiceLink op WhatsApp en zie hoe je CRM automatisch wordt bijgewerkt met gestructureerde gegevens, opvolgtaken en contactinformatie.",
-      "whatsappConnected": "WhatsApp verbonden",
-      "crmIntegrationActive": "CRM-integratie actief",
-      "aiProcessingReady": "AI-verwerking klaar"
+      "startSending": "Begin met Spraaknotities Versturen",
+      "description": "Stuur gewoon een spraakbericht naar VoiceLink op WhatsApp en kijk hoe je CRM automatisch wordt bijgewerkt met gestructureerde data, follow-up taken en contactinformatie.",
+      "whatsappConnected": "WhatsApp Verbonden",
+      "crmIntegrationActive": "CRM Integratie Actief",
+      "aiProcessingReady": "AI Verwerking Klaar"
     },
     "gettingStarted": {
-      "title": "Klaar om te beginnen?",
+      "title": "Klaar om te Beginnen?",
       "subtitle": "Volg deze eenvoudige stappen om VoiceLink te gebruiken",
       "step1": {
-        "title": "Verifieer WhatsApp",
-        "description": "Verbind je WhatsApp-nummer om bevestigingen van spraaknotities te ontvangen"
+        "title": "WhatsApp Verifiëren",
+        "description": "Verbind je WhatsApp nummer om spraaknotitie bevestigingen te ontvangen"
       },
       "step2": {
-        "title": "Stuur spraaknotitie",
-        "description": "Neem je gedachten op via WhatsApp-spraakberichten"
+        "title": "Spraaknotitie Versturen",
+        "description": "Neem je gedachten natuurlijk op via WhatsApp spraakberichten"
       },
       "step3": {
-        "title": "Bekijk de magie",
-        "description": "AI verwerkt je spraak en synchroniseert gestructureerde gegevens met je CRM"
+        "title": "Kijk de Magie Gebeuren",
+        "description": "AI verwerkt je spraak en synchroniseert gestructureerde data naar je CRM"
       }
     },
     "customerPortal": {
-      "title": "Beheer je abonnement",
-      "subtitle": "Bekijk je facturatiegegevens en beheer je abonnement",
+      "title": "Beheer Je Abonnement",
+      "subtitle": "Toegang tot je factuurinformatie en beheer je abonnement",
       "portalTitle": "Klantportaal",
-      "portalDescription": "Toegang tot je factuurgeschiedenis, betalingsmethoden bijwerken, facturen downloaden en je abonnement beheren via ons beveiligde klantportaal.",
-      "accessPortal": "Ga naar klantportaal",
+      "portalDescription": "Toegang tot je factuurgeschiedenis, update betaalmethoden, download facturen en beheer je abonnementsinstellingen via ons beveiligde klantportaal.",
+      "accessPortal": "Toegang tot Klantportaal",
       "viewBillingHistory": "Bekijk factuurgeschiedenis",
-      "updatePaymentMethods": "Werk betalingsmethoden bij",
+      "updatePaymentMethods": "Update betaalmethoden",
+      "updatePaymentMethod": "Update betaalmethode",
       "downloadInvoices": "Download facturen",
       "manageSubscription": "Beheer abonnement"
     },
     "premiumFeatures": {
-      "title": "Je premium functies",
-      "subtitle": "Alles wat je nodig hebt om spraak om te zetten in gestructureerde CRM-gegevens",
+      "title": "Je Premium Functies",
+      "subtitle": "Alles wat je nodig hebt om spraak om te zetten in gestructureerde CRM data",
       "whatsappVoiceNotes": {
-        "title": "WhatsApp-spraaknotities",
-        "description": "Stuur onbeperkt spraakberichten rechtstreeks naar je CRM via WhatsApp",
-        "unlimitedUsage": "Onbeperkt gebruik"
+        "title": "WhatsApp Spraaknotities",
+        "description": "Stuur onbeperkte spraakberichten direct naar je CRM via WhatsApp",
+        "unlimitedUsage": "Onbeperkt Gebruik",
+        "instantProcessing": "Directe Verwerking",
+        "multiLanguage": "Meertalige Ondersteuning"
       },
       "realtimeSync": {
-        "title": "Realtime synchronisatie",
-        "description": "Directe synchronisatie met je CRM-platform",
-        "liveUpdates": "Live-updates"
+        "title": "Real-time Synchronisatie",
+        "description": "Directe synchronisatie met je CRM platform",
+        "liveUpdates": "Live Updates"
       },
       "prioritySupport": {
-        "title": "Prioritaire ondersteuning",
-        "description": "24/7 toegewijde hulp van ons expertteam",
-        "support24x7": "24/7 ondersteuning"
+        "title": "Prioriteit Support",
+        "description": "24/7 toegewijde hulp van ons expert team",
+        "support24x7": "24/7 Support"
+      },
+      "aiProcessing": {
+        "title": "AI Verwerking",
+        "description": "Geavanceerde AI extraheert en structureert belangrijke informatie uit je spraak",
+        "smartExtraction": "Slimme Data Extractie",
+        "autoScheduling": "Auto-Inplanning",
+        "contextAware": "Contextbewuste Verwerking"
+      },
+      "crmIntegration": {
+        "title": "CRM Integratie",
+        "description": "Naadloze integratie met je bestaande CRM platform",
+        "realTimeSync": "Real-time Sync",
+        "autoContactCreation": "Auto Contact Aanmaak",
+        "taskManagement": "Taakbeheer"
       }
     },
     "support": {
-      "title": "Hulp nodig bij de start?",
-      "description": "Ons ondersteuningsteam helpt je graag om het meeste uit VoiceLink te halen. Krijg persoonlijke hulp bij installatie en optimalisatie.",
-      "contactSupport": "Contact opnemen met support"
+      "title": "Hulp Nodig om te Beginnen?",
+      "subtitle": "Ons support team is er om je te helpen het meeste uit VoiceLink te halen. Krijg persoonlijke hulp bij setup en optimalisatie.",
+      "description": "Ons support team is er om je te helpen het meeste uit VoiceLink te halen. Krijg persoonlijke hulp bij setup en optimalisatie.",
+      "contactSupport": "Contact Support",
+      "email": {
+        "title": "Email Support",
+        "description": "Krijg hulp via email met gedetailleerde antwoorden binnen 24 uur"
+      },
+      "liveChat": {
+        "title": "Live Chat",
+        "description": "Chat met ons support team in real-time",
+        "startChat": "Start Chat"
+      },
+      "consultation": {
+        "title": "Gratis Consultatie",
+        "description": "Plan een gratis consultatiegesprek met onze experts",
+        "bookCall": "Boek Gesprek"
+      }
     }
   },
+  "numbers": {
+    "currency": "€{{amount}}",
+    "percentage": "{{value}}%",
+    "decimal": "{{value}}"
+  },
   "whatsapp": {
-    "integration": "WhatsApp-integratie",
-    "verified": "WhatsApp geverifieerd",
+    "integration": "WhatsApp Integratie",
+    "verified": "WhatsApp Geverifieerd",
     "connectedTo": "Verbonden met {{number}}",
-    "activeReady": "Actief & klaar",
-    "readyDescription": "Je WhatsApp-nummer is geverifieerd en klaar om bevestigingen van spraaknotities te ontvangen. Je kunt nu spraakberichten sturen naar VoiceLink!",
-    "changeNumber": "Wijzig WhatsApp-nummer",
-    "changeDescription": "Verbreek verbinding om een ander WhatsApp-nummer te verbinden",
-    "disconnect": "Verbinding verbreken",
-    "disconnecting": "Verbinding verbreken...",
-    "verificationPending": "WhatsApp-verificatie in behandeling",
-    "pendingDescription": "Je WhatsApp-verificatie is in behandeling. Voltooi het verificatieproces om VoiceLink te gebruiken.",
-    "refreshStatus": "Status vernieuwen",
-    "whatsappNumber": "WhatsApp-nummer",
-    "includeCountryCode": "Voer landcode in (bijv. +32 voor België)",
+    "activeReady": "Actief & Klaar",
+    "readyDescription": "Je WhatsApp nummer is geverifieerd en klaar om spraaknotitie bevestigingen te ontvangen. Je kunt nu spraakberichten naar VoiceLink sturen!",
+    "changeNumber": "WhatsApp Nummer Wijzigen",
+    "changeDescription": "Ontkoppel om een ander WhatsApp nummer te verbinden",
+    "disconnect": "Ontkoppelen",
+    "disconnecting": "Ontkoppelen...",
+    "verificationPending": "WhatsApp Verificatie In Behandeling",
+    "pendingDescription": "Je WhatsApp verificatie is in behandeling. Voltooi het verificatieproces om VoiceLink te gebruiken.",
+    "refreshStatus": "Status Vernieuwen",
+    "whatsappNumber": "WhatsApp Nummer",
+    "includeCountryCode": "Inclusief landcode (bijv. +32 voor België)",
     "validPhoneRequired": "Voer een geldig internationaal telefoonnummer in",
-    "sendVerificationCode": "Verificatiecode verzenden",
-    "sending": "Verzenden...",
-    "verificationCodeSent": "Verificatiecode verzonden",
-    "codeSentTo": "We hebben een 6-cijferige code verzonden naar {{number}}",
+    "sendVerificationCode": "Verstuur Verificatiecode",
+    "sending": "Versturen...",
+    "verificationCodeSent": "Verificatiecode Verstuurd",
+    "codeSentTo": "We hebben een 6-cijferige code gestuurd naar {{number}}",
     "codeExpires": "Code verloopt om {{time}}",
     "verificationCode": "Verificatiecode",
     "enterCode": "Voer 6-cijferige code in",
     "verifying": "Verifiëren...",
     "verify": "Verifiëren",
-    "resendCode": "Code opnieuw verzenden",
-    "verifiedSuccessfully": "WhatsApp-nummer succesvol geverifieerd!"
+    "resendCode": "Code Opnieuw Versturen",
+    "verifiedSuccessfully": "WhatsApp nummer succesvol geverifieerd!"
   },
   "pricing": {
-    "title": "Volumekortingen die met je meegroeien",
-    "subtitle": "Prijs per gebruiker. Start gratis, upgrade wanneer je er klaar voor bent. Geen verborgen kosten.",
+    "title": "Volume Prijzen Die Meeschalen",
+    "subtitle": "Per gebruiker prijzen. Start gratis, upgrade wanneer je klaar bent. Geen verborgen kosten.",
     "monthly": "Maandelijks",
     "yearly": "Jaarlijks",
     "save20": "Bespaar 20%",
     "voicelinkPro": "VoiceLink Pro",
     "perfectForTeams": "Perfect voor groeiende teams",
     "features": {
-      "unlimitedVoiceNotes": "Onbeperkte WhatsApp-spraaknotities",
-      "realtimeCrmSync": "Realtime CRM-synchronisatie",
-      "nativeWhatsappIntegration": "Native WhatsApp-integratie",
+      "unlimitedVoiceNotes": "Onbeperkte WhatsApp spraaknotities",
+      "realtimeCrmSync": "Real-time CRM synchronisatie",
+      "nativeWhatsappIntegration": "Native WhatsApp integratie",
       "multiLanguageSupport": "Meertalige ondersteuning",
-      "prioritySupport": "Prioritaire ondersteuning"
+      "prioritySupport": "Prioriteit support"
     },
-    "numberOfUsers": "Aantal gebruikers",
+    "numberOfUsers": "Aantal Gebruikers",
     "customAmount": "Aangepast aantal",
     "enterNumberOfUsers": "Voer aantal gebruikers in",
     "perUserPerMonth": "/gebruiker/maand",
     "users": "{{count}} gebruiker",
     "users_plural": "{{count}} gebruikers",
     "total": "Totaal: €{{amount}}/{{period}}",
-    "annualSavings": "Jaarlijkse besparing: €{{amount}}",
-    "yearlyDiscount": "20% korting toegepast voor jaarlijkse facturatie",
-    "startFreeTrial": "Start gratis proefperiode",
-    "comingSoon": "Binnenkort beschikbaar",
-    "multiUserPlansComingSoon": "🚧 Multi-user plannen binnenkort beschikbaar! Momenteel alleen abonnementen voor één gebruiker.",
-    "multiUserPlansLaunching": "Multi-user plannen lanceren binnenkort",
-    "freeTrialNoCreditCard": "14 dagen gratis proef • Geen creditcard nodig",
-    "volumeDiscountTiers": "Volumekorting niveaus",
+    "annualSavings": "Jaarlijkse Besparing: €{{amount}}",
+    "yearlyDiscount": "20% korting toegepast voor jaarlijkse facturering",
+    "startFreeTrial": "Start Gratis Proefperiode",
+    "comingSoon": "Binnenkort Beschikbaar",
+    "multiUserPlansComingSoon": "🚧 Multi-gebruiker plannen komen binnenkort! Momenteel zijn alleen enkele gebruiker abonnementen beschikbaar.",
+    "multiUserPlansLaunching": "Multi-gebruiker plannen komen binnenkort",
+    "freeTrial": "14-dagen gratis proefperiode",
+    "volumeDiscountTiers": "Volume Korting Niveaus",
     "automaticDiscounts": "Automatische kortingen toegepast op basis van teamgrootte",
-    "currentlyOnlySingleUser": "Momenteel alleen abonnementen voor één gebruiker beschikbaar. Multi-user plannen met volumekortingen binnenkort beschikbaar!",
+    "currentlyOnlySingleUser": "Momenteel zijn alleen enkele gebruiker plannen beschikbaar. Multi-gebruiker plannen met volume kortingen komen binnenkort!",
     "plan": "Plan",
     "teamSize": "Teamgrootte",
-    "pricePerUser": "Prijs per gebruiker",
+    "pricePerUser": "Prijs per Gebruiker",
     "discount": "Korting",
     "current": "Huidig",
-    "contactUs": "Contacteer ons",
+    "contactUs": "Contacteer Ons",
     "off": "{{percent}}% korting",
     "custom": "Aangepast",
-    "enterprisePricing": "Enterprise-prijzen",
+    "enterprisePricing": "Enterprise Prijzen",
     "customPricingFor": "Aangepaste prijzen voor {{count}}+ gebruikers",
     "dedicatedAccountManager": "Toegewijde accountmanager",
     "customIntegrations": "Aangepaste integraties & functies",
-    "getCustomQuote": "Ontvang aangepaste offerte",
-    "allPlansInclude": "Alle plannen bevatten onbeperkte WhatsApp-spraaknotities, realtime CRM-synchronisatie en prioritaire ondersteuning.",
-    "automaticDiscountsComingSoon": "Automatische kortingen op basis van teamgrootte (binnenkort beschikbaar)"
+    "getCustomQuote": "Krijg Aangepaste Offerte",
+    "allPlansInclude": "Alle plannen bevatten onbeperkte WhatsApp spraaknotities, real-time CRM synchronisatie en prioriteit support.",
+    "automaticDiscountsComingSoon": "Automatische kortingen toegepast op basis van teamgrootte (Binnenkort)"
   },
   "features": {
-    "title": "CRM-integraties",
+    "title": "CRM Integraties",
     "subtitle": "Verbind direct. Synchroniseer automatisch.",
-    "oneClickSetup": "Één-klik setup",
-    "realtimeSync": "Realtime synchronisatie",
+    "oneClickSetup": "Eén-klik setup",
+    "realtimeSync": "Real-time synchronisatie",
     "secureOauth": "Veilige OAuth",
-    "moreIntegrations": "We werken voortdurend aan nieuwe CRM-integraties zoals HubSpot, Salesforce, Zoho & meer om VoiceLink voor iedereen beschikbaar te maken.",
-    "dontSeeYourCrm": "Zie je jouw CRM niet? Wij bouwen aangepaste integraties voor elk platform met een API.",
-    "contactForCustom": "Neem contact met ons op voor een aangepaste integratie"
+    "moreIntegrations": "We werken voortdurend aan het toevoegen van nieuwe CRM integraties zoals HubSpot, Salesforce, Zoho & meer om VoiceLink voor iedereen beschikbaar te maken.",
+    "dontSeeYourCrm": "Zie je je CRM niet? We bouwen aangepaste integraties voor elk platform met een API.",
+    "contactForCustom": "Contacteer Ons voor Aangepaste Integratie"
   },
   "howItWorks": {
-    "title": "Hoe WhatsApp-spraaknotities werken",
-    "subtitle": "Drie eenvoudige stappen om spraak om te zetten in gestructureerde gegevens",
+    "title": "Hoe WhatsApp Spraaknotities Werken",
+    "subtitle": "Drie eenvoudige stappen om spraak om te zetten in gestructureerde data",
     "step1": {
-      "title": "Spraakinvoer",
-      "description": "Neem je gedachten op via WhatsApp-spraakberichten"
+      "title": "Spraak Invoer",
+      "description": "Neem je gedachten natuurlijk op via WhatsApp spraakberichten"
     },
     "step2": {
-      "title": "AI-verwerking",
-      "description": "Geavanceerde AI haalt belangrijke info uit je spraak en structureert deze"
+      "title": "AI Verwerking",
+      "description": "Geavanceerde AI extraheert en structureert belangrijke informatie uit je spraak"
     },
     "step3": {
-      "title": "CRM-integratie",
-      "description": "Gestructureerde gegevens worden automatisch gesynchroniseerd met je CRM-systeem"
+      "title": "CRM Integratie",
+      "description": "Gestructureerde data synchroniseert automatisch naar je CRM systeem"
     }
   },
   "customSolutions": {
-    "title": "Wil je een aangepaste VoiceLink-oplossing?",
-    "subtitle": "Wij bouwen oplossingen op maat voor elke CRM of bedrijfsysteem. Als het een API heeft, kunnen we het verbinden.",
+    "title": "Wil je een aangepaste VoiceLink oplossing?",
+    "subtitle": "We bouwen op maat gemaakte spraakoplossingen voor elk CRM of bedrijfssysteem. Als het een API heeft, kunnen we ermee verbinden.",
     "twoExamples": "Twee voorbeelden:",
-    "adaptsToAnyIndustry": "VoiceLink past zich aan elke sector of workflow aan die spraak-naar-data nodig heeft.",
+    "adaptsToAnyIndustry": "VoiceLink past zich aan elke industrie of workflow aan die spraak-naar-data conversie nodig heeft.",
     "fieldTechnicians": {
       "title": "Veldtechnici",
-      "description": "Technici spreken serviceverslagen in terwijl ze onderweg zijn. Spraaknotities genereren automatisch gestructureerde rapporten met jobdetails, gebruikte onderdelen en bestede tijd.",
-      "features": "Aangepaste rapportformaten • Realtime synchronisatie • Mobiel-eerst"
+      "description": "Technici spreken servicerapporten in tijdens het rijden tussen klussen. Spraaknotities genereren automatisch gestructureerde rapporten met klus details, gebruikte onderdelen en bestede tijd.",
+      "features": "Aangepaste rapportformaten • Real-time sync • Mobile-first"
     },
     "propertyManagement": {
       "title": "Vastgoedbeheer",
-      "description": "Beheerders nemen onderhoudsverzoeken, huurdersinteracties en inspectienotities op via spraak. AI maakt automatisch werkorders aan, werkt huurdersgegevens bij en plant opvolgingen.",
-      "features": "Werkordercreatie • Huurderscommunicatie • Onderhoudsplanning"
+      "description": "Vastgoedbeheerders nemen onderhoudsverzoeken, huurder interacties en inspectienotities op via spraak. AI maakt automatisch werkorders aan, werkt huurder records bij en plant follow-ups.",
+      "features": "Werkorder aanmaak • Huurder communicatie • Onderhoudsplanning"
     },
-    "connectAnyCrm": "Verbind elke CRM",
-    "integrateWithAnySystem": "Integreer met elk systeem",
-    "apiSupport": "+ Elk systeem met REST API, GraphQL of webhooks",
-    "readyToBuild": "Klaar om jouw aangepaste oplossing te bouwen?",
-    "customSolutionDescription": "Vertel ons over je workflow en we laten zien hoe spraaktechnologie je bedrijfsvoering kan transformeren. Elke oplossing wordt volledig op maat gemaakt.",
-    "scheduleCustomDemo": "Plan een demo op maat",
-    "discussYourNeeds": "Bespreek je behoeften",
+    "connectAnyCrm": "Verbind Elk CRM",
+    "integrateWithAnySystem": "We integreren met elk systeem dat een API heeft",
+    "apiSupport": "+ Elk systeem met REST API, GraphQL, of webhooks",
+    "readyToBuild": "Klaar om Je Aangepaste Oplossing te Bouwen?",
+    "customSolutionDescription": "Vertel ons over je workflow, en we laten je zien hoe spraaktechnologie je bedrijfsprocessen kan transformeren. Elke oplossing is op maat gemaakt voor je exacte behoeften.",
+    "scheduleCustomDemo": "Plan Aangepaste Demo",
+    "discussYourNeeds": "Bespreek Je Behoeften",
     "freeConsultation": "Gratis consultatie",
     "customProofOfConcept": "Aangepast proof of concept",
-    "tailoredImplementation": "Implementatie op maat"
-  },
-  "finalCta": {
-    "title": "Klaar om je workflow te transformeren?",
-    "subtitle": "Hoe meer gebruikers je toevoegt, hoe meer je bespaart. Start gratis, schaal betaalbaar. Verbind je WhatsApp en start vandaag nog je gratis proefperiode.",
-    "startFreeTrial": "Start gratis proefperiode",
-    "watchDemo": "Bekijk demo",
-    "freeTrialFeatures": {
-      "freeTrialDays": "14 dagen gratis proefperiode",
-      "noSetupFees": "Geen installatiekosten",
-      "cancelAnytime": "Op elk moment annuleren"
-    }
+    "tailoredImplementation": "Op maat gemaakte implementatie"
   },
   "footer": {
     "copyright": "© 2025 Finit Solutions",
     "privacy": "Privacy",
-    "saasAgreement": "SaaS-overeenkomst",
+    "saasAgreement": "SaaS Overeenkomst",
     "disclaimer": "Disclaimer",
-    "cookiePolicy": "Cookiebeleid",
-    "cookieSettings": "Cookie-instellingen",
+    "cookiePolicy": "Cookie Beleid",
+    "cookieSettings": "Cookie Instellingen",
     "support": "Ondersteuning"
+  },
+  "subscription": {
+    "title": "Abonnementsbeheer",
+    "status": "Status",
+    "plan": "Plan",
+    "billingPeriod": "Factureringsperiode",
+    "nextBilling": "Volgende Facturering",
+    "amount": "Bedrag",
+    "paymentMethod": "Betaalmethode",
+    "manageSubscription": "Abonnement Beheren",
+    "cancelSubscription": "Abonnement Opzeggen",
+    "upgradeSubscription": "Abonnement Upgraden",
+    "subscriptionDetails": "Abonnementsdetails",
+    "billingHistory": "Factureringsgeschiedenis",
+    "currentPlan": "Huidig Plan",
+    "planFeatures": "Plan Functies",
+    "subscriptionActive": "Actief",
+    "subscriptionCanceled": "Geannuleerd",
+    "subscriptionPastDue": "Achterstallig",
+    "subscriptionTrialing": "Proefperiode",
+    "monthly": "Maandelijks",
+    "yearly": "Jaarlijks",
+    "endingOn": "Eindigt op {{date}}",
+    "renewsOn": "Vernieuwt op {{date}}",
+    "trialEndsOn": "Proefperiode eindigt op {{date}}"
+  },
+  "userInfo": {
+    "personalInformation": "Persoonlijke Informatie",
+    "accountDetails": "Accountdetails",
+    "contactInformation": "Contactinformatie",
+    "preferences": "Voorkeuren",
+    "companyInformation": "Bedrijfsinformatie",
+    "apiConfiguration": "API Configuratie",
+    "fullName": "Volledige Naam",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "emailAddress": "E-mailadres",
+    "phoneNumber": "Telefoonnummer",
+    "language": "Taal",
+    "timeZone": "Tijdzone",
+    "locale": "Lokalisatie",
+    "accountId": "Account ID",
+    "userId": "Gebruiker ID",
+    "companyName": "Bedrijfsnaam",
+    "companyDomain": "Bedrijfsdomein",
+    "defaultCurrency": "Standaard Valuta",
+    "lastLogin": "Laatste Login",
+    "accountStatus": "Account Status",
+    "emailStatus": "E-mail Status",
+    "adminStatus": "Admin Status",
+    "supportAccess": "Support Toegang",
+    "tokenExpires": "Token Verloopt",
+    "audience": "Doelgroep",
+    "scope": "Bereik",
+    "active": "Actief",
+    "inactive": "Inactief",
+    "admin": "Admin",
+    "user": "Gebruiker",
+    "verified": "Geverifieerd",
+    "unverified": "Niet Geverifieerd",
+    "yes": "Ja",
+    "no": "Nee",
+    "notAvailable": "N.v.t.",
+    "notProvided": "Niet opgegeven",
+    "minutes": "minuten",
+    "invoiceable": "Factureerbaar",
+    "whitelabeling": "Whitelabeling",
+    "timeTrackingLimit": "Tijdregistratie Limiet",
+    "accountType": "Account Type"
   },
   "errors": {
     "authenticationFailed": "Authenticatie mislukt",
@@ -309,13 +574,6 @@
     "networkError": "Netwerkfout opgetreden",
     "unexpectedError": "Er is een onverwachte fout opgetreden",
     "tryAgain": "Probeer het opnieuw"
-  },
-  "validation": {
-    "required": "Dit veld is verplicht",
-    "invalidEmail": "Voer een geldig e-mailadres in",
-    "invalidPhone": "Voer een geldig telefoonnummer in",
-    "minLength": "Moet minstens {{min}} tekens bevatten",
-    "maxLength": "Mag niet meer dan {{max}} tekens bevatten"
   },
   "dates": {
     "today": "Vandaag",
@@ -328,9 +586,50 @@
     "lastMonth": "Vorige maand",
     "nextMonth": "Volgende maand"
   },
-  "numbers": {
-    "currency": "€{{amount}}",
-    "percentage": "{{value}}%",
-    "decimal": "{{value}}"
+  "contact": {
+    "title": "Contacteer Ons",
+    "subtitle": "Neem contact op met ons team voor persoonlijke hulp",
+    "fullName": "Volledige Naam",
+    "fullNamePlaceholder": "Voer uw volledige naam in",
+    "emailAddress": "E-mailadres",
+    "emailPlaceholder": "Voer uw e-mailadres in",
+    "phoneNumber": "Telefoonnummer",
+    "phonePlaceholder": "+31 123 456 789",
+    "message": "Bericht",
+    "messagePlaceholder": "Vertel ons over uw behoeften of stel uw vragen...",
+    "sendMessage": "Bericht Versturen",
+    "sendingMessage": "Bericht Versturen...",
+    "messageSent": "Bericht Verstuurd!",
+    "thankYouMessage": "Bedankt voor het contact. We nemen binnen 24 uur contact met u op.",
+    "responseTime": "We reageren binnen 24 uur op werkdagen",
+    "required": "Verplicht",
+    "submitFailed": "Bericht versturen mislukt. Probeer het opnieuw of neem direct contact met ons op."
+  },
+  "finalCta": {
+    "title": "Klaar om je Workflow te Transformeren?",
+    "subtitle": "Hoe meer gebruikers je toevoegt, hoe meer je bespaart. Start gratis, schaal betaalbaar. Verbind je WhatsApp en start vandaag je gratis proefperiode.",
+    "startFreeTrial": "Start Gratis Proefperiode",
+    "watchDemo": "Bekijk Demo",
+    "freeTrialFeatures": {
+      "freeTrialDays": "14-dagen gratis proefperiode",
+      "noSetupFees": "Geen installatiekosten",
+      "cancelAnytime": "Altijd opzegbaar"
+    }
+  },
+  "phoneMockup": {
+    "voiceLink": "VoiceLink",
+    "online": "online",
+    "typeMessage": "Typ een bericht",
+    "aiProcessing": "AI Verwerkt Spraaknotitie...",
+    "updatedCrm": "✅ CRM Bijgewerkt met:",
+    "followUpCall": "Follow-up Gesprek",
+    "keyNotes": "Belangrijke Notities:",
+    "actionItems": "Actiepunten:",
+    "sendProposal": "Voorstel versturen voor vrijdag",
+    "includeRoi": "ROI berekeningen bijvoegen",
+    "discussPremium": "Bespreek premium pakket prijzen en implementatie tijdlijn",
+    "budgetIncreased": "Budget verhoogd met 40% voor digitale tools",
+    "strongInterest": "Sterke interesse in WhatsApp integratie",
+    "prefersThursday": "Voorkeur voor donderdag middag gesprekken"
   }
 }

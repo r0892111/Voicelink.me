@@ -1,6 +1,6 @@
 {
   "common": {
-    "loading": "Wird geladen...",
+    "loading": "Laden...",
     "error": "Fehler",
     "success": "Erfolg",
     "cancel": "Abbrechen",
@@ -10,289 +10,178 @@
     "close": "Schließen",
     "back": "Zurück",
     "next": "Weiter",
-    "previous": "Vorherige",
-    "submit": "Absenden",
+    "previous": "Zurück",
+    "submit": "Senden",
     "confirm": "Bestätigen",
     "yes": "Ja",
-    "no": "Nein"
+    "no": "Nein",
+    "enterNumberOfUsers": "Anzahl der Benutzer eingeben",
+    "premiumMonthly": "Premium Monatlich",
+    "advancedCrmFeatures": "Erweiterte CRM-Funktionen und Prioritätssupport",
+    "updateDatabaseName": "Datenbankname aktualisieren",
+    "enterOdooDatabaseName": "Geben Sie Ihren Odoo-Datenbanknamen ein",
+    "enterNewApiKey": "Neuen API-Schlüssel zum Aktualisieren eingeben",
+    "enterOdooApiKey": "Geben Sie Ihren Odoo API-Schlüssel ein",
+    "selectUserAccount": "Wählen Sie Ihr Benutzerkonto aus",
+    "accessRightsTab": "Im \"Zugriffsrechte\"-Tab finden Sie den \"API-Schlüssel\"-Bereich",
+    "generateOrCopyApiKey": "Generieren oder kopieren Sie Ihren bestehenden API-Schlüssel",
+    "loadingDashboard": "Dashboard wird geladen...",
+    "teamMemberInvitedSuccessfully": "Teammitglied erfolgreich eingeladen!",
+    "changeLanguage": "Sprache ändern",
+    "voiceLink": "VoiceLink",
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
+    "minLength": "Muss mindestens {{min}} Zeichen lang sein",
+    "maxLength": "Darf höchstens {{max}} Zeichen lang sein",
+    "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren"
   },
-  "navigation": {
-    "home": "Startseite",
-    "features": "Funktionen",
-    "pricing": "Preise",
-    "dashboard": "Dashboard",
-    "support": "Support",
-    "signOut": "Abmelden",
-    "getStarted": "Kostenlos starten",
-    "backToHome": "Zurück zur Startseite"
+  "platforms": {
+    "teamleader": "TeamLeader",
+    "pipedrive": "Pipedrive",
+    "odoo": "Odoo",
+    "unknown": "Unbekannt"
   },
-  "hero": {
-    "title": "Einfach...",
-    "mainTitle": "Sprich mit deinem CRM",
-    "subtitle1": "Sende Sprachnachrichten über WhatsApp und sie synchronisieren sich automatisch mit deinem CRM.",
-    "subtitle2": "Verwandle Sprachnachrichten sofort in strukturierte Daten.",
-    "getStartedFree": "Kostenlos starten",
-    "watchDemo": "Demo ansehen",
-    "oneClickSetup": "Ein-Klick-CRM-Verbindung",
-    "whatsappSetup": "WhatsApp in 2 Minuten verbinden"
+  "validation": {
+    "enterValidApiKey": "Bitte geben Sie einen gültigen API-Schlüssel ein",
+    "enterOdooDatabaseName": "Bitte geben Sie Ihren Odoo-Datenbanknamen ein",
+    "userNotAuthenticated": "Benutzer nicht authentifiziert",
+    "failedToSaveApiKey": "API-Schlüssel speichern fehlgeschlagen",
+    "enterValidPhoneNumber": "Bitte geben Sie eine gültige internationale Telefonnummer ein",
+    "enterValidSixDigitCode": "Bitte geben Sie einen gültigen 6-stelligen Code ein",
+    "failedToSendVerificationCode": "Verifizierungscode senden fehlgeschlagen",
+    "failedToVerifyCode": "Code verifizieren fehlgeschlagen",
+    "failedToDisconnectWhatsapp": "WhatsApp trennen fehlgeschlagen",
+    "pleaseSignInToPurchase": "Bitte melden Sie sich an, um einen Kauf zu tätigen",
+    "purchaseFailed": "Kauf fehlgeschlagen",
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
+    "minLength": "Muss mindestens {{min}} Zeichen lang sein",
+    "maxLength": "Darf höchstens {{max}} Zeichen lang sein",
+    "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren"
   },
   "auth": {
+    "invalidAuthenticationPlatform": "Ungültige Authentifizierungsplattform",
+    "authenticationFailed": "Authentifizierung fehlgeschlagen",
+    "missingAuthenticationParameters": "Fehlende Authentifizierungsparameter",
+    "invalidStateParameter": "Ungültiger State-Parameter",
+    "failedToEstablishSession": "Sitzung einrichten fehlgeschlagen",
+    "completingAuthentication": "Authentifizierung wird abgeschlossen...",
+    "authenticationFailedFor": "Authentifizierung fehlgeschlagen für {{provider}}"
+  },
+  "auth": {
+    "callback": {
+      "authenticating": "Authentifizierung...",
+      "authenticationSuccessful": "Authentifizierung Erfolgreich!",
+      "authenticationFailed": "Authentifizierung Fehlgeschlagen",
+      "processingAuth": "{{platform}} Authentifizierung wird verarbeitet...",
+      "completingAuth": "Authentifizierung wird abgeschlossen...",
+      "successfullyAuthenticated": "Erfolgreich mit {{platform}} authentifiziert!",
+      "redirectingToCheckout": "Weiterleitung zur Abonnement-Kasse...",
+      "returnToHome": "Zurück zur Startseite"
+    },
     "modal": {
-      "title": "Starte deine kostenlose Testversion",
-      "subtitle": "Verbinde dein CRM und beginne sofort mit VoiceLink",
-      "freeTrialBanner": "14-tägige kostenlose Testversion startet jetzt",
-      "freeTrialDescription": "Deine kostenlose Testphase beginnt sofort nach der Verbindung mit deinem CRM. Keine Kreditkarte erforderlich.",
-      "connectTeamleader": "Teamleader verbinden",
-      "connectPipedrive": "Pipedrive verbinden",
-      "connectOdoo": "Odoo verbinden",
-      "startTrialInstantly": "Starte deine Testversion sofort",
-      "alreadyHaveAccount": "Hast du schon ein Konto?",
-      "signInDescription": "Melde dich einfach über deine CRM-Plattform oben an",
-      "secureOauth": "Sichere OAuth-Anmeldung",
+      "title": "Starten Sie Ihre Kostenlose Testversion",
+      "subtitle": "Verbinden Sie Ihr CRM und beginnen Sie sofort mit VoiceLink",
+      "freeTrialBanner": "14-Tage Kostenlose Testversion Beginnt Jetzt",
+      "freeTrialDescription": "Ihre kostenlose Testversion beginnt sofort nach der Verbindung Ihres CRM.",
+      "connectTeamleader": "Teamleader Verbinden",
+      "connectPipedrive": "Pipedrive Verbinden",
+      "connectOdoo": "Odoo Verbinden",
+      "startTrialInstantly": "Starten Sie Ihre kostenlose Testversion sofort",
+      "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+      "signInDescription": "Verbinden Sie sich einfach mit Ihrer CRM-Plattform oben, um sich anzumelden",
+      "secureOauth": "Sicheres OAuth",
       "noSetupFees": "Keine Einrichtungsgebühren",
-      "cancelAnytime": "Jederzeit kündbar",
-      "termsAgreement": "Durch die Verbindung deines CRM stimmst du unseren {{termsLink}} und {{privacyLink}} zu",
+      "cancelAnytime": "Jederzeit Kündbar",
+      "termsAgreement": "Durch die Verbindung Ihres CRM stimmen Sie unseren {{termsLink}} und {{privacyLink}} zu",
       "termsOfService": "Nutzungsbedingungen",
       "privacyPolicy": "Datenschutzrichtlinie"
     },
-    "callback": {
-      "authenticating": "Authentifizierung läuft...",
-      "authenticationSuccessful": "Authentifizierung erfolgreich!",
-      "authenticationFailed": "Authentifizierung fehlgeschlagen",
-      "processingAuth": "Verarbeite {{platform}}-Authentifizierung...",
-      "completingAuth": "Authentifizierung wird abgeschlossen...",
-      "successfullyAuthenticated": "Erfolgreich mit {{platform}} authentifiziert!",
-      "redirectingToCheckout": "Weiterleitung zum Abo-Checkout...",
-      "returnToHome": "Zurück zur Startseite"
-    }
+    "invalidAuthenticationPlatform": "Ungültige Authentifizierungsplattform",
+    "authenticationFailed": "Authentifizierung fehlgeschlagen",
+    "missingAuthenticationParameters": "Fehlende Authentifizierungsparameter",
+    "invalidStateParameter": "Ungültiger State-Parameter",
+    "failedToEstablishSession": "Sitzung einrichten fehlgeschlagen",
+    "completingAuthentication": "Authentifizierung wird abgeschlossen...",
+    "authenticationFailedFor": "Authentifizierung fehlgeschlagen für {{provider}}"
   },
-  "dashboard": {
-    "welcome": "Willkommen zurück, {{name}}!",
-    "welcomeDefault": "Willkommen zurück, Premium-Benutzer!",
-    "subscriptionActive": "Dein VoiceLink-Abo ist aktiv",
-    "platformConnection": {
-      "title": "{{platform}}",
-      "connectedActive": "Verbunden & aktiv",
-      "integrationReady": "Integration ist live und bereit für Sprachnachrichten"
-    },
-    "accountProfile": {
-      "title": "Konto-Profil",
-      "subtitle": "Deine CRM-Kontoinformationen",
-      "personalInfo": "Persönliche Informationen",
-      "accountDetails": "Kontodetails",
-      "fullName": "Vollständiger Name",
-      "email": "E-Mail",
-      "language": "Sprache",
-      "timeZone": "Zeitzone",
-      "whatsappStatus": "WhatsApp-Status",
-      "phone": "Telefon",
-      "accountId": "Konto-ID",
-      "emailStatus": "E-Mail-Status"
-    },
-    "whatsappStatus": {
-      "connected": "Verbunden",
-      "pending": "Ausstehend",
-      "notConnected": "Nicht verbunden"
-    },
-    "allSet": {
-      "title": "🎉 Alles erledigt!",
-      "subtitle": "Dein WhatsApp ist verbunden und VoiceLink ist einsatzbereit",
-      "startSending": "Sprachnachrichten senden",
-      "description": "Sende einfach eine Sprachnachricht an VoiceLink über WhatsApp und sieh zu, wie dein CRM automatisch mit strukturierten Daten, Follow-up-Aufgaben und Kontaktinformationen aktualisiert wird.",
-      "whatsappConnected": "WhatsApp verbunden",
-      "crmIntegrationActive": "CRM-Integration aktiv",
-      "aiProcessingReady": "KI-Verarbeitung bereit"
-    },
-    "gettingStarted": {
-      "title": "Bereit loszulegen?",
-      "subtitle": "Befolge diese einfachen Schritte, um mit VoiceLink zu starten",
-      "step1": {
-        "title": "WhatsApp verifizieren",
-        "description": "Verbinde deine WhatsApp-Nummer, um Sprachnachrichten-Bestätigungen zu erhalten"
-      },
-      "step2": {
-        "title": "Sprachnachricht senden",
-        "description": "Sprich deine Gedanken ganz natürlich in WhatsApp-Sprachnachrichten"
-      },
-      "step3": {
-        "title": "Magie erleben",
-        "description": "KI verarbeitet deine Stimme und synchronisiert strukturierte Daten mit deinem CRM"
-      }
-    },
-    "customerPortal": {
-      "title": "Verwalte dein Abo",
-      "subtitle": "Greife auf deine Rechnungsinformationen zu und verwalte dein Abo",
-      "portalTitle": "Kundenportal",
-      "portalDescription": "Greife auf deine Rechnungsverläufe zu, aktualisiere Zahlungsmethoden, lade Rechnungen herunter und verwalte deine Abo-Einstellungen über unser sicheres Kundenportal.",
-      "accessPortal": "Kundenportal öffnen",
-      "viewBillingHistory": "Rechnungsverlauf anzeigen",
-      "updatePaymentMethods": "Zahlungsmethoden aktualisieren",
-      "downloadInvoices": "Rechnungen herunterladen",
-      "manageSubscription": "Abo verwalten"
-    },
-    "premiumFeatures": {
-      "title": "Deine Premium-Funktionen",
-      "subtitle": "Alles, was du brauchst, um Sprache in strukturierte CRM-Daten zu verwandeln",
-      "whatsappVoiceNotes": {
-        "title": "WhatsApp-Sprachnachrichten",
-        "description": "Sende unbegrenzt Sprachnachrichten direkt in dein CRM über WhatsApp",
-        "unlimitedUsage": "Unbegrenzte Nutzung"
-      },
-      "realtimeSync": {
-        "title": "Echtzeit-Synchronisation",
-        "description": "Sofortige Synchronisation mit deiner CRM-Plattform",
-        "liveUpdates": "Live-Updates"
-      },
-      "prioritySupport": {
-        "title": "Prioritäts-Support",
-        "description": "Rund um die Uhr engagierte Unterstützung durch unser Expertenteam",
-        "support24x7": "24/7-Support"
-      }
-    },
-    "support": {
-      "title": "Brauchst du Hilfe beim Start?",
-      "description": "Unser Support-Team hilft dir, das Beste aus VoiceLink herauszuholen. Erhalte persönliche Unterstützung bei Einrichtung und Optimierung.",
-      "contactSupport": "Support kontaktieren"
-    }
+  "teamManagement": {
+    "title": "Team-Verwaltung",
+    "subtitle": "Verwalten Sie Ihre Teammitglieder und Einladungen",
+    "accountOwner": "Kontoinhaber",
+    "admin": "Admin",
+    "teamMembers": "Teammitglieder",
+    "pending": "Ausstehend",
+    "addNewMember": "Neues Teammitglied Hinzufügen",
+    "selectCompanyUser": "Unternehmensbenutzer Auswählen",
+    "loadingUsers": "Unternehmensbenutzer laden...",
+    "selectedUserDetails": "Details des Ausgewählten Benutzers",
+    "name": "Name",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "notProvided": "Nicht angegeben",
+    "whatsappNumber": "WhatsApp-Nummer (falls anders als Telefon)",
+    "whatsappNumberPlaceholder": "+49 123 456 789",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "Vollständigen Namen eingeben",
+    "emailAddress": "E-Mail-Adresse",
+    "emailPlaceholder": "E-Mail-Adresse eingeben",
+    "sendingInvitation": "Einladung senden...",
+    "saveAndInvite": "Speichern & Einladen",
+    "clearSelection": "Auswahl Löschen",
+    "addNewUser": "Neuen Benutzer Hinzufügen",
+    "teamLimitReached": "Team-Limit Erreicht",
+    "teamLimitMessage": "Sie haben Ihr Team-Limit von {{total}} Benutzern erreicht. Upgraden Sie Ihr Abonnement, um mehr Teammitglieder hinzuzufügen.",
+    "upgradeSubscription": "Abonnement Upgraden"
   },
   "whatsapp": {
-    "integration": "WhatsApp-Integration",
-    "verified": "WhatsApp verifiziert",
+    "integration": "WhatsApp Integration",
+    "verified": "WhatsApp Verifiziert",
     "connectedTo": "Verbunden mit {{number}}",
-    "activeReady": "Aktiv & bereit",
-    "readyDescription": "Deine WhatsApp-Nummer ist verifiziert und bereit, Sprachnachrichten-Bestätigungen zu empfangen. Du kannst jetzt Sprachnachrichten an VoiceLink senden!",
-    "changeNumber": "WhatsApp-Nummer ändern",
-    "changeDescription": "Trenne die Verbindung, um eine andere WhatsApp-Nummer zu verbinden",
-    "disconnect": "Verbindung trennen",
-    "disconnecting": "Verbindung wird getrennt...",
-    "verificationPending": "WhatsApp-Verifizierung ausstehend",
-    "pendingDescription": "Deine WhatsApp-Verifizierung ist ausstehend. Bitte schließe den Verifizierungsprozess ab, um VoiceLink nutzen zu können.",
-    "refreshStatus": "Status aktualisieren",
+    "activeReady": "Aktiv & Bereit",
+    "readyDescription": "Ihre WhatsApp-Nummer ist verifiziert und bereit, Sprachnotiz-Bestätigungen zu empfangen. Sie können jetzt Sprachnachrichten an VoiceLink senden!",
+    "changeNumber": "WhatsApp-Nummer Ändern",
+    "changeDescription": "Trennen Sie die Verbindung, um eine andere WhatsApp-Nummer zu verbinden",
+    "disconnect": "Trennen",
+    "disconnecting": "Trennung...",
+    "verificationPending": "WhatsApp-Verifizierung Ausstehend",
+    "pendingDescription": "Ihre WhatsApp-Verifizierung steht aus. Bitte schließen Sie den Verifizierungsprozess ab, um VoiceLink zu verwenden.",
+    "refreshStatus": "Status Aktualisieren",
     "whatsappNumber": "WhatsApp-Nummer",
-    "includeCountryCode": "Bitte mit Ländercode eingeben (z. B. +49 für Deutschland)",
-    "validPhoneRequired": "Bitte gib eine gültige internationale Telefonnummer ein",
-    "sendVerificationCode": "Verifizierungscode senden",
-    "sending": "Wird gesendet...",
-    "verificationCodeSent": "Verifizierungscode gesendet",
+    "includeCountryCode": "Ländercode einschließen (z.B. +49 für Deutschland)",
+    "validPhoneRequired": "Bitte geben Sie eine gültige internationale Telefonnummer ein",
+    "sendVerificationCode": "Bestätigungscode Senden",
+    "sending": "Senden...",
+    "verificationCodeSent": "Bestätigungscode Gesendet",
     "codeSentTo": "Wir haben einen 6-stelligen Code an {{number}} gesendet",
-    "codeExpires": "Code läuft um {{time}} ab",
-    "verificationCode": "Verifizierungscode",
+    "codeExpires": "Code läuft ab um {{time}}",
+    "verificationCode": "Bestätigungscode",
     "enterCode": "6-stelligen Code eingeben",
-    "verifying": "Überprüfung läuft...",
-    "verify": "Überprüfen",
-    "resendCode": "Code erneut senden",
+    "verifying": "Verifizierung...",
+    "verify": "Verifizieren",
+    "resendCode": "Code Erneut Senden",
     "verifiedSuccessfully": "WhatsApp-Nummer erfolgreich verifiziert!"
   },
-  "pricing": {
-    "title": "Volumenbasierte Preise, die mit dir wachsen",
-    "subtitle": "Preis pro Benutzer. Starte kostenlos, upgrade, wenn du bereit bist. Keine versteckten Gebühren.",
-    "monthly": "Monatlich",
-    "yearly": "Jährlich",
-    "save20": "Spare 20%",
-    "voicelinkPro": "VoiceLink Pro",
-    "perfectForTeams": "Perfekt für wachsende Teams",
-    "features": {
-      "unlimitedVoiceNotes": "Unbegrenzte WhatsApp-Sprachnachrichten",
-      "realtimeCrmSync": "Echtzeit-CRM-Synchronisation",
-      "nativeWhatsappIntegration": "Native WhatsApp-Integration",
-      "multiLanguageSupport": "Mehrsprachige Unterstützung",
-      "prioritySupport": "Prioritäts-Support"
-    },
-    "numberOfUsers": "Anzahl der Benutzer",
-    "customAmount": "Benutzerdefinierte Anzahl",
-    "enterNumberOfUsers": "Benutzeranzahl eingeben",
-    "perUserPerMonth": "/Benutzer/Monat",
-    "users": "{{count}} Benutzer",
-    "users_plural": "{{count}} Benutzer",
-    "total": "Gesamt: €{{amount}}/{{period}}",
-    "annualSavings": "Jährliche Ersparnis: €{{amount}}",
-    "yearlyDiscount": "20% Rabatt bei jährlicher Abrechnung",
-    "startFreeTrial": "Kostenlose Testversion starten",
-    "comingSoon": "Demnächst verfügbar",
-    "multiUserPlansComingSoon": "🚧 Multi-Benutzerpläne kommen bald! Derzeit sind nur Einzelbenutzer-Abos verfügbar.",
-    "multiUserPlansLaunching": "Multi-Benutzerpläne starten bald",
-    "freeTrialNoCreditCard": "14 Tage kostenlos testen • Keine Kreditkarte erforderlich",
-    "volumeDiscountTiers": "Volumenrabatt-Stufen",
-    "automaticDiscounts": "Automatische Rabatte basierend auf Teamgröße",
-    "currentlyOnlySingleUser": "Derzeit sind nur Einzelbenutzerpläne verfügbar. Multi-Benutzerpläne mit Mengenrabatten kommen bald!",
-    "plan": "Plan",
-    "teamSize": "Teamgröße",
-    "pricePerUser": "Preis pro Benutzer",
-    "discount": "Rabatt",
-    "current": "Aktuell",
-    "contactUs": "Kontaktiere uns",
-    "off": "{{percent}}% Rabatt",
-    "custom": "Individuell",
-    "enterprisePricing": "Unternehmenspreise",
-    "customPricingFor": "Individuelle Preise für {{count}}+ Benutzer",
-    "dedicatedAccountManager": "Persönlicher Account-Manager",
-    "customIntegrations": "Individuelle Integrationen & Funktionen",
-    "getCustomQuote": "Individuelles Angebot anfordern",
-    "allPlansInclude": "Alle Pläne beinhalten unbegrenzte WhatsApp-Sprachnachrichten, Echtzeit-CRM-Synchronisation und Prioritäts-Support.",
-    "automaticDiscountsComingSoon": "Automatische Rabatte basierend auf Teamgröße (Demnächst verfügbar)"
-  },
-  "features": {
-    "title": "CRM-Integrationen",
-    "subtitle": "Sofort verbinden. Automatisch synchronisieren.",
-    "oneClickSetup": "Ein-Klick-Einrichtung",
-    "realtimeSync": "Echtzeit-Synchronisation",
-    "secureOauth": "Sichere OAuth-Anmeldung",
-    "moreIntegrations": "Wir arbeiten ständig an neuen CRM-Integrationen wie HubSpot, Salesforce, Zoho & mehr, um VoiceLink für alle verfügbar zu machen.",
-    "dontSeeYourCrm": "Dein CRM nicht dabei? Wir erstellen individuelle Integrationen für jede Plattform mit API.",
-    "contactForCustom": "Kontaktiere uns für eine individuelle Integration"
-  },
-  "howItWorks": {
-    "title": "Wie WhatsApp-Sprachnachrichten funktionieren",
-    "subtitle": "Drei einfache Schritte, um Sprache in strukturierte Daten zu verwandeln",
-    "step1": {
-      "title": "Spracheingabe",
-      "description": "Sprich deine Gedanken ganz natürlich in WhatsApp-Sprachnachrichten"
-    },
-    "step2": {
-      "title": "KI-Verarbeitung",
-      "description": "Fortschrittliche KI extrahiert und strukturiert wichtige Informationen aus deiner Sprache"
-    },
-    "step3": {
-      "title": "CRM-Integration",
-      "description": "Strukturierte Daten synchronisieren sich automatisch mit deinem CRM-System"
-    }
-  },
-  "customSolutions": {
-    "title": "Möchtest du eine individuelle VoiceLink-Lösung?",
-    "subtitle": "Wir entwickeln maßgeschneiderte Sprachlösungen für jedes CRM oder Geschäftssystem. Wenn es eine API hat, können wir es verbinden.",
-    "twoExamples": "Zwei Beispiele:",
-    "adaptsToAnyIndustry": "VoiceLink passt sich jeder Branche oder jedem Workflow an, der Sprache in Daten verwandeln muss.",
-    "fieldTechnicians": {
-      "title": "Servicetechniker",
-      "description": "Techniker sprechen Serviceberichte während der Fahrt zwischen Aufträgen. Sprachnachrichten erzeugen automatisch strukturierte Berichte mit Auftragsdetails, verwendeten Teilen und aufgewendeter Zeit.",
-      "features": "Individuelle Berichtformate • Echtzeit-Synchronisation • Mobil optimiert"
-    },
-    "propertyManagement": {
-      "title": "Immobilienverwaltung",
-      "description": "Immobilienverwalter nehmen Wartungsanfragen, Mieterinteraktionen und Inspektionsnotizen per Sprache auf. KI erstellt automatisch Arbeitsaufträge, aktualisiert Mieterdaten und plant Nachverfolgungen.",
-      "features": "Arbeitsaufträge • Mieterkommunikation • Wartungsplanung"
-    },
-    "connectAnyCrm": "Jedes CRM verbinden",
-    "integrateWithAnySystem": "Wir integrieren jedes System mit API",
-    "apiSupport": "+ Jedes System mit REST API, GraphQL oder Webhooks",
-    "readyToBuild": "Bereit, deine individuelle Lösung zu entwickeln?",
-    "customSolutionDescription": "Erzähle uns von deinem Workflow und wir zeigen dir, wie Sprachtechnologie deine Geschäftsprozesse transformieren kann. Jede Lösung wird exakt auf deine Bedürfnisse zugeschnitten.",
-    "scheduleCustomDemo": "Individuelle Demo vereinbaren",
-    "discussYourNeeds": "Sprich mit uns über deine Anforderungen",
-    "freeConsultation": "Kostenlose Beratung",
-    "customProofOfConcept": "Individueller Proof of Concept",
-    "tailoredImplementation": "Maßgeschneiderte Implementierung"
-  },
-  "finalCta": {
-    "title": "Bereit, deinen Workflow zu transformieren?",
-    "subtitle": "Je mehr Benutzer du hinzufügst, desto mehr sparst du. Starte kostenlos, wachse günstig. Verbinde dein WhatsApp und starte noch heute deine kostenlose Testversion.",
-    "startFreeTrial": "Kostenlose Testversion starten",
-    "watchDemo": "Demo ansehen",
-    "freeTrialFeatures": {
-      "freeTrialDays": "14 Tage kostenlose Testversion",
-      "noSetupFees": "Keine Einrichtungsgebühren",
-      "cancelAnytime": "Jederzeit kündbar"
-    }
+  "contact": {
+    "title": "Kontaktieren Sie Uns",
+    "subtitle": "Nehmen Sie Kontakt mit unserem Team für persönliche Unterstützung auf",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+    "emailAddress": "E-Mail-Adresse",
+    "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
+    "phoneNumber": "Telefonnummer",
+    "phonePlaceholder": "+49 123 456 789",
+    "message": "Nachricht",
+    "messagePlaceholder": "Erzählen Sie uns von Ihren Bedürfnissen oder stellen Sie Ihre Fragen...",
+    "sendMessage": "Nachricht Senden",
+    "sendingMessage": "Nachricht wird gesendet...",
+    "messageSent": "Nachricht Gesendet!",
+    "thankYouMessage": "Vielen Dank, dass Sie uns kontaktiert haben. Wir werden Ihnen innerhalb von 24 Stunden antworten.",
+    "responseTime": "Wir antworten innerhalb von 24 Stunden an Werktagen",
+    "required": "Erforderlich",
+    "submitFailed": "Nachricht senden fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
   },
   "footer": {
     "copyright": "© 2025 Finit Solutions",
@@ -303,19 +192,81 @@
     "cookieSettings": "Cookie-Einstellungen",
     "support": "Support"
   },
+  "subscription": {
+    "title": "Abonnement-Verwaltung",
+    "status": "Status",
+    "plan": "Plan",
+    "billingPeriod": "Abrechnungszeitraum",
+    "nextBilling": "Nächste Abrechnung",
+    "amount": "Betrag",
+    "paymentMethod": "Zahlungsmethode",
+    "manageSubscription": "Abonnement Verwalten",
+    "cancelSubscription": "Abonnement Kündigen",
+    "upgradeSubscription": "Abonnement Upgraden",
+    "subscriptionDetails": "Abonnement-Details",
+    "billingHistory": "Abrechnungshistorie",
+    "currentPlan": "Aktueller Plan",
+    "planFeatures": "Plan-Funktionen",
+    "subscriptionActive": "Aktiv",
+    "subscriptionCanceled": "Gekündigt",
+    "subscriptionPastDue": "Überfällig",
+    "subscriptionTrialing": "Testphase",
+    "monthly": "Monatlich",
+    "yearly": "Jährlich",
+    "endingOn": "Endet am {{date}}",
+    "renewsOn": "Verlängert sich am {{date}}",
+    "trialEndsOn": "Testphase endet am {{date}}"
+  },
+  "userInfo": {
+    "personalInformation": "Persönliche Informationen",
+    "accountDetails": "Kontodetails",
+    "contactInformation": "Kontaktinformationen",
+    "preferences": "Einstellungen",
+    "companyInformation": "Unternehmensinformationen",
+    "apiConfiguration": "API-Konfiguration",
+    "fullName": "Vollständiger Name",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "emailAddress": "E-Mail-Adresse",
+    "phoneNumber": "Telefonnummer",
+    "language": "Sprache",
+    "timeZone": "Zeitzone",
+    "locale": "Gebietsschema",
+    "accountId": "Konto-ID",
+    "userId": "Benutzer-ID",
+    "companyName": "Firmenname",
+    "companyDomain": "Firmen-Domain",
+    "defaultCurrency": "Standardwährung",
+    "lastLogin": "Letzte Anmeldung",
+    "accountStatus": "Kontostatus",
+    "emailStatus": "E-Mail-Status",
+    "adminStatus": "Admin-Status",
+    "supportAccess": "Support-Zugang",
+    "tokenExpires": "Token Läuft Ab",
+    "audience": "Zielgruppe",
+    "scope": "Bereich",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "admin": "Admin",
+    "user": "Benutzer",
+    "verified": "Verifiziert",
+    "unverified": "Nicht Verifiziert",
+    "yes": "Ja",
+    "no": "Nein",
+    "notAvailable": "N/V",
+    "notProvided": "Nicht angegeben",
+    "minutes": "Minuten",
+    "invoiceable": "Abrechenbar",
+    "whitelabeling": "White-Labeling",
+    "timeTrackingLimit": "Zeiterfassungslimit",
+    "accountType": "Kontotyp"
+  },
   "errors": {
     "authenticationFailed": "Authentifizierung fehlgeschlagen",
     "invalidCredentials": "Ungültige Anmeldedaten",
     "networkError": "Netzwerkfehler aufgetreten",
     "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten",
-    "tryAgain": "Bitte versuche es erneut"
-  },
-  "validation": {
-    "required": "Dieses Feld ist erforderlich",
-    "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein",
-    "invalidPhone": "Bitte gib eine gültige Telefonnummer ein",
-    "minLength": "Muss mindestens {{min}} Zeichen lang sein",
-    "maxLength": "Darf höchstens {{max}} Zeichen lang sein"
+    "tryAgain": "Bitte versuchen Sie es erneut"
   },
   "dates": {
     "today": "Heute",
@@ -324,13 +275,290 @@
     "thisWeek": "Diese Woche",
     "lastWeek": "Letzte Woche",
     "nextWeek": "Nächste Woche",
-    "thisMonth": "Diesen Monat",
-    "lastMonth": "Letzten Monat",
-    "nextMonth": "Nächsten Monat"
+    "thisMonth": "Dieser Monat",
+    "lastMonth": "Letzter Monat",
+    "nextMonth": "Nächster Monat"
+  },
+  "contact": {
+    "title": "Kontaktieren Sie Uns",
+    "subtitle": "Nehmen Sie Kontakt mit unserem Team für persönliche Unterstützung auf",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+    "emailAddress": "E-Mail-Adresse",
+    "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
+    "phoneNumber": "Telefonnummer",
+    "phonePlaceholder": "+49 123 456 789",
+    "message": "Nachricht",
+    "messagePlaceholder": "Erzählen Sie uns von Ihren Bedürfnissen oder stellen Sie Ihre Fragen...",
+    "sendMessage": "Nachricht Senden",
+    "sendingMessage": "Nachricht wird gesendet...",
+    "messageSent": "Nachricht Gesendet!",
+    "thankYouMessage": "Vielen Dank, dass Sie uns kontaktiert haben. Wir werden Ihnen innerhalb von 24 Stunden antworten.",
+    "responseTime": "Wir antworten innerhalb von 24 Stunden an Werktagen",
+    "required": "Erforderlich",
+    "submitFailed": "Nachricht senden fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
   },
   "numbers": {
     "currency": "€{{amount}}",
     "percentage": "{{value}}%",
     "decimal": "{{value}}"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "dashboard": "Dashboard",
+    "support": "Support",
+    "signOut": "Abmelden",
+    "getStarted": "Kostenlos Starten",
+    "backToHome": "Zurück zur Startseite"
+  },
+  "hero": {
+    "title": "Einfach...",
+    "mainTitle": "Sprechen Sie mit Ihrem CRM",
+    "subtitle1": "Senden Sie Sprachnachrichten über WhatsApp und sehen Sie zu, wie sie automatisch mit Ihrem CRM synchronisiert werden.",
+    "subtitle2": "Verwandeln Sie Sprachnachrichten sofort in strukturierte Daten.",
+    "getStartedFree": "Kostenlos Starten",
+    "watchDemo": "Demo Ansehen",
+    "oneClickSetup": "Ein-Klick CRM Verbindung",
+    "whatsappSetup": "WhatsApp in 2 Minuten verbinden"
+  },
+  "auth": {
+    "modal": {
+      "title": "Starten Sie Ihre Kostenlose Testversion",
+      "subtitle": "Verbinden Sie Ihr CRM und beginnen Sie sofort mit VoiceLink",
+      "freeTrialBanner": "14-Tage Kostenlose Testversion Beginnt Jetzt",
+      "freeTrialDescription": "Ihre kostenlose Testversion beginnt sofort nach der Verbindung Ihres CRM.",
+      "connectTeamleader": "Teamleader Verbinden",
+      "connectPipedrive": "Pipedrive Verbinden",
+      "connectOdoo": "Odoo Verbinden"
+    }
+  },
+  "dashboard": {
+    "welcome": "Willkommen zurück, {{name}}!",
+    "connectedToPlatform": "Sie sind mit {{platform}} verbunden. Ihre CRM-Daten und Tools sind einsatzbereit.",
+    "platformInformation": "Plattform-Informationen",
+    "upgradeExperience": "Verbessern Sie Ihre Erfahrung",
+    "welcomeDefault": "Willkommen zurück, Premium-Benutzer!",
+    "subscriptionActive": "Ihr VoiceLink-Abonnement ist aktiv",
+    "customerPortal": {
+      "title": "Verwalten Sie Ihr Abonnement",
+      "subtitle": "Zugriff auf Ihre Rechnungsinformationen und verwalten Sie Ihr Abonnement",
+      "portalTitle": "Kundenportal",
+      "portalDescription": "Zugriff auf Ihre Rechnungshistorie, Aktualisierung von Zahlungsmethoden, Download von Rechnungen und Verwaltung Ihrer Abonnementeinstellungen über unser sicheres Kundenportal.",
+      "accessPortal": "Zugriff auf Kundenportal",
+      "viewBillingHistory": "Rechnungshistorie anzeigen",
+      "updatePaymentMethods": "Zahlungsmethoden aktualisieren",
+      "updatePaymentMethod": "Zahlungsmethode aktualisieren",
+      "downloadInvoices": "Rechnungen herunterladen",
+      "manageSubscription": "Abonnement verwalten"
+    },
+    "premiumFeatures": {
+      "title": "Ihre Premium-Funktionen",
+      "subtitle": "Alles was Sie brauchen, um Sprache in strukturierte CRM-Daten zu verwandeln",
+      "whatsappVoiceNotes": {
+        "title": "WhatsApp Sprachnotizen",
+        "description": "Senden Sie unbegrenzte Sprachnachrichten direkt an Ihr CRM über WhatsApp",
+        "unlimitedUsage": "Unbegrenzte Nutzung",
+        "instantProcessing": "Sofortige Verarbeitung",
+        "multiLanguage": "Mehrsprachige Unterstützung"
+      },
+      "realtimeSync": {
+        "title": "Echtzeit-Synchronisation",
+        "description": "Sofortige Synchronisation mit Ihrer CRM-Plattform",
+        "liveUpdates": "Live-Updates"
+      },
+      "prioritySupport": {
+        "title": "Prioritäts-Support",
+        "description": "24/7 dedizierte Unterstützung von unserem Expertenteam",
+        "support24x7": "24/7 Support"
+      },
+      "aiProcessing": {
+        "title": "KI-Verarbeitung",
+        "description": "Fortschrittliche KI extrahiert und strukturiert wichtige Informationen aus Ihrer Sprache",
+        "smartExtraction": "Intelligente Datenextraktion",
+        "autoScheduling": "Automatische Terminplanung",
+        "contextAware": "Kontextbewusste Verarbeitung"
+      },
+      "crmIntegration": {
+        "title": "CRM-Integration",
+        "description": "Nahtlose Integration mit Ihrer bestehenden CRM-Plattform",
+        "realTimeSync": "Echtzeit-Sync",
+        "autoContactCreation": "Automatische Kontakterstellung",
+        "taskManagement": "Aufgabenverwaltung"
+      }
+    },
+    "support": {
+      "title": "Hilfe beim Einstieg Benötigt?",
+      "subtitle": "Unser Support-Team ist da, um Ihnen zu helfen, das Beste aus VoiceLink herauszuholen. Erhalten Sie personalisierte Unterstützung bei Setup und Optimierung.",
+      "description": "Unser Support-Team ist da, um Ihnen zu helfen, das Beste aus VoiceLink herauszuholen. Erhalten Sie personalisierte Unterstützung bei Setup und Optimierung.",
+      "contactSupport": "Support Kontaktieren",
+      "email": {
+        "title": "E-Mail-Support",
+        "description": "Hilfe per E-Mail mit detaillierten Antworten innerhalb von 24 Stunden"
+      },
+      "liveChat": {
+        "title": "Live-Chat",
+        "description": "Chatten Sie mit unserem Support-Team in Echtzeit",
+        "startChat": "Chat Starten"
+      },
+      "consultation": {
+        "title": "Kostenlose Beratung",
+        "description": "Vereinbaren Sie einen kostenlosen Beratungstermin mit unseren Experten",
+        "bookCall": "Termin Buchen"
+      }
+    },
+    "teamManagement": {
+      "title": "Team-Verwaltung",
+      "subtitle": "Verwalten Sie Ihre Teammitglieder und Einladungen",
+      "accountOwner": "Kontoinhaber",
+      "admin": "Admin",
+      "teamMembers": "Teammitglieder",
+      "pending": "Ausstehend",
+      "addNewMember": "Neues Teammitglied Hinzufügen",
+      "selectCompanyUser": "Unternehmensbenutzer Auswählen",
+      "loadingUsers": "Unternehmensbenutzer laden...",
+      "selectedUserDetails": "Details des Ausgewählten Benutzers",
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "notProvided": "Nicht angegeben",
+      "whatsappNumber": "WhatsApp-Nummer (falls anders als Telefon)",
+      "whatsappNumberPlaceholder": "+49 123 456 789",
+      "fullName": "Vollständiger Name",
+      "fullNamePlaceholder": "Vollständigen Namen eingeben",
+      "emailAddress": "E-Mail-Adresse",
+      "emailPlaceholder": "E-Mail-Adresse eingeben",
+      "sendingInvitation": "Einladung senden...",
+      "saveAndInvite": "Speichern & Einladen",
+      "clearSelection": "Auswahl Löschen",
+      "addNewUser": "Neuen Benutzer Hinzufügen",
+      "teamLimitReached": "Team-Limit Erreicht",
+      "teamLimitMessage": "Sie haben Ihr Team-Limit von {{total}} Benutzern erreicht. Upgraden Sie Ihr Abonnement, um mehr Teammitglieder hinzuzufügen.",
+      "upgradeSubscription": "Abonnement Upgraden"
+    },
+    "userGuide": {
+      "title": "Täglicher Nutzungsleitfaden",
+      "subtitle": "VoiceLink funktioniert am besten, wenn Sie Ihre Updates strukturiert und klar sprechen",
+      "recordingContacts": {
+        "title": "1. Kontakte Aufnehmen",
+        "startWith": "Beginnen Sie mit:",
+        "example1": "\"Gerade angerufen/gesprochen mit [NAME]\"",
+        "example2": "oder \"[NAME] hat gerade besucht\"",
+        "names": "Namen:",
+        "namesTip": "Sprechen Sie langsam und buchstabieren Sie schwierige Namen Buchstabe für Buchstabe",
+        "phoneEmail": "Telefon/E-Mail:",
+        "phoneEmailTip": "Optional, aber buchstabieren Sie immer, wenn Sie unsicher sind",
+        "newVsExisting": "Neue vs. Bestehende Kontakte",
+        "newVsExistingTip": "VoiceLink sucht automatisch nach bestehenden Datensätzen und erstellt neue Kontakte, wenn nötig."
+      },
+      "conversationInfo": {
+        "title": "2. Gesprächsinformationen",
+        "description": "Teilen Sie wichtige Informationen, als würden Sie sie einem Kollegen erzählen.",
+        "example": "Beispiel:",
+        "exampleText": "\"Er ist an Produkt X interessiert, möchte nächste Woche eine Demo und bat mich, die Preisliste zu senden.\"",
+        "tip": "Tipp:",
+        "tipText": "Je mehr Details Sie angeben, desto besser kann VoiceLink Ihr CRM ausfüllen. Das System erstellt automatisch Tags und Berichte als Anmerkungen."
+      },
+      "calendarTasks": {
+        "title": "3. Kalender- und Aufgabenverwaltung",
+        "description": "VoiceLink kann automatisch Termine und Aufgaben erstellen oder aktualisieren.",
+        "callbacks": "📞 Rückrufe:",
+        "callback1": "\"Ich muss ihn Montag um 15:00 zurückrufen\"",
+        "callback2": "\"Ich sollte ihn morgen früh anrufen\"",
+        "appointments": "📅 Termine:",
+        "appointment1": "\"Er kommt nächsten Dienstag um 14:00\"",
+        "appointment2": "\"Meeting in Tremelo am 29. Mai um 13:00\"",
+        "tasks": "✅ Aufgaben:",
+        "task1": "\"Katalog morgen senden\"",
+        "task2": "\"Angebot für Freitag 14:00 vorbereiten\"",
+        "updates": "🔄 Updates:",
+        "update1": "\"Meeting mit Marianna auf Dienstag 12:00 verschoben\"",
+        "update2": "\"Jeff hat nicht geantwortet, morgen nochmal versuchen\""
+      },
+      "bestPractices": {
+        "title": "4. Beste Praktiken für Optimale Nutzung",
+        "speakClearly": {
+          "title": "Klar Sprechen",
+          "description": "Sprechen Sie klar und langsam auf Standard-Englisch"
+        },
+        "spellingMode": {
+          "title": "Buchstabier-Modus",
+          "description": "Buchstabieren Sie Buchstaben für Namen, E-Mails und Telefonnummern, wenn Sie unsicher sind"
+        },
+        "autoScheduling": {
+          "title": "Auto-Terminierung",
+          "description": "Keine Zeit erwähnt? VoiceLink findet automatisch eine passende Zeit"
+        },
+        "keepFocused": {
+          "title": "Fokussiert Bleiben",
+          "description": "Ein Update pro Nachricht ist am zuverlässigsten"
+        },
+        "important": "Wichtig:",
+        "importantText": "Sie können nur einen Kontakt pro Nachricht aktualisieren. Möchten Sie mehrere Personen in Ihrem CRM aktualisieren? Nehmen Sie sie mit separaten Sprachnotizen auf WhatsApp auf."
+      },
+      "troubleshooting": {
+        "title": "5. Fehlerbehebung",
+        "noConnection": {
+          "title": "Keine Verbindung?",
+          "description": "Internetverbindung und API-Einstellungen überprüfen"
+        },
+        "wrongInput": {
+          "title": "Falsche Eingabe?",
+          "description": "Korrekturen über neue Sprachnachricht senden"
+        },
+        "transcriptionErrors": {
+          "title": "Transkriptionsfehler?",
+          "description": "Klar sprechen ohne Hintergrundgeräusche"
+        }
+      },
+      "needHelp": "Hilfe Benötigt?"
+    }
+  },
+  "whatsapp": {
+    "integration": "WhatsApp Integration",
+    "verified": "WhatsApp Verifiziert",
+    "connectedTo": "Verbunden mit {{number}}",
+    "whatsappNumber": "WhatsApp Nummer",
+    "includeCountryCode": "Ländercode einschließen (z.B. +49 für Deutschland)",
+    "sendVerificationCode": "Bestätigungscode Senden",
+    "verificationCode": "Bestätigungscode",
+    "verify": "Verifizieren"
+  },
+  "pricing": {
+    "title": "Volumen-Preise Die Mitwachsen",
+    "subtitle": "Pro-Benutzer-Preise. Starten Sie kostenlos, upgraden Sie wenn Sie bereit sind. Keine versteckten Gebühren.",
+    "monthly": "Monatlich",
+    "yearly": "Jährlich",
+    "save20": "20% Sparen",
+    "startFreeTrial": "Kostenlose Testversion Starten",
+    "comingSoon": "Demnächst Verfügbar"
+  },
+  "finalCta": {
+    "title": "Bereit, Ihren Workflow zu Transformieren?",
+    "subtitle": "Je mehr Benutzer Sie hinzufügen, desto mehr sparen Sie. Starten Sie kostenlos, skalieren Sie erschwinglich. Verbinden Sie Ihr WhatsApp und starten Sie heute Ihre kostenlose Testversion.",
+    "startFreeTrial": "Kostenlose Testversion Starten",
+    "watchDemo": "Demo Ansehen",
+    "freeTrialFeatures": {
+      "freeTrialDays": "14-tägige kostenlose Testversion",
+      "noSetupFees": "Keine Einrichtungsgebühren",
+      "cancelAnytime": "Jederzeit kündbar"
+    }
+  },
+  "phoneMockup": {
+    "voiceLink": "VoiceLink",
+    "online": "online",
+    "typeMessage": "Nachricht eingeben",
+    "aiProcessing": "KI Verarbeitet Sprachnotiz...",
+    "updatedCrm": "✅ CRM Aktualisiert mit:",
+    "followUpCall": "Nachfass-Anruf",
+    "keyNotes": "Wichtige Notizen:",
+    "actionItems": "Aktionspunkte:",
+    "sendProposal": "Angebot bis Freitag senden",
+    "includeRoi": "ROI-Berechnungen einschließen",
+    "discussPremium": "Premium-Paket Preise und Implementierungszeitplan besprechen",
+    "budgetIncreased": "Budget um 40% für digitale Tools erhöht",
+    "strongInterest": "Starkes Interesse an WhatsApp-Integration",
+    "prefersThursday": "Bevorzugt Donnerstag-Nachmittag-Anrufe"
   }
 }

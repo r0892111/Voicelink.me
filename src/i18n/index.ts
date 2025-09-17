@@ -24,12 +24,17 @@ const resources = {
   }
 };
 
-// Clear any existing language preference and force English as default
-if (typeof window !== 'undefined') {
-  const currentLang = localStorage.getItem('i18nextLng');
-  if (currentLang && !['en', 'nl', 'fr', 'de'].includes(currentLang)) {
-    localStorage.removeItem('i18nextLng');
-  }
+// Clear invalid language from localStorage and determine initial language
+const supportedLanguages = ['en', 'nl', 'fr', 'de'];
+const storedLanguage = localStorage.getItem('i18nextLng');
+let initialLanguage = 'en'; // Default to English
+
+if (storedLanguage && supportedLanguages.includes(storedLanguage)) {
+  // Use stored language if it's valid
+  initialLanguage = storedLanguage;
+} else if (storedLanguage && !supportedLanguages.includes(storedLanguage)) {
+  // Clear invalid stored language
+  localStorage.removeItem('i18nextLng');
 }
 
 i18n
@@ -38,7 +43,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en', // Set English as the default language
+    lng: initialLanguage, // Use determined initial language
     fallbackLng: 'en',
     supportedLngs: ['en', 'nl', 'fr', 'de'], // Only allow supported languages
     debug: process.env.NODE_ENV === 'development',

@@ -14,7 +14,65 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "enterNumberOfUsers": "Enter number of users",
+    "premiumMonthly": "Premium Monthly",
+    "advancedCrmFeatures": "Advanced CRM features and priority support",
+    "updateDatabaseName": "Update database name",
+    "enterOdooDatabaseName": "Enter your Odoo database name",
+    "enterNewApiKey": "Enter new API key to update",
+    "enterOdooApiKey": "Enter your Odoo API key",
+    "selectUserAccount": "Select your user account",
+    "accessRightsTab": "In the \"Access Rights\" tab, find the \"API Key\" section",
+    "generateOrCopyApiKey": "Generate or copy your existing API key",
+    "loadingDashboard": "Loading dashboard...",
+    "teamMemberInvitedSuccessfully": "Team member invited successfully!",
+    "changeLanguage": "Change language",
+    "voiceLink": "VoiceLink"
+  },
+  "platforms": {
+    "teamleader": "TeamLeader",
+    "pipedrive": "Pipedrive",
+    "odoo": "Odoo",
+    "unknown": "Unknown"
+  },
+  "validation": {
+    "enterValidApiKey": "Please enter a valid API key",
+    "enterOdooDatabaseName": "Please enter your Odoo database name",
+    "userNotAuthenticated": "User not authenticated",
+    "failedToSaveApiKey": "Failed to save API key",
+    "enterValidPhoneNumber": "Please enter a valid international phone number",
+    "enterValidSixDigitCode": "Please enter a valid 6-digit code",
+    "failedToSendVerificationCode": "Failed to send verification code",
+    "failedToVerifyCode": "Failed to verify code",
+    "failedToDisconnectWhatsapp": "Failed to disconnect WhatsApp",
+    "pleaseSignInToPurchase": "Please sign in to make a purchase",
+    "purchaseFailed": "Purchase failed",
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPhone": "Please enter a valid phone number",
+    "minLength": "Must be at least {{min}} characters",
+    "maxLength": "Must be no more than {{max}} characters",
+    "agreeToTerms": "Please agree to the SaaS Agreement to continue"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with our team for personalized assistance",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "emailAddress": "Email Address",
+    "emailPlaceholder": "Enter your email address",
+    "phoneNumber": "Phone Number",
+    "phonePlaceholder": "+1 234 567 8900",
+    "message": "Message",
+    "messagePlaceholder": "Tell us about your needs or ask your questions...",
+    "sendMessage": "Send Message",
+    "sendingMessage": "Sending Message...",
+    "messageSent": "Message Sent!",
+    "thankYouMessage": "Thank you for contacting us. We'll get back to you within 24 hours.",
+    "responseTime": "We'll respond within 24 hours on business days",
+    "required": "Required",
+    "submitFailed": "Failed to send message. Please try again or contact us directly."
   },
   "navigation": {
     "home": "Home",
@@ -41,7 +99,7 @@
       "title": "Start Your Free Trial",
       "subtitle": "Connect your CRM and begin using VoiceLink instantly",
       "freeTrialBanner": "14-Day Free Trial Starts Now",
-      "freeTrialDescription": "Your free trial begins immediately upon connecting your CRM. No credit card required.",
+      "freeTrialDescription": "Your free trial begins immediately upon connecting your CRM.",
       "connectTeamleader": "Connect Teamleader",
       "connectPipedrive": "Connect Pipedrive",
       "connectOdoo": "Connect Odoo",
@@ -50,10 +108,7 @@
       "signInDescription": "Simply connect with your CRM platform above to sign in",
       "secureOauth": "Secure OAuth",
       "noSetupFees": "No Setup Fees",
-      "cancelAnytime": "Cancel Anytime",
-      "termsAgreement": "By connecting your CRM, you agree to our {{termsLink}} and {{privacyLink}}",
-      "termsOfService": "Terms of Service",
-      "privacyPolicy": "Privacy Policy"
+      "cancelAnytime": "Cancel Anytime"
     },
     "callback": {
       "authenticating": "Authenticating...",
@@ -64,10 +119,127 @@
       "successfullyAuthenticated": "Successfully authenticated with {{platform}}!",
       "redirectingToCheckout": "Redirecting to subscription checkout...",
       "returnToHome": "Return to Home"
-    }
+    },
+    "invalidAuthenticationPlatform": "Invalid authentication platform",
+    "authenticationFailed": "Authentication failed",
+    "missingAuthenticationParameters": "Missing authentication parameters",
+    "invalidStateParameter": "Invalid state parameter",
+    "failedToEstablishSession": "Failed to establish session",
+    "completingAuthentication": "Completing authentication...",
+    "authenticationFailedFor": "Authentication failed for {{provider}}"
+  },
+  "teamManagement": {
+    "title": "Team Management",
+    "subtitle": "Manage your team members and invitations",
+    "accountOwner": "Account Owner",
+    "admin": "Admin",
+    "teamMembers": "Team Members",
+    "pending": "Pending",
+    "addNewMember": "Add New Team Member",
+    "selectCompanyUser": "Select Company User",
+    "loadingUsers": "Loading company users...",
+    "selectedUserDetails": "Selected User Details",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "notProvided": "Not provided",
+    "whatsappNumber": "WhatsApp Number (if different from phone)",
+    "whatsappNumberPlaceholder": "+1 234 567 8900",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter full name",
+    "emailAddress": "Email Address",
+    "emailPlaceholder": "Enter email address",
+    "sendingInvitation": "Sending Invitation...",
+    "saveAndInvite": "Save & Invite",
+    "clearSelection": "Clear Selection",
+    "addNewUser": "Add New User",
+    "teamLimitReached": "Team Limit Reached",
+    "teamLimitMessage": "You've reached your team limit of {{total}} users. Upgrade your subscription to add more team members.",
+    "upgradeSubscription": "Upgrade Subscription"
+  },
+  "userGuide": {
+    "title": "Daily Usage Guide",
+    "subtitle": "VoiceLink works best when you speak your updates in a structured and clear manner",
+    "recordingContacts": {
+      "title": "1. Recording Contacts",
+      "startWith": "Start with:",
+      "example1": "\"Just called/spoke with [NAME]\"",
+      "example2": "or \"[NAME] just visited\"",
+      "names": "Names:",
+      "namesTip": "Speak slowly and spell difficult names letter by letter",
+      "phoneEmail": "Phone/Email:",
+      "phoneEmailTip": "Optional, but always spell when in doubt",
+      "newVsExisting": "New vs. Existing Contacts:",
+      "newVsExistingTip": "VoiceLink automatically searches for existing records and creates new contacts when needed."
+    },
+    "conversationInfo": {
+      "title": "2. Conversation Information",
+      "description": "Share important information as if you're telling a colleague.",
+      "example": "Example:",
+      "exampleText": "\"He's interested in product X, wants a demo next week, and asked me to send the price list.\"",
+      "tip": "Tip:",
+      "tipText": "The more details you provide, the better VoiceLink can fill your CRM. The system automatically creates tags and reports as annotations."
+    },
+    "calendarTasks": {
+      "title": "3. Calendar & Task Management",
+      "description": "VoiceLink can automatically create or update appointments and tasks.",
+      "callbacks": "📞 Callbacks:",
+      "callback1": "\"I need to call him back Monday at 3 PM\"",
+      "callback2": "\"I should call him tomorrow morning\"",
+      "appointments": "📅 Appointments:",
+      "appointment1": "\"He's coming next Tuesday at 2 PM\"",
+      "appointment2": "\"Meeting in Tremelo on May 29th at 1 PM\"",
+      "tasks": "✅ Tasks:",
+      "task1": "\"Send catalog tomorrow\"",
+      "task2": "\"Prepare quote for Friday 2 PM\"",
+      "updates": "🔄 Updates:",
+      "update1": "\"Meeting with Marianna moved to Tuesday 12 PM\"",
+      "update2": "\"Jeff didn't answer, try again tomorrow\""
+    },
+    "bestPractices": {
+      "title": "4. Best Practices for Optimal Use",
+      "speakClearly": {
+        "title": "Speak Clearly",
+        "description": "Speak clearly and slowly in standard English"
+      },
+      "spellingMode": {
+        "title": "Spelling Mode",
+        "description": "Spell letters for names, emails, and phone numbers when in doubt"
+      },
+      "autoScheduling": {
+        "title": "Auto-Scheduling",
+        "description": "No time mentioned? VoiceLink finds a suitable time automatically"
+      },
+      "keepFocused": {
+        "title": "Keep It Focused",
+        "description": "Speak only about one person per voice message."
+      },
+      "important": "Important:",
+      "importantText": "You can only update one contact per message. Want to update multiple people in your CRM? Record them with separate voice notes on WhatsApp."
+    },
+    "troubleshooting": {
+      "title": "5. Troubleshooting",
+      "noConnection": {
+        "title": "No Connection?",
+        "description": "Check internet connection and API settings"
+      },
+      "wrongInput": {
+        "title": "Wrong Input?",
+        "description": "Send corrections via new voice message"
+      },
+      "transcriptionErrors": {
+        "title": "Transcription Errors?",
+        "description": "Speak clearly without background noise"
+      }
+    },
+    "needHelp": "Need Help?"
   },
   "dashboard": {
     "welcome": "Welcome back, {{name}}!",
+    "connectedToPlatform": "You're connected to {{platform}}. Your CRM data and tools are ready to use.",
+    "platformInformation": "Platform Information",
+    "upgradeExperience": "Upgrade Your Experience",
+    "welcomeDefault": "Welcome back, Premium User!",
     "subscriptionActive": "Your VoiceLink subscription is active",
     "platformConnection": {
       "title": "{{platform}}",
@@ -126,6 +298,7 @@
       "accessPortal": "Access Customer Portal",
       "viewBillingHistory": "View billing history",
       "updatePaymentMethods": "Update payment methods",
+      "updatePaymentMethod": "Update payment method",
       "downloadInvoices": "Download invoices",
       "manageSubscription": "Manage subscription"
     },
@@ -135,7 +308,9 @@
       "whatsappVoiceNotes": {
         "title": "WhatsApp Voice Notes",
         "description": "Send unlimited voice messages directly to your CRM via WhatsApp",
-        "unlimitedUsage": "Unlimited Usage"
+        "unlimitedUsage": "Unlimited Usage",
+        "instantProcessing": "Instant Processing",
+        "multiLanguage": "Multi-language Support"
       },
       "realtimeSync": {
         "title": "Real-time Sync",
@@ -146,12 +321,41 @@
         "title": "Priority Support",
         "description": "24/7 dedicated assistance from our expert team",
         "support24x7": "24/7 Support"
+      },
+      "aiProcessing": {
+        "title": "AI Processing",
+        "description": "Advanced AI extracts and structures key information from your voice",
+        "smartExtraction": "Smart Data Extraction",
+        "autoScheduling": "Auto-Scheduling",
+        "contextAware": "Context-Aware Processing"
+      },
+      "crmIntegration": {
+        "title": "CRM Integration",
+        "description": "Seamless integration with your existing CRM platform",
+        "realTimeSync": "Real-time Sync",
+        "autoContactCreation": "Auto Contact Creation",
+        "taskManagement": "Task Management"
       }
     },
     "support": {
       "title": "Need Help Getting Started?",
+      "subtitle": "Our support team is here to help you make the most of VoiceLink. Get personalized assistance with setup and optimization.",
       "description": "Our support team is here to help you make the most of VoiceLink. Get personalized assistance with setup and optimization.",
-      "contactSupport": "Contact Support"
+      "contactSupport": "Contact Support",
+      "email": {
+        "title": "Email Support",
+        "description": "Get help via email with detailed responses within 24 hours"
+      },
+      "liveChat": {
+        "title": "Live Chat",
+        "description": "Chat with our support team in real-time",
+        "startChat": "Start Chat"
+      },
+      "consultation": {
+        "title": "Free Consultation",
+        "description": "Schedule a free consultation call with our experts",
+        "bookCall": "Book Call"
+      }
     }
   },
   "whatsapp": {
@@ -210,7 +414,7 @@
     "comingSoon": "Coming Soon",
     "multiUserPlansComingSoon": "🚧 Multi-user plans coming soon! Currently only single user subscriptions are available.",
     "multiUserPlansLaunching": "Multi-user plans launching soon",
-    "freeTrialNoCreditCard": "14-day free trial • No credit card required",
+    "freeTrial": "14-day free trial",
     "volumeDiscountTiers": "Volume Discount Tiers",
     "automaticDiscounts": "Automatic discounts applied based on team size",
     "currentlyOnlySingleUser": "Currently only single user plans are available. Multi-user plans with volume discounts coming soon!",
@@ -293,6 +497,22 @@
       "cancelAnytime": "Cancel anytime"
     }
   },
+  "phoneMockup": {
+    "voiceLink": "VoiceLink",
+    "online": "online",
+    "typeMessage": "Type a message",
+    "aiProcessing": "AI Processing Voice Note...",
+    "updatedCrm": "✅ Updated CRM with:",
+    "followUpCall": "Follow-up Call",
+    "keyNotes": "Key Notes:",
+    "actionItems": "Action Items:",
+    "sendProposal": "Send proposal by Friday",
+    "includeRoi": "Include ROI calculations",
+    "discussPremium": "Discuss premium package pricing and implementation timeline",
+    "budgetIncreased": "Budget increased 40% for digital tools",
+    "strongInterest": "Strong interest in WhatsApp integration",
+    "prefersThursday": "Prefers Thursday PM calls"
+  },
   "footer": {
     "copyright": "© 2025 Finit Solutions",
     "privacy": "Privacy",
@@ -302,19 +522,81 @@
     "cookieSettings": "Cookie Settings",
     "support": "Support"
   },
+  "subscription": {
+    "title": "Subscription Management",
+    "status": "Status",
+    "plan": "Plan",
+    "billingPeriod": "Billing Period",
+    "nextBilling": "Next Billing",
+    "amount": "Amount",
+    "paymentMethod": "Payment Method",
+    "manageSubscription": "Manage Subscription",
+    "cancelSubscription": "Cancel Subscription",
+    "upgradeSubscription": "Upgrade Subscription",
+    "subscriptionDetails": "Subscription Details",
+    "billingHistory": "Billing History",
+    "currentPlan": "Current Plan",
+    "planFeatures": "Plan Features",
+    "subscriptionActive": "Active",
+    "subscriptionCanceled": "Canceled",
+    "subscriptionPastDue": "Past Due",
+    "subscriptionTrialing": "Trial Period",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "endingOn": "Ending on {{date}}",
+    "renewsOn": "Renews on {{date}}",
+    "trialEndsOn": "Trial ends on {{date}}"
+  },
+  "userInfo": {
+    "personalInformation": "Personal Information",
+    "accountDetails": "Account Details",
+    "contactInformation": "Contact Information",
+    "preferences": "Preferences",
+    "companyInformation": "Company Information",
+    "apiConfiguration": "API Configuration",
+    "fullName": "Full Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "language": "Language",
+    "timeZone": "Time Zone",
+    "locale": "Locale",
+    "accountId": "Account ID",
+    "userId": "User ID",
+    "companyName": "Company Name",
+    "companyDomain": "Company Domain",
+    "defaultCurrency": "Default Currency",
+    "lastLogin": "Last Login",
+    "accountStatus": "Account Status",
+    "emailStatus": "Email Status",
+    "adminStatus": "Admin Status",
+    "supportAccess": "Support Access",
+    "tokenExpires": "Token Expires",
+    "audience": "Audience",
+    "scope": "Scope",
+    "active": "Active",
+    "inactive": "Inactive",
+    "admin": "Admin",
+    "user": "User",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "yes": "Yes",
+    "no": "No",
+    "notAvailable": "N/A",
+    "notProvided": "Not provided",
+    "minutes": "minutes",
+    "invoiceable": "Invoiceable",
+    "whitelabeling": "Whitelabeling",
+    "timeTrackingLimit": "Time Tracking Limit",
+    "accountType": "Account Type"
+  },
   "errors": {
     "authenticationFailed": "Authentication failed",
     "invalidCredentials": "Invalid credentials",
     "networkError": "Network error occurred",
     "unexpectedError": "An unexpected error occurred",
     "tryAgain": "Please try again"
-  },
-  "validation": {
-    "required": "This field is required",
-    "invalidEmail": "Please enter a valid email address",
-    "invalidPhone": "Please enter a valid phone number",
-    "minLength": "Must be at least {{min}} characters",
-    "maxLength": "Must be no more than {{max}} characters"
   },
   "dates": {
     "today": "Today",

@@ -54,7 +54,7 @@ export const AuthCallback: React.FC = () => {
 
       if (!platform) {
         setStatus('error');
-        setMessage('Invalid authentication platform');
+        setMessage(t('auth.invalidAuthenticationPlatform'));
         return;
       }
 
@@ -78,13 +78,13 @@ export const AuthCallback: React.FC = () => {
 
       if (error) {
         setStatus('error');
-        setMessage(`Authentication failed: ${error}`);
+        setMessage(`${t('auth.authenticationFailed')}: ${error}`);
         return;
       }
 
       if (!code || !state) {
         setStatus('error');
-        setMessage('Missing authentication parameters');
+        setMessage(t('auth.missingAuthenticationParameters'));
         return;
       }
 
@@ -95,7 +95,7 @@ export const AuthCallback: React.FC = () => {
 
       if (storedState && state !== storedState) {
         setStatus('error');
-        setMessage('Invalid state parameter');
+        setMessage(t('auth.invalidStateParameter'));
         return;
       }
 
@@ -130,7 +130,7 @@ export const AuthCallback: React.FC = () => {
 
       if (!result.success) {
         setStatus('error');
-        setMessage(result.error || 'Authentication failed');
+        setMessage(result.error || t('auth.authenticationFailed'));
         return;
       }
 
@@ -148,14 +148,14 @@ export const AuthCallback: React.FC = () => {
         if (sessionError) {
           console.error('Session setup error:', sessionError);
           setStatus('error');
-          setMessage('Failed to establish session');
+          setMessage(t('auth.failedToEstablishSession'));
           return;
         }
       }
 
       // Handle platforms with session_url (magic links, Pipedrive, etc.)
       if (result.session_url) {
-        setMessage('Completing authentication...');
+        setMessage(t('auth.completingAuthentication'));
         window.location.href = result.session_url;
         return;
       }
@@ -170,7 +170,6 @@ export const AuthCallback: React.FC = () => {
 
     } catch (err) {
       setStatus('error');
-      setMessage(err instanceof Error ? err.message : 'An unexpected error occurred');
       setMessage(err instanceof Error ? err.message : t('errors.unexpectedError'));
     }
   };
