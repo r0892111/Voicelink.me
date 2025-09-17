@@ -105,21 +105,21 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center p-2">
                       <img 
                         src="/Finit Icon Blue.svg" 
-                        alt="VoiceLink" 
+                        alt={t('phoneMockup.voiceLink')} 
                         className="w-full h-full object-contain"
                       />
                     </div>
                     <div className="flex-1">
-                      <div className="text-white font-medium">VoiceLink</div>
+                      <div className="text-white font-medium">{t('phoneMockup.voiceLink')}</div>
                       <div className="flex items-center space-x-1">
                         <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                        <span className="text-xs text-green-200">online</span>
+                        <span className="text-xs text-green-200">{t('phoneMockup.online')}</span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
                       <img 
                         src="/whatsapp.svg" 
-                        alt="WhatsApp" 
+                        alt="WhatsApp"
                         className="w-6 h-6"
                       />
                       <div className="text-white text-lg font-bold">⋮</div>
@@ -185,7 +185,7 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                       <div className="bg-white rounded-2xl rounded-bl-md p-3 max-w-[250px] shadow-sm">
                         <div className="flex items-center space-x-2">
                           <Zap className="w-4 h-4 animate-pulse" style={{ color: '#1C2C55' }} />
-                          <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>AI Processing Voice Note...</span>
+                          <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('phoneMockup.aiProcessing')}</span>
                         </div>
                         <div className="mt-2 h-1 bg-gray-200 rounded-full overflow-hidden">
                           <div className="h-full rounded-full animate-pulse" style={{ backgroundColor: '#F7E69B', width: '70%' }}></div>
@@ -200,29 +200,29 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                           <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center p-1">
                             <img 
                               src="/Finit Icon Blue.svg" 
-                              alt="VoiceLink" 
+                              alt={t('phoneMockup.voiceLink')} 
                               className="w-full h-full object-contain"
                             />
                           </div>
-                          <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>VoiceLink</span>
+                          <span className="text-sm font-semibold" style={{ color: '#1C2C55' }}>{t('phoneMockup.voiceLink')}</span>
                         </div>
                         
                         <div className="text-sm text-gray-800 leading-relaxed">
-                          <div className="font-medium mb-2" style={{ color: '#1C2C55' }}>✅ Updated CRM with:</div>
+                          <div className="font-medium mb-2" style={{ color: '#1C2C55' }}>{t('phoneMockup.updatedCrm')}</div>
                           
                           <div className="space-y-1.5 text-sm">
-                            <div>📞 <strong>Follow-up Call</strong> - Sarah Mitchell (TechFlow)</div>
-                            <div className="ml-4 text-gray-700">• Discuss premium package pricing and implementation timeline</div>
+                            <div>📞 <strong>{t('phoneMockup.followUpCall')}</strong> - Sarah Mitchell (TechFlow)</div>
+                            <div className="ml-4 text-gray-700">• {t('phoneMockup.discussPremium')}</div>
                             <div className="ml-4 text-gray-700">• Thursday, Jan 16 at 2:00 PM</div>
                             
-                            <div className="pt-1">📝 <strong>Key Notes:</strong></div>
-                            <div className="ml-4 text-gray-700">• Budget increased 40% for digital tools</div>
-                            <div className="ml-4 text-gray-700">• Strong interest in WhatsApp integration</div>
-                            <div className="ml-4 text-gray-700">• Prefers Thursday PM calls</div>
+                            <div className="pt-1">📝 <strong>{t('phoneMockup.keyNotes')}</strong></div>
+                            <div className="ml-4 text-gray-700">• {t('phoneMockup.budgetIncreased')}</div>
+                            <div className="ml-4 text-gray-700">• {t('phoneMockup.strongInterest')}</div>
+                            <div className="ml-4 text-gray-700">• {t('phoneMockup.prefersThursday')}</div>
                             
-                            <div className="pt-1">📋 <strong>Action Items:</strong></div>
-                            <div className="ml-4 text-gray-700">• Send proposal by Friday</div>
-                            <div className="ml-4 text-gray-700">• Include ROI calculations</div>
+                            <div className="pt-1">📋 <strong>{t('phoneMockup.actionItems')}</strong></div>
+                            <div className="ml-4 text-gray-700">• {t('phoneMockup.sendProposal')}</div>
+                            <div className="ml-4 text-gray-700">• {t('phoneMockup.includeRoi')}</div>
                           </div>
                         </div>
                         
@@ -240,7 +240,7 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                     <div className="flex-shrink-0 p-4 pt-2">
                       <div className="bg-white rounded-full px-4 py-2 flex items-center space-x-3 shadow-sm">
                         <div className="text-gray-400">😊</div>
-                        <div className="flex-1 text-sm text-gray-500">Type a message</div>
+                        <div className="flex-1 text-sm text-gray-500">{t('phoneMockup.typeMessage')}</div>
                         <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
                           <Mic className="w-4 h-4 text-white" />
                         </div>
