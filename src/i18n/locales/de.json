@@ -53,7 +53,13 @@
     "failedToVerifyCode": "Code verifizieren fehlgeschlagen",
     "failedToDisconnectWhatsapp": "WhatsApp trennen fehlgeschlagen",
     "pleaseSignInToPurchase": "Bitte melden Sie sich an, um einen Kauf zu tätigen",
-    "purchaseFailed": "Kauf fehlgeschlagen"
+    "purchaseFailed": "Kauf fehlgeschlagen",
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
+    "minLength": "Muss mindestens {{min}} Zeichen lang sein",
+    "maxLength": "Darf höchstens {{max}} Zeichen lang sein",
+    "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren"
   },
   "auth": {
     "invalidAuthenticationPlatform": "Ungültige Authentifizierungsplattform",

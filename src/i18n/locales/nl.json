@@ -47,7 +47,13 @@
     "failedToVerifyCode": "Code verifiëren mislukt",
     "failedToDisconnectWhatsapp": "WhatsApp ontkoppelen mislukt",
     "pleaseSignInToPurchase": "Meld u aan om een aankoop te doen",
-    "purchaseFailed": "Aankoop mislukt"
+    "purchaseFailed": "Aankoop mislukt",
+    "required": "Dit veld is verplicht",
+    "invalidEmail": "Voer een geldig e-mailadres in",
+    "invalidPhone": "Voer een geldig telefoonnummer in",
+    "minLength": "Moet minimaal {{min}} karakters bevatten",
+    "maxLength": "Mag maximaal {{max}} karakters bevatten",
+    "agreeToTerms": "Ga akkoord met de SaaS Overeenkomst om door te gaan"
   },
   "navigation": {
     "home": "Home",

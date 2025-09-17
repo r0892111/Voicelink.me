@@ -52,7 +52,8 @@
     "invalidEmail": "Please enter a valid email address",
     "invalidPhone": "Please enter a valid phone number",
     "minLength": "Must be at least {{min}} characters",
-    "maxLength": "Must be no more than {{max}} characters"
+    "maxLength": "Must be no more than {{max}} characters",
+    "agreeToTerms": "Please agree to the SaaS Agreement to continue"
   },
   "contact": {
     "title": "Contact Us",
