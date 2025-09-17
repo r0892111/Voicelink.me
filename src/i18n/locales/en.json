@@ -54,6 +54,25 @@
     "minLength": "Must be at least {{min}} characters",
     "maxLength": "Must be no more than {{max}} characters"
   },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with our team for personalized assistance",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "emailAddress": "Email Address",
+    "emailPlaceholder": "Enter your email address",
+    "phoneNumber": "Phone Number",
+    "phonePlaceholder": "+1 234 567 8900",
+    "message": "Message",
+    "messagePlaceholder": "Tell us about your needs or ask your questions...",
+    "sendMessage": "Send Message",
+    "sendingMessage": "Sending Message...",
+    "messageSent": "Message Sent!",
+    "thankYouMessage": "Thank you for contacting us. We'll get back to you within 24 hours.",
+    "responseTime": "We'll respond within 24 hours on business days",
+    "required": "Required",
+    "submitFailed": "Failed to send message. Please try again or contact us directly."
+  },
   "navigation": {
     "home": "Home",
     "features": "Features",

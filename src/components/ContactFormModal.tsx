@@ -174,7 +174,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                   className="h-8 w-auto"
                 />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">Contact Us</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('contact.title')}</h2>
               <p className="text-lg text-gray-600">
                 {t('contact.subtitle')}
               </p>
@@ -182,7 +182,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
 
             {error && (
               <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center space-x-2 text-red-700">
-                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                <div className="w-5 h-5 flex-shrink-0 text-red-500">⚠</div>
                 <span className="text-sm">{error}</span>
               </div>
             )}

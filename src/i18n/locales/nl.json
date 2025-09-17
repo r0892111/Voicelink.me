@@ -508,6 +508,25 @@
     "lastMonth": "Vorige maand",
     "nextMonth": "Volgende maand"
   },
+  "contact": {
+    "title": "Contact Ons",
+    "subtitle": "Neem contact op met ons team voor persoonlijke hulp",
+    "fullName": "Volledige Naam",
+    "fullNamePlaceholder": "Voer uw volledige naam in",
+    "emailAddress": "E-mailadres",
+    "emailPlaceholder": "Voer uw e-mailadres in",
+    "phoneNumber": "Telefoonnummer",
+    "phonePlaceholder": "+31 123 456 789",
+    "message": "Bericht",
+    "messagePlaceholder": "Vertel ons over uw behoeften of stel uw vragen...",
+    "sendMessage": "Bericht Versturen",
+    "sendingMessage": "Bericht Versturen...",
+    "messageSent": "Bericht Verstuurd!",
+    "thankYouMessage": "Bedankt voor het contact. We nemen binnen 24 uur contact met u op.",
+    "responseTime": "We reageren binnen 24 uur op werkdagen",
+    "required": "Verplicht",
+    "submitFailed": "Bericht versturen mislukt. Probeer het opnieuw of neem direct contact met ons op."
+  },
   "finalCta": {
     "title": "Klaar om je Workflow te Transformeren?",
     "subtitle": "Hoe meer gebruikers je toevoegt, hoe meer je bespaart. Start gratis, schaal betaalbaar. Verbind je WhatsApp en start vandaag je gratis proefperiode.",
