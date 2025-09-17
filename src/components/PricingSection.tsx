@@ -205,6 +205,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   </div>
                 </div>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+                <button 
+                  onClick={openContactModal}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+                >
                   {t('pricing.getCustomQuote')}
                 </button>
               </div>
