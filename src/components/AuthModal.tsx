@@ -15,7 +15,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [agreedToTerms, setAgreedToTerms] = React.useState(false);
+  const [isAnimating, setIsAnimating] = React.useState(false);
   const processingRef = React.useRef(false);
+
+  // Handle modal animation
+  React.useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+    }
+  }, [isOpen]);
 
   const handleSignIn = async (provider: AuthProvider) => {
   // Prevent double calls using ref
@@ -74,6 +82,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   // Reset processing state when modal closes
   React.useEffect(() => {
     if (!isOpen) {
+      setIsAnimating(false);
       processingRef.current = false;
       setLoadingProvider(null);
       setError(null);
@@ -84,8 +93,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative transform transition-all duration-300 scale-100">
+    <div className={`fixed inset-0 bg-black backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-300 ${
+      isAnimating ? 'bg-opacity-60' : 'bg-opacity-0'
+    }`}>
+      <div className={`bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative transition-all duration-300 ease-out ${
+        isAnimating 
+          ? 'scale-100 opacity-100 translate-y-0' 
+          : 'scale-95 opacity-0 translate-y-4'
+      }`}>
         {/* Close Button */}
         <button
           onClick={onClose}
