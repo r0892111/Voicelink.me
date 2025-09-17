@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, User, Mail, Phone, MessageSquare, Send, Loader2 } from 'lucide-react';
+import { X, User, Mail, Phone, MessageSquare, Send, Loader2, AlertCircle } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
 
 interface ContactFormModalProps {
@@ -60,6 +60,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!validateForm()) {
       setError(t('validation.agreeToTerms'));
       return;
     }
@@ -158,10 +159,6 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Send className="w-8 h-8 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Message Sent!</h2>
-            <p className="text-gray-600">
-              Thank you for contacting us. We'll get back to you within 24 hours.
-            </p>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('contact.success.title')}</h2>
             <p className="text-gray-600">
               {t('contact.success.description')}
@@ -178,10 +175,6 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                   className="h-8 w-auto"
                 />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">Contact Us</h2>
-              <p className="text-lg text-gray-600">
-                Get in touch with our team for personalized assistance
-              </p>
               <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('contact.title')}</h2>
               <p className="text-lg text-gray-600">
                 {t('contact.subtitle')}
