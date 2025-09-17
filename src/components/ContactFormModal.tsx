@@ -28,6 +28,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
     message: ''
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -66,8 +67,25 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
     setIsSubmitting(true);
 
     try {
-      // Simulate form submission - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Send form data to webhook
+      const response = await fetch('https://alexfinit.app.n8n.cloud/webhook-test/dc07ccfe-138f-4a8c-9f3a-e64f2591560d', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim() || null,
+          message: formData.message.trim() || null,
+          timestamp: new Date().toISOString(),
+          source: 'voicelink_contact_form'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       
       setIsSubmitted(true);
       
@@ -81,6 +99,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
       
     } catch (error) {
       console.error('Form submission error:', error);
+      setError('Failed to send message. Please try again or contact us directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -93,6 +112,10 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
     // Clear error when user starts typing
     if (errors[field as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+    // Clear general error when user starts typing
+    if (error) {
+      setError(null);
     }
   };
 
