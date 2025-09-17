@@ -99,7 +99,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
       
     } catch (error) {
       console.error('Form submission error:', error);
-      setError('Failed to send message. Please try again or contact us directly.');
+      setError(t('contact.submitFailed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -158,9 +158,9 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Send className="w-8 h-8 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Message Sent!</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('contact.messageSent')}</h2>
             <p className="text-gray-600">
-              Thank you for contacting us. We'll get back to you within 24 hours.
+              {t('contact.thankYouMessage')}
             </p>
           </div>
         ) : (
@@ -176,7 +176,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-3">Contact Us</h2>
               <p className="text-lg text-gray-600">
-                Get in touch with our team for personalized assistance
+                {t('contact.subtitle')}
               </p>
             </div>
 
@@ -192,7 +192,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
               {/* Name Field */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name *
+                  {t('contact.fullName')} *
                 </label>
                 <div className="relative">
                   <input
@@ -203,7 +203,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                     className={`w-full px-4 py-3 pl-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                       errors.name ? 'border-red-300' : 'border-gray-300'
                     }`}
-                    placeholder="Enter your full name"
+                    placeholder={t('contact.fullNamePlaceholder')}
                   />
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 </div>
@@ -215,7 +215,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address *
+                  {t('contact.emailAddress')} *
                 </label>
                 <div className="relative">
                   <input
@@ -226,7 +226,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                     className={`w-full px-4 py-3 pl-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                       errors.email ? 'border-red-300' : 'border-gray-300'
                     }`}
-                    placeholder="Enter your email address"
+                    placeholder={t('contact.emailPlaceholder')}
                   />
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 </div>
@@ -238,7 +238,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
               {/* Phone Field */}
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number
+                  {t('contact.phoneNumber')}
                 </label>
                 <div className="relative">
                   <input
@@ -247,7 +247,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                     value={formData.phone}
                     onChange={handleInputChange('phone')}
                     className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    placeholder="+32 123 456 789"
+                    placeholder={t('contact.phonePlaceholder')}
                   />
                   <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 </div>
@@ -256,7 +256,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
               {/* Message Field */}
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
+                  {t('contact.message')}
                 </label>
                 <div className="relative">
                   <textarea
@@ -265,7 +265,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                     onChange={handleInputChange('message')}
                     rows={4}
                     className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
-                    placeholder="Tell us about your needs or ask any questions..."
+                    placeholder={t('contact.messagePlaceholder')}
                   />
                   <MessageSquare className="absolute left-3 top-4 w-5 h-5 text-gray-400" />
                 </div>
@@ -283,18 +283,18 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Sending Message...</span>
+                    <span>{t('contact.sendingMessage')}</span>
                   </>
                 ) : (
                   <>
                     <Send className="w-5 h-5" />
-                    <span>Send Message</span>
+                    <span>{t('contact.sendMessage')}</span>
                   </>
                 )}
               </button>
 
               <p className="text-xs text-gray-500 text-center">
-                We'll respond within 24 hours during business days
+                {t('contact.responseTime')}
               </p>
             </form>
           </>
