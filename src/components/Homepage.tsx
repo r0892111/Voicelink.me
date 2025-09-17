@@ -43,6 +43,7 @@ const PricingCalculator: React.FC = () => {
   const [userCount, setUserCount] = React.useState(1);
   const [customInput, setCustomInput] = React.useState('');
   const [isCustom, setIsCustom] = React.useState(false);
+  const { t } = useI18n();
   
   // Tier-based pricing logic
   const getTierInfo = (users: number) => {
@@ -495,6 +496,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                visibleSections.has('custom-solutions') 
                  ? 'opacity-100 -translate-x-0' 
                  : 'opacity-0 -translate-x-8'
+             }`}>
                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('customSolutions.twoExamples')}</h3>
                <p className="text-gray-600">{t('customSolutions.adaptsToAnyIndustry')}</p>
              </div>
@@ -557,7 +559,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                     <Zap className="w-6 h-6" style={{ color: '#1C2C55' }} />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>Connect Any CRM</h3>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('customSolutions.connectAnyCrm')}</h3>
                   <p className="text-sm text-gray-600">{t('customSolutions.integrateWithAnySystem')}</p>
                 </div>
@@ -740,13 +741,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
       <footer 
         id="footer"
         data-animate-section
-
         className="text-white py-12 relative z-10"
         style={{ backgroundColor: '#202226' }}
       >
         <div className="max-w-7xl mx-auto px-6">
-
-          
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
               {/* White logo on dark background */}
