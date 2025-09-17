@@ -19,15 +19,15 @@ const Support: React.FC = () => {
           </button>
           
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Support</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('navigation.support')}</h1>
             <h2 className="text-xl font-semibold text-blue-600 mb-4">FINIT SOLUTIONS</h2>
-            <p className="text-gray-600">We're here to help you with VoiceLink</p>
+            <p className="text-gray-600">{t('dashboard.support.description')}</p>
           </div>
         </div>
 
         {/* Contact Information */}
         <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('contact.title')}</h2>
           
           <div className="grid md:grid-cols-2 gap-8">
             {/* Email Support */}

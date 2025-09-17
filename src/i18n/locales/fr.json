@@ -47,7 +47,13 @@
     "failedToVerifyCode": "Échec de la vérification du code",
     "failedToDisconnectWhatsapp": "Échec de la déconnexion WhatsApp",
     "pleaseSignInToPurchase": "Veuillez vous connecter pour effectuer un achat",
-    "purchaseFailed": "Échec de l'achat"
+    "purchaseFailed": "Échec de l'achat",
+    "required": "Ce champ est obligatoire",
+    "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+    "invalidPhone": "Veuillez entrer un numéro de téléphone valide",
+    "minLength": "Doit contenir au moins {{min}} caractères",
+    "maxLength": "Ne doit pas dépasser {{max}} caractères",
+    "agreeToTerms": "Veuillez accepter l'Accord SaaS pour continuer"
   },
   "auth": {
     "callback": {

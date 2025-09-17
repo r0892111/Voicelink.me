@@ -31,7 +31,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   // Check if user agreed to terms
   if (!agreedToTerms) {
-    setError('Please agree to the SaaS Agreement to continue');
+    setError(t('validation.agreeToTerms'));
     return;
   }
   try {
