@@ -48,7 +48,6 @@
     "failedToDisconnectWhatsapp": "Failed to disconnect WhatsApp",
     "pleaseSignInToPurchase": "Please sign in to make a purchase",
     "purchaseFailed": "Purchase failed",
-    "agreeToTerms": "Please agree to the SaaS Agreement to continue",
     "required": "This field is required",
     "invalidEmail": "Please enter a valid email address",
     "invalidPhone": "Please enter a valid phone number",
@@ -507,29 +506,4 @@
     "percentage": "{{value}}%",
     "decimal": "{{value}}"
   }
-  },
-  "contact": {
-    "title": "Contact Us",
-    "subtitle": "Get in touch with our team for personalized assistance",
-    "form": {
-      "fullName": "Full Name",
-      "fullNamePlaceholder": "Enter your full name",
-      "emailAddress": "Email Address",
-      "emailPlaceholder": "Enter your email address",
-      "phoneNumber": "Phone Number",
-      "phonePlaceholder": "+32 123 456 789",
-      "message": "Message",
-      "messagePlaceholder": "Tell us about your needs or ask any questions...",
-      "sendMessage": "Send Message",
-      "sendingMessage": "Sending Message...",
-      "required": "*",
-      "responseTime": "We'll respond within 24 hours during business days"
-    },
-    "success": {
-      "title": "Message Sent!",
-      "description": "Thank you for contacting us. We'll get back to you within 24 hours."
-    },
-    "errors": {
-      "submitFailed": "Failed to send message. Please try again or contact us directly."
-    }
 }
