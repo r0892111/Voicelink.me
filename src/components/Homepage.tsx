@@ -7,6 +7,7 @@ import { useI18n } from '../hooks/useI18n';
 
 interface HomepageProps {
   openModal: () => void;
+  openContactModal: () => void;
 }
 
 // Custom hook for scroll-triggered animations
@@ -124,7 +125,7 @@ const PricingCalculator: React.FC = () => {
   );
 };
 
-export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
+export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal }) => {
   const visibleSections = useScrollAnimation();
   const [selectedUsers, setSelectedUsers] = React.useState(1);
   const { openSettings } = useConsent();
@@ -287,7 +288,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               <p className="text-base text-gray-500 mb-6 font-bold">
                 {t('features.dontSeeYourCrm')}
               </p>
-              <button className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-gray-300 rounded-full hover:border-gray-400 transition-colors group">
+              <button 
+                onClick={openContactModal}
+                className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-gray-300 rounded-full hover:border-gray-400 transition-colors group"
+              >
                 <span className="text-base font-medium text-gray-700">{t('features.contactForCustom')}</span>
                 <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -611,6 +615,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
+                  onClick={() => window.open('https://calendly.com/alex-finitsolutions/30min', '_blank')}
                   className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
                   style={{ backgroundColor: '#1C2C55' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
@@ -620,6 +625,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button 
+                  onClick={openContactModal}
                   className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
                   style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
                   onMouseEnter={(e) => {
