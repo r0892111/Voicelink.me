@@ -68,7 +68,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
 
     try {
       // Send form data to webhook
-      const response = await fetch('https://alexfinit.app.n8n.cloud/webhook-test/dc07ccfe-138f-4a8c-9f3a-e64f2591560d', {
+      const response = await fetch('https://alexfinit.app.n8n.cloud/webhook/dc07ccfe-138f-4a8c-9f3a-e64f2591560d', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -212,7 +212,7 @@
       },
       "keepFocused": {
         "title": "Keep It Focused",
-        "description": "One update per message is most reliable"
+        "description": "Speak only about one person per voice message."
       },
       "important": "Important:",
       "importantText": "You can only update one contact per message. Want to update multiple people in your CRM? Record them with separate voice notes on WhatsApp."
