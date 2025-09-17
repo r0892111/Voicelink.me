@@ -247,6 +247,16 @@
     "oneClickSetup": "Connexion CRM en un clic",
     "whatsappSetup": "Connectez WhatsApp en 2 minutes"
   },
+  "features": {
+    "title": "Intégrations CRM",
+    "subtitle": "Connectez instantanément. Synchronisez automatiquement.",
+    "oneClickSetup": "Configuration en un clic",
+    "realtimeSync": "Synchronisation en temps réel",
+    "secureOauth": "OAuth sécurisé",
+    "moreIntegrations": "Nous travaillons constamment à l'ajout de nouvelles intégrations CRM comme HubSpot, Salesforce, Zoho et plus pour rendre VoiceLink disponible pour tous.",
+    "dontSeeYourCrm": "Vous ne voyez pas votre CRM ? Nous construisons des intégrations personnalisées pour toute plateforme avec une API.",
+    "contactForCustom": "Contactez-nous pour une Intégration Personnalisée"
+  },
   "auth": {
     "modal": {
       "title": "Commencez Votre Essai Gratuit",
@@ -580,6 +590,11 @@
     "startFreeTrial": "Commencer l'Essai Gratuit",
     "watchDemo": "Voir la Démo",
     "freeTrialFeatures": {
+      "freeTrialDays": "Essai gratuit de 14 jours",
+      "noSetupFees": "Aucuns frais d'installation",
+      "cancelAnytime": "Annuler à tout moment"
+    }
+  },
   "contact": {
     "title": "Contactez-Nous",
     "subtitle": "Entrez en contact avec notre équipe pour une assistance personnalisée",
@@ -598,10 +613,5 @@
     "responseTime": "Nous répondrons dans les 24 heures pendant les jours ouvrables",
     "required": "Obligatoire",
     "submitFailed": "Échec de l'envoi du message. Veuillez réessayer ou nous contacter directement."
-  },
-      "freeTrialDays": "Essai gratuit de 14 jours",
-      "noSetupFees": "Aucuns frais d'installation",
-      "cancelAnytime": "Annuler à tout moment"
-    }
   }
 }
