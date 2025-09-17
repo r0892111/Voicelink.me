@@ -495,7 +495,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal }) => {
                visibleSections.has('custom-solutions') 
                  ? 'opacity-100 -translate-x-0' 
                  : 'opacity-0 -translate-x-8'
-             }`}>
                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1C2C55' }}>{t('customSolutions.twoExamples')}</h3>
                <p className="text-gray-600">{t('customSolutions.adaptsToAnyIndustry')}</p>
              </div>
