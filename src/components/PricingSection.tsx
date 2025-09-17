@@ -344,7 +344,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       <td className="px-6 py-4">
                         {isEnterpriseTier ? (
                           <button 
-                           onClick={openContactModal}
+                           onClick={openModal}
                            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer">
                             {t('pricing.contactUs')}
                           </button>
