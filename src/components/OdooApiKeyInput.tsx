@@ -220,12 +220,10 @@ export const OdooApiKeyInput: React.FC = () => {
         <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
           <h4 className="text-sm font-medium text-purple-800 mb-2">How to get your Odoo API Key:</h4>
           <ol className="text-xs text-purple-700 space-y-1 list-decimal list-inside">
-            <li>Log into your Odoo instance as an administrator</li>
-            <li>Go to Settings → Users & Companies → Users</li>
             <li>{t('common.selectUserAccount')}</li>
             <li>{t('common.accessRightsTab')}</li>
             <li>{t('common.generateOrCopyApiKey')}</li>
-            <li>Your database name is typically found in your Odoo URL (e.g., "mycompany" from mycompany.odoo.com)</li>
+            <li>{t('common.databaseNameLocation')}</li>
           </ol>
         </div>
       </div>
