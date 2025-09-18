@@ -33,7 +33,14 @@ export const useI18n = () => {
   
   // Language switching
   const changeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
+    console.log('useI18n - changing language to:', language);
+    console.log('useI18n - current language before change:', i18n.language);
+    
+    i18n.changeLanguage(language).then(() => {
+      console.log('useI18n - language changed successfully to:', i18n.language);
+      console.log('useI18n - localStorage i18nextLng:', localStorage.getItem('i18nextLng'));
+    });
+    
     document.documentElement.lang = language;
     document.documentElement.dir = getTextDirection(language);
   };

@@ -22,9 +22,12 @@
     "enterOdooDatabaseName": "Entrez votre nom de base de données Odoo",
     "enterNewApiKey": "Entrez une nouvelle clé API pour mettre à jour",
     "enterOdooApiKey": "Entrez votre clé API Odoo",
-    "selectUserAccount": "Sélectionnez votre compte utilisateur",
-    "accessRightsTab": "Dans l'onglet \"Droits d'accès\", trouvez la section \"Clé API\"",
-    "generateOrCopyApiKey": "Générez ou copiez votre clé API existante",
+    "selectUserAccount": "Naviguez vers votre base de données Odoo",
+    "accessRightsTab": "En haut à droite, cliquez sur Préférences, naviguez vers l'onglet Sécurité du Compte",
+    "generateOrCopyApiKey": "En bas vous pouvez créer une nouvelle clé API. Nous recommandons une clé API pour une période plus longue, ou quand la clé expire vous devez la renouveler",
+    "databaseNameLocation": "Votre nom de base de données se trouve généralement dans votre URL Odoo (ex: \"mycompany\" de mycompany.odoo.com)",
+    "function": "Fonction",
+    "autofill": "Remplissage automatique",
     "loadingDashboard": "Chargement du tableau de bord...",
     "teamMemberInvitedSuccessfully": "Membre de l'équipe invité avec succès !",
     "changeLanguage": "Changer de langue",
@@ -275,11 +278,13 @@
     "upgradeExperience": "Améliorez Votre Expérience",
     "welcomeDefault": "Bon retour, Utilisateur Premium !",
     "subscriptionActive": "Votre abonnement VoiceLink est actif",
+    
     "platformConnection": {
       "title": "{{platform}}",
       "connectedActive": "Connecté et Actif",
       "integrationReady": "L'intégration est en ligne et prête pour les notes vocales"
     },
+
     "accountProfile": {
       "title": "Profil du Compte",
       "subtitle": "Informations de votre compte CRM",
@@ -292,37 +297,43 @@
       "whatsappStatus": "Statut WhatsApp",
       "phone": "Téléphone",
       "accountId": "ID du Compte",
-      "emailStatus": "Statut E-mail"
+
+      "emailStatus": "Statut E-mail",
+      "contact": "Contact",
+      "account": "Compte",
+      "preferences": "Préférences",
+      "status": "Statut",
+      "phoneType": "Type de Téléphone",
+      "admin": "Admin",
+      "user": "Utilisateur",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "yes": "Oui",
+      "no": "Non",
+      "minutes": "minutes",
+      "locale": "Locale",
+      "adminStatus": "Statut Admin",
+      "accountStatus": "Statut du Compte",
+      "company": "Entreprise",
+      "companyDomain": "Domaine de l'Entreprise",
+      "defaultCurrency": "Devise par Défaut",
+      "lastLogin": "Dernière Connexion",
+      "userID": "ID Utilisateur",
+      "supportAccess": "Accès Support",
+      "scope": "Portée",
+      "audience": "Audience",
+      "tokenExpires": "Token Expire",
+      "accountID": "ID du Compte",
+      "type": "Type",
+      "invoiceable": "Facturable",
+      "whitelabeling": "Marque Blanche",
+      "timeTrackingLimit": "Limite de Suivi du Temps",
+      "unknownPlatform": "Plateforme inconnue"
     },
     "whatsappStatus": {
       "connected": "Connecté",
-      "pending": "En Attente",
+      "pending": "En attente",
       "notConnected": "Non Connecté"
-    },
-    "allSet": {
-      "title": "🎉 Vous êtes Prêt !",
-      "subtitle": "Votre WhatsApp est connecté et VoiceLink est prêt à utiliser",
-      "startSending": "Commencer à Envoyer des Notes Vocales",
-      "description": "Envoyez simplement un message vocal à VoiceLink sur WhatsApp et regardez votre CRM se mettre à jour automatiquement avec des données structurées, des tâches de suivi et des informations de contact.",
-      "whatsappConnected": "WhatsApp Connecté",
-      "crmIntegrationActive": "Intégration CRM Active",
-      "aiProcessingReady": "Traitement IA Prêt"
-    },
-    "gettingStarted": {
-      "title": "Prêt à Commencer ?",
-      "subtitle": "Suivez ces étapes simples pour commencer à utiliser VoiceLink",
-      "step1": {
-        "title": "Vérifier WhatsApp",
-        "description": "Connectez votre numéro WhatsApp pour recevoir des confirmations de notes vocales"
-      },
-      "step2": {
-        "title": "Envoyer une Note Vocale",
-        "description": "Enregistrez vos pensées naturellement via les messages vocaux WhatsApp"
-      },
-      "step3": {
-        "title": "Regardez la Magie Opérer",
-        "description": "L'IA traite votre voix et synchronise les données structurées vers votre CRM"
-      }
     },
     "customerPortal": {
       "title": "Gérez Votre Abonnement",
@@ -390,83 +401,6 @@
         "description": "Planifiez un appel de consultation gratuit avec nos experts",
         "bookCall": "Réserver un Appel"
       }
-    },
-    "userGuide": {
-      "title": "Guide d'Utilisation Quotidienne",
-      "subtitle": "VoiceLink fonctionne mieux lorsque vous parlez de vos mises à jour de manière structurée et claire",
-      "recordingContacts": {
-        "title": "1. Enregistrement des Contacts",
-        "startWith": "Commencez par :",
-        "example1": "\"Vient d'appeler/parler avec [NOM]\"",
-        "example2": "ou \"[NOM] vient de visiter\"",
-        "names": "Noms :",
-        "namesTip": "Parlez lentement et épellez les noms difficiles lettre par lettre",
-        "phoneEmail": "Téléphone/E-mail :",
-        "phoneEmailTip": "Optionnel, mais épellez toujours quand vous avez un doute",
-        "newVsExisting": "Nouveaux vs. Contacts Existants",
-        "newVsExistingTip": "VoiceLink recherche automatiquement les enregistrements existants et crée de nouveaux contacts quand nécessaire."
-      },
-      "conversationInfo": {
-        "title": "2. Informations de Conversation",
-        "description": "Partagez des informations importantes comme si vous les racontiez à un collègue.",
-        "example": "Exemple :",
-        "exampleText": "\"Il est intéressé par le produit X, veut une démo la semaine prochaine, et m'a demandé d'envoyer la liste de prix.\"",
-        "tip": "Conseil :",
-        "tipText": "Plus vous donnez de détails, mieux VoiceLink peut remplir votre CRM. Le système crée automatiquement des tags et des rapports comme annotations."
-      },
-      "calendarTasks": {
-        "title": "3. Gestion du Calendrier et des Tâches",
-        "description": "VoiceLink peut automatiquement créer ou mettre à jour des rendez-vous et des tâches.",
-        "callbacks": "📞 Rappels :",
-        "callback1": "\"Je dois le rappeler lundi à 15h\"",
-        "callback2": "\"Je devrais l'appeler demain matin\"",
-        "appointments": "📅 Rendez-vous :",
-        "appointment1": "\"Il vient mardi prochain à 14h\"",
-        "appointment2": "\"Réunion à Tremelo le 29 mai à 13h\"",
-        "tasks": "✅ Tâches :",
-        "task1": "\"Envoyer le catalogue demain\"",
-        "task2": "\"Préparer le devis pour vendredi 14h\"",
-        "updates": "🔄 Mises à jour :",
-        "update1": "\"Réunion avec Marianna déplacée à mardi 12h\"",
-        "update2": "\"Jeff n'a pas répondu, réessayer demain\""
-      },
-      "bestPractices": {
-        "title": "4. Meilleures Pratiques pour une Utilisation Optimale",
-        "speakClearly": {
-          "title": "Parlez Clairement",
-          "description": "Parlez clairement et lentement en anglais standard"
-        },
-        "spellingMode": {
-          "title": "Mode Orthographe",
-          "description": "Épellez les lettres pour les noms, e-mails et numéros de téléphone quand vous avez un doute"
-        },
-        "autoScheduling": {
-          "title": "Planification Automatique",
-          "description": "Aucune heure mentionnée ? VoiceLink trouve automatiquement un moment approprié"
-        },
-        "keepFocused": {
-          "title": "Restez Concentré",
-          "description": "Une mise à jour par message est la plus fiable"
-        },
-        "important": "Important :",
-        "importantText": "Vous ne pouvez mettre à jour qu'un seul contact par message. Voulez-vous mettre à jour plusieurs personnes dans votre CRM ? Enregistrez-les avec des notes vocales séparées sur WhatsApp."
-      },
-      "troubleshooting": {
-        "title": "5. Dépannage",
-        "noConnection": {
-          "title": "Pas de Connexion ?",
-          "description": "Vérifiez la connexion internet et les paramètres API"
-        },
-        "wrongInput": {
-          "title": "Mauvaise Saisie ?",
-          "description": "Envoyez les corrections via un nouveau message vocal"
-        },
-        "transcriptionErrors": {
-          "title": "Erreurs de Transcription ?",
-          "description": "Parlez clairement sans bruit de fond"
-        }
-      },
-      "needHelp": "Besoin d'Aide ?"
     }
   },
   "whatsapp": {

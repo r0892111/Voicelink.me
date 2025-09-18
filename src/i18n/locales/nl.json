@@ -22,9 +22,12 @@
     "enterOdooDatabaseName": "Voer uw Odoo database naam in",
     "enterNewApiKey": "Voer nieuwe API-sleutel in om bij te werken",
     "enterOdooApiKey": "Voer uw Odoo API-sleutel in",
-    "selectUserAccount": "Selecteer uw gebruikersaccount",
-    "accessRightsTab": "In het \"Toegangsrechten\" tabblad, vind de \"API-sleutel\" sectie",
-    "generateOrCopyApiKey": "Genereer of kopieer uw bestaande API-sleutel",
+    "selectUserAccount": "Navigeer naar uw Odoo database",
+    "accessRightsTab": "Klik rechtsboven op Voorkeuren, navigeer naar het Account Beveiliging tabblad",
+    "generateOrCopyApiKey": "Onderaan kunt u een nieuwe API-sleutel aanmaken. We raden een API-sleutel voor een langere periode aan, of wanneer de sleutel verloopt moet u deze vernieuwen",
+    "databaseNameLocation": "Uw databasenaam is meestal te vinden in uw Odoo URL (bijv. \"mycompany\" van mycompany.odoo.com)",
+    "function": "Functie",
+    "autofill": "Automatisch invullen",
     "loadingDashboard": "Dashboard laden...",
     "teamMemberInvitedSuccessfully": "Teamlid succesvol uitgenodigd!",
     "changeLanguage": "Taal wijzigen",
@@ -129,40 +132,42 @@
   },
   "teamManagement": {
     "title": "Teambeheer",
-    "subtitle": "Beheer je teamleden en uitnodigingen",
+
+    "subtitle": "Beheer uw teamleden en uitnodigingen",
     "accountOwner": "Accounteigenaar",
     "admin": "Admin",
     "teamMembers": "Teamleden",
-    "pending": "In Behandeling",
+    "pending": "In behandeling",
     "addNewMember": "Nieuw Teamlid Toevoegen",
     "selectCompanyUser": "Bedrijfsgebruiker Selecteren",
     "loadingUsers": "Bedrijfsgebruikers laden...",
-    "selectedUserDetails": "Geselecteerde Gebruiker Details",
+    "selectedUserDetails": "Details van Geselecteerde Gebruiker",
     "name": "Naam",
-    "email": "E-Mail",
+    "email": "E-mail",
     "phone": "Telefoon",
     "notProvided": "Niet opgegeven",
-    "whatsappNumber": "WhatsApp-Nummer (indien anders dan telefoon)",
-    "whatsappNumberPlaceholder": "+31 123 456 789",
+    "whatsappNumber": "WhatsApp-nummer (indien anders dan telefoon)",
+    "whatsappNumberPlaceholder": "+31 6 12345678",
     "fullName": "Volledige Naam",
-    "fullNamePlaceholder": "Voer volledige naam in",
+    "fullNamePlaceholder": "Volledige naam invoeren",
     "emailAddress": "E-mailadres",
-    "emailPlaceholder": "Voer e-mailadres in",
-    "sendingInvitation": "Uitnodiging verzenden...",
+    "emailPlaceholder": "E-mailadres invoeren",
+    "sendingInvitation": "Uitnodiging versturen...",
     "saveAndInvite": "Opslaan & Uitnodigen",
     "clearSelection": "Selectie Wissen",
     "addNewUser": "Nieuwe Gebruiker Toevoegen",
-    "teamLimitReached": "Team Limiet Bereikt",
-    "teamLimitMessage": "Je hebt je team limiet van {{total}} gebruikers bereikt. Upgrade je abonnement om meer teamleden toe te voegen.",
+    "teamLimitReached": "Teamlimiet Bereikt",
+    "teamLimitMessage": "U heeft uw teamlimiet van {{total}} gebruikers bereikt. Upgrade uw abonnement om meer teamleden toe te voegen.",
     "upgradeSubscription": "Abonnement Upgraden"
   },
   "userGuide": {
-    "title": "Dagelijkse Gebruikshandleiding",
-    "subtitle": "VoiceLink werkt het beste wanneer je je updates gestructureerd en duidelijk spreekt",
+    "title": "Dagelijkse Gebruikersgids",
+    "subtitle": "VoiceLink werkt het beste wanneer je je updates gestructureerd en duidelijk uitspreekt",
     "recordingContacts": {
       "title": "1. Contacten Opnemen",
       "startWith": "Begin met:",
       "example1": "\"Net gebeld/gesproken met [NAAM]\"",
+
       "example2": "of \"[NAAM] heeft net bezocht\"",
       "names": "Namen:",
       "namesTip": "Spreek langzaam en spel moeilijke namen letter voor letter",
@@ -202,11 +207,11 @@
         "description": "Spreek duidelijk en langzaam in standaard Engels"
       },
       "spellingMode": {
-        "title": "Spellingsmodus",
-        "description": "Spel letters voor namen, e-mails en telefoonnummers bij twijfel"
+        "title": "Spelmodus",
+        "description": "Spel letters voor namen, e-mails en telefoonnummers wanneer je twijfelt"
       },
       "autoScheduling": {
-        "title": "Auto-Planning",
+        "title": "Auto-inplanning",
         "description": "Geen tijd genoemd? VoiceLink vindt automatisch een geschikte tijd"
       },
       "keepFocused": {
@@ -214,16 +219,17 @@
         "description": "Eén update per bericht is het meest betrouwbaar"
       },
       "important": "Belangrijk:",
-      "importantText": "Je kunt slechts één contact per bericht bijwerken. Wil je meerdere personen in je CRM bijwerken? Neem ze op met aparte spraaknotities op WhatsApp."
+      "importantText": "Je kunt slechts één contact per bericht bijwerken. Wil je meerdere personen in je CRM bijwerken? Neem ze op met aparte spraaknotities via WhatsApp."
     },
     "troubleshooting": {
       "title": "5. Probleemoplossing",
       "noConnection": {
-        "title": "Geen Verbinding?",
+        "title": "Geen verbinding?",
         "description": "Controleer internetverbinding en API-instellingen"
       },
       "wrongInput": {
-        "title": "Verkeerde Invoer?",
+        "title": "Verkeerde invoer?",
+
         "description": "Stuur correcties via nieuw spraakbericht"
       },
       "transcriptionErrors": {
@@ -240,16 +246,11 @@
     "upgradeExperience": "Upgrade Je Ervaring",
     "welcomeDefault": "Welkom terug, Premium Gebruiker!",
     "subscriptionActive": "Je VoiceLink abonnement is actief",
-    "platformConnection": {
-      "title": "{{platform}}",
-      "connectedActive": "Verbonden & Actief",
-      "integrationReady": "Integratie is live en klaar voor spraaknotities"
-    },
     "accountProfile": {
-      "title": "Accountprofiel",
-      "subtitle": "Je CRM accountinformatie",
+      "title": "Account Profiel",
+      "subtitle": "Je CRM account informatie",
       "personalInfo": "Persoonlijke Informatie",
-      "accountDetails": "Accountdetails",
+      "accountDetails": "Account Details",
       "fullName": "Volledige Naam",
       "email": "E-mail",
       "language": "Taal",
@@ -257,37 +258,42 @@
       "whatsappStatus": "WhatsApp Status",
       "phone": "Telefoon",
       "accountId": "Account ID",
-      "emailStatus": "E-mail Status"
+      "emailStatus": "E-mail Status",
+      "contact": "Contact",
+      "account": "Account",
+      "preferences": "Voorkeuren",
+      "status": "Status",
+      "phoneType": "Telefoon Type",
+      "admin": "Admin",
+      "user": "Gebruiker",
+      "active": "Actief",
+      "inactive": "Inactief",
+      "yes": "Ja",
+      "no": "Nee",
+      "minutes": "minuten",
+      "locale": "Locale",
+      "adminStatus": "Admin Status",
+      "accountStatus": "Account Status",
+      "company": "Bedrijf",
+      "companyDomain": "Bedrijfsdomein",
+      "defaultCurrency": "Standaard Valuta",
+      "lastLogin": "Laatste Inlog",
+      "userID": "Gebruiker ID",
+      "supportAccess": "Ondersteuning Toegang",
+      "scope": "Bereik",
+      "audience": "Publiek",
+      "tokenExpires": "Token Verloopt",
+      "accountID": "Account ID",
+      "type": "Type",
+      "invoiceable": "Factureerbaar",
+      "whitelabeling": "White-labeling",
+      "timeTrackingLimit": "Tijdregistratie Limiet",
+      "unknownPlatform": "Onbekend platform"
     },
     "whatsappStatus": {
       "connected": "Verbonden",
-      "pending": "In Behandeling",
+      "pending": "In behandeling",
       "notConnected": "Niet Verbonden"
-    },
-    "allSet": {
-      "title": "🎉 Je bent Helemaal Klaar!",
-      "subtitle": "Je WhatsApp is verbonden en VoiceLink is klaar voor gebruik",
-      "startSending": "Begin met Spraaknotities Versturen",
-      "description": "Stuur gewoon een spraakbericht naar VoiceLink op WhatsApp en kijk hoe je CRM automatisch wordt bijgewerkt met gestructureerde data, follow-up taken en contactinformatie.",
-      "whatsappConnected": "WhatsApp Verbonden",
-      "crmIntegrationActive": "CRM Integratie Actief",
-      "aiProcessingReady": "AI Verwerking Klaar"
-    },
-    "gettingStarted": {
-      "title": "Klaar om te Beginnen?",
-      "subtitle": "Volg deze eenvoudige stappen om VoiceLink te gebruiken",
-      "step1": {
-        "title": "WhatsApp Verifiëren",
-        "description": "Verbind je WhatsApp nummer om spraaknotitie bevestigingen te ontvangen"
-      },
-      "step2": {
-        "title": "Spraaknotitie Versturen",
-        "description": "Neem je gedachten natuurlijk op via WhatsApp spraakberichten"
-      },
-      "step3": {
-        "title": "Kijk de Magie Gebeuren",
-        "description": "AI verwerkt je spraak en synchroniseert gestructureerde data naar je CRM"
-      }
     },
     "customerPortal": {
       "title": "Beheer Je Abonnement",
@@ -384,11 +390,21 @@
     "codeSentTo": "We hebben een 6-cijferige code gestuurd naar {{number}}",
     "codeExpires": "Code verloopt om {{time}}",
     "verificationCode": "Verificatiecode",
+    "verify": "Verifiëren",
+    "disconnecting": "Verbinding verbreken...",
+    "disconnect": "Verbinding Verbreken",
+    "verificationPending": "Verificatie in behandeling",
+    "pendingDescription": "Uw WhatsApp-nummer wordt geverifieerd. Dit kan enkele minuten duren.",
+    "refreshStatus": "Status Vernieuwen",
+    "verifiedSuccessfully": "WhatsApp succesvol geverifieerd!",
+    "validPhoneRequired": "Voer een geldig telefoonnummer in met landcode",
+    "sending": "Versturen...",
+    "verificationCodeSent": "Verificatiecode Verzonden",
+    "codeSentTo": "Code verzonden naar {{number}}",
+    "codeExpires": "Code verloopt om {{time}}",
     "enterCode": "Voer 6-cijferige code in",
     "verifying": "Verifiëren...",
-    "verify": "Verifiëren",
-    "resendCode": "Code Opnieuw Versturen",
-    "verifiedSuccessfully": "WhatsApp nummer succesvol geverifieerd!"
+    "resendCode": "Code Opnieuw Verzenden"
   },
   "pricing": {
     "title": "Volume Prijzen Die Meeschalen",
