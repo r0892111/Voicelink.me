@@ -6,6 +6,7 @@ import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
 import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
+import { ContactFormModal } from './components/ContactFormModal';
 import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
@@ -22,6 +23,7 @@ import { useI18n } from './hooks/useI18n';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const { user, loading, signOut } = useAuth();
   const { t } = useI18n();
@@ -39,6 +41,13 @@ function App() {
     setIsModalOpen(false);
   };
 
+  const openContactModal = () => {
+    setIsContactModalOpen(true);
+  };
+
+  const closeContactModal = () => {
+    setIsContactModalOpen(false);
+  };
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -80,6 +89,21 @@ function App() {
                         <>
                           <a href="#features" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">{t('navigation.features')}</a>
                           <a href="#pricing" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">{t('navigation.pricing')}</a>
+                          <button
+                            onClick={() => window.open('https://calendly.com/alex-finitsolutions/30min', '_blank')}
+                            className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50"
+                          >
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                            </svg>
+                            <span>Schedule Online Meeting</span>
+                          </button>
+                          <button
+                            onClick={openContactModal}
+                            className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50"
+                          >
+                            Contact Us
+                          </button>
                         </>
                       )}
                     </>
@@ -146,6 +170,21 @@ function App() {
                   <div className="flex flex-col space-y-4 pt-4">
                     <a href="#features" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">{t('navigation.features')}</a>
                     <a href="#pricing" className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50">{t('navigation.pricing')}</a>
+                    <button
+                      onClick={() => window.open('https://calendly.com/alex-finitsolutions/30min', '_blank')}
+                      className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50 text-left"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                      </svg>
+                      <span>Schedule Online Meeting</span>
+                    </button>
+                    <button
+                      onClick={openContactModal}
+                      className="text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-gray-50 text-left"
+                    >
+                      Contact Us
+                    </button>
                     
                     {/* Mobile Language Switcher */}
                     <div className="px-3 py-2">
@@ -200,7 +239,7 @@ function App() {
           {/* Routes */}
           <div className="pt-20">
             <Routes>
-              <Route path="/" element={<Homepage openModal={openModal} />} />
+              <Route path="/" element={<Homepage openModal={openModal} openContactModal={openContactModal} />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/success" element={<SuccessPage />} />
@@ -213,6 +252,7 @@ function App() {
           </div>
 
           {!user && <AuthModal isOpen={isModalOpen} onClose={closeModal} />}
+          <ContactFormModal isOpen={isContactModalOpen} onClose={closeContactModal} />
           
           {/* Cookie Banner */}
           <CookieBanner />

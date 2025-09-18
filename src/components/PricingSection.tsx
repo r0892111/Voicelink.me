@@ -7,6 +7,7 @@ interface PricingSectionProps {
   selectedUsers: number;
   setSelectedUsers: (users: number) => void;
   openModal: () => void;
+  openContactModal: () => void;
 }
 
 interface PricingTier {
@@ -31,6 +32,11 @@ const getCurrentTier = (users: number): PricingTier => {
   return pricingTiers.find(tier => 
     users >= tier.minUsers && (tier.maxUsers === null || users <= tier.maxUsers)
   ) || pricingTiers[0];
+};
+
+const getTierDisplayName = (users: number): string => {
+  const tier = getCurrentTier(users);
+  return `VoiceLink ${tier.name}`;
 };
 
 const calculatePricing = (users: number, billingPeriod: BillingPeriod) => {
@@ -65,7 +71,8 @@ const calculatePricing = (users: number, billingPeriod: BillingPeriod) => {
 export const PricingSection: React.FC<PricingSectionProps> = ({
   selectedUsers,
   setSelectedUsers,
-  openModal
+  openModal,
+  openContactModal
 }) => {
   const { t } = useI18n();
   const [billingPeriod, setBillingPeriod] = React.useState<BillingPeriod>('monthly');
@@ -115,7 +122,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
       <div className="grid lg:grid-cols-2 gap-12 items-stretch">
         {/* Pricing Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-left h-full flex flex-col" style={{ animationDelay: '0.4s' }}>
+        <div className="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 border border-gray-100 animate-fade-in-left h-full flex flex-col" style={{ animationDelay: '0.4s' }}>
           <div className="flex items-center space-x-3 mb-6">
             <img 
               src="/Finit Icon Blue.svg" 
@@ -123,12 +130,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               className="w-12 h-12"
             />
             <div>
-              <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>{t('pricing.voicelinkPro')}</h3>
+              <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>{getTierDisplayName(selectedUsers)}</h3>
               <p className="text-gray-600">{t('pricing.perfectForTeams')}</p>
             </div>
           </div>
 
-          <div className="space-y-6 mb-8 flex-grow h-full flex flex-col justify-center">
+          <div className="space-y-4 mb-6">
             {[
               t('pricing.features.unlimitedVoiceNotes'),
               t('pricing.features.realtimeCrmSync'),
@@ -145,7 +152,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             ))}
           </div>
 
-          <div className="mb-6">
+          <div className="mb-4">
             <label htmlFor="users" className="block text-sm font-medium text-gray-700 mb-3">
               {t('pricing.numberOfUsers')}
             </label>
@@ -177,7 +184,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </div>
 
           {pricing.isEnterprise ? (
-            <div className="text-center mb-8 mt-auto">
+            <div className="text-center mb-6 mt-auto">
               <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-2xl">
                 <div className="mb-4">
                   <h4 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>
@@ -197,13 +204,16 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     <span>{t('pricing.customIntegrations')}</span>
                   </div>
                 </div>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+                <button 
+                  onClick={openContactModal}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+                >
                   {t('pricing.getCustomQuote')}
                 </button>
               </div>
             </div>
           ) : (
-            <div className="text-center mb-8 mt-auto">
+            <div className="text-center mb-6 mt-auto">
               <div className="flex items-baseline justify-center space-x-2 mb-2">
                 <span className="text-5xl font-bold" style={{ color: '#1C2C55' }}>
                   €{pricing.pricePerUser.toFixed(2)}
@@ -258,18 +268,18 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 </div>
               )}
               <p className="text-center text-sm text-gray-500 mt-4">
-                {selectedUsers > 1 ? t('pricing.multiUserPlansLaunching') : t('pricing.freeTrialNoCreditCard')}
+                {selectedUsers > 1 ? t('pricing.multiUserPlansLaunching') : t('pricing.freeTrial')}
               </p>
             </div>
           )}
         </div>
 
         {/* Volume Discount Table */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10 border border-gray-100 animate-fade-in-right h-full flex flex-col" style={{ animationDelay: '0.6s' }}>
+        <div className="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 border border-gray-100 animate-fade-in-right h-full flex flex-col" style={{ animationDelay: '0.6s' }}>
           <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: '#1C2C55' }}>
             {t('pricing.volumeDiscountTiers')}
           </h3>
-          <p className="text-gray-600 text-center mb-8">
+          <p className="text-gray-600 text-center mb-6">
             {t('pricing.automaticDiscounts')}
           </p>
           <div className="text-center mb-6">
@@ -281,7 +291,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-gray-200 flex-grow">
+          <div className="overflow-hidden rounded-2xl border border-gray-200 flex-grow mb-4">
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
@@ -336,7 +346,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       </td>
                       <td className="px-6 py-4">
                         {isEnterpriseTier ? (
-                          <button className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                          <button 
+                           onClick={openContactModal}
+                           className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer">
                             {t('pricing.contactUs')}
                           </button>
                         ) : tier.discount > 0 ? (
@@ -358,7 +370,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </table>
           </div>
 
-          <div className="mt-8 p-4 bg-gray-50 rounded-xl">
+          <div className="p-4 bg-gray-50 rounded-xl">
             <p className="text-sm text-gray-600 text-center">
               {t('pricing.allPlansInclude')}
               {t('pricing.automaticDiscountsComingSoon')}

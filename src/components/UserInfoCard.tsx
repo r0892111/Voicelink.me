@@ -9,6 +9,7 @@ interface UserInfoCardProps {
 
 export const UserInfoCard: React.FC<UserInfoCardProps> = ({ platform, userInfo }) => {
   const { t } = useI18n();
+
   const renderTeamleaderInfo = () => {
     const user = userInfo?.user || {};
     const account = userInfo?.account || {};
