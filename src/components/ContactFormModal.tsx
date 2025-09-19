@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { X, User, Mail, Phone, MessageSquare, Send, Loader2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Mail, Phone, User, MessageSquare, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
 
 interface ContactFormModalProps {
@@ -7,298 +7,206 @@ interface ContactFormModalProps {
   onClose: () => void;
 }
 
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
-
-interface FormErrors {
-  name?: string;
-  email?: string;
-}
-
 export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) => {
   const { t } = useI18n();
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
+  const [formData, setFormData] = useState({
+    fullName: '',
     email: '',
     phone: '',
     message: ''
   });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  // Handle modal animation
-  useEffect(() => {
-    if (isOpen) {
-      setIsAnimating(true);
-    }
-  }, [isOpen]);
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = t('validation.required');
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = t('validation.required');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = t('validation.invalidEmail');
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-
     setIsSubmitting(true);
+    setSubmitStatus('idle');
 
     try {
-      // Send form data to webhook
-      const response = await fetch('https://alexfinit.app.n8n.cloud/webhook/dc07ccfe-138f-4a8c-9f3a-e64f2591560d', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim() || null,
-          message: formData.message.trim() || null,
-          timestamp: new Date().toISOString(),
-          source: 'voicelink_contact_form'
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      // Simulate API call - replace with actual endpoint
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
-      setIsSubmitted(true);
+      // For now, just show success
+      setSubmitStatus('success');
       
-      // Reset form after 3 seconds and close modal
+      // Reset form after success
       setTimeout(() => {
-        setFormData({ name: '', email: '', phone: '', message: '' });
-        setErrors({});
-        setIsSubmitted(false);
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+        setSubmitStatus('idle');
         onClose();
-      }, 3000);
+      }, 2000);
       
     } catch (error) {
-      console.error('Form submission error:', error);
-      setError(t('contact.submitFailed'));
+      setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const handleInputChange = (field: keyof FormData) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData(prev => ({ ...prev, [field]: e.target.value }));
-    // Clear error when user starts typing
-    if (errors[field as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
-    }
-    // Clear general error when user starts typing
-    if (error) {
-      setError(null);
-    }
-  };
-
-  const handleClose = () => {
-    if (!isSubmitting) {
-      setIsAnimating(false);
-      // Delay actual close to allow exit animation
-      setTimeout(() => {
-        setFormData({ name: '', email: '', phone: '', message: '' });
-        setErrors({});
-        setIsSubmitted(false);
-        onClose();
-      }, 200);
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className={`fixed inset-0 bg-black backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-300 ${
-      isAnimating ? 'bg-opacity-60' : 'bg-opacity-0'
-    }`}>
-      <div className={`bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative max-h-[90vh] overflow-y-auto transition-all duration-300 ease-out ${
-        isAnimating 
-          ? 'scale-100 opacity-100 translate-y-0' 
-          : 'scale-95 opacity-0 translate-y-4'
-      }`}>
-        {/* Close Button */}
-        <button
-          onClick={handleClose}
-          disabled={isSubmitting}
-          className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-full hover:bg-gray-100 disabled:opacity-50"
-        >
-          <X className="w-6 h-6" />
-        </button>
-
-        {/* Success State */}
-        {isSubmitted ? (
-          <div className="text-center py-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Send className="w-8 h-8 text-green-600" />
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      <div className="flex min-h-screen items-center justify-center p-4">
+        {/* Backdrop */}
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+          onClick={onClose}
+        />
+        
+        {/* Modal */}
+        <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">{t('contact.title')}</h2>
+              <p className="text-gray-600 mt-1">{t('contact.subtitle')}</p>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('contact.messageSent')}</h2>
-            <p className="text-gray-600">
-              {t('contact.thankYouMessage')}
-            </p>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="w-6 h-6 text-gray-500" />
+            </button>
           </div>
-        ) : (
-          <>
-            {/* Modal Header */}
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center space-x-3 mb-4">
-                <img 
-                  src="/Finit Voicelink Blue.svg" 
-                  alt={t('common.voiceLink')} 
-                  className="h-8 w-auto"
-                />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('contact.title')}</h2>
-              <p className="text-lg text-gray-600">
-                {t('contact.subtitle')}
-              </p>
-            </div>
 
-            {error && (
-              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center space-x-2 text-red-700">
-                <div className="w-5 h-5 flex-shrink-0 text-red-500">⚠</div>
-                <span className="text-sm">{error}</span>
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+            {/* Status Messages */}
+            {submitStatus === 'success' && (
+              <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2 text-green-700">
+                <CheckCircle className="w-5 h-5" />
+                <span>{t('contact.messageSent')}</span>
               </div>
             )}
 
-            {/* Contact Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name Field */}
+            {submitStatus === 'error' && (
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
+                <AlertCircle className="w-5 h-5" />
+                <span>{t('contact.submitFailed')}</span>
+              </div>
+            )}
+
+            {/* Form Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('contact.fullName')} *
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                  <User className="w-4 h-4 inline mr-1" />
+                  {t('contact.fullName')} <span className="text-red-500">*</span>
                 </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleInputChange('name')}
-                    className={`w-full px-4 py-3 pl-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                      errors.name ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                    placeholder={t('contact.fullNamePlaceholder')}
-                  />
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                </div>
-                {errors.name && (
-                  <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                )}
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  placeholder={t('contact.fullNamePlaceholder')}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
               </div>
 
-              {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('contact.emailAddress')} *
+                  <Mail className="w-4 h-4 inline mr-1" />
+                  {t('contact.emailAddress')} <span className="text-red-500">*</span>
                 </label>
-                <div className="relative">
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleInputChange('email')}
-                    className={`w-full px-4 py-3 pl-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                      errors.email ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                    placeholder={t('contact.emailPlaceholder')}
-                  />
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                </div>
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-                )}
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder={t('contact.emailPlaceholder')}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
               </div>
+            </div>
 
-              {/* Phone Field */}
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('contact.phoneNumber')}
-                </label>
-                <div className="relative">
-                  <input
-                    type="tel"
-                    id="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange('phone')}
-                    className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    placeholder={t('contact.phonePlaceholder')}
-                  />
-                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                </div>
-              </div>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                <Phone className="w-4 h-4 inline mr-1" />
+                {t('contact.phoneNumber')}
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder={t('contact.phonePlaceholder')}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
 
-              {/* Message Field */}
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('contact.message')}
-                </label>
-                <div className="relative">
-                  <textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={handleInputChange('message')}
-                    rows={4}
-                    className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
-                    placeholder={t('contact.messagePlaceholder')}
-                  />
-                  <MessageSquare className="absolute left-3 top-4 w-5 h-5 text-gray-400" />
-                </div>
-              </div>
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                <MessageSquare className="w-4 h-4 inline mr-1" />
+                {t('contact.message')} <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder={t('contact.messagePlaceholder')}
+                required
+                rows={5}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              />
+            </div>
 
-              {/* Submit Button */}
+            {/* Response Time Info */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm text-blue-800">
+                <strong>{t('contact.responseTime')}</strong>
+              </p>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex justify-end space-x-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                {t('common.cancel')}
+              </button>
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                style={{ backgroundColor: '#1C2C55' }}
-                onMouseEnter={(e) => !isSubmitting && (e.currentTarget.style.backgroundColor = '#0F1A3A')}
-                onMouseLeave={(e) => !isSubmitting && (e.currentTarget.style.backgroundColor = '#1C2C55')}
+                disabled={isSubmitting || submitStatus === 'success'}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-colors flex items-center space-x-2"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     <span>{t('contact.sendingMessage')}</span>
                   </>
                 ) : (
                   <>
-                    <Send className="w-5 h-5" />
+                    <Send className="w-4 h-4" />
                     <span>{t('contact.sendMessage')}</span>
                   </>
                 )}
               </button>
-
-              <p className="text-xs text-gray-500 text-center">
-                {t('contact.responseTime')}
-              </p>
-            </form>
-          </>
-        )}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
