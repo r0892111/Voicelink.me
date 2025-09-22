@@ -167,7 +167,19 @@
     "verifying": "Verifizierung...",
     "verify": "Verifizieren",
     "resendCode": "Code Erneut Senden",
-    "verifiedSuccessfully": "WhatsApp-Nummer erfolgreich verifiziert!"
+    "verifiedSuccessfully": "WhatsApp-Nummer erfolgreich verifiziert!",
+    "verificationPage": {
+      "invalidLink": "Ungültiger Verifizierungslink",
+      "wrongPlace": "Es sieht so aus, als wären Sie am falschen Ort. Diese Seite benötigt einen gültigen Verifizierungslink mit Benutzer-ID und OTP-Code Parametern.",
+      "returnToHome": "Zurück zur Startseite",
+      "useProperLink": "Wenn Sie einen Verifizierungslink erhalten haben, verwenden Sie bitte diesen Link.",
+      "autoFilled": "Verifizierungscode Automatisch Ausgefüllt",
+      "autoFilledDescription": "Ihr Verifizierungscode wurde automatisch aus dem sicheren Link ausgefüllt. Klicken Sie einfach auf verifizieren, um den Prozess abzuschließen.",
+      "secureVerification": "Sichere Verifizierung",
+      "linkExpires": "Dieser Verifizierungslink ist einzigartig und läuft nach der Verwendung für Ihre Sicherheit ab.",
+      "enterSixDigitCode": "Geben Sie den 6-stelligen Code aus Ihrer WhatsApp-Nachricht ein",
+      "redirectingToDashboard": "Weiterleitung zum Dashboard in 3 Sekunden..."
+    }
   },
   "contact": {
     "title": "Kontaktieren Sie Uns",

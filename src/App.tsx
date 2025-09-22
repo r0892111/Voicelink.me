@@ -5,6 +5,7 @@ import { AuthModal } from './components/AuthModal';
 import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
 import { SuccessPage } from './components/SuccessPage';
+import { WhatsAppVerificationPage } from './components/WhatsAppVerificationPage';
 import { Homepage } from './components/Homepage';
 import { ContactFormModal } from './components/ContactFormModal';
 import SaasAgreement from './components/SaasAgreement';
@@ -237,6 +238,7 @@ function App() {
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/success" element={<SuccessPage />} />
+              <Route path="/verify-whatsapp" element={<WhatsAppVerificationPage />} />
               <Route path="/saas-agreement" element={<SaasAgreement />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/disclaimer" element={<Disclaimer />} />

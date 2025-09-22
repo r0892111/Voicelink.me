@@ -407,6 +407,19 @@
     "enterCode": "Voer 6-cijferige code in",
     "verifying": "Verifiëren...",
     "resendCode": "Code Opnieuw Verzenden"
+    "verifiedSuccessfully": "WhatsApp succesvol geverifieerd!",
+    "verificationPage": {
+      "invalidLink": "Ongeldige Verificatielink",
+      "wrongPlace": "Het lijkt erop dat je op de verkeerde plek bent. Deze pagina vereist een geldige verificatielink met gebruikers-ID en OTP-code parameters.",
+      "returnToHome": "Terug naar Home",
+      "useProperLink": "Als je een verificatielink hebt ontvangen, gebruik dan die link.",
+      "autoFilled": "Verificatiecode Automatisch Ingevuld",
+      "autoFilledDescription": "Je verificatiecode is automatisch ingevuld vanuit de beveiligde link. Klik gewoon op verifiëren om het proces te voltooien.",
+      "secureVerification": "Veilige Verificatie",
+      "linkExpires": "Deze verificatielink is uniek en verloopt na gebruik voor je veiligheid.",
+      "enterSixDigitCode": "Voer de 6-cijferige code in van je WhatsApp bericht",
+      "redirectingToDashboard": "Doorverwijzen naar dashboard in 3 seconden..."
+    }
   },
   "pricing": {
     "title": "Volume Prijzen Die Meeschalen",
