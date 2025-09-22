@@ -138,6 +138,8 @@
     "admin": "Admin",
     "teamMembers": "Teamleden",
     "pending": "In behandeling",
+    "verified": "Geverifieerd",
+    "notVerified": "Niet Geverifieerd",
     "addNewMember": "Nieuw Teamlid Toevoegen",
     "selectCompanyUser": "Bedrijfsgebruiker Selecteren",
     "loadingUsers": "Bedrijfsgebruikers laden...",

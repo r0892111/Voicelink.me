@@ -96,9 +96,9 @@ export const Dashboard: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <BuyButton
-            priceId="price_1S2ZQPLPohnizGblvhj9qbK3"
+            priceId="price_1S5o6zLPohnizGblsQq7OYCT"
             productName={t('common.premiumMonthly')}
-            price="€29.99/mo"
+            price="€29.90/mo"
             description={t('common.advancedCrmFeatures')}
           />
           

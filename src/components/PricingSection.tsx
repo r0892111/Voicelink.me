@@ -250,7 +250,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 className={`w-full font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 group ${
                   selectedUsers > 1 
                     ? 'bg-gray-400 text-white cursor-not-allowed' 
-                    : 'text-white hover:shadow-xl hover:scale-105 hover:-translate-y-1'
+                    : 'text-white hover:shadow-xl hover:scale-[1.02]'
                 }`}
                 style={{ backgroundColor: selectedUsers > 1 ? undefined : '#1C2C55' }}
                 onMouseEnter={(e) => selectedUsers <= 1 && (e.currentTarget.style.backgroundColor = '#0F1A3A')}

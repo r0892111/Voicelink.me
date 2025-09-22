@@ -148,6 +148,8 @@
     "admin": "Admin",
     "teamMembers": "Team Members",
     "pending": "Pending",
+    "verified": "Verified",
+    "notVerified": "Not Verified",
     "addNewMember": "Add New Team Member",
     "selectCompanyUser": "Select Company User",
     "loadingUsers": "Loading company users...",

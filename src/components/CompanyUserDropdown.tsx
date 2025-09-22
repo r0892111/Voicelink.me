@@ -18,6 +18,7 @@ interface CompanyUserDropdownProps {
   onUserSelect: (user: CompanyUser) => void;
   onAutofillPhone?: (phone: string) => void;
   platform: string;
+  excludedEmails?: string[];
 }
 
 export const CompanyUserDropdown: React.FC<CompanyUserDropdownProps> = ({
@@ -26,9 +27,15 @@ export const CompanyUserDropdown: React.FC<CompanyUserDropdownProps> = ({
   selectedUser,
   onUserSelect,
   onAutofillPhone,
-  platform
+  platform,
+  excludedEmails = []
 }) => {
   const { t } = useI18n();
+
+  // Filter out users whose emails are already in the team
+  const filteredUsers = users.filter(user => 
+    !excludedEmails.includes(user.email.toLowerCase())
+  );
 
   const getUserDisplayName = (user: CompanyUser): string => {
     switch (platform) {
@@ -94,7 +101,7 @@ export const CompanyUserDropdown: React.FC<CompanyUserDropdownProps> = ({
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
           <option value="">{t('teamManagement.selectCompanyUser')}</option>
-          {users.map((user) => (
+          {filteredUsers.map((user) => (
             <option key={user.id} value={user.id}>
               {getUserDisplayInfo(user)}
             </option>

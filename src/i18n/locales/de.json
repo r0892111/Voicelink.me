@@ -117,6 +117,8 @@
     "admin": "Admin",
     "teamMembers": "Teammitglieder",
     "pending": "Ausstehend",
+    "verified": "Verifiziert",
+    "notVerified": "Nicht Verifiziert",
     "addNewMember": "Neues Teammitglied Hinzufügen",
     "selectCompanyUser": "Unternehmensbenutzer Auswählen",
     "loadingUsers": "Unternehmensbenutzer laden...",
