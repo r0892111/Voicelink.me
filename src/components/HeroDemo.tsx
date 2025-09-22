@@ -267,7 +267,9 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 left: '8%', 
                 width: '320px',
                 transform: 'rotate(-2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'rotate(-2deg) scale(1.1) translateZ(50px)';
@@ -319,7 +321,9 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 right: '8%', 
                 width: '350px',
                 transform: 'rotate(1.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'rotate(1.5deg) scale(1.1) translateZ(50px)';
@@ -389,7 +393,9 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 left: '15%', 
                 width: '280px',
                 transform: 'rotate(-1deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'rotate(-1deg) scale(1.1) translateZ(50px)';
@@ -455,7 +461,9 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 right: '15%', 
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1.1) translateZ(50px)';
@@ -546,7 +554,9 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 left: '50%', 
                 width: '360px',
                 transform: 'translateX(-50%) rotate(0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1.1) translateZ(50px)';
@@ -598,7 +608,9 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 left: '50%', 
                 width: '200px',
                 transform: 'translateX(-50%) rotate(-0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1.1) translateZ(50px)';

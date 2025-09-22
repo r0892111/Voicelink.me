@@ -349,7 +349,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                     ? 'opacity-100 -translate-x-0' 
                     : 'opacity-0 -translate-x-8'
                 }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2" style={{ userSelect: 'none', cursor: 'pointer' }}>
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
                         <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="currentColor" viewBox="0 0 24 24">
@@ -385,7 +385,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                     ? 'opacity-100 scale-100' 
                     : 'opacity-0 scale-95'
                 }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2" style={{ userSelect: 'none', cursor: 'pointer' }}>
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
                         <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -421,7 +421,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                     ? 'opacity-100 translate-x-0' 
                     : 'opacity-0 translate-x-8'
                 }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2" style={{ userSelect: 'none', cursor: 'pointer' }}>
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
                         <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -510,7 +510,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                 visibleSections.has('custom-solutions') 
                   ? 'opacity-100 -translate-x-0' 
                   : 'opacity-0 -translate-x-8'
-              }`}>
+              }`} style={{ userSelect: 'none', cursor: 'pointer' }}>
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
@@ -531,7 +531,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                 visibleSections.has('custom-solutions') 
                   ? 'opacity-100 -translate-x-0' 
                   : 'opacity-0 -translate-x-8'
-              }`}>
+              }`} style={{ userSelect: 'none', cursor: 'pointer' }}>
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
@@ -559,7 +559,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                 visibleSections.has('custom-solutions') 
                   ? 'opacity-100 scale-100' 
                   : 'opacity-0 scale-95'
-              }`}>
+              }`} style={{ userSelect: 'none', cursor: 'pointer' }}>
                 <div className="text-center mb-6">
                   <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                     <Zap className="w-6 h-6" style={{ color: '#1C2C55' }} />
