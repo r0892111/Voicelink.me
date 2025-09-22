@@ -254,27 +254,6 @@ export const WhatsAppVerificationPage: React.FC = () => {
           </div>
         )}
 
-        {hasValidParams && !loading && !success && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-            <div className="flex items-center space-x-2 mb-2">
-              <Shield className="w-5 h-5 text-yellow-600" />
-              <span className="font-medium text-yellow-800">Manual Verification Available</span>
-            </div>
-            <p className="text-sm text-yellow-700">
-              If auto-verification failed, you can manually verify using the form below.
-            </p>
-          </div>
-        )}
-          <div className="flex items-center space-x-2 mb-2">
-            <Shield className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-blue-800">Verification Code Auto-Filled</span>
-          </div>
-          <p className="text-sm text-blue-700">
-            Your verification code has been automatically filled from the secure link. 
-            Simply click verify to complete the process.
-          </p>
-        </div>
-
         {/* Error Message */}
         {error && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
