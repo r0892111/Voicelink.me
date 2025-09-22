@@ -42,7 +42,7 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
               <button
                 onClick={openModal}
-                className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
@@ -51,7 +51,7 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button 
-                className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:scale-[1.02] flex items-center justify-center space-x-2"
                 style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#F7E69B';
@@ -261,13 +261,15 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
             
             {/* Contact Card - Top Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '2%', 
                 left: '8%', 
                 width: '320px',
                 transform: 'rotate(-2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'rotate(-2deg) scale(1.1) translateZ(50px)';
@@ -313,13 +315,15 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
 
             {/* Voice Note Analysis Card - Top Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '1%', 
                 right: '8%', 
                 width: '350px',
                 transform: 'rotate(1.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'rotate(1.5deg) scale(1.1) translateZ(50px)';
@@ -383,13 +387,15 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
 
             {/* Calendar Widget - Center Left */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '30%', 
                 left: '15%', 
                 width: '280px',
                 transform: 'rotate(-1deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'rotate(-1deg) scale(1.1) translateZ(50px)';
@@ -449,13 +455,15 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
 
             {/* Analytics Card - Bottom Right */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '33%', 
                 right: '15%', 
                 width: '280px',
                 transform: 'rotate(-1.2deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'rotate(-1.2deg) scale(1.1) translateZ(50px)';
@@ -540,13 +548,15 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
 
             {/* Pipeline Card - Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '25%', 
                 left: '50%', 
                 width: '360px',
                 transform: 'translateX(-50%) rotate(0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateX(-50%) rotate(0.5deg) scale(1.1) translateZ(50px)';
@@ -592,13 +602,15 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
 
             {/* Quick Stats Card - Top Center */}
             <div 
-              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-all duration-500 hover:shadow-3xl"
+              className="absolute bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-3xl"
               style={{ 
                 top: '5%', 
                 left: '50%', 
                 width: '200px',
                 transform: 'translateX(-50%) rotate(-0.5deg)',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+                userSelect: 'none',
+                cursor: 'pointer'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateX(-50%) rotate(-0.5deg) scale(1.1) translateZ(50px)';

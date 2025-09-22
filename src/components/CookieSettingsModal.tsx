@@ -248,7 +248,7 @@ export const CookieSettingsModal: React.FC = () => {
               </button>
               <button
                 onClick={handleAcceptAll}
-                className="px-6 py-3 text-white rounded-lg transition-all duration-200 font-medium hover:shadow-lg hover:scale-105"
+                className="px-6 py-3 text-white rounded-lg transition-all duration-200 font-medium hover:shadow-lg hover:scale-[1.02]"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}

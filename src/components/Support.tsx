@@ -1,9 +1,11 @@
 import React from 'react';
-import { ArrowLeft, Mail, Phone, MessageCircle, Clock } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useI18n } from '../hooks/useI18n';
 
 const Support: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 pt-24">
@@ -15,7 +17,7 @@ const Support: React.FC = () => {
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-6 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
+            <span>{t('navigation.backToHome')}</span>
           </button>
           
           <div className="text-center">
@@ -37,8 +39,8 @@ const Support: React.FC = () => {
                   <Mail className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-blue-900">Email Support</h3>
-                  <p className="text-blue-700">Get help via email</p>
+                  <h3 className="text-lg font-semibold text-blue-900">{t('dashboard.support.email.title')}</h3>
+                  <p className="text-blue-700">{t('dashboard.support.email.description')}</p>
                 </div>
               </div>
               <div className="space-y-2">
@@ -48,7 +50,7 @@ const Support: React.FC = () => {
                 >
                   contact@finitsolutions.be
                 </a>
-                <p className="text-sm text-blue-600">We typically respond within 24 hours</p>
+                <p className="text-sm text-blue-600">{t('contact.responseTime')}</p>
               </div>
             </div>
 
@@ -59,8 +61,8 @@ const Support: React.FC = () => {
                   <Phone className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-green-900">Phone Support</h3>
-                  <p className="text-green-700">Speak with our team</p>
+                  <h3 className="text-lg font-semibold text-green-900">{t('dashboard.support.liveChat.title')}</h3>
+                  <p className="text-green-700">{t('dashboard.support.liveChat.description')}</p>
                 </div>
               </div>
               <div className="space-y-2">
@@ -76,7 +78,7 @@ const Support: React.FC = () => {
                 >
                   +32 (0)468 029 945
                 </a>
-                <p className="text-sm text-green-600">Monday - Friday, 9:00 AM - 6:00 PM CET</p>
+                <p className="text-sm text-green-600">{t('dashboard.support.consultation.description')}</p>
               </div>
             </div>
           </div>
@@ -84,7 +86,7 @@ const Support: React.FC = () => {
 
         {/* Company Information */}
         <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Company Information</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('dashboard.support.title')}</h2>
           
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <div className="space-y-3">
@@ -113,15 +115,15 @@ const Support: React.FC = () => {
           
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-3">
-              <h3 className="font-semibold text-gray-900">Email Support</h3>
-              <p className="text-gray-600">Available 24/7</p>
-              <p className="text-sm text-gray-500">We respond within 24 hours during business days</p>
+              <h3 className="font-semibold text-gray-900">{t('dashboard.support.email.title')}</h3>
+              <p className="text-gray-600">{t('dashboard.support.email.description')}</p>
+              <p className="text-sm text-gray-500">{t('contact.responseTime')}</p>
             </div>
             
             <div className="space-y-3">
-              <h3 className="font-semibold text-gray-900">Phone Support</h3>
-              <p className="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM CET</p>
-              <p className="text-sm text-gray-500">For urgent matters and technical support</p>
+              <h3 className="font-semibold text-gray-900">{t('dashboard.support.liveChat.title')}</h3>
+              <p className="text-gray-600">{t('dashboard.support.liveChat.description')}</p>
+              <p className="text-sm text-gray-500">{t('dashboard.support.consultation.description')}</p>
             </div>
           </div>
         </div>

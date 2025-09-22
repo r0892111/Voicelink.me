@@ -1,179 +1,193 @@
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { createClient } from 'npm:@supabase/supabase-js@2.39.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+};
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
-        },
-      }
-    )
-
-    const { data: { user } } = await supabaseClient.auth.getUser()
-
-    if (!user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: corsHeaders }
-      )
-    }
-
-    const { team_member, crm_provider } = await req.json()
+    const body = await req.json();
+    const { team_member, crm_provider, admin_user_id } = body;
 
     if (!team_member || !team_member.name || !team_member.email || !crm_provider) {
-      return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
-        { status: 400, headers: corsHeaders }
-      )
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    const adminUserId = user.id
+    if (!admin_user_id) {
+      return new Response(JSON.stringify({ error: 'Missing admin_user_id for invited user' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
 
-    // Create new user in auth
-    const { data: newUser, error: authError } = await supabaseClient.auth.admin.createUser({
+    const supabaseAdminClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
+    // 1. Fetch admin CRM record
+    const { data: adminRecord, error: adminError } = await supabaseAdminClient
+      .from(`${crm_provider}_users`)
+      .select('*')
+      .eq('user_id', admin_user_id)
+      .single();
+
+    if (adminError || !adminRecord) {
+      console.error('Error fetching admin CRM record:', adminError);
+      return new Response(JSON.stringify({ error: 'Admin CRM record not found' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // 2. Create Auth user
+    const { data: authUser, error: authError } = await supabaseAdminClient.auth.admin.createUser({
       email: team_member.email,
-      password: Math.random().toString(36).slice(-8), // Generate random password
       email_confirm: true,
-    })
+      user_metadata: {
+        name: team_member.name,
+        invited_by_crm: crm_provider,
+        invited_by: admin_user_id
+      }
+    });
 
     if (authError) {
-      console.error('Error creating auth user:', authError)
-      return new Response(
-        JSON.stringify({ error: 'Failed to create user account' }),
-        { status: 500, headers: corsHeaders }
-      )
+      console.error('Error creating auth user:', authError);
+      return new Response(JSON.stringify({ error: 'Failed to create auth user' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    // Get admin user's CRM data to copy tokens (for Pipedrive & TeamLeader)
-    let adminCrmData = null;
-    if (crm_provider === 'pipedrive' || crm_provider === 'teamleader') {
-      const { data: adminData, error: adminError } = await supabaseClient
-        .from(`${crm_provider}_users`)
-        .select('access_token, refresh_token, token_expires_at, api_domain')
-        .eq('user_id', adminUserId)
-        .is('deleted_at', null)
-        .single();
-
-      if (adminError) {
-        console.error('Error fetching admin CRM data:', adminError);
-        return new Response(
-          JSON.stringify({ error: 'Failed to fetch admin CRM data' }),
-          { status: 500, headers: corsHeaders }
-        );
-      }
-
-      adminCrmData = adminData;
-    }
-
-    // Create CRM-specific user record
-    let crmUserData: any = {
-      admin_user_id: adminUserId,
-      invited_by: adminUserId,
+    // 3. Build CRM-specific data
+    let crmUserData: Record<string, any> = {
+      user_id: authUser.user.id,
+      invited_by: admin_user_id,
+      admin_user_id,
       invitation_status: 'pending',
       whatsapp_number: team_member.whatsapp_number || null,
       whatsapp_status: 'not_set',
-    }
+      is_admin: false,
+      // Inherit admin's tokens & API domain
+      access_token: adminRecord.access_token,
+      refresh_token: adminRecord.refresh_token,
+      token_expires_at: adminRecord.token_expires_at,
+      api_domain: adminRecord.api_domain
+    };
 
     switch (crm_provider) {
       case 'teamleader':
         crmUserData = {
           ...crmUserData,
-          user_id: newUser.user.id,
-          teamleader_id: `invited_${newUser.user.id}`,
-          access_token: adminCrmData?.access_token || null,
-          refresh_token: adminCrmData?.refresh_token || null,
-          token_expires_at: adminCrmData?.token_expires_at || null,
+          teamleader_id: `invited_${Date.now()}`,
           user_info: {
             first_name: team_member.name.split(' ')[0],
             last_name: team_member.name.split(' ').slice(1).join(' ') || '',
-            email: team_member.email,
-          },
-        }
-        break
+            email: team_member.email
+          }
+        };
+        break;
 
       case 'pipedrive':
         crmUserData = {
           ...crmUserData,
-          user_id: newUser.user.id,
-          pipedrive_id: Math.floor(Math.random() * 1000000), // Generate fake ID for invited users
-          access_token: adminCrmData?.access_token || null,
-          refresh_token: adminCrmData?.refresh_token || null,
-          token_expires_at: adminCrmData?.token_expires_at || null,
-          api_domain: adminCrmData?.api_domain || null,
+          pipedrive_id: Math.floor(Math.random() * 1000000),
           user_info: {
             name: team_member.name,
-            email: team_member.email,
-          },
-        }
-        break
+            email: team_member.email
+          }
+        };
+        break;
 
       case 'odoo':
         crmUserData = {
           ...crmUserData,
-          user_id: newUser.user.id,
-          odoo_user_id: `invited_${newUser.user.id}`,
+          odoo_user_id: `invited_${Date.now()}`,
           user_info: {
             name: team_member.name,
-            email: team_member.email,
-          },
-        }
-        break
+            email: team_member.email
+          }
+        };
+        break;
 
       default:
-        return new Response(
-          JSON.stringify({ error: 'Invalid CRM provider' }),
-          { status: 400, headers: corsHeaders }
-        )
+        return new Response(JSON.stringify({ error: 'Invalid CRM provider' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
     }
 
-    // Insert CRM user record
-    const { data: crmUser, error: crmError } = await supabaseClient
+    // 4. Insert invited user into CRM table
+    const { error: crmError, data: insertedUser } = await supabaseAdminClient
       .from(`${crm_provider}_users`)
       .insert(crmUserData)
       .select()
-      .single()
+      .single();
 
     if (crmError) {
-      console.error('Error creating CRM user:', crmError)
-      // Clean up auth user if CRM creation fails
-      await supabaseClient.auth.admin.deleteUser(newUser.user.id)
-      return new Response(
-        JSON.stringify({ error: 'Failed to create CRM user record' }),
-        { status: 500, headers: corsHeaders }
-      )
+      console.error('Error creating CRM user:', crmError);
+      return new Response(JSON.stringify({ error: 'Failed to create CRM user record' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        user: {
-          id: newUser.user.id,
-          email: newUser.user.email,
-          name: team_member.name,
-          whatsapp_number: team_member.whatsapp_number,
-          invitation_status: 'pending',
-        },
-      }),
-      { headers: corsHeaders }
-    )
+    // 5. Send WhatsApp OTP if phone number is provided
+    let whatsappOtpSent = false;
+    if (team_member.whatsapp_number) {
+      try {
+        // Generate 6-digit OTP
+        const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
+
+        // Update the user record with OTP details
+        const { error: otpError } = await supabaseAdminClient
+          .from(`${crm_provider}_users`)
+          .update({
+            whatsapp_otp_code: otpCode,
+            whatsapp_otp_expires_at: expiresAt.toISOString(),
+            whatsapp_otp_phone: team_member.whatsapp_number,
+            whatsapp_status: 'pending',
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', insertedUser.id);
+
+        if (!otpError) {
+          // TODO: Here you would integrate with your WhatsApp service (Twilio, etc.)
+          // For now, we'll just log the OTP (in production, send via WhatsApp)
+          console.log(`WhatsApp OTP for ${team_member.whatsapp_number}: ${otpCode}`);
+          whatsappOtpSent = true;
+        } else {
+          console.error('Error setting up WhatsApp OTP:', otpError);
+        }
+      } catch (otpError) {
+        console.error('Error sending WhatsApp OTP:', otpError);
+        // Don't fail the entire invitation if OTP fails
+      }
+    }
+
+    return new Response(JSON.stringify({
+      success: true,
+      authUser,
+      crmUser: insertedUser,
+      whatsappOtpSent
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
   } catch (error) {
-    console.error('Error in invite-team-members function:', error)
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: corsHeaders }
-    )
+    console.error('Error in invite-team-members function:', error);
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
   }
-})
+});

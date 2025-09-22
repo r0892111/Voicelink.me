@@ -349,7 +349,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                     ? 'opacity-100 -translate-x-0' 
                     : 'opacity-0 -translate-x-8'
                 }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2" style={{ userSelect: 'none', cursor: 'pointer' }}>
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
                         <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="currentColor" viewBox="0 0 24 24">
@@ -385,7 +385,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                     ? 'opacity-100 scale-100' 
                     : 'opacity-0 scale-95'
                 }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2" style={{ userSelect: 'none', cursor: 'pointer' }}>
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
                         <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -421,7 +421,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                     ? 'opacity-100 translate-x-0' 
                     : 'opacity-0 translate-x-8'
                 }`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2">
+                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-500 hover:-translate-y-2" style={{ userSelect: 'none', cursor: 'pointer' }}>
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
                         <svg className="w-7 h-7" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -510,7 +510,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                 visibleSections.has('custom-solutions') 
                   ? 'opacity-100 -translate-x-0' 
                   : 'opacity-0 -translate-x-8'
-              }`}>
+              }`} style={{ userSelect: 'none', cursor: 'pointer' }}>
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
@@ -531,7 +531,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                 visibleSections.has('custom-solutions') 
                   ? 'opacity-100 -translate-x-0' 
                   : 'opacity-0 -translate-x-8'
-              }`}>
+              }`} style={{ userSelect: 'none', cursor: 'pointer' }}>
                 <div className="flex items-start space-x-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                       <Settings className="w-8 h-8" style={{ color: '#1C2C55' }} />
@@ -559,7 +559,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                 visibleSections.has('custom-solutions') 
                   ? 'opacity-100 scale-100' 
                   : 'opacity-0 scale-95'
-              }`}>
+              }`} style={{ userSelect: 'none', cursor: 'pointer' }}>
                 <div className="text-center mb-6">
                   <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.08)' }}>
                     <Zap className="w-6 h-6" style={{ color: '#1C2C55' }} />
@@ -617,7 +617,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
                   onClick={() => window.open('https://calendly.com/alex-finitsolutions/30min', '_blank')}
-                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
+                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                   style={{ backgroundColor: '#1C2C55' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
@@ -627,7 +627,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
                 </button>
                 <button 
                   onClick={openContactModal}
-                  className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center space-x-2"
+                  className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:scale-[1.02] flex items-center justify-center space-x-2"
                   style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#F7E69B';
@@ -692,7 +692,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
           }`}>
             <button
               onClick={openModal}
-              className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
+              className="group bg-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
               style={{ color: '#1C2C55' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F7E69B'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}

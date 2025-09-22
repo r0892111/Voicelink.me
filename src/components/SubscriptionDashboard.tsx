@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Crown, Users, Settings, CheckCircle, MessageCircle, Headphones, Calendar, Mail, CreditCard, ExternalLink, UserPlus, Phone, Loader2, X, AlertCircle } from 'lucide-react';
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
+import { CompanyUserDropdown } from './CompanyUserDropdown';
 import { supabase } from '../lib/supabase';
 
 interface TeamMember {
@@ -10,16 +11,24 @@ interface TeamMember {
   name: string;
   email: string;
   whatsapp_number: string;
+  whatsapp_status?: 'not_set' | 'pending' | 'active';
+  invitation_status?: 'pending' | 'accepted' | 'declined';
 }
 
-interface OdooUser {
-  id: number;
+interface CompanyUser {
+  id: number | string;
   name: string;
-  login: string;
   email: string;
   function?: string;
   phone?: string;
+  // Additional platform-specific fields
+  [key: string]: any;
 }
+
+// Platform-specific user interfaces can be added here if needed
+// interface OdooUser extends CompanyUser { id: number; login: string; }
+// interface PipedriveUser extends CompanyUser { id: number; active_flag?: boolean; }
+// interface TeamLeaderUser extends CompanyUser { id: string; first_name?: string; last_name?: string; }
 
 import { useI18n } from '../hooks/useI18n';
 
@@ -35,10 +44,10 @@ export const SubscriptionDashboard: React.FC = () => {
   const [inviteError, setInviteError] = useState('');
   const [totalUsers] = useState(5);
   
-  // Odoo-specific state
-  const [odooUsers, setOdooUsers] = useState<OdooUser[]>([]);
-  const [loadingOdooUsers, setLoadingOdooUsers] = useState(false);
-  const [selectedOdooUser, setSelectedOdooUser] = useState<OdooUser | null>(null);
+  // Company users state (works for all platforms)
+  const [companyUsers, setCompanyUsers] = useState<CompanyUser[]>([]);
+  const [loadingCompanyUsers, setLoadingCompanyUsers] = useState(false);
+  const [selectedCompanyUser, setSelectedCompanyUser] = useState<CompanyUser | null>(null);
   const [isFetchingRef] = React.useState({ current: false });
   const [lastFetchTimeRef] = React.useState({ current: 0 });
   const [lastStatusRef] = React.useState({ current: 'not_set' });
@@ -46,6 +55,65 @@ export const SubscriptionDashboard: React.FC = () => {
 
   const remainingSlots = totalUsers - addedTeamMembers.length - 1;
   const canAddMore = remainingSlots > 0;
+
+  // Debug: Monitor team members state changes
+  React.useEffect(() => {
+    console.log('Team members updated:', addedTeamMembers);
+    console.log('Team size:', addedTeamMembers.length + 1);
+  }, [addedTeamMembers]);
+
+  // Fetch existing team members from database
+  const fetchTeamMembers = React.useCallback(async () => {
+    if (!user) return;
+    
+    try {
+      const platform = user.platform;
+      const tableName = `${platform}_users`;
+      
+      // Get current session for authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.error('No session found for fetching team members');
+        return;
+      }
+
+      // Fetch team members invited by this admin user
+      const { data: teamMembers, error } = await supabase
+        .from(tableName)
+        .select('id, user_info, whatsapp_number, whatsapp_status, invitation_status, created_at')
+        .eq('admin_user_id', user.id)
+        .eq('is_admin', false)
+        .is('deleted_at', null)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching team members:', error);
+        return;
+      }
+
+      // Transform database data to TeamMember format
+      const transformedMembers: TeamMember[] = teamMembers.map(member => ({
+        id: member.id.toString(),
+        name: member.user_info?.name || member.user_info?.first_name + ' ' + member.user_info?.last_name || 'Unknown',
+        email: member.user_info?.email || '',
+        whatsapp_number: member.whatsapp_number || '',
+        whatsapp_status: member.whatsapp_status || 'not_set',
+        invitation_status: member.invitation_status || 'pending'
+      }));
+
+      console.log('Fetched team members from database:', transformedMembers);
+      setAddedTeamMembers(transformedMembers);
+    } catch (error) {
+      console.error('Error fetching team members:', error);
+    }
+  }, [user]);
+
+  // Fetch team members when component mounts or user changes
+  React.useEffect(() => {
+    if (user) {
+      fetchTeamMembers();
+    }
+  }, [user, fetchTeamMembers]);
 
   const fetchWhatsAppStatus = React.useCallback(async (force = false) => {
     if (!user || isFetchingRef.current) return;
@@ -177,11 +245,20 @@ export const SubscriptionDashboard: React.FC = () => {
   };
 
   const isCurrentMemberValid = () => {
-    return currentMember.name.trim() && currentMember.email.trim() && currentMember.whatsapp_number.trim();
+    // Basic validation: name and email are required
+    const hasNameAndEmail = currentMember.name.trim() && currentMember.email.trim();
+    
+    // For company user selection, WhatsApp number is optional if user is selected
+    if (selectedCompanyUser) {
+      return hasNameAndEmail;
+    }
+    
+    // For manual entry, all fields including WhatsApp are required
+    return hasNameAndEmail && currentMember.whatsapp_number.trim();
   };
 
   const addNewUser = async () => {
-    if (!isCurrentMemberValid() || !canAddMore) return;
+    if (!isCurrentMemberValid() || !canAddMore || !user) return;
     
     try {
       // Get current session for authentication
@@ -198,8 +275,12 @@ export const SubscriptionDashboard: React.FC = () => {
           'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
-          crm_provider: user?.platform,
-          team_member: currentMember
+          crm_provider: user.platform,
+          team_member: {
+            ...currentMember,
+            whatsapp_number: currentMember.whatsapp_number || null
+          },
+          admin_user_id: user.id
         })
       });
 
@@ -209,17 +290,36 @@ export const SubscriptionDashboard: React.FC = () => {
       }
 
       const result = await response.json();
+      console.log('Team member invitation result:', result);
+      
+      // Generate a unique ID for the team member
+      const teamMemberId = result.crmUser?.id || result.authUser?.user?.id || `temp_${Date.now()}`;
       
       // Add the new team member to the local state
       setAddedTeamMembers(prev => [...prev, {
-        id: result.team_member.id,
-        name: result.team_member.name,
-        email: result.team_member.email,
-        whatsapp_number: result.team_member.whatsapp_number
+        id: teamMemberId,
+        name: currentMember.name,
+        email: currentMember.email,
+        whatsapp_number: currentMember.whatsapp_number
       }]);
       
-      // Clear the form
+      console.log('Added team member to state:', {
+        id: teamMemberId,
+        name: currentMember.name,
+        email: currentMember.email,
+        whatsapp_number: currentMember.whatsapp_number
+      });
+      
+      // Show success message
+      setInviteSuccess(true);
+      setTimeout(() => setInviteSuccess(false), 3000);
+      
+      // Refresh team members from database
+      await fetchTeamMembers();
+      
+      // Clear the form and selected user
       setCurrentMember({ name: '', email: '', whatsapp_number: '' });
+      setSelectedCompanyUser(null);
     } catch (error) {
       console.error('Error adding team member:', error);
       setInviteError(error instanceof Error ? error.message : 'Failed to add team member');
@@ -227,22 +327,60 @@ export const SubscriptionDashboard: React.FC = () => {
     }
   };
 
-  const removeMember = (id: string) => {
-    // TODO: Implement actual removal from database
-    // For now, just remove from local state
-    setAddedTeamMembers(prev => prev.filter(member => member.id !== id));
+  const removeMember = async (id: string) => {
+    if (!user) return;
     
-    // Show confirmation
-    setInviteSuccess(true);
-    setTimeout(() => setInviteSuccess(false), 2000);
+    try {
+      // Get current session for authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.error('No session found for removing team member');
+        return;
+      }
+
+      // Call the remove-team-member Edge Function
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/remove-team-member`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          team_member_id: id,
+          crm_provider: user.platform,
+          admin_user_id: user.id
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to remove team member');
+      }
+
+      const result = await response.json();
+      console.log('Team member removal result:', result);
+
+      // Remove from local state
+      setAddedTeamMembers(prev => prev.filter(member => member.id !== id));
+      
+      // Show confirmation
+      setInviteSuccess(true);
+      setTimeout(() => setInviteSuccess(false), 2000);
+      
+      console.log('Team member and auth user removed successfully');
+    } catch (error) {
+      console.error('Error removing team member:', error);
+      setInviteError(error instanceof Error ? error.message : 'Failed to remove team member');
+      setTimeout(() => setInviteError(''), 5000);
+    }
   };
 
 
-  // Odoo API functions
-  const fetchOdooCompanyUsers = async () => {
-    if (!user || user.platform !== 'odoo') return;
+  // Generic company users API functions
+  const fetchCompanyUsers = async () => {
+    if (!user || !['odoo', 'pipedrive', 'teamleader'].includes(user.platform)) return;
     
-    setLoadingOdooUsers(true);
+    setLoadingCompanyUsers(true);
     try {
       // Get current session for authentication
       const { data: { session } } = await supabase.auth.getSession();
@@ -250,8 +388,10 @@ export const SubscriptionDashboard: React.FC = () => {
         throw new Error('Authentication required');
       }
 
-      // First, get the user's Odoo credentials and database info
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-odoo-company-users`, {
+      // Determine the correct endpoint based on platform
+      const endpoint = getCompanyUsersEndpoint(user.platform);
+      
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -269,29 +409,50 @@ export const SubscriptionDashboard: React.FC = () => {
       }
 
       const result = await response.json();
-      setOdooUsers(result.users || []);
+      setCompanyUsers(result.users || []);
     } catch (error) {
-      console.error('Error fetching Odoo company users:', error);
+      console.error(`Error fetching ${user.platform} company users:`, error);
       setInviteError(error instanceof Error ? error.message : 'Failed to fetch company users');
       setTimeout(() => setInviteError(''), 5000);
     } finally {
-      setLoadingOdooUsers(false);
+      setLoadingCompanyUsers(false);
     }
   };
 
-  const handleOdooUserSelect = (odooUser: OdooUser) => {
-    setSelectedOdooUser(odooUser);
+  // Helper function to get the correct endpoint for each platform
+  const getCompanyUsersEndpoint = (platform: string): string => {
+    switch (platform) {
+      case 'odoo':
+        return 'get-odoo-company-users';
+      case 'pipedrive':
+        return 'get-pipedrive-company-users';
+      case 'teamleader':
+        return 'get-teamleader-company-users';
+      default:
+        throw new Error(`Unsupported platform: ${platform}`);
+    }
+  };
+
+  const handleCompanyUserSelect = (companyUser: CompanyUser) => {
+    setSelectedCompanyUser(companyUser);
     setCurrentMember({
-      name: odooUser.name,
-      email: odooUser.email,
-      whatsapp_number: odooUser.phone || ''
+      name: companyUser.name,
+      email: companyUser.email,
+      whatsapp_number: companyUser.phone || ''
     });
   };
 
-  // Fetch Odoo company users when component loads for Odoo users
+  const handleAutofillPhone = (phone: string) => {
+    setCurrentMember(prev => ({
+      ...prev,
+      whatsapp_number: phone
+    }));
+  };
+
+  // Fetch company users when component loads for supported platforms
   React.useEffect(() => {
-    if (user?.platform === 'odoo' && whatsappStatus === 'active') {
-      fetchOdooCompanyUsers();
+    if (user?.platform && ['odoo', 'pipedrive', 'teamleader'].includes(user.platform) && whatsappStatus === 'active') {
+      fetchCompanyUsers();
     }
   }, [user?.platform, whatsappStatus]);
 
@@ -617,12 +778,23 @@ export const SubscriptionDashboard: React.FC = () => {
                               </div>
                             </div>
                             <div className="flex items-center space-x-2">
-                              <div className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
-                                {t('teamManagement.pending')}
+                              <div className={`px-3 py-1 text-xs font-medium rounded-full ${
+                                member.whatsapp_status === 'active' 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : member.whatsapp_status === 'pending'
+                                  ? 'bg-yellow-100 text-yellow-800'
+                                  : 'bg-gray-100 text-gray-800'
+                              }`}>
+                                {member.whatsapp_status === 'active' 
+                                  ? t('teamManagement.verified')
+                                  : member.whatsapp_status === 'pending'
+                                  ? t('teamManagement.pending')
+                                  : t('teamManagement.notVerified')
+                                }
                               </div>
                               <button
                                 onClick={() => removeMember(member.id!)}
-                                className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors"
+                                className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-all duration-200 hover:scale-110"
                               >
                                 <X className="w-4 h-4" />
                               </button>
@@ -653,54 +825,18 @@ export const SubscriptionDashboard: React.FC = () => {
                       </div>
                     )}
 
-                    {/* Odoo User Selection Dropdown */}
-                    {user?.platform === 'odoo' ? (
+                    {/* Company User Selection Dropdown - Works for all platforms */}
+                    {user?.platform && ['odoo', 'pipedrive', 'teamleader'].includes(user.platform) ? (
                       <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('teamManagement.selectCompanyUser')}
-                          </label>
-                          {loadingOdooUsers ? (
-                            <div className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 flex items-center space-x-2">
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                              <span>{t('teamManagement.loadingUsers')}</span>
-                            </div>
-                          ) : (
-                            <select
-                              value={selectedOdooUser?.id || ''}
-                              onChange={(e) => {
-                                const userId = parseInt(e.target.value);
-                                const user = odooUsers.find(u => u.id === userId);
-                                if (user) handleOdooUserSelect(user);
-                              }}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            >
-                              <option value="">{t('teamManagement.selectCompanyUser')}</option>
-                              {odooUsers.map((odooUser) => (
-                                <option key={odooUser.id} value={odooUser.id}>
-                                  {odooUser.name} ({odooUser.email})
-                                </option>
-                              ))}
-                            </select>
-                          )}
-                        </div>
-
-                        {selectedOdooUser && (
-                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                            <h5 className="font-medium text-blue-900 mb-2">{t('teamManagement.selectedUserDetails')}</h5>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                              <div>
-                                <span className="font-medium">{t('teamManagement.name')}:</span> {selectedOdooUser.name}
-                              </div>
-                              <div>
-                                <span className="font-medium">{t('teamManagement.email')}:</span> {selectedOdooUser.email}
-                              </div>
-                              <div>
-                                <span className="font-medium">{t('teamManagement.phone')}:</span> {selectedOdooUser.phone || t('teamManagement.notProvided')}
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                        <CompanyUserDropdown
+                          users={companyUsers}
+                          loading={loadingCompanyUsers}
+                          selectedUser={selectedCompanyUser}
+                          onUserSelect={handleCompanyUserSelect}
+                          onAutofillPhone={handleAutofillPhone}
+                          platform={user.platform}
+                          excludedEmails={addedTeamMembers.map(member => member.email.toLowerCase())}
+                        />
 
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -766,7 +902,7 @@ export const SubscriptionDashboard: React.FC = () => {
                       <button
                         onClick={addNewUser}
                         disabled={!isCurrentMemberValid() || inviting}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2"
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:scale-[1.02] flex items-center justify-center space-x-2"
                       >
                         {inviting ? (
                           <>
@@ -784,10 +920,10 @@ export const SubscriptionDashboard: React.FC = () => {
                       <button
                         onClick={() => {
                           setCurrentMember({ name: '', email: '', whatsapp_number: '' });
-                          setSelectedOdooUser(null);
+                          setSelectedCompanyUser(null);
                         }}
                         disabled={inviting}
-                        className="px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-colors disabled:opacity-50"
+                        className="px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-all duration-200 hover:scale-[1.02] disabled:opacity-50"
                       >
                         {user?.platform === 'odoo' ? t('teamManagement.clearSelection') : t('teamManagement.addNewUser')}
                       </button>
@@ -800,7 +936,7 @@ export const SubscriptionDashboard: React.FC = () => {
                     <p className="text-gray-600 mb-4">
                       {t('teamManagement.teamLimitMessage', { total: totalUsers })}
                     </p>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200 hover:scale-[1.02]">
                       {t('teamManagement.upgradeSubscription')}
                     </button>
                   </div>
@@ -1076,7 +1212,7 @@ export const SubscriptionDashboard: React.FC = () => {
                     href="https://billing.stripe.com/p/login/cNifZi74c1OQepfcYAdMI00"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center space-x-3 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1"
+                    className="group inline-flex items-center space-x-3 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
                     style={{ backgroundColor: '#1C2C55' }}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
