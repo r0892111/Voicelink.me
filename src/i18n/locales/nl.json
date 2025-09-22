@@ -406,7 +406,7 @@
     "codeExpires": "Code verloopt om {{time}}",
     "enterCode": "Voer 6-cijferige code in",
     "verifying": "Verifiëren...",
-    "resendCode": "Code Opnieuw Verzenden"
+    "resendCode": "Code Opnieuw Verzenden",
     "verifiedSuccessfully": "WhatsApp succesvol geverifieerd!",
     "verificationPage": {
       "invalidLink": "Ongeldige Verificatielink",
