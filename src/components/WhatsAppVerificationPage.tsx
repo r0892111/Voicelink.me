@@ -14,6 +14,7 @@ export const WhatsAppVerificationPage: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [hasValidParams, setHasValidParams] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [autoVerified, setAutoVerified] = useState(false);
 
   useEffect(() => {
     // Get URL parameters
@@ -26,10 +27,58 @@ export const WhatsAppVerificationPage: React.FC = () => {
       setHasValidParams(true);
       setUserId(userIdParam);
       setOtpCode(otpCodeParam);
+      
+      // Auto-verify if both parameters are present
+      if (!autoVerified) {
+        setAutoVerified(true);
+        verifyOTPWithParams(userIdParam, otpCodeParam);
+      }
     } else {
       setHasValidParams(false);
     }
   }, [searchParams]);
+
+  const verifyOTPWithParams = async (userIdParam: string, otpCodeParam: string) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-verify-external`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          user_id: userIdParam,
+          otp_code: otpCodeParam
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to verify OTP');
+      }
+
+      const result = await response.json();
+      
+      if (result.success) {
+        setSuccess(true);
+        
+        // Redirect to success page after 3 seconds
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 3000);
+      } else {
+        setError(result.error || 'Verification failed');
+      }
+
+    } catch (error) {
+      setError(error instanceof Error ? error.message : t('validation.failedToVerifyCode'));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const verifyOTP = async () => {
     if (!otpCode.trim() || otpCode.length !== 6) {
@@ -181,7 +230,41 @@ export const WhatsAppVerificationPage: React.FC = () => {
         </div>
 
         {/* Auto-filled notice */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        {hasValidParams && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center space-x-2 mb-2">
+              <Shield className="w-5 h-5 text-blue-600" />
+              <span className="font-medium text-blue-800">Auto-Verification in Progress</span>
+            </div>
+            <p className="text-sm text-blue-700">
+              Your verification code has been automatically detected and verification is in progress.
+            </p>
+          </div>
+        )}
+
+        {!hasValidParams && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center space-x-2 mb-2">
+              <AlertCircle className="w-5 h-5 text-red-600" />
+              <span className="font-medium text-red-800">Invalid Verification Link</span>
+            </div>
+            <p className="text-sm text-red-700">
+              This page requires valid userid and otpcode parameters in the URL.
+            </p>
+          </div>
+        )}
+
+        {hasValidParams && !loading && !success && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center space-x-2 mb-2">
+              <Shield className="w-5 h-5 text-yellow-600" />
+              <span className="font-medium text-yellow-800">Manual Verification Available</span>
+            </div>
+            <p className="text-sm text-yellow-700">
+              If auto-verification failed, you can manually verify using the form below.
+            </p>
+          </div>
+        )}
           <div className="flex items-center space-x-2 mb-2">
             <Shield className="w-5 h-5 text-blue-600" />
             <span className="font-medium text-blue-800">Verification Code Auto-Filled</span>
