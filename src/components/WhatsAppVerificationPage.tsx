@@ -18,12 +18,12 @@ export const WhatsAppVerificationPage: React.FC = () => {
 
   useEffect(() => {
     // Get URL parameters from both search params and URL path
-    const userIdParam = searchParams.get('userid');
-    const otpCodeParam = searchParams.get('otpcode');
+    const userIdParam = searchParams.get('user_id') || searchParams.get('userid');
+    const otpCodeParam = searchParams.get('otp_code') || searchParams.get('otpcode');
     
     // Also check if parameters are in the URL path (for URLs like /verify-whatsappuserid=...&otpcode=...)
     const currentPath = window.location.pathname + window.location.search;
-    const pathMatch = currentPath.match(/userid=([^&]+)&otpcode=([^&\s]+)/);
+    const pathMatch = currentPath.match(/(?:user_id|userid)=([^&]+)&(?:otp_code|otpcode)=([^&\s]+)/);
     
     let finalUserId = userIdParam;
     let finalOtpCode = otpCodeParam;
@@ -62,6 +62,7 @@ export const WhatsAppVerificationPage: React.FC = () => {
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
+          action: 'verify_otp',
           user_id: userIdParam,
           otp_code: otpCodeParam
         })
@@ -114,6 +115,7 @@ export const WhatsAppVerificationPage: React.FC = () => {
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
+          action: 'verify_otp',
           user_id: userId,
           otp_code: otpCode.trim()
         })
