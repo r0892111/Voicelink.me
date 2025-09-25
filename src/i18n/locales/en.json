@@ -429,7 +429,19 @@
     "verifying": "Verifying...",
     "verify": "Verify",
     "resendCode": "Resend Code",
-    "verifiedSuccessfully": "WhatsApp number verified successfully!"
+    "verifiedSuccessfully": "WhatsApp number verified successfully!",
+    "verificationPage": {
+      "invalidLink": "Invalid Verification Link",
+      "wrongPlace": "It looks like you're in the wrong place. This page requires a valid verification link with user ID and OTP code parameters.",
+      "returnToHome": "Return to Home",
+      "useProperLink": "If you received a verification link, please use that link instead.",
+      "autoFilled": "Verification Code Auto-Filled",
+      "autoFilledDescription": "Your verification code has been automatically filled from the secure link. Simply click verify to complete the process.",
+      "secureVerification": "Secure Verification",
+      "linkExpires": "This verification link is unique and expires after use for your security.",
+      "enterSixDigitCode": "Enter the 6-digit code from your WhatsApp message",
+      "redirectingToDashboard": "Redirecting to dashboard in 3 seconds..."
+    }
   },
   "pricing": {
     "title": "Volume Pricing That Scales With You",

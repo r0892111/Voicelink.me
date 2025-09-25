@@ -143,10 +143,11 @@ Deno.serve(async (req) => {
 
     // 5. Send WhatsApp OTP if phone number is provided
     let whatsappOtpSent = false;
+    let otpCode = null;
     if (team_member.whatsapp_number) {
       try {
         // Generate 6-digit OTP
-        const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+        otpCode = Math.floor(100000 + Math.random() * 900000).toString();
         const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
 
         // Update the user record with OTP details
@@ -162,9 +163,20 @@ Deno.serve(async (req) => {
           .eq('id', insertedUser.id);
 
         if (!otpError) {
-          // TODO: Here you would integrate with your WhatsApp service (Twilio, etc.)
-          // For now, we'll just log the OTP (in production, send via WhatsApp)
-          console.log(`WhatsApp OTP for ${team_member.whatsapp_number}: ${otpCode}`);
+          // Send WhatsApp OTP message
+          try {
+            const whatsappMessage = `🔐 VoiceLink Verification Code: ${otpCode}\n\nClick here to verify instantly: ${Deno.env.get('SUPABASE_URL')?.replace('/rest/v1', '')}/verify-whatsapp?userid=${authUser.user.id}&otpcode=${otpCode}\n\nOr enter the code manually in the app.\n\nCode expires in 10 minutes.`;
+            
+            // TODO: Replace with actual WhatsApp API integration (Twilio, etc.)
+            console.log(`WhatsApp message to ${team_member.whatsapp_number}:`);
+            console.log(whatsappMessage);
+            console.log(`Verification URL: ${Deno.env.get('SUPABASE_URL')?.replace('/rest/v1', '')}/verify-whatsapp?userid=${authUser.user.id}&otpcode=${otpCode}`);
+            
+            whatsappOtpSent = true;
+          } catch (whatsappError) {
+            console.error('Error sending WhatsApp message:', whatsappError);
+            // Don't fail the invitation if WhatsApp sending fails
+          }
           whatsappOtpSent = true;
         } else {
           console.error('Error setting up WhatsApp OTP:', otpError);
@@ -179,7 +191,8 @@ Deno.serve(async (req) => {
       success: true,
       authUser,
       crmUser: insertedUser,
-      whatsappOtpSent
+      whatsappOtpSent,
+      verificationUrl: otpCode ? `${Deno.env.get('SUPABASE_URL')?.replace('/rest/v1', '')}/verify-whatsapp?userid=${authUser.user.id}&otpcode=${otpCode}` : null
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });

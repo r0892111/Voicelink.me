@@ -433,7 +433,19 @@
     "verifying": "Vérification...",
     "verify": "Vérifier",
     "resendCode": "Renvoyer le Code",
-    "verifiedSuccessfully": "Numéro WhatsApp vérifié avec succès !"
+    "verifiedSuccessfully": "Numéro WhatsApp vérifié avec succès !",
+    "verificationPage": {
+      "invalidLink": "Lien de Vérification Invalide",
+      "wrongPlace": "Il semble que vous soyez au mauvais endroit. Cette page nécessite un lien de vérification valide avec les paramètres ID utilisateur et code OTP.",
+      "returnToHome": "Retour à l'Accueil",
+      "useProperLink": "Si vous avez reçu un lien de vérification, veuillez utiliser ce lien.",
+      "autoFilled": "Code de Vérification Pré-rempli",
+      "autoFilledDescription": "Votre code de vérification a été automatiquement rempli à partir du lien sécurisé. Cliquez simplement sur vérifier pour terminer le processus.",
+      "secureVerification": "Vérification Sécurisée",
+      "linkExpires": "Ce lien de vérification est unique et expire après utilisation pour votre sécurité.",
+      "enterSixDigitCode": "Entrez le code à 6 chiffres de votre message WhatsApp",
+      "redirectingToDashboard": "Redirection vers le tableau de bord dans 3 secondes..."
+    }
   },
   "pricing": {
     "title": "Tarification Volume Qui S'Adapte",
