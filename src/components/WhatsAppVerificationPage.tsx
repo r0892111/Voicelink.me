@@ -17,21 +17,33 @@ export const WhatsAppVerificationPage: React.FC = () => {
   const [autoVerified, setAutoVerified] = useState(false);
 
   useEffect(() => {
-    // Get URL parameters
+    // Get URL parameters from both search params and URL path
     const userIdParam = searchParams.get('userid');
     const otpCodeParam = searchParams.get('otpcode');
     
-    console.log('URL params:', { userIdParam, otpCodeParam });
+    // Also check if parameters are in the URL path (for URLs like /verify-whatsappuserid=...&otpcode=...)
+    const currentPath = window.location.pathname + window.location.search;
+    const pathMatch = currentPath.match(/userid=([^&]+)&otpcode=([^&\s]+)/);
     
-    if (userIdParam && otpCodeParam) {
+    let finalUserId = userIdParam;
+    let finalOtpCode = otpCodeParam;
+    
+    if (pathMatch) {
+      finalUserId = pathMatch[1];
+      finalOtpCode = pathMatch[2];
+    }
+    
+    console.log('URL params:', { userIdParam, otpCodeParam, pathMatch, finalUserId, finalOtpCode });
+    
+    if (finalUserId && finalOtpCode) {
       setHasValidParams(true);
-      setUserId(userIdParam);
-      setOtpCode(otpCodeParam);
+      setUserId(finalUserId);
+      setOtpCode(finalOtpCode);
       
       // Auto-verify if both parameters are present
       if (!autoVerified) {
         setAutoVerified(true);
-        verifyOTPWithParams(userIdParam, otpCodeParam);
+        verifyOTPWithParams(finalUserId, finalOtpCode);
       }
     } else {
       setHasValidParams(false);

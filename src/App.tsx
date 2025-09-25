@@ -31,6 +31,11 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Debug routing
+  React.useEffect(() => {
+    console.log('Current location:', location.pathname, location.search);
+  }, [location]);
+
   // Check if we're on the homepage
   const isHomepage = location.pathname === '/';
 
@@ -239,11 +244,14 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/success" element={<SuccessPage />} />
               <Route path="/verify-whatsapp" element={<WhatsAppVerificationPage />} />
+              <Route path="/verify-whatsapp/*" element={<WhatsAppVerificationPage />} />
               <Route path="/saas-agreement" element={<SaasAgreement />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/support" element={<Support />} />
+              {/* Fallback route for debugging */}
+              <Route path="*" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-red-600">No route matched: {location.pathname}</h1><p>Available routes: /, /dashboard, /verify-whatsapp, etc.</p></div>} />
             </Routes>
           </div>
 
