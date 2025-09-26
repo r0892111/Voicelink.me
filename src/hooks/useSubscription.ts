@@ -14,7 +14,7 @@ export interface Subscription {
   crm_provider: string | null;
   crm_user_id: string | null;
   product_name: string;
-  team_size_limit: number;
+  quantity: number;
   metadata: Record<string, string> | null;
 }
 
@@ -76,7 +76,7 @@ export const useSubscription = () => {
     subscription, 
     loading, 
     hasActiveSubscription, 
-    teamSizeLimit: subscription?.team_size_limit || 1, // Default fallback
+    teamSizeLimit: subscription?.quantity || 1, // Default fallback
     checkSubscription 
   };
 };
