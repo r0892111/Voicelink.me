@@ -446,13 +446,9 @@
     "annualSavings": "Jaarlijkse Besparing: €{{amount}}",
     "yearlyDiscount": "20% korting toegepast voor jaarlijkse facturering",
     "startFreeTrial": "Start Gratis Proefperiode",
-    "comingSoon": "Binnenkort Beschikbaar",
-    "multiUserPlansComingSoon": "🚧 Multi-gebruiker plannen komen binnenkort! Momenteel zijn alleen enkele gebruiker abonnementen beschikbaar.",
-    "multiUserPlansLaunching": "Multi-gebruiker plannen komen binnenkort",
     "freeTrial": "14-dagen gratis proefperiode",
     "volumeDiscountTiers": "Volume Korting Niveaus",
     "automaticDiscounts": "Automatische kortingen toegepast op basis van teamgrootte",
-    "currentlyOnlySingleUser": "Momenteel zijn alleen enkele gebruiker plannen beschikbaar. Multi-gebruiker plannen met volume kortingen komen binnenkort!",
     "plan": "Plan",
     "teamSize": "Teamgrootte",
     "pricePerUser": "Prijs per Gebruiker",
@@ -467,7 +463,6 @@
     "customIntegrations": "Aangepaste integraties & functies",
     "getCustomQuote": "Krijg Aangepaste Offerte",
     "allPlansInclude": "Alle plannen bevatten onbeperkte WhatsApp spraaknotities, real-time CRM synchronisatie en prioriteit support.",
-    "automaticDiscountsComingSoon": "Automatische kortingen toegepast op basis van teamgrootte (Binnenkort)"
   },
   "features": {
     "title": "CRM Integraties",
