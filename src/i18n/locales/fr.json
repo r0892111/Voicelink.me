@@ -472,13 +472,9 @@
     "annualSavings": "Économies Annuelles : €{{amount}}",
     "yearlyDiscount": "Remise de 20% appliquée pour la facturation annuelle",
     "startFreeTrial": "Commencer l'Essai Gratuit",
-    "comingSoon": "Bientôt Disponible",
-    "multiUserPlansComingSoon": "🚧 Les plans multi-utilisateurs arrivent bientôt ! Actuellement, seuls les abonnements utilisateur unique sont disponibles.",
-    "multiUserPlansLaunching": "Les plans multi-utilisateurs arrivent bientôt",
     "freeTrial": "Essai gratuit de 14 jours",
     "volumeDiscountTiers": "Niveaux de Remise Volume",
     "automaticDiscounts": "Remises automatiques appliquées selon la taille de l'équipe",
-    "currentlyOnlySingleUser": "Actuellement, seuls les plans utilisateur unique sont disponibles. Les plans multi-utilisateurs avec remises volume arrivent bientôt !",
     "plan": "Plan",
     "teamSize": "Taille d'Équipe",
     "pricePerUser": "Prix par Utilisateur",
@@ -492,8 +488,7 @@
     "dedicatedAccountManager": "Gestionnaire de compte dédié",
     "customIntegrations": "Intégrations et fonctionnalités personnalisées",
     "getCustomQuote": "Obtenir un Devis Personnalisé",
-    "allPlansInclude": "Tous les plans incluent des notes vocales WhatsApp illimitées, une synchronisation CRM en temps réel et un support prioritaire.",
-    "automaticDiscountsComingSoon": "Remises automatiques appliquées selon la taille de l'équipe (Bientôt)"
+    "allPlansInclude": "Tous les plans incluent des notes vocales WhatsApp illimitées, une synchronisation CRM en temps réel et un support prioritaire."
   },
   "howItWorks": {
     "title": "Comment Fonctionnent les Notes Vocales WhatsApp",

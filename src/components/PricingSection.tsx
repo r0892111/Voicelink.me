@@ -246,29 +246,17 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             <div className="mt-auto">
               <button
                 onClick={openModal}
-                disabled={selectedUsers > 1}
-                className={`w-full font-semibold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 group ${
-                  selectedUsers > 1 
-                    ? 'bg-gray-400 text-white cursor-not-allowed' 
-                    : 'text-white hover:shadow-xl hover:scale-[1.02]'
-                }`}
-                style={{ backgroundColor: selectedUsers > 1 ? undefined : '#1C2C55' }}
-                onMouseEnter={(e) => selectedUsers <= 1 && (e.currentTarget.style.backgroundColor = '#0F1A3A')}
-                onMouseLeave={(e) => selectedUsers <= 1 && (e.currentTarget.style.backgroundColor = '#1C2C55')}
+                className="w-full text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 group"
+                style={{ backgroundColor: '#1C2C55' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
               >
-                <span>{selectedUsers > 1 ? t('pricing.comingSoon') : t('pricing.startFreeTrial')}</span>
-                {selectedUsers <= 1 && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+                <span>{t('pricing.startFreeTrial')}</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               
-              {selectedUsers > 1 && (
-                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <p className="text-yellow-800 text-sm font-medium">
-                    {t('pricing.multiUserPlansComingSoon')}
-                  </p>
-                </div>
-              )}
               <p className="text-center text-sm text-gray-500 mt-4">
-                {selectedUsers > 1 ? t('pricing.multiUserPlansLaunching') : t('pricing.freeTrial')}
+                {t('pricing.freeTrial')}
               </p>
             </div>
           )}
@@ -283,12 +271,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             {t('pricing.automaticDiscounts')}
           </p>
           <div className="text-center mb-6">
-            <p className="text-sm text-yellow-800 font-medium">
-              {t('pricing.currentlyOnlySingleUser')}
+            <p className="text-gray-600">
+              {t('pricing.automaticDiscounts')}
             </p>
-            <div className="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-              {t('pricing.comingSoon')}
-            </div>
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-gray-200 flex-grow mb-4">
@@ -311,7 +296,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       key={tier.name}
                       className={`border-b border-gray-100 transition-all duration-300 ${
                         isCurrentTier 
-                          ? isStarterTier ? 'hover:bg-gray-50' : 'bg-gray-50 opacity-60'
+                          ? 'bg-blue-50 hover:bg-blue-100'
                           : 'hover:bg-gray-50'
                       }`}
                     >
@@ -322,11 +307,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                         {isCurrentTier && (
                           <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                             {t('pricing.current')}
-                          </span>
-                        )}
-                        {!isStarterTier && (
-                          <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                            {t('pricing.comingSoon')}
                           </span>
                         )}
                       </td>

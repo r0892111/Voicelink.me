@@ -468,13 +468,9 @@
     "annualSavings": "Annual Savings: €{{amount}}",
     "yearlyDiscount": "20% discount applied for yearly billing",
     "startFreeTrial": "Start Free Trial",
-    "comingSoon": "Coming Soon",
-    "multiUserPlansComingSoon": "🚧 Multi-user plans coming soon! Currently only single user subscriptions are available.",
-    "multiUserPlansLaunching": "Multi-user plans launching soon",
     "freeTrial": "14-day free trial",
     "volumeDiscountTiers": "Volume Discount Tiers",
     "automaticDiscounts": "Automatic discounts applied based on team size",
-    "currentlyOnlySingleUser": "Currently only single user plans are available. Multi-user plans with volume discounts coming soon!",
     "plan": "Plan",
     "teamSize": "Team Size",
     "pricePerUser": "Price per User",
@@ -488,8 +484,7 @@
     "dedicatedAccountManager": "Dedicated account manager",
     "customIntegrations": "Custom integrations & features",
     "getCustomQuote": "Get Custom Quote",
-    "allPlansInclude": "All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support.",
-    "automaticDiscountsComingSoon": "Automatic discounts applied based on team size (Coming Soon)"
+    "allPlansInclude": "All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support."
   },
   "features": {
     "title": "CRM Integrations",
