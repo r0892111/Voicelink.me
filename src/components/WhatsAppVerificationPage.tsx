@@ -78,10 +78,7 @@ export const WhatsAppVerificationPage: React.FC = () => {
       if (result.success) {
         setSuccess(true);
         
-        // Redirect to success page after 3 seconds
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 3000);
+        // No redirect - user should close the page
       } else {
         setError(result.error || 'Verification failed');
       }
@@ -131,10 +128,7 @@ export const WhatsAppVerificationPage: React.FC = () => {
       if (result.success) {
         setSuccess(true);
         
-        // Redirect to success page after 3 seconds
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 3000);
+        // No redirect - user should close the page
       } else {
         setError(result.error || 'Verification failed');
       }
@@ -145,6 +139,7 @@ export const WhatsAppVerificationPage: React.FC = () => {
       setLoading(false);
     }
   };
+
 
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '').slice(0, 6);
@@ -214,9 +209,12 @@ export const WhatsAppVerificationPage: React.FC = () => {
             </p>
           </div>
           
-          <p className="text-sm text-gray-500">
-            Redirecting to dashboard in 3 seconds...
-          </p>
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+            <p className="text-sm text-green-800">
+              <strong>✅ Verification Complete!</strong><br/>
+              Your WhatsApp is now connected to VoiceLink. You can close this webpage.
+            </p>
+          </div>
         </div>
       </div>
     );
