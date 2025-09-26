@@ -598,7 +598,14 @@
     "yearly": "Jährlich",
     "save20": "20% Sparen",
     "startFreeTrial": "Kostenlose Testversion Starten",
-    "comingSoon": "Demnächst Verfügbar"
+    "freeTrial": "14-tägige kostenlose Testversion",
+    "volumeDiscountTiers": "Volume Discount Tiers",
+    "automaticDiscounts": "Automatic discounts applied based on team size",
+    "plan": "Plan",
+    "teamSize": "Team Size",
+    "pricePerUser": "Price per User",
+    "getCustomQuote": "Obtenir un Devis Personnalisé",
+    "allPlansInclude": "Tous les plans incluent des notes vocales WhatsApp illimitées, une synchronisation CRM en temps réel et un support prioritaire."
   },
   "finalCta": {
     "title": "Bereit, Ihren Workflow zu Transformieren?",
