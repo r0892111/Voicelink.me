@@ -79,7 +79,7 @@ export const OdooApiKeyInput: React.FC = () => {
         .from('odoo_users')
         .upsert({ 
           user_id: user.id,
-          api_key: apiKey.trim(),
+          access_token: apiKey.trim(),
           odoo_database: databaseName.trim(),
           updated_at: new Date().toISOString(),
           is_admin: true
