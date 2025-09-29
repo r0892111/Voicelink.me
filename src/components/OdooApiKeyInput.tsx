@@ -77,12 +77,15 @@ export const OdooApiKeyInput: React.FC = () => {
     try {
       const { error } = await supabase
         .from('odoo_users')
-        .update({ 
+        .upsert({ 
+          user_id: user.id,
           api_key: apiKey.trim(),
           odoo_database: databaseName.trim(),
-          updated_at: new Date().toISOString()
-        })
-        .eq('user_id', user.id);
+          updated_at: new Date().toISOString(),
+          is_admin: true
+        }, {
+          onConflict: 'user_id'
+        });
 
       if (error) {
         throw new Error(error.message);
