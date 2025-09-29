@@ -75,20 +75,34 @@ export const OdooApiKeyInput: React.FC = () => {
     setError(null);
 
     try {
-      const { error } = await supabase
+      // First try to update existing record
+      const { data: updateData, error: updateError } = await supabase
         .from('odoo_users')
-        .upsert({ 
-          user_id: user.id,
+        .update({ 
           access_token: apiKey.trim(),
           odoo_database: databaseName.trim(),
-          updated_at: new Date().toISOString(),
-          is_admin: true
-        }, {
-          onConflict: 'user_id'
-        });
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id)
+        .select();
 
-      if (error) {
-        throw new Error(error.message);
+      // If no rows were updated, insert a new record
+      if (!updateError && (!updateData || updateData.length === 0)) {
+        const { error: insertError } = await supabase
+          .from('odoo_users')
+          .insert({ 
+            user_id: user.id,
+            access_token: apiKey.trim(),
+            odoo_database: databaseName.trim(),
+            updated_at: new Date().toISOString(),
+            is_admin: true
+          });
+
+        if (insertError) {
+          throw new Error(insertError.message);
+        }
+      } else if (updateError) {
+        throw new Error(updateError.message);
       }
 
       setSuccess(true);
