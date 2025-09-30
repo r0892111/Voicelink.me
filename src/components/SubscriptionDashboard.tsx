@@ -37,6 +37,7 @@ export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
   const { t } = useI18n();
   const { teamSizeLimit, loading: subscriptionLoading } = useSubscription();
+  const manageSubscriptionRef = React.useRef<HTMLElement>(null);
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
   const [addedTeamMembers, setAddedTeamMembers] = useState<TeamMember[]>([]);
@@ -56,6 +57,15 @@ export const SubscriptionDashboard: React.FC = () => {
 
   const remainingSlots = teamSizeLimit - addedTeamMembers.length - 1;
   const canAddMore = remainingSlots > 0;
+
+  const scrollToManageSubscription = () => {
+    if (manageSubscriptionRef.current) {
+      manageSubscriptionRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
 
   // Debug: Monitor team members state changes
   React.useEffect(() => {
@@ -952,7 +962,10 @@ export const SubscriptionDashboard: React.FC = () => {
                     <p className="text-gray-600 mb-4">
                       {t('teamManagement.teamLimitMessage', { total: teamSizeLimit })}
                     </p>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200 hover:scale-[1.02]">
+                    <button 
+                      onClick={scrollToManageSubscription}
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200 hover:scale-[1.02]"
+                    >
                       {t('teamManagement.upgradeSubscription')}
                     </button>
                   </div>
@@ -1201,7 +1214,7 @@ export const SubscriptionDashboard: React.FC = () => {
           )}
 
           {/* Customer Portal Section - Manage Subscription */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <section ref={manageSubscriptionRef} className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
                 {t('dashboard.customerPortal.title')}
