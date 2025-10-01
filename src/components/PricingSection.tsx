@@ -310,12 +310,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           </span>
                         )}
                       </td>
-                      <td className={`px-6 py-4 ${
-                        isCurrentTier ? 'text-blue-800' : 'text-gray-600'
-                      }`}>
-                        {tier.minUsers}–{tier.maxUsers || '∞'} users
-                      </td>
-                      <td className={`px-6 py-4 font-semibold ${
+                      <td className={`px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-semibold ${
                         isCurrentTier ? 'text-blue-900' : 'text-gray-900'
                       }`}>
                         {isEnterpriseTier ? (
@@ -324,15 +319,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           `€${(billingPeriod === 'monthly' ? tier.monthlyPricePerUser : tier.yearlyPricePerUser).toFixed(2)}`
                         )}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm">
                         {isEnterpriseTier ? (
                           <button 
                            onClick={openContactModal}
-                           className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer">
+                           className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer">
                             {t('pricing.contactUs')}
                           </button>
                         ) : tier.discount > 0 ? (
-                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                          <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
                             tier.discount >= 50 ? 'bg-blue-100 text-blue-800' :
                             tier.discount >= 30 ? 'bg-green-100 text-green-800' :
                             'bg-yellow-100 text-yellow-800'
@@ -350,10 +345,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </table>
           </div>
 
-          <div className="p-4 bg-gray-50 rounded-xl">
-            <p className="text-sm text-gray-600 text-center">
+          <div className="p-3 sm:p-4 bg-gray-50 rounded-xl">
+            <p className="text-xs sm:text-sm text-gray-600 text-center">
               {t('pricing.allPlansInclude')}
-              {t('pricing.automaticDiscountsComingSoon')}
             </p>
           </div>
         </div>
