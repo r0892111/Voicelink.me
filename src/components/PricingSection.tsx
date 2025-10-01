@@ -300,7 +300,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           : 'hover:bg-gray-50'
                       }`}
                     >
-                      <td className={`px-6 py-4 font-medium ${
                       <td className={`px-3 sm:px-6 py-3 sm:py-4 font-medium ${
                         isCurrentTier ? 'text-blue-900' : 'text-gray-900'
                       }`}>
