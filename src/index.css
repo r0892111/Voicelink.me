@@ -2,6 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile-First Responsive Utilities */
+@layer utilities {
+  /* Touch-friendly tap targets */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improved mobile spacing */
+  .mobile-spacing {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Mobile-optimized text sizes */
+  .mobile-text-sm {
+    @apply text-sm sm:text-base;
+  }
+  
+  .mobile-text-base {
+    @apply text-base sm:text-lg;
+  }
+  
+  .mobile-text-lg {
+    @apply text-lg sm:text-xl;
+  }
+  
+  .mobile-text-xl {
+    @apply text-xl sm:text-2xl;
+  }
+  
+  .mobile-text-2xl {
+    @apply text-2xl sm:text-3xl;
+  }
+  
+  .mobile-text-3xl {
+    @apply text-3xl sm:text-4xl lg:text-5xl;
+  }
+  
+  /* Mobile-optimized button spacing */
+  .mobile-btn {
+    @apply py-3 px-6 sm:py-4 sm:px-8;
+  }
+  
+  /* Safe area for mobile devices with notches */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 /* Hero Animation Keyframes */
 @keyframes fadeInUp {
   from {
@@ -141,4 +194,3 @@
 .rtl .mr-auto {
   margin-right: 0;
   margin-left: auto;
-}

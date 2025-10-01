@@ -103,39 +103,39 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="text-center mb-16 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-        <h2 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: '#1C2C55' }}>
+    <div className="max-w-7xl mx-auto mobile-spacing">
+      <div className="text-center mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        <h2 className="mobile-text-3xl font-bold mb-4 sm:mb-6" style={{ color: '#1C2C55' }}>
           {t('pricing.title')}
         </h2>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+        <p className="mobile-text-lg text-gray-600 max-w-3xl mx-auto mb-8 sm:mb-12">
           {t('pricing.subtitle')}
         </p>
       </div>
       
-      <div className="flex items-center justify-center mb-12">
+      <div className="flex items-center justify-center mb-8 sm:mb-12">
         <BillingPeriodSwitch 
           billingPeriod={billingPeriod}
           onBillingPeriodChange={setBillingPeriod}
         />
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-stretch">
         {/* Pricing Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 border border-gray-100 animate-fade-in-left h-full flex flex-col" style={{ animationDelay: '0.4s' }}>
-          <div className="flex items-center space-x-3 mb-6">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 border border-gray-100 animate-fade-in-left h-full flex flex-col mobile-card" style={{ animationDelay: '0.4s' }}>
+          <div className="flex items-center space-x-3 mb-4 sm:mb-6">
             <img 
               src="/Finit Icon Blue.svg" 
               alt={t('common.voiceLink')} 
-              className="w-12 h-12"
+              className="w-10 sm:w-12 h-10 sm:h-12"
             />
             <div>
-              <h3 className="text-2xl font-bold" style={{ color: '#1C2C55' }}>{getTierDisplayName(selectedUsers)}</h3>
-              <p className="text-gray-600">{t('pricing.perfectForTeams')}</p>
+              <h3 className="mobile-text-xl font-bold" style={{ color: '#1C2C55' }}>{getTierDisplayName(selectedUsers)}</h3>
+              <p className="mobile-text-sm text-gray-600">{t('pricing.perfectForTeams')}</p>
             </div>
           </div>
 
-          <div className="space-y-4 mb-6">
+          <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
             {[
               t('pricing.features.unlimitedVoiceNotes'),
               t('pricing.features.realtimeCrmSync'),
@@ -144,10 +144,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               t('pricing.features.prioritySupport')
             ].map((feature, index) => (
               <div key={index} className="flex items-center space-x-3">
-                <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                <div className="w-5 sm:w-6 h-5 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1C2C55' }}>
                   <Check className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-gray-700">{feature}</span>
+                <span className="mobile-text-sm text-gray-700">{feature}</span>
               </div>
             ))}
           </div>
@@ -160,7 +160,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               id="users"
               value={isCustom ? 'custom' : selectedUsers.toString()}
               onChange={(e) => handleUserCountChange(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+              className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent mobile-text-base tap-target"
             >
               {predefinedOptions.map(num => (
                 <option key={num} value={num}>
@@ -177,7 +177,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 value={customInput}
                 onChange={handleCustomInputChange}
                 placeholder={t('pricing.enterNumberOfUsers')}
-                className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                className="w-full mt-3 px-3 sm:px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent mobile-text-base tap-target"
               />
             )}
             
@@ -185,28 +185,28 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
           {pricing.isEnterprise ? (
             <div className="text-center mb-6 mt-auto">
-              <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-2xl">
+              <div className="p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-xl sm:rounded-2xl">
                 <div className="mb-4">
-                  <h4 className="text-2xl font-bold mb-2" style={{ color: '#1C2C55' }}>
+                  <h4 className="mobile-text-xl font-bold mb-2" style={{ color: '#1C2C55' }}>
                     {t('pricing.enterprisePricing')}
                   </h4>
-                  <p className="text-gray-600">
+                  <p className="mobile-text-sm text-gray-600">
                     {t('pricing.customPricingFor', { count: selectedUsers })}
                   </p>
                 </div>
-                <div className="space-y-3 mb-4">
-                  <div className="flex items-center justify-center space-x-2 text-sm text-gray-700">
+                <div className="space-y-2 sm:space-y-3 mb-4">
+                  <div className="flex items-center justify-center space-x-2 text-xs sm:text-sm text-gray-700">
                     <span>✓</span>
                     <span>{t('pricing.dedicatedAccountManager')}</span>
                   </div>
-                  <div className="flex items-center justify-center space-x-2 text-sm text-gray-700">
+                  <div className="flex items-center justify-center space-x-2 text-xs sm:text-sm text-gray-700">
                     <span>✓</span>
                     <span>{t('pricing.customIntegrations')}</span>
                   </div>
                 </div>
                 <button 
                   onClick={openContactModal}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 sm:px-6 py-3 rounded-xl transition-colors tap-target mobile-text-sm"
                 >
                   {t('pricing.getCustomQuote')}
                 </button>
@@ -215,23 +215,23 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           ) : (
             <div className="text-center mb-6 mt-auto">
               <div className="flex items-baseline justify-center space-x-2 mb-2">
-                <span className="text-5xl font-bold" style={{ color: '#1C2C55' }}>
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold" style={{ color: '#1C2C55' }}>
                   €{pricing.pricePerUser.toFixed(2)}
                 </span>
-                <span className="text-xl text-gray-600">{t('pricing.perUserPerMonth')}</span>
+                <span className="mobile-text-base text-gray-600">{t('pricing.perUserPerMonth')}</span>
               </div>
-              <p className="text-gray-600 mb-2">
+              <p className="mobile-text-sm text-gray-600 mb-2">
                 {t('pricing.users', { count: selectedUsers })}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500">
                 {t('pricing.total', { 
                   amount: (billingPeriod === 'yearly' ? pricing.price * 12 : pricing.price).toFixed(2),
                   period: billingPeriod === 'yearly' ? t('pricing.yearly') : t('pricing.monthly')
                 })}
               </p>
               {pricing.savings > 0 && (
-                <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                  <p className="text-green-800 font-semibold text-sm">
+                <div className="mt-3 p-2 sm:p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-green-800 font-semibold text-xs sm:text-sm">
                     {t('pricing.annualSavings', { amount: pricing.savings.toFixed(2) })}
                   </p>
                   <p className="text-green-600 text-xs mt-1">
@@ -246,7 +246,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             <div className="mt-auto">
               <button
                 onClick={openModal}
-                className="w-full text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 group"
+                className="w-full text-white font-semibold mobile-btn rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 group tap-target"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
@@ -255,7 +255,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               
-              <p className="text-center text-sm text-gray-500 mt-4">
+              <p className="text-center text-xs sm:text-sm text-gray-500 mt-3 sm:mt-4">
                 {t('pricing.freeTrial')}
               </p>
             </div>
@@ -263,27 +263,27 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         </div>
 
         {/* Volume Discount Table */}
-        <div className="bg-white rounded-3xl shadow-2xl p-6 lg:p-8 border border-gray-100 animate-fade-in-right h-full flex flex-col" style={{ animationDelay: '0.6s' }}>
-          <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: '#1C2C55' }}>
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 border border-gray-100 animate-fade-in-right h-full flex flex-col mobile-card" style={{ animationDelay: '0.6s' }}>
+          <h3 className="mobile-text-xl font-bold mb-4 sm:mb-6 text-center" style={{ color: '#1C2C55' }}>
             {t('pricing.volumeDiscountTiers')}
           </h3>
-          <p className="text-gray-600 text-center mb-6">
+          <p className="mobile-text-sm text-gray-600 text-center mb-4 sm:mb-6">
             {t('pricing.automaticDiscounts')}
           </p>
-          <div className="text-center mb-6">
-            <p className="text-gray-600">
+          <div className="text-center mb-4 sm:mb-6">
+            <p className="mobile-text-sm text-gray-600">
               {t('pricing.automaticDiscounts')}
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-gray-200 flex-grow mb-4">
-            <table className="w-full">
+          <div className="overflow-x-auto rounded-xl sm:rounded-2xl border border-gray-200 flex-grow mb-4">
+            <table className="w-full min-w-[500px]">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t('pricing.plan')}</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t('pricing.teamSize')}</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t('pricing.pricePerUser')}</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t('pricing.discount')}</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">{t('pricing.plan')}</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">{t('pricing.teamSize')}</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">{t('pricing.pricePerUser')}</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900">{t('pricing.discount')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -301,21 +301,22 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       }`}
                     >
                       <td className={`px-6 py-4 font-medium ${
+                      <td className={`px-3 sm:px-6 py-3 sm:py-4 font-medium ${
                         isCurrentTier ? 'text-blue-900' : 'text-gray-900'
                       }`}>
                         {tier.name}
                         {isCurrentTier && (
-                          <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="ml-1 sm:ml-2 inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                             {t('pricing.current')}
                           </span>
                         )}
                       </td>
-                      <td className={`px-6 py-4 ${
+                      <td className={`px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm ${
                         isCurrentTier ? 'text-blue-800' : 'text-gray-600'
                       }`}>
                         {tier.minUsers}–{tier.maxUsers || '∞'} users
                       </td>
-                      <td className={`px-6 py-4 font-semibold ${
+                      <td className={`px-3 sm:px-6 py-3 sm:py-4 font-semibold text-xs sm:text-sm ${
                         isCurrentTier ? 'text-blue-900' : 'text-gray-900'
                       }`}>
                         {isEnterpriseTier ? (
@@ -324,15 +325,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           `€${(billingPeriod === 'monthly' ? tier.monthlyPricePerUser : tier.yearlyPricePerUser).toFixed(2)}`
                         )}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4">
                         {isEnterpriseTier ? (
                           <button 
                            onClick={openContactModal}
-                           className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer">
+                           className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer tap-target">
                             {t('pricing.contactUs')}
                           </button>
                         ) : tier.discount > 0 ? (
-                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                          <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
                             tier.discount >= 50 ? 'bg-blue-100 text-blue-800' :
                             tier.discount >= 30 ? 'bg-green-100 text-green-800' :
                             'bg-yellow-100 text-yellow-800'
@@ -350,10 +351,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </table>
           </div>
 
-          <div className="p-4 bg-gray-50 rounded-xl">
-            <p className="text-sm text-gray-600 text-center">
+          <div className="p-3 sm:p-4 bg-gray-50 rounded-lg sm:rounded-xl">
+            <p className="text-xs sm:text-sm text-gray-600 text-center">
               {t('pricing.allPlansInclude')}
-              {t('pricing.automaticDiscountsComingSoon')}
             </p>
           </div>
         </div>
@@ -361,8 +361,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
       {/* Background Pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-5" style={{ backgroundColor: '#1C2C55' }}></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
+        <div className="absolute -top-20 sm:-top-40 -right-20 sm:-right-40 w-40 sm:w-80 h-40 sm:h-80 rounded-full opacity-5" style={{ backgroundColor: '#1C2C55' }}></div>
+        <div className="absolute -bottom-20 sm:-bottom-40 -left-20 sm:-left-40 w-40 sm:w-80 h-40 sm:h-80 rounded-full opacity-5" style={{ backgroundColor: '#F7E69B' }}></div>
       </div>
     </div>
   );
