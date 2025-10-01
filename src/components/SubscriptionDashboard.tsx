@@ -31,13 +31,10 @@ interface CompanyUser {
 // interface TeamLeaderUser extends CompanyUser { id: string; first_name?: string; last_name?: string; }
 
 import { useI18n } from '../hooks/useI18n';
-import { useSubscription } from '../hooks/useSubscription';
 
 export const SubscriptionDashboard: React.FC = () => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const { teamSizeLimit, loading: subscriptionLoading } = useSubscription();
-  const manageSubscriptionRef = React.useRef<HTMLElement>(null);
   const [whatsappStatus, setWhatsappStatus] = React.useState<'not_set' | 'pending' | 'active'>('not_set');
   const [loadingWhatsApp, setLoadingWhatsApp] = React.useState(true);
   const [addedTeamMembers, setAddedTeamMembers] = useState<TeamMember[]>([]);
@@ -45,6 +42,7 @@ export const SubscriptionDashboard: React.FC = () => {
   const [inviting] = useState(false);
   const [inviteSuccess, setInviteSuccess] = useState(false);
   const [inviteError, setInviteError] = useState('');
+  const [totalUsers] = useState(5);
   
   // Company users state (works for all platforms)
   const [companyUsers, setCompanyUsers] = useState<CompanyUser[]>([]);
@@ -55,17 +53,8 @@ export const SubscriptionDashboard: React.FC = () => {
   const [lastStatusRef] = React.useState({ current: 'not_set' });
   const [statusCheckIntervalRef] = React.useState({ current: null });
 
-  const remainingSlots = teamSizeLimit - addedTeamMembers.length - 1;
+  const remainingSlots = totalUsers - addedTeamMembers.length - 1;
   const canAddMore = remainingSlots > 0;
-
-  const scrollToManageSubscription = () => {
-    if (manageSubscriptionRef.current) {
-      manageSubscriptionRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  };
 
   // Debug: Monitor team members state changes
   React.useEffect(() => {
@@ -270,13 +259,6 @@ export const SubscriptionDashboard: React.FC = () => {
 
   const addNewUser = async () => {
     if (!isCurrentMemberValid() || !canAddMore || !user) return;
-    
-    // Additional validation: Check if we're at the team size limit
-    if (addedTeamMembers.length + 1 >= teamSizeLimit) {
-      setInviteError(`You have reached your team size limit of ${teamSizeLimit} users. Please upgrade your subscription to add more team members.`);
-      setTimeout(() => setInviteError(''), 5000);
-      return;
-    }
     
     try {
       // Get current session for authentication
@@ -748,20 +730,12 @@ export const SubscriptionDashboard: React.FC = () => {
                   </div>
                   <div className="text-right">
                     <div className="text-sm text-gray-500">Team Size</div>
-                    {subscriptionLoading ? (
-                      <div className="text-2xl font-bold text-gray-400 animate-pulse">
-                        Loading...
-                      </div>
-                    ) : (
-                      <>
-                        <div className="text-2xl font-bold" style={{ color: '#1C2C55' }}>
-                          {addedTeamMembers.length + 1}/{teamSizeLimit}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {remainingSlots} slots remaining
-                        </div>
-                      </>
-                    )}
+                    <div className="text-2xl font-bold" style={{ color: '#1C2C55' }}>
+                      {addedTeamMembers.length + 1}/{totalUsers}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {remainingSlots} slots remaining
+                    </div>
                   </div>
                 </div>
 
@@ -927,7 +901,7 @@ export const SubscriptionDashboard: React.FC = () => {
                     <div className="flex space-x-4">
                       <button
                         onClick={addNewUser}
-                        disabled={!isCurrentMemberValid() || inviting || subscriptionLoading}
+                        disabled={!isCurrentMemberValid() || inviting}
                         className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:scale-[1.02] flex items-center justify-center space-x-2"
                       >
                         {inviting ? (
@@ -960,12 +934,9 @@ export const SubscriptionDashboard: React.FC = () => {
                     <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                     <h4 className="text-lg font-semibold text-gray-900 mb-2">{t('teamManagement.teamLimitReached')}</h4>
                     <p className="text-gray-600 mb-4">
-                      {t('teamManagement.teamLimitMessage', { total: teamSizeLimit })}
+                      {t('teamManagement.teamLimitMessage', { total: totalUsers })}
                     </p>
-                    <button 
-                      onClick={scrollToManageSubscription}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200 hover:scale-[1.02]"
-                    >
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200 hover:scale-[1.02]">
                       {t('teamManagement.upgradeSubscription')}
                     </button>
                   </div>
@@ -1214,7 +1185,7 @@ export const SubscriptionDashboard: React.FC = () => {
           )}
 
           {/* Customer Portal Section - Manage Subscription */}
-          <section ref={manageSubscriptionRef} className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
                 {t('dashboard.customerPortal.title')}

@@ -61,7 +61,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex min-h-screen items-center justify-center p-3 sm:p-4">
+      <div className="flex min-h-screen items-center justify-center p-4">
         {/* Backdrop */}
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
@@ -69,42 +69,42 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
         />
         
         {/* Modal */}
-        <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto mobile-modal">
+        <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <div>
-              <h2 className="mobile-text-xl font-bold text-gray-900">{t('contact.title')}</h2>
-              <p className="mobile-text-sm text-gray-600 mt-1">{t('contact.subtitle')}</p>
+              <h2 className="text-2xl font-bold text-gray-900">{t('contact.title')}</h2>
+              <p className="text-gray-600 mt-1">{t('contact.subtitle')}</p>
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors tap-target"
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
               <X className="w-6 h-6 text-gray-500" />
             </button>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
             {/* Status Messages */}
             {submitStatus === 'success' && (
-              <div className="p-3 sm:p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2 text-green-700">
+              <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2 text-green-700">
                 <CheckCircle className="w-5 h-5" />
-                <span className="mobile-text-sm">{t('contact.messageSent')}</span>
+                <span>{t('contact.messageSent')}</span>
               </div>
             )}
 
             {submitStatus === 'error' && (
-              <div className="p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
                 <AlertCircle className="w-5 h-5" />
-                <span className="mobile-text-sm">{t('contact.submitFailed')}</span>
+                <span>{t('contact.submitFailed')}</span>
               </div>
             )}
 
             {/* Form Fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="fullName" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
                   <User className="w-4 h-4 inline mr-1" />
                   {t('contact.fullName')} <span className="text-red-500">*</span>
                 </label>
@@ -116,12 +116,12 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                   onChange={handleInputChange}
                   placeholder={t('contact.fullNamePlaceholder')}
                   required
-                  className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mobile-text-base tap-target"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   <Mail className="w-4 h-4 inline mr-1" />
                   {t('contact.emailAddress')} <span className="text-red-500">*</span>
                 </label>
@@ -133,13 +133,13 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                   onChange={handleInputChange}
                   placeholder={t('contact.emailPlaceholder')}
                   required
-                  className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mobile-text-base tap-target"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 <Phone className="w-4 h-4 inline mr-1" />
                 {t('contact.phoneNumber')}
               </label>
@@ -150,12 +150,12 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder={t('contact.phonePlaceholder')}
-                className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mobile-text-base tap-target"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                 <MessageSquare className="w-4 h-4 inline mr-1" />
                 {t('contact.message')} <span className="text-red-500">*</span>
               </label>
@@ -167,30 +167,30 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                 placeholder={t('contact.messagePlaceholder')}
                 required
                 rows={5}
-                className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none mobile-text-base"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               />
             </div>
 
             {/* Response Time Info */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4">
-              <p className="text-xs sm:text-sm text-blue-800">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm text-blue-800">
                 <strong>{t('contact.responseTime')}</strong>
               </p>
             </div>
 
             {/* Submit Button */}
-            <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4">
+            <div className="flex justify-end space-x-4">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 sm:px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors tap-target mobile-text-sm"
+                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 {t('common.cancel')}
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting || submitStatus === 'success'}
-                className="px-4 sm:px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-colors flex items-center justify-center space-x-2 tap-target mobile-text-sm"
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-colors flex items-center space-x-2"
               >
                 {isSubmitting ? (
                   <>

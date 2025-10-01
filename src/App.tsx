@@ -68,14 +68,14 @@ function App() {
   return (
     <ConsentProvider>
       <RTLProvider>
-        <div className="min-h-screen bg-white mobile-container">
+        <div className="min-h-screen bg-white">
           {/* Navigation */}
-          <nav className="fixed top-0 left-0 right-0 z-[9999] bg-white/90 backdrop-blur-xl border-b border-gray-200/50 shadow-sm safe-area-top">
-            <div className="max-w-7xl mx-auto mobile-spacing py-3 sm:py-4">
+          <nav className="fixed top-0 left-0 right-0 z-[9999] bg-white/90 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
+            <div className="max-w-7xl mx-auto px-6 py-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 cursor-pointer group" onClick={() => navigate('/')}>
                   {!isHomepage && (
-                    <div className="flex items-center justify-center w-10 h-10 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-gray-100 group-hover:to-gray-200 transition-all duration-200 shadow-sm tap-target">
+                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-gray-100 group-hover:to-gray-200 transition-all duration-200 shadow-sm">
                       <ArrowLeft className="w-4 h-4 text-gray-600 group-hover:text-gray-800" />
                     </div>
                   )}
@@ -83,34 +83,32 @@ function App() {
                   <img 
                     src="/Finit Voicelink Blue.svg" 
                     alt={t('common.voiceLink')} 
-                    className="h-8 sm:h-10 lg:h-11 w-auto group-hover:scale-[1.02] transition-all duration-200"
+                    className="h-11 w-auto group-hover:scale-[1.02] transition-all duration-200"
                   />
                 </div>
                 
                 {/* Desktop Navigation */}
-                <div className="hidden lg:flex items-center space-x-1">
+                <div className="hidden md:flex items-center space-x-1">
                   {isHomepage && (
                     <>
                       {isHomepage && (
                         <>
-                          <a href="#features" className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-3 py-2 rounded-xl hover:bg-gray-50 hover:shadow-sm tap-target">{t('navigation.features')}</a>
-                          <a href="#pricing" className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-3 py-2 rounded-xl hover:bg-gray-50 hover:shadow-sm tap-target">{t('navigation.pricing')}</a>
+                          <a href="#features" className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-gray-50 hover:shadow-sm">{t('navigation.features')}</a>
+                          <a href="#pricing" className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-gray-50 hover:shadow-sm">{t('navigation.pricing')}</a>
                           <button
                             onClick={() => window.open('https://calendly.com/alex-finitsolutions/30min', '_blank')}
-                            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-3 py-2 rounded-xl hover:bg-gray-50 hover:shadow-sm tap-target"
+                            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-gray-50 hover:shadow-sm"
                           >
                             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                             </svg>
-                            <span className="hidden xl:inline">Schedule Online Meeting</span>
-                            <span className="xl:hidden">Schedule</span>
+                            <span>Schedule Online Meeting</span>
                           </button>
                           <button
                             onClick={openContactModal}
-                            className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-3 py-2 rounded-xl hover:bg-gray-50 hover:shadow-sm tap-target"
+                            className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-gray-50 hover:shadow-sm"
                           >
-                            <span className="hidden xl:inline">Contact Us</span>
-                            <span className="xl:hidden">Contact</span>
+                            Contact Us
                           </button>
                         </>
                       )}
@@ -125,37 +123,36 @@ function App() {
                      {isHomepage && (
                        <button
                          onClick={() => navigate('/dashboard')}
-                         className="text-blue-600 hover:text-blue-700 font-medium transition-all duration-200 px-3 py-2 rounded-xl hover:bg-blue-50 hover:shadow-sm tap-target"
+                         className="text-blue-600 hover:text-blue-700 font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-blue-50 hover:shadow-sm"
                        >
                          {t('navigation.dashboard')}
                        </button>
                      )}
-                      <div className="flex items-center space-x-2 lg:space-x-3 bg-gradient-to-r from-white to-gray-50 backdrop-blur-sm rounded-2xl px-3 lg:px-4 py-2.5 shadow-sm border border-gray-200/60 hover:shadow-md transition-all duration-200">
-                        <div className="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-sm">
+                      <div className="flex items-center space-x-3 bg-gradient-to-r from-white to-gray-50 backdrop-blur-sm rounded-2xl px-4 py-2.5 shadow-sm border border-gray-200/60 hover:shadow-md transition-all duration-200">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-sm">
                           <User className="w-4 h-4 text-white" />
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-gray-900 font-semibold text-xs sm:text-sm leading-tight truncate max-w-[120px] lg:max-w-none">{user.name}</span>
-                          <span className="text-xs text-gray-500 capitalize leading-tight hidden sm:block">
+                          <span className="text-gray-900 font-semibold text-sm leading-tight">{user.name}</span>
+                          <span className="text-xs text-gray-500 capitalize leading-tight">
                             {user.platform}
                           </span>
                         </div>
                       </div>
                       <button
                         onClick={signOut}
-                        className="flex items-center space-x-1 lg:space-x-2 text-gray-600 hover:text-red-600 transition-all duration-200 px-2 lg:px-4 py-2 rounded-xl hover:bg-red-50 hover:shadow-sm font-medium tap-target"
+                        className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-all duration-200 px-4 py-2 rounded-xl hover:bg-red-50 hover:shadow-sm font-medium"
                       >
                         <LogOut className="w-4 h-4" />
-                        <span className="hidden lg:inline">{t('navigation.signOut')}</span>
+                        <span>{t('navigation.signOut')}</span>
                       </button>
                     </div>
                   ) : (
                     <button
                       onClick={openModal}
-                      className="group text-white font-semibold py-3 px-4 sm:px-6 lg:px-7 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 tap-target text-sm sm:text-base"
+                      className="group text-white font-semibold py-3 px-7 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
                     >
-                      <span className="hidden sm:inline">{t('navigation.getStarted')}</span>
-                      <span className="sm:hidden">Start Free</span>
+                      <span>{t('navigation.getStarted')}</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
                   )}
@@ -164,7 +161,7 @@ function App() {
                 {/* Mobile Menu Button */}
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="lg:hidden p-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:shadow-sm tap-target"
+                  className="md:hidden p-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:shadow-sm"
                 >
                   {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
@@ -172,13 +169,13 @@ function App() {
 
               {/* Mobile Menu */}
               {isMobileMenuOpen && (
-                <div className="lg:hidden mt-4 pb-4 border-t border-gray-200/50 safe-area-bottom">
-                  <div className="flex flex-col space-y-1 pt-4">
-                    <a href="#features" className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-4 rounded-xl hover:bg-gray-50 hover:shadow-sm mobile-nav-item">{t('navigation.features')}</a>
-                    <a href="#pricing" className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-4 rounded-xl hover:bg-gray-50 hover:shadow-sm mobile-nav-item">{t('navigation.pricing')}</a>
+                <div className="md:hidden mt-4 pb-4 border-t border-gray-200/50">
+                  <div className="flex flex-col space-y-2 pt-4">
+                    <a href="#features" className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-gray-50 hover:shadow-sm">{t('navigation.features')}</a>
+                    <a href="#pricing" className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-gray-50 hover:shadow-sm">{t('navigation.pricing')}</a>
                     <button
                       onClick={() => window.open('https://calendly.com/alex-finitsolutions/30min', '_blank')}
-                      className="flex items-center space-x-3 text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-4 rounded-xl hover:bg-gray-50 hover:shadow-sm text-left mobile-nav-item"
+                      className="flex items-center space-x-3 text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-gray-50 hover:shadow-sm text-left"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
@@ -187,38 +184,38 @@ function App() {
                     </button>
                     <button
                       onClick={openContactModal}
-                      className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-4 rounded-xl hover:bg-gray-50 hover:shadow-sm text-left mobile-nav-item"
+                      className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-gray-50 hover:shadow-sm text-left"
                     >
                       Contact Us
                     </button>
                     
                     {/* Mobile Language Switcher */}
-                    <div className="px-4 py-3">
+                    <div className="px-4 py-2">
                       <LanguageSwitcher />
                     </div>
                     
                     {user ? (
-                      <div className="flex flex-col space-y-1 pt-3 border-t border-gray-200/50">
+                      <div className="flex flex-col space-y-2 pt-3 border-t border-gray-200/50">
                        {isHomepage && (
                          <button
                            onClick={() => navigate('/dashboard')}
-                           className="text-blue-600 hover:text-blue-700 font-medium transition-all duration-200 px-4 py-4 rounded-xl hover:bg-blue-50 hover:shadow-sm text-left mobile-nav-item"
+                           className="text-blue-600 hover:text-blue-700 font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-blue-50 hover:shadow-sm text-left"
                          >
                            {t('navigation.dashboard')}
                          </button>
                        )}
-                        <div className="flex items-center space-x-3 px-4 py-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl mx-2">
-                          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-sm">
+                        <div className="flex items-center space-x-3 px-4 py-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl">
+                          <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-sm">
                             <User className="w-4 h-4 text-white" />
                           </div>
                           <div>
-                            <div className="text-gray-900 font-semibold text-sm truncate max-w-[200px]">{user.name}</div>
+                            <div className="text-gray-900 font-semibold text-sm">{user.name}</div>
                             <div className="text-xs text-gray-500 capitalize">{user.platform}</div>
                           </div>
                         </div>
                         <button
                           onClick={signOut}
-                          className="flex items-center space-x-3 text-red-600 hover:text-red-700 transition-all duration-200 px-4 py-4 rounded-xl hover:bg-red-50 hover:shadow-sm font-medium text-left mobile-nav-item"
+                          className="flex items-center space-x-3 text-red-600 hover:text-red-700 transition-all duration-200 px-4 py-3 rounded-xl hover:bg-red-50 hover:shadow-sm font-medium text-left"
                         >
                           <LogOut className="w-4 h-4" />
                           <span>{t('navigation.signOut')}</span>
@@ -227,7 +224,7 @@ function App() {
                     ) : (
                       <button
                         onClick={openModal}
-                        className="group text-white font-semibold py-3 px-4 sm:px-6 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 tap-target text-sm sm:text-base mx-2"
+                        className="group text-white font-semibold py-3 px-7 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
                       >
                         <span>{t('navigation.getStarted')}</span>
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -240,7 +237,7 @@ function App() {
           </nav>
 
           {/* Routes */}
-          <div className="pt-16 sm:pt-20">
+          <div className="pt-20">
             <Routes>
               <Route path="/" element={<Homepage openModal={openModal} openContactModal={openContactModal} />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
@@ -268,15 +265,14 @@ function App() {
           <CookieSettingsModal />
 
           {/* Cookie Settings Footer Link */}
-          <div className="fixed bottom-4 right-4 z-40 safe-area-bottom">
+          <div className="fixed bottom-4 right-4 z-40">
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('openCookieSettings'))}
-              className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-2 bg-white border border-gray-200 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] text-xs sm:text-sm font-medium text-gray-700 hover:text-gray-900 tap-target"
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] text-sm font-medium text-gray-700 hover:text-gray-900"
               aria-label={t('common.changeLanguage')}
             >
               <Cookie className="w-4 h-4" />
-              <span className="hidden md:inline">Cookie Settings</span>
-              <span className="md:hidden">Cookies</span>
+              <span className="hidden sm:inline">Cookie Settings</span>
             </button>
           </div>
         </div>
