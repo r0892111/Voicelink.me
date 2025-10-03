@@ -59,13 +59,26 @@ export const LanguagePreference: React.FC = () => {
       if (error) throw error;
 
       if (data?.language_preference) {
+        // User has a saved preference, use it
         setSelectedLanguage(data.language_preference);
         i18n.changeLanguage(data.language_preference);
       } else {
-        setSelectedLanguage(i18n.language);
+        // No saved preference, use current website language as default
+        const currentLanguage = i18n.language;
+        setSelectedLanguage(currentLanguage);
+
+        // Automatically save the current website language as their preference
+        await supabase
+          .from(tableName)
+          .update({
+            language_preference: currentLanguage,
+            updated_at: new Date().toISOString()
+          })
+          .eq('user_id', user.id);
       }
     } catch (error) {
       console.error('Error loading language preference:', error);
+      // Fallback to current website language
       setSelectedLanguage(i18n.language);
     } finally {
       setLoading(false);
