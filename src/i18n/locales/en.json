@@ -156,6 +156,8 @@
     "accountOwner": "Account Owner",
     "admin": "Admin",
     "teamMembers": "Team Members",
+    "teamSize": "Team Size",
+    "slotsRemaining": "{{count}} slots remaining",
     "pending": "Pending",
     "verified": "Verified",
     "notVerified": "Not Verified",
@@ -410,7 +412,8 @@
         "description": "Schedule a free consultation call with our experts",
         "bookCall": "Book Call"
       }
-    }
+    },
+    "supportCenter": "Support Center"
   },
   "whatsapp": {
     "integration": "WhatsApp Integration",

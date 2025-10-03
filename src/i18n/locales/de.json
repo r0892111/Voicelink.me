@@ -125,6 +125,8 @@
     "accountOwner": "Kontoinhaber",
     "admin": "Admin",
     "teamMembers": "Teammitglieder",
+    "teamSize": "Teamgröße",
+    "slotsRemaining": "{{count}} Plätze verfügbar",
     "pending": "Ausstehend",
     "verified": "Verifiziert",
     "notVerified": "Nicht Verifiziert",
@@ -483,35 +485,7 @@
         "bookCall": "Termin Buchen"
       }
     },
-    "teamManagement": {
-      "title": "Team-Verwaltung",
-      "subtitle": "Verwalten Sie Ihre Teammitglieder und Einladungen",
-      "accountOwner": "Kontoinhaber",
-      "admin": "Admin",
-      "teamMembers": "Teammitglieder",
-      "pending": "Ausstehend",
-      "addNewMember": "Neues Teammitglied Hinzufügen",
-      "selectCompanyUser": "Unternehmensbenutzer Auswählen",
-      "loadingUsers": "Unternehmensbenutzer laden...",
-      "selectedUserDetails": "Details des Ausgewählten Benutzers",
-      "name": "Name",
-      "email": "E-Mail",
-      "phone": "Telefon",
-      "notProvided": "Nicht angegeben",
-      "whatsappNumber": "WhatsApp-Nummer (falls anders als Telefon)",
-      "whatsappNumberPlaceholder": "+49 123 456 789",
-      "fullName": "Vollständiger Name",
-      "fullNamePlaceholder": "Vollständigen Namen eingeben",
-      "emailAddress": "E-Mail-Adresse",
-      "emailPlaceholder": "E-Mail-Adresse eingeben",
-      "sendingInvitation": "Einladung senden...",
-      "saveAndInvite": "Speichern & Einladen",
-      "clearSelection": "Auswahl Löschen",
-      "addNewUser": "Neuen Benutzer Hinzufügen",
-      "teamLimitReached": "Team-Limit Erreicht",
-      "teamLimitMessage": "Sie haben Ihr Team-Limit von {{total}} Benutzern erreicht. Upgraden Sie Ihr Abonnement, um mehr Teammitglieder hinzuzufügen.",
-      "upgradeSubscription": "Abonnement Upgraden"
-    },
+    "supportCenter": "Support-Center",
     "userGuide": {
       "title": "Täglicher Nutzungsleitfaden",
       "subtitle": "VoiceLink funktioniert am besten, wenn Sie Ihre Updates strukturiert und klar sprechen",
@@ -588,7 +562,8 @@
         }
       },
       "needHelp": "Hilfe Benötigt?"
-    }
+    },
+    "supportCenter": "Support-Center"
   },
   "whatsapp": {
     "integration": "WhatsApp Integration",

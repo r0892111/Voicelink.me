@@ -110,6 +110,8 @@
     "accountOwner": "Propriétaire du Compte",
     "admin": "Admin",
     "teamMembers": "Membres d'Équipe",
+    "teamSize": "Taille de l'Équipe",
+    "slotsRemaining": "{{count}} places restantes",
     "pending": "En Attente",
     "verified": "Vérifié",
     "notVerified": "Non Vérifié",
@@ -414,7 +416,8 @@
         "description": "Planifiez un appel de consultation gratuit avec nos experts",
         "bookCall": "Réserver un Appel"
       }
-    }
+    },
+    "supportCenter": "Centre de Support"
   },
   "whatsapp": {
     "integration": "Intégration WhatsApp",

@@ -90,7 +90,6 @@ export const Dashboard: React.FC = () => {
       <div className="bg-white rounded-xl shadow-sm p-8">
         <div className="flex items-center space-x-2 mb-6">
           <ShoppingBag className="w-6 h-6 text-blue-600" />
-          <h2 className="text-xl font-semibold text-gray-900">Upgrade Your Experience</h2>
           <h2 className="text-xl font-semibold text-gray-900">{t('dashboard.upgradeExperience')}</h2>
         </div>
         

@@ -141,11 +141,12 @@
   },
   "teamManagement": {
     "title": "Teambeheer",
-
     "subtitle": "Beheer uw teamleden en uitnodigingen",
     "accountOwner": "Accounteigenaar",
     "admin": "Admin",
     "teamMembers": "Teamleden",
+    "teamSize": "Teamgrootte",
+    "slotsRemaining": "{{count}} plekken beschikbaar",
     "pending": "In behandeling",
     "verified": "Geverifieerd",
     "notVerified": "Niet Geverifieerd",
@@ -372,7 +373,8 @@
         "description": "Plan een gratis consultatiegesprek met onze experts",
         "bookCall": "Boek Gesprek"
       }
-    }
+    },
+    "supportCenter": "Ondersteuningscentrum"
   },
   "numbers": {
     "currency": "€{{amount}}",
