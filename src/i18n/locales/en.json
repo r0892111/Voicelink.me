@@ -674,5 +674,12 @@
     "currency": "€{{amount}}",
     "percentage": "{{value}}%",
     "decimal": "{{value}}"
+  },
+  "languagePreference": {
+    "title": "Voice Note Language",
+    "description": "Choose the language you will speak in your WhatsApp voice notes",
+    "saved": "Language preference saved successfully!",
+    "note": "Note",
+    "noteText": "This setting affects how VoiceLink processes your voice notes. Speak in the language you select for best results."
   }
 }

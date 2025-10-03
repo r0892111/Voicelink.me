@@ -655,5 +655,12 @@
     "responseTime": "Nous répondrons dans les 24 heures pendant les jours ouvrables",
     "required": "Obligatoire",
     "submitFailed": "Échec de l'envoi du message. Veuillez réessayer ou nous contacter directement."
+  },
+  "languagePreference": {
+    "title": "Langue des Notes Vocales",
+    "description": "Choisissez la langue dans laquelle vous parlerez dans vos notes vocales WhatsApp",
+    "saved": "Préférence de langue enregistrée avec succès !",
+    "note": "Remarque",
+    "noteText": "Ce paramètre affecte la façon dont VoiceLink traite vos notes vocales. Parlez dans la langue que vous sélectionnez pour de meilleurs résultats."
   }
 }

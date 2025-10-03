@@ -4,6 +4,7 @@ import { Crown, Users, Settings, CheckCircle, MessageCircle, Headphones, Calenda
 import { WhatsAppVerification } from './WhatsAppVerification';
 import { OdooApiKeyInput } from './OdooApiKeyInput';
 import { CompanyUserDropdown } from './CompanyUserDropdown';
+import { LanguagePreference } from './LanguagePreference';
 import { supabase } from '../lib/supabase';
 
 interface TeamMember {
@@ -713,6 +714,11 @@ export const SubscriptionDashboard: React.FC = () => {
               <OdooApiKeyInput />
             </section>
           )}
+
+          {/* Language Preference - Show for all authenticated users */}
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.45s' }}>
+            <LanguagePreference />
+          </section>
 
           {/* Team Management Section - Only show when WhatsApp is active */}
           {!loadingWhatsApp && whatsappStatus === 'active' && (

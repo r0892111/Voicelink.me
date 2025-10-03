@@ -642,5 +642,12 @@
     "budgetIncreased": "Budget um 40% für digitale Tools erhöht",
     "strongInterest": "Starkes Interesse an WhatsApp-Integration",
     "prefersThursday": "Bevorzugt Donnerstag-Nachmittag-Anrufe"
+  },
+  "languagePreference": {
+    "title": "Sprachnotiz-Sprache",
+    "description": "Wählen Sie die Sprache, in der Sie Ihre WhatsApp-Sprachnotizen sprechen werden",
+    "saved": "Sprachpräferenz erfolgreich gespeichert!",
+    "note": "Hinweis",
+    "noteText": "Diese Einstellung beeinflusst, wie VoiceLink Ihre Sprachnotizen verarbeitet. Sprechen Sie in der Sprache, die Sie für beste Ergebnisse auswählen."
   }
 }

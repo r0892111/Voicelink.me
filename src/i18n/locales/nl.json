@@ -666,5 +666,12 @@
     "budgetIncreased": "Budget verhoogd met 40% voor digitale tools",
     "strongInterest": "Sterke interesse in WhatsApp integratie",
     "prefersThursday": "Voorkeur voor donderdag middag gesprekken"
+  },
+  "languagePreference": {
+    "title": "Spraaknotitie Taal",
+    "description": "Kies de taal waarin u uw WhatsApp spraaknotities zult spreken",
+    "saved": "Taalvoorkeur succesvol opgeslagen!",
+    "note": "Opmerking",
+    "noteText": "Deze instelling bepaalt hoe VoiceLink uw spraaknotities verwerkt. Spreek in de taal die u selecteert voor de beste resultaten."
   }
 }
