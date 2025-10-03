@@ -75,34 +75,17 @@ export const OdooApiKeyInput: React.FC = () => {
     setError(null);
 
     try {
-      // First try to update existing record
-      const { data: updateData, error: updateError } = await supabase
+      const { error } = await supabase
         .from('odoo_users')
         .update({ 
-          access_token: apiKey.trim(),
+          api_key: apiKey.trim(),
           odoo_database: databaseName.trim(),
           updated_at: new Date().toISOString()
         })
-        .eq('user_id', user.id)
-        .select();
+        .eq('user_id', user.id);
 
-      // If no rows were updated, insert a new record
-      if (!updateError && (!updateData || updateData.length === 0)) {
-        const { error: insertError } = await supabase
-          .from('odoo_users')
-          .insert({ 
-            user_id: user.id,
-            access_token: apiKey.trim(),
-            odoo_database: databaseName.trim(),
-            updated_at: new Date().toISOString(),
-            is_admin: true
-          });
-
-        if (insertError) {
-          throw new Error(insertError.message);
-        }
-      } else if (updateError) {
-        throw new Error(updateError.message);
+      if (error) {
+        throw new Error(error.message);
       }
 
       setSuccess(true);
@@ -234,14 +217,33 @@ export const OdooApiKeyInput: React.FC = () => {
           )}
         </button>
 
-        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-purple-800 mb-2">How to get your Odoo API Key:</h4>
-          <ol className="text-xs text-purple-700 space-y-1 list-decimal list-inside">
-            <li>{t('common.selectUserAccount')}</li>
-            <li>{t('common.accessRightsTab')}</li>
-            <li>{t('common.generateOrCopyApiKey')}</li>
-            <li>{t('common.databaseNameLocation')}</li>
-          </ol>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+          <h4 className="text-sm font-semibold text-blue-900 mb-4 flex items-center">
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {t('common.odooApiInstructions.title') || 'How to get your Odoo API Key'}
+          </h4>
+          <div className="space-y-3">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((step) => (
+              <div key={step} className="flex items-start">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-semibold flex items-center justify-center mt-0.5">
+                  {step}
+                </div>
+                <p className={`ml-3 text-sm ${step === 8 ? 'text-blue-900 font-semibold' : 'text-blue-800'}`}>
+                  {t(`common.odooApiInstructions.step${step}`)}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 pt-4 border-t border-blue-300">
+            <p className="text-sm font-medium text-blue-900 flex items-center">
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              {t('common.odooApiInstructions.allSet')}
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -22,10 +22,19 @@
     "enterOdooDatabaseName": "Geben Sie Ihren Odoo-Datenbanknamen ein",
     "enterNewApiKey": "Neuen API-Schlüssel zum Aktualisieren eingeben",
     "enterOdooApiKey": "Geben Sie Ihren Odoo API-Schlüssel ein",
-    "selectUserAccount": "Navigieren Sie zu Ihrer Odoo-Datenbank",
-    "accessRightsTab": "Oben rechts klicken Sie auf Einstellungen, navigieren Sie zum Konto-Sicherheit Tab",
-    "generateOrCopyApiKey": "Unten können Sie einen neuen API-Schlüssel erstellen. Wir empfehlen einen API-Schlüssel für einen längeren Zeitraum, oder wenn der Schlüssel abläuft müssen Sie ihn erneuern",
-    "databaseNameLocation": "Ihr Datenbankname befindet sich normalerweise in Ihrer Odoo-URL (z.B. \"mycompany\" von mycompany.odoo.com)",
+    "odooApiInstructions": {
+      "title": "So erhalten Sie Ihren Odoo API-Schlüssel",
+      "step1": "Melden Sie sich bei Ihrem Odoo-Konto an",
+      "step2": "Klicken Sie auf Ihr Profilsymbol oben rechts auf der Seite",
+      "step3": "Wählen Sie 'Einstellungen'",
+      "step4": "Öffnen Sie den Tab 'Kontosicherheit'",
+      "step5": "Klicken Sie auf 'Neuer API-Schlüssel' am unteren Rand der Seite",
+      "step6": "Bestätigen Sie Ihr Odoo-Passwort",
+      "step7": "Benennen Sie Ihren API-Schlüssel: 'VoiceLink' (oder einen anderen Namen Ihrer Wahl)",
+      "step8": "WICHTIG: Wählen Sie 'Dauerhafter Schlüssel' als Dauer dieses API-Schlüssels",
+      "step9": "Kopieren Sie Ihren neuen API-Schlüssel und fügen Sie ihn in das obige Feld ein",
+      "allSet": "Sie sind jetzt startklar!"
+    },
     "function": "Funktion",
     "autofill": "Automatisch ausfüllen",
     "loadingDashboard": "Dashboard wird geladen...",
@@ -633,5 +642,12 @@
     "budgetIncreased": "Budget um 40% für digitale Tools erhöht",
     "strongInterest": "Starkes Interesse an WhatsApp-Integration",
     "prefersThursday": "Bevorzugt Donnerstag-Nachmittag-Anrufe"
+  },
+  "languagePreference": {
+    "title": "Sprachnotiz-Sprache",
+    "description": "Wählen Sie die Sprache, in der Sie Ihre WhatsApp-Sprachnotizen sprechen werden",
+    "saved": "Sprachpräferenz erfolgreich gespeichert!",
+    "note": "Hinweis",
+    "noteText": "Diese Einstellung beeinflusst, wie VoiceLink Ihre Sprachnotizen verarbeitet. Sprechen Sie in der Sprache, die Sie für beste Ergebnisse auswählen."
   }
 }

@@ -22,10 +22,19 @@
     "enterOdooDatabaseName": "Enter your Odoo database name",
     "enterNewApiKey": "Enter new API key to update",
     "enterOdooApiKey": "Enter your Odoo API key",
-    "selectUserAccount": "Navigate to your Odoo database",
-    "accessRightsTab": "On the top right, click Preferences, navigate to the Account Security tab",
-    "generateOrCopyApiKey": "At the bottom you can create a new API key. We recommend an API key for a longer period of time, or when the key expires you have to renew it",
-    "databaseNameLocation": "Your database name is typically found in your Odoo URL (e.g., \"mycompany\" from mycompany.odoo.com)",
+    "odooApiInstructions": {
+      "title": "How to get your Odoo API Key",
+      "step1": "Log in to your Odoo account",
+      "step2": "Click on your profile icon at the top right of the page",
+      "step3": "Select 'Preferences'",
+      "step4": "Open the 'Account Security' tab",
+      "step5": "Click 'New API Key' at the bottom of the page",
+      "step6": "Confirm your Odoo password",
+      "step7": "Name your API Key: 'VoiceLink' (or a different name of your choice)",
+      "step8": "IMPORTANT: Select 'Persistent Key' as the duration of this API Key",
+      "step9": "Copy and paste your new API Key into the field above",
+      "allSet": "You're now all set!"
+    },
     "loadingDashboard": "Loading dashboard...",
     "teamMemberInvitedSuccessfully": "Team member invited successfully!",
     "changeLanguage": "Change language",
@@ -665,5 +674,12 @@
     "currency": "€{{amount}}",
     "percentage": "{{value}}%",
     "decimal": "{{value}}"
+  },
+  "languagePreference": {
+    "title": "Voice Note Language",
+    "description": "Choose the language you will speak in your WhatsApp voice notes",
+    "saved": "Language preference saved successfully!",
+    "note": "Note",
+    "noteText": "This setting affects how VoiceLink processes your voice notes. Speak in the language you select for best results."
   }
 }

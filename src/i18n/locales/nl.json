@@ -22,10 +22,19 @@
     "enterOdooDatabaseName": "Voer uw Odoo database naam in",
     "enterNewApiKey": "Voer nieuwe API-sleutel in om bij te werken",
     "enterOdooApiKey": "Voer uw Odoo API-sleutel in",
-    "selectUserAccount": "Navigeer naar uw Odoo database",
-    "accessRightsTab": "Klik rechtsboven op Voorkeuren, navigeer naar het Account Beveiliging tabblad",
-    "generateOrCopyApiKey": "Onderaan kunt u een nieuwe API-sleutel aanmaken. We raden een API-sleutel voor een langere periode aan, of wanneer de sleutel verloopt moet u deze vernieuwen",
-    "databaseNameLocation": "Uw databasenaam is meestal te vinden in uw Odoo URL (bijv. \"mycompany\" van mycompany.odoo.com)",
+    "odooApiInstructions": {
+      "title": "Hoe uw Odoo API-sleutel te verkrijgen",
+      "step1": "Log in op uw Odoo account",
+      "step2": "Klik op uw profielpictogram rechtsboven op de pagina",
+      "step3": "Selecteer 'Voorkeuren'",
+      "step4": "Open het tabblad 'Accountbeveiliging'",
+      "step5": "Klik onderaan de pagina op 'Nieuwe API-sleutel'",
+      "step6": "Bevestig uw Odoo wachtwoord",
+      "step7": "Geef uw API-sleutel een naam: 'VoiceLink' (of een andere naam naar keuze)",
+      "step8": "BELANGRIJK: Selecteer 'Permanente sleutel' als duur van deze API-sleutel",
+      "step9": "Kopieer en plak uw nieuwe API-sleutel in het veld hierboven",
+      "allSet": "U bent nu helemaal klaar!"
+    },
     "function": "Functie",
     "autofill": "Automatisch invullen",
     "loadingDashboard": "Dashboard laden...",
@@ -657,5 +666,12 @@
     "budgetIncreased": "Budget verhoogd met 40% voor digitale tools",
     "strongInterest": "Sterke interesse in WhatsApp integratie",
     "prefersThursday": "Voorkeur voor donderdag middag gesprekken"
+  },
+  "languagePreference": {
+    "title": "Spraaknotitie Taal",
+    "description": "Kies de taal waarin u uw WhatsApp spraaknotities zult spreken",
+    "saved": "Taalvoorkeur succesvol opgeslagen!",
+    "note": "Opmerking",
+    "noteText": "Deze instelling bepaalt hoe VoiceLink uw spraaknotities verwerkt. Spreek in de taal die u selecteert voor de beste resultaten."
   }
 }

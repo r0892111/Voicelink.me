@@ -14,7 +14,6 @@ export interface Subscription {
   crm_provider: string | null;
   crm_user_id: string | null;
   product_name: string;
-  quantity: number;
   metadata: Record<string, string> | null;
 }
 
@@ -72,11 +71,5 @@ export const useSubscription = () => {
 
   const hasActiveSubscription = subscription?.subscription_status === 'active' || subscription?.subscription_status === 'trialing';
 
-  return { 
-    subscription, 
-    loading, 
-    hasActiveSubscription, 
-    teamSizeLimit: subscription?.quantity || 1, // Default fallback
-    checkSubscription 
-  };
+  return { subscription, loading, hasActiveSubscription, checkSubscription };
 };

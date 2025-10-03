@@ -22,10 +22,19 @@
     "enterOdooDatabaseName": "Entrez votre nom de base de données Odoo",
     "enterNewApiKey": "Entrez une nouvelle clé API pour mettre à jour",
     "enterOdooApiKey": "Entrez votre clé API Odoo",
-    "selectUserAccount": "Naviguez vers votre base de données Odoo",
-    "accessRightsTab": "En haut à droite, cliquez sur Préférences, naviguez vers l'onglet Sécurité du Compte",
-    "generateOrCopyApiKey": "En bas vous pouvez créer une nouvelle clé API. Nous recommandons une clé API pour une période plus longue, ou quand la clé expire vous devez la renouveler",
-    "databaseNameLocation": "Votre nom de base de données se trouve généralement dans votre URL Odoo (ex: \"mycompany\" de mycompany.odoo.com)",
+    "odooApiInstructions": {
+      "title": "Comment obtenir votre clé API Odoo",
+      "step1": "Connectez-vous à votre compte Odoo",
+      "step2": "Cliquez sur votre icône de profil en haut à droite de la page",
+      "step3": "Sélectionnez 'Préférences'",
+      "step4": "Ouvrez l'onglet 'Sécurité du Compte'",
+      "step5": "Cliquez sur 'Nouvelle Clé API' en bas de la page",
+      "step6": "Confirmez votre mot de passe Odoo",
+      "step7": "Nommez votre clé API : 'VoiceLink' (ou un autre nom de votre choix)",
+      "step8": "IMPORTANT : Sélectionnez 'Clé Persistante' comme durée de cette clé API",
+      "step9": "Copiez et collez votre nouvelle clé API dans le champ ci-dessus",
+      "allSet": "Vous êtes maintenant prêt !"
+    },
     "function": "Fonction",
     "autofill": "Remplissage automatique",
     "loadingDashboard": "Chargement du tableau de bord...",
@@ -646,5 +655,12 @@
     "responseTime": "Nous répondrons dans les 24 heures pendant les jours ouvrables",
     "required": "Obligatoire",
     "submitFailed": "Échec de l'envoi du message. Veuillez réessayer ou nous contacter directement."
+  },
+  "languagePreference": {
+    "title": "Langue des Notes Vocales",
+    "description": "Choisissez la langue dans laquelle vous parlerez dans vos notes vocales WhatsApp",
+    "saved": "Préférence de langue enregistrée avec succès !",
+    "note": "Remarque",
+    "noteText": "Ce paramètre affecte la façon dont VoiceLink traite vos notes vocales. Parlez dans la langue que vous sélectionnez pour de meilleurs résultats."
   }
 }
