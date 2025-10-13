@@ -141,11 +141,12 @@
   },
   "teamManagement": {
     "title": "Teambeheer",
-
     "subtitle": "Beheer uw teamleden en uitnodigingen",
     "accountOwner": "Accounteigenaar",
     "admin": "Admin",
     "teamMembers": "Teamleden",
+    "teamSize": "Teamgrootte",
+    "slotsRemaining": "{{count}} plekken beschikbaar",
     "pending": "In behandeling",
     "verified": "Geverifieerd",
     "notVerified": "Niet Geverifieerd",
@@ -372,7 +373,8 @@
         "description": "Plan een gratis consultatiegesprek met onze experts",
         "bookCall": "Boek Gesprek"
       }
-    }
+    },
+    "supportCenter": "Ondersteuningscentrum"
   },
   "numbers": {
     "currency": "€{{amount}}",
@@ -673,5 +675,35 @@
     "saved": "Taalvoorkeur succesvol opgeslagen!",
     "note": "Opmerking",
     "noteText": "Deze instelling bepaalt hoe VoiceLink uw spraaknotities verwerkt. Spreek in de taal die u selecteert voor de beste resultaten."
+  },
+  "testSignup": {
+    "title": "Word een Vroege Testgebruiker",
+    "subtitle": "Krijg gratis toegang tot VoiceLink en help ons de toekomst van spraakgestuurde CRM-integratie vorm te geven",
+    "benefitsTitle": "Wat U Krijgt:",
+    "benefit1": "Gratis levenslange toegang tot VoiceLink",
+    "benefit2": "Prioritaire ondersteuning van ons team",
+    "benefit3": "Beïnvloed productontwikkeling met uw feedback",
+    "benefit4": "Vroege toegang tot nieuwe functies",
+    "firstName": "Voornaam",
+    "firstNamePlaceholder": "Jan",
+    "lastName": "Achternaam",
+    "lastNamePlaceholder": "Jansen",
+    "email": "E-mailadres",
+    "emailPlaceholder": "jan.jansen@voorbeeld.nl",
+    "phone": "Telefoonnummer",
+    "phonePlaceholder": "+32 123 456 789",
+    "crmPlatform": "Met welk CRM bent u van plan VoiceLink te gebruiken?",
+    "submitButton": "Meld u aan als Testgebruiker",
+    "submitting": "Bezig met verzenden...",
+    "privacyNote": "Door dit formulier in te dienen, gaat u ermee akkoord dat ons team contact met u opneemt over VoiceLink-testen.",
+    "emailAlreadyRegistered": "Dit e-mailadres is al geregistreerd voor testen.",
+    "submissionError": "Er is een fout opgetreden. Probeer het opnieuw.",
+    "successTitle": "Welkom bij de VoiceLink Familie!",
+    "successMessage": "Bedankt voor uw aanmelding als vroege testgebruiker. We nemen binnenkort contact met u op met uw gratis toegang tot VoiceLink.",
+    "nextSteps": "Wat gebeurt er nu?",
+    "step1": "We beoordelen uw aanvraag",
+    "step2": "U ontvangt een e-mail met uw gratis toegangsgegevens",
+    "step3": "Ons team begeleidt u door het installatieproces",
+    "backToHome": "Terug naar Home"
   }
 }

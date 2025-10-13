@@ -125,6 +125,8 @@
     "accountOwner": "Kontoinhaber",
     "admin": "Admin",
     "teamMembers": "Teammitglieder",
+    "teamSize": "Teamgröße",
+    "slotsRemaining": "{{count}} Plätze verfügbar",
     "pending": "Ausstehend",
     "verified": "Verifiziert",
     "notVerified": "Nicht Verifiziert",
@@ -483,35 +485,7 @@
         "bookCall": "Termin Buchen"
       }
     },
-    "teamManagement": {
-      "title": "Team-Verwaltung",
-      "subtitle": "Verwalten Sie Ihre Teammitglieder und Einladungen",
-      "accountOwner": "Kontoinhaber",
-      "admin": "Admin",
-      "teamMembers": "Teammitglieder",
-      "pending": "Ausstehend",
-      "addNewMember": "Neues Teammitglied Hinzufügen",
-      "selectCompanyUser": "Unternehmensbenutzer Auswählen",
-      "loadingUsers": "Unternehmensbenutzer laden...",
-      "selectedUserDetails": "Details des Ausgewählten Benutzers",
-      "name": "Name",
-      "email": "E-Mail",
-      "phone": "Telefon",
-      "notProvided": "Nicht angegeben",
-      "whatsappNumber": "WhatsApp-Nummer (falls anders als Telefon)",
-      "whatsappNumberPlaceholder": "+49 123 456 789",
-      "fullName": "Vollständiger Name",
-      "fullNamePlaceholder": "Vollständigen Namen eingeben",
-      "emailAddress": "E-Mail-Adresse",
-      "emailPlaceholder": "E-Mail-Adresse eingeben",
-      "sendingInvitation": "Einladung senden...",
-      "saveAndInvite": "Speichern & Einladen",
-      "clearSelection": "Auswahl Löschen",
-      "addNewUser": "Neuen Benutzer Hinzufügen",
-      "teamLimitReached": "Team-Limit Erreicht",
-      "teamLimitMessage": "Sie haben Ihr Team-Limit von {{total}} Benutzern erreicht. Upgraden Sie Ihr Abonnement, um mehr Teammitglieder hinzuzufügen.",
-      "upgradeSubscription": "Abonnement Upgraden"
-    },
+    "supportCenter": "Support-Center",
     "userGuide": {
       "title": "Täglicher Nutzungsleitfaden",
       "subtitle": "VoiceLink funktioniert am besten, wenn Sie Ihre Updates strukturiert und klar sprechen",
@@ -588,7 +562,8 @@
         }
       },
       "needHelp": "Hilfe Benötigt?"
-    }
+    },
+    "supportCenter": "Support-Center"
   },
   "whatsapp": {
     "integration": "WhatsApp Integration",
@@ -649,5 +624,35 @@
     "saved": "Sprachpräferenz erfolgreich gespeichert!",
     "note": "Hinweis",
     "noteText": "Diese Einstellung beeinflusst, wie VoiceLink Ihre Sprachnotizen verarbeitet. Sprechen Sie in der Sprache, die Sie für beste Ergebnisse auswählen."
+  },
+  "testSignup": {
+    "title": "Werden Sie ein Früher Testbenutzer",
+    "subtitle": "Erhalten Sie kostenlosen Zugang zu VoiceLink und helfen Sie uns, die Zukunft der sprachgesteuerten CRM-Integration zu gestalten",
+    "benefitsTitle": "Was Sie Erhalten:",
+    "benefit1": "Kostenloser lebenslanger Zugang zu VoiceLink",
+    "benefit2": "Prioritärer Support von unserem Team",
+    "benefit3": "Beeinflussen Sie die Produktentwicklung mit Ihrem Feedback",
+    "benefit4": "Frühzeitiger Zugang zu neuen Funktionen",
+    "firstName": "Vorname",
+    "firstNamePlaceholder": "Max",
+    "lastName": "Nachname",
+    "lastNamePlaceholder": "Mustermann",
+    "email": "E-Mail-Adresse",
+    "emailPlaceholder": "max.mustermann@beispiel.de",
+    "phone": "Telefonnummer",
+    "phonePlaceholder": "+49 123 456 789",
+    "crmPlatform": "Welches CRM möchten Sie mit VoiceLink verwenden?",
+    "submitButton": "Als Testbenutzer Beitreten",
+    "submitting": "Wird gesendet...",
+    "privacyNote": "Durch das Absenden dieses Formulars stimmen Sie zu, von unserem Team bezüglich VoiceLink-Tests kontaktiert zu werden.",
+    "emailAlreadyRegistered": "Diese E-Mail ist bereits für Tests registriert.",
+    "submissionError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "successTitle": "Willkommen in der VoiceLink-Familie!",
+    "successMessage": "Vielen Dank für Ihre Anmeldung als früher Testbenutzer. Wir werden Sie bald mit Ihrem kostenlosen Zugang zu VoiceLink kontaktieren.",
+    "nextSteps": "Was passiert als Nächstes?",
+    "step1": "Wir werden Ihre Bewerbung prüfen",
+    "step2": "Sie erhalten eine E-Mail mit Ihren kostenlosen Zugangsdaten",
+    "step3": "Unser Team wird Sie durch den Einrichtungsprozess führen",
+    "backToHome": "Zurück zur Startseite"
   }
 }

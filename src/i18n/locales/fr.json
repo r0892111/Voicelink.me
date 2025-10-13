@@ -110,6 +110,8 @@
     "accountOwner": "Propriétaire du Compte",
     "admin": "Admin",
     "teamMembers": "Membres d'Équipe",
+    "teamSize": "Taille de l'Équipe",
+    "slotsRemaining": "{{count}} places restantes",
     "pending": "En Attente",
     "verified": "Vérifié",
     "notVerified": "Non Vérifié",
@@ -414,7 +416,8 @@
         "description": "Planifiez un appel de consultation gratuit avec nos experts",
         "bookCall": "Réserver un Appel"
       }
-    }
+    },
+    "supportCenter": "Centre de Support"
   },
   "whatsapp": {
     "integration": "Intégration WhatsApp",
@@ -662,5 +665,35 @@
     "saved": "Préférence de langue enregistrée avec succès !",
     "note": "Remarque",
     "noteText": "Ce paramètre affecte la façon dont VoiceLink traite vos notes vocales. Parlez dans la langue que vous sélectionnez pour de meilleurs résultats."
+  },
+  "testSignup": {
+    "title": "Devenez un Utilisateur Testeur Précoce",
+    "subtitle": "Obtenez un accès gratuit à VoiceLink et aidez-nous à façonner l'avenir de l'intégration CRM vocale",
+    "benefitsTitle": "Ce Que Vous Obtenez :",
+    "benefit1": "Accès gratuit à vie à VoiceLink",
+    "benefit2": "Support prioritaire de notre équipe",
+    "benefit3": "Influencez le développement du produit avec vos retours",
+    "benefit4": "Accès anticipé aux nouvelles fonctionnalités",
+    "firstName": "Prénom",
+    "firstNamePlaceholder": "Jean",
+    "lastName": "Nom de Famille",
+    "lastNamePlaceholder": "Dupont",
+    "email": "Adresse E-mail",
+    "emailPlaceholder": "jean.dupont@exemple.fr",
+    "phone": "Numéro de Téléphone",
+    "phonePlaceholder": "+33 1 23 45 67 89",
+    "crmPlatform": "Quel CRM prévoyez-vous d'utiliser avec VoiceLink ?",
+    "submitButton": "Rejoindre en Tant qu'Utilisateur Testeur",
+    "submitting": "Envoi en cours...",
+    "privacyNote": "En soumettant ce formulaire, vous acceptez d'être contacté par notre équipe concernant les tests de VoiceLink.",
+    "emailAlreadyRegistered": "Cet e-mail est déjà enregistré pour les tests.",
+    "submissionError": "Une erreur s'est produite. Veuillez réessayer.",
+    "successTitle": "Bienvenue dans la Famille VoiceLink !",
+    "successMessage": "Merci de vous être inscrit en tant qu'utilisateur testeur précoce. Nous vous contacterons bientôt avec votre accès gratuit à VoiceLink.",
+    "nextSteps": "Que se passe-t-il ensuite ?",
+    "step1": "Nous examinerons votre candidature",
+    "step2": "Vous recevrez un e-mail avec vos identifiants d'accès gratuit",
+    "step3": "Notre équipe vous guidera à travers le processus de configuration",
+    "backToHome": "Retour à l'Accueil"
   }
 }

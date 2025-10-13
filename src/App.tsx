@@ -8,6 +8,7 @@ import { SuccessPage } from './components/SuccessPage';
 import { WhatsAppVerificationPage } from './components/WhatsAppVerificationPage';
 import { Homepage } from './components/Homepage';
 import { ContactFormModal } from './components/ContactFormModal';
+import { TestSignup } from './components/TestSignup';
 import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
@@ -110,11 +111,17 @@ function App() {
                           >
                             Contact Us
                           </button>
+                          <button
+                            onClick={() => navigate('/test')}
+                            className="text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 font-semibold px-5 py-2 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
+                          >
+                            Join Waitlist
+                          </button>
                         </>
                       )}
                     </>
                   )}
-                  
+
                   {/* Language Switcher */}
                   <LanguageSwitcher />
                   
@@ -188,7 +195,13 @@ function App() {
                     >
                       Contact Us
                     </button>
-                    
+                    <button
+                      onClick={() => navigate('/test')}
+                      className="text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 font-semibold px-4 py-3 rounded-xl transition-all duration-200 hover:shadow-lg text-left"
+                    >
+                      Join Waitlist
+                    </button>
+
                     {/* Mobile Language Switcher */}
                     <div className="px-4 py-2">
                       <LanguageSwitcher />
@@ -240,6 +253,7 @@ function App() {
           <div className="pt-20">
             <Routes>
               <Route path="/" element={<Homepage openModal={openModal} openContactModal={openContactModal} />} />
+              <Route path="/test" element={<TestSignup />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/success" element={<SuccessPage />} />

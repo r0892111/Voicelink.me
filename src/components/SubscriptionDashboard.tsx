@@ -735,12 +735,12 @@ export const SubscriptionDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm text-gray-500">Team Size</div>
+                    <div className="text-sm text-gray-500">{t('teamManagement.teamSize')}</div>
                     <div className="text-2xl font-bold" style={{ color: '#1C2C55' }}>
                       {addedTeamMembers.length + 1}/{totalUsers}
                     </div>
                     <div className="text-xs text-gray-500">
-                      {remainingSlots} slots remaining
+                      {t('teamManagement.slotsRemaining', { count: remainingSlots })}
                     </div>
                   </div>
                 </div>
@@ -1181,7 +1181,7 @@ export const SubscriptionDashboard: React.FC = () => {
                         className="flex items-center space-x-2 px-4 py-2 bg-white rounded-lg hover:shadow-md transition-shadow"
                       >
                         <Headphones className="w-4 h-4" style={{ color: '#1C2C55' }} />
-                        <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>Support Center</span>
+                        <span className="text-sm font-medium" style={{ color: '#1C2C55' }}>{t('dashboard.supportCenter')}</span>
                       </a>
                     </div>
                   </div>
