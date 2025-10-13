@@ -55,17 +55,17 @@ export const TestSignup: React.FC = () => {
     setError('');
 
     try {
+      const signupData = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        phone: formData.phone || null,
+        crm_platform: formData.crmPlatform
+      };
+
       const { error: insertError } = await supabase
         .from('test_signups')
-        .insert([
-          {
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-            email: formData.email,
-            phone: formData.phone || null,
-            crm_platform: formData.crmPlatform
-          }
-        ]);
+        .insert([signupData]);
 
       if (insertError) {
         if (insertError.code === '23505') {
@@ -75,6 +75,27 @@ export const TestSignup: React.FC = () => {
         }
         setLoading(false);
         return;
+      }
+
+      // Send data to webhook
+      try {
+        await fetch('https://alexfinit.app.n8n.cloud/webhook/a4d75004-461b-4672-8f41-028a1aa70674', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone || '',
+            crmPlatform: formData.crmPlatform,
+            timestamp: new Date().toISOString()
+          })
+        });
+      } catch (webhookError) {
+        console.error('Error sending to webhook:', webhookError);
+        // Don't fail the submission if webhook fails
       }
 
       setSuccess(true);
