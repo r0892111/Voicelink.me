@@ -200,10 +200,6 @@ export const TestSignup: React.FC = () => {
             <ul className="space-y-2 text-gray-700">
               <li className="flex items-center">
                 <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                {t('testSignup.benefit1') || 'Free lifetime access to VoiceLink'}
-              </li>
-              <li className="flex items-center">
-                <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
                 {t('testSignup.benefit2') || 'Priority support from our team'}
               </li>
               <li className="flex items-center">
