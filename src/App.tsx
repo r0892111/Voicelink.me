@@ -8,6 +8,7 @@ import { SuccessPage } from './components/SuccessPage';
 import { WhatsAppVerificationPage } from './components/WhatsAppVerificationPage';
 import { Homepage } from './components/Homepage';
 import { ContactFormModal } from './components/ContactFormModal';
+import { TestSignup } from './components/TestSignup';
 import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
@@ -240,6 +241,7 @@ function App() {
           <div className="pt-20">
             <Routes>
               <Route path="/" element={<Homepage openModal={openModal} openContactModal={openContactModal} />} />
+              <Route path="/test" element={<TestSignup />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/success" element={<SuccessPage />} />
