@@ -177,32 +177,21 @@ export const AuthCallback: React.FC = () => {
   const checkSubscriptionAndRedirect = async () => {
     try {
       const hasActiveSubscription = await checkSubscriptionStatus();
-
+      
       if (hasActiveSubscription) {
         // User has active subscription, go to dashboard
         navigate('/dashboard');
       } else {
         // User doesn't have subscription, redirect to Stripe checkout
         setMessage(t('auth.callback.redirectingToCheckout'));
-
-        // Determine price ID based on referrer
-        const referrer = localStorage.getItem('auth_referrer') || '';
-        const isCustomDomain = referrer.includes('vlcustom.netlify.app');
-
-        // Use different price IDs based on referrer
-        const priceId = isCustomDomain
-          ? import.meta.env.VITE_STRIPE_CUSTOM_PRICE_ID || 'price_1S5o6zLPohnizGblsQq7OYCT'
-          : 'price_1S5o6zLPohnizGblsQq7OYCT';
-
+        
+        // Use the starter tier price ID for single user
         await StripeService.createCheckoutSession({
-          priceId,
+          priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
           quantity: 1,
           successUrl: `${window.location.origin}/dashboard`,
           cancelUrl: `${window.location.origin}/dashboard`,
         });
-
-        // Clean up referrer after use
-        localStorage.removeItem('auth_referrer');
       }
     } catch (error) {
       console.error('Error during subscription check/redirect:', error);

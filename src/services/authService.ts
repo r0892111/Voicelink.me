@@ -42,7 +42,7 @@ export class AuthService {
   private async initiateTeamleaderAuth(): Promise<AuthResult> {
     const clientId = import.meta.env.VITE_TEAMLEADER_CLIENT_ID;
     const redirectUri = `${window.location.protocol}//${window.location.host}/auth/teamleader/callback`;
-
+    
     if (!clientId) {
       return { success: false, error: 'TeamLeader client ID not configured' };
     }
@@ -50,10 +50,6 @@ export class AuthService {
     const state = this.generateState();
     localStorage.setItem('teamleader_oauth_state', state);
     localStorage.setItem('auth_provider', 'teamleader');
-
-    // Store the referrer domain for custom pricing
-    const referrer = document.referrer || window.location.hostname;
-    localStorage.setItem('auth_referrer', referrer);
 
     const params = new URLSearchParams({
       response_type: 'code',
@@ -71,7 +67,7 @@ export class AuthService {
   private async initiatePipedriveAuth(): Promise<AuthResult> {
     const clientId = import.meta.env.VITE_PIPEDRIVE_CLIENT_ID;
     const redirectUri = `${window.location.protocol}//${window.location.host}/auth/pipedrive/callback`;
-
+    
     if (!clientId) {
       return { success: false, error: 'Pipedrive client ID not configured' };
     }
@@ -79,10 +75,6 @@ export class AuthService {
     const state = this.generateState();
     localStorage.setItem('pipedrive_oauth_state', state);
     localStorage.setItem('auth_provider', 'pipedrive');
-
-    // Store the referrer domain for custom pricing
-    const referrer = document.referrer || window.location.hostname;
-    localStorage.setItem('auth_referrer', referrer);
 
     const params = new URLSearchParams({
       response_type: 'code',
@@ -126,10 +118,6 @@ export class AuthService {
     localStorage.setItem('odoo_oauth_state', state);
     localStorage.setItem('auth_provider', 'odoo');
     localStorage.setItem('userPlatform', 'odoo');
-
-    // Store the referrer domain for custom pricing
-    const referrer = document.referrer || window.location.hostname;
-    localStorage.setItem('auth_referrer', referrer);
     const authUrl = `https://accounts.odoo.com/oauth2/auth?${params.toString()}`;
 
     window.location.href = authUrl;
