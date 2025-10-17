@@ -350,6 +350,15 @@
       "pending": "En attente",
       "notConnected": "Non Connecté"
     },
+    "allSet": {
+      "title": "🎉 Tout est Prêt !",
+      "subtitle": "Votre WhatsApp est connecté et VoiceLink est prêt à l'emploi",
+      "startSending": "Commencez à Envoyer des Notes Vocales",
+      "description": "Envoyez simplement un message vocal à VoiceLink sur WhatsApp et regardez votre CRM se mettre à jour automatiquement avec des données structurées, des tâches de suivi et des informations de contact.",
+      "whatsappConnected": "WhatsApp Connecté",
+      "crmIntegrationActive": "Intégration CRM Active",
+      "aiProcessingReady": "Traitement IA Prêt"
+    },
     "customerPortal": {
       "title": "Gérez Votre Abonnement",
       "subtitle": "Accédez à vos informations de facturation et gérez votre abonnement",
