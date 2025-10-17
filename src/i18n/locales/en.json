@@ -335,7 +335,7 @@
       "subtitle": "Follow these simple steps to start using VoiceLink",
       "step1": {
         "title": "Enable Two-Factor Authentication",
-        "description": "Secure your Odoo account by enabling 2FA in your account settings. Go to: Profile → Preferences → Account Security → Toggle 'Two Step Verification' and follow Odoo's instructions."
+        "description": "Secure your Odoo account by enabling 2FA in your account settings."
       },
       "step2": {
         "title": "Add Your API Key",

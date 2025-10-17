@@ -569,7 +569,7 @@
       "subtitle": "Folgen Sie diesen einfachen Schritten, um VoiceLink zu nutzen",
       "step1": {
         "title": "Zwei-Faktor-Authentifizierung Aktivieren",
-        "description": "Sichern Sie Ihr Odoo-Konto durch Aktivierung von 2FA in Ihren Kontoeinstellungen. Gehen Sie zu: Profil → Einstellungen → Kontosicherheit → Schalten Sie 'Verifizierung in Zwei Schritten' ein und folgen Sie Odoos Anweisungen."
+        "description": "Sichern Sie Ihr Odoo-Konto durch Aktivierung von 2FA in Ihren Kontoeinstellungen."
       },
       "step2": {
         "title": "Fügen Sie Ihren API-Schlüssel Hinzu",

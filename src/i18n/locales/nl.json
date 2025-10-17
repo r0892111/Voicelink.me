@@ -380,7 +380,7 @@
       "subtitle": "Volg deze eenvoudige stappen om VoiceLink te gebruiken",
       "step1": {
         "title": "Schakel Twee-Factorauthenticatie In",
-        "description": "Beveilig uw Odoo-account door 2FA in te schakelen in uw accountinstellingen. Ga naar: Profiel → Voorkeuren → Accountbeveiliging → Schakel 'Verificatie in Twee Stappen' in en volg Odoo's instructies."
+        "description": "Beveilig uw Odoo-account door 2FA in te schakelen in uw accountinstellingen."
       },
       "step2": {
         "title": "Voeg Uw API-sleutel Toe",
