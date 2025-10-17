@@ -522,6 +522,30 @@
     "step3": {
       "title": "CRM Integration",
       "description": "Structured data syncs automatically to your CRM system"
+    },
+    "coreFunctionalities": {
+      "title": "Core Functionalities",
+      "subtitle": "Everything you need to manage your CRM by voice",
+      "contactManagement": {
+        "title": "Contact Management",
+        "description": "Create new contacts or update existing ones by simply speaking their name, phone, and email. VoiceLink automatically searches for existing records."
+      },
+      "calendarTasks": {
+        "title": "Calendar & Tasks",
+        "description": "Schedule callbacks, appointments, and tasks with natural language. Say \"Call him back Monday at 3 PM\" and VoiceLink creates the task automatically."
+      },
+      "smartExtraction": {
+        "title": "Smart Data Extraction",
+        "description": "AI captures key conversation details, interests, and action items. Automatically creates tags and annotations in your CRM."
+      },
+      "autoScheduling": {
+        "title": "Intelligent Scheduling",
+        "description": "No time mentioned? VoiceLink finds suitable time slots automatically and syncs with your calendar."
+      }
+    },
+    "customIntegration": {
+      "description": "This is just the core functionality of VoiceLink at the current moment, but you can always contact us for a custom integration like creating offers, work orders, invoices etc. simply by using your voice.",
+      "cta": "Contact Us for Custom Integration"
     }
   },
   "customSolutions": {

@@ -515,6 +515,30 @@
     "step3": {
       "title": "CRM Integratie",
       "description": "Gestructureerde data synchroniseert automatisch naar je CRM systeem"
+    },
+    "coreFunctionalities": {
+      "title": "Kernfunctionaliteiten",
+      "subtitle": "Alles wat je nodig hebt om je CRM te beheren met spraak",
+      "contactManagement": {
+        "title": "Contactbeheer",
+        "description": "Maak nieuwe contacten aan of werk bestaande bij door simpelweg hun naam, telefoon en e-mail uit te spreken. VoiceLink zoekt automatisch naar bestaande records."
+      },
+      "calendarTasks": {
+        "title": "Kalender & Taken",
+        "description": "Plan terugbelverzoeken, afspraken en taken met natuurlijke taal. Zeg \"Bel hem terug maandag om 15:00\" en VoiceLink maakt automatisch de taak aan."
+      },
+      "smartExtraction": {
+        "title": "Slimme Data-extractie",
+        "description": "AI legt belangrijke gespreksdetails, interesses en actiepunten vast. Maakt automatisch tags en annotaties aan in je CRM."
+      },
+      "autoScheduling": {
+        "title": "Intelligente Planning",
+        "description": "Geen tijd genoemd? VoiceLink vindt automatisch geschikte tijdslots en synchroniseert met je agenda."
+      }
+    },
+    "customIntegration": {
+      "description": "Dit is slechts de kernfunctionaliteit van VoiceLink op dit moment, maar je kunt altijd contact met ons opnemen voor een aangepaste integratie zoals het maken van offertes, werkopdrachten, facturen etc. simpelweg door je stem te gebruiken.",
+      "cta": "Neem Contact Op voor Aangepaste Integratie"
     }
   },
   "customSolutions": {
