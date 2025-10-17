@@ -569,7 +569,7 @@
       "subtitle": "Folgen Sie diesen einfachen Schritten, um VoiceLink zu nutzen",
       "step1": {
         "title": "Zwei-Faktor-Authentifizierung Aktivieren",
-        "description": "Sichern Sie Ihr Odoo-Konto durch Aktivierung von 2FA in Ihren Kontoeinstellungen. Gehen Sie zu: Profil → Einstellungen → Kontosicherheit → Schalten Sie 'Verifizierung in Zwei Schritten' ein und folgen Sie Odoos Anweisungen."
+        "description": "Sichern Sie Ihr Odoo-Konto durch Aktivierung von 2FA in Ihren Kontoeinstellungen."
       },
       "step2": {
         "title": "Fügen Sie Ihren API-Schlüssel Hinzu",
@@ -590,6 +590,46 @@
     "sendVerificationCode": "Bestätigungscode Senden",
     "verificationCode": "Bestätigungscode",
     "verify": "Verifizieren"
+  },
+  "howItWorks": {
+    "title": "Wie WhatsApp Sprachnotizen Funktionieren",
+    "subtitle": "Drei einfache Schritte, um Sprache in strukturierte Daten zu verwandeln",
+    "step1": {
+      "title": "Spracheingabe",
+      "description": "Nehmen Sie Ihre Gedanken natürlich über WhatsApp Sprachnachrichten auf"
+    },
+    "step2": {
+      "title": "KI-Verarbeitung",
+      "description": "Fortschrittliche KI extrahiert und strukturiert wichtige Informationen aus Ihrer Sprache"
+    },
+    "step3": {
+      "title": "CRM-Integration",
+      "description": "Strukturierte Daten synchronisieren sich automatisch mit Ihrem CRM-System"
+    },
+    "coreFunctionalities": {
+      "title": "Kernfunktionalitäten",
+      "subtitle": "Alles was Sie brauchen, um Ihr CRM per Sprache zu verwalten",
+      "contactManagement": {
+        "title": "Kontaktverwaltung",
+        "description": "Erstellen Sie neue Kontakte oder aktualisieren Sie bestehende, indem Sie einfach deren Namen, Telefon und E-Mail aussprechen. VoiceLink sucht automatisch nach vorhandenen Einträgen."
+      },
+      "calendarTasks": {
+        "title": "Kalender & Aufgaben",
+        "description": "Planen Sie Rückrufe, Termine und Aufgaben in natürlicher Sprache. Sagen Sie \"Ruf ihn Montag um 15 Uhr zurück\" und VoiceLink erstellt automatisch die Aufgabe."
+      },
+      "smartExtraction": {
+        "title": "Intelligente Datenextraktion",
+        "description": "KI erfasst wichtige Gesprächsdetails, Interessen und Aktionspunkte. Erstellt automatisch Tags und Anmerkungen in Ihrem CRM."
+      },
+      "autoScheduling": {
+        "title": "Intelligente Terminplanung",
+        "description": "Keine Zeit erwähnt? VoiceLink findet automatisch passende Zeitfenster und synchronisiert mit Ihrem Kalender."
+      }
+    },
+    "customIntegration": {
+      "description": "Mehr benötigt? Von Angeboten und Arbeitsaufträgen bis hin zu Rechnungen und darüber hinaus - wir erstellen maßgeschneiderte Sprach-Workflows für Ihr Unternehmen.",
+      "cta": "Individuelle Lösungen Entdecken"
+    }
   },
   "pricing": {
     "title": "Volumen-Preise Die Mitwachsen",

@@ -380,7 +380,7 @@
       "subtitle": "Volg deze eenvoudige stappen om VoiceLink te gebruiken",
       "step1": {
         "title": "Schakel Twee-Factorauthenticatie In",
-        "description": "Beveilig uw Odoo-account door 2FA in te schakelen in uw accountinstellingen. Ga naar: Profiel → Voorkeuren → Accountbeveiliging → Schakel 'Verificatie in Twee Stappen' in en volg Odoo's instructies."
+        "description": "Beveilig uw Odoo-account door 2FA in te schakelen in uw accountinstellingen."
       },
       "step2": {
         "title": "Voeg Uw API-sleutel Toe",
@@ -515,6 +515,30 @@
     "step3": {
       "title": "CRM Integratie",
       "description": "Gestructureerde data synchroniseert automatisch naar je CRM systeem"
+    },
+    "coreFunctionalities": {
+      "title": "Kernfunctionaliteiten",
+      "subtitle": "Alles wat je nodig hebt om je CRM te beheren met spraak",
+      "contactManagement": {
+        "title": "Contactbeheer",
+        "description": "Maak nieuwe contacten aan of werk bestaande bij door simpelweg hun naam, telefoon en e-mail uit te spreken. VoiceLink zoekt automatisch naar bestaande records."
+      },
+      "calendarTasks": {
+        "title": "Kalender & Taken",
+        "description": "Plan terugbelverzoeken, afspraken en taken met natuurlijke taal. Zeg \"Bel hem terug maandag om 15:00\" en VoiceLink maakt automatisch de taak aan."
+      },
+      "smartExtraction": {
+        "title": "Slimme Data-extractie",
+        "description": "AI legt belangrijke gespreksdetails, interesses en actiepunten vast. Maakt automatisch tags en annotaties aan in je CRM."
+      },
+      "autoScheduling": {
+        "title": "Intelligente Planning",
+        "description": "Geen tijd genoemd? VoiceLink vindt automatisch geschikte tijdslots en synchroniseert met je agenda."
+      }
+    },
+    "customIntegration": {
+      "description": "Meer nodig? Van offertes en werkopdrachten tot facturen en verder - we bouwen aangepaste spraakworkflows op maat van jouw bedrijf.",
+      "cta": "Ontdek Aangepaste Oplossingen"
     }
   },
   "customSolutions": {

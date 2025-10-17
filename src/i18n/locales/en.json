@@ -335,7 +335,7 @@
       "subtitle": "Follow these simple steps to start using VoiceLink",
       "step1": {
         "title": "Enable Two-Factor Authentication",
-        "description": "Secure your Odoo account by enabling 2FA in your account settings. Go to: Profile → Preferences → Account Security → Toggle 'Two Step Verification' and follow Odoo's instructions."
+        "description": "Secure your Odoo account by enabling 2FA in your account settings."
       },
       "step2": {
         "title": "Add Your API Key",
@@ -522,6 +522,30 @@
     "step3": {
       "title": "CRM Integration",
       "description": "Structured data syncs automatically to your CRM system"
+    },
+    "coreFunctionalities": {
+      "title": "Core Functionalities",
+      "subtitle": "Everything you need to manage your CRM by voice",
+      "contactManagement": {
+        "title": "Contact Management",
+        "description": "Create new contacts or update existing ones by simply speaking their name, phone, and email. VoiceLink automatically searches for existing records."
+      },
+      "calendarTasks": {
+        "title": "Calendar & Tasks",
+        "description": "Schedule callbacks, appointments, and tasks with natural language. Say \"Call him back Monday at 3 PM\" and VoiceLink creates the task automatically."
+      },
+      "smartExtraction": {
+        "title": "Smart Data Extraction",
+        "description": "AI captures key conversation details, interests, and action items. Automatically creates tags and annotations in your CRM."
+      },
+      "autoScheduling": {
+        "title": "Intelligent Scheduling",
+        "description": "No time mentioned? VoiceLink finds suitable time slots automatically and syncs with your calendar."
+      }
+    },
+    "customIntegration": {
+      "description": "Need more? From quotes and work orders to invoices and beyond - we'll build custom voice workflows tailored to your business.",
+      "cta": "Explore Custom Solutions"
     }
   },
   "customSolutions": {
