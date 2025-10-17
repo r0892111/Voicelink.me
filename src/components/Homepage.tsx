@@ -444,80 +444,110 @@ export const Homepage: React.FC<HomepageProps> = ({ openModal, openContactModal 
               </div>
             </div>
 
-            {/* Core Functionalities Section */}
+            {/* Core Functionalities Section - Interactive Carousel */}
             <div className={`mt-24 transition-all duration-1000 delay-[1100ms] ${
               visibleSections.has('how-it-works')
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-8'
             }`}>
-              <div className="text-center mb-12">
+              <div className="text-center mb-16">
                 <h3 className="text-4xl font-bold mb-4" style={{ color: '#1C2C55' }}>
                   {t('howItWorks.coreFunctionalities.title')}
                 </h3>
-                <p className="text-lg max-w-2xl mx-auto" style={{ color: '#6B7280' }}>
+                <p className="text-lg max-w-2xl mx-auto mb-8" style={{ color: '#6B7280' }}>
                   {t('howItWorks.coreFunctionalities.subtitle')}
                 </p>
+                <p className="text-sm text-gray-500">Scroll to explore →</p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                {/* Contact Management */}
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                  <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <svg className="w-6 h-6" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
-                    {t('howItWorks.coreFunctionalities.contactManagement.title')}
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {t('howItWorks.coreFunctionalities.contactManagement.description')}
-                  </p>
-                </div>
+              {/* Horizontal Scrolling Carousel */}
+              <div className="relative mb-16 -mx-6 lg:mx-0">
+                <div className="overflow-x-auto pb-8 px-6 lg:px-0 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  <div className="flex gap-6 min-w-max lg:grid lg:grid-cols-4 lg:min-w-0">
+                    {/* Contact Management */}
+                    <div className="flex-shrink-0 w-80 lg:w-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group cursor-pointer">
+                      <div className="w-16 h-16 rounded-xl mb-6 flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                        <svg className="w-8 h-8" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      </div>
+                      <h4 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
+                        {t('howItWorks.coreFunctionalities.contactManagement.title')}
+                      </h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {t('howItWorks.coreFunctionalities.contactManagement.description')}
+                      </p>
+                      <div className="mt-6 flex items-center text-sm font-medium text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Learn more</span>
+                        <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
 
-                {/* Calendar & Tasks */}
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                  <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <svg className="w-6 h-6" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
-                    {t('howItWorks.coreFunctionalities.calendarTasks.title')}
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {t('howItWorks.coreFunctionalities.calendarTasks.description')}
-                  </p>
-                </div>
+                    {/* Calendar & Tasks */}
+                    <div className="flex-shrink-0 w-80 lg:w-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group cursor-pointer">
+                      <div className="w-16 h-16 rounded-xl mb-6 flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                        <svg className="w-8 h-8" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <h4 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
+                        {t('howItWorks.coreFunctionalities.calendarTasks.title')}
+                      </h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {t('howItWorks.coreFunctionalities.calendarTasks.description')}
+                      </p>
+                      <div className="mt-6 flex items-center text-sm font-medium text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Learn more</span>
+                        <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
 
-                {/* Smart Data Extraction */}
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                  <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <svg className="w-6 h-6" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
-                    {t('howItWorks.coreFunctionalities.smartExtraction.title')}
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {t('howItWorks.coreFunctionalities.smartExtraction.description')}
-                  </p>
-                </div>
+                    {/* Smart Data Extraction */}
+                    <div className="flex-shrink-0 w-80 lg:w-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group cursor-pointer">
+                      <div className="w-16 h-16 rounded-xl mb-6 flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                        <svg className="w-8 h-8" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                      <h4 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
+                        {t('howItWorks.coreFunctionalities.smartExtraction.title')}
+                      </h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {t('howItWorks.coreFunctionalities.smartExtraction.description')}
+                      </p>
+                      <div className="mt-6 flex items-center text-sm font-medium text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Learn more</span>
+                        <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
 
-                {/* Intelligent Scheduling */}
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                  <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                    <svg className="w-6 h-6" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    {/* Intelligent Scheduling */}
+                    <div className="flex-shrink-0 w-80 lg:w-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group cursor-pointer">
+                      <div className="w-16 h-16 rounded-xl mb-6 flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                        <svg className="w-8 h-8" style={{ color: '#1C2C55' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <h4 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
+                        {t('howItWorks.coreFunctionalities.autoScheduling.title')}
+                      </h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {t('howItWorks.coreFunctionalities.autoScheduling.description')}
+                      </p>
+                      <div className="mt-6 flex items-center text-sm font-medium text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Learn more</span>
+                        <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
-                  <h4 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors" style={{ color: '#1C2C55' }}>
-                    {t('howItWorks.coreFunctionalities.autoScheduling.title')}
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {t('howItWorks.coreFunctionalities.autoScheduling.description')}
-                  </p>
                 </div>
               </div>
 
