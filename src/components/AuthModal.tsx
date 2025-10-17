@@ -93,14 +93,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className={`fixed inset-0 bg-black backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-300 ${
-      isAnimating ? 'bg-opacity-60' : 'bg-opacity-0'
-    }`}>
-      <div className={`bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative transition-all duration-300 ease-out ${
-        isAnimating 
-          ? 'scale-100 opacity-100 translate-y-0' 
-          : 'scale-95 opacity-0 translate-y-4'
-      }`}>
+    <div
+      className={`fixed inset-0 bg-black backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-300 ${
+        isAnimating ? 'bg-opacity-60' : 'bg-opacity-0'
+      }`}
+      onClick={onClose}
+    >
+      <div
+        className={`bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative transition-all duration-300 ease-out ${
+          isAnimating
+            ? 'scale-100 opacity-100 translate-y-0'
+            : 'scale-95 opacity-0 translate-y-4'
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close Button */}
         <button
           onClick={onClose}
