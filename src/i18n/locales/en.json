@@ -334,16 +334,16 @@
       "title": "Ready to Get Started?",
       "subtitle": "Follow these simple steps to start using VoiceLink",
       "step1": {
-        "title": "Verify WhatsApp",
-        "description": "Connect your WhatsApp number to receive voice note confirmations"
+        "title": "Enable Two-Factor Authentication",
+        "description": "Secure your Odoo account by enabling 2FA in your account settings. Go to: Profile → Preferences → Account Security → Toggle 'Two Step Verification' and follow Odoo's instructions."
       },
       "step2": {
-        "title": "Send Voice Note",
-        "description": "Record your thoughts naturally through WhatsApp voice messages"
+        "title": "Add Your API Key",
+        "description": "Generate your Odoo API key to allow VoiceLink to communicate with your CRM securely"
       },
       "step3": {
-        "title": "Watch Magic Happen",
-        "description": "AI processes your voice and syncs structured data to your CRM"
+        "title": "Connect WhatsApp",
+        "description": "Connect your WhatsApp number to receive voice note confirmations and start using VoiceLink"
       }
     },
     "customerPortal": {

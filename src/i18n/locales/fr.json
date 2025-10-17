@@ -417,7 +417,23 @@
         "bookCall": "Réserver un Appel"
       }
     },
-    "supportCenter": "Centre de Support"
+    "supportCenter": "Centre de Support",
+    "gettingStarted": {
+      "title": "Prêt à Commencer ?",
+      "subtitle": "Suivez ces étapes simples pour commencer à utiliser VoiceLink",
+      "step1": {
+        "title": "Activer l'Authentification à Deux Facteurs",
+        "description": "Sécurisez votre compte Odoo en activant 2FA dans vos paramètres de compte. Allez à : Profil → Préférences → Sécurité du Compte → Activez 'Vérification en Deux Étapes' et suivez les instructions d'Odoo."
+      },
+      "step2": {
+        "title": "Ajoutez Votre Clé API",
+        "description": "Générez votre clé API Odoo pour permettre à VoiceLink de communiquer en toute sécurité avec votre CRM"
+      },
+      "step3": {
+        "title": "Connecter WhatsApp",
+        "description": "Connectez votre numéro WhatsApp pour recevoir des confirmations de notes vocales et commencer à utiliser VoiceLink"
+      }
+    }
   },
   "whatsapp": {
     "integration": "Intégration WhatsApp",

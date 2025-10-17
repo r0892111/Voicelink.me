@@ -374,7 +374,23 @@
         "bookCall": "Boek Gesprek"
       }
     },
-    "supportCenter": "Ondersteuningscentrum"
+    "supportCenter": "Ondersteuningscentrum",
+    "gettingStarted": {
+      "title": "Klaar om te Beginnen?",
+      "subtitle": "Volg deze eenvoudige stappen om VoiceLink te gebruiken",
+      "step1": {
+        "title": "Schakel Twee-Factorauthenticatie In",
+        "description": "Beveilig uw Odoo-account door 2FA in te schakelen in uw accountinstellingen. Ga naar: Profiel → Voorkeuren → Accountbeveiliging → Schakel 'Verificatie in Twee Stappen' in en volg Odoo's instructies."
+      },
+      "step2": {
+        "title": "Voeg Uw API-sleutel Toe",
+        "description": "Genereer uw Odoo API-sleutel zodat VoiceLink veilig kan communiceren met uw CRM"
+      },
+      "step3": {
+        "title": "Verbind WhatsApp",
+        "description": "Verbind uw WhatsApp-nummer om spraaknotitiebevestigingen te ontvangen en VoiceLink te gebruiken"
+      }
+    }
   },
   "numbers": {
     "currency": "€{{amount}}",
