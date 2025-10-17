@@ -653,66 +653,131 @@ export const SubscriptionDashboard: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8 mb-8">
-                      {/* Step 1 */}
-                      <div className="text-center">
-                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
+                    {user?.platform === 'odoo' ? (
+                      /* Odoo-specific 3-step setup process */
+                      <div className="space-y-8">
+                        {/* Step 1: Enable 2FA */}
+                        <div className="border border-gray-200 rounded-2xl p-6 bg-gradient-to-r from-blue-50 to-indigo-50">
+                          <div className="flex items-start space-x-4">
+                            <div className="w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                              <span className="text-xl font-bold text-white">1</span>
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                                {t('dashboard.gettingStarted.step1.title')}
+                              </h3>
+                              <p className="text-gray-700 leading-relaxed mb-4">
+                                {t('dashboard.gettingStarted.step1.description')}
+                              </p>
+                              <div className="bg-white border border-blue-200 rounded-lg p-4">
+                                <p className="text-sm text-gray-800">
+                                  <strong>{t('common.odooApiInstructions.step1')}</strong> → <strong>{t('common.odooApiInstructions.step2')}</strong> → <strong>{t('common.odooApiInstructions.step3')}</strong> → <strong>{t('common.odooApiInstructions.step4')}</strong> → Toggle 'Two Step Verification'
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                          {t('dashboard.gettingStarted.step1.title')}
-                        </h3>
-                        <p className="text-gray-600 leading-relaxed">
-                          {t('dashboard.gettingStarted.step1.description')}
-                        </p>
-                      </div>
 
-                      {/* Step 2 */}
-                      <div className="text-center">
-                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
+                        {/* Step 2: Add API Key */}
+                        <div className="border border-gray-200 rounded-2xl p-6 bg-gradient-to-r from-green-50 to-emerald-50">
+                          <div className="flex items-start space-x-4">
+                            <div className="w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                              <span className="text-xl font-bold text-white">2</span>
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                                {t('dashboard.gettingStarted.step2.title')}
+                              </h3>
+                              <p className="text-gray-700 leading-relaxed mb-4">
+                                {t('dashboard.gettingStarted.step2.description')}
+                              </p>
+                              <div className="mt-4">
+                                <OdooApiKeyInput />
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                          {t('dashboard.gettingStarted.step2.title')}
-                        </h3>
-                        <p className="text-gray-600 leading-relaxed">
-                          {t('dashboard.gettingStarted.step2.description')}
-                        </p>
-                      </div>
 
-                      {/* Step 3 */}
-                      <div className="text-center">
-                        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                          <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
+                        {/* Step 3: Connect WhatsApp */}
+                        <div className="border border-gray-200 rounded-2xl p-6 bg-gradient-to-r from-purple-50 to-violet-50">
+                          <div className="flex items-start space-x-4">
+                            <div className="w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: '#1C2C55' }}>
+                              <span className="text-xl font-bold text-white">3</span>
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                                {t('dashboard.gettingStarted.step3.title')}
+                              </h3>
+                              <p className="text-gray-700 leading-relaxed mb-4">
+                                {t('dashboard.gettingStarted.step3.description')}
+                              </p>
+                              <div className="mt-4">
+                                <WhatsAppVerification onStatusChange={(status) => {
+                                  setWhatsappStatus(status);
+                                  setTimeout(() => refreshWhatsAppStatus(), 1000);
+                                }} />
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                          {t('dashboard.gettingStarted.step3.title')}
-                        </h3>
-                        <p className="text-gray-600 leading-relaxed">
-                          {t('dashboard.gettingStarted.step3.description')}
-                        </p>
                       </div>
-                    </div>
+                    ) : (
+                      /* Default setup for other platforms */
+                      <>
+                        <div className="grid md:grid-cols-3 gap-8 mb-8">
+                          {/* Step 1 */}
+                          <div className="text-center">
+                            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                              <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                              {t('dashboard.gettingStarted.step1.title')}
+                            </h3>
+                            <p className="text-gray-600 leading-relaxed">
+                              {t('dashboard.gettingStarted.step1.description')}
+                            </p>
+                          </div>
 
-                    {/* WhatsApp Integration Embedded */}
-                    <div className="border-t border-gray-200 pt-8">
-                      <WhatsAppVerification onStatusChange={(status) => {
-                        setWhatsappStatus(status);
-                        // Refresh status after change
-                        setTimeout(() => refreshWhatsAppStatus(), 1000);
-                      }} />
-                    </div>
+                          {/* Step 2 */}
+                          <div className="text-center">
+                            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                              <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                              {t('dashboard.gettingStarted.step2.title')}
+                            </h3>
+                            <p className="text-gray-600 leading-relaxed">
+                              {t('dashboard.gettingStarted.step2.description')}
+                            </p>
+                          </div>
+
+                          {/* Step 3 */}
+                          <div className="text-center">
+                            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
+                              <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
+                              {t('dashboard.gettingStarted.step3.title')}
+                            </h3>
+                            <p className="text-gray-600 leading-relaxed">
+                              {t('dashboard.gettingStarted.step3.description')}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* WhatsApp Integration Embedded */}
+                        <div className="border-t border-gray-200 pt-8">
+                          <WhatsAppVerification onStatusChange={(status) => {
+                            setWhatsappStatus(status);
+                            setTimeout(() => refreshWhatsAppStatus(), 1000);
+                          }} />
+                        </div>
+                      </>
+                    )}
                   </div>
                 </section>
               )}
             </>
-          )}
-
-          {/* Odoo API Key Input - Only for Odoo users */}
-          {user?.platform === 'odoo' && (
-            <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <OdooApiKeyInput />
-            </section>
           )}
 
           {/* Language Preference - Show for all authenticated users */}
