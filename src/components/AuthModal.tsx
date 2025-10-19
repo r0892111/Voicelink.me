@@ -206,7 +206,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           {provider.name === 'odoo' && t('auth.modal.connectOdoo')}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {isDisabled ? 'Temporarily unavailable' : t('auth.modal.startTrialInstantly')}
+                          {isDisabled ? 'Temporarily unavailable' : (
+                            provider.name === 'odoo' ? 'For Odoo.com accounts only' : t('auth.modal.startTrialInstantly')
+                          )}
                         </div>
                       </div>
                     </div>
@@ -222,6 +224,35 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </button>
             );
           })}
+        </div>
+
+        {/* Self-hosted Odoo Info */}
+        <div className="mb-6 p-4 bg-purple-50 border border-purple-200 rounded-xl">
+          <div className="flex items-start space-x-3">
+            <AlertCircle className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <h4 className="text-sm font-semibold text-purple-900 mb-1">
+                Using Self-Hosted Odoo?
+              </h4>
+              <p className="text-sm text-purple-800 mb-2">
+                If your company uses a self-hosted Odoo instance (like odoo.yourcompany.com), OAuth login won't work. Instead:
+              </p>
+              <ol className="text-sm text-purple-800 space-y-1 ml-4 list-decimal">
+                <li>Create an account with email/password</li>
+                <li>Go to Dashboard → Odoo Settings</li>
+                <li>Enter your Odoo database name and API key</li>
+              </ol>
+              <a
+                href="/ODOO_CUSTOM_SETUP.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-sm font-medium text-purple-700 hover:text-purple-900 mt-2"
+              >
+                <Download className="w-4 h-4 mr-1" />
+                View setup guide
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Footer */}

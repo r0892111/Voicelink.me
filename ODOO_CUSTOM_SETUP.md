@@ -1,13 +1,26 @@
-# Custom Odoo OAuth Configuration
+# Self-Hosted Odoo Setup Guide
 
-This guide explains how to configure VoiceLink to work with custom Odoo implementations that host their own login pages.
+This guide explains how to configure VoiceLink to work with self-hosted Odoo implementations.
+
+## Quick Start for Self-Hosted Odoo Users
+
+**If your company uses a self-hosted Odoo instance (like https://odoo.afc-collection.co or odoo.yourcompany.com):**
+
+1. Go to the [Test Signup Page](/test-signup)
+2. Fill in your details and select "Odoo" as your CRM platform
+3. After signup, go to Dashboard → Odoo Settings
+4. Enter your Odoo database name and API key
+5. Start using VoiceLink!
+
+---
 
 ## Overview
 
-VoiceLink supports two methods for Odoo integration:
+VoiceLink supports three methods for Odoo integration:
 
-1. **Standard OAuth** (for Odoo.com hosted instances)
-2. **Custom OAuth** (for self-hosted or custom Odoo implementations)
+1. **Standard OAuth** - For Odoo.com hosted accounts (e.g., yourcompany.odoo.com)
+2. **API Key Authentication** - For self-hosted Odoo (e.g., odoo.yourcompany.com) ⭐ **RECOMMENDED**
+3. **Custom OAuth** - For self-hosted Odoo with OAuth server configured (advanced)
 
 ## Method 1: Standard OAuth (Odoo.com)
 
@@ -18,7 +31,70 @@ For standard Odoo.com accounts, no additional configuration is needed. The syste
 VITE_ODOO_CLIENT_ID=your_client_id_here
 ```
 
-## Method 2: Custom OAuth (Self-Hosted Odoo)
+## Method 2: API Key Authentication (Self-Hosted Odoo) ⭐ RECOMMENDED
+
+This is the easiest method for self-hosted Odoo instances.
+
+### Step-by-Step Instructions
+
+#### 1. Create a VoiceLink Account
+
+1. Go to [Test Signup Page](/test-signup)
+2. Fill in your information:
+   - First Name
+   - Last Name
+   - Email
+   - Phone (with WhatsApp)
+   - Select "Odoo" as CRM Platform
+3. Check your email for the confirmation link
+4. Click the confirmation link to activate your account
+
+#### 2. Get Your Odoo API Key
+
+1. Log into your Odoo instance (e.g., https://odoo.afc-collection.co)
+2. Go to **Settings** → **Users & Companies** → **Users**
+3. Select your user account
+4. Click the **"Preferences"** tab
+5. Scroll to **"Account Security"** section
+6. Click **"New API Key"**
+7. Enter a description: "VoiceLink Integration"
+8. ⚠️ **IMPORTANT**: Select **"Permanent key"** as duration
+9. Copy the generated API key
+
+#### 3. Configure VoiceLink
+
+1. Log into VoiceLink with your email and password
+2. Go to **Dashboard**
+3. Find the **"Odoo API Key"** section
+4. Enter your **Database Name** (e.g., "afc-collection" from https://odoo.afc-collection.co)
+5. Paste your **API Key**
+6. Click **"Save Configuration"**
+
+#### 4. Test the Integration
+
+1. Send a test voice message to VoiceLink on WhatsApp
+2. Check your Odoo instance to verify data was synced
+3. View activity logs in the VoiceLink dashboard
+
+### Troubleshooting API Key Authentication
+
+**"Invalid API Key" error:**
+- Verify you copied the complete API key
+- Check that the API key is set to "Permanent"
+- Ensure your Odoo user has appropriate permissions
+
+**"Database not found" error:**
+- Verify the database name matches your Odoo URL
+- Example: For https://odoo.company.com, use "company" or check your Odoo database settings
+
+**"Connection failed" error:**
+- Check your Odoo instance is accessible from the internet
+- Verify firewall settings allow API access
+- Ensure Odoo API is enabled
+
+---
+
+## Method 3: Custom OAuth (Self-Hosted Odoo with OAuth)
 
 For custom Odoo implementations with their own OAuth server:
 
@@ -85,26 +161,22 @@ Ensure your Odoo OAuth application grants the `userinfo` scope.
 - Try authentication again
 - Check that cookies are enabled
 
-## Method 3: API Key (Alternative for Custom Odoo)
+## Comparison: Which Method Should I Use?
 
-If OAuth is not available or not working, you can use API key authentication:
+| Feature | Standard OAuth | API Key | Custom OAuth |
+|---------|---------------|---------|-------------|
+| **For Odoo.com** | ✅ Yes | ❌ No | ❌ No |
+| **For Self-Hosted** | ❌ No | ✅ Yes | ✅ Yes (if configured) |
+| **Ease of Setup** | Easy | Easy | Complex |
+| **Requires IT Support** | No | No | Yes |
+| **Security** | High | High | High |
+| **User Experience** | One-click login | Manual setup | One-click login |
 
-1. Log in to VoiceLink (create account with email)
-2. Go to Dashboard → Odoo Settings
-3. Enter your Odoo database name and API key
-4. The system will use API key authentication instead of OAuth
+### Recommendation:
 
-### Getting Your Odoo API Key
-
-1. Log into your Odoo instance
-2. Go to Settings → Users & Companies → Users
-3. Select your user
-4. Click "Preferences" tab
-5. Go to "Account Security" section
-6. Click "New API Key"
-7. Enter a description (e.g., "VoiceLink Integration")
-8. **IMPORTANT**: Select "Permanent key" as duration
-9. Copy the generated API key
+- **Odoo.com users**: Use Standard OAuth (automatic)
+- **Self-hosted Odoo users**: Use API Key Authentication (easiest)
+- **Enterprise with OAuth server**: Use Custom OAuth (requires IT setup)
 
 ## Backend Configuration
 
