@@ -26,6 +26,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [password, setPassword] = React.useState('');
   const [isSignup, setIsSignup] = React.useState(false);
   const [emailLoading, setEmailLoading] = React.useState(false);
+  const [emailError, setEmailError] = React.useState<string | null>(null);
+  const termsCheckboxRef = React.useRef<HTMLInputElement>(null);
 
   // TEMPORARY: Set to true to re-enable Pipedrive and Teamleader
   const disabledProviders = ['pipedrive', 'teamleader'];
@@ -44,6 +46,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   // Check if user agreed to terms
   if (!agreedToTerms) {
     setError(t('validation.agreeToTerms'));
+    termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    termsCheckboxRef.current?.focus();
     return;
   }
   try {
@@ -93,16 +97,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   const handleEmailAuth = async () => {
     if (!email || !password) {
-      setError('Please enter both email and password');
+      setEmailError('Please enter both email and password');
       return;
     }
 
     if (!agreedToTerms) {
       setError(t('validation.agreeToTerms'));
+      setEmailError('Please agree to the SaaS Agreement below');
+      termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      termsCheckboxRef.current?.focus();
       return;
     }
 
     setEmailLoading(true);
+    setEmailError(null);
     setError(null);
 
     try {
@@ -134,7 +142,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         }
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Authentication failed');
+      const errorMessage = err instanceof Error ? err.message : 'Authentication failed';
+      setEmailError(errorMessage);
+      console.error('Email auth error:', err);
     } finally {
       setEmailLoading(false);
     }
@@ -147,6 +157,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       processingRef.current = false;
       setLoadingProvider(null);
       setError(null);
+      setEmailError(null);
       setAgreedToTerms(false);
       setShowSelfHostedLogin(false);
       setEmail('');
@@ -325,6 +336,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </p>
               </div>
 
+              {emailError && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
+                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm text-red-800 font-medium">Error</p>
+                    <p className="text-sm text-red-700">{emailError}</p>
+                  </div>
+                </div>
+              )}
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email
@@ -413,17 +434,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <div className="mb-6">
             <label className="flex items-start space-x-3 cursor-pointer">
               <input
+                ref={termsCheckboxRef}
                 type="checkbox"
                 checked={agreedToTerms}
                 onChange={(e) => setAgreedToTerms(e.target.checked)}
-                className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-offset-2"
               />
               <span className="text-sm text-gray-700">
                 I agree to the{' '}
-                <a 
-                  href="/saas-agreement" 
-                  className="text-blue-600 hover:underline font-medium" 
-                  target="_blank" 
+                <a
+                  href="/saas-agreement"
+                  className="text-blue-600 hover:underline font-medium"
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   SaaS Agreement
