@@ -1,5 +1,7 @@
 import React from 'react';
-import { X, Loader2, AlertCircle, Download } from 'lucide-react';
+import { X, Loader2, AlertCircle, Download, ChevronDown, ChevronUp, Mail, Lock, UserPlus } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { useNavigate } from 'react-router-dom';
 import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
@@ -12,11 +14,18 @@ interface AuthModalProps {
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const { t } = useI18n();
+  const navigate = useNavigate();
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [agreedToTerms, setAgreedToTerms] = React.useState(false);
   const [isAnimating, setIsAnimating] = React.useState(false);
   const processingRef = React.useRef(false);
+
+  const [showSelfHostedLogin, setShowSelfHostedLogin] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [isSignup, setIsSignup] = React.useState(false);
+  const [emailLoading, setEmailLoading] = React.useState(false);
 
   // TEMPORARY: Set to true to re-enable Pipedrive and Teamleader
   const disabledProviders = ['pipedrive', 'teamleader'];
@@ -82,6 +91,55 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   }
 };
 
+  const handleEmailAuth = async () => {
+    if (!email || !password) {
+      setError('Please enter both email and password');
+      return;
+    }
+
+    if (!agreedToTerms) {
+      setError(t('validation.agreeToTerms'));
+      return;
+    }
+
+    setEmailLoading(true);
+    setError(null);
+
+    try {
+      if (isSignup) {
+        const { data, error: signupError } = await supabase.auth.signUp({
+          email,
+          password,
+        });
+
+        if (signupError) throw signupError;
+
+        if (data.user) {
+          localStorage.setItem('userPlatform', 'odoo');
+          localStorage.setItem('auth_provider', 'odoo');
+          navigate('/dashboard');
+        }
+      } else {
+        const { data, error: loginError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (loginError) throw loginError;
+
+        if (data.user) {
+          localStorage.setItem('userPlatform', 'odoo');
+          localStorage.setItem('auth_provider', 'odoo');
+          navigate('/dashboard');
+        }
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Authentication failed');
+    } finally {
+      setEmailLoading(false);
+    }
+  };
+
   // Reset processing state when modal closes
   React.useEffect(() => {
     if (!isOpen) {
@@ -90,6 +148,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       setLoadingProvider(null);
       setError(null);
       setAgreedToTerms(false);
+      setShowSelfHostedLogin(false);
+      setEmail('');
+      setPassword('');
+      setIsSignup(false);
     }
   }, [isOpen]);
 
@@ -226,33 +288,123 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           })}
         </div>
 
-        {/* Self-hosted Odoo Info */}
-        <div className="mb-6 p-4 bg-purple-50 border border-purple-200 rounded-xl">
-          <div className="flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <h4 className="text-sm font-semibold text-purple-900 mb-1">
-                Using Self-Hosted Odoo?
-              </h4>
-              <p className="text-sm text-purple-800 mb-2">
-                If your company uses a self-hosted Odoo instance (like odoo.yourcompany.com), OAuth login won't work. Instead:
-              </p>
-              <ol className="text-sm text-purple-800 space-y-1 ml-4 list-decimal">
-                <li>Create an account with email/password</li>
-                <li>Go to Dashboard → Odoo Settings</li>
-                <li>Enter your Odoo database name and API key</li>
-              </ol>
-              <a
-                href="/ODOO_CUSTOM_SETUP.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm font-medium text-purple-700 hover:text-purple-900 mt-2"
-              >
-                <Download className="w-4 h-4 mr-1" />
-                View setup guide
-              </a>
+        {/* Self-hosted Odoo Login */}
+        <div className="mb-6">
+          <button
+            onClick={() => setShowSelfHostedLogin(!showSelfHostedLogin)}
+            className="w-full p-4 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <AlertCircle className="w-5 h-5 text-purple-600 flex-shrink-0" />
+                <div className="text-left">
+                  <h4 className="text-sm font-semibold text-purple-900">
+                    Using Self-Hosted Odoo?
+                  </h4>
+                  <p className="text-xs text-purple-700">
+                    Click to login with email & password
+                  </p>
+                </div>
+              </div>
+              {showSelfHostedLogin ? (
+                <ChevronUp className="w-5 h-5 text-purple-600" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-purple-600" />
+              )}
             </div>
-          </div>
+          </button>
+
+          {showSelfHostedLogin && (
+            <div className="mt-4 p-6 bg-white border-2 border-purple-200 rounded-xl space-y-4">
+              <div className="text-center mb-4">
+                <h5 className="text-lg font-semibold text-gray-900 mb-1">
+                  {isSignup ? 'Create Account' : 'Sign In'}
+                </h5>
+                <p className="text-sm text-gray-600">
+                  For self-hosted Odoo instances
+                </p>
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={handleEmailAuth}
+                disabled={emailLoading || !email || !password || !agreedToTerms}
+                className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
+              >
+                {emailLoading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>{isSignup ? 'Creating Account...' : 'Signing In...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <UserPlus className="w-5 h-5" />
+                    <span>{isSignup ? 'Create Account' : 'Sign In'}</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => setIsSignup(!isSignup)}
+                className="w-full text-sm text-purple-600 hover:text-purple-800 font-medium"
+              >
+                {isSignup ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
+              </button>
+
+              <div className="pt-4 border-t border-gray-200">
+                <p className="text-xs text-gray-600 mb-2">
+                  After logging in:
+                </p>
+                <ol className="text-xs text-gray-600 space-y-1 ml-4 list-decimal">
+                  <li>Go to Dashboard → Odoo Settings</li>
+                  <li>Enter your Odoo database name and API key</li>
+                  <li>Start using VoiceLink!</li>
+                </ol>
+                <a
+                  href="/ODOO_CUSTOM_SETUP.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-xs font-medium text-purple-600 hover:text-purple-800 mt-3"
+                >
+                  <Download className="w-3 h-3 mr-1" />
+                  View setup guide
+                </a>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer */}
