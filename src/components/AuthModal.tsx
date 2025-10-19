@@ -6,6 +6,7 @@ import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
 import { useI18n } from '../hooks/useI18n';
+import { StripeService } from '../services/stripeService';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -150,7 +151,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           localStorage.setItem('userPlatform', 'odoo');
           localStorage.setItem('auth_provider', 'odoo');
-          navigate('/dashboard');
+
+          // Redirect to Stripe checkout for subscription
+          try {
+            await StripeService.createCheckoutSession({
+              priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+              quantity: 1,
+              successUrl: `${window.location.origin}/dashboard`,
+              cancelUrl: `${window.location.origin}/dashboard`,
+              crmProvider: 'odoo',
+            });
+          } catch (checkoutError) {
+            console.error('Checkout error:', checkoutError);
+            // If checkout fails, still navigate to dashboard
+            navigate('/dashboard');
+          }
         }
       } else {
         const { data, error: loginError } = await supabase.auth.signInWithPassword({
