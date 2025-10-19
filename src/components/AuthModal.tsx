@@ -28,6 +28,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [isSignup, setIsSignup] = React.useState(false);
   const [emailLoading, setEmailLoading] = React.useState(false);
   const [emailError, setEmailError] = React.useState<string | null>(null);
+  const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
   const termsCheckboxRef = React.useRef<HTMLInputElement>(null);
 
   // TEMPORARY: Set to true to re-enable Pipedrive and Teamleader
@@ -153,6 +154,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           localStorage.setItem('auth_provider', 'odoo');
 
           // Create Stripe customer
+          setRedirectingMessage(t('auth.preparingCheckout') || 'Setting up your account...');
           try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
@@ -180,6 +182,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           }
 
           // Redirect to Stripe checkout for subscription
+          setRedirectingMessage(t('auth.redirectingToCheckout') || 'Redirecting to checkout...');
           try {
             await StripeService.createCheckoutSession({
               priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
@@ -190,6 +193,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             });
           } catch (checkoutError) {
             console.error('Checkout error:', checkoutError);
+            setRedirectingMessage(null);
             // If checkout fails, still navigate to dashboard
             navigate('/dashboard');
           }
@@ -258,12 +262,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <X className="w-6 h-6" />
         </button>
 
+        {/* Redirecting Message */}
+        {redirectingMessage && (
+          <div className="absolute inset-0 bg-white bg-opacity-95 rounded-2xl flex flex-col items-center justify-center z-50">
+            <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
+            <p className="text-lg font-medium text-gray-900">{redirectingMessage}</p>
+            <p className="text-sm text-gray-600 mt-2">Please wait...</p>
+          </div>
+        )}
+
         {/* Modal Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <img 
-              src="/Finit Voicelink Blue.svg" 
-              alt={t('common.voiceLink')} 
+            <img
+              src="/Finit Voicelink Blue.svg"
+              alt={t('common.voiceLink')}
               className="h-8 w-auto"
             />
           </div>
