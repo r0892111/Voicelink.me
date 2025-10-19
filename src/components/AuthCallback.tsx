@@ -106,6 +106,18 @@ export const AuthCallback: React.FC = () => {
       setMessage(`Processing ${platform} authentication...`);
       setMessage(t('auth.callback.processingAuth', { platform }));
 
+      // Build request body - include custom OAuth URL for Odoo if configured
+      const requestBody: Record<string, string> = {
+        code,
+        state,
+        redirect_uri: `${window.location.protocol}//${window.location.host}/auth/${platform}/callback`,
+      };
+
+      // For custom Odoo implementations, pass the OAuth URL to the backend
+      if (platform === 'odoo' && import.meta.env.VITE_ODOO_AUTH_URL) {
+        requestBody.odoo_oauth_url = import.meta.env.VITE_ODOO_AUTH_URL;
+      }
+
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth`,
         {
@@ -114,11 +126,7 @@ export const AuthCallback: React.FC = () => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           },
-          body: JSON.stringify({
-            code,
-            state,
-            redirect_uri: `${window.location.protocol}//${window.location.host}/auth/${platform}/callback`,
-          }),
+          body: JSON.stringify(requestBody),
         }
       );
 
