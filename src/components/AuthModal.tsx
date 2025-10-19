@@ -1,9 +1,12 @@
 import React from 'react';
-import { X, Loader2, AlertCircle, Download } from 'lucide-react';
+import { X, Loader2, AlertCircle, Download, ChevronDown, ChevronUp, Mail, Lock, UserPlus } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { useNavigate } from 'react-router-dom';
 import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
 import { useI18n } from '../hooks/useI18n';
+import { StripeService } from '../services/stripeService';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -12,11 +15,21 @@ interface AuthModalProps {
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const { t } = useI18n();
+  const navigate = useNavigate();
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [agreedToTerms, setAgreedToTerms] = React.useState(false);
   const [isAnimating, setIsAnimating] = React.useState(false);
   const processingRef = React.useRef(false);
+
+  const [showSelfHostedLogin, setShowSelfHostedLogin] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [isSignup, setIsSignup] = React.useState(false);
+  const [emailLoading, setEmailLoading] = React.useState(false);
+  const [emailError, setEmailError] = React.useState<string | null>(null);
+  const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
+  const termsCheckboxRef = React.useRef<HTMLInputElement>(null);
 
   // TEMPORARY: Set to true to re-enable Pipedrive and Teamleader
   const disabledProviders = ['pipedrive', 'teamleader'];
@@ -35,6 +48,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   // Check if user agreed to terms
   if (!agreedToTerms) {
     setError(t('validation.agreeToTerms'));
+    termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    termsCheckboxRef.current?.focus();
     return;
   }
   try {
@@ -82,6 +97,130 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   }
 };
 
+  const handleEmailAuth = async () => {
+    if (!email || !password) {
+      setEmailError('Please enter both email and password');
+      return;
+    }
+
+    if (!agreedToTerms) {
+      setError(t('validation.agreeToTerms'));
+      setEmailError('Please agree to the SaaS Agreement below');
+      termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      termsCheckboxRef.current?.focus();
+      return;
+    }
+
+    setEmailLoading(true);
+    setEmailError(null);
+    setError(null);
+
+    try {
+      if (isSignup) {
+        const { data, error: signupError } = await supabase.auth.signUp({
+          email,
+          password,
+        });
+
+        if (signupError) throw signupError;
+
+        if (data.user) {
+          // Create entry in odoo_users table
+          const { error: odooUserError } = await supabase
+            .from('odoo_users')
+            .insert({
+              user_id: data.user.id,
+              odoo_user_id: data.user.id,
+            });
+
+          if (odooUserError) {
+            console.error('Error creating odoo_users entry:', odooUserError);
+          }
+
+          // Create entry in users table
+          const { error: userError } = await supabase
+            .from('users')
+            .insert({
+              id: data.user.id,
+              email: email,
+              name: email.split('@')[0],
+            });
+
+          if (userError) {
+            console.error('Error creating users entry:', userError);
+          }
+
+          localStorage.setItem('userPlatform', 'odoo');
+          localStorage.setItem('auth_provider', 'odoo');
+
+          // Create Stripe customer
+          setRedirectingMessage(t('auth.preparingCheckout') || 'Setting up your account...');
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+              const customerResponse = await fetch(
+                `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-stripe-customer`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session.access_token}`,
+                  },
+                  body: JSON.stringify({ provider: 'odoo' }),
+                }
+              );
+
+              const customerResult = await customerResponse.json();
+              if (!customerResult.success) {
+                console.error('Failed to create Stripe customer:', customerResult.error);
+              } else {
+                console.log('Stripe customer created:', customerResult.customer_id);
+              }
+            }
+          } catch (customerError) {
+            console.error('Error creating Stripe customer:', customerError);
+          }
+
+          // Redirect to Stripe checkout for subscription
+          setRedirectingMessage(t('auth.redirectingToCheckout') || 'Redirecting to checkout...');
+          try {
+            await StripeService.createCheckoutSession({
+              priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+              quantity: 1,
+              successUrl: `${window.location.origin}/dashboard`,
+              cancelUrl: `${window.location.origin}/dashboard`,
+              crmProvider: 'odoo',
+            });
+          } catch (checkoutError) {
+            console.error('Checkout error:', checkoutError);
+            setRedirectingMessage(null);
+            // If checkout fails, still navigate to dashboard
+            navigate('/dashboard');
+          }
+        }
+      } else {
+        const { data, error: loginError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (loginError) throw loginError;
+
+        if (data.user) {
+          localStorage.setItem('userPlatform', 'odoo');
+          localStorage.setItem('auth_provider', 'odoo');
+          navigate('/dashboard');
+        }
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Authentication failed';
+      setEmailError(errorMessage);
+      console.error('Email auth error:', err);
+    } finally {
+      setEmailLoading(false);
+    }
+  };
+
   // Reset processing state when modal closes
   React.useEffect(() => {
     if (!isOpen) {
@@ -89,7 +228,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       processingRef.current = false;
       setLoadingProvider(null);
       setError(null);
+      setEmailError(null);
       setAgreedToTerms(false);
+      setShowSelfHostedLogin(false);
+      setEmail('');
+      setPassword('');
+      setIsSignup(false);
     }
   }, [isOpen]);
 
@@ -118,12 +262,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <X className="w-6 h-6" />
         </button>
 
+        {/* Redirecting Message */}
+        {redirectingMessage && (
+          <div className="absolute inset-0 bg-white bg-opacity-95 rounded-2xl flex flex-col items-center justify-center z-50">
+            <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
+            <p className="text-lg font-medium text-gray-900">{redirectingMessage}</p>
+            <p className="text-sm text-gray-600 mt-2">Please wait...</p>
+          </div>
+        )}
+
         {/* Modal Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <img 
-              src="/Finit Voicelink Blue.svg" 
-              alt={t('common.voiceLink')} 
+            <img
+              src="/Finit Voicelink Blue.svg"
+              alt={t('common.voiceLink')}
               className="h-8 w-auto"
             />
           </div>
@@ -206,7 +359,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           {provider.name === 'odoo' && t('auth.modal.connectOdoo')}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {isDisabled ? 'Temporarily unavailable' : t('auth.modal.startTrialInstantly')}
+                          {isDisabled ? 'Temporarily unavailable' : (
+                            provider.name === 'odoo' ? 'For Odoo.com accounts only' : t('auth.modal.startTrialInstantly')
+                          )}
                         </div>
                       </div>
                     </div>
@@ -224,23 +379,153 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           })}
         </div>
 
+        {/* Self-hosted Odoo Login */}
+        <div className="mb-6">
+          <button
+            onClick={() => setShowSelfHostedLogin(!showSelfHostedLogin)}
+            className="w-full p-4 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <AlertCircle className="w-5 h-5 text-purple-600 flex-shrink-0" />
+                <div className="text-left">
+                  <h4 className="text-sm font-semibold text-purple-900">
+                    Using Self-Hosted Odoo?
+                  </h4>
+                  <p className="text-xs text-purple-700">
+                    Click to login with email & password
+                  </p>
+                </div>
+              </div>
+              {showSelfHostedLogin ? (
+                <ChevronUp className="w-5 h-5 text-purple-600" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-purple-600" />
+              )}
+            </div>
+          </button>
+
+          {showSelfHostedLogin && (
+            <div className="mt-4 p-6 bg-white border-2 border-purple-200 rounded-xl space-y-4">
+              <div className="text-center mb-4">
+                <h5 className="text-lg font-semibold text-gray-900 mb-1">
+                  {isSignup ? 'Create Account' : 'Sign In'}
+                </h5>
+                <p className="text-sm text-gray-600">
+                  For self-hosted Odoo instances
+                </p>
+              </div>
+
+              {emailError && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
+                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm text-red-800 font-medium">Error</p>
+                    <p className="text-sm text-red-700">{emailError}</p>
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={handleEmailAuth}
+                disabled={emailLoading || !email || !password || !agreedToTerms}
+                className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
+              >
+                {emailLoading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>{isSignup ? 'Creating Account...' : 'Signing In...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <UserPlus className="w-5 h-5" />
+                    <span>{isSignup ? 'Create Account' : 'Sign In'}</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => setIsSignup(!isSignup)}
+                className="w-full text-sm text-purple-600 hover:text-purple-800 font-medium"
+              >
+                {isSignup ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
+              </button>
+
+              <div className="pt-4 border-t border-gray-200">
+                <p className="text-xs text-gray-600 mb-2">
+                  After logging in:
+                </p>
+                <ol className="text-xs text-gray-600 space-y-1 ml-4 list-decimal">
+                  <li>Go to Dashboard → Odoo Settings</li>
+                  <li>Enter your Odoo database name and API key</li>
+                  <li>Start using VoiceLink!</li>
+                </ol>
+                <a
+                  href="/ODOO_CUSTOM_SETUP.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-xs font-medium text-purple-600 hover:text-purple-800 mt-3"
+                >
+                  <Download className="w-3 h-3 mr-1" />
+                  View setup guide
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Footer */}
         <div className="pt-6 border-t border-gray-200">
           {/* Terms Agreement Checkbox */}
           <div className="mb-6">
             <label className="flex items-start space-x-3 cursor-pointer">
               <input
+                ref={termsCheckboxRef}
                 type="checkbox"
                 checked={agreedToTerms}
                 onChange={(e) => setAgreedToTerms(e.target.checked)}
-                className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-offset-2"
               />
               <span className="text-sm text-gray-700">
                 I agree to the{' '}
-                <a 
-                  href="/saas-agreement" 
-                  className="text-blue-600 hover:underline font-medium" 
-                  target="_blank" 
+                <a
+                  href="/saas-agreement"
+                  className="text-blue-600 hover:underline font-medium"
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   SaaS Agreement

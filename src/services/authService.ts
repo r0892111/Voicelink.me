@@ -92,7 +92,7 @@ export class AuthService {
 
   private async initiateOdooAuth(): Promise<AuthResult> {
     const clientId = import.meta.env.VITE_ODOO_CLIENT_ID;
-    
+
     if (!clientId) {
       return { success: false, error: 'Odoo client ID not configured' };
     }
@@ -118,7 +118,11 @@ export class AuthService {
     localStorage.setItem('odoo_oauth_state', state);
     localStorage.setItem('auth_provider', 'odoo');
     localStorage.setItem('userPlatform', 'odoo');
-    const authUrl = `https://accounts.odoo.com/oauth2/auth?${params.toString()}`;
+
+    // Support custom Odoo domains via environment variable
+    // Default to accounts.odoo.com for standard Odoo.com installations
+    const odooAuthUrl = import.meta.env.VITE_ODOO_AUTH_URL || 'https://accounts.odoo.com';
+    const authUrl = `${odooAuthUrl}/oauth2/auth?${params.toString()}`;
 
     window.location.href = authUrl;
     return { success: true };
