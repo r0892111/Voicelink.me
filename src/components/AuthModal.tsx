@@ -152,6 +152,33 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           localStorage.setItem('userPlatform', 'odoo');
           localStorage.setItem('auth_provider', 'odoo');
 
+          // Create Stripe customer
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+              const customerResponse = await fetch(
+                `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-stripe-customer`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session.access_token}`,
+                  },
+                  body: JSON.stringify({ provider: 'odoo' }),
+                }
+              );
+
+              const customerResult = await customerResponse.json();
+              if (!customerResult.success) {
+                console.error('Failed to create Stripe customer:', customerResult.error);
+              } else {
+                console.log('Stripe customer created:', customerResult.customer_id);
+              }
+            }
+          } catch (customerError) {
+            console.error('Error creating Stripe customer:', customerError);
+          }
+
           // Redirect to Stripe checkout for subscription
           try {
             await StripeService.createCheckoutSession({
