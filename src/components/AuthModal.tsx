@@ -123,6 +123,31 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         if (signupError) throw signupError;
 
         if (data.user) {
+          // Create entry in odoo_users table
+          const { error: odooUserError } = await supabase
+            .from('odoo_users')
+            .insert({
+              user_id: data.user.id,
+              odoo_user_id: data.user.id,
+            });
+
+          if (odooUserError) {
+            console.error('Error creating odoo_users entry:', odooUserError);
+          }
+
+          // Create entry in users table
+          const { error: userError } = await supabase
+            .from('users')
+            .insert({
+              id: data.user.id,
+              email: email,
+              name: email.split('@')[0],
+            });
+
+          if (userError) {
+            console.error('Error creating users entry:', userError);
+          }
+
           localStorage.setItem('userPlatform', 'odoo');
           localStorage.setItem('auth_provider', 'odoo');
           navigate('/dashboard');
