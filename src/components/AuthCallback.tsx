@@ -36,6 +36,13 @@ export const AuthCallback: React.FC = () => {
       });
 
       const result = await response.json();
+
+      // Handle case where user has no Stripe customer ID yet
+      if (!result.success && result.error && result.error.includes('empty string')) {
+        console.log('User has not set up Stripe customer yet');
+        return false;
+      }
+
       return result.success && (result.subscription?.subscription_status === 'active' || result.subscription?.subscription_status === 'trialing');
     } catch (error) {
       console.error('Error checking subscription:', error);

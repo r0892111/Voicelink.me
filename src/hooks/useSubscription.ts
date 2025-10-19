@@ -51,7 +51,21 @@ export const useSubscription = () => {
       const result = await response.json();
 
       console.log(result);
-      if (!result.success || !result.subscription) {
+
+      // If error is about empty customer ID, user hasn't subscribed yet
+      if (!result.success) {
+        if (result.error && result.error.includes('empty string')) {
+          console.log('User has not set up Stripe customer yet');
+          setSubscription(null);
+          return;
+        }
+        // Other errors
+        console.error('Subscription check error:', result.error);
+        setSubscription(null);
+        return;
+      }
+
+      if (!result.subscription) {
         setSubscription(null);
         return;
       }
