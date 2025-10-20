@@ -640,7 +640,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email {isSignup && <span className="text-red-500">*</span>}
+                  {t('auth.email')} {isSignup && <span className="text-red-500">*</span>}
                 </label>
                 {isSignup && (
                   <p className="text-xs text-gray-600 mb-2">{t('auth.mustMatchOdooEmail')}</p>
@@ -660,10 +660,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password {isSignup && <span className="text-red-500">*</span>}
+                  {t('auth.password')} {isSignup && <span className="text-red-500">*</span>}
                 </label>
                 {isSignup && (
-                  <p className="text-xs text-gray-600 mb-2">Choose a secure password (min. 6 characters)</p>
+                  <p className="text-xs text-gray-600 mb-2">{t('auth.chooseSecurePassword')}</p>
                 )}
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -688,7 +688,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               {isSignup && (
                 <div>
                   <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                    Confirm Password <span className="text-red-500">*</span>
+                    {t('auth.confirmPassword')} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -719,12 +719,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 {emailLoading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>{isSignup ? 'Creating Account...' : 'Signing In...'}</span>
+                    <span>{isSignup ? t('auth.creatingAccount') : t('auth.signingIn')}</span>
                   </>
                 ) : (
                   <>
                     <UserPlus className="w-5 h-5" />
-                    <span>{isSignup ? 'Create Account' : 'Sign In'}</span>
+                    <span>{isSignup ? t('auth.createAccount') : t('auth.signIn')}</span>
                   </>
                 )}
               </button>
@@ -742,7 +742,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 }}
                 className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium"
               >
-                {isSignup ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
+                {isSignup ? t('auth.alreadyHaveAccountSignIn') : t('auth.needAccountSignUp')}
               </button>
             </div>
           </div>
@@ -768,28 +768,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-offset-2"
               />
               <span className="text-sm text-gray-700">
-                I agree to the{' '}
+                {t('validation.iAgreeToThe')}{' '}
                 <a
                   href="/saas-agreement"
                   className="text-blue-600 hover:underline font-medium"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  SaaS Agreement
+                  {t('validation.saasAgreement')}
                 </a>
               </span>
             </label>
             
             {/* Download Options */}
             <div className="mt-3 ml-7 flex items-center space-x-4 text-xs text-gray-600">
-              <span>Download:</span>
+              <span>{t('validation.download')}</span>
               <a
                 href="/SaaS Agreement en-US.pdf"
                 download="SaaS_Agreement_English.pdf"
                 className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
               >
                 <Download className="w-3 h-3" />
-                <span>English Version</span>
+                <span>{t('validation.englishVersion')}</span>
               </a>
               <a
                 href="/SaaS Overeenkomst.docx.pdf"
@@ -797,7 +797,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
               >
                 <Download className="w-3 h-3" />
-                <span>Dutch Version (Official)</span>
+                <span>{t('validation.dutchVersionOfficial')}</span>
               </a>
             </div>
           </div>
@@ -806,14 +806,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           {/* Privacy Policy Notice */}
           <div className="mb-6">
             <p className="text-xs text-gray-500 text-center">
-              By connecting your CRM, you acknowledge our{' '}
-              <a 
-                href="/privacy-policy" 
-                className="text-blue-600 hover:underline" 
-                target="_blank" 
+              {t('validation.byConnectingCRM')}{' '}
+              <a
+                href="/privacy-policy"
+                className="text-blue-600 hover:underline"
+                target="_blank"
                 rel="noopener noreferrer"
               >
-                Privacy Policy
+                {t('validation.privacyPolicy')}
               </a>
             </p>
           </div>

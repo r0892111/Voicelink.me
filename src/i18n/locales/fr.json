@@ -65,7 +65,14 @@
     "invalidPhone": "Veuillez entrer un numéro de téléphone valide",
     "minLength": "Doit contenir au moins {{min}} caractères",
     "maxLength": "Ne doit pas dépasser {{max}} caractères",
-    "agreeToTerms": "Veuillez accepter l'Accord SaaS pour continuer"
+    "agreeToTerms": "Veuillez accepter l'Accord SaaS pour continuer",
+    "iAgreeToThe": "J'accepte le",
+    "saasAgreement": "Accord SaaS",
+    "download": "Télécharger :",
+    "englishVersion": "Version Anglaise",
+    "dutchVersionOfficial": "Version Néerlandaise (Officielle)",
+    "byConnectingCRM": "En connectant votre CRM, vous reconnaissez notre",
+    "privacyPolicy": "Politique de Confidentialité"
   },
   "auth": {
     "callback": {
@@ -110,6 +117,14 @@
     "importantEmailAddress": "Important : Adresse e-mail",
     "emailMatchWarning": "Cela crée votre compte VoiceLink (pas votre mot de passe Odoo). Votre e-mail doit correspondre à votre e-mail Odoo, sinon l'intégration ne fonctionnera pas. Vous pouvez choisir le mot de passe que vous préférez - il sera crypté et stocké en toute sécurité.",
     "mustMatchOdooEmail": "Doit correspondre exactement à votre adresse e-mail Odoo",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le Mot de passe",
+    "chooseSecurePassword": "Choisissez un mot de passe sécurisé (min. 6 caractères)",
+    "creatingAccount": "Création du Compte...",
+    "signingIn": "Connexion en cours...",
+    "alreadyHaveAccountSignIn": "Vous avez déjà un compte ? Se connecter",
+    "needAccountSignUp": "Besoin d'un compte ? S'inscrire",
     "chooseYourOdooType": "Choisissez votre type Odoo",
     "selectOdooInstallationType": "Sélectionnez le type d'installation Odoo que vous utilisez",
     "odooCloudTitle": "Odoo.com (Cloud)",
