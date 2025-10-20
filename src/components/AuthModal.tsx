@@ -30,6 +30,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [isSignup, setIsSignup] = React.useState(true);
+  const [globalAuthMode, setGlobalAuthMode] = React.useState<'signup' | 'login'>('signup');
   const [emailLoading, setEmailLoading] = React.useState(false);
   const [emailError, setEmailError] = React.useState<string | null>(null);
   const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
@@ -49,8 +50,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   // Prevent double calls using ref
   if (processingRef.current || loadingProvider) return;
 
-  // Check if user agreed to terms
-  if (!agreedToTerms) {
+  // Check if user agreed to terms (only required for signup)
+  if (globalAuthMode === 'signup' && !agreedToTerms) {
     setError(t('validation.agreeToTerms'));
     termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     termsCheckboxRef.current?.focus();
@@ -155,7 +156,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       return;
     }
 
-    if (!agreedToTerms) {
+    // Only check terms agreement for signup
+    if (isSignup && !agreedToTerms) {
       setError(t('validation.agreeToTerms'));
       setEmailError('Please agree to the SaaS Agreement below');
       termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -336,7 +338,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       setShowSelfHostedLogin(false);
       setEmail('');
       setPassword('');
-      setIsSignup(false);
+      setIsSignup(true);
+      setGlobalAuthMode('signup');
     }
   }, [isOpen]);
 
@@ -417,7 +420,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 onClick={() => {
                   setShowOdooTypeSelection(false);
                   setShowSelfHostedLogin(true);
-                  setIsSignup(true);
+                  setIsSignup(globalAuthMode === 'signup');
                 }}
                 className="w-full p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
               >
@@ -453,11 +456,38 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   className="h-8 w-auto"
                 />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('auth.modal.title')}</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                {globalAuthMode === 'signup' ? t('auth.modal.title') : t('auth.signInToAccount')}
+              </h2>
               <p className="text-lg text-gray-600 mb-4">{t('auth.modal.subtitle')}</p>
 
-              {/* Free Trial Banner */}
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
+              {/* Global Signup/Login Toggle */}
+              <div className="flex items-center justify-center space-x-2 mb-6">
+                <button
+                  onClick={() => setGlobalAuthMode('signup')}
+                  className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                    globalAuthMode === 'signup'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {t('auth.signUp')}
+                </button>
+                <button
+                  onClick={() => setGlobalAuthMode('login')}
+                  className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                    globalAuthMode === 'login'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {t('auth.logIn')}
+                </button>
+              </div>
+
+              {/* Free Trial Banner - Only show for signup */}
+              {globalAuthMode === 'signup' && (
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                   <span className="text-green-800 font-semibold text-lg">{t('auth.modal.freeTrialBanner')}</span>
@@ -465,7 +495,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 <p className="text-green-700 text-sm">
                   {t('auth.modal.freeTrialDescription')}
                 </p>
-              </div>
+                </div>
+              )}
           
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center space-x-2 text-red-700">
@@ -719,7 +750,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
         {/* Footer */}
         <div className="pt-6 border-t border-gray-200">
-          {/* Terms Agreement Checkbox */}
+          {/* Terms Agreement Checkbox - Only show for signup */}
+          {globalAuthMode === 'signup' && (
           <div className="mb-6">
             <label className="flex items-start space-x-3 cursor-pointer">
               <input
@@ -763,6 +795,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </a>
             </div>
           </div>
+          )}
 
           {/* Privacy Policy Notice */}
           <div className="mb-6">
@@ -779,15 +812,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </p>
           </div>
 
-          {/* Sign In Option */}
-          <div className="text-center mb-6">
-            <p className="text-sm text-gray-600 mb-2">
-              {t('auth.modal.alreadyHaveAccount')}
-            </p>
-            <p className="text-xs text-gray-500">
-              {t('auth.modal.signInDescription')}
-            </p>
-          </div>
           
           <div className="grid grid-cols-3 gap-4 text-center mb-4">
             <div className="flex flex-col items-center space-y-1">
