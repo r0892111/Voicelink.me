@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Loader2, AlertCircle, Download, ChevronDown, ChevronUp, Mail, Lock, UserPlus } from 'lucide-react';
+import { X, Loader2, AlertCircle, Download, ChevronDown, ChevronUp, Mail, Lock, UserPlus, Eye, EyeOff } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { AuthProvider } from '../types/auth';
@@ -22,10 +22,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [isAnimating, setIsAnimating] = React.useState(false);
   const processingRef = React.useRef(false);
 
+  const [showOdooTypeSelection, setShowOdooTypeSelection] = React.useState(false);
   const [showSelfHostedLogin, setShowSelfHostedLogin] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [isSignup, setIsSignup] = React.useState(false);
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [isSignup, setIsSignup] = React.useState(true);
+  const [globalAuthMode, setGlobalAuthMode] = React.useState<'signup' | 'login'>('signup');
   const [emailLoading, setEmailLoading] = React.useState(false);
   const [emailError, setEmailError] = React.useState<string | null>(null);
   const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
@@ -45,13 +50,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   // Prevent double calls using ref
   if (processingRef.current || loadingProvider) return;
 
-  // Check if user agreed to terms
-  if (!agreedToTerms) {
+  // Check if user agreed to terms (only required for signup)
+  if (globalAuthMode === 'signup' && !agreedToTerms) {
     setError(t('validation.agreeToTerms'));
     termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     termsCheckboxRef.current?.focus();
     return;
   }
+
+  // If Odoo is clicked, show type selection instead of direct auth
+  if (provider.name === 'odoo') {
+    setShowOdooTypeSelection(true);
+    return;
+  }
+
   try {
     processingRef.current = true;
     setLoadingProvider(provider.name);
@@ -69,9 +81,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         break;
       case 'pipedrive':
         authService = AuthService.createPipedriveAuth();
-        break;
-      case 'odoo':
-        authService = AuthService.createOdooAuth();
         break;
       default:
         console.error('Unknown provider:', provider.name);
@@ -97,13 +106,58 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   }
 };
 
+  const handleOdooCloudAuth = async () => {
+    if (!agreedToTerms) {
+      setError(t('validation.agreeToTerms'));
+      termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      termsCheckboxRef.current?.focus();
+      return;
+    }
+
+    try {
+      processingRef.current = true;
+      setLoadingProvider('odoo');
+      setError(null);
+
+      localStorage.setItem('userPlatform', 'odoo');
+      localStorage.setItem('auth_provider', 'odoo');
+
+      const authService = AuthService.createOdooAuth();
+      const result = await authService.initiateAuth();
+
+      if (!result.success && result.error) {
+        setError(`${t('auth.authenticationFailedFor', { provider: 'Odoo' })}: ${result.error}`);
+        localStorage.removeItem('userPlatform');
+        localStorage.removeItem('auth_provider');
+      }
+    } catch (error) {
+      setError(`Error signing in with Odoo: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      localStorage.removeItem('userPlatform');
+      localStorage.removeItem('auth_provider');
+    } finally {
+      setLoadingProvider(null);
+      processingRef.current = false;
+    }
+  };
+
   const handleEmailAuth = async () => {
     if (!email || !password) {
       setEmailError('Please enter both email and password');
       return;
     }
 
-    if (!agreedToTerms) {
+    if (isSignup && password !== confirmPassword) {
+      setEmailError('Passwords do not match');
+      return;
+    }
+
+    if (isSignup && password.length < 6) {
+      setEmailError('Password must be at least 6 characters');
+      return;
+    }
+
+    // Only check terms agreement for signup
+    if (isSignup && !agreedToTerms) {
       setError(t('validation.agreeToTerms'));
       setEmailError('Please agree to the SaaS Agreement below');
       termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -125,6 +179,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         if (signupError) throw signupError;
 
         if (data.user) {
+          // Show loading immediately to prevent dashboard flash
+          setRedirectingMessage(t('auth.preparingCheckout') || 'Setting up your account...');
+
           const userName = email.split('@')[0];
 
           // Create entry in odoo_users table
@@ -160,7 +217,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           localStorage.setItem('auth_provider', 'odoo');
 
           // Create Stripe customer
-          setRedirectingMessage(t('auth.preparingCheckout') || 'Setting up your account...');
           try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
@@ -205,6 +261,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           }
         }
       } else {
+        // Sign in existing user
         const { data, error: loginError } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -215,7 +272,49 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         if (data.user) {
           localStorage.setItem('userPlatform', 'odoo');
           localStorage.setItem('auth_provider', 'odoo');
-          navigate('/dashboard');
+
+          // Show loading state while checking subscription
+          setRedirectingMessage(t('auth.checkingSubscription') || 'Checking your subscription...');
+
+          try {
+            // Check if user has active subscription
+            const response = await fetch(
+              `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=odoo`,
+              {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${data.session.access_token}`,
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+
+            const result = await response.json();
+            const hasActiveSubscription =
+              result.success &&
+              result.subscription &&
+              (result.subscription.subscription_status === 'active' ||
+               result.subscription.subscription_status === 'trialing');
+
+            if (hasActiveSubscription) {
+              // User has active subscription, go to dashboard
+              navigate('/dashboard');
+            } else {
+              // No active subscription, redirect to Stripe checkout
+              setRedirectingMessage(t('auth.redirectingToCheckout') || 'Redirecting to checkout...');
+              await StripeService.createCheckoutSession({
+                priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+                quantity: 1,
+                successUrl: `${window.location.origin}/dashboard`,
+                cancelUrl: `${window.location.origin}/dashboard`,
+                crmProvider: 'odoo',
+              });
+            }
+          } catch (subscriptionError) {
+            console.error('Error checking subscription:', subscriptionError);
+            // On error, navigate to dashboard (safer than leaving user stuck)
+            navigate('/dashboard');
+          }
         }
       }
     } catch (err) {
@@ -239,7 +338,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       setShowSelfHostedLogin(false);
       setEmail('');
       setPassword('');
-      setIsSignup(false);
+      setIsSignup(true);
+      setGlobalAuthMode('signup');
     }
   }, [isOpen]);
 
@@ -273,32 +373,136 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <div className="absolute inset-0 bg-white bg-opacity-95 rounded-2xl flex flex-col items-center justify-center z-50">
             <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
             <p className="text-lg font-medium text-gray-900">{redirectingMessage}</p>
-            <p className="text-sm text-gray-600 mt-2">Please wait...</p>
+            <p className="text-sm text-gray-600 mt-2">{t('auth.pleaseWait')}</p>
           </div>
         )}
 
-        {/* Modal Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <img
-              src="/Finit Voicelink Blue.svg"
-              alt={t('common.voiceLink')}
-              className="h-8 w-auto"
-            />
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('auth.modal.title')}</h2>
-          <p className="text-lg text-gray-600 mb-4">{t('auth.modal.subtitle')}</p>
-          
-          {/* Free Trial Banner */}
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
-            <div className="flex items-center justify-center space-x-2 mb-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-green-800 font-semibold text-lg">{t('auth.modal.freeTrialBanner')}</span>
+        {/* Odoo Type Selection Screen */}
+        {showOdooTypeSelection ? (
+          <>
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center space-x-3 mb-4">
+                <img
+                  src="/Finit Voicelink Blue.svg"
+                  alt={t('common.voiceLink')}
+                  className="h-8 w-auto"
+                />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('auth.chooseYourOdooType')}</h2>
+              <p className="text-lg text-gray-600 mb-4">{t('auth.selectOdooInstallationType')}</p>
             </div>
-            <p className="text-green-700 text-sm">
-              {t('auth.modal.freeTrialDescription')}
-            </p>
-          </div>
+
+            <div className="space-y-4 mb-8">
+              {/* Odoo.com (Cloud) Option */}
+              <button
+                onClick={handleOdooCloudAuth}
+                disabled={loadingProvider === 'odoo'}
+                className="w-full p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 mt-1">
+                    <img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('auth.odooCloudTitle')}</h3>
+                    <p className="text-sm text-gray-600">
+                      {t('auth.odooCloudDescription')}
+                    </p>
+                  </div>
+                  {loadingProvider === 'odoo' && (
+                    <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+                  )}
+                </div>
+              </button>
+
+              {/* Self-Hosted Odoo Option */}
+              <button
+                onClick={() => {
+                  setShowOdooTypeSelection(false);
+                  setShowSelfHostedLogin(true);
+                  setIsSignup(globalAuthMode === 'signup');
+                }}
+                className="w-full p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 mt-1">
+                    <img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('auth.selfHostedOdooTitle')}</h3>
+                    <p className="text-sm text-gray-600">
+                      {t('auth.selfHostedOdooDescription')}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <button
+              onClick={() => setShowOdooTypeSelection(false)}
+              className="w-full py-3 text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              ← {t('auth.backToLoginOptions')}
+            </button>
+          </>
+        ) : (
+          <>
+            {/* Modal Header */}
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center space-x-3 mb-4">
+                <img
+                  src="/Finit Voicelink Blue.svg"
+                  alt={t('common.voiceLink')}
+                  className="h-8 w-auto"
+                />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                {globalAuthMode === 'signup' ? t('auth.modal.title') : t('auth.signInToAccount')}
+              </h2>
+              <p className="text-lg text-gray-600 mb-4">{t('auth.modal.subtitle')}</p>
+
+              {/* Global Signup/Login Toggle */}
+              <div className="flex items-center justify-center space-x-2 mb-6">
+                <button
+                  onClick={() => {
+                    setGlobalAuthMode('signup');
+                    setError(null);
+                  }}
+                  className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                    globalAuthMode === 'signup'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {t('auth.signUp')}
+                </button>
+                <button
+                  onClick={() => {
+                    setGlobalAuthMode('login');
+                    setError(null);
+                  }}
+                  className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                    globalAuthMode === 'login'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {t('auth.logIn')}
+                </button>
+              </div>
+
+              {/* Free Trial Banner - Only show for signup */}
+              {globalAuthMode === 'signup' && (
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                  <span className="text-green-800 font-semibold text-lg">{t('auth.modal.freeTrialBanner')}</span>
+                </div>
+                <p className="text-green-700 text-sm">
+                  {t('auth.modal.freeTrialDescription')}
+                </p>
+                </div>
+              )}
           
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center space-x-2 text-red-700">
@@ -343,7 +547,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <>
                     <div className="flex items-center justify-center w-full">
                       <Loader2 className="w-6 h-6 animate-spin text-gray-600 mr-3" />
-                      <span className="text-lg text-gray-600">Connecting to {provider.displayName}...</span>
+                      <span className="text-lg text-gray-600">{t('auth.connectingTo', { provider: provider.displayName })}</span>
                     </div>
                   </>
                 ) : (
@@ -365,8 +569,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           {provider.name === 'odoo' && t('auth.modal.connectOdoo')}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {isDisabled ? 'Temporarily unavailable' : (
-                            provider.name === 'odoo' ? 'For Odoo.com accounts only' : t('auth.modal.startTrialInstantly')
+                          {isDisabled ? t('auth.temporarilyUnavailable') : (
+                            provider.name === 'odoo' ? t('auth.forOdooAccountsOnly') : t('auth.modal.startTrialInstantly')
                           )}
                         </div>
                       </div>
@@ -385,48 +589,50 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           })}
         </div>
 
-        {/* Self-hosted Odoo Login */}
-        <div className="mb-6">
-          <button
-            onClick={() => setShowSelfHostedLogin(!showSelfHostedLogin)}
-            className="w-full p-4 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 transition-colors"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <AlertCircle className="w-5 h-5 text-purple-600 flex-shrink-0" />
-                <div className="text-left">
-                  <h4 className="text-sm font-semibold text-purple-900">
-                    Using Self-Hosted Odoo?
-                  </h4>
-                  <p className="text-xs text-purple-700">
-                    Click to login with email & password
-                  </p>
-                </div>
-              </div>
-              {showSelfHostedLogin ? (
-                <ChevronUp className="w-5 h-5 text-purple-600" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-purple-600" />
-              )}
-            </div>
-          </button>
+        {/* Self-hosted Odoo Login Form */}
+        {showSelfHostedLogin && (
+          <div className="mb-6">
+            <button
+              onClick={() => {
+                setShowSelfHostedLogin(false);
+                setShowOdooTypeSelection(true);
+              }}
+              className="mb-4 text-gray-600 hover:text-gray-900 transition-colors flex items-center space-x-1"
+            >
+              <span>←</span>
+              <span>{t('auth.backToOdooOptions')}</span>
+            </button>
 
-          {showSelfHostedLogin && (
-            <div className="mt-4 p-6 bg-white border-2 border-purple-200 rounded-xl space-y-4">
+            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl space-y-4">
               <div className="text-center mb-4">
                 <h5 className="text-lg font-semibold text-gray-900 mb-1">
-                  {isSignup ? 'Create Account' : 'Sign In'}
+                  {isSignup ? t('auth.createAccount') : t('auth.signIn')}
                 </h5>
                 <p className="text-sm text-gray-600">
-                  For self-hosted Odoo instances
+                  {t('auth.forSelfHostedInstances')}
                 </p>
               </div>
+
+              {/* Important Email Notice */}
+              {isSignup && (
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-start space-x-2">
+                    <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-blue-900 mb-1">{t('auth.importantEmailAddress')}</p>
+                      <p className="text-sm text-blue-800">
+                        {t('auth.emailMatchWarning')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {emailError && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
                   <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm text-red-800 font-medium">Error</p>
+                    <p className="text-sm text-red-800 font-medium">{t('auth.error')}</p>
                     <p className="text-sm text-red-700">{emailError}</p>
                   </div>
                 </div>
@@ -434,8 +640,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
+                  Email {isSignup && <span className="text-red-500">*</span>}
                 </label>
+                {isSignup && (
+                  <p className="text-xs text-gray-600 mb-2">{t('auth.mustMatchOdooEmail')}</p>
+                )}
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -444,32 +653,68 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
 
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
+                  Password {isSignup && <span className="text-red-500">*</span>}
                 </label>
+                {isSignup && (
+                  <p className="text-xs text-gray-600 mb-2">Choose a secure password (min. 6 characters)</p>
+                )}
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
                 </div>
               </div>
 
+              {isSignup && (
+                <div>
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                    Confirm Password <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <button
                 onClick={handleEmailAuth}
-                disabled={emailLoading || !email || !password || !agreedToTerms}
-                className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
+                disabled={emailLoading || !email || !password || (isSignup && (!confirmPassword || !agreedToTerms))}
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
               >
                 {emailLoading ? (
                   <>
@@ -485,45 +730,41 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </button>
 
               <button
-                onClick={() => setIsSignup(!isSignup)}
-                className="w-full text-sm text-purple-600 hover:text-purple-800 font-medium"
+                onClick={() => {
+                  // When switching auth modes, go back to main screen to ensure SaaS agreement is shown for signup
+                  const newMode = isSignup ? 'login' : 'signup';
+                  setGlobalAuthMode(newMode);
+                  setShowSelfHostedLogin(false);
+                  setShowOdooTypeSelection(false);
+                  setIsSignup(newMode === 'signup');
+                  setEmailError(null);
+                  setConfirmPassword('');
+                }}
+                className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium"
               >
                 {isSignup ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
               </button>
-
-              <div className="pt-4 border-t border-gray-200">
-                <p className="text-xs text-gray-600 mb-2">
-                  After logging in:
-                </p>
-                <ol className="text-xs text-gray-600 space-y-1 ml-4 list-decimal">
-                  <li>Go to Dashboard → Odoo Settings</li>
-                  <li>Enter your Odoo database name and API key</li>
-                  <li>Start using VoiceLink!</li>
-                </ol>
-                <a
-                  href="/ODOO_CUSTOM_SETUP.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-xs font-medium text-purple-600 hover:text-purple-800 mt-3"
-                >
-                  <Download className="w-3 h-3 mr-1" />
-                  View setup guide
-                </a>
-              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Footer */}
         <div className="pt-6 border-t border-gray-200">
-          {/* Terms Agreement Checkbox */}
+          {/* Terms Agreement Checkbox - Only show for signup */}
+          {globalAuthMode === 'signup' && (
           <div className="mb-6">
             <label className="flex items-start space-x-3 cursor-pointer">
               <input
                 ref={termsCheckboxRef}
                 type="checkbox"
                 checked={agreedToTerms}
-                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                onChange={(e) => {
+                  setAgreedToTerms(e.target.checked);
+                  if (e.target.checked) {
+                    setError(null);
+                    setEmailError(null);
+                  }
+                }}
                 className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-offset-2"
               />
               <span className="text-sm text-gray-700">
@@ -560,6 +801,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </a>
             </div>
           </div>
+          )}
 
           {/* Privacy Policy Notice */}
           <div className="mb-6">
@@ -576,15 +818,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </p>
           </div>
 
-          {/* Sign In Option */}
-          <div className="text-center mb-6">
-            <p className="text-sm text-gray-600 mb-2">
-              {t('auth.modal.alreadyHaveAccount')}
-            </p>
-            <p className="text-xs text-gray-500">
-              {t('auth.modal.signInDescription')}
-            </p>
-          </div>
           
           <div className="grid grid-cols-3 gap-4 text-center mb-4">
             <div className="flex flex-col items-center space-y-1">
@@ -613,6 +846,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
         </div>
+        </>
+        )}
       </div>
     </div>
   );
