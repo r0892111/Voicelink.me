@@ -539,7 +539,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-blue-900 mb-1">Important: Email Address</p>
                       <p className="text-sm text-blue-800">
-                        This creates a separate VoiceLink account. Your email address <strong>must match exactly</strong> with your Odoo email address, otherwise the integration will not work. You can choose any password you prefer - it will be securely hashed and stored.
+                        This creates your VoiceLink account (not your Odoo password). Your email <strong>must match your Odoo email</strong>, otherwise the integration will not work. You can choose any password you prefer - it will be securely encrypted and stored.
                       </p>
                     </div>
                   </div>
@@ -581,7 +581,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   Password {isSignup && <span className="text-red-500">*</span>}
                 </label>
                 {isSignup && (
-                  <p className="text-xs text-gray-600 mb-2">Choose a secure password (min. 6 characters)</p>
+                  <p className="text-xs text-gray-600 mb-2">Choose a secure password (min. 6 characters) - not your Odoo password</p>
                 )}
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -601,6 +601,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
+                {isSignup && (
+                  <p className="text-xs text-gray-500 mt-1.5 flex items-center">
+                    <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"/>
+                    </svg>
+                    Your password is encrypted and never shared with third parties.
+                  </p>
+                )}
               </div>
 
               {isSignup && (
