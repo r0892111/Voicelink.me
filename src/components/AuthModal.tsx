@@ -464,7 +464,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               {/* Global Signup/Login Toggle */}
               <div className="flex items-center justify-center space-x-2 mb-6">
                 <button
-                  onClick={() => setGlobalAuthMode('signup')}
+                  onClick={() => {
+                    setGlobalAuthMode('signup');
+                    setError(null);
+                  }}
                   className={`px-6 py-2 rounded-lg font-medium transition-all ${
                     globalAuthMode === 'signup'
                       ? 'bg-blue-600 text-white shadow-md'
@@ -474,7 +477,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {t('auth.signUp')}
                 </button>
                 <button
-                  onClick={() => setGlobalAuthMode('login')}
+                  onClick={() => {
+                    setGlobalAuthMode('login');
+                    setError(null);
+                  }}
                   className={`px-6 py-2 rounded-lg font-medium transition-all ${
                     globalAuthMode === 'login'
                       ? 'bg-blue-600 text-white shadow-md'
