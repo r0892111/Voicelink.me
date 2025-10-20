@@ -253,11 +253,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               cancelUrl: `${window.location.origin}/dashboard`,
               crmProvider: 'odoo',
             });
+            // If we get here, redirect was successful - don't reset loading state
+            return;
           } catch (checkoutError) {
             console.error('Checkout error:', checkoutError);
             setRedirectingMessage(null);
             // If checkout fails, still navigate to dashboard
             navigate('/dashboard');
+            return;
           }
         }
       } else {
@@ -299,21 +302,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             if (hasActiveSubscription) {
               // User has active subscription, go to dashboard
               navigate('/dashboard');
+              return;
             } else {
               // No active subscription, redirect to Stripe checkout
               setRedirectingMessage(t('auth.redirectingToCheckout') || 'Redirecting to checkout...');
-              await StripeService.createCheckoutSession({
-                priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
-                quantity: 1,
-                successUrl: `${window.location.origin}/dashboard`,
-                cancelUrl: `${window.location.origin}/dashboard`,
-                crmProvider: 'odoo',
-              });
+              try {
+                await StripeService.createCheckoutSession({
+                  priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+                  quantity: 1,
+                  successUrl: `${window.location.origin}/dashboard`,
+                  cancelUrl: `${window.location.origin}/dashboard`,
+                  crmProvider: 'odoo',
+                });
+                // If we get here, redirect was successful - don't reset loading state
+                return;
+              } catch (checkoutError) {
+                console.error('Checkout error during login:', checkoutError);
+                setRedirectingMessage(null);
+                navigate('/dashboard');
+                return;
+              }
             }
           } catch (subscriptionError) {
             console.error('Error checking subscription:', subscriptionError);
             // On error, navigate to dashboard (safer than leaving user stuck)
             navigate('/dashboard');
+            return;
           }
         }
       }
