@@ -372,6 +372,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 onClick={() => {
                   setShowOdooTypeSelection(false);
                   setShowSelfHostedLogin(true);
+                  setIsSignup(true);
                 }}
                 className="w-full p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
               >
