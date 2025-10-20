@@ -360,7 +360,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   setShowOdooTypeSelection(false);
                   setShowSelfHostedLogin(true);
                 }}
-                className="w-full p-6 bg-gray-50 border-2 border-gray-200 rounded-xl hover:bg-gray-100 hover:border-gray-300 transition-all text-left group"
+                className="w-full p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
               >
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0 mt-1">
@@ -369,7 +369,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <div className="flex-1">
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">Self-Hosted Odoo</h3>
                     <p className="text-sm text-gray-600">
-                      Use this if your Odoo runs on your own server or custom domain — for example <span className="font-mono text-gray-700">odoo.yourcompany.com</span> or similar.
+                      Use this if your Odoo runs on your own server or custom domain — for example <span className="font-mono text-blue-600">odoo.yourcompany.com</span> or similar.
                     </p>
                   </div>
                 </div>
