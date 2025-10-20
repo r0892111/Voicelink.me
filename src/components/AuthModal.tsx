@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Loader2, AlertCircle, Download, ChevronDown, ChevronUp, Mail, Lock, UserPlus } from 'lucide-react';
+import { X, Loader2, AlertCircle, Download, ChevronDown, ChevronUp, Mail, Lock, UserPlus, Eye, EyeOff } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { AuthProvider } from '../types/auth';
@@ -26,7 +26,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [showSelfHostedLogin, setShowSelfHostedLogin] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [isSignup, setIsSignup] = React.useState(false);
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [isSignup, setIsSignup] = React.useState(true);
   const [emailLoading, setEmailLoading] = React.useState(false);
   const [emailError, setEmailError] = React.useState<string | null>(null);
   const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
@@ -139,6 +142,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const handleEmailAuth = async () => {
     if (!email || !password) {
       setEmailError('Please enter both email and password');
+      return;
+    }
+
+    if (isSignup && password !== confirmPassword) {
+      setEmailError('Passwords do not match');
+      return;
+    }
+
+    if (isSignup && password.length < 6) {
+      setEmailError('Password must be at least 6 characters');
       return;
     }
 
@@ -517,6 +530,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </p>
               </div>
 
+              {/* Important Email Notice */}
+              {isSignup && (
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-start space-x-2">
+                    <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-blue-900 mb-1">Important: Email Address</p>
+                      <p className="text-sm text-blue-800">
+                        This creates a separate VoiceLink account. Your email address <strong>must match exactly</strong> with your Odoo email address, otherwise the integration will not work. You can choose any password you prefer - it will be securely hashed and stored.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {emailError && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
                   <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
@@ -529,8 +557,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
+                  Email {isSignup && <span className="text-red-500">*</span>}
                 </label>
+                {isSignup && (
+                  <p className="text-xs text-gray-600 mb-2">Must match your Odoo email address exactly</p>
+                )}
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -539,32 +570,68 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
 
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
+                  Password {isSignup && <span className="text-red-500">*</span>}
                 </label>
+                {isSignup && (
+                  <p className="text-xs text-gray-600 mb-2">Choose a secure password (min. 6 characters)</p>
+                )}
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
                 </div>
               </div>
 
+              {isSignup && (
+                <div>
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                    Confirm Password <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <button
                 onClick={handleEmailAuth}
-                disabled={emailLoading || !email || !password || !agreedToTerms}
-                className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
+                disabled={emailLoading || !email || !password || (isSignup && !confirmPassword) || !agreedToTerms}
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
               >
                 {emailLoading ? (
                   <>
@@ -580,30 +647,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </button>
 
               <button
-                onClick={() => setIsSignup(!isSignup)}
-                className="w-full text-sm text-purple-600 hover:text-purple-800 font-medium"
+                onClick={() => {
+                  setIsSignup(!isSignup);
+                  setEmailError(null);
+                  setConfirmPassword('');
+                }}
+                className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium"
               >
                 {isSignup ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
               </button>
 
               <div className="pt-4 border-t border-gray-200">
                 <p className="text-xs text-gray-600 mb-2">
-                  After logging in:
+                  After {isSignup ? 'creating your account' : 'logging in'}:
                 </p>
                 <ol className="text-xs text-gray-600 space-y-1 ml-4 list-decimal">
                   <li>Go to Dashboard → Odoo Settings</li>
                   <li>Enter your Odoo database name and API key</li>
                   <li>Start using VoiceLink!</li>
                 </ol>
-                <a
-                  href="/ODOO_CUSTOM_SETUP.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-xs font-medium text-purple-600 hover:text-purple-800 mt-3"
-                >
-                  <Download className="w-3 h-3 mr-1" />
-                  View setup guide
-                </a>
               </div>
             </div>
           </div>
