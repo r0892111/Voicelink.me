@@ -768,28 +768,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-offset-2"
               />
               <span className="text-sm text-gray-700">
-                I agree to the{' '}
+                {t('validation.iAgreeToThe')}{' '}
                 <a
                   href="/saas-agreement"
                   className="text-blue-600 hover:underline font-medium"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  SaaS Agreement
+                  {t('validation.saasAgreement')}
                 </a>
               </span>
             </label>
             
             {/* Download Options */}
             <div className="mt-3 ml-7 flex items-center space-x-4 text-xs text-gray-600">
-              <span>Download:</span>
+              <span>{t('validation.download')}</span>
               <a
                 href="/SaaS Agreement en-US.pdf"
                 download="SaaS_Agreement_English.pdf"
                 className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
               >
                 <Download className="w-3 h-3" />
-                <span>English Version</span>
+                <span>{t('validation.englishVersion')}</span>
               </a>
               <a
                 href="/SaaS Overeenkomst.docx.pdf"
@@ -797,7 +797,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
               >
                 <Download className="w-3 h-3" />
-                <span>Dutch Version (Official)</span>
+                <span>{t('validation.dutchVersionOfficial')}</span>
               </a>
             </div>
           </div>
@@ -806,14 +806,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           {/* Privacy Policy Notice */}
           <div className="mb-6">
             <p className="text-xs text-gray-500 text-center">
-              By connecting your CRM, you acknowledge our{' '}
-              <a 
-                href="/privacy-policy" 
-                className="text-blue-600 hover:underline" 
-                target="_blank" 
+              {t('validation.byConnectingCRM')}{' '}
+              <a
+                href="/privacy-policy"
+                className="text-blue-600 hover:underline"
+                target="_blank"
                 rel="noopener noreferrer"
               >
-                Privacy Policy
+                {t('validation.privacyPolicy')}
               </a>
             </p>
           </div>

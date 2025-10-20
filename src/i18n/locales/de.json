@@ -71,7 +71,14 @@
     "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
     "minLength": "Muss mindestens {{min}} Zeichen lang sein",
     "maxLength": "Darf höchstens {{max}} Zeichen lang sein",
-    "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren"
+    "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren",
+    "iAgreeToThe": "Ich stimme der",
+    "saasAgreement": "SaaS-Vereinbarung",
+    "download": "Download:",
+    "englishVersion": "Englische Version",
+    "dutchVersionOfficial": "Niederländische Version (Offiziell)",
+    "byConnectingCRM": "Durch die Verbindung Ihres CRM bestätigen Sie unsere",
+    "privacyPolicy": "Datenschutzerklärung"
   },
   "auth": {
     "invalidAuthenticationPlatform": "Ungültige Authentifizierungsplattform",

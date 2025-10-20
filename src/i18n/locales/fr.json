@@ -65,7 +65,14 @@
     "invalidPhone": "Veuillez entrer un numéro de téléphone valide",
     "minLength": "Doit contenir au moins {{min}} caractères",
     "maxLength": "Ne doit pas dépasser {{max}} caractères",
-    "agreeToTerms": "Veuillez accepter l'Accord SaaS pour continuer"
+    "agreeToTerms": "Veuillez accepter l'Accord SaaS pour continuer",
+    "iAgreeToThe": "J'accepte le",
+    "saasAgreement": "Accord SaaS",
+    "download": "Télécharger :",
+    "englishVersion": "Version Anglaise",
+    "dutchVersionOfficial": "Version Néerlandaise (Officielle)",
+    "byConnectingCRM": "En connectant votre CRM, vous reconnaissez notre",
+    "privacyPolicy": "Politique de Confidentialité"
   },
   "auth": {
     "callback": {

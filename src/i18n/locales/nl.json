@@ -65,7 +65,14 @@
     "invalidPhone": "Voer een geldig telefoonnummer in",
     "minLength": "Moet minimaal {{min}} karakters bevatten",
     "maxLength": "Mag maximaal {{max}} karakters bevatten",
-    "agreeToTerms": "Ga akkoord met de SaaS Overeenkomst om door te gaan"
+    "agreeToTerms": "Ga akkoord met de SaaS Overeenkomst om door te gaan",
+    "iAgreeToThe": "Ik ga akkoord met de",
+    "saasAgreement": "SaaS Overeenkomst",
+    "download": "Download:",
+    "englishVersion": "Engelse Versie",
+    "dutchVersionOfficial": "Nederlandse Versie (Officieel)",
+    "byConnectingCRM": "Door uw CRM te verbinden, erkent u ons",
+    "privacyPolicy": "Privacybeleid"
   },
   "navigation": {
     "home": "Home",

@@ -75,7 +75,14 @@
     "invalidPhone": "Please enter a valid phone number",
     "minLength": "Must be at least {{min}} characters",
     "maxLength": "Must be no more than {{max}} characters",
-    "agreeToTerms": "Please agree to the SaaS Agreement to continue"
+    "agreeToTerms": "Please agree to the SaaS Agreement to continue",
+    "iAgreeToThe": "I agree to the",
+    "saasAgreement": "SaaS Agreement",
+    "download": "Download:",
+    "englishVersion": "English Version",
+    "dutchVersionOfficial": "Dutch Version (Official)",
+    "byConnectingCRM": "By connecting your CRM, you acknowledge our",
+    "privacyPolicy": "Privacy Policy"
   },
   "contact": {
     "title": "Contact Us",
