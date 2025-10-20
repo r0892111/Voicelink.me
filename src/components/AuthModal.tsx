@@ -744,17 +744,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               >
                 {isSignup ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
               </button>
-
-              <div className="pt-4 border-t border-gray-200">
-                <p className="text-xs text-gray-600 mb-2">
-                  After {isSignup ? 'creating your account' : 'logging in'}:
-                </p>
-                <ol className="text-xs text-gray-600 space-y-1 ml-4 list-decimal">
-                  <li>Go to Dashboard → Odoo Settings</li>
-                  <li>Enter your Odoo database name and API key</li>
-                  <li>Start using VoiceLink!</li>
-                </ol>
-              </div>
             </div>
           </div>
         )}
