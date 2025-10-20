@@ -142,6 +142,9 @@
       "redirectingToCheckout": "Redirecting to subscription checkout...",
       "returnToHome": "Return to Home"
     },
+    "preparingCheckout": "Setting up your account...",
+    "redirectingToCheckout": "Redirecting to checkout...",
+    "checkingSubscription": "Checking your subscription...",
     "invalidAuthenticationPlatform": "Invalid authentication platform",
     "authenticationFailed": "Authentication failed",
     "missingAuthenticationParameters": "Missing authentication parameters",

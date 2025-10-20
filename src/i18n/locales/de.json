@@ -111,6 +111,9 @@
       "termsOfService": "Nutzungsbedingungen",
       "privacyPolicy": "Datenschutzrichtlinie"
     },
+    "preparingCheckout": "Ihr Konto wird eingerichtet...",
+    "redirectingToCheckout": "Weiterleitung zur Kasse...",
+    "checkingSubscription": "Ihr Abonnement wird überprüft...",
     "invalidAuthenticationPlatform": "Ungültige Authentifizierungsplattform",
     "authenticationFailed": "Authentifizierung fehlgeschlagen",
     "missingAuthenticationParameters": "Fehlende Authentifizierungsparameter",

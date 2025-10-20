@@ -177,6 +177,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         if (signupError) throw signupError;
 
         if (data.user) {
+          // Show loading immediately to prevent dashboard flash
+          setRedirectingMessage(t('auth.preparingCheckout') || 'Setting up your account...');
+
           const userName = email.split('@')[0];
 
           // Create entry in odoo_users table
@@ -212,7 +215,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           localStorage.setItem('auth_provider', 'odoo');
 
           // Create Stripe customer
-          setRedirectingMessage(t('auth.preparingCheckout') || 'Setting up your account...');
           try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
@@ -257,6 +259,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           }
         }
       } else {
+        // Sign in existing user
         const { data, error: loginError } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -267,7 +270,49 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         if (data.user) {
           localStorage.setItem('userPlatform', 'odoo');
           localStorage.setItem('auth_provider', 'odoo');
-          navigate('/dashboard');
+
+          // Show loading state while checking subscription
+          setRedirectingMessage(t('auth.checkingSubscription') || 'Checking your subscription...');
+
+          try {
+            // Check if user has active subscription
+            const response = await fetch(
+              `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=odoo`,
+              {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${data.session.access_token}`,
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+
+            const result = await response.json();
+            const hasActiveSubscription =
+              result.success &&
+              result.subscription &&
+              (result.subscription.subscription_status === 'active' ||
+               result.subscription.subscription_status === 'trialing');
+
+            if (hasActiveSubscription) {
+              // User has active subscription, go to dashboard
+              navigate('/dashboard');
+            } else {
+              // No active subscription, redirect to Stripe checkout
+              setRedirectingMessage(t('auth.redirectingToCheckout') || 'Redirecting to checkout...');
+              await StripeService.createCheckoutSession({
+                priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+                quantity: 1,
+                successUrl: `${window.location.origin}/dashboard`,
+                cancelUrl: `${window.location.origin}/dashboard`,
+                crmProvider: 'odoo',
+              });
+            }
+          } catch (subscriptionError) {
+            console.error('Error checking subscription:', subscriptionError);
+            // On error, navigate to dashboard (safer than leaving user stuck)
+            navigate('/dashboard');
+          }
         }
       }
     } catch (err) {

@@ -131,6 +131,9 @@
       "termsOfService": "Servicevoorwaarden",
       "privacyPolicy": "Privacybeleid"
     },
+    "preparingCheckout": "Je account wordt ingesteld...",
+    "redirectingToCheckout": "Doorverwijzen naar checkout...",
+    "checkingSubscription": "Je abonnement controleren...",
     "invalidAuthenticationPlatform": "Ongeldig authenticatieplatform",
     "authenticationFailed": "Authenticatie mislukt",
     "missingAuthenticationParameters": "Ontbrekende authenticatieparameters",

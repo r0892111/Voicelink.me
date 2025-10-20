@@ -97,6 +97,9 @@
       "privacyPolicy": "Politique de Confidentialité"
     },
     "invalidAuthenticationPlatform": "Plateforme d'authentification invalide",
+    "preparingCheckout": "Configuration de votre compte...",
+    "redirectingToCheckout": "Redirection vers le paiement...",
+    "checkingSubscription": "Vérification de votre abonnement...",
     "authenticationFailed": "Échec de l'authentification",
     "missingAuthenticationParameters": "Paramètres d'authentification manquants",
     "invalidStateParameter": "Paramètre d'état invalide",
