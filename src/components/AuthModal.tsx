@@ -707,7 +707,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               <button
                 onClick={handleEmailAuth}
-                disabled={emailLoading || !email || !password || (isSignup && !confirmPassword) || !agreedToTerms}
+                disabled={emailLoading || !email || !password || (isSignup && (!confirmPassword || !agreedToTerms))}
                 className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
               >
                 {emailLoading ? (
@@ -725,7 +725,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               <button
                 onClick={() => {
-                  setIsSignup(!isSignup);
+                  // When switching auth modes, go back to main screen to ensure SaaS agreement is shown for signup
+                  const newMode = isSignup ? 'login' : 'signup';
+                  setGlobalAuthMode(newMode);
+                  setShowSelfHostedLogin(false);
+                  setShowOdooTypeSelection(false);
+                  setIsSignup(newMode === 'signup');
                   setEmailError(null);
                   setConfirmPassword('');
                 }}
