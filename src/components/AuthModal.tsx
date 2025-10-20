@@ -581,7 +581,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   Password {isSignup && <span className="text-red-500">*</span>}
                 </label>
                 {isSignup && (
-                  <p className="text-xs text-gray-600 mb-2">Choose a secure password (min. 6 characters) - not your Odoo password</p>
+                  <p className="text-xs text-gray-600 mb-2">Choose a secure password (min. 6 characters)</p>
                 )}
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
