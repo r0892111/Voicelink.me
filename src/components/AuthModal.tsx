@@ -22,6 +22,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [isAnimating, setIsAnimating] = React.useState(false);
   const processingRef = React.useRef(false);
 
+  const [showOdooTypeSelection, setShowOdooTypeSelection] = React.useState(false);
   const [showSelfHostedLogin, setShowSelfHostedLogin] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -52,6 +53,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     termsCheckboxRef.current?.focus();
     return;
   }
+
+  // If Odoo is clicked, show type selection instead of direct auth
+  if (provider.name === 'odoo') {
+    setShowOdooTypeSelection(true);
+    return;
+  }
+
   try {
     processingRef.current = true;
     setLoadingProvider(provider.name);
@@ -69,9 +77,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         break;
       case 'pipedrive':
         authService = AuthService.createPipedriveAuth();
-        break;
-      case 'odoo':
-        authService = AuthService.createOdooAuth();
         break;
       default:
         console.error('Unknown provider:', provider.name);
@@ -96,6 +101,40 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     processingRef.current = false;
   }
 };
+
+  const handleOdooCloudAuth = async () => {
+    if (!agreedToTerms) {
+      setError(t('validation.agreeToTerms'));
+      termsCheckboxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      termsCheckboxRef.current?.focus();
+      return;
+    }
+
+    try {
+      processingRef.current = true;
+      setLoadingProvider('odoo');
+      setError(null);
+
+      localStorage.setItem('userPlatform', 'odoo');
+      localStorage.setItem('auth_provider', 'odoo');
+
+      const authService = AuthService.createOdooAuth();
+      const result = await authService.initiateAuth();
+
+      if (!result.success && result.error) {
+        setError(`${t('auth.authenticationFailedFor', { provider: 'Odoo' })}: ${result.error}`);
+        localStorage.removeItem('userPlatform');
+        localStorage.removeItem('auth_provider');
+      }
+    } catch (error) {
+      setError(`Error signing in with Odoo: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      localStorage.removeItem('userPlatform');
+      localStorage.removeItem('auth_provider');
+    } finally {
+      setLoadingProvider(null);
+      processingRef.current = false;
+    }
+  };
 
   const handleEmailAuth = async () => {
     if (!email || !password) {
@@ -277,28 +316,97 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           </div>
         )}
 
-        {/* Modal Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <img
-              src="/Finit Voicelink Blue.svg"
-              alt={t('common.voiceLink')}
-              className="h-8 w-auto"
-            />
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('auth.modal.title')}</h2>
-          <p className="text-lg text-gray-600 mb-4">{t('auth.modal.subtitle')}</p>
-          
-          {/* Free Trial Banner */}
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
-            <div className="flex items-center justify-center space-x-2 mb-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-green-800 font-semibold text-lg">{t('auth.modal.freeTrialBanner')}</span>
+        {/* Odoo Type Selection Screen */}
+        {showOdooTypeSelection ? (
+          <>
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center space-x-3 mb-4">
+                <img
+                  src="/Finit Voicelink Blue.svg"
+                  alt={t('common.voiceLink')}
+                  className="h-8 w-auto"
+                />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">Choose your Odoo type</h2>
+              <p className="text-lg text-gray-600 mb-4">Select the type of Odoo installation you're using</p>
             </div>
-            <p className="text-green-700 text-sm">
-              {t('auth.modal.freeTrialDescription')}
-            </p>
-          </div>
+
+            <div className="space-y-4 mb-8">
+              {/* Odoo.com (Cloud) Option */}
+              <button
+                onClick={handleOdooCloudAuth}
+                disabled={loadingProvider === 'odoo'}
+                className="w-full p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 mt-1">
+                    <img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Odoo.com (Cloud)</h3>
+                    <p className="text-sm text-gray-600">
+                      Use this if your Odoo account runs on Odoo's official cloud — your login URL looks like <span className="font-mono text-blue-600">yourcompany.odoo.com</span>.
+                    </p>
+                  </div>
+                  {loadingProvider === 'odoo' && (
+                    <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+                  )}
+                </div>
+              </button>
+
+              {/* Self-Hosted Odoo Option */}
+              <button
+                onClick={() => {
+                  setShowOdooTypeSelection(false);
+                  setShowSelfHostedLogin(true);
+                }}
+                className="w-full p-6 bg-gray-50 border-2 border-gray-200 rounded-xl hover:bg-gray-100 hover:border-gray-300 transition-all text-left group"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 mt-1">
+                    <img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Self-Hosted Odoo</h3>
+                    <p className="text-sm text-gray-600">
+                      Use this if your Odoo runs on your own server or custom domain — for example <span className="font-mono text-gray-700">odoo.yourcompany.com</span> or similar.
+                    </p>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <button
+              onClick={() => setShowOdooTypeSelection(false)}
+              className="w-full py-3 text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              ← Back to login options
+            </button>
+          </>
+        ) : (
+          <>
+            {/* Modal Header */}
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center space-x-3 mb-4">
+                <img
+                  src="/Finit Voicelink Blue.svg"
+                  alt={t('common.voiceLink')}
+                  className="h-8 w-auto"
+                />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('auth.modal.title')}</h2>
+              <p className="text-lg text-gray-600 mb-4">{t('auth.modal.subtitle')}</p>
+
+              {/* Free Trial Banner */}
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                  <span className="text-green-800 font-semibold text-lg">{t('auth.modal.freeTrialBanner')}</span>
+                </div>
+                <p className="text-green-700 text-sm">
+                  {t('auth.modal.freeTrialDescription')}
+                </p>
+              </div>
           
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center space-x-2 text-red-700">
@@ -385,34 +493,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           })}
         </div>
 
-        {/* Self-hosted Odoo Login */}
-        <div className="mb-6">
-          <button
-            onClick={() => setShowSelfHostedLogin(!showSelfHostedLogin)}
-            className="w-full p-4 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 transition-colors"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <AlertCircle className="w-5 h-5 text-purple-600 flex-shrink-0" />
-                <div className="text-left">
-                  <h4 className="text-sm font-semibold text-purple-900">
-                    Using Self-Hosted Odoo?
-                  </h4>
-                  <p className="text-xs text-purple-700">
-                    Click to login with email & password
-                  </p>
-                </div>
-              </div>
-              {showSelfHostedLogin ? (
-                <ChevronUp className="w-5 h-5 text-purple-600" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-purple-600" />
-              )}
-            </div>
-          </button>
+        {/* Self-hosted Odoo Login Form */}
+        {showSelfHostedLogin && (
+          <div className="mb-6">
+            <button
+              onClick={() => {
+                setShowSelfHostedLogin(false);
+                setShowOdooTypeSelection(true);
+              }}
+              className="mb-4 text-gray-600 hover:text-gray-900 transition-colors flex items-center space-x-1"
+            >
+              <span>←</span>
+              <span>Back to Odoo options</span>
+            </button>
 
-          {showSelfHostedLogin && (
-            <div className="mt-4 p-6 bg-white border-2 border-purple-200 rounded-xl space-y-4">
+            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl space-y-4">
               <div className="text-center mb-4">
                 <h5 className="text-lg font-semibold text-gray-900 mb-1">
                   {isSignup ? 'Create Account' : 'Sign In'}
@@ -511,8 +606,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </a>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Footer */}
         <div className="pt-6 border-t border-gray-200">
@@ -613,6 +708,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
         </div>
+        </>
+        )}
       </div>
     </div>
   );
