@@ -640,7 +640,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email {isSignup && <span className="text-red-500">*</span>}
+                  {t('auth.email')} {isSignup && <span className="text-red-500">*</span>}
                 </label>
                 {isSignup && (
                   <p className="text-xs text-gray-600 mb-2">{t('auth.mustMatchOdooEmail')}</p>
@@ -660,10 +660,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password {isSignup && <span className="text-red-500">*</span>}
+                  {t('auth.password')} {isSignup && <span className="text-red-500">*</span>}
                 </label>
                 {isSignup && (
-                  <p className="text-xs text-gray-600 mb-2">Choose a secure password (min. 6 characters)</p>
+                  <p className="text-xs text-gray-600 mb-2">{t('auth.chooseSecurePassword')}</p>
                 )}
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -688,7 +688,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               {isSignup && (
                 <div>
                   <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                    Confirm Password <span className="text-red-500">*</span>
+                    {t('auth.confirmPassword')} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -719,12 +719,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 {emailLoading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>{isSignup ? 'Creating Account...' : 'Signing In...'}</span>
+                    <span>{isSignup ? t('auth.creatingAccount') : t('auth.signingIn')}</span>
                   </>
                 ) : (
                   <>
                     <UserPlus className="w-5 h-5" />
-                    <span>{isSignup ? 'Create Account' : 'Sign In'}</span>
+                    <span>{isSignup ? t('auth.createAccount') : t('auth.signIn')}</span>
                   </>
                 )}
               </button>
@@ -742,7 +742,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 }}
                 className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium"
               >
-                {isSignup ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
+                {isSignup ? t('auth.alreadyHaveAccountSignIn') : t('auth.needAccountSignUp')}
               </button>
             </div>
           </div>
