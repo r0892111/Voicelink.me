@@ -370,7 +370,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <div className="absolute inset-0 bg-white bg-opacity-95 rounded-2xl flex flex-col items-center justify-center z-50">
             <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
             <p className="text-lg font-medium text-gray-900">{redirectingMessage}</p>
-            <p className="text-sm text-gray-600 mt-2">Please wait...</p>
+            <p className="text-sm text-gray-600 mt-2">{t('auth.pleaseWait')}</p>
           </div>
         )}
 
@@ -385,8 +385,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   className="h-8 w-auto"
                 />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">Choose your Odoo type</h2>
-              <p className="text-lg text-gray-600 mb-4">Select the type of Odoo installation you're using</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('auth.chooseYourOdooType')}</h2>
+              <p className="text-lg text-gray-600 mb-4">{t('auth.selectOdooInstallationType')}</p>
             </div>
 
             <div className="space-y-4 mb-8">
@@ -401,9 +401,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     <img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Odoo.com (Cloud)</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('auth.odooCloudTitle')}</h3>
                     <p className="text-sm text-gray-600">
-                      Use this if your Odoo account runs on Odoo's official cloud — your login URL looks like <span className="font-mono text-blue-600">yourcompany.odoo.com</span>.
+                      {t('auth.odooCloudDescription')}
                     </p>
                   </div>
                   {loadingProvider === 'odoo' && (
@@ -426,9 +426,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     <img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Self-Hosted Odoo</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('auth.selfHostedOdooTitle')}</h3>
                     <p className="text-sm text-gray-600">
-                      Use this if your Odoo runs on your own server or custom domain — for example <span className="font-mono text-blue-600">odoo.yourcompany.com</span> or similar.
+                      {t('auth.selfHostedOdooDescription')}
                     </p>
                   </div>
                 </div>
@@ -439,7 +439,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               onClick={() => setShowOdooTypeSelection(false)}
               className="w-full py-3 text-gray-600 hover:text-gray-900 transition-colors"
             >
-              ← Back to login options
+              ← {t('auth.backToLoginOptions')}
             </button>
           </>
         ) : (
@@ -510,7 +510,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <>
                     <div className="flex items-center justify-center w-full">
                       <Loader2 className="w-6 h-6 animate-spin text-gray-600 mr-3" />
-                      <span className="text-lg text-gray-600">Connecting to {provider.displayName}...</span>
+                      <span className="text-lg text-gray-600">{t('auth.connectingTo', { provider: provider.displayName })}</span>
                     </div>
                   </>
                 ) : (
@@ -532,8 +532,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           {provider.name === 'odoo' && t('auth.modal.connectOdoo')}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {isDisabled ? 'Temporarily unavailable' : (
-                            provider.name === 'odoo' ? 'For Odoo.com accounts only' : t('auth.modal.startTrialInstantly')
+                          {isDisabled ? t('auth.temporarilyUnavailable') : (
+                            provider.name === 'odoo' ? t('auth.forOdooAccountsOnly') : t('auth.modal.startTrialInstantly')
                           )}
                         </div>
                       </div>
@@ -563,16 +563,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               className="mb-4 text-gray-600 hover:text-gray-900 transition-colors flex items-center space-x-1"
             >
               <span>←</span>
-              <span>Back to Odoo options</span>
+              <span>{t('auth.backToOdooOptions')}</span>
             </button>
 
             <div className="p-6 bg-white border-2 border-gray-200 rounded-xl space-y-4">
               <div className="text-center mb-4">
                 <h5 className="text-lg font-semibold text-gray-900 mb-1">
-                  {isSignup ? 'Create Account' : 'Sign In'}
+                  {isSignup ? t('auth.createAccount') : t('auth.signIn')}
                 </h5>
                 <p className="text-sm text-gray-600">
-                  For self-hosted Odoo instances
+                  {t('auth.forSelfHostedInstances')}
                 </p>
               </div>
 
@@ -582,9 +582,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <div className="flex items-start space-x-2">
                     <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-blue-900 mb-1">Important: Email Address</p>
+                      <p className="text-sm font-semibold text-blue-900 mb-1">{t('auth.importantEmailAddress')}</p>
                       <p className="text-sm text-blue-800">
-                        This creates your VoiceLink account (not your Odoo password). Your email <strong>must match your Odoo email</strong>, otherwise the integration will not work. You can choose any password you prefer - it will be securely encrypted and stored.
+                        {t('auth.emailMatchWarning')}
                       </p>
                     </div>
                   </div>
@@ -595,7 +595,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
                   <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm text-red-800 font-medium">Error</p>
+                    <p className="text-sm text-red-800 font-medium">{t('auth.error')}</p>
                     <p className="text-sm text-red-700">{emailError}</p>
                   </div>
                 </div>
@@ -606,7 +606,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   Email {isSignup && <span className="text-red-500">*</span>}
                 </label>
                 {isSignup && (
-                  <p className="text-xs text-gray-600 mb-2">Must match your Odoo email address exactly</p>
+                  <p className="text-xs text-gray-600 mb-2">{t('auth.mustMatchOdooEmail')}</p>
                 )}
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
