@@ -37,7 +37,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const termsCheckboxRef = React.useRef<HTMLInputElement>(null);
 
   // TEMPORARY: Set to true to re-enable Pipedrive and Teamleader
-  const disabledProviders: string[] = [];
+  const disabledProviders: string[] = ['teamleader'];
 
   // Handle modal animation
   React.useEffect(() => {
