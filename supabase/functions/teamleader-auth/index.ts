@@ -178,7 +178,7 @@ Deno.serve(async (req: Request) => {
         user_info: userInfo,
         is_admin: true,
       }, {
-        onConflict: "user_id",
+        onConflict: "teamleader_id",
       });
 
     if (insertError) {
