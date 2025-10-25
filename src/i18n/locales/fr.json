@@ -108,7 +108,7 @@
     "redirectingToCheckout": "Redirection vers le paiement...",
     "checkingSubscription": "Vérification de votre abonnement...",
     "temporarilyUnavailable": "Temporairement indisponible",
-    "forOdooAccountsOnly": "Pour les comptes Odoo.com uniquement",
+    "forOdooAccountsOnly": "Choisissez votre type de compte Odoo",
     "forSelfHostedInstances": "Pour les instances Odoo auto-hébergées",
     "backToOdooOptions": "Retour aux options Odoo",
     "backToLoginOptions": "Retour aux options de connexion",

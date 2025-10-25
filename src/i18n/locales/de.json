@@ -122,7 +122,7 @@
     "redirectingToCheckout": "Weiterleitung zur Kasse...",
     "checkingSubscription": "Ihr Abonnement wird überprüft...",
     "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
-    "forOdooAccountsOnly": "Nur für Odoo.com-Konten",
+    "forOdooAccountsOnly": "Wählen Sie Ihren Odoo-Kontotyp",
     "forSelfHostedInstances": "Für selbst gehostete Odoo-Instanzen",
     "backToOdooOptions": "Zurück zu Odoo-Optionen",
     "backToLoginOptions": "Zurück zu Anmeldeoptionen",
