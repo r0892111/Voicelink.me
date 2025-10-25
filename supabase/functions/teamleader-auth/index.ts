@@ -192,35 +192,25 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Generate session for the user
-    const sessionResponse = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${supabaseServiceKey}`,
-        "Content-Type": "application/json",
-        "apikey": supabaseServiceKey,
-      },
-      body: JSON.stringify({
-        email: userInfo.email,
-        password: Math.random().toString(36),
-      }),
+    // Generate session token for the user using admin API
+    const sessionData = await supabase.auth.admin.generateLink({
+      type: 'magiclink',
+      email: userInfo.email,
     });
 
-    // Generate a magic link instead for secure login
-    const magicLinkResponse = await fetch(`${supabaseUrl}/auth/v1/magiclink`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${supabaseServiceKey}`,
-        "Content-Type": "application/json",
-        "apikey": supabaseServiceKey,
-      },
-      body: JSON.stringify({
-        email: userInfo.email,
-        type: "magiclink",
-      }),
-    });
+    if (sessionData.error) {
+      console.error("Error generating session:", sessionData.error);
+      return new Response(
+        JSON.stringify({ success: false, error: "Failed to generate session" }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
 
-    const magicLinkData = await magicLinkResponse.json();
+    // Extract session tokens from the properties
+    const sessionTokens = sessionData.data.properties;
 
     return new Response(
       JSON.stringify({
@@ -230,7 +220,10 @@ Deno.serve(async (req: Request) => {
           email: userInfo.email,
           name: userInfo.first_name + " " + userInfo.last_name,
         },
-        session_url: magicLinkData.action_link || magicLinkData.confirmation_url,
+        session: {
+          access_token: sessionTokens.access_token,
+          refresh_token: sessionTokens.refresh_token,
+        },
       }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
