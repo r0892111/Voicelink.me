@@ -28,8 +28,11 @@ Deno.serve(async (req: Request) => {
     }
 
     // Exchange code for access token
-    const clientId = Deno.env.get("VITE_TEAMLEADER_CLIENT_ID");
+    const clientId = Deno.env.get("TEAMLEADER_CLIENT_ID");
     const clientSecret = Deno.env.get("TEAMLEADER_CLIENT_SECRET");
+
+    console.log("Client ID configured:", !!clientId);
+    console.log("Client Secret configured:", !!clientSecret);
 
     if (!clientId || !clientSecret) {
       return new Response(
@@ -42,7 +45,7 @@ Deno.serve(async (req: Request) => {
     }
 
     // Exchange authorization code for access token
-    const tokenResponse = await fetch("https://app.teamleader.eu/oauth2/access_token", {
+    const tokenResponse = await fetch("https://focus.teamleader.eu/oauth2/access_token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
