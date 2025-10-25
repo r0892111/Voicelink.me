@@ -722,57 +722,20 @@ export const SubscriptionDashboard: React.FC = () => {
                         </div>
                       </div>
                     ) : (
-                      /* Default setup for other platforms */
-                      <>
-                        <div className="grid md:grid-cols-3 gap-8 mb-8">
-                          {/* Step 1 */}
-                          <div className="text-center">
-                            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                              <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>1</span>
-                            </div>
-                            <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                              {t('dashboard.gettingStarted.step1.title')}
-                            </h3>
-                            <p className="text-gray-600 leading-relaxed">
-                              {t('dashboard.gettingStarted.step1.description')}
-                            </p>
-                          </div>
-
-                          {/* Step 2 */}
-                          <div className="text-center">
-                            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                              <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>2</span>
-                            </div>
-                            <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                              {t('dashboard.gettingStarted.step2.title')}
-                            </h3>
-                            <p className="text-gray-600 leading-relaxed">
-                              {t('dashboard.gettingStarted.step2.description')}
-                            </p>
-                          </div>
-
-                          {/* Step 3 */}
-                          <div className="text-center">
-                            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(28, 44, 85, 0.1)' }}>
-                              <span className="text-2xl font-bold" style={{ color: '#1C2C55' }}>3</span>
-                            </div>
-                            <h3 className="text-xl font-semibold mb-3" style={{ color: '#1C2C55' }}>
-                              {t('dashboard.gettingStarted.step3.title')}
-                            </h3>
-                            <p className="text-gray-600 leading-relaxed">
-                              {t('dashboard.gettingStarted.step3.description')}
-                            </p>
-                          </div>
+                      /* Default setup for other platforms - Teamleader and Pipedrive */
+                      <div className="space-y-6">
+                        <div className="text-center mb-6">
+                          <p className="text-lg text-gray-600">
+                            Connect your WhatsApp number to start using VoiceLink
+                          </p>
                         </div>
 
-                        {/* WhatsApp Integration Embedded */}
-                        <div className="border-t border-gray-200 pt-8">
-                          <WhatsAppVerification onStatusChange={(status) => {
-                            setWhatsappStatus(status);
-                            setTimeout(() => refreshWhatsAppStatus(), 1000);
-                          }} />
-                        </div>
-                      </>
+                        {/* WhatsApp Integration Only */}
+                        <WhatsAppVerification onStatusChange={(status) => {
+                          setWhatsappStatus(status);
+                          setTimeout(() => refreshWhatsAppStatus(), 1000);
+                        }} />
+                      </div>
                     )}
                   </div>
                 </section>

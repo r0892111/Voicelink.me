@@ -142,7 +142,7 @@
     "redirectingToCheckout": "Doorverwijzen naar checkout...",
     "checkingSubscription": "Je abonnement controleren...",
     "temporarilyUnavailable": "Tijdelijk niet beschikbaar",
-    "forOdooAccountsOnly": "Alleen voor Odoo.com accounts",
+    "forOdooAccountsOnly": "Kies je Odoo account type",
     "forSelfHostedInstances": "Voor zelf-gehoste Odoo instanties",
     "backToOdooOptions": "Terug naar Odoo opties",
     "backToLoginOptions": "Terug naar inlogopties",
