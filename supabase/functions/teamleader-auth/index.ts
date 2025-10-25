@@ -172,13 +172,13 @@ Deno.serve(async (req: Request) => {
       .from("teamleader_users")
       .upsert({
         user_id: authUserId,
-        teamleader_user_id: userInfo.id,
+        teamleader_id: userInfo.id,
         access_token: access_token,
         refresh_token: refresh_token,
         user_info: userInfo,
         is_admin: true,
       }, {
-        onConflict: "user_id",
+        onConflict: "teamleader_id",
       });
 
     if (insertError) {
