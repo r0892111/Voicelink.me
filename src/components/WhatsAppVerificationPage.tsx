@@ -62,7 +62,6 @@ export const WhatsAppVerificationPage: React.FC = () => {
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
-          action: 'verify_otp',
           user_id: userIdParam,
           otp_code: otpCodeParam
         })
@@ -112,7 +111,6 @@ export const WhatsAppVerificationPage: React.FC = () => {
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({
-          action: 'verify_otp',
           user_id: userId,
           otp_code: otpCode.trim()
         })
