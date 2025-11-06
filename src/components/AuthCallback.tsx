@@ -178,10 +178,21 @@ export const AuthCallback: React.FC = () => {
       setStatus('success');
       setMessage(t('auth.callback.successfullyAuthenticated', { platform }));
 
-      // Check subscription status and redirect accordingly
-      setTimeout(() => {
-        checkSubscriptionAndRedirect();
-      }, 2000);
+      // Check if this was an invitation flow
+      const pendingInvitationToken = localStorage.getItem('pending_invitation_token');
+      const pendingInvitationProvider = localStorage.getItem('pending_invitation_provider');
+
+      if (pendingInvitationToken && pendingInvitationProvider) {
+        // This is an invited user who just authenticated
+        setTimeout(() => {
+          processInvitationAndRedirect(pendingInvitationToken, pendingInvitationProvider);
+        }, 2000);
+      } else {
+        // Normal authentication flow
+        setTimeout(() => {
+          checkSubscriptionAndRedirect();
+        }, 2000);
+      }
 
     } catch (err) {
       setStatus('error');
@@ -189,17 +200,68 @@ export const AuthCallback: React.FC = () => {
     }
   };
 
+  const processInvitationAndRedirect = async (token: string, provider: string) => {
+    try {
+      setMessage('Processing invitation and generating WhatsApp verification...');
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('No active session');
+      }
+
+      // Call edge function to process invitation and generate WhatsApp OTP
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/process-invitation`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            invitation_token: token,
+            provider: provider,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to process invitation');
+      }
+
+      const result = await response.json();
+
+      // Clean up localStorage
+      localStorage.removeItem('pending_invitation_token');
+      localStorage.removeItem('pending_invitation_provider');
+
+      if (result.success && result.whatsapp_verification_url) {
+        // Redirect to WhatsApp verification page
+        window.location.href = result.whatsapp_verification_url;
+      } else {
+        // Fallback to dashboard
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.error('Error processing invitation:', error);
+      // Clean up and redirect to dashboard
+      localStorage.removeItem('pending_invitation_token');
+      localStorage.removeItem('pending_invitation_provider');
+      navigate('/dashboard');
+    }
+  };
+
   const checkSubscriptionAndRedirect = async () => {
     try {
       const hasActiveSubscription = await checkSubscriptionStatus();
-      
+
       if (hasActiveSubscription) {
         // User has active subscription, go to dashboard
         navigate('/dashboard');
       } else {
         // User doesn't have subscription, redirect to Stripe checkout
         setMessage(t('auth.callback.redirectingToCheckout'));
-        
+
         // Use the starter tier price ID for single user
         await StripeService.createCheckoutSession({
           priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
