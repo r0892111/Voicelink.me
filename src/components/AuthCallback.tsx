@@ -191,15 +191,35 @@ export const AuthCallback: React.FC = () => {
 
   const checkSubscriptionAndRedirect = async () => {
     try {
+      // Check if we're in WhatsApp verification flow
+      const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
+      const whatsappUserId = localStorage.getItem('whatsapp_verification_user_id');
+      const whatsappOtpCode = localStorage.getItem('whatsapp_verification_otp_code');
+
+      if (isWhatsAppFlow && whatsappUserId && whatsappOtpCode) {
+        // Clear the flow flag
+        localStorage.removeItem('whatsapp_verification_flow');
+
+        setMessage(t('auth.redirectingToWhatsAppVerification'));
+
+        // Get the current user ID
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          // Redirect to WhatsApp verification with auth_user_id
+          navigate(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`);
+          return;
+        }
+      }
+
       const hasActiveSubscription = await checkSubscriptionStatus();
-      
+
       if (hasActiveSubscription) {
         // User has active subscription, go to dashboard
         navigate('/dashboard');
       } else {
         // User doesn't have subscription, redirect to Stripe checkout
         setMessage(t('auth.callback.redirectingToCheckout'));
-        
+
         // Use the starter tier price ID for single user
         await StripeService.createCheckoutSession({
           priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',

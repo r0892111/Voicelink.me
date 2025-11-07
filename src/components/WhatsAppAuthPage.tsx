@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import { MessageCircle, Loader2, AlertCircle, Shield, LogIn } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { MessageCircle, AlertCircle, Shield, Loader2 } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
-import { supabase } from '../lib/supabase';
+import { AuthService } from '../services/authService';
+import { authProviders } from '../config/authProviders';
 
 export const WhatsAppAuthPage: React.FC = () => {
   const { t } = useI18n();
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSignUp, setIsSignUp] = useState(false);
-
   const [userId, setUserId] = useState<string | null>(null);
   const [otpCode, setOtpCode] = useState<string | null>(null);
 
@@ -43,16 +38,13 @@ export const WhatsAppAuthPage: React.FC = () => {
 
     setUserId(finalUserId);
     setOtpCode(finalOtpCode);
+
+    // Store in localStorage so we can retrieve after OAuth callback
+    localStorage.setItem('whatsapp_verification_user_id', finalUserId);
+    localStorage.setItem('whatsapp_verification_otp_code', finalOtpCode);
   }, [searchParams]);
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!email || !password || !name) {
-      setError('Please fill in all fields');
-      return;
-    }
-
+  const handleProviderAuth = async (providerName: string) => {
     if (!userId || !otpCode) {
       setError('Invalid verification link');
       return;
@@ -62,103 +54,36 @@ export const WhatsAppAuthPage: React.FC = () => {
     setError(null);
 
     try {
-      // Create new auth user
-      const { data: authData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            name,
-            whatsapp_verification_pending: true,
-            whatsapp_user_id: userId,
-            whatsapp_otp_code: otpCode
-          }
-        }
-      });
+      // Store that we're in WhatsApp verification flow
+      localStorage.setItem('whatsapp_verification_flow', 'true');
 
-      if (signUpError) throw signUpError;
+      // Initiate OAuth flow
+      let authService: AuthService;
 
-      if (authData.user) {
-        // Save verification token in database
-        const { error: insertError } = await supabase
-          .from('whatsapp_verification_tokens')
-          .insert({
-            auth_user_id: authData.user.id,
-            crm_user_id: userId,
-            otp_code: otpCode,
-            email: email,
-            name: name,
-            created_at: new Date().toISOString()
-          });
-
-        if (insertError) {
-          console.error('Error saving verification token:', insertError);
-        }
-
-        // Redirect to verification page
-        navigate(`/verify-whatsapp?user_id=${userId}&otp_code=${otpCode}&auth_user_id=${authData.user.id}`);
+      switch (providerName) {
+        case 'teamleader':
+          authService = AuthService.createTeamleaderAuth();
+          break;
+        case 'pipedrive':
+          authService = AuthService.createPipedriveAuth();
+          break;
+        case 'odoo':
+          authService = AuthService.createOdooAuth();
+          break;
+        default:
+          throw new Error('Unknown provider');
       }
 
-    } catch (error) {
-      console.error('Sign up error:', error);
-      setError(error instanceof Error ? error.message : 'Failed to create account');
-    } finally {
-      setLoading(false);
-    }
-  };
+      const result = await authService.initiateAuth();
 
-  const handleSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
-    }
-
-    if (!userId || !otpCode) {
-      setError('Invalid verification link');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Sign in existing user
-      const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (signInError) throw signInError;
-
-      if (authData.user) {
-        // Save/update verification token in database
-        const { error: upsertError } = await supabase
-          .from('whatsapp_verification_tokens')
-          .upsert({
-            auth_user_id: authData.user.id,
-            crm_user_id: userId,
-            otp_code: otpCode,
-            email: email,
-            name: authData.user.user_metadata?.name || email,
-            created_at: new Date().toISOString()
-          }, {
-            onConflict: 'auth_user_id,crm_user_id'
-          });
-
-        if (upsertError) {
-          console.error('Error saving verification token:', upsertError);
-        }
-
-        // Redirect to verification page
-        navigate(`/verify-whatsapp?user_id=${userId}&otp_code=${otpCode}&auth_user_id=${authData.user.id}`);
+      if (!result.success) {
+        throw new Error(result.error || 'Authentication failed');
       }
 
+      // OAuth flow will redirect away, so loading state will persist
     } catch (error) {
-      console.error('Sign in error:', error);
-      setError(error instanceof Error ? error.message : 'Failed to sign in');
-    } finally {
+      console.error('Auth error:', error);
+      setError(error instanceof Error ? error.message : 'Failed to authenticate');
       setLoading(false);
     }
   };
@@ -201,7 +126,7 @@ export const WhatsAppAuthPage: React.FC = () => {
           </h1>
 
           <p className="text-gray-600">
-            {isSignUp ? 'Create an account to verify your WhatsApp' : 'Sign in to verify your WhatsApp'}
+            Sign in with your CRM platform to verify your WhatsApp
           </p>
         </div>
 
@@ -212,7 +137,7 @@ export const WhatsAppAuthPage: React.FC = () => {
             <span className="font-medium text-blue-800">Secure Authentication Required</span>
           </div>
           <p className="text-sm text-blue-700">
-            To complete WhatsApp verification, please {isSignUp ? 'create an account' : 'sign in'} with your credentials.
+            To complete WhatsApp verification, please sign in with your CRM account. Your tokens will be securely stored and linked to your WhatsApp verification.
           </p>
         </div>
 
@@ -224,98 +149,42 @@ export const WhatsAppAuthPage: React.FC = () => {
           </div>
         )}
 
-        {/* Form */}
-        <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-4">
-          {isSignUp && (
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your full name"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              />
-            </div>
-          )}
+        {/* Provider Buttons */}
+        <div className="space-y-3">
+          <p className="text-sm text-gray-700 font-medium mb-3">
+            Choose your CRM platform:
+          </p>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              required
-            />
-            {isSignUp && (
-              <p className="text-xs text-gray-500 mt-1">
-                Password must be at least 6 characters
-              </p>
-            )}
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                <span>{isSignUp ? 'Creating Account...' : 'Signing In...'}</span>
-              </>
-            ) : (
-              <>
-                <LogIn className="w-5 h-5" />
-                <span>{isSignUp ? 'Create Account & Continue' : 'Sign In & Continue'}</span>
-              </>
-            )}
-          </button>
-
-          {/* Toggle Sign In / Sign Up */}
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setIsSignUp(!isSignUp);
-                setError(null);
-              }}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-            >
-              {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
-            </button>
-          </div>
-        </form>
+          {authProviders.map((provider) => {
+            const Icon = provider.icon;
+            return (
+              <button
+                key={provider.name}
+                onClick={() => handleProviderAuth(provider.name)}
+                disabled={loading}
+                className={`w-full ${provider.color} ${provider.hoverColor} disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2`}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Redirecting...</span>
+                  </>
+                ) : (
+                  <>
+                    <Icon className="w-5 h-5" />
+                    <span>Sign in with {provider.displayName}</span>
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
 
         {/* Info */}
         <div className="mt-6 pt-6 border-t border-gray-200">
           <div className="bg-gray-50 rounded-lg p-4">
             <p className="text-xs text-gray-600 text-center">
-              Your account will be linked to your WhatsApp verification. This ensures secure access to your VoiceLink features.
+              After signing in, you'll be redirected back to complete your WhatsApp verification. Your CRM access tokens will be securely stored in the database.
             </p>
           </div>
         </div>
