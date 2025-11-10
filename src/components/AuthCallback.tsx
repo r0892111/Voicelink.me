@@ -178,21 +178,10 @@ export const AuthCallback: React.FC = () => {
       setStatus('success');
       setMessage(t('auth.callback.successfullyAuthenticated', { platform }));
 
-      // Check if this was an invitation flow
-      const pendingInvitationToken = localStorage.getItem('pending_invitation_token');
-      const pendingInvitationProvider = localStorage.getItem('pending_invitation_provider');
-
-      if (pendingInvitationToken && pendingInvitationProvider) {
-        // This is an invited user who just authenticated
-        setTimeout(() => {
-          processInvitationAndRedirect(pendingInvitationToken, pendingInvitationProvider);
-        }, 2000);
-      } else {
-        // Normal authentication flow
-        setTimeout(() => {
-          checkSubscriptionAndRedirect();
-        }, 2000);
-      }
+      // Check subscription status and redirect accordingly
+      setTimeout(() => {
+        checkSubscriptionAndRedirect();
+      }, 2000);
 
     } catch (err) {
       setStatus('error');
@@ -200,59 +189,28 @@ export const AuthCallback: React.FC = () => {
     }
   };
 
-  const processInvitationAndRedirect = async (token: string, provider: string) => {
-    try {
-      setMessage('Processing invitation and generating WhatsApp verification...');
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        throw new Error('No active session');
-      }
-
-      // Call edge function to process invitation and generate WhatsApp OTP
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/process-invitation`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`,
-          },
-          body: JSON.stringify({
-            invitation_token: token,
-            provider: provider,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to process invitation');
-      }
-
-      const result = await response.json();
-
-      // Clean up localStorage
-      localStorage.removeItem('pending_invitation_token');
-      localStorage.removeItem('pending_invitation_provider');
-
-      if (result.success && result.whatsapp_verification_url) {
-        // Redirect to WhatsApp verification page
-        window.location.href = result.whatsapp_verification_url;
-      } else {
-        // Fallback to dashboard
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      console.error('Error processing invitation:', error);
-      // Clean up and redirect to dashboard
-      localStorage.removeItem('pending_invitation_token');
-      localStorage.removeItem('pending_invitation_provider');
-      navigate('/dashboard');
-    }
-  };
-
   const checkSubscriptionAndRedirect = async () => {
     try {
+      // Check if we're in WhatsApp verification flow
+      const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
+      const whatsappUserId = localStorage.getItem('whatsapp_verification_user_id');
+      const whatsappOtpCode = localStorage.getItem('whatsapp_verification_otp_code');
+
+      if (isWhatsAppFlow && whatsappUserId && whatsappOtpCode) {
+        // Clear the flow flag
+        localStorage.removeItem('whatsapp_verification_flow');
+
+        setMessage(t('auth.redirectingToWhatsAppVerification'));
+
+        // Get the current user ID
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          // Redirect to WhatsApp verification with auth_user_id
+          navigate(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`);
+          return;
+        }
+      }
+
       const hasActiveSubscription = await checkSubscriptionStatus();
 
       if (hasActiveSubscription) {

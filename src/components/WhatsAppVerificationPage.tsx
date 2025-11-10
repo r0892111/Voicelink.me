@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { MessageCircle, Check, Loader2, AlertCircle, ArrowLeft, Shield } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
+import { supabase } from '../lib/supabase';
 
 export const WhatsAppVerificationPage: React.FC = () => {
   const { t } = useI18n();
@@ -15,55 +16,85 @@ export const WhatsAppVerificationPage: React.FC = () => {
   const [hasValidParams, setHasValidParams] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [autoVerified, setAutoVerified] = useState(false);
+  const [authUserId, setAuthUserId] = useState<string | null>(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    // Get URL parameters from both search params and URL path
-    const userIdParam = searchParams.get('user_id') || searchParams.get('userid');
-    const otpCodeParam = searchParams.get('otp_code') || searchParams.get('otpcode');
-    
-    // Also check if parameters are in the URL path (for URLs like /verify-whatsappuserid=...&otpcode=...)
-    const currentPath = window.location.pathname + window.location.search;
-    const pathMatch = currentPath.match(/(?:user_id|userid)=([^&]+)&(?:otp_code|otpcode)=([^&\s]+)/);
-    
-    let finalUserId = userIdParam;
-    let finalOtpCode = otpCodeParam;
-    
-    if (pathMatch) {
-      finalUserId = pathMatch[1];
-      finalOtpCode = pathMatch[2];
-    }
-    
-    console.log('URL params:', { userIdParam, otpCodeParam, pathMatch, finalUserId, finalOtpCode });
-    
-    if (finalUserId && finalOtpCode) {
+    const checkAuthAndParams = async () => {
+      // Get URL parameters from both search params and URL path
+      const userIdParam = searchParams.get('user_id') || searchParams.get('userid');
+      const otpCodeParam = searchParams.get('otp_code') || searchParams.get('otpcode');
+      const authUserIdParam = searchParams.get('auth_user_id');
+
+      // Also check if parameters are in the URL path (for URLs like /verify-whatsappuserid=...&otpcode=...)
+      const currentPath = window.location.pathname + window.location.search;
+      const pathMatch = currentPath.match(/(?:user_id|userid)=([^&]+)&(?:otp_code|otpcode)=([^&\s]+)/);
+
+      let finalUserId = userIdParam;
+      let finalOtpCode = otpCodeParam;
+
+      if (pathMatch) {
+        finalUserId = pathMatch[1];
+        finalOtpCode = pathMatch[2];
+      }
+
+      console.log('URL params:', { userIdParam, otpCodeParam, pathMatch, finalUserId, finalOtpCode, authUserIdParam });
+
+      if (!finalUserId || !finalOtpCode) {
+        setHasValidParams(false);
+        setCheckingAuth(false);
+        return;
+      }
+
+      // Check if user is authenticated
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        // Redirect to auth page with params
+        navigate(`/whatsapp-auth?user_id=${finalUserId}&otp_code=${finalOtpCode}`);
+        return;
+      }
+
+      // User is authenticated, proceed with verification
       setHasValidParams(true);
       setUserId(finalUserId);
       setOtpCode(finalOtpCode);
-      
-      // Auto-verify if both parameters are present
+      setAuthUserId(user.id);
+      setCheckingAuth(false);
+
+      // Auto-verify if both parameters are present and not already verified
       if (!autoVerified) {
         setAutoVerified(true);
-        verifyOTPWithParams(finalUserId, finalOtpCode);
+        verifyOTPWithParams(finalUserId, finalOtpCode, user.id);
       }
-    } else {
-      setHasValidParams(false);
-    }
-  }, [searchParams]);
+    };
 
-  const verifyOTPWithParams = async (userIdParam: string, otpCodeParam: string) => {
+    checkAuthAndParams();
+  }, [searchParams, navigate]);
+
+  const verifyOTPWithParams = async (userIdParam: string, otpCodeParam: string, currentAuthUserId: string) => {
     setLoading(true);
     setError(null);
 
     try {
+      // Get the current auth session
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error('Authentication required');
+      }
+
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-verify-external`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
+          action: 'verify_otp',
           user_id: userIdParam,
-          otp_code: otpCodeParam
+          otp_code: otpCodeParam,
+          auth_user_id: currentAuthUserId
         })
       });
 
@@ -73,11 +104,16 @@ export const WhatsAppVerificationPage: React.FC = () => {
       }
 
       const result = await response.json();
-      
+
       if (result.success) {
+        // Update verification token in database
+        await supabase
+          .from('whatsapp_verification_tokens')
+          .update({ verified_at: new Date().toISOString() })
+          .eq('auth_user_id', currentAuthUserId)
+          .eq('crm_user_id', userIdParam);
+
         setSuccess(true);
-        
-        // No redirect - user should close the page
       } else {
         setError(result.error || 'Verification failed');
       }
@@ -95,47 +131,12 @@ export const WhatsAppVerificationPage: React.FC = () => {
       return;
     }
 
-    if (!userId) {
-      setError('User ID not found');
+    if (!userId || !authUserId) {
+      setError('Authentication required');
       return;
     }
 
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-verify-external`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          otp_code: otpCode.trim()
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to verify OTP');
-      }
-
-      const result = await response.json();
-      
-      if (result.success) {
-        setSuccess(true);
-        
-        // No redirect - user should close the page
-      } else {
-        setError(result.error || 'Verification failed');
-      }
-
-    } catch (error) {
-      setError(error instanceof Error ? error.message : t('validation.failedToVerifyCode'));
-    } finally {
-      setLoading(false);
-    }
+    await verifyOTPWithParams(userId, otpCode.trim(), authUserId);
   };
 
 
@@ -144,6 +145,25 @@ export const WhatsAppVerificationPage: React.FC = () => {
     setOtpCode(value);
     setError(null);
   };
+
+  // Show loading while checking authentication
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-lg max-w-md w-full p-8 text-center">
+          <div className="flex justify-center mb-6">
+            <Loader2 className="w-16 h-16 text-blue-600 animate-spin" />
+          </div>
+          <h1 className="text-xl font-semibold text-gray-900 mb-2">
+            Checking Authentication...
+          </h1>
+          <p className="text-gray-600">
+            Please wait while we verify your session
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // Show error state if parameters are missing
   if (!hasValidParams) {

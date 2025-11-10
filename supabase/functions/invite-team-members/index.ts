@@ -141,54 +141,49 @@ Deno.serve(async (req) => {
       });
     }
 
-    // 5. Generate invitation token and send invitation link
+    // 5. Send WhatsApp OTP if phone number is provided
     let whatsappOtpSent = false;
-    let invitationToken = null;
+    let otpCode = null;
     if (team_member.whatsapp_number) {
       try {
-        // Generate secure invitation token
-        invitationToken = `${authUser.user.id}_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours from now
+        // Generate 6-digit OTP
+        otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
 
-        // Update the user record with invitation token
-        const { error: tokenError } = await supabaseAdminClient
+        // Update the user record with OTP details
+        const { error: otpError } = await supabaseAdminClient
           .from(`${crm_provider}_users`)
           .update({
-            invitation_token: invitationToken,
-            invitation_token_expires_at: expiresAt.toISOString(),
+            whatsapp_otp_code: otpCode,
+            whatsapp_otp_expires_at: expiresAt.toISOString(),
             whatsapp_otp_phone: team_member.whatsapp_number,
-            whatsapp_status: 'not_set',
+            whatsapp_status: 'pending',
             updated_at: new Date().toISOString()
           })
           .eq('id', insertedUser.id);
 
-        if (!tokenError) {
-          // Get the base URL from environment
-          const baseUrl = Deno.env.get('SUPABASE_URL')?.replace('/rest/v1', '') || 'https://your-domain.com';
-
-          // Create invitation link that requires CRM authentication first
-          const invitationLink = `${baseUrl}/invite-accept?token=${invitationToken}&provider=${crm_provider}`;
-
-          // Send WhatsApp invitation message
+        if (!otpError) {
+          // Send WhatsApp OTP message
           try {
-            const whatsappMessage = `👋 Welcome to VoiceLink!\n\nYou've been invited to join your team on VoiceLink.\n\nClick here to accept your invitation and set up your account:\n${invitationLink}\n\n⚠️ This link expires in 24 hours.\n\nYou'll need to authenticate with your ${crm_provider.charAt(0).toUpperCase() + crm_provider.slice(1)} account to complete the setup.`;
-
+            const whatsappMessage = `🔐 VoiceLink Verification Code: ${otpCode}\n\nClick here to verify instantly: ${Deno.env.get('SUPABASE_URL')?.replace('/rest/v1', '')}/verify-whatsapp?userid=${authUser.user.id}&otpcode=${otpCode}\n\nOr enter the code manually in the app.\n\nCode expires in 10 minutes.`;
+            
             // TODO: Replace with actual WhatsApp API integration (Twilio, etc.)
             console.log(`WhatsApp message to ${team_member.whatsapp_number}:`);
             console.log(whatsappMessage);
-            console.log(`Invitation URL: ${invitationLink}`);
-
+            console.log(`Verification URL: ${Deno.env.get('SUPABASE_URL')?.replace('/rest/v1', '')}/verify-whatsapp?userid=${authUser.user.id}&otpcode=${otpCode}`);
+            
             whatsappOtpSent = true;
           } catch (whatsappError) {
             console.error('Error sending WhatsApp message:', whatsappError);
             // Don't fail the invitation if WhatsApp sending fails
           }
+          whatsappOtpSent = true;
         } else {
-          console.error('Error setting up invitation token:', tokenError);
+          console.error('Error setting up WhatsApp OTP:', otpError);
         }
-      } catch (inviteError) {
-        console.error('Error sending invitation:', inviteError);
-        // Don't fail the entire invitation if sending fails
+      } catch (otpError) {
+        console.error('Error sending WhatsApp OTP:', otpError);
+        // Don't fail the entire invitation if OTP fails
       }
     }
 
@@ -196,8 +191,8 @@ Deno.serve(async (req) => {
       success: true,
       authUser,
       crmUser: insertedUser,
-      invitationSent: whatsappOtpSent,
-      invitationUrl: invitationToken ? `${Deno.env.get('SUPABASE_URL')?.replace('/rest/v1', '')}/invite-accept?token=${invitationToken}&provider=${crm_provider}` : null
+      whatsappOtpSent,
+      verificationUrl: otpCode ? `${Deno.env.get('SUPABASE_URL')?.replace('/rest/v1', '')}/verify-whatsapp?userid=${authUser.user.id}&otpcode=${otpCode}` : null
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });

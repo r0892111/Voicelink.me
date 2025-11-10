@@ -13,11 +13,19 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { user_id, otp_code } = body;
+    const { user_id, otp_code, auth_user_id } = body;
 
     if (!user_id || !otp_code) {
       return new Response(JSON.stringify({ error: 'Missing user_id or otp_code' }), {
         status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Verify auth_user_id is provided
+    if (!auth_user_id) {
+      return new Response(JSON.stringify({ error: 'Authentication required' }), {
+        status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
@@ -86,6 +94,7 @@ Deno.serve(async (req) => {
         whatsapp_otp_code: null,
         whatsapp_otp_expires_at: null,
         whatsapp_otp_phone: null,
+        auth_user_id: auth_user_id,
         updated_at: new Date().toISOString()
       })
       .eq('id', userData.id);
@@ -96,6 +105,20 @@ Deno.serve(async (req) => {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
+    }
+
+    // Update the verification token
+    const { error: tokenError } = await supabaseAdminClient
+      .from('whatsapp_verification_tokens')
+      .update({
+        verified_at: new Date().toISOString()
+      })
+      .eq('auth_user_id', auth_user_id)
+      .eq('crm_user_id', user_id);
+
+    if (tokenError) {
+      console.error('Error updating verification token:', tokenError);
+      // Don't fail the request if token update fails
     }
 
     return new Response(JSON.stringify({
