@@ -125,8 +125,14 @@ export const AuthCallback: React.FC = () => {
         requestBody.odoo_oauth_url = import.meta.env.VITE_ODOO_AUTH_URL;
       }
 
+      // Check if we're in WhatsApp verification flow and use external auth for Pipedrive
+      const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
+      const authFunctionName = (platform === 'pipedrive' && isWhatsAppFlow) 
+        ? 'pipedrive-external-auth' 
+        : `${platform}-auth`;
+
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth`,
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${authFunctionName}`,
         {
           method: 'POST',
           headers: {
