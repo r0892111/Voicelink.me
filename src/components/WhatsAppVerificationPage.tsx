@@ -50,10 +50,24 @@ export const WhatsAppVerificationPage: React.FC = () => {
       const { data: { user } } = await supabase.auth.getUser();
 
       if (!user) {
-        // Redirect to auth page with params
-        navigate(`/whatsapp-auth?user_id=${finalUserId}&otp_code=${finalOtpCode}`);
-        return;
+        // Only redirect if we haven't already tried to authenticate
+        const authAttempted = sessionStorage.getItem('whatsapp_auth_redirect');
+
+        if (!authAttempted) {
+          sessionStorage.setItem('whatsapp_auth_redirect', 'true');
+          navigate(`/whatsapp-auth?user_id=${finalUserId}&otp_code=${finalOtpCode}`);
+          return;
+        } else {
+          // Already tried auth but still not authenticated - show error
+          setError('Please authenticate to continue with WhatsApp verification');
+          setHasValidParams(false);
+          setCheckingAuth(false);
+          return;
+        }
       }
+
+      // Clear the redirect flag since we're now authenticated
+      sessionStorage.removeItem('whatsapp_auth_redirect');
 
       // User is authenticated, proceed with verification
       setHasValidParams(true);
@@ -70,7 +84,8 @@ export const WhatsAppVerificationPage: React.FC = () => {
     };
 
     checkAuthAndParams();
-  }, [searchParams, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const verifyOTPWithParams = async (userIdParam: string, otpCodeParam: string, currentAuthUserId: string) => {
     setLoading(true);
