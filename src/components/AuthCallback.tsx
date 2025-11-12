@@ -125,6 +125,16 @@ export const AuthCallback: React.FC = () => {
         requestBody.odoo_oauth_url = import.meta.env.VITE_ODOO_AUTH_URL;
       }
 
+      // If we're in WhatsApp verification flow, include the user_id and otp_code
+      const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
+      const whatsappUserId = localStorage.getItem('whatsapp_verification_user_id');
+      const whatsappOtpCode = localStorage.getItem('whatsapp_verification_otp_code');
+
+      if (isWhatsAppFlow && whatsappUserId && whatsappOtpCode) {
+        requestBody.whatsapp_user_id = whatsappUserId;
+        requestBody.whatsapp_otp_code = whatsappOtpCode;
+      }
+
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${platform}-auth`,
         {
@@ -200,11 +210,43 @@ export const AuthCallback: React.FC = () => {
         // Clear the flow flag
         localStorage.removeItem('whatsapp_verification_flow');
 
-        setMessage(t('auth.redirectingToWhatsAppVerification'));
+        setMessage('Linking your account...');
 
-        // Get the current user ID
+        // Get the current user ID and session
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
+          // First, link the auth_user_id to the CRM record
+          const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform');
+
+          if (provider) {
+            try {
+              const linkResponse = await fetch(
+                `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/link-whatsapp-auth`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Authorization': `Bearer ${session.access_token}`,
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    crm_user_id: whatsappUserId,
+                    provider: provider,
+                  }),
+                }
+              );
+
+              const linkResult = await linkResponse.json();
+
+              if (!linkResult.success) {
+                console.error('Failed to link auth user:', linkResult.error);
+              }
+            } catch (linkError) {
+              console.error('Error linking auth user:', linkError);
+            }
+          }
+
+          setMessage(t('auth.redirectingToWhatsAppVerification'));
+
           // Redirect to WhatsApp verification with auth_user_id
           navigate(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`);
           return;
