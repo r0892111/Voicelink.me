@@ -131,6 +131,8 @@ export const AuthCallback: React.FC = () => {
         ? 'pipedrive-external-auth' 
         : `${platform}-auth`;
 
+      console.log('Auth callback:', { platform, isWhatsAppFlow, authFunctionName });
+
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${authFunctionName}`,
         {
@@ -144,10 +146,26 @@ export const AuthCallback: React.FC = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`Authentication failed: ${response.statusText}`);
+        // Try to get error details from response
+        let errorMessage = `Authentication failed: ${response.statusText}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorData.message || errorMessage;
+        } catch (e) {
+          // If response is not JSON, use status text
+        }
+        console.error('Auth function error:', { status: response.status, statusText: response.statusText, authFunctionName });
+        throw new Error(errorMessage);
       }
 
       const result = await response.json();
+
+      console.log('Auth function result:', { 
+        success: result.success, 
+        hasSession: !!result.session, 
+        hasSessionUrl: !!result.session_url,
+        platform 
+      });
 
       if (!result.success) {
         setStatus('error');
@@ -161,7 +179,7 @@ export const AuthCallback: React.FC = () => {
 
       // Handle session if returned
       if (result.session) {
-        const { error: sessionError } = await supabase.auth.setSession({
+        const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
           access_token: result.session.access_token,
           refresh_token: result.session.refresh_token,
         });
@@ -172,13 +190,42 @@ export const AuthCallback: React.FC = () => {
           setMessage(t('auth.failedToEstablishSession'));
           return;
         }
+
+        // Verify session was set
+        if (!sessionData.session) {
+          console.error('Session was not established after setSession');
+          setStatus('error');
+          setMessage(t('auth.failedToEstablishSession'));
+          return;
+        }
+
+        console.log('Session established successfully:', { userId: sessionData.session.user.id });
       }
 
       // Handle platforms with session_url (magic links, Pipedrive, etc.)
       if (result.session_url) {
         setMessage(t('auth.completingAuthentication'));
+        // For external auth, we might need to wait a bit for session to be established
+        // Check if we have a session before redirecting
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session && !result.session) {
+          console.warn('No session available before redirecting to session_url');
+          // Still redirect as the session_url might establish the session
+        }
         window.location.href = result.session_url;
         return;
+      }
+
+      // If no session and no session_url, verify we have a session
+      if (!result.session && !result.session_url) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          console.error('No session established and no session_url provided');
+          setStatus('error');
+          setMessage('Authentication completed but no session was established. Please try again.');
+          return;
+        }
+        console.log('Session verified after auth:', { userId: session.user.id });
       }
 
       setStatus('success');
@@ -197,6 +244,25 @@ export const AuthCallback: React.FC = () => {
 
   const checkSubscriptionAndRedirect = async () => {
     try {
+      // First, verify we have an active session
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError) {
+        console.error('Error getting session:', sessionError);
+        setStatus('error');
+        setMessage('Failed to verify authentication session. Please try again.');
+        return;
+      }
+
+      if (!session?.user) {
+        console.error('No active session found after authentication');
+        setStatus('error');
+        setMessage('Authentication completed but no session is active. Please try signing in again.');
+        return;
+      }
+
+      console.log('Session verified in redirect check:', { userId: session.user.id, email: session.user.email });
+
       // Check if we're in WhatsApp verification flow
       const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
       const whatsappUserId = localStorage.getItem('whatsapp_verification_user_id');
@@ -208,13 +274,9 @@ export const AuthCallback: React.FC = () => {
 
         setMessage(t('auth.redirectingToWhatsAppVerification'));
 
-        // Get the current user ID
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          // Redirect to WhatsApp verification with auth_user_id
-          navigate(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`);
-          return;
-        }
+        // Redirect to WhatsApp verification with auth_user_id
+        navigate(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`);
+        return;
       }
 
       const hasActiveSubscription = await checkSubscriptionStatus();
