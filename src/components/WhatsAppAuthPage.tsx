@@ -13,6 +13,8 @@ export const WhatsAppAuthPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [otpCode, setOtpCode] = useState<string | null>(null);
+  const [userProvider, setUserProvider] = useState<string | null>(null);
+  const [loadingProvider, setLoadingProvider] = useState(true);
 
   useEffect(() => {
     // Extract URL parameters
@@ -42,7 +44,37 @@ export const WhatsAppAuthPage: React.FC = () => {
     // Store in localStorage so we can retrieve after OAuth callback
     localStorage.setItem('whatsapp_verification_user_id', finalUserId);
     localStorage.setItem('whatsapp_verification_otp_code', finalOtpCode);
+
+    // Fetch the user's CRM provider
+    fetchUserProvider(finalUserId);
   }, [searchParams]);
+
+  const fetchUserProvider = async (userId: string) => {
+    try {
+      setLoadingProvider(true);
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-user-provider?user_id=${userId}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          },
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success && result.provider) {
+        setUserProvider(result.provider);
+      } else {
+        setError('Could not determine your CRM provider');
+      }
+    } catch (error) {
+      console.error('Error fetching user provider:', error);
+      setError('Failed to load authentication options');
+    } finally {
+      setLoadingProvider(false);
+    }
+  };
 
   const handleProviderAuth = async (providerName: string) => {
     if (!userId || !otpCode) {
@@ -151,33 +183,47 @@ export const WhatsAppAuthPage: React.FC = () => {
 
         {/* Provider Buttons */}
         <div className="space-y-3">
-          <p className="text-sm text-gray-700 font-medium mb-3">
-            Choose your CRM platform:
-          </p>
-
-          {authProviders.map((provider) => {
-            const Icon = provider.icon;
-            return (
-              <button
-                key={provider.name}
-                onClick={() => handleProviderAuth(provider.name)}
-                disabled={loading}
-                className={`w-full ${provider.color} ${provider.hoverColor} disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2`}
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Redirecting...</span>
-                  </>
-                ) : (
-                  <>
-                    <Icon className="w-5 h-5" />
-                    <span>Sign in with {provider.displayName}</span>
-                  </>
-                )}
-              </button>
-            );
-          })}
+          {loadingProvider ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+              <span className="ml-3 text-gray-600">Loading authentication options...</span>
+            </div>
+          ) : userProvider ? (
+            <>
+              <p className="text-sm text-gray-700 font-medium mb-3">
+                Sign in with your CRM platform:
+              </p>
+              {authProviders
+                .filter(provider => provider.name === userProvider)
+                .map((provider) => {
+                  const Icon = provider.icon;
+                  return (
+                    <button
+                      key={provider.name}
+                      onClick={() => handleProviderAuth(provider.name)}
+                      disabled={loading}
+                      className={`w-full ${provider.color} ${provider.hoverColor} disabled:bg-gray-400 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2`}
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          <span>Redirecting...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Icon className="w-5 h-5" />
+                          <span>Sign in with {provider.displayName}</span>
+                        </>
+                      )}
+                    </button>
+                  );
+                })}
+            </>
+          ) : (
+            <div className="text-center text-red-600">
+              Unable to load authentication options
+            </div>
+          )}
         </div>
 
         {/* Info */}
