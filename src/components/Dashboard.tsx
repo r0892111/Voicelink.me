@@ -17,17 +17,82 @@ export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   // Check for pending subscription check after magic link redirect (for Teamleader auth)
+  // This runs on mount and when user loads
   useEffect(() => {
     const checkPendingSubscription = async () => {
       const pendingCheck = sessionStorage.getItem('pending_subscription_check');
       const authPlatform = sessionStorage.getItem('auth_platform');
       
+      console.log('Checking pending subscription:', { pendingCheck, authPlatform, hasUser: !!user });
+      
       if (pendingCheck === 'true' && authPlatform) {
-        // Wait a bit for session to be established
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Wait a bit for session to be established (magic link might need time)
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        console.log('Session check after magic link:', { hasSession: !!session, error: sessionError, userId: session?.user?.id });
+        
         if (session?.user) {
+          // Clear the flag immediately to prevent duplicate checks
+          sessionStorage.removeItem('pending_subscription_check');
+          sessionStorage.removeItem('auth_platform');
+          
+          // Check subscription status
+          const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform') || authPlatform;
+          
+          console.log('Checking subscription for provider:', provider);
+          
+          try {
+            const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=${provider || 'unknown'}`, {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${session.access_token}`,
+                'Content-Type': 'application/json',
+              },
+            });
+
+            const result = await response.json();
+            console.log('Subscription check result:', result);
+            
+            const hasActiveSub = result.success && (result.subscription?.subscription_status === 'active' || result.subscription?.subscription_status === 'trialing');
+
+            if (!hasActiveSub) {
+              console.log('No active subscription, redirecting to Stripe checkout');
+              // User doesn't have subscription, redirect to Stripe checkout
+              await StripeService.createCheckoutSession({
+                priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+                quantity: 1,
+                successUrl: `${window.location.origin}/dashboard`,
+                cancelUrl: `${window.location.origin}/dashboard`,
+              });
+            } else {
+              console.log('User has active subscription');
+            }
+            // If has subscription, Dashboard will show SubscriptionDashboard automatically
+          } catch (error) {
+            console.error('Error checking subscription after magic link:', error);
+          }
+        } else {
+          console.warn('No session found after magic link redirect, will retry when user loads');
+        }
+      }
+    };
+    
+    // Check regardless of user state - session might be available even if user isn't loaded yet
+    checkPendingSubscription();
+  }, [user, navigate]);
+
+  // Also listen for auth state changes to catch when session is established
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        const pendingCheck = sessionStorage.getItem('pending_subscription_check');
+        const authPlatform = sessionStorage.getItem('auth_platform');
+        
+        if (pendingCheck === 'true' && authPlatform) {
+          console.log('Auth state changed to SIGNED_IN, checking subscription');
+          
           // Clear the flag
           sessionStorage.removeItem('pending_subscription_check');
           sessionStorage.removeItem('auth_platform');
@@ -48,7 +113,7 @@ export const Dashboard: React.FC = () => {
             const hasActiveSub = result.success && (result.subscription?.subscription_status === 'active' || result.subscription?.subscription_status === 'trialing');
 
             if (!hasActiveSub) {
-              // User doesn't have subscription, redirect to Stripe checkout
+              console.log('No active subscription, redirecting to Stripe checkout');
               await StripeService.createCheckoutSession({
                 priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
                 quantity: 1,
@@ -56,18 +121,17 @@ export const Dashboard: React.FC = () => {
                 cancelUrl: `${window.location.origin}/dashboard`,
               });
             }
-            // If has subscription, Dashboard will show SubscriptionDashboard automatically
           } catch (error) {
-            console.error('Error checking subscription after magic link:', error);
+            console.error('Error checking subscription after auth state change:', error);
           }
         }
       }
+    });
+
+    return () => {
+      subscription.unsubscribe();
     };
-    
-    if (user) {
-      checkPendingSubscription();
-    }
-  }, [user, navigate]);
+  }, []);
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
