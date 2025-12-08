@@ -80,7 +80,6 @@ export class AuthService {
       response_type: 'code',
       client_id: clientId,
       redirect_uri: redirectUri,
-      scope: 'basic:read deals:full activities:full contacts:full users:read account:read search:read leads:full',
       state: state,
     });
 
