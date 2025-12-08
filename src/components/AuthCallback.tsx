@@ -114,10 +114,16 @@ export const AuthCallback: React.FC = () => {
       setMessage(t('auth.callback.processingAuth', { platform }));
 
       // Build request body - include custom OAuth URL for Odoo if configured
+      // Support custom redirect URI for Teamleader via environment variable
+      let redirectUri = `${window.location.protocol}//${window.location.host}/auth/${platform}/callback`;
+      if (platform === 'teamleader' && import.meta.env.VITE_TEAMLEADER_REDIRECT_URI) {
+        redirectUri = import.meta.env.VITE_TEAMLEADER_REDIRECT_URI;
+      }
+      
       const requestBody: Record<string, string> = {
         code,
         state,
-        redirect_uri: `${window.location.protocol}//${window.location.host}/auth/${platform}/callback`,
+        redirect_uri: redirectUri,
       };
 
       // For custom Odoo implementations, pass the OAuth URL to the backend
@@ -205,6 +211,24 @@ export const AuthCallback: React.FC = () => {
       // Handle platforms with session_url (magic links, Pipedrive, etc.)
       if (result.session_url) {
         setMessage(t('auth.completingAuthentication'));
+        
+        // Fix redirect_to parameter in session_url to use current origin instead of localhost
+        let fixedSessionUrl = result.session_url;
+        try {
+          const url = new URL(result.session_url);
+          const redirectTo = url.searchParams.get('redirect_to');
+          if (redirectTo && redirectTo.includes('localhost')) {
+            // Replace localhost with current origin
+            const currentOrigin = window.location.origin;
+            const fixedRedirectTo = redirectTo.replace(/https?:\/\/localhost(:\d+)?/, currentOrigin);
+            url.searchParams.set('redirect_to', fixedRedirectTo);
+            fixedSessionUrl = url.toString();
+            console.log('Fixed session_url redirect_to:', { original: redirectTo, fixed: fixedRedirectTo });
+          }
+        } catch (e) {
+          console.warn('Could not parse session_url:', e);
+        }
+        
         // For external auth, we might need to wait a bit for session to be established
         // Check if we have a session before redirecting
         const { data: { session } } = await supabase.auth.getSession();
@@ -212,7 +236,12 @@ export const AuthCallback: React.FC = () => {
           console.warn('No session available before redirecting to session_url');
           // Still redirect as the session_url might establish the session
         }
-        window.location.href = result.session_url;
+        
+        // Store a flag to check subscription after magic link redirect completes
+        sessionStorage.setItem('pending_subscription_check', 'true');
+        sessionStorage.setItem('auth_platform', platform);
+        
+        window.location.href = fixedSessionUrl;
         return;
       }
 

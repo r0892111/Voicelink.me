@@ -41,7 +41,10 @@ export class AuthService {
 
   private async initiateTeamleaderAuth(): Promise<AuthResult> {
     const clientId = import.meta.env.VITE_TEAMLEADER_CLIENT_ID;
-    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/teamleader/callback`;
+    // Support custom redirect URI via environment variable (for production)
+    // Otherwise, use the current window location
+    const redirectUri = import.meta.env.VITE_TEAMLEADER_REDIRECT_URI 
+      || `${window.location.protocol}//${window.location.host}/auth/teamleader/callback`;
     
     if (!clientId) {
       return { success: false, error: 'TeamLeader client ID not configured' };

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useSubscription } from '../hooks/useSubscription';
 import { useI18n } from '../hooks/useI18n';
@@ -6,11 +7,67 @@ import { Users, Zap, Settings, ShoppingBag } from 'lucide-react';
 import { UserInfoCard } from './UserInfoCard';
 import { BuyButton } from './BuyButton';
 import { SubscriptionDashboard } from './SubscriptionDashboard';
+import { supabase } from '../lib/supabase';
+import { StripeService } from '../services/stripeService';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
   const { t } = useI18n();
+  const navigate = useNavigate();
+
+  // Check for pending subscription check after magic link redirect (for Teamleader auth)
+  useEffect(() => {
+    const checkPendingSubscription = async () => {
+      const pendingCheck = sessionStorage.getItem('pending_subscription_check');
+      const authPlatform = sessionStorage.getItem('auth_platform');
+      
+      if (pendingCheck === 'true' && authPlatform) {
+        // Wait a bit for session to be established
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          // Clear the flag
+          sessionStorage.removeItem('pending_subscription_check');
+          sessionStorage.removeItem('auth_platform');
+          
+          // Check subscription status
+          const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform') || authPlatform;
+          
+          try {
+            const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=${provider || 'unknown'}`, {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${session.access_token}`,
+                'Content-Type': 'application/json',
+              },
+            });
+
+            const result = await response.json();
+            const hasActiveSub = result.success && (result.subscription?.subscription_status === 'active' || result.subscription?.subscription_status === 'trialing');
+
+            if (!hasActiveSub) {
+              // User doesn't have subscription, redirect to Stripe checkout
+              await StripeService.createCheckoutSession({
+                priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+                quantity: 1,
+                successUrl: `${window.location.origin}/dashboard`,
+                cancelUrl: `${window.location.origin}/dashboard`,
+              });
+            }
+            // If has subscription, Dashboard will show SubscriptionDashboard automatically
+          } catch (error) {
+            console.error('Error checking subscription after magic link:', error);
+          }
+        }
+      }
+    };
+    
+    if (user) {
+      checkPendingSubscription();
+    }
+  }, [user, navigate]);
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
