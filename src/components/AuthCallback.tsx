@@ -217,13 +217,24 @@ export const AuthCallback: React.FC = () => {
         try {
           const url = new URL(result.session_url);
           const redirectTo = url.searchParams.get('redirect_to');
-          if (redirectTo && redirectTo.includes('localhost')) {
+          if (redirectTo) {
+            // Replace any localhost URL with current origin (voicelink.me in production)
+            const currentOrigin = window.location.origin; // Will be https://voicelink.me in production
+            let fixedRedirectTo = redirectTo;
+            
             // Replace localhost with current origin
-            const currentOrigin = window.location.origin;
-            const fixedRedirectTo = redirectTo.replace(/https?:\/\/localhost(:\d+)?/, currentOrigin);
+            if (redirectTo.includes('localhost')) {
+              fixedRedirectTo = redirectTo.replace(/https?:\/\/localhost(:\d+)?/, currentOrigin);
+            }
+            
+            // Ensure we're using the correct protocol (https in production)
+            if (currentOrigin.includes('voicelink.me') && fixedRedirectTo.startsWith('http://')) {
+              fixedRedirectTo = fixedRedirectTo.replace('http://', 'https://');
+            }
+            
             url.searchParams.set('redirect_to', fixedRedirectTo);
             fixedSessionUrl = url.toString();
-            console.log('Fixed session_url redirect_to:', { original: redirectTo, fixed: fixedRedirectTo });
+            console.log('Fixed session_url redirect_to:', { original: redirectTo, fixed: fixedRedirectTo, currentOrigin });
           }
         } catch (e) {
           console.warn('Could not parse session_url:', e);
