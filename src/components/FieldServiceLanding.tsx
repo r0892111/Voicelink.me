@@ -10,12 +10,12 @@ export const FieldServiceLanding: React.FC<FieldServiceLandingProps> = ({ openMo
     <LandingPageTemplate
       openModal={openModal}
       hero={{
-        title: 'Work orders & follow-ups in your CRM in 10 seconds (with voice).',
-        subtitle: 'No more admin backlog after interventions. Notes + tasks + next steps automatically logged in Teamleader/Pipedrive.',
+        title: 'Voor servicebedrijven: CRM-updates in 10 seconden, gewoon via spraak.',
+        subtitle: 'Na elke interventie of klantcontact: notities, taken en vervolgacties automatisch in Teamleader/Pipedrive. Geen admin-achterstand meer.',
         bullets: [
-          'After each job: speak 1 update → CRM note + task created',
-          'Fewer missed follow-ups → faster invoicing and scheduling',
-          'Everything centralized, even when someone is away',
+          'Na elke job: 1 spraakupdate → notitie + volgende stap in je CRM',
+'Minder vergeten opvolging → sneller plannen en factureren',
+'Alles centraal en deelbaar voor het hele team'
         ],
       }}
     />
