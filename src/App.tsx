@@ -26,6 +26,8 @@ import { CookieSettingsModal } from './components/CookieSettingsModal';
 import { RTLProvider } from './components/RTLProvider';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { useI18n } from './hooks/useI18n';
+import { AnalyticsListener } from './components/AnalyticsListener';
+import { withUTM } from './utils/utm';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -73,21 +75,22 @@ function App() {
   return (
     <ConsentProvider>
       <RTLProvider>
+        <AnalyticsListener />
         <div className="min-h-screen bg-white">
           {/* Navigation */}
           <nav className="fixed top-0 left-0 right-0 z-[9999] bg-white/90 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
             <div className="max-w-7xl mx-auto px-6 py-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4 cursor-pointer group" onClick={() => navigate('/')}>
+                <div className="flex items-center space-x-4 cursor-pointer group" onClick={() => navigate(withUTM('/'))}>
                   {!isHomepage && (
                     <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-gray-100 group-hover:to-gray-200 transition-all duration-200 shadow-sm">
                       <ArrowLeft className="w-4 h-4 text-gray-600 group-hover:text-gray-800" />
                     </div>
                   )}
                   {/* Blue logo on light background */}
-                  <img 
-                    src="/Finit Voicelink Blue.svg" 
-                    alt={t('common.voiceLink')} 
+                  <img
+                    src="/Finit Voicelink Blue.svg"
+                    alt={t('common.voiceLink')}
                     className="h-11 w-auto group-hover:scale-[1.02] transition-all duration-200"
                   />
                 </div>
@@ -116,7 +119,7 @@ function App() {
                             Contact Us
                           </button>
                           <button
-                            onClick={() => navigate('/test')}
+                            onClick={() => navigate(withUTM('/test'))}
                             className="text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 font-semibold px-5 py-2 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
                           >
                             Join Waitlist
@@ -133,7 +136,7 @@ function App() {
                     <div className="flex items-center space-x-4">
                      {isHomepage && (
                        <button
-                         onClick={() => navigate('/dashboard')}
+                         onClick={() => navigate(withUTM('/dashboard'))}
                          className="text-blue-600 hover:text-blue-700 font-medium transition-all duration-200 px-4 py-2 rounded-xl hover:bg-blue-50 hover:shadow-sm"
                        >
                          {t('navigation.dashboard')}
@@ -200,7 +203,7 @@ function App() {
                       Contact Us
                     </button>
                     <button
-                      onClick={() => navigate('/test')}
+                      onClick={() => navigate(withUTM('/test'))}
                       className="text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 font-semibold px-4 py-3 rounded-xl transition-all duration-200 hover:shadow-lg text-left"
                     >
                       Join Waitlist
@@ -215,7 +218,7 @@ function App() {
                       <div className="flex flex-col space-y-2 pt-3 border-t border-gray-200/50">
                        {isHomepage && (
                          <button
-                           onClick={() => navigate('/dashboard')}
+                           onClick={() => navigate(withUTM('/dashboard'))}
                            className="text-blue-600 hover:text-blue-700 font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-blue-50 hover:shadow-sm text-left"
                          >
                            {t('navigation.dashboard')}

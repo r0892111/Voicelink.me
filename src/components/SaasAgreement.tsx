@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { ChevronRight, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { withUTM } from "../utils/utm";
 
 export default function SaasAgreementPage() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function SaasAgreementPage() {
             {/* Navigation */}
             <div className="mb-8">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => navigate(withUTM('/'))}
                 className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />

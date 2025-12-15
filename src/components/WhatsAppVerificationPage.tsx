@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { MessageCircle, Check, Loader2, AlertCircle, ArrowLeft, Shield } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
 import { supabase } from '../lib/supabase';
+import { withUTM } from '../utils/utm';
 
 export const WhatsAppVerificationPage: React.FC = () => {
   const { t } = useI18n();
@@ -55,7 +56,7 @@ export const WhatsAppVerificationPage: React.FC = () => {
 
         if (!authAttempted) {
           sessionStorage.setItem('whatsapp_auth_redirect', 'true');
-          navigate(`/whatsapp-auth?user_id=${finalUserId}&otp_code=${finalOtpCode}`);
+          navigate(withUTM(`/whatsapp-auth?user_id=${finalUserId}&otp_code=${finalOtpCode}`));
           return;
         } else {
           // Already tried auth but still not authenticated - show error
@@ -201,7 +202,7 @@ export const WhatsAppVerificationPage: React.FC = () => {
           
           <div className="space-y-3">
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate(withUTM('/'))}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
             >
               <ArrowLeft className="w-4 h-4" />

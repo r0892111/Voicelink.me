@@ -4,6 +4,7 @@ import { HeroDemo } from './HeroDemo';
 import { PricingSection } from './PricingSection';
 import { useConsent } from '../contexts/ConsentContext';
 import { useI18n } from '../hooks/useI18n';
+import { trackCTAClick } from '../utils/analytics';
 
 interface HomepageProps {
   openModal: () => void;

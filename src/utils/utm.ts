@@ -132,3 +132,57 @@ export function useUTM() {
     appendUTM,
   };
 }
+
+/**
+ * Enhanced helper for React Router navigation with UTM parameters
+ * Appends stored UTM params to internal paths or absolute URLs
+ * Returns a react-router friendly string: pathname + search + hash
+ *
+ * @param pathOrUrl - Internal path ("/signup") or absolute URL
+ * @param params - Optional UTM params to override stored ones
+ * @returns Complete path with UTM params for react-router navigate()
+ */
+export function withUTM(pathOrUrl: string, params?: UTMParams): string {
+  const utmParams = params || getStoredUTM();
+  const queryString = utmToQueryString(utmParams);
+
+  if (!queryString) return pathOrUrl;
+
+  try {
+    const url = new URL(pathOrUrl, window.location.origin);
+
+    Object.entries(utmParams).forEach(([key, value]) => {
+      if (value) {
+        url.searchParams.set(key, value);
+      }
+    });
+
+    if (pathOrUrl.startsWith('http') || pathOrUrl.startsWith('//')) {
+      return url.href;
+    }
+
+    return url.pathname + url.search + url.hash;
+  } catch {
+    const separator = pathOrUrl.includes('?') ? '&' : '?';
+    return `${pathOrUrl}${separator}${queryString}`;
+  }
+}
+
+/**
+ * Returns only non-empty UTM parameters as a flat object for GA4 events
+ * Suitable for passing to gtag() or dataLayer.push()
+ *
+ * @returns Object with only populated utm_* fields
+ */
+export function getUTMForAnalytics(): Record<string, string> {
+  const stored = getStoredUTM();
+  const result: Record<string, string> = {};
+
+  Object.entries(stored).forEach(([key, value]) => {
+    if (value && value.trim()) {
+      result[key] = value;
+    }
+  });
+
+  return result;
+}
