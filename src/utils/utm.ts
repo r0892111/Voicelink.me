@@ -1,6 +1,7 @@
 /**
  * UTM Parameter Handler
  * Manages UTM parameters from URL, stores them in localStorage, and appends them to links.
+ * Privacy-compliant: Only persists to localStorage with marketing consent.
  */
 
 export interface UTMParams {
@@ -13,6 +14,23 @@ export interface UTMParams {
 
 const UTM_STORAGE_KEY = 'utm';
 const UTM_PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+
+// In-memory storage for UTM params (used before consent is granted)
+let memoryUTM: UTMParams = {};
+
+/**
+ * Checks if user has given marketing consent
+ */
+function hasMarketingConsent(): boolean {
+  try {
+    const consent = localStorage.getItem('cookie-consent');
+    if (!consent) return false;
+    const parsed = JSON.parse(consent);
+    return parsed.marketing === true;
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Extracts UTM parameters from current URL
@@ -32,18 +50,33 @@ export function extractUTMFromURL(): UTMParams {
 }
 
 /**
- * Stores UTM parameters in localStorage
+ * Stores UTM parameters - respects marketing consent
+ * With consent: persists to localStorage
+ * Without consent: stores in memory only (cleared on page refresh)
  */
 export function persistUTM(params: UTMParams): void {
-  if (Object.keys(params).length > 0) {
+  if (Object.keys(params).length === 0) return;
+
+  if (hasMarketingConsent()) {
+    // User has given marketing consent - persist to localStorage
     localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(params));
+  } else {
+    // No consent yet - store in memory only
+    memoryUTM = { ...params };
   }
 }
 
 /**
- * Retrieves stored UTM parameters from localStorage
+ * Retrieves stored UTM parameters
+ * Priority: memory storage (no consent) > localStorage (with consent)
  */
 export function getStoredUTM(): UTMParams {
+  // Check memory first (for users without consent)
+  if (Object.keys(memoryUTM).length > 0) {
+    return memoryUTM;
+  }
+
+  // Fall back to localStorage (for users with consent)
   try {
     const stored = localStorage.getItem(UTM_STORAGE_KEY);
     return stored ? JSON.parse(stored) : {};
@@ -81,6 +114,33 @@ export function appendUTMToURL(url: string, params?: UTMParams): string {
 }
 
 /**
+ * Migrates UTM from memory to localStorage when consent is granted
+ */
+function migrateUTMToStorage(): void {
+  if (Object.keys(memoryUTM).length > 0 && hasMarketingConsent()) {
+    localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(memoryUTM));
+    memoryUTM = {}; // Clear memory after migration
+  }
+}
+
+/**
+ * Sets up listener for consent changes
+ */
+function setupConsentListener(): void {
+  // Listen for storage events (consent changes in other tabs)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'cookie-consent') {
+      migrateUTMToStorage();
+    }
+  });
+
+  // Listen for custom consent change event (same tab)
+  window.addEventListener('consentChanged', () => {
+    migrateUTMToStorage();
+  });
+}
+
+/**
  * Initialize UTM tracking on page load
  * Call this once when the app loads
  */
@@ -95,6 +155,12 @@ export function initializeUTMTracking(): void {
 
   // Setup click handlers for links with data-append-utm attribute
   setupUTMClickHandlers();
+
+  // Setup listener for consent changes
+  setupConsentListener();
+
+  // Check if consent was granted and we have memory UTM to migrate
+  migrateUTMToStorage();
 }
 
 /**
