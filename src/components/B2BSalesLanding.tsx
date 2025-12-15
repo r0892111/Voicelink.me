@@ -10,12 +10,12 @@ export const B2BSalesLanding: React.FC<B2BSalesLandingProps> = ({ openModal }) =
     <LandingPageTemplate
       openModal={openModal}
       hero={{
-        title: 'Keep Pipedrive/Teamleader up-to-date while you\'re on the road.',
-        subtitle: 'Voice → deal note + next step + stage update. Forecast stays real, follow-ups don\'t slip.',
+        title: 'Voor sales teams: houd Pipedrive/Teamleader up-to-date terwijl je onderweg bent.',
+        subtitle: 'Na elk gesprek: deal-notitie, volgende stap en statusupdate automatisch gelogd. Forecast klopt en follow-ups slippen niet.',
         bullets: [
-          '5 updates in 48 hours = your \'wow moment\'',
-          'No more admin after customer visits',
-          'Managers get a real pipeline',
+          'Na elk bezoek: 10 seconden spraak → CRM-update',
+          'Geen admin-avond meer, wél consistente opvolging',
+          'Managers zien een pipeline die écht klopt',
         ],
       }}
     />
