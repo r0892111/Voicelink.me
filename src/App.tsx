@@ -10,6 +10,9 @@ import { WhatsAppAuthPage } from './components/WhatsAppAuthPage';
 import { Homepage } from './components/Homepage';
 import { ContactFormModal } from './components/ContactFormModal';
 import { TestSignup } from './components/TestSignup';
+import { FieldServiceLanding } from './components/FieldServiceLanding';
+import { InstallatorsLanding } from './components/InstallatorsLanding';
+import { B2BSalesLanding } from './components/B2BSalesLanding';
 import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
@@ -255,6 +258,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage openModal={openModal} openContactModal={openContactModal} />} />
               <Route path="/test" element={<TestSignup />} />
+              <Route path="/lp/field-service" element={<FieldServiceLanding />} />
+              <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
+              <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/success" element={<SuccessPage />} />
