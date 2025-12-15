@@ -248,7 +248,7 @@ export const AuthCallback: React.FC = () => {
     try {
       // First, verify we have an active session
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      
+
       if (sessionError) {
         console.error('Error getting session:', sessionError);
         setStatus('error');
@@ -284,9 +284,39 @@ export const AuthCallback: React.FC = () => {
       const hasActiveSubscription = await checkSubscriptionStatus();
 
       if (hasActiveSubscription) {
-        // User has active subscription, go to dashboard
+        // User has active subscription, check if trial event already tracked
         const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform');
-        trackTrialStarted(provider || undefined);
+
+        // Get table name based on provider
+        const tableName = provider === 'teamleader' ? 'teamleader_users'
+                       : provider === 'pipedrive' ? 'pipedrive_users'
+                       : provider === 'odoo' ? 'odoo_users'
+                       : null;
+
+        if (tableName) {
+          // Check if trial_started_tracked is false
+          const { data: userData, error: userError } = await supabase
+            .from(tableName)
+            .select('trial_started_tracked')
+            .eq('user_id', session.user.id)
+            .maybeSingle();
+
+          if (!userError && userData && !userData.trial_started_tracked) {
+            // Fire the event only once
+            trackTrialStarted(provider || undefined);
+
+            // Update the flag in database
+            await supabase
+              .from(tableName)
+              .update({ trial_started_tracked: true })
+              .eq('user_id', session.user.id);
+
+            console.log('[Analytics] Trial_started tracked for first time');
+          } else {
+            console.log('[Analytics] Trial_started already tracked, skipping');
+          }
+        }
+
         navigate(withUTM('/dashboard'));
       } else {
         // User doesn't have subscription, redirect to Stripe checkout
