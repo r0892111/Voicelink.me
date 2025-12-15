@@ -258,9 +258,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage openModal={openModal} openContactModal={openContactModal} />} />
               <Route path="/test" element={<TestSignup />} />
-              <Route path="/lp/field-service" element={<FieldServiceLanding />} />
-              <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
-              <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
+              <Route path="/lp/field-service" element={<FieldServiceLanding openModal={openModal} />} />
+              <Route path="/lp/installateurs" element={<InstallatorsLanding openModal={openModal} />} />
+              <Route path="/lp/b2b-sales" element={<B2BSalesLanding openModal={openModal} />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/success" element={<SuccessPage />} />

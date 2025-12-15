@@ -1,30 +1,23 @@
 import React from 'react';
 import { ArrowRight, CheckCircle, Play, Mic, Zap } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { useUTM } from '../utils/utm';
 
 interface LandingPageProps {
+  openModal: () => void;
   hero: {
     title: string;
     subtitle: string;
     bullets: string[];
   };
-  signupRoute?: string;
   demoURL?: string;
 }
 
 export const LandingPageTemplate: React.FC<LandingPageProps> = ({
+  openModal,
   hero,
-  signupRoute = '/signup',
   demoURL = 'https://youtu.be/wVaR0NwPNHc',
 }) => {
-  const navigate = useNavigate();
   const { appendUTM } = useUTM();
-
-  const handleGetStarted = () => {
-    const url = appendUTM(signupRoute);
-    navigate(url);
-  };
 
   const handleWatchDemo = () => {
     const url = appendUTM(demoURL);
@@ -72,8 +65,7 @@ export const LandingPageTemplate: React.FC<LandingPageProps> = ({
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
                 <button
-                  onClick={handleGetStarted}
-                  data-append-utm="true"
+                  onClick={openModal}
                   className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                   style={{ backgroundColor: '#1C2C55' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
@@ -370,8 +362,7 @@ export const LandingPageTemplate: React.FC<LandingPageProps> = ({
             Join teams already using VoiceLink to stay on top of their CRM
           </p>
           <button
-            onClick={handleGetStarted}
-            data-append-utm="true"
+            onClick={openModal}
             className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] inline-flex items-center space-x-2"
             style={{ backgroundColor: '#1C2C55' }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
