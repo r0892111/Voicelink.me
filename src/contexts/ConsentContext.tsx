@@ -63,6 +63,9 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     localStorage.setItem('cookie-consent', JSON.stringify(newConsent));
     setShowBanner(false);
     setShowSettings(false);
+
+    // Dispatch event for UTM tracking and other consent-dependent features
+    window.dispatchEvent(new Event('consentChanged'));
   };
 
   const acceptAll = () => {
@@ -105,6 +108,10 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
       preferences: false,
     };
     localStorage.setItem('cookie-consent', JSON.stringify(essentialOnly));
+    setConsent(essentialOnly);
+
+    // Dispatch event for consent-dependent features
+    window.dispatchEvent(new Event('consentChanged'));
   };
 
   const hasConsent = (category: string): boolean => {
