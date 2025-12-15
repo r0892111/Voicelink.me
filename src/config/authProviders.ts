@@ -15,12 +15,5 @@ export const authProviders: AuthProvider[] = [
     icon: Zap,
     color: 'bg-orange-500',
     hoverColor: 'hover:bg-orange-600'
-  },
-  {
-    name: 'odoo',
-    displayName: 'Odoo',
-    icon: Settings,
-    color: 'bg-purple-600',
-    hoverColor: 'hover:bg-purple-700'
   }
 ];
