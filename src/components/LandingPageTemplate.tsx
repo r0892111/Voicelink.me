@@ -15,7 +15,7 @@ interface LandingPageProps {
 
 export const LandingPageTemplate: React.FC<LandingPageProps> = ({
   hero,
-  signupRoute = '/test',
+  signupRoute = '/signup',
   demoURL = 'https://youtu.be/wVaR0NwPNHc',
 }) => {
   const navigate = useNavigate();
