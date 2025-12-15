@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowLeft, Mail, Phone, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useI18n } from '../hooks/useI18n';
+import { withUTM } from '../utils/utm';
 
 const Support: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Support: React.FC = () => {
         {/* Header */}
         <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(withUTM('/'))}
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-6 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />

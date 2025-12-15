@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { withUTM } from '../utils/utm';
 
 const PrivacyPolicy: React.FC = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const PrivacyPolicy: React.FC = () => {
         {/* Header */}
         <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(withUTM('/'))}
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-6 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MessageCircle, Zap, CheckCircle, Play, Users, Mic, ArrowRight, Phone, TrendingUp, Calendar } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
+import { trackCTAClick } from '../utils/analytics';
 
 interface HeroDemoProps {
   openModal: () => void;
@@ -41,7 +42,10 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
             
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
               <button
-                onClick={openModal}
+                onClick={() => {
+                  trackCTAClick('Get Started Free - Hero', '/');
+                  openModal();
+                }}
                 className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                 style={{ backgroundColor: '#1C2C55' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
@@ -50,7 +54,7 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                 <span>{t('hero.getStartedFree')}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button 
+              <button
                 className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:scale-[1.02] flex items-center justify-center space-x-2"
                 style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
                 onMouseEnter={(e) => {
@@ -61,7 +65,10 @@ export const HeroDemo: React.FC<HeroDemoProps> = ({ openModal }) => {
                   e.currentTarget.style.backgroundColor = 'transparent';
                   e.currentTarget.style.borderColor = '#1C2C55';
                 }}
-                onClick={() => window.open('https://youtu.be/wVaR0NwPNHc', '_blank')}
+                onClick={() => {
+                  trackCTAClick('Watch Demo - Hero', '/');
+                  window.open('https://youtu.be/wVaR0NwPNHc', '_blank');
+                }}
               >
                 <Play className="w-5 h-5" />
                 <span>{t('hero.watchDemo')}</span>

@@ -4,6 +4,8 @@ import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
 import { useI18n } from '../hooks/useI18n';
+import { withUTM } from '../utils/utm';
+import { trackTrialStarted } from '../utils/analytics';
 
 type CallbackStatus = 'loading' | 'success' | 'error';
 
@@ -315,7 +317,7 @@ export const AuthCallback: React.FC = () => {
         setMessage(t('auth.redirectingToWhatsAppVerification'));
 
         // Redirect to WhatsApp verification with auth_user_id
-        navigate(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`);
+        navigate(withUTM(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`));
         return;
       }
 
@@ -323,7 +325,9 @@ export const AuthCallback: React.FC = () => {
 
       if (hasActiveSubscription) {
         // User has active subscription, go to dashboard
-        navigate('/dashboard');
+        const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform');
+        trackTrialStarted(provider || undefined);
+        navigate(withUTM('/dashboard'));
       } else {
         // User doesn't have subscription, redirect to Stripe checkout
         setMessage(t('auth.callback.redirectingToCheckout'));
@@ -339,7 +343,7 @@ export const AuthCallback: React.FC = () => {
     } catch (error) {
       console.error('Error during subscription check/redirect:', error);
       // Fallback to dashboard if there's an error
-      navigate('/dashboard');
+      navigate(withUTM('/dashboard'));
     }
   };
 
@@ -377,7 +381,7 @@ export const AuthCallback: React.FC = () => {
 
         {status === 'error' && (
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(withUTM('/'))}
             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
           >
             {t('auth.callback.returnToHome')}

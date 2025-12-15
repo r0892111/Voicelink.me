@@ -7,6 +7,8 @@ import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
 import { useI18n } from '../hooks/useI18n';
 import { StripeService } from '../services/stripeService';
+import { withUTM } from '../utils/utm';
+import { trackSignupStart } from '../utils/analytics';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -43,8 +45,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   React.useEffect(() => {
     if (isOpen) {
       setIsAnimating(true);
+      if (globalAuthMode === 'signup') {
+        trackSignupStart();
+      }
     }
-  }, [isOpen]);
+  }, [isOpen, globalAuthMode]);
 
   const handleSignIn = async (provider: AuthProvider) => {
   // Prevent double calls using ref
@@ -259,7 +264,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             console.error('Checkout error:', checkoutError);
             setRedirectingMessage(null);
             // If checkout fails, still navigate to dashboard
-            navigate('/dashboard');
+            navigate(withUTM('/dashboard'));
             return;
           }
         }
@@ -301,7 +306,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
             if (hasActiveSubscription) {
               // User has active subscription, go to dashboard
-              navigate('/dashboard');
+              navigate(withUTM('/dashboard'));
               return;
             } else {
               // No active subscription, redirect to Stripe checkout
@@ -319,14 +324,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               } catch (checkoutError) {
                 console.error('Checkout error during login:', checkoutError);
                 setRedirectingMessage(null);
-                navigate('/dashboard');
+                navigate(withUTM('/dashboard'));
                 return;
               }
             }
           } catch (subscriptionError) {
             console.error('Error checking subscription:', subscriptionError);
             // On error, navigate to dashboard (safer than leaving user stuck)
-            navigate('/dashboard');
+            navigate(withUTM('/dashboard'));
             return;
           }
         }

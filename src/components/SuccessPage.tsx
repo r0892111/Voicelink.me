@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { withUTM } from '../utils/utm';
 
 export const SuccessPage: React.FC = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export const SuccessPage: React.FC = () => {
   useEffect(() => {
     // Auto-redirect after 5 seconds
     const timer = setTimeout(() => {
-      navigate('/');
+      navigate(withUTM('/'));
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -38,7 +39,7 @@ export const SuccessPage: React.FC = () => {
         
         <div className="space-y-3">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(withUTM('/'))}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
           >
             <ArrowLeft className="w-4 h-4" />
