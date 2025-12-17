@@ -333,12 +333,12 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
 
-                  <div
-                    className="mt-2 text-[11px] sm:text-sm text-center lg:text-right"
-                    style={{ color: 'rgba(32, 34, 38, 0.75)' }}
-                  >
-                    Setup in minutes
-                  </div>
+<div
+  className="mt-2 text-[11px] sm:text-sm text-center lg:text-right"
+  style={{ color: 'rgba(32, 34, 38, 0.75)' }}
+>
+  Setup your VoiceLink WhatsApp in 3 minutes
+</div>
                 </div>
               {/* WhatsApp preview + CTA BELOW it */}
               <div
