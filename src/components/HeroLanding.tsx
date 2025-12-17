@@ -69,7 +69,8 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
               >
                 <span className="underline">Nobody</span> likes administration.
                 <br />
-              
+                <br />
+               
                 Talk to your CRM with VoiceLink.
               </h1>
 
