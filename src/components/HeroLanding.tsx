@@ -81,7 +81,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
 
             {/* Right Side - Phone Mockup */}
             <div className="flex justify-center lg:justify-end animate-fade-in-right" style={{ animationDelay: '0.3s' }}>
-              <div className="relative max-w-[280px] mx-auto">
+              <div className="relative max-w-[140px] mx-auto">
                 {/* Background Effect Elements */}
                 <div className="absolute inset-0 transform translate-x-6 translate-y-6 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[2rem] blur-2xl opacity-40 scale-110"></div>
                 <div className="absolute inset-0 transform translate-x-4 translate-y-4 bg-gradient-to-br from-gray-400 to-gray-600 rounded-[2rem] blur-xl opacity-35 scale-107"></div>
@@ -125,7 +125,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                     {/* Chat Messages */}
                     <div className="bg-[#ECE5DD] flex-1 flex flex-col" style={{
                       backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d4d8' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                      height: '500px'
+                      height: '250px'
                     }}>
                       {/* Messages Container */}
                       <div className="flex-1 p-3 space-y-3">
