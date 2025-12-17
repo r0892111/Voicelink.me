@@ -27,7 +27,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
         iconColor: '#128C7E',
       },
       {
-        title: 'AI',
+        title: 'VoiceLink AI',
         desc: 'Extracts the details',
         icon: <Sparkles className="w-5 h-5" />,
         iconBg: 'rgba(247, 230, 155, 0.35)',
