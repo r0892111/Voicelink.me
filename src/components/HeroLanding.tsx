@@ -39,7 +39,7 @@ const WhatsAppPreview: React.FC = () => {
   {/* Logo with white background only */}
   <div className="h-9 w-9 rounded-full bg-white flex items-center justify-center">
     <img
-      src="/Finit Voicelink Blue.svg"
+      src="/Finit logo Blue.svg"
       alt="VoiceLink"
       className="h-7 w-7 object-contain"
       draggable={false}
