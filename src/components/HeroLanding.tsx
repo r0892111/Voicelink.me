@@ -161,19 +161,14 @@ const WhatsAppPreview: React.FC = () => {
               borderColor: 'rgba(255,255,255,0.06)',
             }}
           >
-            Got it. I created:
+            Updates:
             <ul className="mt-2 pl-5 list-disc space-y-1" style={{ color: 'rgba(233,237,239,0.9)' }}>
               <li>✅ CRM note on “Jan / Deal #1842”</li>
               <li>✅ Follow-up task: Tue 09:00</li>
               <li>✅ Next step: confirm delivery Friday</li>
             </ul>
 
-            <div
-              className="mt-3 inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold"
-              style={{ background: 'rgba(255,255,255,0.10)', color: '#e9edef' }}
-            >
-              Open in CRM →
-            </div>
+            
 
             <div className="mt-1 text-[10px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
               09:13
