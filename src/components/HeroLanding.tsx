@@ -50,23 +50,11 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       <section className="relative min-h-screen flex items-center z-10 pt-16">
         <div className="max-w-7xl mx-auto px-6 w-full">
           <div className="space-y-8 animate-fade-in-left">
-            {/* H1 Title with Phone Mockup */}
-            <div className="flex items-center gap-8">
-              {/* H1 Title */}
-              <h1
-                className="text-6xl lg:text-7xl font-black leading-tight animate-scale-in"
-                style={{
-                  color: '#1C2C55',
-                  textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
-                  animationDelay: '0.2s',
-                }}
-              >
-                Talk to your CRM
-              </h1>
-
-              {/* Phone Mockup */}
+            {/* TOP ROW: Phone (left) + Logo (right) — like the screenshot */}
+            <div className="flex items-start justify-between gap-6">
+              {/* Phone Mockup (left) */}
               <div className="flex-shrink-0 animate-fade-in-right" style={{ animationDelay: '0.3s' }}>
-                <div className="relative max-w-[140px] mx-auto">
+                <div className="relative max-w-[190px] sm:max-w-[210px] mx-auto">
                   {/* Background Effect Elements */}
                   <div className="absolute inset-0 transform translate-x-3 translate-y-3 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[1rem] blur-xl opacity-40 scale-110"></div>
                   <div className="absolute inset-0 transform translate-x-2 translate-y-2 bg-gradient-to-br from-gray-400 to-gray-600 rounded-[1rem] blur-lg opacity-35 scale-107"></div>
@@ -237,7 +225,28 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                   </div>
                 </div>
               </div>
+
+              {/* Logo (right) */}
+              <div className="flex-1 flex justify-end pt-3 sm:pt-6">
+                <img
+                  src="/Finit Voicelink Blue.svg"
+                  alt="Finit VoiceLink"
+                  className="w-[160px] sm:w-[220px] h-auto object-contain"
+                />
+              </div>
             </div>
+
+            {/* H1 Title (below phone+logo, like screenshot) */}
+            <h1
+              className="text-6xl lg:text-7xl font-black leading-tight animate-scale-in"
+              style={{
+                color: '#1C2C55',
+                textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
+                animationDelay: '0.2s',
+              }}
+            >
+              Talk to your CRM
+            </h1>
 
             {/* Subtext */}
             <p
