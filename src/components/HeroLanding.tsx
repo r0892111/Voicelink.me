@@ -6,16 +6,6 @@ interface HeroLandingProps {
   openModal: () => void;
 }
 
-type Step = {
-  key: string;
-  title?: string;
-  desc: string;
-  iconType: 'lucide' | 'logo';
-  icon?: React.ReactNode;
-  iconBg: string;
-  iconColor?: string;
-};
-
 export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
   // Track landing page view on mount
   React.useEffect(() => {
@@ -27,101 +17,113 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
     openModal();
   };
 
-  const ProcessStrip = () => {
-    const steps: Step[] = [
-      {
-        key: 'whatsapp',
-        title: 'WhatsApp',
-        desc: 'Send a voice note',
-        iconType: 'lucide',
-        icon: <MessageCircle className="w-5 h-5" />,
-        iconBg: 'rgba(37, 211, 102, 0.14)',
-        iconColor: '#128C7E',
-      },
-      {
-        key: 'voicelink',
-        // title intentionally omitted: we only want logo + text
-        desc: 'Extracts the details',
-        iconType: 'logo',
-        iconBg: 'rgba(255,255,255,0.35)',
-      },
-      {
-        key: 'crm',
-        title: 'CRM',
-        desc: 'Updates automatically',
-        iconType: 'lucide',
-        icon: <Database className="w-5 h-5" />,
-        iconBg: 'rgba(28, 44, 85, 0.08)',
-        iconColor: '#1C2C55',
-      },
-    ];
-
+  const TwoCardFlow = () => {
     return (
       <div className="mt-6">
-        {/* “Equation” line (instant understanding) */}
+        {/* Instant understanding line */}
         <div className="text-sm sm:text-base font-semibold mb-4" style={{ color: '#1C2C55' }}>
-          WhatsApp voice → AI → CRM update
+          Talk in WhatsApp → Your CRM updates itself
         </div>
 
-        {/* Steps */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-          {steps.map((s, i) => (
-            <React.Fragment key={s.key}>
+        <div className="flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4">
+          {/* Card 1: WhatsApp */}
+          <div
+            className="w-full sm:flex-1 rounded-2xl border px-4 py-4 bg-white/80"
+            style={{
+              borderColor: 'rgba(28, 44, 85, 0.12)',
+              backdropFilter: 'blur(6px)',
+            }}
+          >
+            <div className="flex items-start gap-3">
               <div
-                className="w-full sm:w-auto flex items-center gap-3 rounded-2xl border px-4 py-3 bg-white/80"
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{
-                  borderColor: 'rgba(28, 44, 85, 0.12)',
-                  backdropFilter: 'blur(6px)',
+                  backgroundColor: 'rgba(37, 211, 102, 0.14)',
+                  color: '#128C7E',
                 }}
               >
-                {/* Icon area */}
-                {s.iconType === 'logo' ? (
-                  // Special layout: logo takes 50% of the card width, text takes 50%
-                  <div className="grid grid-cols-2 items-center gap-3 w-full">
-                    {/* Left: logo = 50% */}
-                    <div className="w-full flex items-center">
-                      <img
-                        src="/Finit Voicelink Blue.svg"
-                        alt="VoiceLink"
-                        className="w-full h-8 object-contain object-left"
-                      />
-                    </div>
-
-                    {/* Right: text = 50% */}
-                    <div className="text-sm text-gray-700 text-left leading-tight">{s.desc}</div>
-                  </div>
-                ) : (
-                  <>
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center"
-                      style={{
-                        backgroundColor: s.iconBg,
-                        color: s.iconColor,
-                      }}
-                    >
-                      {s.icon}
-                    </div>
-
-                    <div className="leading-tight">
-                      {s.title ? (
-                        <div className="text-sm font-extrabold" style={{ color: '#1C2C55' }}>
-                          {s.title}
-                        </div>
-                      ) : null}
-                      <div className="text-sm text-gray-700">{s.desc}</div>
-                    </div>
-                  </>
-                )}
+                <MessageCircle className="w-5 h-5" />
               </div>
 
-              {/* Arrow between steps */}
-              {i < steps.length - 1 && (
-                <div className="flex justify-center sm:justify-start">
-                  <ArrowRight className="w-4 h-4" style={{ color: 'rgba(28, 44, 85, 0.35)' }} />
+              <div className="leading-tight">
+                <div className="text-sm font-extrabold" style={{ color: '#1C2C55' }}>
+                  WhatsApp
                 </div>
-              )}
-            </React.Fragment>
-          ))}
+                <div className="text-sm text-gray-700">Send a voice note</div>
+              </div>
+            </div>
+
+            {/* Minimal “input” snippet */}
+            <div className="mt-3 rounded-xl border bg-white px-3 py-3" style={{ borderColor: 'rgba(28,44,85,0.08)' }}>
+              <div className="text-xs font-semibold text-gray-700">🎤 Voice note</div>
+              <div className="mt-1 text-sm text-gray-800 leading-snug">
+                “Client X — follow-up Friday 9:00. Update the quote.”
+              </div>
+            </div>
+          </div>
+
+          {/* Connector */}
+          <div className="flex sm:flex-col items-center justify-center gap-2 sm:gap-2 px-1">
+            {/* Arrow */}
+            <div className="flex items-center justify-center">
+              <ArrowRight className="w-5 h-5" style={{ color: 'rgba(28, 44, 85, 0.35)' }} />
+            </div>
+
+            {/* “Invisible layer” badge */}
+            <div
+              className="px-3 py-1 rounded-full text-xs font-semibold border bg-white/80"
+              style={{
+                borderColor: 'rgba(28, 44, 85, 0.12)',
+                color: '#1C2C55',
+                backdropFilter: 'blur(6px)',
+              }}
+              title="VoiceLink runs inside WhatsApp"
+            >
+              Powered by VoiceLink AI
+            </div>
+          </div>
+
+          {/* Card 2: CRM */}
+          <div
+            className="w-full sm:flex-1 rounded-2xl border px-4 py-4 bg-white/80"
+            style={{
+              borderColor: 'rgba(28, 44, 85, 0.12)',
+              backdropFilter: 'blur(6px)',
+            }}
+          >
+            <div className="flex items-start gap-3">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{
+                  backgroundColor: 'rgba(28, 44, 85, 0.08)',
+                  color: '#1C2C55',
+                }}
+              >
+                <Database className="w-5 h-5" />
+              </div>
+
+              <div className="leading-tight">
+                <div className="text-sm font-extrabold" style={{ color: '#1C2C55' }}>
+                  Your CRM
+                </div>
+                <div className="text-sm text-gray-700">Updated automatically</div>
+              </div>
+            </div>
+
+            {/* Minimal “output” snippet */}
+            <div className="mt-3 rounded-xl border bg-white px-3 py-3" style={{ borderColor: 'rgba(28,44,85,0.08)' }}>
+              <div className="text-xs font-semibold text-gray-700">✅ Logged to the right deal</div>
+              <div className="mt-1 text-sm text-gray-800 leading-snug">
+                Follow-up scheduled + key notes saved.
+              </div>
+              <div className="mt-2 text-xs text-gray-600">📅 Next action: Friday 9:00</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Supporting line (reinforces “invisible”) */}
+        <div className="mt-3 text-sm" style={{ color: 'rgba(32, 34, 38, 0.75)' }}>
+          No app switching • No typing • Works with your existing workflow
         </div>
       </div>
     );
@@ -175,12 +177,12 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 animationDelay: '0.3s',
               }}
             >
-              Talk about any company update. VoiceLink turns it into structured CRM data automatically.
+              Send a WhatsApp voice note. Your CRM gets the update automatically — structured and ready for follow-up.
             </p>
 
-            {/* 3-step process strip (instant understanding) */}
+            {/* Two-card flow (WhatsApp -> CRM, VoiceLink as invisible layer) */}
             <div className="animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
-              <ProcessStrip />
+              <TwoCardFlow />
             </div>
 
             {/* CTAs */}
