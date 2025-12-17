@@ -36,7 +36,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       className="w-5 h-5"
     />
   ),
-  iconBg: 'rgba(247, 230, 155, 0.35)',
+  iconBg: 'rgba(255, 255, 255, 0.35)',
   iconColor: '#1C2C55',
 },
       {
