@@ -347,7 +347,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                     className="mt-2 text-[11px] sm:text-sm text-center lg:text-right"
                     style={{ color: 'rgba(32, 34, 38, 0.75)' }}
                   >
-                    No credit card • Setup in minutes
+                    Setup in minutes
                   </div>
                 </div>
               </div>
