@@ -44,7 +44,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       </div>
 
 {/* Hero Section */}
-<section className="relative min-h-screen z-10 pt-10">
+
   {/* Logo pinned at top */}
   <div className="absolute top-4 left-0 right-0 z-20 flex justify-center">
     <img
@@ -62,7 +62,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       </div>
     </div>
   </div>
-</section>
+
 
             {/* Headline */}
             <h1
