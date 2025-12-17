@@ -46,7 +46,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       {/* Hero Section */}
       <section className="relative h-full z-10 flex flex-col">
         {/* Logo pinned at top */}
-        <div className="flex-shrink-0 pt-4 pb-2 flex justify-center z-20">
+        <div className="flex-shrink-0 pt-10 pb-2 flex justify-center z-20">
           <img
             src="/Finit Voicelink Blue.svg"
             alt="Finit VoiceLink"
