@@ -28,33 +28,40 @@ const WhatsAppPreview: React.FC = () => {
       aria-label="VoiceLink WhatsApp preview"
     >
       {/* Top bar */}
-      <div
-        className="flex items-center gap-3 px-3 py-2.5"
-        style={{
-            backgroundColor: '#ffffff',
-  borderBottom: '1px solid rgba(0,0,0,0.08)',
-        }}
-      >
-        <img
-  src="/Finit Voicelink Blue.svg"
-  alt="VoiceLink"
-  className="h-9 w-9 rounded-full bg-white/10 p-1 object-contain"
-/>
+     {/* Top bar */}
+<div
+  className="flex items-center gap-3 px-3 py-2.5"
+  style={{
+    backgroundColor: '#202c33',
+    borderBottom: '1px solid rgba(255,255,255,0.06)',
+  }}
+>
+  {/* Logo with white background only */}
+  <div className="h-9 w-9 rounded-full bg-white flex items-center justify-center">
+    <img
+      src="/Finit Voicelink Blue.svg"
+      alt="VoiceLink"
+      className="h-7 w-7 object-contain"
+      draggable={false}
+    />
+  </div>
 
-        <div className="flex-1 min-w-0">
-          <div className="text-[13px] font-bold leading-tight" style={{ color: '#e9edef' }}>
-            VoiceLink
-          </div>
-          <div className="text-[11px] truncate" style={{ color: 'rgba(233,237,239,0.7)' }}>
-            Online • logs to Teamleader/Pipedrive
-          </div>
-        </div>
-        <div className="flex gap-1.5" aria-hidden="true">
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
-        </div>
-      </div>
+  <div className="flex-1 min-w-0">
+    <div className="text-[13px] font-bold leading-tight" style={{ color: '#e9edef' }}>
+      VoiceLink
+    </div>
+    <div className="text-[11px] truncate" style={{ color: 'rgba(233,237,239,0.7)' }}>
+      Online • logs to Teamleader/Pipedrive
+    </div>
+  </div>
+
+  <div className="flex gap-1.5" aria-hidden="true">
+    <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
+    <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
+    <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
+  </div>
+</div>
+
 
       {/* Body */}
       <div
