@@ -27,12 +27,18 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
         iconColor: '#128C7E',
       },
       {
-        title: 'VoiceLink AI',
-        desc: 'Extracts the details',
-        icon: <Sparkles className="w-5 h-5" />,
-        iconBg: 'rgba(247, 230, 155, 0.35)',
-        iconColor: '#1C2C55',
-      },
+  title: 'VoiceLink AI',
+  desc: 'Extracts the details',
+  icon: (
+    <img
+      src="/Finit Icon Blue.svg"
+      alt="VoiceLink AI"
+      className="w-5 h-5"
+    />
+  ),
+  iconBg: 'rgba(247, 230, 155, 0.35)',
+  iconColor: '#1C2C55',
+},
       {
         title: 'CRM',
         desc: 'Updates automatically',
