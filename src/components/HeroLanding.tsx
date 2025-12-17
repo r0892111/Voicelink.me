@@ -33,7 +33,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
     <img
       src="/Finit Voicelink Blue.svg"
       alt="VoiceLink AI"
-      className="w-10 h-5"
+      className="w-30 h-5"
     />
   ),
   iconBg: 'rgba(255, 255, 255, 0.35)',
