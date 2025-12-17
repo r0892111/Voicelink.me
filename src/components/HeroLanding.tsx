@@ -21,7 +21,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
   };
 
   const ProofCard = () => (
-    <div className="relative w-full max-w-[420px] mx-auto lg:mx-0">
+    <div className="relative w-full max-w-[340px] mx-auto lg:mx-0">
       {/* Badge overlay */}
       <div className="absolute -top-3 left-4 z-20">
         <div
@@ -44,18 +44,18 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
           backgroundColor: 'rgba(255,255,255,0.92)',
           borderColor: 'rgba(28, 44, 85, 0.10)',
           boxShadow:
-            '0 18px 40px -18px rgba(0,0,0,0.18), 0 10px 24px -14px rgba(0,0,0,0.14)',
+            '0 16px 34px -18px rgba(0,0,0,0.18), 0 10px 22px -16px rgba(0,0,0,0.14)',
           backdropFilter: 'blur(8px)',
         }}
       >
         {/* WhatsApp header (minimal) */}
         <div
-          className="px-4 py-3 flex items-center gap-2"
+          className="px-3 py-2 flex items-center gap-2"
           style={{
             backgroundColor: '#075E54',
           }}
         >
-          <div className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center p-1">
+          <div className="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center p-1">
             <img
               src="/Finit Icon Blue.svg"
               alt={t('phoneMockup.voiceLink')}
@@ -63,20 +63,20 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
             />
           </div>
           <div className="flex-1">
-            <div className="text-white font-semibold text-sm leading-tight">
+            <div className="text-white font-semibold text-xs leading-tight">
               {t('phoneMockup.voiceLink')}
             </div>
             <div className="flex items-center gap-1">
               <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
-              <span className="text-xs text-green-100">{t('phoneMockup.online')}</span>
+              <span className="text-[10px] text-green-100">{t('phoneMockup.online')}</span>
             </div>
           </div>
-          <img src="/whatsapp.svg" alt="WhatsApp" className="w-5 h-5 opacity-95" />
+          <img src="/whatsapp.svg" alt="WhatsApp" className="w-4 h-4 opacity-95" />
         </div>
 
         {/* Chat area (tight, focused on the proof) */}
         <div
-          className="p-4 space-y-3"
+          className="p-3 space-y-2"
           style={{
             backgroundColor: '#ECE5DD',
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d4d8' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -87,16 +87,16 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
             <div className="bg-[#DCF8C6] rounded-2xl rounded-br-md px-3 py-2 max-w-[92%] shadow-sm">
               <div className="flex items-center gap-2">
                 <div
-                  className="w-7 h-7 rounded-full flex items-center justify-center"
+                  className="w-6 h-6 rounded-full flex items-center justify-center"
                   style={{ backgroundColor: '#25D366' }}
                 >
-                  <Play className="w-4 h-4 text-white ml-0.5" />
+                  <Play className="w-3.5 h-3.5 text-white ml-0.5" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-[3px]">
-                    {[...Array(14)].map((_, i) => {
-                      const heights = [3, 5, 7, 10, 12, 14, 12, 9, 7, 5, 4, 3, 4, 5];
-                      const isPlayed = i < 9;
+                    {[...Array(12)].map((_, i) => {
+                      const heights = [3, 5, 7, 10, 12, 10, 8, 6, 5, 4, 3, 4];
+                      const isPlayed = i < 8;
                       return (
                         <div
                           key={i}
@@ -111,10 +111,10 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                     })}
                   </div>
                 </div>
-                <div className="text-xs font-semibold text-gray-600">1:23</div>
+                <div className="text-[11px] font-semibold text-gray-600">1:23</div>
               </div>
               <div className="flex justify-end items-center gap-1 mt-1">
-                <span className="text-[11px] text-gray-500">2:30 PM</span>
+                <span className="text-[10px] text-gray-500">2:30 PM</span>
                 <CheckCircle className="w-3 h-3 text-[#53BDEB]" />
               </div>
             </div>
@@ -174,7 +174,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
               </div>
 
               <div className="flex justify-end items-center gap-1 mt-2">
-                <span className="text-[11px] text-gray-500">2:31 PM</span>
+                <span className="text-[10px] text-gray-500">2:31 PM</span>
                 <CheckCircle className="w-3 h-3 text-[#53BDEB]" />
               </div>
             </div>
@@ -225,37 +225,45 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center z-10 pt-16">
         <div className="max-w-7xl mx-auto px-6 w-full">
-          {/* Layout: copy left, proof card right on desktop; on mobile proof card under CTA */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-            {/* Left: headline + copy + CTA */}
-            <div className="space-y-7 animate-fade-in-left">
-              <h1
-                className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight animate-scale-in"
-                style={{
-                  color: '#1C2C55',
-                  textShadow: '0 4px 8px rgba(28, 44, 85, 0.10)',
-                  animationDelay: '0.2s',
-                }}
-              >
-                Talk to your CRM
-              </h1>
+          {/* Layout: make left column a flex column so CTA can sit at bottom */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-stretch min-h-[calc(100vh-4rem)]">
+            {/* Left: headline + copy, CTA at bottom */}
+            <div className="flex flex-col min-h-full">
+              <div className="space-y-7 animate-fade-in-left">
+                <h1
+                  className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight animate-scale-in"
+                  style={{
+                    color: '#1C2C55',
+                    textShadow: '0 4px 8px rgba(28, 44, 85, 0.10)',
+                    animationDelay: '0.2s',
+                  }}
+                >
+                  Talk to your CRM
+                </h1>
 
-              <p
-                className="text-lg sm:text-xl lg:text-2xl leading-relaxed animate-fade-in-up max-w-2xl"
-                style={{
-                  color: '#202226',
-                  animationDelay: '0.3s',
-                }}
-              >
-                Transform WhatsApp voice notes into structured CRM data instantly.
-                <br className="hidden sm:block" />
-                No typing, no forms, just talk.
-              </p>
+                <p
+                  className="text-lg sm:text-xl lg:text-2xl leading-relaxed animate-fade-in-up max-w-2xl"
+                  style={{
+                    color: '#202226',
+                    animationDelay: '0.3s',
+                  }}
+                >
+                  Transform WhatsApp voice notes into structured CRM data instantly.
+                  <br className="hidden sm:block" />
+                  No typing, no forms, just talk.
+                </p>
 
-              <div className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                {/* On mobile, show proof card under copy */}
+                <div className="lg:hidden pt-2">
+                  <ProofCard />
+                </div>
+              </div>
+
+              {/* CTA pushed to bottom */}
+              <div className="mt-auto pt-10 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
                 <button
                   onClick={handleStartTrial}
-                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
+                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 w-full sm:w-auto"
                   style={{ backgroundColor: '#1C2C55' }}
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0F1A3A')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#1C2C55')}
@@ -264,20 +272,14 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                {/* Micro trust line (cheap lift) */}
                 <div className="mt-3 text-sm" style={{ color: 'rgba(32, 34, 38, 0.75)' }}>
                   No credit card • Setup in minutes
                 </div>
               </div>
-
-              {/* On mobile, show proof card directly under CTA (above-the-fold-ish) */}
-              <div className="lg:hidden pt-2">
-                <ProofCard />
-              </div>
             </div>
 
             {/* Right: proof card on desktop */}
-            <div className="hidden lg:flex justify-end animate-fade-in-right" style={{ animationDelay: '0.3s' }}>
+            <div className="hidden lg:flex justify-end items-center animate-fade-in-right" style={{ animationDelay: '0.3s' }}>
               <ProofCard />
             </div>
           </div>
