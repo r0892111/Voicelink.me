@@ -48,13 +48,13 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
         <div className="max-w-7xl mx-auto px-6 w-full">
           <div className="space-y-8 animate-fade-in-left">
             {/* Logo */}
-            <div className="flex justify-end pt-3 sm:pt-6">
-              <img
-                src="/Finit Voicelink Blue.svg"
-                alt="Finit VoiceLink"
-                className="w-[160px] sm:w-[220px] h-auto object-contain"
-              />
-            </div>
+            <div className="flex justify-center pt-2 sm:pt-3 -mt-2">
+  <img
+    src="/Finit Voicelink Blue.svg"
+    alt="Finit VoiceLink"
+    className="w-[220px] sm:w-[300px] h-auto object-contain"
+  />
+</div>
 
             {/* Headline */}
             <h1
