@@ -141,8 +141,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 animationDelay: '0.3s',
               }}
             >
-              Speak any company update. VoiceLink turns it into structured CRM data automatically —
-              no typing, no forms.
+              Talk about any company update. VoiceLink turns it into structured CRM data automatically
             </p>
 
             {/* 3-step process strip (instant understanding) */}
