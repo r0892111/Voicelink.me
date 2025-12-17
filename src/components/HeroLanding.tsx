@@ -35,13 +35,12 @@ const WhatsAppPreview: React.FC = () => {
           borderBottom: '1px solid rgba(255,255,255,0.06)',
         }}
       >
-        <div
-          className="h-9 w-9 rounded-full"
-          aria-hidden="true"
-          style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06))',
-          }}
-        />
+        <img
+  src="/Finit Voicelink Blue.svg"
+  alt="VoiceLink"
+  className="h-9 w-9 rounded-full bg-white/10 p-1 object-contain"
+/>
+
         <div className="flex-1 min-w-0">
           <div className="text-[13px] font-bold leading-tight" style={{ color: '#e9edef' }}>
             VoiceLink
