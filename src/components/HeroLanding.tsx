@@ -142,7 +142,7 @@ const WhatsAppPreview: React.FC = () => {
             </div>
 
             <div className="mt-2 text-[12px]" style={{ color: 'rgba(233,237,239,0.95)' }}>
-              “Called Jan — confirm delivery Friday, update deal, create follow-up next Tuesday.”
+              “Jan confirmed—he’s in. Quote is €4,850 excl. VAT. Schedule the installation for next Friday. Move the deal to Won and create a task: ‘meet Jan on site’ Tuesday at 8:00. Also attach the photos of the meter cabinet to the deal.”
             </div>
 
             <div className="mt-1 text-[10px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
