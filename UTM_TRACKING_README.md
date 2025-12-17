@@ -35,7 +35,9 @@ All CTA clicks are tracked using the `trackCTAClick()` function from `src/utils/
 - Timestamp
 
 **Where Data Goes:**
-- Stored in Supabase `analytics_events` table
+- **Google Analytics** via `window.gtag()` (Tracking ID: `G-V2GHSHWX23`)
+  - Events sent as `CTA_click` with all parameters
+  - Visible in Google Analytics dashboard under Events
 - Only tracked if user has given analytics consent
 - Includes user ID if authenticated
 
@@ -67,9 +69,9 @@ The following CTAs on the homepage (`src/components/Homepage.tsx`) are tracked:
 ```
 
 The `trackCTAClick()` function automatically:
-1. Retrieves stored UTM parameters
+1. Retrieves stored UTM parameters from sessionStorage
 2. Checks user consent preferences
-3. Sends event to Supabase with all data
+3. Sends event to Google Analytics via gtag with all parameters
 
 ## Data Flow
 
@@ -82,13 +84,16 @@ The `trackCTAClick()` function automatically:
    ↓
 4. trackCTAClick() called with button_id='start_free_trial'
    ↓
-5. Event stored in database with:
-   - button_id: 'start_free_trial'
-   - page_path: '/'
+5. Event sent to Google Analytics via gtag:
+   - event: 'CTA_click'
+   - cta_name: 'start_free_trial'
+   - lp_path: '/'
+   - page_location: full URL
    - utm_source: 'google'
    - utm_medium: 'cpc'
-   - user_id: (if logged in)
-   - timestamp: current time
+   - utm_campaign: (if present)
+   - utm_term: (if present)
+   - utm_content: (if present)
 ```
 
 ## Privacy & Consent
@@ -98,64 +103,43 @@ The `trackCTAClick()` function automatically:
 - Managed through `ConsentContext` (`src/contexts/ConsentContext.tsx`)
 - No tracking occurs if user declines analytics consent
 
-## Database Schema
+## Viewing Data in Google Analytics
 
-Analytics events are stored in the `analytics_events` table:
+All CTA events are sent to Google Analytics (ID: `G-V2GHSHWX23`). To view them:
 
-```sql
-CREATE TABLE analytics_events (
-  id uuid PRIMARY KEY,
-  event_type text NOT NULL,
-  button_id text,
-  page_path text,
-  utm_source text,
-  utm_medium text,
-  utm_campaign text,
-  utm_term text,
-  utm_content text,
-  user_id uuid,
-  created_at timestamptz DEFAULT now()
-);
-```
+1. **Go to Google Analytics** → Events
+2. **Look for event:** `CTA_click`
+3. **View event parameters:**
+   - `cta_name` - Which button was clicked
+   - `lp_path` - Which page the click occurred on
+   - `utm_source`, `utm_medium`, `utm_campaign` - Campaign attribution
+   - `page_location` - Full URL with query parameters
 
-## Querying Analytics Data
+### Creating Custom Reports
 
-### Find top-performing campaigns
-```sql
-SELECT
-  utm_campaign,
-  COUNT(*) as clicks,
-  COUNT(DISTINCT user_id) as unique_users
-FROM analytics_events
-WHERE event_type = 'cta_click'
-GROUP BY utm_campaign
-ORDER BY clicks DESC;
-```
+You can create custom reports in GA4 to analyze:
+- Which CTAs drive the most engagement
+- Which campaigns lead to trial signups
+- Conversion paths by traffic source
+- A/B testing different campaign parameters
 
-### Track conversion funnel
-```sql
-SELECT
-  button_id,
-  COUNT(*) as clicks
-FROM analytics_events
-WHERE utm_source = 'google'
-  AND event_type = 'cta_click'
-GROUP BY button_id
-ORDER BY clicks DESC;
-```
+### Example GA4 Explorations
 
-### Analyze by traffic source
-```sql
-SELECT
-  utm_source,
-  utm_medium,
-  COUNT(*) as total_clicks,
-  COUNT(DISTINCT user_id) as unique_users
-FROM analytics_events
-WHERE event_type = 'cta_click'
-GROUP BY utm_source, utm_medium
-ORDER BY total_clicks DESC;
-```
+**Top Performing CTAs:**
+- Dimension: Event name (`CTA_click`)
+- Breakdown: `cta_name` parameter
+- Metric: Event count
+
+**Campaign Performance:**
+- Dimension: `utm_campaign` parameter
+- Secondary dimension: `cta_name` parameter
+- Metric: Event count, Users
+
+**Traffic Source Analysis:**
+- Dimension: `utm_source` parameter
+- Secondary dimension: `utm_medium` parameter
+- Breakdown: `cta_name` parameter
+- Metric: Event count
 
 ## Adding Tracking to New Buttons
 

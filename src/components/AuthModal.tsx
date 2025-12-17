@@ -45,9 +45,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   React.useEffect(() => {
     if (isOpen) {
       setIsAnimating(true);
-      if (globalAuthMode === 'signup') {
-        trackSignupStart();
-      }
     }
   }, [isOpen, globalAuthMode]);
 
@@ -73,6 +70,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     processingRef.current = true;
     setLoadingProvider(provider.name);
     setError(null);
+
+    // Track signup start when user clicks CRM provider
+    if (globalAuthMode === 'signup') {
+      trackSignupStart();
+    }
 
     // Set platform in localStorage immediately
     localStorage.setItem('userPlatform', provider.name);
@@ -123,6 +125,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       processingRef.current = true;
       setLoadingProvider('odoo');
       setError(null);
+
+      // Track signup start when user clicks Odoo provider
+      if (globalAuthMode === 'signup') {
+        trackSignupStart();
+      }
 
       localStorage.setItem('userPlatform', 'odoo');
       localStorage.setItem('auth_provider', 'odoo');
@@ -176,6 +183,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
     try {
       if (isSignup) {
+        // Track signup start when user attempts email signup
+        trackSignupStart();
+
         const { data, error: signupError } = await supabase.auth.signUp({
           email,
           password,
