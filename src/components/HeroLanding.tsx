@@ -75,7 +75,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
               </h1>
 
               {/* CTA */}
-              <div className="animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
+              <div className="animate-fade-in-up pb-24" style={{ animationDelay: '0.35s' }}>
                 <button
                   onClick={handleStartTrial}
                   className="group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
