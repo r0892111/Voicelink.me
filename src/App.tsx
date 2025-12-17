@@ -13,6 +13,7 @@ import { TestSignup } from './components/TestSignup';
 import { FieldServiceLanding } from './components/FieldServiceLanding';
 import { InstallatorsLanding } from './components/InstallatorsLanding';
 import { B2BSalesLanding } from './components/B2BSalesLanding';
+import { HeroLanding } from './components/HeroLanding';
 import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
@@ -46,6 +47,9 @@ function App() {
   // Check if we're on the homepage
   const isHomepage = location.pathname === '/';
 
+  // Check if we're on the landing page (hide navigation)
+  const isLandingPage = location.pathname === '/landing';
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -78,6 +82,7 @@ function App() {
         <AnalyticsListener />
         <div className="min-h-screen bg-white">
           {/* Navigation */}
+          {!isLandingPage && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] bg-white/90 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
             <div className="max-w-7xl mx-auto px-6 py-3">
               <div className="flex items-center justify-between">
@@ -255,12 +260,14 @@ function App() {
               )}
             </div>
           </nav>
+          )}
 
           {/* Routes */}
-          <div className="pt-20">
+          <div className={isLandingPage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openModal={openModal} openContactModal={openContactModal} />} />
               <Route path="/test" element={<TestSignup />} />
+              <Route path="/landing" element={<HeroLanding openModal={openModal} />} />
               <Route path="/lp/field-service" element={<FieldServiceLanding openModal={openModal} />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding openModal={openModal} />} />
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding openModal={openModal} />} />

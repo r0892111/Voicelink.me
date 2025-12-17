@@ -382,7 +382,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       onClick={onClose}
     >
       <div
-        className={`bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 relative transition-all duration-300 ease-out ${
+        className={`bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8 relative transition-all duration-300 ease-out ${
           isAnimating
             ? 'scale-100 opacity-100 translate-y-0'
             : 'scale-95 opacity-0 translate-y-4'
@@ -392,9 +392,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-full hover:bg-gray-100"
+          className="absolute top-3 right-3 sm:top-6 sm:right-6 text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-full hover:bg-gray-100"
         >
-          <X className="w-6 h-6" />
+          <X className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         {/* Redirecting Message */}
@@ -409,37 +409,37 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* Odoo Type Selection Screen */}
         {showOdooTypeSelection ? (
           <>
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center space-x-3 mb-4">
+            <div className="text-center mb-4 sm:mb-8">
+              <div className="flex items-center justify-center space-x-3 mb-2 sm:mb-4">
                 <img
                   src="/Finit Voicelink Blue.svg"
                   alt={t('common.voiceLink')}
-                  className="h-8 w-auto"
+                  className="h-6 sm:h-8 w-auto"
                 />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('auth.chooseYourOdooType')}</h2>
-              <p className="text-lg text-gray-600 mb-4">{t('auth.selectOdooInstallationType')}</p>
+              <h2 className="text-xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">{t('auth.chooseYourOdooType')}</h2>
+              <p className="text-sm sm:text-lg text-gray-600 mb-3 sm:mb-4">{t('auth.selectOdooInstallationType')}</p>
             </div>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-8">
               {/* Odoo.com (Cloud) Option */}
               <button
                 onClick={handleOdooCloudAuth}
                 disabled={loadingProvider === 'odoo'}
-                className="w-full p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
+                className="w-full p-4 sm:p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex items-start space-x-3 sm:space-x-4">
                   <div className="flex-shrink-0 mt-1">
-                    <img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8" />
+                    <img src="/odoo_logo.svg" alt="Odoo" className="h-6 w-6 sm:h-8 sm:w-8" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('auth.odooCloudTitle')}</h3>
-                    <p className="text-sm text-gray-600">
+                    <h3 className="text-base sm:text-xl font-semibold text-gray-900 mb-1 sm:mb-2">{t('auth.odooCloudTitle')}</h3>
+                    <p className="text-xs sm:text-sm text-gray-600">
                       {t('auth.odooCloudDescription')}
                     </p>
                   </div>
                   {loadingProvider === 'odoo' && (
-                    <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+                    <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 animate-spin" />
                   )}
                 </div>
               </button>
@@ -451,15 +451,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   setShowSelfHostedLogin(true);
                   setIsSignup(globalAuthMode === 'signup');
                 }}
-                className="w-full p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
+                className="w-full p-4 sm:p-6 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all text-left group"
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex items-start space-x-3 sm:space-x-4">
                   <div className="flex-shrink-0 mt-1">
-                    <img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8" />
+                    <img src="/odoo_logo.svg" alt="Odoo" className="h-6 w-6 sm:h-8 sm:w-8" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('auth.selfHostedOdooTitle')}</h3>
-                    <p className="text-sm text-gray-600">
+                    <h3 className="text-base sm:text-xl font-semibold text-gray-900 mb-1 sm:mb-2">{t('auth.selfHostedOdooTitle')}</h3>
+                    <p className="text-xs sm:text-sm text-gray-600">
                       {t('auth.selfHostedOdooDescription')}
                     </p>
                   </div>
@@ -477,27 +477,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         ) : (
           <>
             {/* Modal Header */}
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center space-x-3 mb-4">
+            <div className="text-center mb-4 sm:mb-8">
+              <div className="flex items-center justify-center space-x-3 mb-2 sm:mb-4">
                 <img
                   src="/Finit Voicelink Blue.svg"
                   alt={t('common.voiceLink')}
-                  className="h-8 w-auto"
+                  className="h-6 sm:h-8 w-auto"
                 />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+              <h2 className="text-xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
                 {globalAuthMode === 'signup' ? t('auth.modal.title') : t('auth.signInToAccount')}
               </h2>
-              <p className="text-lg text-gray-600 mb-4">{t('auth.modal.subtitle')}</p>
+              <p className="text-sm sm:text-lg text-gray-600 mb-3 sm:mb-4">{t('auth.modal.subtitle')}</p>
 
               {/* Global Signup/Login Toggle */}
-              <div className="flex items-center justify-center space-x-2 mb-6">
+              <div className="flex items-center justify-center space-x-2 mb-3 sm:mb-6">
                 <button
                   onClick={() => {
                     setGlobalAuthMode('signup');
                     setError(null);
                   }}
-                  className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-all ${
                     globalAuthMode === 'signup'
                       ? 'bg-blue-600 text-white shadow-md'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -510,7 +510,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     setGlobalAuthMode('login');
                     setError(null);
                   }}
-                  className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-all ${
                     globalAuthMode === 'login'
                       ? 'bg-blue-600 text-white shadow-md'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -522,27 +522,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
               {/* Free Trial Banner - Only show for signup */}
               {globalAuthMode === 'signup' && (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
-                <div className="flex items-center justify-center space-x-2 mb-2">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-3 sm:p-4 mb-3 sm:mb-6">
+                <div className="flex items-center justify-center space-x-2 mb-1 sm:mb-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                  <span className="text-green-800 font-semibold text-lg">{t('auth.modal.freeTrialBanner')}</span>
+                  <span className="text-green-800 font-semibold text-base sm:text-lg">{t('auth.modal.freeTrialBanner')}</span>
                 </div>
-                <p className="text-green-700 text-sm">
+                <p className="text-green-700 text-xs sm:text-sm">
                   {t('auth.modal.freeTrialDescription')}
                 </p>
                 </div>
               )}
           
           {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center space-x-2 text-red-700">
-              <AlertCircle className="w-5 h-5 flex-shrink-0" />
-              <span className="text-sm">{error}</span>
+            <div className="mb-3 sm:mb-4 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-xl flex items-center space-x-2 text-red-700">
+              <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+              <span className="text-xs sm:text-sm">{error}</span>
             </div>
           )}
         </div>
 
         {/* Sign-in Options */}
-        <div className="space-y-4 mb-8">
+        <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-8">
           {authProviders.map((provider) => {
             const isLoading = loadingProvider === provider.name;
             const isDisabled = disabledProviders.includes(provider.name);
@@ -566,7 +566,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 key={provider.name}
                 onClick={() => !isDisabled && handleSignIn(provider)}
                 disabled={loadingProvider !== null || isDisabled}
-                className={`group w-full bg-white border-2 border-gray-200 text-gray-800 font-semibold py-5 px-8 rounded-2xl transition-all duration-300 flex items-center justify-between transform relative overflow-hidden ${
+                className={`group w-full bg-white border-2 border-gray-200 text-gray-800 font-semibold py-3 sm:py-5 px-4 sm:px-8 rounded-2xl transition-all duration-300 flex items-center justify-between transform relative overflow-hidden ${
                   isDisabled
                     ? 'opacity-50 cursor-not-allowed'
                     : 'hover:border-gray-300 hover:shadow-lg hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
@@ -575,39 +575,39 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 {isLoading ? (
                   <>
                     <div className="flex items-center justify-center w-full">
-                      <Loader2 className="w-6 h-6 animate-spin text-gray-600 mr-3" />
-                      <span className="text-lg text-gray-600">{t('auth.connectingTo', { provider: provider.displayName })}</span>
+                      <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 animate-spin text-gray-600 mr-2 sm:mr-3" />
+                      <span className="text-sm sm:text-lg text-gray-600">{t('auth.connectingTo', { provider: provider.displayName })}</span>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="flex items-center space-x-4">
-                      <div className={`w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center transition-colors ${
+                    <div className="flex items-center space-x-2 sm:space-x-4">
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gray-50 rounded-xl flex items-center justify-center transition-colors ${
                         !isDisabled && 'group-hover:bg-gray-100'
                       }`}>
                         <img
                           src={getProviderLogo(provider.name)}
                           alt={provider.displayName}
-                          className="w-8 h-8 object-contain"
+                          className="w-6 h-6 sm:w-8 sm:h-8 object-contain"
                         />
                       </div>
                       <div className="text-left">
-                        <div className="text-lg font-semibold text-gray-900">
+                        <div className="text-sm sm:text-lg font-semibold text-gray-900">
                           {provider.name === 'teamleader' && t('auth.modal.connectTeamleader')}
                           {provider.name === 'pipedrive' && t('auth.modal.connectPipedrive')}
                           {provider.name === 'odoo' && t('auth.modal.connectOdoo')}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-xs sm:text-sm text-gray-500">
                           {isDisabled ? t('auth.temporarilyUnavailable') : (
                             provider.name === 'odoo' ? t('auth.forOdooAccountsOnly') : t('auth.modal.startTrialInstantly')
                           )}
                         </div>
                       </div>
                     </div>
-                    <div className={`w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center transition-colors ${
+                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-100 flex items-center justify-center transition-colors ${
                       !isDisabled && 'group-hover:bg-gray-200'
                     }`}>
-                      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
@@ -778,10 +778,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         )}
 
         {/* Footer */}
-        <div className="pt-6 border-t border-gray-200">
+        <div className="pt-3 sm:pt-6 border-t border-gray-200">
           {/* Terms Agreement Checkbox - Only show for signup */}
           {globalAuthMode === 'signup' && (
-          <div className="mb-6">
+          <div className="mb-3 sm:mb-6">
             <label className="flex items-start space-x-3 cursor-pointer">
               <input
                 ref={termsCheckboxRef}
@@ -833,7 +833,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           )}
 
           {/* Privacy Policy Notice */}
-          <div className="mb-6">
+          <div className="mb-3 sm:mb-6">
             <p className="text-xs text-gray-500 text-center">
               {t('validation.byConnectingCRM')}{' '}
               <a
@@ -847,31 +847,31 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </p>
           </div>
 
-          
-          <div className="grid grid-cols-3 gap-4 text-center mb-4">
-            <div className="flex flex-col items-center space-y-1">
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center mb-2 sm:mb-4">
+            <div className="flex flex-col items-center space-y-0.5 sm:space-y-1">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-xs text-gray-600 font-medium">{t('auth.modal.secureOauth')}</span>
+              <span className="text-[10px] sm:text-xs text-gray-600 font-medium leading-tight">{t('auth.modal.secureOauth')}</span>
             </div>
-            <div className="flex flex-col items-center space-y-1">
-              <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex flex-col items-center space-y-0.5 sm:space-y-1">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-green-100 flex items-center justify-center">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-xs text-gray-600 font-medium">{t('auth.modal.noSetupFees')}</span>
+              <span className="text-[10px] sm:text-xs text-gray-600 font-medium leading-tight">{t('auth.modal.noSetupFees')}</span>
             </div>
-            <div className="flex flex-col items-center space-y-1">
-              <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
-                <svg className="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex flex-col items-center space-y-0.5 sm:space-y-1">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-xs text-gray-600 font-medium">{t('auth.modal.cancelAnytime')}</span>
+              <span className="text-[10px] sm:text-xs text-gray-600 font-medium leading-tight">{t('auth.modal.cancelAnytime')}</span>
             </div>
           </div>
         </div>
