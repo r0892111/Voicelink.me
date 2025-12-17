@@ -165,8 +165,8 @@ const WhatsAppPreview: React.FC = () => {
             <ul className="mt-2 pl-5 list-disc space-y-1" style={{ color: 'rgba(233,237,239,0.9)' }}>
               <li>✅ Deal moved: Proposal → Won</li>
               <li>✅ Quote logged: €4,850 excl. VAT</li>
-              <li>✅ Task created: Tue 08:00 — “Meet on site (meter cabinet check)”</li>
-              <li>✅ Attachments added: “meterkast.jpg”, “panel_location.jpg”</li>
+              <li>✅ Task created: Tue 08:00 — “On-site check”</li>
+              <li>✅ Files added: “meterkast.jpg”, “panel_location.jpg”</li>
               
             </ul>
 
