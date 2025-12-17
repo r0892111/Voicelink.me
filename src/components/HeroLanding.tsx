@@ -314,10 +314,9 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                     animationDelay: '0.2s',
                   }}
                 >
-                  <span className="underline">Nobody</span> likes administration.
-                  <br />
-                  <br />
-                  Talk to your CRM with VoiceLink.
+                  
+                 
+                  <span className="underline">Talk</span> to your CRM with <span className="underline">VoiceLink</span>.
                 </h1>
               </div>
 
