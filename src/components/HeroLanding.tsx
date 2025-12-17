@@ -18,7 +18,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
   };
 
   return (
-    <div className="min-h-screen bg-white relative">
+    <div className="h-screen bg-white relative overflow-hidden">
       {/* Background Gradient */}
       <div className="fixed inset-0 z-0">
         <div
@@ -44,23 +44,23 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen z-10 pt-10">
+      <section className="relative h-full z-10 flex flex-col">
         {/* Logo pinned at top */}
-        <div className="absolute top-4 left-0 right-0 z-20 flex justify-center">
+        <div className="flex-shrink-0 pt-4 pb-2 flex justify-center z-20">
           <img
             src="/Finit Voicelink Blue.svg"
             alt="Finit VoiceLink"
-            className="w-[240px] sm:w-[320px] h-auto object-contain"
+            className="w-[180px] sm:w-[240px] lg:w-[320px] h-auto object-contain"
           />
         </div>
 
-        {/* Centered content (with enough top space for logo) */}
-        <div className="min-h-screen flex items-center">
-          <div className="max-w-7xl mx-auto px-6 w-full">
-            <div className="space-y-8 animate-fade-in-left pt-20">
+        {/* Centered content */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+            <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in-left">
               {/* Headline */}
               <h1
-                className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight animate-scale-in max-w-4xl"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight animate-scale-in max-w-4xl"
                 style={{
                   color: '#1C2C55',
                   textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
@@ -76,16 +76,16 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
               <div className="animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
                 <button
                   onClick={handleStartTrial}
-                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
+                  className="group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                   style={{ backgroundColor: '#1C2C55' }}
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0F1A3A')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#1C2C55')}
                 >
-                  <span>Start free trial now</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <span className="text-sm sm:text-base">Start free trial now</span>
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                <div className="mt-3 text-sm" style={{ color: 'rgba(32, 34, 38, 0.75)' }}>
+                <div className="mt-2 sm:mt-3 text-xs sm:text-sm" style={{ color: 'rgba(32, 34, 38, 0.75)' }}>
                   No credit card • Setup in minutes
                 </div>
               </div>
