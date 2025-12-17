@@ -28,40 +28,38 @@ const WhatsAppPreview: React.FC = () => {
       aria-label="VoiceLink WhatsApp preview"
     >
       {/* Top bar */}
-     {/* Top bar */}
-<div
-  className="flex items-center gap-3 px-3 py-2.5"
-  style={{
-    backgroundColor: '#202c33',
-    borderBottom: '1px solid rgba(255,255,255,0.06)',
-  }}
->
-  {/* Logo with white background only */}
-  <div className="h-9 w-9 rounded-full bg-white flex items-center justify-center">
-    <img
-      src="/Finit Icon Blue.svg"
-      alt="VoiceLink"
-      className="h-6 w-6 object-contain"
-      draggable={false}
-    />
-  </div>
+      <div
+        className="flex items-center gap-3 px-3 py-2.5"
+        style={{
+          backgroundColor: '#202c33',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+        }}
+      >
+        {/* Logo with white background only */}
+        <div className="h-9 w-9 rounded-full bg-white flex items-center justify-center">
+          <img
+            src="/Finit Icon Blue.svg"
+            alt="VoiceLink"
+            className="h-6 w-6 object-contain"
+            draggable={false}
+          />
+        </div>
 
-  <div className="flex-1 min-w-0">
-    <div className="text-[13px] font-bold leading-tight" style={{ color: '#e9edef' }}>
-      VoiceLink
-    </div>
-    <div className="text-[11px] truncate" style={{ color: 'rgba(233,237,239,0.7)' }}>
-      Online • logs to Teamleader/Pipedrive
-    </div>
-  </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-[13px] font-bold leading-tight" style={{ color: '#e9edef' }}>
+            VoiceLink
+          </div>
+          <div className="text-[11px] truncate" style={{ color: 'rgba(233,237,239,0.7)' }}>
+            Online • logs to Teamleader/Pipedrive
+          </div>
+        </div>
 
-  <div className="flex gap-1.5" aria-hidden="true">
-    <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
-    <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
-    <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
-  </div>
-</div>
-
+        <div className="flex gap-1.5" aria-hidden="true">
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgba(233,237,239,0.5)' }} />
+        </div>
+      </div>
 
       {/* Body */}
       <div
@@ -143,12 +141,14 @@ const WhatsAppPreview: React.FC = () => {
               </div>
 
               <div className="text-[11px]" style={{ color: 'rgba(233,237,239,0.9)' }}>
-                0:14
+                0:18
               </div>
             </div>
 
             <div className="mt-2 text-[12px]" style={{ color: 'rgba(233,237,239,0.95)' }}>
-              “Jan confirmed—he’s in. Quote is €4,850 excl. VAT. Schedule the installation for next Friday. Move the deal to Won and create a task: ‘meet Jan on site’ Tuesday at 8:00. Also attach the photos of the meter cabinet to the deal.”
+              “Jan confirmed—he’s in. Quote is €4,850 excl. VAT. Schedule the installation for next Friday. Move the deal
+              to Won and create a task: ‘meet Jan on site’ Tuesday at 8:00. Also attach the photos of the meter cabinet
+              to the deal.”
             </div>
 
             <div className="mt-1 text-[10px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
@@ -171,12 +171,9 @@ const WhatsAppPreview: React.FC = () => {
             <ul className="mt-2 pl-5 list-disc space-y-1" style={{ color: 'rgba(233,237,239,0.9)' }}>
               <li>✅ Deal moved: Proposal → Won</li>
               <li>✅ Quote logged: €4,850 excl. VAT</li>
-              <li>✅ Task created: Tue 08:00 — “On-site check”</li>
-              <li>✅ Files added: “meterkast.jpg”, “panel.jpg”</li>
-              
+              <li>✅ Task: Tue 08:00 — “On-site check”</li>
+              <li>✅ Files: “meterkast.jpg”, “panel.jpg”</li>
             </ul>
-
-            
 
             <div className="mt-1 text-[10px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
               09:13
@@ -208,37 +205,33 @@ const WhatsAppPreview: React.FC = () => {
           Message
         </div>
 
+        {/* Mic icon (proper mic shape) */}
         <div
-          className="h-9 w-9 rounded-full"
-          style={{
-            background: 'rgba(255,255,255,0.10)',
-            position: 'relative',
-          }}
+          className="h-9 w-9 rounded-full flex items-center justify-center"
+          style={{ background: 'rgba(255,255,255,0.10)' }}
         >
-          <div
-            style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -55%)',
-              width: 10,
-              height: 16,
-              borderRadius: 6,
-              background: 'rgba(233,237,239,0.85)',
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              left: '50%',
-              top: '64%',
-              transform: 'translateX(-50%)',
-              width: 14,
-              height: 2,
-              borderRadius: 2,
-              background: 'rgba(233,237,239,0.85)',
-            }}
-          />
+          <div className="relative w-[16px] h-[18px]">
+            {/* capsule */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 top-0 w-[10px] h-[12px] rounded-full"
+              style={{ background: 'rgba(233,237,239,0.9)' }}
+            />
+            {/* side arcs */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 top-[6px] w-[16px] h-[10px] rounded-b-full"
+              style={{ border: '2px solid rgba(233,237,239,0.9)', borderTop: '0' }}
+            />
+            {/* stem */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 top-[11px] w-[2px] h-[4px] rounded"
+              style={{ background: 'rgba(233,237,239,0.9)' }}
+            />
+            {/* base */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[14px] h-[2px] rounded"
+              style={{ background: 'rgba(233,237,239,0.9)' }}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -317,13 +310,12 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                     animationDelay: '0.2s',
                   }}
                 >
-                  
-                 
-                  <span className="underline">Talk</span> to your CRM with <span className="underline">VoiceLink</span>.
+                  <span className="underline">Talk</span> to your CRM with{' '}
+                  <span className="underline">VoiceLink</span>.
                 </h1>
               </div>
 
-              {/* WhatsApp preview + CTA BELOW it (always visible) */}
+              {/* WhatsApp preview + CTA BELOW it */}
               <div
                 className="flex flex-col items-center lg:items-end gap-3 animate-fade-in-up"
                 style={{ animationDelay: '0.25s' }}
