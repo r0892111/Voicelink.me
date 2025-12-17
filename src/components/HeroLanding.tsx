@@ -130,7 +130,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 animationDelay: '0.2s',
               }}
             >
-              Just... Talk to your CRM
+              Just.. Talk to your CRM
             </h1>
 
             {/* Subtext */}
@@ -141,7 +141,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 animationDelay: '0.3s',
               }}
             >
-              Speak a WhatsApp update. VoiceLink turns it into structured CRM data automatically —
+              Speak any company update. VoiceLink turns it into structured CRM data automatically —
               no typing, no forms.
             </p>
 
