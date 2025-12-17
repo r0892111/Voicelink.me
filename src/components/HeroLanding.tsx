@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
 import { trackCTAClick, trackLandingPageView } from '../utils/analytics';
 
@@ -18,11 +18,6 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
   const handleStartTrial = () => {
     trackCTAClick('start_free_trial', '/landing');
     openModal();
-  };
-
-  const handleWatchDemo = () => {
-    trackCTAClick('watch_demo', '/landing');
-    window.open('https://youtu.be/wVaR0NwPNHc', '_blank');
   };
 
   return (
@@ -75,7 +70,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
 
               {/* CTAs */}
               <div
-                className="flex flex-col sm:flex-row gap-4 animate-fade-in-up"
+                className="animate-fade-in-up"
                 style={{ animationDelay: '0.4s' }}
               >
                 {/* Primary CTA - Start Free Trial */}
@@ -88,24 +83,6 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 >
                   <span>Start free trial now</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-
-                {/* Secondary CTA - Watch Demo */}
-                <button
-                  onClick={handleWatchDemo}
-                  className="group border-2 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:scale-[1.02] flex items-center justify-center space-x-2"
-                  style={{ borderColor: '#1C2C55', color: '#1C2C55' }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#F7E69B';
-                    e.currentTarget.style.borderColor = '#1C2C55';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.borderColor = '#1C2C55';
-                  }}
-                >
-                  <Play className="w-5 h-5" />
-                  <span>Watch Demo</span>
                 </button>
               </div>
             </div>
