@@ -55,7 +55,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
         </div>
 
         {/* Centered content */}
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-start justify-center pt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
             <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in-left">
               {/* Headline */}
@@ -67,7 +67,9 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                   animationDelay: '0.2s',
                 }}
               >
-                Nobody likes administration.
+                <span className="underline">Nobody</span> likes administration.
+                <br />
+                <br />
                 <br />
                 Talk to your CRM with VoiceLink.
               </h1>
