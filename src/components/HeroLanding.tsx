@@ -21,23 +21,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
   };
 
   const ProofCard = () => (
-    <div className="relative w-full max-w-[340px] mx-auto lg:mx-0">
-      {/* Badge overlay */}
-      <div className="absolute -top-3 left-4 z-20">
-        <div
-          className="px-3 py-1 rounded-full text-xs font-semibold shadow-sm border"
-          style={{
-            backgroundColor: 'rgba(255,255,255,0.9)',
-            borderColor: 'rgba(28, 44, 85, 0.12)',
-            color: '#1C2C55',
-            backdropFilter: 'blur(6px)',
-          }}
-        >
-          WhatsApp → CRM (auto)
-        </div>
-      </div>
-
-      {/* Proof crop card (no phone frame) */}
+    
       <div
         className="relative rounded-3xl overflow-hidden border shadow-xl"
         style={{
