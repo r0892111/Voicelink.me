@@ -32,10 +32,10 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center z-10 pt-16">
         <div className="max-w-7xl mx-auto px-6 w-full">
-          <div className="grid lg:grid-cols-[1.5fr_1fr] gap-12 items-center">
+          <div className="space-y-8 animate-fade-in-left">
 
-            {/* Left Side - Hero Copy */}
-            <div className="space-y-8 animate-fade-in-left">
+            {/* H1 Title with Phone Mockup */}
+            <div className="flex items-center gap-8">
               {/* H1 Title */}
               <h1
                 className="text-6xl lg:text-7xl font-black leading-tight animate-scale-in"
@@ -48,39 +48,8 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 Talk to your CRM
               </h1>
 
-              {/* Subtext */}
-              <p
-                className="text-xl lg:text-2xl leading-relaxed animate-fade-in-up"
-                style={{
-                  color: '#202226',
-                  animationDelay: '0.3s'
-                }}
-              >
-                Transform WhatsApp voice notes into structured CRM data instantly.
-                No typing, no forms, just talk.
-              </p>
-
-              {/* CTAs */}
-              <div
-                className="animate-fade-in-up"
-                style={{ animationDelay: '0.4s' }}
-              >
-                {/* Primary CTA - Start Free Trial */}
-                <button
-                  onClick={handleStartTrial}
-                  className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
-                  style={{ backgroundColor: '#1C2C55' }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
-                >
-                  <span>Start free trial now</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
-            </div>
-
-            {/* Right Side - Phone Mockup */}
-            <div className="flex justify-center lg:justify-end animate-fade-in-right" style={{ animationDelay: '0.3s' }}>
+              {/* Phone Mockup */}
+              <div className="flex-shrink-0 animate-fade-in-right" style={{ animationDelay: '0.3s' }}>
               <div className="relative max-w-[140px] mx-auto">
                 {/* Background Effect Elements */}
                 <div className="absolute inset-0 transform translate-x-3 translate-y-3 bg-gradient-to-br from-gray-300 to-gray-500 rounded-[1rem] blur-xl opacity-40 scale-110"></div>
@@ -229,6 +198,37 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                   </div>
                 </div>
               </div>
+              </div>
+            </div>
+
+            {/* Subtext */}
+            <p
+              className="text-xl lg:text-2xl leading-relaxed animate-fade-in-up max-w-3xl"
+              style={{
+                color: '#202226',
+                animationDelay: '0.3s'
+              }}
+            >
+              Transform WhatsApp voice notes into structured CRM data instantly.
+              No typing, no forms, just talk.
+            </p>
+
+            {/* CTAs */}
+            <div
+              className="animate-fade-in-up"
+              style={{ animationDelay: '0.4s' }}
+            >
+              {/* Primary CTA - Start Free Trial */}
+              <button
+                onClick={handleStartTrial}
+                className="group text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
+                style={{ backgroundColor: '#1C2C55' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0F1A3A'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1C2C55'}
+              >
+                <span>Start free trial now</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
 
           </div>
