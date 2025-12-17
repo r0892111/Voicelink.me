@@ -65,9 +65,9 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 animationDelay: '0.2s',
               }}
             >
-              Nobody likes doing administration.
+              Nobody likes administration.
               <br />
-              Just talk to your CRM with VoiceLink.
+              Talk to your CRM with VoiceLink.
             </h1>
 
             {/* CTA */}
