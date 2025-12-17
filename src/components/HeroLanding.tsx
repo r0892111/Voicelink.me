@@ -41,7 +41,7 @@ const WhatsAppPreview: React.FC = () => {
     <img
       src="/Finit Icon Blue.svg"
       alt="VoiceLink"
-      className="h-7 w-7 object-contain"
+      className="h-6 w-6 object-contain"
       draggable={false}
     />
   </div>
