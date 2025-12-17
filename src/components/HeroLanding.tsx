@@ -39,10 +39,7 @@ const WhatsAppPreview: React.FC = () => {
           <div className="text-[14px] font-bold leading-tight" style={{ color: '#e9edef' }}>
             VoiceLink
           </div>
-          <div
-            className="text-[12px] truncate"
-            style={{ color: 'rgba(233,237,239,0.7)' }}
-          >
+          <div className="text-[12px] truncate" style={{ color: 'rgba(233,237,239,0.7)' }}>
             Online • logs to Teamleader/Pipedrive
           </div>
         </div>
@@ -240,7 +237,6 @@ const WhatsAppPreview: React.FC = () => {
 };
 
 export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
-  // Track landing page view on mount
   React.useEffect(() => {
     trackLandingPageView('/landing');
   }, []);
@@ -252,6 +248,17 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
 
   return (
     <div className="h-screen bg-white relative overflow-hidden">
+      {/* CTA attention animation */}
+      <style>{`
+        @keyframes vlCtaNudge {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .vl-cta-nudge { animation: none !important; }
+        }
+      `}</style>
+
       {/* Background Gradient */}
       <div className="fixed inset-0 z-0">
         <div
@@ -291,9 +298,8 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
         <div className="flex-1 flex items-start justify-center pt-12 sm:pt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-              {/* Left: copy + CTA */}
+              {/* Left: copy */}
               <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in-left">
-                {/* Headline */}
                 <h1
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight animate-scale-in max-w-4xl"
                   style={{
@@ -307,13 +313,23 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                   <br />
                   Talk to your CRM with VoiceLink.
                 </h1>
+              </div>
 
-                {/* CTA */}
-                <div className="animate-fade-in-up pb-10 lg:pb-24" style={{ animationDelay: '0.35s' }}>
+              {/* Right: WhatsApp preview + CTA BELOW it */}
+              <div
+                className="flex flex-col items-center lg:items-end gap-5 animate-fade-in-up"
+                style={{ animationDelay: '0.25s' }}
+              >
+                <WhatsAppPreview />
+
+                <div className="w-full flex flex-col items-center lg:items-end">
                   <button
                     onClick={handleStartTrial}
-                    className="group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
-                    style={{ backgroundColor: '#1C2C55' }}
+                    className="vl-cta-nudge group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
+                    style={{
+                      backgroundColor: '#1C2C55',
+                      animation: 'vlCtaNudge 2.2s ease-in-out infinite',
+                    }}
                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0F1A3A')}
                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#1C2C55')}
                   >
@@ -322,17 +338,12 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                   </button>
 
                   <div
-                    className="mt-2 sm:mt-3 text-xs sm:text-sm"
+                    className="mt-2 sm:mt-3 text-xs sm:text-sm text-center lg:text-right"
                     style={{ color: 'rgba(32, 34, 38, 0.75)' }}
                   >
                     No credit card • Setup in minutes
                   </div>
                 </div>
-              </div>
-
-              {/* Right: WhatsApp preview */}
-              <div className="flex lg:justify-end justify-center animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
-                <WhatsAppPreview />
               </div>
             </div>
           </div>
