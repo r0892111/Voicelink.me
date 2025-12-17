@@ -301,28 +301,24 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-start">
               {/* Copy */}
-              <div className="space-y-3 sm:space-y-5 animate-fade-in-left">
-                <h1
-                  className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight animate-scale-in max-w-4xl"
-                  style={{
-                    color: '#1C2C55',
-                    textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
-                    animationDelay: '0.2s',
-                  }}
-                >
-                  <span className="underline">Talk</span> to your CRM with{' '}
-                  <span className="underline">VoiceLink</span>.
-                </h1>
-              </div>
+              {/* Copy */}
+<div className="space-y-3 sm:space-y-5 animate-fade-in-left flex flex-col items-center text-center">
+  <h1
+    className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight animate-scale-in max-w-4xl mx-auto text-center"
+    style={{
+      color: '#1C2C55',
+      textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
+      animationDelay: '0.2s',
+    }}
+  >
+    <span className="underline">Talk</span> to your CRM with{' '}
+    <span className="underline">VoiceLink</span>.
+    
+    
+  </h1>
+</div>
 
-              {/* WhatsApp preview + CTA BELOW it */}
-              <div
-                className="flex flex-col items-center lg:items-end gap-3 animate-fade-in-up"
-                style={{ animationDelay: '0.25s' }}
-              >
-                <WhatsAppPreview />
-
-                <div className="w-full flex flex-col items-center lg:items-end pb-4">
+<div className="w-full flex flex-col items-center lg:items-end pb-4">
                   <button
                     onClick={handleStartTrial}
                     className="vl-cta-nudge group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
@@ -337,13 +333,21 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
 
-                  <div
-                    className="mt-2 text-[11px] sm:text-sm text-center lg:text-right"
-                    style={{ color: 'rgba(32, 34, 38, 0.75)' }}
-                  >
-                    Setup in minutes
-                  </div>
+<div
+  className="mt-2 text-[11px] sm:text-sm text-center lg:text-right"
+  style={{ color: 'rgba(32, 34, 38, 0.75)' }}
+>
+  Setup your VoiceLink WhatsApp in 3 minutes
+</div>
                 </div>
+              {/* WhatsApp preview + CTA BELOW it */}
+              <div
+                className="flex flex-col items-center lg:items-end gap-3 animate-fade-in-up"
+                style={{ animationDelay: '0.25s' }}
+              >
+                <WhatsAppPreview />
+
+                
               </div>
             </div>
           </div>
