@@ -130,7 +130,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 animationDelay: '0.2s',
               }}
             >
-              Talk to your CRM
+              Just... Talk to your CRM
             </h1>
 
             {/* Subtext */}
