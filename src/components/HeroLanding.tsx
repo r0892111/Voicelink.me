@@ -11,7 +11,15 @@ const WhatsAppPreview: React.FC = () => {
 
   return (
     <div
-      className="w-full max-w-[420px] rounded-[22px] overflow-hidden shadow-2xl border"
+      className="
+        w-full
+        max-w-[360px]
+        sm:max-w-[380px]
+        rounded-[20px]
+        overflow-hidden
+        shadow-2xl
+        border
+      "
       style={{
         backgroundColor: '#0b141a',
         borderColor: 'rgba(0,0,0,0.08)',
@@ -21,25 +29,24 @@ const WhatsAppPreview: React.FC = () => {
     >
       {/* Top bar */}
       <div
-        className="flex items-center gap-3 px-4 py-3"
+        className="flex items-center gap-3 px-3 py-2.5"
         style={{
           backgroundColor: '#202c33',
           borderBottom: '1px solid rgba(255,255,255,0.06)',
         }}
       >
         <div
-          className="h-10 w-10 rounded-full"
+          className="h-9 w-9 rounded-full"
           aria-hidden="true"
           style={{
-            background:
-              'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06))',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06))',
           }}
         />
         <div className="flex-1 min-w-0">
-          <div className="text-[14px] font-bold leading-tight" style={{ color: '#e9edef' }}>
+          <div className="text-[13px] font-bold leading-tight" style={{ color: '#e9edef' }}>
             VoiceLink
           </div>
-          <div className="text-[12px] truncate" style={{ color: 'rgba(233,237,239,0.7)' }}>
+          <div className="text-[11px] truncate" style={{ color: 'rgba(233,237,239,0.7)' }}>
             Online • logs to Teamleader/Pipedrive
           </div>
         </div>
@@ -52,14 +59,14 @@ const WhatsAppPreview: React.FC = () => {
 
       {/* Body */}
       <div
-        className="px-3 py-3"
+        className="px-3 py-2.5"
         style={{
           background:
             'radial-gradient(circle at 20% 10%, rgba(255,255,255,0.06), transparent 45%), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.04), transparent 50%), #0b141a',
         }}
       >
         <div
-          className="mx-auto mb-3 w-max px-3 py-1.5 text-[12px] rounded-full border"
+          className="mx-auto mb-2 w-max px-3 py-1 text-[11px] rounded-full border"
           style={{
             color: 'rgba(233,237,239,0.75)',
             background: 'rgba(255,255,255,0.06)',
@@ -72,7 +79,7 @@ const WhatsAppPreview: React.FC = () => {
         {/* Incoming */}
         <div className="flex justify-start my-2">
           <div
-            className="max-w-[86%] rounded-2xl px-3 py-2 text-[13px] leading-snug border"
+            className="max-w-[88%] rounded-2xl px-3 py-2 text-[12px] leading-snug border"
             style={{
               backgroundColor: '#202c33',
               color: '#e9edef',
@@ -80,7 +87,7 @@ const WhatsAppPreview: React.FC = () => {
             }}
           >
             Hey! Send me a voice note or message and I’ll log it in your CRM. ✅
-            <div className="mt-1.5 text-[11px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
+            <div className="mt-1 text-[10px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
               09:12
             </div>
           </div>
@@ -89,7 +96,7 @@ const WhatsAppPreview: React.FC = () => {
         {/* Outgoing voice note */}
         <div className="flex justify-end my-2">
           <div
-            className="max-w-[86%] rounded-2xl px-3 py-2 text-[13px] leading-snug border"
+            className="max-w-[88%] rounded-2xl px-3 py-2 text-[12px] leading-snug border"
             style={{
               backgroundColor: '#005c4b',
               color: '#e9edef',
@@ -129,16 +136,16 @@ const WhatsAppPreview: React.FC = () => {
                 ))}
               </div>
 
-              <div className="text-[12px]" style={{ color: 'rgba(233,237,239,0.9)' }}>
+              <div className="text-[11px]" style={{ color: 'rgba(233,237,239,0.9)' }}>
                 0:14
               </div>
             </div>
 
-            <div className="mt-2 text-[13px]" style={{ color: 'rgba(233,237,239,0.95)' }}>
+            <div className="mt-2 text-[12px]" style={{ color: 'rgba(233,237,239,0.95)' }}>
               “Called Jan — confirm delivery Friday, update deal, create follow-up next Tuesday.”
             </div>
 
-            <div className="mt-1.5 text-[11px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
+            <div className="mt-1 text-[10px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
               09:13
             </div>
           </div>
@@ -147,7 +154,7 @@ const WhatsAppPreview: React.FC = () => {
         {/* Incoming result */}
         <div className="flex justify-start my-2">
           <div
-            className="max-w-[86%] rounded-2xl px-3 py-2 text-[13px] leading-snug border"
+            className="max-w-[88%] rounded-2xl px-3 py-2 text-[12px] leading-snug border"
             style={{
               backgroundColor: '#202c33',
               color: '#e9edef',
@@ -162,13 +169,13 @@ const WhatsAppPreview: React.FC = () => {
             </ul>
 
             <div
-              className="mt-3 inline-flex items-center px-3 py-1.5 rounded-full text-[12px] font-semibold"
+              className="mt-3 inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold"
               style={{ background: 'rgba(255,255,255,0.10)', color: '#e9edef' }}
             >
               Open in CRM →
             </div>
 
-            <div className="mt-1.5 text-[11px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
+            <div className="mt-1 text-[10px] text-right" style={{ color: 'rgba(233,237,239,0.65)' }}>
               09:13
             </div>
           </div>
@@ -177,7 +184,7 @@ const WhatsAppPreview: React.FC = () => {
 
       {/* Compose bar */}
       <div
-        className="flex items-center gap-2 px-3 py-3"
+        className="flex items-center gap-2 px-3 py-2.5"
         aria-hidden="true"
         style={{
           backgroundColor: '#111b21',
@@ -192,7 +199,7 @@ const WhatsAppPreview: React.FC = () => {
         </div>
 
         <div
-          className="flex-1 h-9 rounded-full flex items-center px-4 text-[13px]"
+          className="flex-1 h-9 rounded-full flex items-center px-4 text-[12px]"
           style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(233,237,239,0.7)' }}
         >
           Message
@@ -205,7 +212,6 @@ const WhatsAppPreview: React.FC = () => {
             position: 'relative',
           }}
         >
-          {/* simple mic */}
           <div
             style={{
               position: 'absolute',
@@ -286,22 +292,22 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
       {/* Hero Section */}
       <section className="relative h-full z-10 flex flex-col">
         {/* Logo pinned at top */}
-        <div className="flex-shrink-0 pt-10 pb-2 flex justify-center z-20">
+        <div className="flex-shrink-0 pt-6 sm:pt-10 pb-1 flex justify-center z-20">
           <img
             src="/Finit Voicelink Blue.svg"
             alt="Finit VoiceLink"
-            className="w-[180px] sm:w-[240px] lg:w-[320px] h-auto object-contain"
+            className="w-[160px] sm:w-[220px] lg:w-[300px] h-auto object-contain"
           />
         </div>
 
-        {/* Centered content */}
-        <div className="flex-1 flex items-start justify-center pt-12 sm:pt-16">
+        {/* Centered content: ensure everything fits on mobile (no scroll) */}
+        <div className="flex-1 flex items-start justify-center pt-4 sm:pt-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-              {/* Left: copy */}
-              <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in-left">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-start">
+              {/* Copy */}
+              <div className="space-y-3 sm:space-y-5 animate-fade-in-left">
                 <h1
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight animate-scale-in max-w-4xl"
+                  className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight animate-scale-in max-w-4xl"
                   style={{
                     color: '#1C2C55',
                     textShadow: '0 4px 8px rgba(28, 44, 85, 0.1)',
@@ -315,14 +321,14 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                 </h1>
               </div>
 
-              {/* Right: WhatsApp preview + CTA BELOW it */}
+              {/* WhatsApp preview + CTA BELOW it (always visible) */}
               <div
-                className="flex flex-col items-center lg:items-end gap-5 animate-fade-in-up"
+                className="flex flex-col items-center lg:items-end gap-3 animate-fade-in-up"
                 style={{ animationDelay: '0.25s' }}
               >
                 <WhatsAppPreview />
 
-                <div className="w-full flex flex-col items-center lg:items-end">
+                <div className="w-full flex flex-col items-center lg:items-end pb-4">
                   <button
                     onClick={handleStartTrial}
                     className="vl-cta-nudge group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
@@ -338,7 +344,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                   </button>
 
                   <div
-                    className="mt-2 sm:mt-3 text-xs sm:text-sm text-center lg:text-right"
+                    className="mt-2 text-[11px] sm:text-sm text-center lg:text-right"
                     style={{ color: 'rgba(32, 34, 38, 0.75)' }}
                   >
                     No credit card • Setup in minutes
