@@ -314,15 +314,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                   <span className="underline">VoiceLink</span>.
                 </h1>
               </div>
-
-              {/* WhatsApp preview + CTA BELOW it */}
-              <div
-                className="flex flex-col items-center lg:items-end gap-3 animate-fade-in-up"
-                style={{ animationDelay: '0.25s' }}
-              >
-                <WhatsAppPreview />
-
-                <div className="w-full flex flex-col items-center lg:items-end pb-4">
+<div className="w-full flex flex-col items-center lg:items-end pb-4">
                   <button
                     onClick={handleStartTrial}
                     className="vl-cta-nudge group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
@@ -344,6 +336,14 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
                     Setup in minutes
                   </div>
                 </div>
+              {/* WhatsApp preview + CTA BELOW it */}
+              <div
+                className="flex flex-col items-center lg:items-end gap-3 animate-fade-in-up"
+                style={{ animationDelay: '0.25s' }}
+              >
+                <WhatsAppPreview />
+
+                
               </div>
             </div>
           </div>
