@@ -166,7 +166,7 @@ const WhatsAppPreview: React.FC = () => {
               <li>✅ Deal moved: Proposal → Won</li>
               <li>✅ Quote logged: €4,850 excl. VAT</li>
               <li>✅ Task created: Tue 08:00 — “On-site check”</li>
-              <li>✅ Files added: “meterkast.jpg”, “panel_location.jpg”</li>
+              <li>✅ Files added: “meterkast.jpg”, “panel.jpg”</li>
               
             </ul>
 
