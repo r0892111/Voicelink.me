@@ -43,18 +43,26 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
         ></div>
       </div>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center z-10 pt-16">
-        <div className="max-w-7xl mx-auto px-6 w-full">
-          <div className="space-y-8 animate-fade-in-left">
-            {/* Logo */}
-            <div className="flex justify-center pt-2 sm:pt-3 -mt-2">
-  <img
-    src="/Finit Voicelink Blue.svg"
-    alt="Finit VoiceLink"
-    className="w-[220px] sm:w-[300px] h-auto object-contain"
-  />
-</div>
+{/* Hero Section */}
+<section className="relative min-h-screen z-10 pt-10">
+  {/* Logo pinned at top */}
+  <div className="absolute top-4 left-0 right-0 z-20 flex justify-center">
+    <img
+      src="/Finit Voicelink Blue.svg"
+      alt="Finit VoiceLink"
+      className="w-[240px] sm:w-[320px] h-auto object-contain"
+    />
+  </div>
+
+  {/* Centered content (with enough top space for logo) */}
+  <div className="min-h-screen flex items-center">
+    <div className="max-w-7xl mx-auto px-6 w-full">
+      <div className="space-y-8 animate-fade-in-left pt-20">
+        {/* ...your headline + CTA stay here... */}
+      </div>
+    </div>
+  </div>
+</section>
 
             {/* Headline */}
             <h1
