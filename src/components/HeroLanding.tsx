@@ -31,7 +31,7 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
   desc: 'Extracts the details',
   icon: (
     <img
-      src="/Finit Icon Blue.svg"
+      src="/Finit Voicelink Blue.svg"
       alt="VoiceLink AI"
       className="w-5 h-5"
     />
