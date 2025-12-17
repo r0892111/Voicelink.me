@@ -313,6 +313,8 @@ export const HeroLanding: React.FC<HeroLandingProps> = ({ openModal }) => {
   >
     <span className="underline">Talk</span> to your CRM with{' '}
     <span className="underline">VoiceLink</span>.
+    All inside <span className="underline">Whatsapp</span>.
+    
   </h1>
 </div>
 
