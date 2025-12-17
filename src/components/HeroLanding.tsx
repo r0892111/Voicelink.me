@@ -31,8 +31,8 @@ const WhatsAppPreview: React.FC = () => {
       <div
         className="flex items-center gap-3 px-3 py-2.5"
         style={{
-          backgroundColor: '#202c33',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
+            backgroundColor: '#ffffff',
+  borderBottom: '1px solid rgba(0,0,0,0.08)',
         }}
       >
         <img
