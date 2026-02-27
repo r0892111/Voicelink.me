@@ -15,7 +15,6 @@ import {
   Star,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { supabase } from '../lib/supabase';
 import { withUTM } from '../utils/utm';
 import { NoiseOverlay } from './ui/NoiseOverlay';
 
@@ -27,7 +26,6 @@ export const Dashboard: React.FC = () => {
 
   const [whatsappStatus, setWhatsappStatus] = useState<WhatsAppStatus>('not_set');
   const [whatsappNumber, setWhatsappNumber] = useState<string | null>(null);
-  const [loadingWA, setLoadingWA] = useState(true);
 
   // Redirect unauthenticated users
   useEffect(() => {
@@ -35,30 +33,6 @@ export const Dashboard: React.FC = () => {
       navigate(withUTM('/signup'));
     }
   }, [user, loading, navigate]);
-
-  // Fetch WhatsApp status
-  useEffect(() => {
-    if (!user) return;
-    const fetchWA = async () => {
-      try {
-        const { data } = await supabase
-          .from(`${user.platform}_users`)
-          .select('whatsapp_number, whatsapp_status')
-          .eq('user_id', user.id)
-          .is('deleted_at', null)
-          .maybeSingle();
-        if (data) {
-          setWhatsappStatus(data.whatsapp_status || 'not_set');
-          setWhatsappNumber(data.whatsapp_number);
-        }
-      } catch (e) {
-        console.error('Error fetching WhatsApp status:', e);
-      } finally {
-        setLoadingWA(false);
-      }
-    };
-    fetchWA();
-  }, [user]);
 
   const getTimeGreeting = () => {
     const h = new Date().getHours();
