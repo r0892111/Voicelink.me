@@ -96,7 +96,9 @@ Deno.serve(async (req) => {
       );
     }
 
-    const tlUser: TeamleaderUser = await meRes.json();
+    // Teamleader API wraps the user object in a "data" envelope
+    const meJson = await meRes.json();
+    const tlUser: TeamleaderUser = meJson.data ?? meJson;
     const email = tlUser.email || `teamleader_${tlUser.id}@placeholder.local`;
     const name = tlUser.name || [tlUser.first_name, tlUser.last_name].filter(Boolean).join(' ') || email.split('@')[0];
 
@@ -118,6 +120,10 @@ Deno.serve(async (req) => {
 
     if (tlUserRow?.user_id) {
       userId = tlUserRow.user_id;
+      // Keep name + metadata fresh on every login
+      await supabase.auth.admin.updateUserById(userId, {
+        user_metadata: { name, provider: 'teamleader' },
+      });
     } else {
       // Check users table by email (might have signed up via another provider)
       const { data: userRow } = await supabase
@@ -129,26 +135,42 @@ Deno.serve(async (req) => {
       if (userRow?.id) {
         userId = userRow.id;
       } else {
-      const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
-        email,
-        email_confirm: true,
-        user_metadata: { name, provider: 'teamleader' },
-      });
+        const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
+          email,
+          email_confirm: true,
+          user_metadata: { name, provider: 'teamleader' },
+        });
 
-      if (createError || !newUser?.user) {
-        console.error('Supabase user creation failed:', createError);
-        return new Response(
-          JSON.stringify({ success: false, error: createError?.message || 'Failed to create user' }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-      userId = newUser.user.id;
+        if (createError || !newUser?.user) {
+          // User may already exist (e.g. from email signup) - look up by email and log them in
+          const isAlreadyRegistered = createError?.message?.toLowerCase().includes('already') ||
+            createError?.message?.toLowerCase().includes('registered') ||
+            createError?.message?.toLowerCase().includes('duplicate');
 
-        // Insert into users table
-        await supabase.from('users').upsert(
-          { id: userId, email, name },
-          { onConflict: 'id' }
-        );
+          if (isAlreadyRegistered) {
+            const { data: listData } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
+            const existingUser = listData?.users?.find((u) => u.email?.toLowerCase() === email.toLowerCase());
+            if (existingUser) {
+              userId = existingUser.id;
+              await supabase.from('users').upsert({ id: userId, email, name }, { onConflict: 'id' });
+            } else {
+              console.error('User exists but could not find by email:', email);
+              return new Response(
+                JSON.stringify({ success: false, error: createError?.message || 'Failed to create user' }),
+                { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+              );
+            }
+          } else {
+            console.error('Supabase user creation failed:', createError);
+            return new Response(
+              JSON.stringify({ success: false, error: createError?.message || 'Failed to create user' }),
+              { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            );
+          }
+        } else {
+          userId = newUser!.user.id;
+          await supabase.from('users').upsert({ id: userId, email, name }, { onConflict: 'id' });
+        }
       }
     }
 

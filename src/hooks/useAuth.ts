@@ -45,7 +45,33 @@ export const useAuth = () => {
       }
 
       const metadata = session.user.user_metadata || {};
-      const name = metadata.name || session.user.email?.split('@')[0] || 'User';
+      let name: string = metadata.name || '';
+
+      // If the stored name looks like a placeholder (e.g. "teamleader_undefined"),
+      // fall back to querying the platform-specific table for the real name.
+      const nameIsCorrupt = !name || name.includes('undefined') || /^(teamleader|pipedrive|odoo)_/.test(name);
+      if (nameIsCorrupt && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
+        try {
+          const { data: platformRow } = await supabase
+            .from(`${platform}_users`)
+            .select('user_info')
+            .eq('user_id', session.user.id)
+            .is('deleted_at', null)
+            .maybeSingle();
+          const info = platformRow?.user_info;
+          if (info?.name && !info.name.includes('undefined')) {
+            name = info.name;
+          } else if (info?.first_name || info?.last_name) {
+            name = [info.first_name, info.last_name].filter(Boolean).join(' ');
+          }
+        } catch (_) {
+          // ignore — we'll fall through to the email fallback
+        }
+      }
+
+      if (!name || name.includes('undefined')) {
+        name = session.user.email?.split('@')[0] || 'User';
+      }
 
       setUser({
         id: session.user.id,

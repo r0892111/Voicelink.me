@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MessageCircle,
   CheckCircle,
   Zap,
   ArrowRight,
-  Phone,
   Clock,
   Mic,
   BookOpen,
@@ -13,27 +12,162 @@ import {
   Sparkles,
   Headphones,
   Star,
+  ChevronDown,
+  Loader2,
+  AlertCircle,
+  Check,
+  X,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { supabase } from '../lib/supabase';
 import { withUTM } from '../utils/utm';
 import { NoiseOverlay } from './ui/NoiseOverlay';
 
 type WhatsAppStatus = 'not_set' | 'pending' | 'active';
 
+const phoneRegex = /^\+[1-9]\d{1,14}$/;
+const isValidPhone = (v: string) => phoneRegex.test(v.trim());
+
 export const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
+  // WhatsApp status from DB
   const [whatsappStatus, setWhatsappStatus] = useState<WhatsAppStatus>('not_set');
   const [whatsappNumber, setWhatsappNumber] = useState<string | null>(null);
 
+  // Inline WhatsApp form
+  const [waOpen, setWaOpen] = useState(false);
+  const [waStep, setWaStep] = useState<'phone' | 'otp'>('phone');
+  const [waPhone, setWaPhone] = useState('');
+  const [waOtp, setWaOtp] = useState('');
+  const [waBusy, setWaBusy] = useState(false);
+  const [waError, setWaError] = useState<string | null>(null);
+  const [waSuccess, setWaSuccess] = useState(false);
+  const waFormRef = useRef<HTMLDivElement>(null);
+
   // Redirect unauthenticated users
   useEffect(() => {
-    if (!loading && !user) {
-      navigate(withUTM('/signup'));
-    }
+    if (!loading && !user) navigate(withUTM('/signup'));
   }, [user, loading, navigate]);
 
+  // Fetch WhatsApp status
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from(`${user.platform}_users`)
+      .select('whatsapp_number, whatsapp_status')
+      .eq('user_id', user.id)
+      .is('deleted_at', null)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setWhatsappStatus(data.whatsapp_status || 'not_set');
+          setWhatsappNumber(data.whatsapp_number);
+        }
+      });
+  }, [user]);
+
+  // ── WhatsApp OTP helpers ──────────────────────────────────────────────────
+  const sendOtp = async () => {
+    if (!user || !isValidPhone(waPhone)) {
+      setWaError('Please enter a valid international phone number (e.g. +32 123 456 789).');
+      return;
+    }
+    setWaBusy(true);
+    setWaError(null);
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-otp`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          action: 'send',
+          crm_provider: user.platform,
+          crm_user_id: user.id.toString(),
+          phone_number: waPhone.trim(),
+        }),
+      });
+      if (!res.ok) {
+        const e = await res.json();
+        throw new Error(e.error || 'Failed to send code');
+      }
+      setWaStep('otp');
+    } catch (e) {
+      setWaError(e instanceof Error ? e.message : 'Failed to send code. Try again.');
+    } finally {
+      setWaBusy(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    if (!user || waOtp.length !== 6) {
+      setWaError('Please enter the 6-digit code from WhatsApp.');
+      return;
+    }
+    setWaBusy(true);
+    setWaError(null);
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-otp`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          action: 'verify',
+          crm_provider: user.platform,
+          crm_user_id: user.id.toString(),
+          otp_code: waOtp.trim(),
+        }),
+      });
+      if (!res.ok) {
+        const e = await res.json();
+        throw new Error(e.error || 'Failed to verify code');
+      }
+      // Send welcome message (non-blocking)
+      fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-welcome`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          crm_provider: user.platform,
+          crm_user_id: user.id.toString(),
+          phone_number: waPhone.trim(),
+        }),
+      }).catch(() => {});
+
+      setWaSuccess(true);
+      setWhatsappStatus('active');
+      setWhatsappNumber(waPhone.trim());
+      setTimeout(() => {
+        setWaOpen(false);
+        setWaSuccess(false);
+        setWaStep('phone');
+        setWaPhone('');
+        setWaOtp('');
+      }, 2000);
+    } catch (e) {
+      setWaError(e instanceof Error ? e.message : 'Invalid code. Try again.');
+    } finally {
+      setWaBusy(false);
+    }
+  };
+
+  const resetWaForm = () => {
+    setWaOpen(false);
+    setWaStep('phone');
+    setWaPhone('');
+    setWaOtp('');
+    setWaError(null);
+    setWaSuccess(false);
+  };
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
   const getTimeGreeting = () => {
     const h = new Date().getHours();
     if (h < 12) return 'Good morning';
@@ -43,14 +177,8 @@ export const Dashboard: React.FC = () => {
 
   const getFirstName = () => user?.name?.split(' ')[0] || 'there';
 
-  const getPlatformLabel = () => {
-    const labels: Record<string, string> = {
-      teamleader: 'Teamleader',
-      pipedrive: 'Pipedrive',
-      odoo: 'Odoo',
-    };
-    return labels[user?.platform || ''] || 'your CRM';
-  };
+  const getPlatformLabel = () =>
+    ({ teamleader: 'Teamleader', pipedrive: 'Pipedrive', odoo: 'Odoo' }[user?.platform || ''] || 'your CRM');
 
   if (loading) {
     return (
@@ -80,7 +208,6 @@ export const Dashboard: React.FC = () => {
           : whatsappStatus === 'pending'
           ? 'Verification pending — check your WhatsApp for the code.'
           : 'Link your WhatsApp number to start sending voice notes.',
-      cta: whatsappStatus === 'not_set' ? 'Connect Now' : undefined,
     },
     {
       n: 3,
@@ -104,29 +231,21 @@ export const Dashboard: React.FC = () => {
 
       {/* ── HERO GREETING ── */}
       <section className="pt-10 pb-10 px-6 relative overflow-hidden">
-        {/* Subtle background blobs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
           <div
             className="absolute -top-40 -right-32 w-[560px] h-[560px] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(26,45,99,0.07) 0%, transparent 70%)',
-            }}
+            style={{ background: 'radial-gradient(circle, rgba(26,45,99,0.07) 0%, transparent 70%)' }}
           />
           <div
             className="absolute top-16 -left-24 w-[380px] h-[380px] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(71,93,143,0.05) 0%, transparent 70%)',
-            }}
+            style={{ background: 'radial-gradient(circle, rgba(71,93,143,0.05) 0%, transparent 70%)' }}
           />
         </div>
 
         <div className="max-w-4xl mx-auto relative">
-          {/* Platform status pill */}
           <div
             className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-navy/[0.08] rounded-full px-4 py-1.5 mb-5 shadow-sm"
-            style={{
-              animation: 'hero-subtitle-in 0.5s cubic-bezier(0.22,1,0.36,1) 0.05s both',
-            }}
+            style={{ animation: 'hero-subtitle-in 0.5s cubic-bezier(0.22,1,0.36,1) 0.05s both' }}
           >
             <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-sm font-medium text-navy/65 font-instrument">
@@ -134,7 +253,6 @@ export const Dashboard: React.FC = () => {
             </span>
           </div>
 
-          {/* Main greeting */}
           <h1
             className="font-general font-bold text-navy leading-[1.08] mb-4"
             style={{
@@ -147,20 +265,14 @@ export const Dashboard: React.FC = () => {
 
           <p
             className="text-lg md:text-xl text-navy/55 font-instrument font-medium max-w-xl mb-8 leading-relaxed"
-            style={{
-              animation: 'hero-subtitle-in 0.6s cubic-bezier(0.22,1,0.36,1) 0.22s both',
-            }}
+            style={{ animation: 'hero-subtitle-in 0.6s cubic-bezier(0.22,1,0.36,1) 0.22s both' }}
           >
-            VoiceLink is ready when you are. Just open WhatsApp and start talking — we'll handle
-            the rest.
+            VoiceLink is ready when you are. Just open WhatsApp and start talking — we'll handle the rest.
           </p>
 
-          {/* CTA row */}
           <div
             className="flex flex-wrap gap-3"
-            style={{
-              animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.35s both',
-            }}
+            style={{ animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.35s both' }}
           >
             <a
               href="https://wa.me/32460229893"
@@ -172,15 +284,6 @@ export const Dashboard: React.FC = () => {
               <span>Open WhatsApp</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
-            {whatsappStatus === 'not_set' && (
-              <button
-                onClick={() => navigate(withUTM('/verify-whatsapp'))}
-                className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm hover:bg-white border border-navy/[0.12] text-navy font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-md"
-              >
-                <Phone className="w-4 h-4" />
-                <span>Connect WhatsApp</span>
-              </button>
-            )}
           </div>
         </div>
       </section>
@@ -188,7 +291,6 @@ export const Dashboard: React.FC = () => {
       {/* ── STATUS CARDS ── */}
       <section className="px-6 pb-8">
         <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {/* CRM */}
           <div
             className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.42s both' }}
@@ -199,70 +301,34 @@ export const Dashboard: React.FC = () => {
               </div>
               <span className="font-general font-semibold text-navy text-sm">CRM</span>
             </div>
-            <p className="text-xs text-navy/50 font-instrument">
-              {getPlatformLabel()} is connected &amp; syncing
-            </p>
+            <p className="text-xs text-navy/50 font-instrument">{getPlatformLabel()} is connected &amp; syncing</p>
             <div className="mt-3 flex items-center space-x-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span className="text-xs font-medium text-emerald-600">Live</span>
             </div>
           </div>
 
-          {/* WhatsApp */}
           <div
             className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.5s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
-              <div
-                className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-                  whatsappStatus === 'active' ? 'bg-emerald-50' : 'bg-navy/[0.05]'
-                }`}
-              >
-                <MessageCircle
-                  className={`w-5 h-5 ${
-                    whatsappStatus === 'active' ? 'text-emerald-500' : 'text-navy/35'
-                  }`}
-                />
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${whatsappStatus === 'active' ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <MessageCircle className={`w-5 h-5 ${whatsappStatus === 'active' ? 'text-emerald-500' : 'text-navy/35'}`} />
               </div>
               <span className="font-general font-semibold text-navy text-sm">WhatsApp</span>
             </div>
             <p className="text-xs text-navy/50 font-instrument truncate">
-              {whatsappStatus === 'active'
-                ? whatsappNumber
-                : whatsappStatus === 'pending'
-                ? 'Verification pending'
-                : 'Not yet connected'}
+              {whatsappStatus === 'active' ? whatsappNumber : whatsappStatus === 'pending' ? 'Verification pending' : 'Not yet connected'}
             </p>
             <div className="mt-3 flex items-center space-x-1.5">
-              <div
-                className={`w-1.5 h-1.5 rounded-full ${
-                  whatsappStatus === 'active'
-                    ? 'bg-emerald-400'
-                    : whatsappStatus === 'pending'
-                    ? 'bg-amber-400'
-                    : 'bg-navy/20'
-                }`}
-              />
-              <span
-                className={`text-xs font-medium ${
-                  whatsappStatus === 'active'
-                    ? 'text-emerald-600'
-                    : whatsappStatus === 'pending'
-                    ? 'text-amber-600'
-                    : 'text-navy/40'
-                }`}
-              >
-                {whatsappStatus === 'active'
-                  ? 'Connected'
-                  : whatsappStatus === 'pending'
-                  ? 'Pending'
-                  : 'Not connected'}
+              <div className={`w-1.5 h-1.5 rounded-full ${whatsappStatus === 'active' ? 'bg-emerald-400' : whatsappStatus === 'pending' ? 'bg-amber-400' : 'bg-navy/20'}`} />
+              <span className={`text-xs font-medium ${whatsappStatus === 'active' ? 'text-emerald-600' : whatsappStatus === 'pending' ? 'text-amber-600' : 'text-navy/40'}`}>
+                {whatsappStatus === 'active' ? 'Connected' : whatsappStatus === 'pending' ? 'Pending' : 'Not connected'}
               </span>
             </div>
           </div>
 
-          {/* Subscription */}
           <div
             className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
@@ -297,60 +363,180 @@ export const Dashboard: React.FC = () => {
               Three quick steps to get fully up and running
             </p>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {setupSteps.map((step) => (
-                <div
-                  key={step.n}
-                  className={`flex items-start gap-4 p-4 rounded-2xl transition-colors duration-200 ${
-                    step.done
-                      ? 'bg-emerald-50/70 border border-emerald-100/80'
-                      : 'bg-navy/[0.03] border border-transparent hover:border-navy/[0.06]'
-                  }`}
-                >
-                  {/* Step indicator */}
+                <div key={step.n}>
+                  {/* ── Step row ── */}
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    className={`flex items-start gap-4 p-4 rounded-2xl transition-colors duration-200 ${
                       step.done
-                        ? 'bg-emerald-100 text-emerald-600'
-                        : 'bg-navy/[0.07] text-navy/45'
+                        ? 'bg-emerald-50/70 border border-emerald-100/80'
+                        : step.n === 2 && waOpen
+                        ? 'bg-navy/[0.05] border border-navy/[0.09] rounded-b-none'
+                        : 'bg-navy/[0.03] border border-transparent hover:border-navy/[0.06]'
                     }`}
                   >
-                    {step.done ? (
-                      <CheckCircle className="w-4 h-4" />
-                    ) : (
-                      <span className="text-sm font-bold font-general">{step.n}</span>
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        step.done ? 'bg-emerald-100 text-emerald-600' : 'bg-navy/[0.07] text-navy/45'
+                      }`}
+                    >
+                      {step.done ? (
+                        <CheckCircle className="w-4 h-4" />
+                      ) : (
+                        <span className="text-sm font-bold font-general">{step.n}</span>
+                      )}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`font-general font-semibold text-sm ${step.done ? 'text-emerald-700' : 'text-navy'}`}>
+                          {step.title}
+                        </span>
+                        {step.pending && (
+                          <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                            <Clock className="w-3 h-3" />
+                            Pending
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-navy/50 font-instrument mt-0.5 leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+
+                    {/* "Connect Now" toggle button — only step 2 when not yet connected */}
+                    {step.n === 2 && whatsappStatus === 'not_set' && (
+                      <button
+                        onClick={() => {
+                          setWaOpen((o) => !o);
+                          setWaError(null);
+                        }}
+                        className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
+                      >
+                        {waOpen ? (
+                          <>
+                            <X className="w-3 h-3" />
+                            Cancel
+                          </>
+                        ) : (
+                          <>
+                            Connect Now
+                            <ChevronDown className="w-3 h-3" />
+                          </>
+                        )}
+                      </button>
                     )}
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span
-                        className={`font-general font-semibold text-sm ${
-                          step.done ? 'text-emerald-700' : 'text-navy'
-                        }`}
-                      >
-                        {step.title}
-                      </span>
-                      {step.pending && (
-                        <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-medium px-2 py-0.5 rounded-full">
-                          <Clock className="w-3 h-3" />
-                          Pending
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-navy/50 font-instrument mt-0.5 leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-
-                  {step.cta && (
-                    <button
-                      onClick={() => navigate(withUTM('/verify-whatsapp'))}
-                      className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
+                  {/* ── Inline WA form (step 2 only) ── */}
+                  {step.n === 2 && (
+                    <div
+                      ref={waFormRef}
+                      className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                      style={{ maxHeight: waOpen && whatsappStatus === 'not_set' ? '400px' : '0px' }}
                     >
-                      {step.cta}
-                      <ArrowRight className="w-3 h-3" />
-                    </button>
+                      <div className="border border-t-0 border-navy/[0.09] rounded-b-2xl bg-white/70 backdrop-blur-sm px-5 py-5">
+                        {/* Error */}
+                        {waError && (
+                          <div className="mb-4 flex items-start gap-2 p-3 bg-red-50 border border-red-100 rounded-xl text-red-700 text-xs font-instrument">
+                            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                            {waError}
+                          </div>
+                        )}
+
+                        {/* Success */}
+                        {waSuccess && (
+                          <div className="mb-4 flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-700 text-sm font-instrument font-medium">
+                            <Check className="w-4 h-4" />
+                            WhatsApp connected successfully! 🎉
+                          </div>
+                        )}
+
+                        {/* Step: phone number */}
+                        {!waSuccess && waStep === 'phone' && (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-xs font-semibold text-navy/70 font-general mb-1.5">
+                                Your WhatsApp number
+                              </label>
+                              <input
+                                type="tel"
+                                value={waPhone}
+                                onChange={(e) => { setWaPhone(e.target.value); setWaError(null); }}
+                                onKeyDown={(e) => e.key === 'Enter' && sendOtp()}
+                                placeholder="+32 123 456 789"
+                                className={`w-full px-4 py-2.5 rounded-xl border text-sm font-instrument bg-white/80 focus:outline-none focus:ring-2 focus:ring-navy/20 transition-colors ${
+                                  waPhone && !isValidPhone(waPhone) ? 'border-red-300' : 'border-navy/[0.12]'
+                                }`}
+                              />
+                              <p className="text-xs text-navy/40 font-instrument mt-1">
+                                Include your country code — e.g. +32 for Belgium.
+                              </p>
+                            </div>
+                            <button
+                              onClick={sendOtp}
+                              disabled={waBusy || !waPhone || !isValidPhone(waPhone)}
+                              className="inline-flex items-center gap-2 bg-navy disabled:bg-navy/40 hover:bg-navy-hover text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors"
+                            >
+                              {waBusy ? <Loader2 className="w-4 h-4 animate-spin" /> : <MessageCircle className="w-4 h-4" />}
+                              {waBusy ? 'Sending…' : 'Send Verification Code'}
+                            </button>
+                          </div>
+                        )}
+
+                        {/* Step: OTP code */}
+                        {!waSuccess && waStep === 'otp' && (
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-2 p-3 bg-navy/[0.04] rounded-xl">
+                              <MessageCircle className="w-4 h-4 text-navy/50 flex-shrink-0" />
+                              <p className="text-xs text-navy/60 font-instrument">
+                                Code sent to <span className="font-semibold text-navy">{waPhone}</span>. Check your WhatsApp.
+                              </p>
+                            </div>
+                            <div>
+                              <label className="block text-xs font-semibold text-navy/70 font-general mb-1.5">
+                                6-digit verification code
+                              </label>
+                              <input
+                                type="text"
+                                inputMode="numeric"
+                                value={waOtp}
+                                onChange={(e) => { setWaOtp(e.target.value.replace(/\D/g, '').slice(0, 6)); setWaError(null); }}
+                                onKeyDown={(e) => e.key === 'Enter' && verifyOtp()}
+                                placeholder="• • • • • •"
+                                maxLength={6}
+                                className="w-full px-4 py-2.5 rounded-xl border border-navy/[0.12] text-center text-xl font-mono tracking-[0.4em] bg-white/80 focus:outline-none focus:ring-2 focus:ring-navy/20 transition-colors"
+                              />
+                            </div>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => { setWaStep('phone'); setWaOtp(''); setWaError(null); }}
+                                className="inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy px-4 py-2.5 rounded-full border border-navy/[0.10] hover:border-navy/20 bg-white/60 transition-colors"
+                              >
+                                <X className="w-3 h-3" />
+                                Back
+                              </button>
+                              <button
+                                onClick={verifyOtp}
+                                disabled={waBusy || waOtp.length !== 6}
+                                className="inline-flex items-center gap-2 bg-navy disabled:bg-navy/40 hover:bg-navy-hover text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors"
+                              >
+                                {waBusy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                                {waBusy ? 'Verifying…' : 'Verify'}
+                              </button>
+                              <button
+                                onClick={sendOtp}
+                                disabled={waBusy}
+                                className="ml-auto text-xs text-navy/45 hover:text-navy/70 font-instrument underline underline-offset-2 disabled:opacity-40 transition-colors"
+                              >
+                                Resend code
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   )}
                 </div>
               ))}
@@ -372,24 +558,18 @@ export const Dashboard: React.FC = () => {
                 <Mic className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-general font-bold text-navy text-base leading-tight">
-                  How to Use VoiceLink
-                </h3>
+                <h3 className="font-general font-bold text-navy text-base leading-tight">How to Use VoiceLink</h3>
                 <p className="text-xs text-navy/40 font-instrument">Tips for the best results</p>
               </div>
             </div>
-
             <ul className="space-y-3.5">
               {tips.map((tip, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className="text-base leading-tight mt-0.5 flex-shrink-0">{tip.emoji}</span>
-                  <span className="text-sm text-navy/60 font-instrument leading-relaxed">
-                    {tip.text}
-                  </span>
+                  <span className="text-sm text-navy/60 font-instrument leading-relaxed">{tip.text}</span>
                 </li>
               ))}
             </ul>
-
             <button
               onClick={() => navigate(withUTM('/support'))}
               className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy transition-colors"
@@ -400,18 +580,14 @@ export const Dashboard: React.FC = () => {
             </button>
           </div>
 
-          {/* Support — navy card */}
+          {/* Support */}
           <div
             className="bg-navy rounded-3xl p-7 relative overflow-hidden shadow-lg"
             style={{ animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.78s both' }}
           >
-            {/* Subtle inner highlight */}
             <div
               className="absolute inset-0 pointer-events-none rounded-3xl"
-              style={{
-                background:
-                  'linear-gradient(145deg, rgba(255,255,255,0.07) 0%, transparent 55%)',
-              }}
+              style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.07) 0%, transparent 55%)' }}
               aria-hidden
             />
             <div className="relative">
@@ -420,18 +596,13 @@ export const Dashboard: React.FC = () => {
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-general font-bold text-white text-base leading-tight">
-                    Need a Hand?
-                  </h3>
+                  <h3 className="font-general font-bold text-white text-base leading-tight">Need a Hand?</h3>
                   <p className="text-xs text-white/45 font-instrument">We're here for you</p>
                 </div>
               </div>
-
               <p className="text-sm text-white/60 font-instrument leading-relaxed mb-6">
-                Our team loves helping new users get the most out of VoiceLink. Reach out anytime
-                — we usually respond within a few hours.
+                Our team loves helping new users get the most out of VoiceLink. Reach out anytime — we usually respond within a few hours.
               </p>
-
               <div className="flex flex-col gap-2.5">
                 <a
                   href="https://calendly.com/alex-finitsolutions/30min"
@@ -459,17 +630,9 @@ export const Dashboard: React.FC = () => {
       <footer className="pb-10 px-6 text-center">
         <p className="text-xs text-navy/28 font-instrument">
           © 2025 Finit Solutions ·{' '}
-          <a href="/privacy-policy" className="hover:text-navy/50 transition-colors">
-            Privacy
-          </a>{' '}
-          ·{' '}
-          <a href="/saas-agreement" className="hover:text-navy/50 transition-colors">
-            SaaS Agreement
-          </a>{' '}
-          ·{' '}
-          <a href="/support" className="hover:text-navy/50 transition-colors">
-            Support
-          </a>
+          <a href="/privacy-policy" className="hover:text-navy/50 transition-colors">Privacy</a>{' '}·{' '}
+          <a href="/saas-agreement" className="hover:text-navy/50 transition-colors">SaaS Agreement</a>{' '}·{' '}
+          <a href="/support" className="hover:text-navy/50 transition-colors">Support</a>
         </p>
       </footer>
     </div>
