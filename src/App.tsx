@@ -44,6 +44,15 @@ function App() {
     console.log('Current location:', location.pathname, location.search);
   }, [location]);
 
+  // After OAuth magic-link redirect, Supabase sends the user back to the site
+  // root (/). If they're authenticated and on the homepage, send them to the
+  // dashboard instead of showing the marketing page.
+  React.useEffect(() => {
+    if (!loading && user && location.pathname === '/') {
+      navigate(withUTM('/dashboard'), { replace: true });
+    }
+  }, [user, loading, location.pathname]);
+
   // Scroll listener for nav styling
   React.useEffect(() => {
     const handleScroll = () => {

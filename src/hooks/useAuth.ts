@@ -70,7 +70,11 @@ export const useAuth = () => {
       }
 
       if (!name || name.includes('undefined')) {
-        name = session.user.email?.split('@')[0] || 'User';
+        // The stored email may also be a placeholder (teamleader_undefined@placeholder.local)
+        // — fall back to a generic label rather than propagate the bad string.
+        const emailPrefix = session.user.email?.split('@')[0] || '';
+        const emailIsBad = !emailPrefix || emailPrefix.includes('undefined') || /^(teamleader|pipedrive|odoo)_/.test(emailPrefix);
+        name = emailIsBad ? 'there' : emailPrefix;
       }
 
       setUser({
