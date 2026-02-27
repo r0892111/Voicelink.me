@@ -1,14 +1,9 @@
 import React from 'react';
 import { LandingPageTemplate } from './LandingPageTemplate';
 
-interface FieldServiceLandingProps {
-  openModal: () => void;
-}
-
-export const FieldServiceLanding: React.FC<FieldServiceLandingProps> = ({ openModal }) => {
+export const FieldServiceLanding: React.FC = () => {
   return (
     <LandingPageTemplate
-      openModal={openModal}
       hero={{
         title: 'Voor servicebedrijven: CRM-updates in 10 seconden, gewoon via spraak.',
         subtitle: 'Na elke interventie of klantcontact: notities, taken en vervolgacties automatisch in Teamleader/Pipedrive. Geen admin-achterstand meer.',

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Kanban columns -->
+  <rect x="5" y="8" width="15" height="48" rx="3" fill="#1A2D63" fill-opacity="0.06" stroke="#1A2D63" stroke-width="2" stroke-opacity="0.4"/>
+  <rect x="25" y="8" width="15" height="48" rx="3" fill="#1A2D63" fill-opacity="0.06" stroke="#1A2D63" stroke-width="2" stroke-opacity="0.4"/>
+  <rect x="45" y="8" width="15" height="48" rx="3" fill="#1A2D63" fill-opacity="0.06" stroke="#1A2D63" stroke-width="2" stroke-opacity="0.4"/>
+  <!-- Cards in columns -->
+  <rect x="8" y="14" width="9" height="8" rx="1.5" fill="#1A2D63" opacity="0.25"/>
+  <rect x="8" y="26" width="9" height="8" rx="1.5" fill="#1A2D63" opacity="0.15"/>
+  <rect x="28" y="14" width="9" height="8" rx="1.5" fill="#1A2D63" opacity="0.2"/>
+  <!-- Active card being moved - highlighted -->
+  <rect x="47" y="14" width="11" height="10" rx="2" fill="#1A2D63" fill-opacity="0.35" stroke="#1A2D63" stroke-width="2"/>
+  <!-- Arrow showing movement -->
+  <path d="M22 18h5" stroke="#1A2D63" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <path d="M39 18l4 0" stroke="#1A2D63" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2" opacity="0.4"/>
+  <path d="M41 15l3 3-3 3" stroke="#1A2D63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+</svg>

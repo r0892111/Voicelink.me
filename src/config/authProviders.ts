@@ -9,11 +9,12 @@ export const authProviders: AuthProvider[] = [
     color: 'bg-emerald-600',
     hoverColor: 'hover:bg-emerald-700'
   },
-  {
-    name: 'pipedrive',
-    displayName: 'Pipedrive',
-    icon: Zap,
-    color: 'bg-orange-500',
-    hoverColor: 'hover:bg-orange-600'
-  }
+  // TEMPORARY: Pipedrive disabled
+  // {
+  //   name: 'pipedrive',
+  //   displayName: 'Pipedrive',
+  //   icon: Zap,
+  //   color: 'bg-orange-500',
+  //   hoverColor: 'hover:bg-orange-600'
+  // }
 ];

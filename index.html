@@ -13,10 +13,65 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/Finit Icon Blue.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VoiceLink</title>
+    <title>VoiceLink — WhatsApp CRM Automation | Finit Solutions</title>
+    <meta name="description" content="Turn WhatsApp voice notes into structured CRM data. VoiceLink integrates with Teamleader, Pipedrive, and Odoo to automate your workflow." />
+    <meta property="og:title" content="VoiceLink — WhatsApp CRM Automation" />
+    <meta property="og:description" content="Turn WhatsApp voice notes into structured CRM data. Integrates with Teamleader, Pipedrive, and Odoo." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://voicelink.me" />
+
+    <!-- Google Fonts: Newsreader + Instrument Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Pre-React loader — removed automatically when React mounts -->
+      <div id="initial-loader" style="
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #FDFBF7;
+      ">
+        <div class="dot-loader"></div>
+      </div>
+    </div>
+    <style>
+      .dot-loader {
+        height: 15px;
+        aspect-ratio: 5;
+        display: flex;
+        justify-content: space-between;
+        --_g: no-repeat radial-gradient(farthest-side, #1A2D63 95%, #0000);
+        background: var(--_g), var(--_g);
+        background-size: 20% 100%;
+        animation: dotLoader-slide 1s infinite;
+      }
+      .dot-loader:before,
+      .dot-loader:after {
+        content: "";
+        height: inherit;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #1A2D63;
+        animation: dotLoader-bounce 1s infinite;
+      }
+      .dot-loader:after {
+        --s: -1, -1;
+      }
+      @keyframes dotLoader-slide {
+        0%, 60% { background-position: calc(1*100%/3) 0, calc(2*100%/3) 0 }
+        100%    { background-position: calc(0*100%/3) 0, calc(3*100%/3) 0 }
+      }
+      @keyframes dotLoader-bounce {
+        0%   { transform: scale(var(--s, 1)) translate(0, 0) }
+        33%  { transform: scale(var(--s, 1)) translate(0, 130%) }
+        66%  { transform: scale(var(--s, 1)) translate(calc(400%/3), 130%) }
+        100% { transform: scale(var(--s, 1)) translate(calc(400%/3), 0) }
+      }
+    </style>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

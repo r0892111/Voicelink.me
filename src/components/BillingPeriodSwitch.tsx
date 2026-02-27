@@ -15,24 +15,24 @@ export const BillingPeriodSwitch: React.FC<BillingPeriodSwitchProps> = ({
   const { t } = useI18n();
 
   return (
-    <div className="flex items-center justify-center mb-8">
-      <div className="bg-gray-100 rounded-full p-1 flex items-center">
+    <div className="flex items-center justify-center">
+      <div className="bg-navy/[0.04] rounded-full p-1.5 flex items-center">
         <button
           onClick={() => onBillingPeriodChange('monthly')}
-          className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+          className={`px-8 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
             billingPeriod === 'monthly'
-              ? 'bg-white text-gray-900 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-white text-navy shadow-sm'
+              : 'text-slate-blue hover:text-navy'
           }`}
         >
           {t('pricing.monthly')}
         </button>
         <button
           onClick={() => onBillingPeriodChange('yearly')}
-          className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 relative ${
+          className={`px-8 py-2.5 rounded-full text-sm font-medium transition-all duration-300 relative ${
             billingPeriod === 'yearly'
-              ? 'bg-white text-gray-900 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-white text-navy shadow-sm'
+              : 'text-slate-blue hover:text-navy'
           }`}
         >
           {t('pricing.yearly')}

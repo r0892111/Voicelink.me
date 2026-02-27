@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Trend line going up -->
+  <path d="M8 50L22 36l10 8 24-30" stroke="#1A2D63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Arrow tip -->
+  <path d="M48 14l8 0 0 8" stroke="#1A2D63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Lightning bolt / opportunity spark -->
+  <path d="M38 28l5-10h6l-5 10h6l-10 16 3-10h-6z" fill="#1A2D63" fill-opacity="0.18" stroke="#1A2D63" stroke-width="2" stroke-linejoin="round"/>
+</svg>

@@ -5,6 +5,7 @@ import './i18n';
 import App from './App.tsx';
 import './index.css';
 import { initializeUTMTracking } from './utils/utm';
+import { PageTransitionProvider } from './hooks/usePageTransition';
 
 // Handle client-side routing for GitHub Pages and similar static hosts
 if (typeof window !== 'undefined') {
@@ -25,7 +26,9 @@ initializeUTMTracking();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <PageTransitionProvider>
+        <App />
+      </PageTransitionProvider>
     </BrowserRouter>
   </StrictMode>
 );

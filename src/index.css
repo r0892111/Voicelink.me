@@ -2,6 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Satoshi — self-hosted font */
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-Light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-LightItalic.otf') format('opentype'); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-MediumItalic.otf') format('opentype'); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-BoldItalic.otf') format('opentype'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-Black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Satoshi'; src: url('/fonts/Satoshi-BlackItalic.otf') format('opentype'); font-weight: 900; font-style: italic; font-display: swap; }
+
+/* Finit Aurora grain overlay for gradient sections */
+.bg-finit-aurora {
+  position: relative;
+}
+.bg-finit-aurora::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  mix-blend-mode: soft-light;
+}
+
+/* Finit Design System — Base */
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: rgba(26, 45, 99, 0.15);
+  color: #1A2D63;
+}
+
+/* Logo Carousel Animation */
+@keyframes scroll-logos {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* Hero Animation Keyframes */
 @keyframes fadeInUp {
   from {
@@ -158,3 +202,98 @@
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
+
+/* Dot loader animation */
+.dot-loader {
+  height: 15px;
+  aspect-ratio: 5;
+  display: flex;
+  justify-content: space-between;
+  --_g: no-repeat radial-gradient(farthest-side, #1A2D63 95%, #0000);
+  background: var(--_g), var(--_g);
+  background-size: 20% 100%;
+  animation: dotLoader-slide 1s infinite;
+}
+.dot-loader:before,
+.dot-loader:after {
+  content: "";
+  height: inherit;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #1A2D63;
+  animation: dotLoader-bounce 1s infinite;
+}
+.dot-loader:after {
+  --s: -1, -1;
+}
+@keyframes dotLoader-slide {
+  0%, 60% { background-position: calc(1*100%/3) 0, calc(2*100%/3) 0 }
+  100%    { background-position: calc(0*100%/3) 0, calc(3*100%/3) 0 }
+}
+@keyframes dotLoader-bounce {
+  0%   { transform: scale(var(--s, 1)) translate(0, 0) }
+  33%  { transform: scale(var(--s, 1)) translate(0, 130%) }
+  66%  { transform: scale(var(--s, 1)) translate(calc(400%/3), 130%) }
+  100% { transform: scale(var(--s, 1)) translate(calc(400%/3), 0) }
+}
+
+/* ── Hero entrance animations ── */
+@keyframes hero-slide-in {
+  from { opacity: 0; transform: translateX(-30px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateX(0);     filter: blur(0); }
+}
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(20px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+@keyframes hero-phone-in {
+  from { opacity: 0; transform: translateX(50px) scale(0.94); filter: blur(3px); }
+  to   { opacity: 1; transform: translateX(0)    scale(1);    filter: blur(0); }
+}
+@keyframes hero-wave-in {
+  from { opacity: 0; transform: scale(1.06); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes hero-subtitle-in {
+  from { opacity: 0; transform: translateY(12px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+.hero-animate-waves    { animation: hero-wave-in    0.9s cubic-bezier(0.22,1,0.36,1) 0s    both; }
+.hero-animate-heading  { animation: hero-slide-in   0.7s cubic-bezier(0.22,1,0.36,1) 0.1s  both; }
+.hero-animate-subtitle { animation: hero-subtitle-in 0.6s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+.hero-animate-ctas     { animation: hero-fade-up    0.6s cubic-bezier(0.22,1,0.36,1) 0.4s  both; }
+.hero-animate-checks   { animation: hero-fade-up    0.5s cubic-bezier(0.22,1,0.36,1) 0.55s both; }
+.hero-animate-phone    { animation: hero-phone-in   0.8s cubic-bezier(0.22,1,0.36,1) 0.2s  both; }
+
+/* ── Auth page entrance animations ── */
+@keyframes auth-slide-down {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes auth-fade-up {
+  from { opacity: 0; transform: translateY(22px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);  filter: blur(0); }
+}
+@keyframes auth-phone-in {
+  from { opacity: 0; transform: translateX(60px) rotate(8deg) scale(0.92); }
+  to   { opacity: 1; transform: translateX(0)   rotate(5deg) scale(1); }
+}
+@keyframes auth-wave-in {
+  from { opacity: 0; transform: scale(1.08); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes auth-btn-cascade {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+.auth-animate-topbar   { animation: auth-slide-down 0.5s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
+.auth-animate-waves    { animation: auth-wave-in    0.9s cubic-bezier(0.22,1,0.36,1) 0s    both; }
+.auth-animate-title    { animation: auth-fade-up    0.6s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
+.auth-animate-subtitle { animation: auth-fade-up    0.6s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+.auth-animate-btn-1    { animation: auth-btn-cascade 0.5s cubic-bezier(0.22,1,0.36,1) 0.35s both; }
+.auth-animate-btn-2    { animation: auth-btn-cascade 0.5s cubic-bezier(0.22,1,0.36,1) 0.45s both; }
+.auth-animate-btn-3    { animation: auth-btn-cascade 0.5s cubic-bezier(0.22,1,0.36,1) 0.55s both; }
+.auth-animate-footer   { animation: auth-fade-up    0.5s cubic-bezier(0.22,1,0.36,1) 0.6s  both; }
+.auth-animate-phone    { animation: auth-phone-in   0.8s cubic-bezier(0.22,1,0.36,1) 0.3s  both; }

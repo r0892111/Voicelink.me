@@ -39,6 +39,7 @@
     "teamMemberInvitedSuccessfully": "Team member invited successfully!",
     "changeLanguage": "Change language",
     "voiceLink": "VoiceLink",
+    "and": "and",
     "active": "Active",
     "inactive": "Inactive",
     "notProvided": "Not provided",
@@ -116,12 +117,17 @@
   "hero": {
     "title": "Just...",
     "mainTitle": "Talk to your CRM",
-    "subtitle1": "Send voice notes via WhatsApp and watch them automatically sync with your CRM.",
+    "subtitle1_pre": "Connect your",
+    "subtitle1_crm": "Teamleader CRM",
+    "subtitle1_mid": "with",
+    "subtitle1_wa": "WhatsApp",
+    "subtitle1_post": "and handle all your admin with a simple voice message.",
     "subtitle2": "Turn voice messages into structured data instantly.",
     "getStartedFree": "Get Started Free",
     "watchDemo": "Watch Demo",
     "oneClickSetup": "One-click CRM Connection",
-    "whatsappSetup": "Connect WhatsApp in 2 minutes"
+    "whatsappSetup": "Connect WhatsApp\nin 2 minutes",
+    "carouselTitle": "Explore what VoiceLink does inside your CRM"
   },
   "auth": {
     "modal": {
@@ -139,6 +145,13 @@
       "noSetupFees": "No Setup Fees",
       "cancelAnytime": "Cancel Anytime"
     },
+    "page": {
+      "signupSubtitle": "14-day free trial. Connect your CRM to get started.",
+      "continueTeamleader": "Continue with Teamleader",
+      "continuePipedrive": "Continue with Pipedrive",
+      "continueOdoo": "Continue with Odoo"
+    },
+    "passiveTermsConsent": "By signing up, you agree to our",
     "callback": {
       "authenticating": "Authenticating...",
       "authenticationSuccessful": "Authentication Successful!",
@@ -157,6 +170,7 @@
     "forSelfHostedInstances": "For self-hosted Odoo instances",
     "backToOdooOptions": "Back to Odoo options",
     "backToLoginOptions": "Back to login options",
+    "backToHome": "Back to home",
     "createAccount": "Create Account",
     "signIn": "Sign In",
     "importantEmailAddress": "Important: Email Address",
@@ -496,47 +510,54 @@
     }
   },
   "pricing": {
-    "title": "Volume Pricing That Scales With You",
-    "subtitle": "Per user pricing. Start free, upgrade when you're ready. No hidden fees.",
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Per-seat pricing with clear message limits. Start free, scale as you grow.",
     "monthly": "Monthly",
     "yearly": "Yearly",
     "save20": "Save 20%",
-    "voicelinkPro": "VoiceLink Pro",
-    "perfectForTeams": "Perfect for growing teams",
     "features": {
-      "unlimitedVoiceNotes": "Unlimited WhatsApp voice notes",
+      "voiceNotes": "WhatsApp voice notes",
       "realtimeCrmSync": "Real-time CRM sync",
-      "nativeWhatsappIntegration": "Native WhatsApp integration",
       "multiLanguageSupport": "Multi-language support",
-      "prioritySupport": "Priority support"
+      "prioritySupport": "Priority support",
+      "dedicatedAccountManager": "Dedicated account manager",
+      "customIntegrations": "Custom integrations & features",
+      "topUpAvailable": "Top-up messages available",
+      "discountedTopUp": "Discounted top-up messages",
+      "largerTopUps": "Larger top-up bundles",
+      "sla": "Custom SLA"
     },
-    "numberOfUsers": "Number of Users",
-    "customAmount": "Custom amount",
-    "enterNumberOfUsers": "Enter number of users",
     "perUserPerMonth": "/user/month",
-    "users": "{{count}} user",
-    "users_plural": "{{count}} users",
-    "total": "Total: €{{amount}}/{{period}}",
-    "annualSavings": "Annual Savings: €{{amount}}",
-    "yearlyDiscount": "20% discount applied for yearly billing",
+    "messagesPerMonth": "{{count}} messages/user/month",
+    "negotiatedVolume": "100+ messages/user/month",
+    "topUp": "Top-up: +{{messages}} msgs for €{{price}}",
+    "topUpLabel": "Need more?",
+    "topUpMessages": "messages",
     "startFreeTrial": "Start Free Trial",
     "freeTrial": "14-day free trial",
-    "volumeDiscountTiers": "Volume Discount Tiers",
-    "automaticDiscounts": "Automatic discounts applied based on team size",
-    "plan": "Plan",
-    "teamSize": "Team Size",
-    "pricePerUser": "Price per User",
-    "discount": "Discount",
-    "current": "Current",
-    "contactUs": "Contact Us",
-    "off": "{{percent}}% off",
     "custom": "Custom",
-    "enterprisePricing": "Enterprise Pricing",
-    "customPricingFor": "Custom pricing for {{count}}+ users",
-    "dedicatedAccountManager": "Dedicated account manager",
-    "customIntegrations": "Custom integrations & features",
     "getCustomQuote": "Get Custom Quote",
-    "allPlansInclude": "All plans include unlimited WhatsApp voice notes, real-time CRM sync, and priority support."
+    "allPlansInclude": "All plans include real-time CRM sync, WhatsApp integration, and multi-language support.",
+    "cards": {
+      "starter": {
+        "name": "Starter",
+        "description": "For small teams (1–3 users)"
+      },
+      "professional": {
+        "name": "Professional",
+        "description": "For growing teams (1–10 users)",
+        "badge": "Most Popular"
+      },
+      "business": {
+        "name": "Business",
+        "description": "For larger teams (1–25 users)"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "For organizations (25+ users)",
+        "contactForPricing": "Tailored to your needs"
+      }
+    }
   },
   "features": {
     "title": "CRM Integrations",
@@ -545,23 +566,27 @@
     "realtimeSync": "Real-time sync",
     "secureOauth": "Secure OAuth",
     "moreIntegrations": "We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.",
-    "dontSeeYourCrm": "Don't see your CRM? We build custom integrations for any platform with an API.",
-    "contactForCustom": "Contact Us for Custom Integration"
+    "dontSeeYourCrm": "Using a different CRM or software? We build custom solutions for any platform you use daily.",
+    "contactForCustom": "Get in touch for a custom solution"
   },
   "howItWorks": {
-    "title": "How WhatsApp Voice Notes Work",
-    "subtitle": "Three simple steps to transform voice into structured data",
+    "title": "How does it work?",
+    "subtitle": "From voice message to your CRM in four steps",
     "step1": {
-      "title": "Voice Input",
-      "description": "Record your thoughts naturally through WhatsApp voice messages"
+      "title": "Send a message",
+      "description": "Open WhatsApp and send a voice note or text — just like you normally would. Add new info to your CRM or look up existing contacts and deals."
     },
     "step2": {
-      "title": "AI Processing",
-      "description": "Advanced AI extracts and structures key information from your voice"
+      "title": "VoiceLink picks out the info",
+      "description": "VoiceLink spots the key info — names, numbers, appointments, notes — and figures out what to do with it."
     },
     "step3": {
-      "title": "CRM Integration",
-      "description": "Structured data syncs automatically to your CRM system"
+      "title": "You get a summary",
+      "description": "Instantly get an overview back in WhatsApp. VoiceLink also thinks ahead: it can ask questions or suggest next steps."
+    },
+    "step4": {
+      "title": "Everything is in your CRM",
+      "description": "Contacts, notes and tasks show up automatically in your CRM. Done."
     },
     "coreFunctionalities": {
       "title": "Core Functionalities",
@@ -778,5 +803,47 @@
     "step2": "You will receive an email with your free access credentials",
     "step3": "Our team will guide you through the setup process",
     "backToHome": "Back to Home"
+  },
+  "trustBar": {
+    "title": "Integrates with your tools"
+  },
+  "problemAgitation": {
+    "title": "Sound familiar?",
+    "subtitle": "Sales teams lose hours every week on manual CRM work.",
+    "pain1": "You forget to log calls in your CRM because you're already on the next one.",
+    "pain2": "Notes from client meetings live in your head — or on a napkin.",
+    "pain3": "Your pipeline looks outdated because updating it takes too long.",
+    "pain4": "Follow-ups slip through the cracks and deals go cold."
+  },
+  "integrations": {
+    "title": "Works with your CRM",
+    "titleBefore": "Works with your",
+    "subtitle": "Connect in one click, no configuration needed, installed in 2 minutes.",
+    "tryForFree": "Try it for free",
+    "bullet1": "Connect in one click",
+    "bullet2": "No configuration needed",
+    "bullet3": "Installed in 2 minutes"
+  },
+  "testimonials": {
+    "title": "What our users say",
+    "quote1": "VoiceLink cut my admin time in half. I just talk, and my CRM stays up to date.",
+    "author1": "Sales Manager, Field Services",
+    "quote2": "Finally, a tool that works how I work — on the road, between meetings.",
+    "author2": "Account Executive, B2B Tech"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "q1": "How does VoiceLink work?",
+    "a1": "Send a WhatsApp voice note to VoiceLink. Our AI transcribes it, extracts contacts, tasks, and notes, then syncs everything to your CRM automatically.",
+    "q2": "Which CRMs are supported?",
+    "a2": "We currently support Teamleader, Pipedrive, and Odoo. More integrations are coming soon — contact us if you need a custom connection.",
+    "q3": "Is my data secure?",
+    "a3": "Yes. We use OAuth for CRM connections, encrypt all data in transit and at rest, and never store your voice recordings after processing.",
+    "q4": "How long does setup take?",
+    "a4": "About 2 minutes. Connect your CRM with one click, verify your WhatsApp number, and you're ready to go.",
+    "q5": "Can I use VoiceLink in multiple languages?",
+    "a5": "Yes. VoiceLink supports English, Dutch, French, and German for voice processing and the interface.",
+    "q6": "What happens during the free trial?",
+    "a6": "You get full access to all features for 14 days. No credit card required. Cancel anytime."
   }
 }

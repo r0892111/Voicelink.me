@@ -41,6 +41,7 @@
     "teamMemberInvitedSuccessfully": "Teammitglied erfolgreich eingeladen!",
     "changeLanguage": "Sprache ändern",
     "voiceLink": "VoiceLink",
+    "and": "und",
     "required": "Dieses Feld ist erforderlich",
     "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
@@ -118,6 +119,13 @@
       "termsOfService": "Nutzungsbedingungen",
       "privacyPolicy": "Datenschutzrichtlinie"
     },
+    "page": {
+      "signupSubtitle": "14 Tage kostenlos testen. Verbinden Sie Ihr CRM, um loszulegen.",
+      "continueTeamleader": "Weiter mit Teamleader",
+      "continuePipedrive": "Weiter mit Pipedrive",
+      "continueOdoo": "Weiter mit Odoo"
+    },
+    "passiveTermsConsent": "Mit der Anmeldung stimmen Sie unserer",
     "preparingCheckout": "Ihr Konto wird eingerichtet...",
     "redirectingToCheckout": "Weiterleitung zur Kasse...",
     "checkingSubscription": "Ihr Abonnement wird überprüft...",
@@ -126,6 +134,7 @@
     "forSelfHostedInstances": "Für selbst gehostete Odoo-Instanzen",
     "backToOdooOptions": "Zurück zu Odoo-Optionen",
     "backToLoginOptions": "Zurück zu Anmeldeoptionen",
+    "backToHome": "Zurück zur Startseite",
     "createAccount": "Konto Erstellen",
     "signIn": "Anmelden",
     "importantEmailAddress": "Wichtig: E-Mail-Adresse",
@@ -384,12 +393,17 @@
   "hero": {
     "title": "Einfach...",
     "mainTitle": "Sprechen Sie mit Ihrem CRM",
-    "subtitle1": "Senden Sie Sprachnachrichten über WhatsApp und sehen Sie zu, wie sie automatisch mit Ihrem CRM synchronisiert werden.",
+    "subtitle1_pre": "Connect your",
+    "subtitle1_crm": "Teamleader CRM",
+    "subtitle1_mid": "with",
+    "subtitle1_wa": "WhatsApp",
+    "subtitle1_post": "and handle all your admin with a simple voice message.",
     "subtitle2": "Verwandeln Sie Sprachnachrichten sofort in strukturierte Daten.",
     "getStartedFree": "Kostenlos Starten",
     "watchDemo": "Demo Ansehen",
     "oneClickSetup": "Ein-Klick CRM Verbindung",
-    "whatsappSetup": "WhatsApp in 2 Minuten verbinden"
+    "whatsappSetup": "WhatsApp verbinden\nin 2 Minuten",
+    "carouselTitle": "See what VoiceLink does inside your CRM"
   },
   "auth": {
     "modal": {
@@ -641,19 +655,23 @@
     "verify": "Verifizieren"
   },
   "howItWorks": {
-    "title": "Wie WhatsApp Sprachnotizen Funktionieren",
-    "subtitle": "Drei einfache Schritte, um Sprache in strukturierte Daten zu verwandeln",
+    "title": "Wie funktioniert es?",
+    "subtitle": "In vier Schritten von der Sprachnachricht in Ihr CRM",
     "step1": {
-      "title": "Spracheingabe",
-      "description": "Nehmen Sie Ihre Gedanken natürlich über WhatsApp Sprachnachrichten auf"
+      "title": "Nachricht senden",
+      "description": "Öffnen Sie WhatsApp und senden Sie eine Sprachnachricht oder Text — ganz wie gewohnt. Fügen Sie neue Infos zu Ihrem CRM hinzu oder suchen Sie bestehende Kontakte und Deals."
     },
     "step2": {
-      "title": "KI-Verarbeitung",
-      "description": "Fortschrittliche KI extrahiert und strukturiert wichtige Informationen aus Ihrer Sprache"
+      "title": "VoiceLink erkennt die Infos",
+      "description": "VoiceLink erkennt die wichtigsten Infos — Namen, Nummern, Termine, Notizen — und überlegt, was damit passieren soll."
     },
     "step3": {
-      "title": "CRM-Integration",
-      "description": "Strukturierte Daten synchronisieren sich automatisch mit Ihrem CRM-System"
+      "title": "Sie bekommen eine Zusammenfassung",
+      "description": "Sofort eine Übersicht zurück in WhatsApp. VoiceLink denkt auch voraus: es kann Fragen stellen oder Vorschläge machen."
+    },
+    "step4": {
+      "title": "Alles steht in Ihrem CRM",
+      "description": "Kontakte, Notizen und Aufgaben erscheinen automatisch in Ihrem CRM. Fertig."
     },
     "coreFunctionalities": {
       "title": "Kernfunktionalitäten",
@@ -681,20 +699,54 @@
     }
   },
   "pricing": {
-    "title": "Volumen-Preise Die Mitwachsen",
-    "subtitle": "Pro-Benutzer-Preise. Starten Sie kostenlos, upgraden Sie wenn Sie bereit sind. Keine versteckten Gebühren.",
+    "title": "Einfache, Transparente Preise",
+    "subtitle": "Pro-Benutzer-Preise mit klaren Nachrichtenlimits. Starten Sie kostenlos, skalieren Sie mit Ihrem Wachstum.",
     "monthly": "Monatlich",
     "yearly": "Jährlich",
     "save20": "20% Sparen",
+    "features": {
+      "voiceNotes": "WhatsApp-Sprachnachrichten",
+      "realtimeCrmSync": "Echtzeit-CRM-Synchronisation",
+      "multiLanguageSupport": "Mehrsprachige Unterstützung",
+      "prioritySupport": "Prioritäts-Support",
+      "dedicatedAccountManager": "Dedizierter Accountmanager",
+      "customIntegrations": "Individuelle Integrationen & Funktionen",
+      "topUpAvailable": "Zusätzliche Nachrichten verfügbar",
+      "discountedTopUp": "Vergünstigte Zusatznachrichten",
+      "largerTopUps": "Größere Auflade-Pakete",
+      "sla": "Individuelles SLA"
+    },
+    "perUserPerMonth": "/Benutzer/Monat",
+    "messagesPerMonth": "{{count}} Nachrichten/Benutzer/Monat",
+    "negotiatedVolume": "100+ Nachrichten/Benutzer/Monat",
+    "topUp": "Aufladen: +{{messages}} Nachr. für €{{price}}",
+    "topUpLabel": "Mehr benötigt?",
+    "topUpMessages": "Nachrichten",
     "startFreeTrial": "Kostenlose Testversion Starten",
     "freeTrial": "14-tägige kostenlose Testversion",
-    "volumeDiscountTiers": "Volume Discount Tiers",
-    "automaticDiscounts": "Automatic discounts applied based on team size",
-    "plan": "Plan",
-    "teamSize": "Team Size",
-    "pricePerUser": "Price per User",
-    "getCustomQuote": "Obtenir un Devis Personnalisé",
-    "allPlansInclude": "Tous les plans incluent des notes vocales WhatsApp illimitées, une synchronisation CRM en temps réel et un support prioritaire."
+    "custom": "Individuell",
+    "getCustomQuote": "Angebot Anfordern",
+    "allPlansInclude": "Alle Pläne beinhalten Echtzeit-CRM-Synchronisation, WhatsApp-Integration und mehrsprachige Unterstützung.",
+    "cards": {
+      "starter": {
+        "name": "Starter",
+        "description": "Für kleine Teams (1–3 Benutzer)"
+      },
+      "professional": {
+        "name": "Professional",
+        "description": "Für wachsende Teams (1–10 Benutzer)",
+        "badge": "Am Beliebtesten"
+      },
+      "business": {
+        "name": "Business",
+        "description": "Für größere Teams (1–25 Benutzer)"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Für Organisationen (25+ Benutzer)",
+        "contactForPricing": "Auf Ihre Bedürfnisse zugeschnitten"
+      }
+    }
   },
   "finalCta": {
     "title": "Bereit, Ihren Workflow zu Transformieren?",
@@ -759,5 +811,51 @@
     "step2": "Sie erhalten eine E-Mail mit Ihren kostenlosen Zugangsdaten",
     "step3": "Unser Team wird Sie durch den Einrichtungsprozess führen",
     "backToHome": "Zurück zur Startseite"
+  },
+  "trustBar": {
+    "title": "Integriert sich mit Ihren Tools"
+  },
+  "problemAgitation": {
+    "title": "Kommt Ihnen bekannt vor?",
+    "subtitle": "Vertriebsteams verlieren jede Woche Stunden mit manueller CRM-Arbeit.",
+    "pain1": "Sie vergessen Anrufe im CRM zu erfassen, weil Sie bereits beim nächsten sind.",
+    "pain2": "Notizen aus Kundengesprächen stecken in Ihrem Kopf — oder auf einer Serviette.",
+    "pain3": "Ihre Pipeline sieht veraltet aus, weil das Aktualisieren zu lange dauert.",
+    "pain4": "Follow-ups rutschen durch und Deals werden kalt."
+  },
+  "features": {
+    "dontSeeYourCrm": "Sie nutzen ein anderes CRM oder eine andere Software? Wir entwickeln maßgeschneiderte Lösungen für jede Plattform, die Sie täglich nutzen.",
+    "contactForCustom": "Kontaktieren Sie uns für eine maßgeschneiderte Lösung"
+  },
+  "integrations": {
+    "title": "Funktioniert mit Ihrem CRM",
+    "titleBefore": "Funktioniert mit Ihrem",
+    "subtitle": "Mit einem Klick verbinden, keine Konfiguration nötig, in 2 Minuten installiert.",
+    "tryForFree": "Kostenlos testen",
+    "bullet1": "Mit einem Klick verbinden",
+    "bullet2": "Keine Konfiguration nötig",
+    "bullet3": "In 2 Minuten installiert"
+  },
+  "testimonials": {
+    "title": "Was unsere Nutzer sagen",
+    "quote1": "VoiceLink hat meine Verwaltungszeit halbiert. Ich spreche einfach, und mein CRM bleibt aktuell.",
+    "author1": "Vertriebsleiter, Außendienst",
+    "quote2": "Endlich ein Tool, das so funktioniert, wie ich arbeite — unterwegs, zwischen Meetings.",
+    "author2": "Account Executive, B2B Tech"
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "q1": "Wie funktioniert VoiceLink?",
+    "a1": "Senden Sie eine WhatsApp-Sprachnachricht an VoiceLink. Unsere KI transkribiert sie, extrahiert Kontakte, Aufgaben und Notizen und synchronisiert alles automatisch mit Ihrem CRM.",
+    "q2": "Welche CRMs werden unterstützt?",
+    "a2": "Wir unterstützen derzeit Teamleader, Pipedrive und Odoo. Weitere Integrationen folgen bald — kontaktieren Sie uns, wenn Sie eine individuelle Anbindung benötigen.",
+    "q3": "Sind meine Daten sicher?",
+    "a3": "Ja. Wir verwenden OAuth für CRM-Verbindungen, verschlüsseln alle Daten bei Übertragung und Speicherung und speichern Ihre Sprachaufnahmen nach der Verarbeitung nie.",
+    "q4": "Wie lange dauert die Einrichtung?",
+    "a4": "Etwa 2 Minuten. Verbinden Sie Ihr CRM mit einem Klick, verifizieren Sie Ihre WhatsApp-Nummer und los geht's.",
+    "q5": "Kann ich VoiceLink in mehreren Sprachen nutzen?",
+    "a5": "Ja. VoiceLink unterstützt Englisch, Niederländisch, Französisch und Deutsch für Sprachverarbeitung und Benutzeroberfläche.",
+    "q6": "Was passiert während der kostenlosen Testphase?",
+    "a6": "Sie erhalten vollen Zugang zu allen Funktionen für 14 Tage. Keine Kreditkarte erforderlich. Jederzeit kündbar."
   }
 }

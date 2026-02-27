@@ -40,7 +40,8 @@
     "loadingDashboard": "Dashboard laden...",
     "teamMemberInvitedSuccessfully": "Teamlid succesvol uitgenodigd!",
     "changeLanguage": "Taal wijzigen",
-    "voiceLink": "VoiceLink"
+    "voiceLink": "VoiceLink",
+    "and": "en"
   },
   "platforms": {
     "teamleader": "TeamLeader",
@@ -87,12 +88,17 @@
   "hero": {
     "title": "Gewoon...",
     "mainTitle": "Praten met je CRM",
-    "subtitle1": "Stuur spraakberichten via WhatsApp en zie ze automatisch synchroniseren met je CRM.",
+    "subtitle1_pre": "Connecteer je",
+    "subtitle1_crm": "Teamleader CRM",
+    "subtitle1_mid": "met",
+    "subtitle1_wa": "WhatsApp",
+    "subtitle1_post": "en doe al je administratie via een simpel spraakbericht.",
     "subtitle2": "Zet spraakberichten direct om in gestructureerde data.",
     "getStartedFree": "Gratis Beginnen",
     "watchDemo": "Bekijk Demo",
     "oneClickSetup": "Eén-klik CRM Verbinding",
-    "whatsappSetup": "Verbind WhatsApp in 2 minuten"
+    "whatsappSetup": "Verbind WhatsApp\nin 2 minuten",
+    "carouselTitle": "Ontdek wat VoiceLink doet in je CRM"
   },
   "auth": {
     "modal": {
@@ -110,6 +116,13 @@
       "noSetupFees": "Geen Installatiekosten",
       "cancelAnytime": "Altijd Opzegbaar"
     },
+    "page": {
+      "signupSubtitle": "14 dagen gratis uitproberen. Verbind je CRM om te starten.",
+      "continueTeamleader": "Doorgaan met Teamleader",
+      "continuePipedrive": "Doorgaan met Pipedrive",
+      "continueOdoo": "Doorgaan met Odoo"
+    },
+    "passiveTermsConsent": "Door je aan te melden, ga je akkoord met onze",
     "callback": {
       "authenticating": "Authenticeren...",
       "authenticationSuccessful": "Authenticatie Succesvol!",
@@ -146,6 +159,7 @@
     "forSelfHostedInstances": "Voor zelf-gehoste Odoo instanties",
     "backToOdooOptions": "Terug naar Odoo opties",
     "backToLoginOptions": "Terug naar inlogopties",
+    "backToHome": "Terug naar home",
     "createAccount": "Account Aanmaken",
     "signIn": "Inloggen",
     "importantEmailAddress": "Belangrijk: E-mailadres",
@@ -498,47 +512,54 @@
     }
   },
   "pricing": {
-    "title": "Volume Prijzen Die Meeschalen",
-    "subtitle": "Per gebruiker prijzen. Start gratis, upgrade wanneer je klaar bent. Geen verborgen kosten.",
+    "title": "Eenvoudige, Transparante Prijzen",
+    "subtitle": "Prijs per gebruiker met duidelijke berichtlimieten. Start gratis, schaal naarmate je groeit.",
     "monthly": "Maandelijks",
     "yearly": "Jaarlijks",
     "save20": "Bespaar 20%",
-    "voicelinkPro": "VoiceLink Pro",
-    "perfectForTeams": "Perfect voor groeiende teams",
     "features": {
-      "unlimitedVoiceNotes": "Onbeperkte WhatsApp spraaknotities",
+      "voiceNotes": "WhatsApp spraakberichten",
       "realtimeCrmSync": "Real-time CRM synchronisatie",
-      "nativeWhatsappIntegration": "Native WhatsApp integratie",
       "multiLanguageSupport": "Meertalige ondersteuning",
-      "prioritySupport": "Prioriteit support"
+      "prioritySupport": "Prioriteit support",
+      "dedicatedAccountManager": "Toegewijde accountmanager",
+      "customIntegrations": "Aangepaste integraties & functies",
+      "topUpAvailable": "Extra berichten beschikbaar",
+      "discountedTopUp": "Extra berichten met korting",
+      "largerTopUps": "Grotere opwaardeer-bundels",
+      "sla": "Aangepaste SLA"
     },
-    "numberOfUsers": "Aantal Gebruikers",
-    "customAmount": "Aangepast aantal",
-    "enterNumberOfUsers": "Voer aantal gebruikers in",
     "perUserPerMonth": "/gebruiker/maand",
-    "users": "{{count}} gebruiker",
-    "users_plural": "{{count}} gebruikers",
-    "total": "Totaal: €{{amount}}/{{period}}",
-    "annualSavings": "Jaarlijkse Besparing: €{{amount}}",
-    "yearlyDiscount": "20% korting toegepast voor jaarlijkse facturering",
+    "messagesPerMonth": "{{count}} berichten/gebruiker/maand",
+    "negotiatedVolume": "100+ berichten/gebruiker/maand",
+    "topUp": "Opwaarderen: +{{messages}} ber. voor €{{price}}",
+    "topUpLabel": "Meer nodig?",
+    "topUpMessages": "berichten",
     "startFreeTrial": "Start Gratis Proefperiode",
     "freeTrial": "14-dagen gratis proefperiode",
-    "volumeDiscountTiers": "Volume Korting Niveaus",
-    "automaticDiscounts": "Automatische kortingen toegepast op basis van teamgrootte",
-    "plan": "Plan",
-    "teamSize": "Teamgrootte",
-    "pricePerUser": "Prijs per Gebruiker",
-    "discount": "Korting",
-    "current": "Huidig",
-    "contactUs": "Contacteer Ons",
-    "off": "{{percent}}% korting",
     "custom": "Aangepast",
-    "enterprisePricing": "Enterprise Prijzen",
-    "customPricingFor": "Aangepaste prijzen voor {{count}}+ gebruikers",
-    "dedicatedAccountManager": "Toegewijde accountmanager",
-    "customIntegrations": "Aangepaste integraties & functies",
-    "getCustomQuote": "Krijg Aangepaste Offerte",
-    "allPlansInclude": "Alle plannen bevatten onbeperkte WhatsApp spraaknotities, real-time CRM synchronisatie en prioriteit support."
+    "getCustomQuote": "Vraag Offerte Aan",
+    "allPlansInclude": "Alle plannen bevatten real-time CRM synchronisatie, WhatsApp integratie en meertalige ondersteuning.",
+    "cards": {
+      "starter": {
+        "name": "Starter",
+        "description": "Voor kleine teams (1–3 gebruikers)"
+      },
+      "professional": {
+        "name": "Professional",
+        "description": "Voor groeiende teams (1–10 gebruikers)",
+        "badge": "Meest Populair"
+      },
+      "business": {
+        "name": "Business",
+        "description": "Voor grotere teams (1–25 gebruikers)"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Voor organisaties (25+ gebruikers)",
+        "contactForPricing": "Afgestemd op jouw behoeften"
+      }
+    }
   },
   "features": {
     "title": "CRM Integraties",
@@ -547,23 +568,27 @@
     "realtimeSync": "Real-time synchronisatie",
     "secureOauth": "Veilige OAuth",
     "moreIntegrations": "We werken voortdurend aan het toevoegen van nieuwe CRM integraties zoals HubSpot, Salesforce, Zoho & meer om VoiceLink voor iedereen beschikbaar te maken.",
-    "dontSeeYourCrm": "Zie je je CRM niet? We bouwen aangepaste integraties voor elk platform met een API.",
-    "contactForCustom": "Contacteer Ons voor Aangepaste Integratie"
+    "dontSeeYourCrm": "Gebruik je een ander CRM of software? Wij bouwen op maat gemaakte oplossingen voor elk platform dat je dagelijks gebruikt.",
+    "contactForCustom": "Neem contact op voor een maatwerk oplossing"
   },
   "howItWorks": {
-    "title": "Hoe WhatsApp Spraaknotities Werken",
-    "subtitle": "Drie eenvoudige stappen om spraak om te zetten in gestructureerde data",
+    "title": "Hoe werkt het?",
+    "subtitle": "In vier stappen van spraakbericht naar je CRM",
     "step1": {
-      "title": "Spraak Invoer",
-      "description": "Neem je gedachten natuurlijk op via WhatsApp spraakberichten"
+      "title": "Stuur een bericht",
+      "description": "Open WhatsApp en stuur een spraakbericht of tekst — zoals je gewend bent. Voeg nieuwe info toe aan je CRM of zoek bestaande contacten en deals op."
     },
     "step2": {
-      "title": "AI Verwerking",
-      "description": "Geavanceerde AI extraheert en structureert belangrijke informatie uit je spraak"
+      "title": "VoiceLink pikt de info eruit",
+      "description": "VoiceLink herkent de belangrijkste info — namen, nummers, afspraken, notities — en redeneert wat ermee moet gebeuren."
     },
     "step3": {
-      "title": "CRM Integratie",
-      "description": "Gestructureerde data synchroniseert automatisch naar je CRM systeem"
+      "title": "Je krijgt een samenvatting",
+      "description": "Meteen een overzicht terug in WhatsApp. VoiceLink denkt ook proactief mee: het kan vragen stellen of zaken voorstellen."
+    },
+    "step4": {
+      "title": "Alles staat in je CRM",
+      "description": "Contacten, notities en taken verschijnen automatisch in je CRM. Klaar."
     },
     "coreFunctionalities": {
       "title": "Kernfunctionaliteiten",
@@ -794,5 +819,47 @@
     "step2": "U ontvangt een e-mail met uw gratis toegangsgegevens",
     "step3": "Ons team begeleidt u door het installatieproces",
     "backToHome": "Terug naar Home"
+  },
+  "trustBar": {
+    "title": "Integreert met je tools"
+  },
+  "problemAgitation": {
+    "title": "Klinkt bekend?",
+    "subtitle": "Sales teams verliezen wekelijks uren aan handmatig CRM-werk.",
+    "pain1": "Je vergeet gesprekken te loggen in je CRM omdat je al bij het volgende bent.",
+    "pain2": "Notities van klantgesprekken zitten in je hoofd — of op een servet.",
+    "pain3": "Je pipeline ziet er verouderd uit omdat bijwerken te lang duurt.",
+    "pain4": "Follow-ups glippen door de mazen en deals koelen af."
+  },
+  "integrations": {
+    "title": "Werkt met jouw CRM",
+    "titleBefore": "Werkt met jouw",
+    "subtitle": "Verbind met één klik, geen configuratie nodig, op 2 minuten geïnstalleerd.",
+    "tryForFree": "Probeer het gratis",
+    "bullet1": "Verbind met één klik",
+    "bullet2": "Geen configuratie nodig",
+    "bullet3": "Op 2 minuten geïnstalleerd"
+  },
+  "testimonials": {
+    "title": "Wat onze gebruikers zeggen",
+    "quote1": "VoiceLink halveert mijn admin-tijd. Ik praat gewoon, en mijn CRM blijft up-to-date.",
+    "author1": "Sales Manager, Field Services",
+    "quote2": "Eindelijk een tool die werkt zoals ik werk — onderweg, tussen meetings door.",
+    "author2": "Account Executive, B2B Tech"
+  },
+  "faq": {
+    "title": "Veelgestelde vragen",
+    "q1": "Hoe werkt VoiceLink?",
+    "a1": "Stuur een WhatsApp-voicenotitie naar VoiceLink. Onze AI transcribeert het, haalt contacten, taken en notities eruit en synchroniseert alles automatisch met je CRM.",
+    "q2": "Welke CRM's worden ondersteund?",
+    "a2": "We ondersteunen momenteel Teamleader, Pipedrive en Odoo. Meer integraties komen eraan — neem contact op als je een maatwerk-koppeling nodig hebt.",
+    "q3": "Zijn mijn gegevens veilig?",
+    "a3": "Ja. We gebruiken OAuth voor CRM-verbindingen, versleutelen alle gegevens onderweg en in rust, en slaan je spraakopnames nooit op na verwerking.",
+    "q4": "Hoe lang duurt de installatie?",
+    "a4": "Ongeveer 2 minuten. Verbind je CRM met één klik, verifieer je WhatsApp-nummer en je bent klaar.",
+    "q5": "Kan ik VoiceLink in meerdere talen gebruiken?",
+    "a5": "Ja. VoiceLink ondersteunt Engels, Nederlands, Frans en Duits voor spraakverwerking en de interface.",
+    "q6": "Wat gebeurt er tijdens de gratis proefperiode?",
+    "a6": "Je krijgt volledige toegang tot alle functies gedurende 14 dagen. Geen creditcard nodig. Op elk moment opzegbaar."
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { ChevronRight, ArrowLeft } from "lucide-react";
+import { ChevronRight, ArrowLeft, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { withUTM } from "../utils/utm";
 
@@ -29,9 +29,29 @@ export default function SaasAgreementPage() {
             </p>
 
             {/* Title */}
-            <h1 className="text-4xl font-bold mb-8 text-center">
+            <h1 className="text-4xl font-bold mb-6 text-center">
               SOFTWARE AS A SERVICE AGREEMENT
             </h1>
+
+            {/* Download PDFs */}
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <a
+                href="/SaaS Agreement en-US.pdf"
+                download="SaaS_Agreement_English.pdf"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors text-sm font-medium"
+              >
+                <Download className="w-4 h-4" />
+                Download English (PDF)
+              </a>
+              <a
+                href="/SaaS Overeenkomst.docx.pdf"
+                download="SaaS_Overeenkomst_Dutch.pdf"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors text-sm font-medium"
+              >
+                <Download className="w-4 h-4" />
+                Download Nederlands (PDF)
+              </a>
+            </div>
 
             <div className="prose prose-lg max-w-none bg-white rounded-lg shadow-sm p-8">
               
