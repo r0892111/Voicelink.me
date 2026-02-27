@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MessageCircle,
@@ -13,159 +13,23 @@ import {
   Headphones,
   Star,
   ChevronDown,
-  Loader2,
-  AlertCircle,
-  Check,
   X,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { supabase } from '../lib/supabase';
+import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
+import { WhatsAppConnectForm } from './WhatsAppConnectForm';
 import { withUTM } from '../utils/utm';
 import { NoiseOverlay } from './ui/NoiseOverlay';
 
-type WhatsAppStatus = 'not_set' | 'pending' | 'active';
-
-const phoneRegex = /^\+[1-9]\d{1,14}$/;
-const isValidPhone = (v: string) => phoneRegex.test(v.trim());
-
 export const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
-  const navigate = useNavigate();
-
-  // WhatsApp status from DB
-  const [whatsappStatus, setWhatsappStatus] = useState<WhatsAppStatus>('not_set');
-  const [whatsappNumber, setWhatsappNumber] = useState<string | null>(null);
-
-  // Inline WhatsApp form
-  const [waOpen, setWaOpen] = useState(false);
-  const [waStep, setWaStep] = useState<'phone' | 'otp'>('phone');
-  const [waPhone, setWaPhone] = useState('');
-  const [waOtp, setWaOtp] = useState('');
-  const [waBusy, setWaBusy] = useState(false);
-  const [waError, setWaError] = useState<string | null>(null);
-  const [waSuccess, setWaSuccess] = useState(false);
-  const waFormRef = useRef<HTMLDivElement>(null);
+  const navigate          = useNavigate();
+  const wa                = useWhatsAppConnect(user);
 
   // Redirect unauthenticated users
   useEffect(() => {
     if (!loading && !user) navigate(withUTM('/signup'));
   }, [user, loading, navigate]);
-
-  // Fetch WhatsApp status
-  useEffect(() => {
-    if (!user) return;
-    supabase
-      .from(`${user.platform}_users`)
-      .select('whatsapp_number, whatsapp_status')
-      .eq('user_id', user.id)
-      .is('deleted_at', null)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data) {
-          setWhatsappStatus(data.whatsapp_status || 'not_set');
-          setWhatsappNumber(data.whatsapp_number);
-        }
-      });
-  }, [user]);
-
-  // ── WhatsApp OTP helpers ──────────────────────────────────────────────────
-  const sendOtp = async () => {
-    if (!user || !isValidPhone(waPhone)) {
-      setWaError('Please enter a valid international phone number (e.g. +32 123 456 789).');
-      return;
-    }
-    setWaBusy(true);
-    setWaError(null);
-    try {
-      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          action: 'send',
-          crm_provider: user.platform,
-          crm_user_id: user.id.toString(),
-          phone_number: waPhone.trim(),
-        }),
-      });
-      if (!res.ok) {
-        const e = await res.json();
-        throw new Error(e.error || 'Failed to send code');
-      }
-      setWaStep('otp');
-    } catch (e) {
-      setWaError(e instanceof Error ? e.message : 'Failed to send code. Try again.');
-    } finally {
-      setWaBusy(false);
-    }
-  };
-
-  const verifyOtp = async () => {
-    if (!user || waOtp.length !== 6) {
-      setWaError('Please enter the 6-digit code from WhatsApp.');
-      return;
-    }
-    setWaBusy(true);
-    setWaError(null);
-    try {
-      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          action: 'verify',
-          crm_provider: user.platform,
-          crm_user_id: user.id.toString(),
-          otp_code: waOtp.trim(),
-        }),
-      });
-      if (!res.ok) {
-        const e = await res.json();
-        throw new Error(e.error || 'Failed to verify code');
-      }
-      // Send welcome message (non-blocking)
-      fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/whatsapp-welcome`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          crm_provider: user.platform,
-          crm_user_id: user.id.toString(),
-          phone_number: waPhone.trim(),
-        }),
-      }).catch(() => {});
-
-      setWaSuccess(true);
-      setWhatsappStatus('active');
-      setWhatsappNumber(waPhone.trim());
-      setTimeout(() => {
-        setWaOpen(false);
-        setWaSuccess(false);
-        setWaStep('phone');
-        setWaPhone('');
-        setWaOtp('');
-      }, 2000);
-    } catch (e) {
-      setWaError(e instanceof Error ? e.message : 'Invalid code. Try again.');
-    } finally {
-      setWaBusy(false);
-    }
-  };
-
-  const resetWaForm = () => {
-    setWaOpen(false);
-    setWaStep('phone');
-    setWaPhone('');
-    setWaOtp('');
-    setWaError(null);
-    setWaSuccess(false);
-  };
 
   // ── Helpers ───────────────────────────────────────────────────────────────
   const getTimeGreeting = () => {
@@ -199,19 +63,19 @@ export const Dashboard: React.FC = () => {
     },
     {
       n: 2,
-      done: whatsappStatus === 'active',
-      pending: whatsappStatus === 'pending',
+      done: wa.status === 'active',
+      pending: wa.status === 'pending',
       title: 'Connect WhatsApp',
       description:
-        whatsappStatus === 'active'
-          ? `Verified · ${whatsappNumber}`
-          : whatsappStatus === 'pending'
+        wa.status === 'active'
+          ? `Verified · ${wa.number}`
+          : wa.status === 'pending'
           ? 'Verification pending — check your WhatsApp for the code.'
           : 'Link your WhatsApp number to start sending voice notes.',
     },
     {
       n: 3,
-      done: whatsappStatus === 'active',
+      done: wa.status === 'active',
       title: 'Send Your First Voice Note',
       description:
         'Open WhatsApp, send a voice message to VoiceLink, and watch your CRM update in seconds.',
@@ -313,18 +177,18 @@ export const Dashboard: React.FC = () => {
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.5s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${whatsappStatus === 'active' ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
-                <MessageCircle className={`w-5 h-5 ${whatsappStatus === 'active' ? 'text-emerald-500' : 'text-navy/35'}`} />
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${wa.status === 'active' ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <MessageCircle className={`w-5 h-5 ${wa.status === 'active' ? 'text-emerald-500' : 'text-navy/35'}`} />
               </div>
               <span className="font-general font-semibold text-navy text-sm">WhatsApp</span>
             </div>
             <p className="text-xs text-navy/50 font-instrument truncate">
-              {whatsappStatus === 'active' ? whatsappNumber : whatsappStatus === 'pending' ? 'Verification pending' : 'Not yet connected'}
+              {wa.status === 'active' ? wa.number : wa.status === 'pending' ? 'Verification pending' : 'Not yet connected'}
             </p>
             <div className="mt-3 flex items-center space-x-1.5">
-              <div className={`w-1.5 h-1.5 rounded-full ${whatsappStatus === 'active' ? 'bg-emerald-400' : whatsappStatus === 'pending' ? 'bg-amber-400' : 'bg-navy/20'}`} />
-              <span className={`text-xs font-medium ${whatsappStatus === 'active' ? 'text-emerald-600' : whatsappStatus === 'pending' ? 'text-amber-600' : 'text-navy/40'}`}>
-                {whatsappStatus === 'active' ? 'Connected' : whatsappStatus === 'pending' ? 'Pending' : 'Not connected'}
+              <div className={`w-1.5 h-1.5 rounded-full ${wa.status === 'active' ? 'bg-emerald-400' : wa.status === 'pending' ? 'bg-amber-400' : 'bg-navy/20'}`} />
+              <span className={`text-xs font-medium ${wa.status === 'active' ? 'text-emerald-600' : wa.status === 'pending' ? 'text-amber-600' : 'text-navy/40'}`}>
+                {wa.status === 'active' ? 'Connected' : wa.status === 'pending' ? 'Pending' : 'Not connected'}
               </span>
             </div>
           </div>
@@ -371,7 +235,7 @@ export const Dashboard: React.FC = () => {
                     className={`flex items-start gap-4 p-4 rounded-2xl transition-colors duration-200 ${
                       step.done
                         ? 'bg-emerald-50/70 border border-emerald-100/80'
-                        : step.n === 2 && waOpen
+                        : step.n === 2 && wa.open
                         ? 'bg-navy/[0.05] border border-navy/[0.09] rounded-b-none'
                         : 'bg-navy/[0.03] border border-transparent hover:border-navy/[0.06]'
                     }`}
@@ -405,16 +269,13 @@ export const Dashboard: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* "Connect Now" toggle button — only step 2 when not yet connected */}
-                    {step.n === 2 && whatsappStatus === 'not_set' && (
+                    {/* "Connect Now" toggle — only step 2 when not yet connected */}
+                    {step.n === 2 && wa.status === 'not_set' && (
                       <button
-                        onClick={() => {
-                          setWaOpen((o) => !o);
-                          setWaError(null);
-                        }}
+                        onClick={wa.toggle}
                         className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
                       >
-                        {waOpen ? (
+                        {wa.open ? (
                           <>
                             <X className="w-3 h-3" />
                             Cancel
@@ -430,113 +291,22 @@ export const Dashboard: React.FC = () => {
                   </div>
 
                   {/* ── Inline WA form (step 2 only) ── */}
-                  {step.n === 2 && (
-                    <div
-                      ref={waFormRef}
-                      className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                      style={{ maxHeight: waOpen && whatsappStatus === 'not_set' ? '400px' : '0px' }}
-                    >
-                      <div className="border border-t-0 border-navy/[0.09] rounded-b-2xl bg-white/70 backdrop-blur-sm px-5 py-5">
-                        {/* Error */}
-                        {waError && (
-                          <div className="mb-4 flex items-start gap-2 p-3 bg-red-50 border border-red-100 rounded-xl text-red-700 text-xs font-instrument">
-                            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                            {waError}
-                          </div>
-                        )}
-
-                        {/* Success */}
-                        {waSuccess && (
-                          <div className="mb-4 flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-700 text-sm font-instrument font-medium">
-                            <Check className="w-4 h-4" />
-                            WhatsApp connected successfully! 🎉
-                          </div>
-                        )}
-
-                        {/* Step: phone number */}
-                        {!waSuccess && waStep === 'phone' && (
-                          <div className="space-y-3">
-                            <div>
-                              <label className="block text-xs font-semibold text-navy/70 font-general mb-1.5">
-                                Your WhatsApp number
-                              </label>
-                              <input
-                                type="tel"
-                                value={waPhone}
-                                onChange={(e) => { setWaPhone(e.target.value); setWaError(null); }}
-                                onKeyDown={(e) => e.key === 'Enter' && sendOtp()}
-                                placeholder="+32 123 456 789"
-                                className={`w-full px-4 py-2.5 rounded-xl border text-sm font-instrument bg-white/80 focus:outline-none focus:ring-2 focus:ring-navy/20 transition-colors ${
-                                  waPhone && !isValidPhone(waPhone) ? 'border-red-300' : 'border-navy/[0.12]'
-                                }`}
-                              />
-                              <p className="text-xs text-navy/40 font-instrument mt-1">
-                                Include your country code — e.g. +32 for Belgium.
-                              </p>
-                            </div>
-                            <button
-                              onClick={sendOtp}
-                              disabled={waBusy || !waPhone || !isValidPhone(waPhone)}
-                              className="inline-flex items-center gap-2 bg-navy disabled:bg-navy/40 hover:bg-navy-hover text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors"
-                            >
-                              {waBusy ? <Loader2 className="w-4 h-4 animate-spin" /> : <MessageCircle className="w-4 h-4" />}
-                              {waBusy ? 'Sending…' : 'Send Verification Code'}
-                            </button>
-                          </div>
-                        )}
-
-                        {/* Step: OTP code */}
-                        {!waSuccess && waStep === 'otp' && (
-                          <div className="space-y-3">
-                            <div className="flex items-center gap-2 p-3 bg-navy/[0.04] rounded-xl">
-                              <MessageCircle className="w-4 h-4 text-navy/50 flex-shrink-0" />
-                              <p className="text-xs text-navy/60 font-instrument">
-                                Code sent to <span className="font-semibold text-navy">{waPhone}</span>. Check your WhatsApp.
-                              </p>
-                            </div>
-                            <div>
-                              <label className="block text-xs font-semibold text-navy/70 font-general mb-1.5">
-                                6-digit verification code
-                              </label>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={waOtp}
-                                onChange={(e) => { setWaOtp(e.target.value.replace(/\D/g, '').slice(0, 6)); setWaError(null); }}
-                                onKeyDown={(e) => e.key === 'Enter' && verifyOtp()}
-                                placeholder="• • • • • •"
-                                maxLength={6}
-                                className="w-full px-4 py-2.5 rounded-xl border border-navy/[0.12] text-center text-xl font-mono tracking-[0.4em] bg-white/80 focus:outline-none focus:ring-2 focus:ring-navy/20 transition-colors"
-                              />
-                            </div>
-                            <div className="flex gap-2">
-                              <button
-                                onClick={() => { setWaStep('phone'); setWaOtp(''); setWaError(null); }}
-                                className="inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy px-4 py-2.5 rounded-full border border-navy/[0.10] hover:border-navy/20 bg-white/60 transition-colors"
-                              >
-                                <X className="w-3 h-3" />
-                                Back
-                              </button>
-                              <button
-                                onClick={verifyOtp}
-                                disabled={waBusy || waOtp.length !== 6}
-                                className="inline-flex items-center gap-2 bg-navy disabled:bg-navy/40 hover:bg-navy-hover text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors"
-                              >
-                                {waBusy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                                {waBusy ? 'Verifying…' : 'Verify'}
-                              </button>
-                              <button
-                                onClick={sendOtp}
-                                disabled={waBusy}
-                                className="ml-auto text-xs text-navy/45 hover:text-navy/70 font-instrument underline underline-offset-2 disabled:opacity-40 transition-colors"
-                              >
-                                Resend code
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                  {step.n === 2 && wa.status === 'not_set' && (
+                    <WhatsAppConnectForm
+                      open={wa.open}
+                      step={wa.step}
+                      phone={wa.phone}
+                      otp={wa.otp}
+                      busy={wa.busy}
+                      error={wa.error}
+                      success={wa.success}
+                      onPhoneChange={(v) => { wa.setPhone(v); }}
+                      onOtpChange={(v) => { wa.setOtp(v); }}
+                      onSendOtp={wa.sendOtp}
+                      onVerifyOtp={wa.verifyOtp}
+                      onBackToPhone={wa.backToPhone}
+                      onResendOtp={wa.resendOtp}
+                    />
                   )}
                 </div>
               ))}

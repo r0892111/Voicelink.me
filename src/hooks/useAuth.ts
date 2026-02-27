@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
-interface AuthUser {
+export interface AuthUser {
   id: string;
   email: string;
   name: string;
