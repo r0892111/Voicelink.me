@@ -34,6 +34,9 @@ Deno.serve(async (req) => {
 
     const clientId = Deno.env.get('TEAMLEADER_CLIENT_ID');
     const clientSecret = Deno.env.get('TEAMLEADER_CLIENT_SECRET');
+    // Apps from marketplace.focus.teamleader.eu use focus.teamleader.eu; else app.teamleader.eu
+    const authBase = Deno.env.get('TEAMLEADER_AUTH_BASE_URL') || 'https://app.teamleader.eu';
+    const tokenUrl = `${authBase.replace(/\/$/, '')}/oauth2/access_token`;
 
     if (!clientId || !clientSecret) {
       return new Response(
@@ -43,23 +46,33 @@ Deno.serve(async (req) => {
     }
 
     // 1. Exchange code for Teamleader tokens
-    const tokenRes = await fetch('https://app.teamleader.eu/oauth2/access_token', {
+    const tokenBody = new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      code,
+      grant_type: 'authorization_code',
+      redirect_uri,
+    });
+
+    const tokenRes = await fetch(tokenUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        code,
-        grant_type: 'authorization_code',
-        redirect_uri,
-      }),
+      body: tokenBody,
     });
 
     if (!tokenRes.ok) {
       const errText = await tokenRes.text();
-      console.error('Teamleader token exchange failed:', tokenRes.status, errText);
+      let hint = '';
+      try {
+        const errJson = JSON.parse(errText);
+        hint = errJson?.errors?.[0]?.meta?.hint || errJson?.error_description || '';
+      } catch (_) {}
+      console.error('Teamleader token exchange failed:', tokenRes.status, errText, { redirect_uri, client_id_prefix: clientId?.slice(0, 8) });
+      const userMessage = hint
+        ? `Failed to exchange authorization code. ${hint}`
+        : 'Failed to exchange authorization code. Check that client ID/secret match the app used for login, and redirect URI matches exactly.';
       return new Response(
-        JSON.stringify({ success: false, error: 'Failed to exchange authorization code' }),
+        JSON.stringify({ success: false, error: userMessage }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -68,7 +81,9 @@ Deno.serve(async (req) => {
     const { access_token: tlAccessToken, refresh_token: tlRefreshToken, expires_in } = tokens;
 
     // 2. Get Teamleader user info (users.me)
-    const meRes = await fetch('https://api.teamleader.eu/users.me', {
+    // Use api.focus.teamleader.eu if auth was via focus
+    const apiBase = authBase.includes('focus') ? 'https://api.focus.teamleader.eu' : 'https://api.teamleader.eu';
+    const meRes = await fetch(`${apiBase}/users.me`, {
       headers: { Authorization: `Bearer ${tlAccessToken}` },
     });
 

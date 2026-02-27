@@ -10,6 +10,7 @@ Set these in Supabase Dashboard → Project Settings → Edge Functions → Secr
 |--------|-------------|
 | `TEAMLEADER_CLIENT_ID` | From Teamleader Marketplace (same as `VITE_TEAMLEADER_CLIENT_ID`) |
 | `TEAMLEADER_CLIENT_SECRET` | From Teamleader Marketplace (never expose client-side) |
+| `TEAMLEADER_AUTH_BASE_URL` | Optional. Use `https://focus.teamleader.eu` if app is from marketplace.focus.teamleader.eu. Default: `https://app.teamleader.eu` |
 
 `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are provided automatically.
 

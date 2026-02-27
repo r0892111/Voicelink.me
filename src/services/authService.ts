@@ -45,6 +45,8 @@ export class AuthService {
     // Otherwise, use the current window location
     const redirectUri = import.meta.env.VITE_TEAMLEADER_REDIRECT_URI 
       || `${window.location.protocol}//${window.location.host}/auth/teamleader/callback`;
+    // Apps from marketplace.focus.teamleader.eu use focus.teamleader.eu
+    const authBase = import.meta.env.VITE_TEAMLEADER_AUTH_BASE_URL || 'https://app.teamleader.eu';
     
     if (!clientId) {
       return { success: false, error: 'TeamLeader client ID not configured' };
@@ -61,7 +63,7 @@ export class AuthService {
       state: state,
     });
 
-    const authUrl = `https://app.teamleader.eu/oauth2/authorize?${params.toString()}`;
+    const authUrl = `${authBase.replace(/\/$/, '')}/oauth2/authorize?${params.toString()}`;
     window.location.href = authUrl;
     
     return { success: true };
