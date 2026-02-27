@@ -64,6 +64,8 @@ export class AuthService {
     });
 
     const authUrl = `${authBase.replace(/\/$/, '')}/oauth2/authorize?${params.toString()}`;
+    // Debug: client_id must match TEAMLEADER_CLIENT_ID in Supabase Edge Function secrets
+    console.log('[Teamleader auth] client_id:', clientId?.slice(0, 8) + '...', 'redirect_uri:', redirectUri);
     window.location.href = authUrl;
     
     return { success: true };

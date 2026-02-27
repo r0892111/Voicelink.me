@@ -5,6 +5,7 @@ import { AuthPage } from './components/AuthPage';
 import { AuthCallback } from './components/AuthCallback';
 import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
+import { Dashboard } from './components/Dashboard';
 import { ContactFormModal } from './components/ContactFormModal';
 import { FieldServiceLanding } from './components/FieldServiceLanding';
 import { InstallatorsLanding } from './components/InstallatorsLanding';
@@ -296,6 +297,7 @@ function App() {
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/success" element={<SuccessPage />} />
               <Route path="/saas-agreement" element={<SaasAgreement />} />
