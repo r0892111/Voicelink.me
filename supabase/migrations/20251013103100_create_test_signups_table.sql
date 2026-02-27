@@ -1,46 +1,5 @@
-/*
-  # Create Test Signups Table
-
-  1. New Tables
-    - `test_signups`
-      - `id` (uuid, primary key)
-      - `first_name` (text, required)
-      - `last_name` (text, required)
-      - `email` (text, unique, required)
-      - `phone` (text, optional)
-      - `crm_platform` (text, required) - teamleader, pipedrive, or odoo
-      - `status` (text) - pending, contacted, onboarded
-      - `created_at` (timestamptz)
-      - `updated_at` (timestamptz)
-
-  2. Security
-    - Enable RLS on `test_signups` table
-    - Allow public insert for new signups
-    - Only authenticated admins can read/update signups
-*/
-
-CREATE TABLE IF NOT EXISTS test_signups (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  first_name text NOT NULL,
-  last_name text NOT NULL,
-  email text UNIQUE NOT NULL,
-  phone text,
-  crm_platform text NOT NULL CHECK (crm_platform IN ('teamleader', 'pipedrive', 'odoo')),
-  status text DEFAULT 'pending' CHECK (status IN ('pending', 'contacted', 'onboarded')),
-  created_at timestamptz DEFAULT now(),
-  updated_at timestamptz DEFAULT now()
-);
-
-ALTER TABLE test_signups ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Anyone can insert test signups"
-  ON test_signups
-  FOR INSERT
-  TO anon, authenticated
-  WITH CHECK (true);
-
-CREATE POLICY "Only authenticated users can view test signups"
-  ON test_signups
-  FOR SELECT
-  TO authenticated
-  USING (true);
+/*\n  # Create Test Signups Table\n\n  1. New Tables\n    - `test_signups`\n      - `id` (uuid, primary key)\n      - `first_name` (text, required)\n      - `last_name` (text, required)\n      - `email` (text, unique, required)\n      - `phone` (text, optional)\n      - `crm_platform` (text, required) - teamleader, pipedrive, or odoo\n      - `status` (text) - pending, contacted, onboarded\n      - `created_at` (timestamptz)\n      - `updated_at` (timestamptz)\n\n  2. Security\n    - Enable RLS on `test_signups` table\n    - Allow public insert for new signups\n    - Only authenticated admins can read/update signups\n*/\n\nCREATE TABLE IF NOT EXISTS test_signups (\n  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n  first_name text NOT NULL,\n  last_name text NOT NULL,\n  email text UNIQUE NOT NULL,\n  phone text,\n  crm_platform text NOT NULL CHECK (crm_platform IN ('teamleader', 'pipedrive', 'odoo')),\n  status text DEFAULT 'pending' CHECK (status IN ('pending', 'contacted', 'onboarded')),\n  created_at timestamptz DEFAULT now(),\n  updated_at timestamptz DEFAULT now()\n);
+\n\nALTER TABLE test_signups ENABLE ROW LEVEL SECURITY;
+\n\nCREATE POLICY "Anyone can insert test signups"\n  ON test_signups\n  FOR INSERT\n  TO anon, authenticated\n  WITH CHECK (true);
+\n\nCREATE POLICY "Only authenticated users can view test signups"\n  ON test_signups\n  FOR SELECT\n  TO authenticated\n  USING (true);
+;

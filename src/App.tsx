@@ -3,13 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import { LogOut, User, Menu, X, ArrowLeft, ArrowRight } from 'lucide-react';
 import { AuthPage } from './components/AuthPage';
 import { AuthCallback } from './components/AuthCallback';
-import { Dashboard } from './components/Dashboard';
 import { SuccessPage } from './components/SuccessPage';
-import { WhatsAppVerificationPage } from './components/WhatsAppVerificationPage';
-import { WhatsAppAuthPage } from './components/WhatsAppAuthPage';
 import { Homepage } from './components/Homepage';
 import { ContactFormModal } from './components/ContactFormModal';
-import { TestSignup } from './components/TestSignup';
 import { FieldServiceLanding } from './components/FieldServiceLanding';
 import { InstallatorsLanding } from './components/InstallatorsLanding';
 import { B2BSalesLanding } from './components/B2BSalesLanding';
@@ -296,17 +292,12 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
               <Route path="/signup" element={<AuthPage />} />
-              <Route path="/test" element={<TestSignup />} />
               <Route path="/landing" element={<HeroLanding />} />
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/success" element={<SuccessPage />} />
-              <Route path="/whatsapp-auth" element={<WhatsAppAuthPage />} />
-              <Route path="/verify-whatsapp" element={<WhatsAppVerificationPage />} />
-              <Route path="/verify-whatsapp/*" element={<WhatsAppVerificationPage />} />
               <Route path="/saas-agreement" element={<SaasAgreement />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/disclaimer" element={<Disclaimer />} />

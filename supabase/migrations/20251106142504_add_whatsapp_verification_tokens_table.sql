@@ -1,57 +1,6 @@
-/*
-  # Add WhatsApp Verification Tokens Table
-
-  1. New Tables
-    - `whatsapp_verification_tokens`
-      - `id` (uuid, primary key) - Unique identifier
-      - `auth_user_id` (uuid) - References auth.users for the authenticated user
-      - `crm_user_id` (text) - The CRM user ID from the verification link
-      - `otp_code` (text) - The OTP code from the verification link
-      - `email` (text) - User's email address
-      - `name` (text) - User's full name
-      - `verified_at` (timestamptz) - When the verification was completed
-      - `created_at` (timestamptz) - When the token was created
-
-  2. Security
-    - Enable RLS on `whatsapp_verification_tokens` table
-    - Add policy for authenticated users to read their own tokens
-    - Add policy for authenticated users to update their own tokens
-
-  3. Notes
-    - This table stores verification tokens that link auth users to CRM users
-    - Tokens are created when users authenticate before WhatsApp verification
-    - After successful verification, the `verified_at` timestamp is updated
-*/
-
-CREATE TABLE IF NOT EXISTS whatsapp_verification_tokens (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  auth_user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE,
-  crm_user_id text NOT NULL,
-  otp_code text NOT NULL,
-  email text NOT NULL,
-  name text NOT NULL,
-  verified_at timestamptz,
-  created_at timestamptz DEFAULT now(),
-  UNIQUE(auth_user_id, crm_user_id)
-);
-
-ALTER TABLE whatsapp_verification_tokens ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Users can read own verification tokens"
-  ON whatsapp_verification_tokens
-  FOR SELECT
-  TO authenticated
-  USING (auth.uid() = auth_user_id);
-
-CREATE POLICY "Users can insert own verification tokens"
-  ON whatsapp_verification_tokens
-  FOR INSERT
-  TO authenticated
-  WITH CHECK (auth.uid() = auth_user_id);
-
-CREATE POLICY "Users can update own verification tokens"
-  ON whatsapp_verification_tokens
-  FOR UPDATE
-  TO authenticated
-  USING (auth.uid() = auth_user_id)
-  WITH CHECK (auth.uid() = auth_user_id);
+/*\n  # Add WhatsApp Verification Tokens Table\n\n  1. New Tables\n    - `whatsapp_verification_tokens`\n      - `id` (uuid, primary key) - Unique identifier\n      - `auth_user_id` (uuid) - References auth.users for the authenticated user\n      - `crm_user_id` (text) - The CRM user ID from the verification link\n      - `otp_code` (text) - The OTP code from the verification link\n      - `email` (text) - User's email address\n      - `name` (text) - User's full name\n      - `verified_at` (timestamptz) - When the verification was completed\n      - `created_at` (timestamptz) - When the token was created\n\n  2. Security\n    - Enable RLS on `whatsapp_verification_tokens` table\n    - Add policy for authenticated users to read their own tokens\n    - Add policy for authenticated users to update their own tokens\n\n  3. Notes\n    - This table stores verification tokens that link auth users to CRM users\n    - Tokens are created when users authenticate before WhatsApp verification\n    - After successful verification, the `verified_at` timestamp is updated\n*/\n\nCREATE TABLE IF NOT EXISTS whatsapp_verification_tokens (\n  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n  auth_user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE,\n  crm_user_id text NOT NULL,\n  otp_code text NOT NULL,\n  email text NOT NULL,\n  name text NOT NULL,\n  verified_at timestamptz,\n  created_at timestamptz DEFAULT now(),\n  UNIQUE(auth_user_id, crm_user_id)\n);
+\n\nALTER TABLE whatsapp_verification_tokens ENABLE ROW LEVEL SECURITY;
+\n\nCREATE POLICY "Users can read own verification tokens"\n  ON whatsapp_verification_tokens\n  FOR SELECT\n  TO authenticated\n  USING (auth.uid() = auth_user_id);
+\n\nCREATE POLICY "Users can insert own verification tokens"\n  ON whatsapp_verification_tokens\n  FOR INSERT\n  TO authenticated\n  WITH CHECK (auth.uid() = auth_user_id);
+\n\nCREATE POLICY "Users can update own verification tokens"\n  ON whatsapp_verification_tokens\n  FOR UPDATE\n  TO authenticated\n  USING (auth.uid() = auth_user_id)\n  WITH CHECK (auth.uid() = auth_user_id);
+\n;

@@ -1,0 +1,13 @@
+\n\nCREATE TABLE IF NOT EXISTS odoo_users (\n  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n  user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,\n  odoo_user_id text UNIQUE NOT NULL,\n  access_token text,\n  refresh_token text,\n  token_expires_at timestamptz,\n  user_info jsonb,\n  created_at timestamptz DEFAULT now(),\n  updated_at timestamptz DEFAULT now(),\n  deleted_at timestamptz,\n  whatsapp_number text,\n  whatsapp_status text DEFAULT 'not_set' CHECK (whatsapp_status IN ('not_set', 'pending', 'active')),\n  whatsapp_otp_code text,\n  whatsapp_otp_expires_at timestamptz,\n  whatsapp_otp_phone text,\n  stripe_customer_id text UNIQUE\n);
+\n\n-- Enable RLS\nALTER TABLE odoo_users ENABLE ROW LEVEL SECURITY;
+\n\n-- Create policies\nCREATE POLICY "Users can view their own Odoo data"\n  ON odoo_users\n  FOR SELECT\n  TO authenticated\n  USING (user_id = auth.uid());
+\n\nCREATE POLICY "Users can insert their own Odoo data"\n  ON odoo_users\n  FOR INSERT\n  TO authenticated\n  WITH CHECK (user_id = auth.uid());
+\n\nCREATE POLICY "Users can update their own Odoo data"\n  ON odoo_users\n  FOR UPDATE\n  TO authenticated\n  USING (user_id = auth.uid())\n  WITH CHECK (user_id = auth.uid());
+\n\n-- Create indexes for performance\nCREATE INDEX IF NOT EXISTS idx_odoo_users_user_id ON odoo_users(user_id);
+\nCREATE INDEX IF NOT EXISTS idx_odoo_users_odoo_user_id ON odoo_users(odoo_user_id);
+\nCREATE INDEX IF NOT EXISTS idx_odoo_users_deleted_at ON odoo_users(deleted_at);
+\nCREATE INDEX IF NOT EXISTS idx_odoo_users_whatsapp_number ON odoo_users(whatsapp_number);
+\nCREATE INDEX IF NOT EXISTS idx_odoo_users_whatsapp_status ON odoo_users(whatsapp_status);
+\nCREATE INDEX IF NOT EXISTS idx_odoo_users_stripe_customer_id ON odoo_users(stripe_customer_id);
+\n\n-- Create trigger for updated_at\nCREATE TRIGGER odoo_users_updated_at\n  BEFORE UPDATE ON odoo_users\n  FOR EACH ROW\n  EXECUTE FUNCTION handle_updated_at();
+;

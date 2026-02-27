@@ -1,0 +1,11 @@
+\n\n-- Add WhatsApp OTP verification fields to users table\nDO $$\nBEGIN\n  -- Add whatsapp_otp_code column if it doesn't exist\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.columns\n    WHERE table_name = 'users' AND column_name = 'whatsapp_otp_code'\n  ) THEN\n    ALTER TABLE users ADD COLUMN whatsapp_otp_code text;
+\n  END IF;
+\n\n  -- Add whatsapp_otp_expires_at column if it doesn't exist\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.columns\n    WHERE table_name = 'users' AND column_name = 'whatsapp_otp_expires_at'\n  ) THEN\n    ALTER TABLE users ADD COLUMN whatsapp_otp_expires_at timestamptz;
+\n  END IF;
+\n\n  -- Add whatsapp_otp_phone column if it doesn't exist\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.columns\n    WHERE table_name = 'users' AND column_name = 'whatsapp_otp_phone'\n  ) THEN\n    ALTER TABLE users ADD COLUMN whatsapp_otp_phone text;
+\n  END IF;
+\nEND $$;
+\n\n-- Add comments to the new columns\nCOMMENT ON COLUMN users.whatsapp_otp_code IS 'Temporary 6-digit OTP code for WhatsApp verification';
+\nCOMMENT ON COLUMN users.whatsapp_otp_expires_at IS 'Expiration timestamp for WhatsApp OTP code';
+\nCOMMENT ON COLUMN users.whatsapp_otp_phone IS 'Phone number being verified with OTP';
+;

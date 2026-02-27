@@ -1,0 +1,16 @@
+\n\nCREATE TABLE IF NOT EXISTS users (\n  id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,\n  name text NOT NULL,\n  email text UNIQUE NOT NULL,\n  webhook text,\n  created_at timestamptz DEFAULT now(),\n  updated_at timestamptz DEFAULT now()\n);
+\n\n-- Enable RLS\nALTER TABLE users ENABLE ROW LEVEL SECURITY;
+\n\n-- Create policies\nCREATE POLICY "Users can read own data"\n  ON users\n  FOR SELECT\n  TO authenticated\n  USING (auth.uid() = id);
+\n\nCREATE POLICY "Users can insert own data"\n  ON users\n  FOR INSERT\n  TO authenticated\n  WITH CHECK (auth.uid() = id);
+\n\nCREATE POLICY "Users can update own data"\n  ON users\n  FOR UPDATE\n  TO authenticated\n  USING (auth.uid() = id)\n  WITH CHECK (auth.uid() = id);
+\n\n-- Create function to handle updated_at\nCREATE OR REPLACE FUNCTION handle_updated_at()\nRETURNS TRIGGER AS $$\nBEGIN\n  NEW.updated_at = now();
+\n  RETURN NEW;
+\nEND;
+\n$$ LANGUAGE plpgsql;
+\n\n-- Create trigger for updated_at\nCREATE TRIGGER users_updated_at\n  BEFORE UPDATE ON users\n  FOR EACH ROW\n  EXECUTE FUNCTION handle_updated_at();
+\n\n-- Create function to automatically create user profile\nCREATE OR REPLACE FUNCTION handle_new_user()\nRETURNS TRIGGER AS $$\nBEGIN\n  INSERT INTO users (id, name, email)\n  VALUES (\n    NEW.id,\n    COALESCE(NEW.raw_user_meta_data->>'name', ''),\n    NEW.email\n  );
+\n  RETURN NEW;
+\nEND;
+\n$$ LANGUAGE plpgsql SECURITY DEFINER;
+\n\n-- Create trigger for new user signup\nCREATE TRIGGER on_auth_user_created\n  AFTER INSERT ON auth.users\n  FOR EACH ROW\n  EXECUTE FUNCTION handle_new_user();
+;

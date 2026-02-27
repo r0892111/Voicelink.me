@@ -1,0 +1,12 @@
+\n\n-- Add stripe_customer_id column to users table\nDO $$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.columns\n    WHERE table_name = 'users' AND column_name = 'stripe_customer_id'\n  ) THEN\n    ALTER TABLE users ADD COLUMN stripe_customer_id text;
+\n  END IF;
+\nEND $$;
+\n\n-- Add unique constraint on stripe_customer_id (if not exists)\nDO $$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.table_constraints\n    WHERE table_name = 'users' AND constraint_name = 'users_stripe_customer_id_key'\n  ) THEN\n    ALTER TABLE users ADD CONSTRAINT users_stripe_customer_id_key UNIQUE (stripe_customer_id);
+\n  END IF;
+\nEND $$;
+\n\n-- Add index for performance (if not exists)\nDO $$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1 FROM pg_indexes\n    WHERE tablename = 'users' AND indexname = 'idx_users_stripe_customer_id'\n  ) THEN\n    CREATE INDEX idx_users_stripe_customer_id ON users (stripe_customer_id);
+\n  END IF;
+\nEND $$;
+\n\n-- Migrate existing data from stripe_customers table to users table\nUPDATE users \nSET stripe_customer_id = sc.customer_id,\n    updated_at = now()\nFROM stripe_customers sc \nWHERE users.id = sc.user_id \n  AND sc.deleted_at IS NULL \n  AND users.stripe_customer_id IS NULL;
+\n\n-- Add comment to document the column\nCOMMENT ON COLUMN users.stripe_customer_id IS 'Stripe customer ID for billing and subscription management';
+;

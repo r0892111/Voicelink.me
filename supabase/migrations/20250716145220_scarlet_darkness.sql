@@ -1,0 +1,10 @@
+\n\n-- Add TeamLeader OAuth columns to users table\nDO $$\nBEGIN\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.columns\n    WHERE table_name = 'users' AND column_name = 'teamleader_access_token'\n  ) THEN\n    ALTER TABLE users ADD COLUMN teamleader_access_token text;
+\n  END IF;
+\n\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.columns\n    WHERE table_name = 'users' AND column_name = 'teamleader_refresh_token'\n  ) THEN\n    ALTER TABLE users ADD COLUMN teamleader_refresh_token text;
+\n  END IF;
+\n\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.columns\n    WHERE table_name = 'users' AND column_name = 'teamleader_token_expires_at'\n  ) THEN\n    ALTER TABLE users ADD COLUMN teamleader_token_expires_at timestamptz;
+\n  END IF;
+\n\n  IF NOT EXISTS (\n    SELECT 1 FROM information_schema.columns\n    WHERE table_name = 'users' AND column_name = 'teamleader_user_info'\n  ) THEN\n    ALTER TABLE users ADD COLUMN teamleader_user_info jsonb;
+\n  END IF;
+\nEND $$;
+;
