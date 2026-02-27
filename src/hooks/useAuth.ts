@@ -29,7 +29,7 @@ export const useAuth = () => {
       return;
     }
     isCheckingAuthRef.current = true;
-    
+
     try {
       const { data: { session } } = await supabase.auth.getSession();
 
@@ -39,68 +39,21 @@ export const useAuth = () => {
         return;
       }
 
-      const userId = session.user.id;
-
-      // 1️⃣ Trust platform from localStorage first
-      let platform = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
-
-      if (platform && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
-        // Only query the platform-specific table
-        const { data: userData } = await supabase
-          .from(`${platform}_users`)
-          .select('id, user_info')
-          .eq('user_id', userId)
-          .is('deleted_at', null)
-          .single();
-
-        if (userData) {
-          setUserPlatformStorage(platform);
-
-          const userName = getUserName(platform as AuthUser['platform'], userData.user_info);
-          setUser({
-            id: userId,
-            email: session.user.email || '',
-            name: userName,
-            platform: platform as AuthUser['platform'],
-            user_info: userData,
-          });
-
-          setLoading(false);
-          return;
-        }
+      const platform = (localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider') || 'teamleader') as AuthUser['platform'];
+      if (['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
+        setUserPlatformStorage(platform);
       }
 
-      // 2️⃣ Fallback: determine platform by scanning tables in safe order
-      const platforms: AuthUser['platform'][] = ['teamleader', 'pipedrive', 'odoo'];
+      const metadata = session.user.user_metadata || {};
+      const name = metadata.name || session.user.email?.split('@')[0] || 'User';
 
-      for (const platformName of platforms) {
-        const { data: userData } = await supabase
-          .from(`${platformName}_users`)
-          .select('id, user_info')
-          .eq('user_id', userId)
-          .is('deleted_at', null)
-          .single();
-
-        if (userData) {
-          setUserPlatformStorage(platformName);
-
-          const userName = getUserName(platformName, userData.user_info);
-          setUser({
-            id: userId,
-            email: session.user.email || '',
-            name: userName,
-            platform: platformName,
-            user_info: userData.user_info,
-          });
-
-          setLoading(false);
-          return;
-        }
-      }
-
-      // 3️⃣ No user found
-      setUser(null);
-      setUserPlatformStorage(null);
+      setUser({
+        id: session.user.id,
+        email: session.user.email || '',
+        name,
+        platform: ['teamleader', 'pipedrive', 'odoo'].includes(platform) ? platform : 'teamleader',
+        user_info: metadata,
+      });
     } catch (error) {
       console.error('Auth check error:', error);
       setUser(null);
@@ -124,24 +77,6 @@ export const useAuth = () => {
 
     return () => subscription.unsubscribe();
   }, [checkAuth]);
-
-
-  
-  const getUserName = (platform: AuthUser['platform'], userInfo: any) => {
-    console.log(userInfo);
-    switch (platform) {
-      case 'teamleader':
-        return userInfo?.first_name && userInfo?.last_name
-          ? `${userInfo.first_name} ${userInfo.last_name}`
-          : userInfo?.email || 'TeamLeader User';
-      case 'pipedrive':
-        return userInfo?.name || userInfo?.email || 'Pipedrive User';
-      case 'odoo':
-        return userInfo?.name || 'Odoo User';
-      default:
-        return 'User';
-    }
-  };
 
   const signOut = async () => {
     try {
