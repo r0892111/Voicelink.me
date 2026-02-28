@@ -1,5 +1,5 @@
 // ── get-subscription ──────────────────────────────────────────────────────────
-// Returns the active Stripe subscription status for the authenticated user.
+// Returns the active Stripe subscription details for the authenticated user.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
@@ -26,7 +26,6 @@ Deno.serve(async (req) => {
 
     if (authError || !user) return json({ success: false, error: 'Unauthorized' }, 401);
 
-    // Look up stripe_customer_id
     const { data: row } = await supabase
       .from('teamleader_users')
       .select('stripe_customer_id')
@@ -37,23 +36,37 @@ Deno.serve(async (req) => {
       return json({ success: true, subscription: { subscription_status: 'none' } });
     }
 
-    // Check Stripe for active/trialing subscription
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
 
     const subscriptions = await stripe.subscriptions.list({
       customer: row.stripe_customer_id,
       status:   'all',
       limit:    5,
+      expand:   ['data.items.data.price.product'],
     });
 
-    // Pick the most relevant subscription (active or trialing takes priority)
     const sub =
       subscriptions.data.find((s) => s.status === 'active' || s.status === 'trialing') ??
       subscriptions.data[0];
 
+    if (!sub) {
+      return json({ success: true, subscription: { subscription_status: 'none' } });
+    }
+
+    const price   = sub.items.data[0]?.price;
+    const product = price?.product as Stripe.Product | undefined;
+
     return json({
       success: true,
-      subscription: { subscription_status: sub?.status ?? 'none' },
+      subscription: {
+        subscription_status: sub.status,
+        trial_end:           sub.trial_end ?? null,
+        current_period_end:  sub.current_period_end ?? null,
+        plan_name:           product?.name ?? 'VoiceLink',
+        amount:              price?.unit_amount ?? null,
+        currency:            price?.currency ?? null,
+        interval:            price?.recurring?.interval ?? null,
+      },
     });
   } catch (err) {
     console.error('get-subscription:', err);

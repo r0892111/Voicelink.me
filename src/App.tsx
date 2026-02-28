@@ -204,7 +204,7 @@ function App() {
                     </div>
                   ) : (
                     <button
-                      onClick={() => navigateWithTransition(withUTM('/test'))}
+                      onClick={() => navigateWithTransition(withUTM('/signup'))}
                       className="group text-white font-semibold py-2.5 px-6 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-navy hover:bg-navy-hover"
                     >
                       <span>{t('navigation.getStarted')}</span>
@@ -285,7 +285,7 @@ function App() {
                     </div>
                   ) : (
                     <button
-                      onClick={() => navigateWithTransition(withUTM('/test'))}
+                      onClick={() => navigateWithTransition(withUTM('/signup'))}
                       className="group text-white font-semibold py-3 px-7 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-navy hover:bg-navy-hover"
                     >
                       <span>{t('navigation.getStarted')}</span>

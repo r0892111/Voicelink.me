@@ -31,6 +31,17 @@ export const Dashboard: React.FC = () => {
   const wa                = useWhatsAppConnect(user);
   const [subChecking, setSubChecking] = useState(true);
 
+  interface SubInfo {
+    subscription_status: string;
+    trial_end: number | null;
+    current_period_end: number | null;
+    plan_name: string | null;
+    amount: number | null;
+    currency: string | null;
+    interval: string | null;
+  }
+  const [subInfo, setSubInfo] = useState<SubInfo | null>(null);
+
   // Redirect unauthenticated users + check subscription
   useEffect(() => {
     if (loading) return;
@@ -75,6 +86,8 @@ export const Dashboard: React.FC = () => {
         { headers: { Authorization: `Bearer ${session.access_token}` } },
       );
       const data = await res.json();
+      if (data.success && data.subscription) setSubInfo(data.subscription);
+
       const isActive =
         data.success &&
         (data.subscription?.subscription_status === 'active' ||
@@ -264,15 +277,60 @@ export const Dashboard: React.FC = () => {
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
-              <div className="w-9 h-9 rounded-xl bg-navy/[0.05] flex items-center justify-center">
-                <Star className="w-5 h-5 text-navy/50" />
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing' ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <Star className={`w-5 h-5 ${subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing' ? 'text-emerald-500' : 'text-navy/50'}`} />
               </div>
               <span className="font-general font-semibold text-navy text-sm">Subscription</span>
             </div>
-            <p className="text-xs text-navy/50 font-instrument">VoiceLink Premium</p>
-            <div className="mt-3 flex items-center space-x-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span className="text-xs font-medium text-emerald-600">Active</span>
+            <p className="text-xs text-navy/50 font-instrument truncate">
+              {subInfo?.plan_name ?? 'VoiceLink'}
+              {subInfo?.amount != null && subInfo?.currency && (
+                <span className="ml-1">
+                  · {(subInfo.amount / 100).toLocaleString('en', { style: 'currency', currency: subInfo.currency.toUpperCase() })}{subInfo.interval ? `/${subInfo.interval}` : ''}
+                </span>
+              )}
+            </p>
+            <div className="mt-3 space-y-1">
+              {subInfo?.subscription_status === 'trialing' && (
+                <>
+                  <div className="flex items-center space-x-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <span className="text-xs font-medium text-amber-600">
+                      Free trial · {subInfo.trial_end ? Math.max(0, Math.ceil((subInfo.trial_end * 1000 - Date.now()) / 86_400_000)) : '—'} days left
+                    </span>
+                  </div>
+                  {subInfo.trial_end && (
+                    <p className="text-xs text-navy/40 font-instrument pl-3">
+                      Billing starts {new Date(subInfo.trial_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </p>
+                  )}
+                </>
+              )}
+              {subInfo?.subscription_status === 'active' && (
+                <>
+                  <div className="flex items-center space-x-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span className="text-xs font-medium text-emerald-600">Active</span>
+                  </div>
+                  {subInfo.current_period_end && (
+                    <p className="text-xs text-navy/40 font-instrument pl-3">
+                      Renews {new Date(subInfo.current_period_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </p>
+                  )}
+                </>
+              )}
+              {subInfo?.subscription_status === 'past_due' && (
+                <div className="flex items-center space-x-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                  <span className="text-xs font-medium text-red-600">Payment due</span>
+                </div>
+              )}
+              {(!subInfo || subInfo.subscription_status === 'none') && (
+                <div className="flex items-center space-x-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-navy/20" />
+                  <span className="text-xs font-medium text-navy/40">—</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
