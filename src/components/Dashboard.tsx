@@ -54,15 +54,12 @@ export const Dashboard: React.FC = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
 
-      // If returning from Stripe checkout, confirm the session and save
-      // stripe_customer_id — then trust the user and skip the subscription
-      // check to avoid a race condition where Stripe hasn't created the
-      // subscription record yet.
+      // ── Step 1: if returning from Stripe, confirm & save customer ID first ──
       const params    = new URLSearchParams(window.location.search);
       const sessionId = params.get('session_id');
       if (sessionId) {
         window.history.replaceState({}, '', '/dashboard');
-        const confirmRes = await fetch(
+        const confirmRes  = await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-confirm-checkout`,
           {
             method:  'POST',
@@ -75,23 +72,30 @@ export const Dashboard: React.FC = () => {
         );
         const confirmData = await confirmRes.json();
         if (confirmData.success) {
-          // Customer ID saved — user just paid, let them through
+          // Customer ID just saved — Stripe subscription may not be indexed
+          // yet, so trust this visit and load details in the background.
+          fetch(
+            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`,
+            { headers: { Authorization: `Bearer ${session.access_token}` } },
+          )
+            .then((r) => r.json())
+            .then((d) => { if (d.success && d.subscription) setSubInfo(d.subscription); })
+            .catch(() => {});
           return;
         }
-        // If confirm failed, fall through to normal subscription check
+        // confirm failed — fall through to full check
       }
 
-      const res = await fetch(
+      // ── Step 2: use stripe_customer_id to verify subscription with Stripe ──
+      const res  = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`,
         { headers: { Authorization: `Bearer ${session.access_token}` } },
       );
       const data = await res.json();
       if (data.success && data.subscription) setSubInfo(data.subscription);
 
-      const isActive =
-        data.success &&
-        (data.subscription?.subscription_status === 'active' ||
-         data.subscription?.subscription_status === 'trialing');
+      const status   = data.subscription?.subscription_status;
+      const isActive = data.success && (status === 'active' || status === 'trialing');
 
       if (!isActive) {
         await StripeService.createCheckoutSession({
@@ -99,12 +103,12 @@ export const Dashboard: React.FC = () => {
           successUrl: `${window.location.origin}/dashboard`,
           cancelUrl:  `${window.location.origin}/`,
         });
-        // StripeService redirects, so nothing runs after this
         return;
       }
+
     } catch (err) {
       console.error('Subscription check failed:', err);
-      // On error, let the user through rather than blocking them
+      // On error let the user through — never block on a network failure
     } finally {
       setSubChecking(false);
     }
@@ -123,7 +127,7 @@ export const Dashboard: React.FC = () => {
   const getPlatformLabel = () =>
     ({ teamleader: 'Teamleader', pipedrive: 'Pipedrive', odoo: 'Odoo' }[user?.platform || ''] || 'your CRM');
 
-  if (loading || subChecking) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />
@@ -277,21 +281,28 @@ export const Dashboard: React.FC = () => {
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing' ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
-                <Star className={`w-5 h-5 ${subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing' ? 'text-emerald-500' : 'text-navy/50'}`} />
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <Star className={`w-5 h-5 ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'text-emerald-500' : 'text-navy/50'}`} />
               </div>
               <span className="font-general font-semibold text-navy text-sm">Subscription</span>
             </div>
-            <p className="text-xs text-navy/50 font-instrument truncate">
-              {subInfo?.plan_name ?? 'VoiceLink'}
-              {subInfo?.amount != null && subInfo?.currency && (
-                <span className="ml-1">
-                  · {(subInfo.amount / 100).toLocaleString('en', { style: 'currency', currency: subInfo.currency.toUpperCase() })}{subInfo.interval ? `/${subInfo.interval}` : ''}
-                </span>
-              )}
-            </p>
+            {subChecking ? (
+              <div className="h-3.5 w-28 bg-navy/[0.07] rounded-full animate-pulse mt-0.5" />
+            ) : (
+              <p className="text-xs text-navy/50 font-instrument truncate">
+                {subInfo?.plan_name ?? 'VoiceLink'}
+                {subInfo?.amount != null && subInfo?.currency && (
+                  <span className="ml-1">
+                    · {(subInfo.amount / 100).toLocaleString('en', { style: 'currency', currency: subInfo.currency.toUpperCase() })}{subInfo.interval ? `/${subInfo.interval}` : ''}
+                  </span>
+                )}
+              </p>
+            )}
             <div className="mt-3 space-y-1">
-              {subInfo?.subscription_status === 'trialing' && (
+              {subChecking && (
+                <div className="h-3 w-20 bg-navy/[0.07] rounded-full animate-pulse" />
+              )}
+              {!subChecking && subInfo?.subscription_status === 'trialing' && (
                 <>
                   <div className="flex items-center space-x-1.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
@@ -306,7 +317,7 @@ export const Dashboard: React.FC = () => {
                   )}
                 </>
               )}
-              {subInfo?.subscription_status === 'active' && (
+              {!subChecking && subInfo?.subscription_status === 'active' && (
                 <>
                   <div className="flex items-center space-x-1.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -319,13 +330,13 @@ export const Dashboard: React.FC = () => {
                   )}
                 </>
               )}
-              {subInfo?.subscription_status === 'past_due' && (
+              {!subChecking && subInfo?.subscription_status === 'past_due' && (
                 <div className="flex items-center space-x-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
                   <span className="text-xs font-medium text-red-600">Payment due</span>
                 </div>
               )}
-              {(!subInfo || subInfo.subscription_status === 'none') && (
+              {!subChecking && (!subInfo || subInfo.subscription_status === 'none') && (
                 <div className="flex items-center space-x-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-navy/20" />
                   <span className="text-xs font-medium text-navy/40">—</span>
