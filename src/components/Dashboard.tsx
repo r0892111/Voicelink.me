@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MessageCircle,
@@ -30,6 +30,8 @@ export const Dashboard: React.FC = () => {
   const navigate          = useNavigate();
   const wa                = useWhatsAppConnect(user);
   const [subChecking, setSubChecking] = useState(true);
+  const mounted = useRef(true);
+  useEffect(() => () => { mounted.current = false; }, []);
 
   interface SubInfo {
     subscription_status: string;
@@ -79,7 +81,7 @@ export const Dashboard: React.FC = () => {
             { headers: { Authorization: `Bearer ${session.access_token}` } },
           )
             .then((r) => r.json())
-            .then((d) => { if (d.success && d.subscription) setSubInfo(d.subscription); })
+            .then((d) => { if (mounted.current && d.success && d.subscription) setSubInfo(d.subscription); })
             .catch(() => {});
           return;
         }
@@ -92,6 +94,8 @@ export const Dashboard: React.FC = () => {
         { headers: { Authorization: `Bearer ${session.access_token}` } },
       );
       const data = await res.json();
+      if (!mounted.current) return;
+
       if (data.success && data.subscription) setSubInfo(data.subscription);
 
       const status   = data.subscription?.subscription_status;
@@ -110,7 +114,7 @@ export const Dashboard: React.FC = () => {
       console.error('Subscription check failed:', err);
       // On error let the user through — never block on a network failure
     } finally {
-      setSubChecking(false);
+      if (mounted.current) setSubChecking(false);
     }
   };
 
