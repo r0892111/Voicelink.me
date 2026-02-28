@@ -36,7 +36,7 @@ export class SupabaseWhatsAppRepository implements IWhatsAppRepository {
     code: string,
     expiresAt: string,
   ): Promise<void> {
-    const { error } = await this.db
+    const { data, error } = await this.db
       .from(this.table)
       .update({
         whatsapp_otp_code:       code,
@@ -45,9 +45,13 @@ export class SupabaseWhatsAppRepository implements IWhatsAppRepository {
         whatsapp_status:         'pending',
         updated_at:              new Date().toISOString(),
       })
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      .select('user_id');
 
     if (error) throw new Error(`storeOtp failed: ${error.message}`);
+    if (!data || data.length === 0) {
+      throw new Error('No user row found — make sure the account exists in the database before connecting WhatsApp.');
+    }
   }
 
   async getOtpRecord(userId: string): Promise<OtpRecord | null> {
@@ -68,7 +72,7 @@ export class SupabaseWhatsAppRepository implements IWhatsAppRepository {
   }
 
   async markVerified(userId: string, phone: string): Promise<void> {
-    const { error } = await this.db
+    const { data, error } = await this.db
       .from(this.table)
       .update({
         whatsapp_number:         phone,
@@ -78,8 +82,12 @@ export class SupabaseWhatsAppRepository implements IWhatsAppRepository {
         whatsapp_otp_phone:      null,
         updated_at:              new Date().toISOString(),
       })
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      .select('user_id');
 
     if (error) throw new Error(`markVerified failed: ${error.message}`);
+    if (!data || data.length === 0) {
+      throw new Error('No user row found — cannot mark WhatsApp as verified.');
+    }
   }
 }
