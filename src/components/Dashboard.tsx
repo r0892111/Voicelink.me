@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MessageCircle,
@@ -18,18 +18,57 @@ import {
 import { useAuth } from '../hooks/useAuth';
 import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
 import { WhatsAppConnectForm } from './WhatsAppConnectForm';
+import { StripeService } from '../services/stripeService';
+import { supabase } from '../lib/supabase';
 import { withUTM } from '../utils/utm';
 import { NoiseOverlay } from './ui/NoiseOverlay';
+
+const PRICE_ID = 'price_1S5o6zLPohnizGblsQq7OYCT';
 
 export const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
   const navigate          = useNavigate();
   const wa                = useWhatsAppConnect(user);
+  const [subChecking, setSubChecking] = useState(true);
 
-  // Redirect unauthenticated users
+  // Redirect unauthenticated users + check subscription
   useEffect(() => {
-    if (!loading && !user) navigate(withUTM('/signup'));
-  }, [user, loading, navigate]);
+    if (loading) return;
+    if (!user) { navigate(withUTM('/signup')); return; }
+    checkSubscription();
+  }, [user, loading]);
+
+  const checkSubscription = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`,
+        { headers: { Authorization: `Bearer ${session.access_token}` } },
+      );
+      const data = await res.json();
+      const isActive =
+        data.success &&
+        (data.subscription?.subscription_status === 'active' ||
+         data.subscription?.subscription_status === 'trialing');
+
+      if (!isActive) {
+        await StripeService.createCheckoutSession({
+          priceId:    PRICE_ID,
+          successUrl: `${window.location.origin}/dashboard`,
+          cancelUrl:  `${window.location.origin}/`,
+        });
+        // StripeService redirects, so nothing runs after this
+        return;
+      }
+    } catch (err) {
+      console.error('Subscription check failed:', err);
+      // On error, let the user through rather than blocking them
+    } finally {
+      setSubChecking(false);
+    }
+  };
 
   // ── Helpers ───────────────────────────────────────────────────────────────
   const getTimeGreeting = () => {
@@ -44,7 +83,7 @@ export const Dashboard: React.FC = () => {
   const getPlatformLabel = () =>
     ({ teamleader: 'Teamleader', pipedrive: 'Pipedrive', odoo: 'Odoo' }[user?.platform || ''] || 'your CRM');
 
-  if (loading) {
+  if (loading || subChecking) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />
