@@ -38,8 +38,11 @@ Deno.serve(async (req) => {
       line_items:           [{ price: price_id, quantity: 1 }],
       success_url:          success_url ?? `${Deno.env.get('SITE_URL') ?? ''}/dashboard`,
       cancel_url:           cancel_url  ?? `${Deno.env.get('SITE_URL') ?? ''}/`,
-      // client_reference_id lets the webhook link the Stripe customer back to our user
       client_reference_id:  user.id,
+      allow_promotion_codes: true,
+      subscription_data: {
+        trial_period_days: 14,
+      },
     });
 
     return json({ success: true, checkout_url: session.url });

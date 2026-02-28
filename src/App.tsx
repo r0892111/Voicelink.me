@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { LogOut, User, Menu, X, ArrowLeft, ArrowRight } from 'lucide-react';
-import { AuthPage } from './components/AuthPage';
 import { AuthCallback } from './components/AuthCallback';
 import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
@@ -68,7 +67,6 @@ function App() {
 
   // Check if we're on the landing page (hide navigation)
   const isLandingPage = location.pathname === '/landing';
-  const isSignupPage = location.pathname === '/signup';
 
   const openContactModal = () => {
     setIsContactModalOpen(true);
@@ -89,10 +87,10 @@ function App() {
     <ConsentProvider>
       <RTLProvider>
         <AnalyticsListener />
-        <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage ? 'h-screen overflow-hidden' : ''}`}>
+        <div className="min-h-screen bg-porcelain font-instrument">
           <NoiseOverlay />
           {/* Navigation */}
-          {!isLandingPage && !isSignupPage && (
+          {!isLandingPage && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
             {/* ── White logo on hero (homepage only, fades out on scroll) ── */}
             {isHomepage && (
@@ -299,10 +297,9 @@ function App() {
           )}
 
           {/* Routes */}
-          <div className={isLandingPage || isSignupPage || isHomepage ? "" : "pt-20"}>
+          <div className={isLandingPage || isHomepage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
-              <Route path="/signup" element={<AuthPage />} />
               <Route path="/landing" element={<HeroLanding />} />
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
