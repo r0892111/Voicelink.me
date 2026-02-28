@@ -35,28 +35,41 @@ Deno.serve(async (req) => {
     const stripe  = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
     const session = await stripe.checkout.sessions.retrieve(session_id);
 
+    console.log(`stripe-confirm-checkout: session ${session_id} status=${session.status} client_ref=${session.client_reference_id} user=${user.id}`);
+
     // Verify this session belongs to the authenticated user
     if (session.client_reference_id !== user.id) {
+      console.error(`client_reference_id mismatch: ${session.client_reference_id} !== ${user.id}`);
       return json({ success: false, error: 'Session does not belong to this user' }, 403);
+    }
+
+    if (session.status !== 'complete') {
+      return json({ success: false, error: `Session not complete (status: ${session.status})` }, 400);
     }
 
     const customerId = session.customer as string;
     if (!customerId) {
-      return json({ success: false, error: 'No customer on session yet' }, 400);
+      return json({ success: false, error: 'No customer on session' }, 400);
     }
 
-    // Save customer ID — upsert so it's idempotent
-    const { error: dbError } = await supabase
+    // Save customer ID — idempotent, safe to call multiple times
+    const { data: updated, error: dbError } = await supabase
       .from('teamleader_users')
       .update({ stripe_customer_id: customerId })
-      .eq('user_id', user.id);
+      .eq('user_id', user.id)
+      .select('user_id');
 
     if (dbError) {
       console.error('stripe-confirm-checkout db error:', dbError);
       return json({ success: false, error: dbError.message }, 500);
     }
 
-    console.log(`stripe_customer_id confirmed for user ${user.id}: ${customerId}`);
+    if (!updated || updated.length === 0) {
+      console.error(`stripe-confirm-checkout: no teamleader_users row found for user_id=${user.id}`);
+      return json({ success: false, error: 'User row not found in teamleader_users' }, 404);
+    }
+
+    console.log(`stripe_customer_id saved for user ${user.id}: ${customerId}`);
     return json({ success: true, customer_id: customerId });
 
   } catch (err) {

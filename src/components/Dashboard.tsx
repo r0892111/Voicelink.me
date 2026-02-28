@@ -43,13 +43,15 @@ export const Dashboard: React.FC = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
 
-      // If returning from Stripe checkout, confirm and save the customer ID
-      // before checking subscription status — avoids the race condition where
-      // the webhook hasn't fired yet.
+      // If returning from Stripe checkout, confirm the session and save
+      // stripe_customer_id — then trust the user and skip the subscription
+      // check to avoid a race condition where Stripe hasn't created the
+      // subscription record yet.
       const params    = new URLSearchParams(window.location.search);
       const sessionId = params.get('session_id');
       if (sessionId) {
-        await fetch(
+        window.history.replaceState({}, '', '/dashboard');
+        const confirmRes = await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-confirm-checkout`,
           {
             method:  'POST',
@@ -60,8 +62,12 @@ export const Dashboard: React.FC = () => {
             body: JSON.stringify({ session_id: sessionId }),
           },
         );
-        // Clean the session_id out of the URL so a refresh doesn't re-confirm
-        window.history.replaceState({}, '', '/dashboard');
+        const confirmData = await confirmRes.json();
+        if (confirmData.success) {
+          // Customer ID saved — user just paid, let them through
+          return;
+        }
+        // If confirm failed, fall through to normal subscription check
       }
 
       const res = await fetch(
