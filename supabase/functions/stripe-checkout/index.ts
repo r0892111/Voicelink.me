@@ -36,7 +36,8 @@ Deno.serve(async (req) => {
       mode:                 'subscription',
       payment_method_types: ['card'],
       line_items:           [{ price: price_id, quantity: 1 }],
-      success_url:          success_url ?? `${Deno.env.get('SITE_URL') ?? ''}/dashboard`,
+      // {CHECKOUT_SESSION_ID} is a Stripe template literal — it gets replaced with the real session ID on redirect
+      success_url:          `${success_url ?? `${Deno.env.get('SITE_URL') ?? ''}/dashboard`}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url:           cancel_url  ?? `${Deno.env.get('SITE_URL') ?? ''}/`,
       client_reference_id:  user.id,
       allow_promotion_codes: true,
