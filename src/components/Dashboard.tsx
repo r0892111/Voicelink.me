@@ -34,7 +34,7 @@ export const Dashboard: React.FC = () => {
   // Redirect unauthenticated users + check subscription
   useEffect(() => {
     if (loading) return;
-    if (!user) { navigate(withUTM('/')); return; }
+    if (!user) { navigate(withUTM('/signup')); return; }
     checkSubscription();
   }, [user, loading]);
 
