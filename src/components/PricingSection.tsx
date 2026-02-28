@@ -243,7 +243,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 </button>
               ) : (
                 <button
-                  onClick={() => navigateWithTransition(withUTM('/signup'))}
+                  onClick={() => navigateWithTransition(withUTM('/test'))}
                   className={`w-full font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg flex items-center justify-center space-x-2 group ${
                     plan.highlighted
                       ? 'bg-navy text-white hover:bg-navy-hover hover:shadow-xl'

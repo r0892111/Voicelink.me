@@ -137,7 +137,7 @@ export const HeroLanding: React.FC = () => {
 
   const handleStartTrial = () => {
     trackCTAClick('start_free_trial', '/landing');
-    navigateWithTransition(withUTM('/signup'));
+    navigateWithTransition(withUTM('/test'));
   };
 
   return (

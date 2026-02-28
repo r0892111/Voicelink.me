@@ -105,7 +105,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
                 <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" style={{ height: '9rem', marginTop: '-1.1rem', marginLeft: '-1.5rem' }} className="inline-block" />
               </h2>
               <button
-                onClick={() => { trackCTAClick('try_free_integrations', '/'); navigateWithTransition(withUTM('/signup')); }}
+                onClick={() => { trackCTAClick('try_free_integrations', '/'); navigateWithTransition(withUTM('/test')); }}
                 className="relative z-10 bg-navy hover:bg-navy-hover text-white font-medium text-[15px] py-3.5 px-8 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] mb-8"
                 style={{ marginTop: '-6.5rem' }}
               >
@@ -231,7 +231,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
-                    onClick={() => { trackCTAClick('start_free_trial', '/'); navigateWithTransition(withUTM('/signup')); }}
+                    onClick={() => { trackCTAClick('start_free_trial', '/'); navigateWithTransition(withUTM('/test')); }}
                     className="group bg-navy hover:bg-navy-hover text-white font-medium text-[15px] py-4 px-8 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                   >
                     <img src="/Finit Voicelink Blue.svg" alt={t('common.voiceLink')} className="w-5 h-5 mr-1 invert brightness-200" />

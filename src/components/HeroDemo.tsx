@@ -1937,7 +1937,7 @@ export const HeroDemo: React.FC = () => {
                 <button
                   onClick={() => {
                     trackCTAClick('Get Started Free - Hero', '/');
-                    navigateWithTransition(withUTM('/signup'));
+                    navigateWithTransition(withUTM('/test'));
                   }}
                   className="group bg-navy text-white text-[15px] font-medium px-6 py-3 rounded-full flex items-center justify-center gap-2.5 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10"
                 >

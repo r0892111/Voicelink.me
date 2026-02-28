@@ -60,7 +60,7 @@ export const LandingPageTemplate: React.FC<LandingPageProps> = ({
                 <button
                   onClick={() => {
                     trackCTAClick('Get Started Free - Landing Page', window.location.pathname);
-                    navigateWithTransition(withUTM('/signup'));
+                    navigateWithTransition(withUTM('/test'));
                   }}
                   className="group text-white font-semibold py-4 px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                 >
@@ -275,7 +275,7 @@ export const LandingPageTemplate: React.FC<LandingPageProps> = ({
           <button
             onClick={() => {
               trackCTAClick('Get Started Free - Final CTA Landing Page', window.location.pathname);
-              navigateWithTransition(withUTM('/signup'));
+              navigateWithTransition(withUTM('/test'));
             }}
             className="group text-white font-semibold py-4 px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] inline-flex items-center space-x-2"
           >

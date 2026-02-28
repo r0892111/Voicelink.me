@@ -16,6 +16,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
 import CookiePolicy from './components/CookiePolicy';
 import Support from './components/Support';
+import { TestSignup } from './components/TestSignup';
 import { useAuth } from './hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ConsentProvider } from './contexts/ConsentContext';
@@ -203,7 +204,7 @@ function App() {
                     </div>
                   ) : (
                     <button
-                      onClick={() => navigateWithTransition(withUTM('/signup'))}
+                      onClick={() => navigateWithTransition(withUTM('/test'))}
                       className="group text-white font-semibold py-2.5 px-6 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-navy hover:bg-navy-hover"
                     >
                       <span>{t('navigation.getStarted')}</span>
@@ -284,7 +285,7 @@ function App() {
                     </div>
                   ) : (
                     <button
-                      onClick={() => navigateWithTransition(withUTM('/signup'))}
+                      onClick={() => navigateWithTransition(withUTM('/test'))}
                       className="group text-white font-semibold py-3 px-7 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-navy hover:bg-navy-hover"
                     >
                       <span>{t('navigation.getStarted')}</span>
@@ -314,6 +315,7 @@ function App() {
               <Route path="/disclaimer" element={<Disclaimer />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/support" element={<Support />} />
+              <Route path="/test" element={<TestSignup />} />
               {/* Fallback route for debugging */}
               <Route path="*" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-red-600">No route matched: {location.pathname}</h1><p>Available routes: /, /dashboard, /verify-whatsapp, etc.</p></div>} />
             </Routes>
