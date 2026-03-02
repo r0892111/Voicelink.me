@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
       customer: row.stripe_customer_id,
       status:   'all',
       limit:    5,
-      expand:   ['data.items.data.price.product'],
+      expand:   ['data.items.data.price'],
     });
 
     const sub =
@@ -53,8 +53,13 @@ Deno.serve(async (req) => {
       return json({ success: true, subscription: { subscription_status: 'none' } });
     }
 
-    const price   = sub.items.data[0]?.price;
-    const product = price?.product as Stripe.Product | undefined;
+    const price     = sub.items.data[0]?.price;
+    const productId = typeof price?.product === 'string' ? price.product : price?.product?.id;
+    let   planName  = 'VoiceLink';
+    if (productId) {
+      const product = await stripe.products.retrieve(productId);
+      planName = product.name ?? planName;
+    }
 
     return json({
       success: true,
@@ -62,7 +67,7 @@ Deno.serve(async (req) => {
         subscription_status: sub.status,
         trial_end:           sub.trial_end ?? null,
         current_period_end:  sub.current_period_end ?? null,
-        plan_name:           product?.name ?? 'VoiceLink',
+        plan_name:           planName,
         amount:              price?.unit_amount ?? null,
         currency:            price?.currency ?? null,
         interval:            price?.recurring?.interval ?? null,
