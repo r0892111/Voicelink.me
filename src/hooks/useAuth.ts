@@ -108,29 +108,20 @@ export const useAuth = () => {
     return () => subscription.unsubscribe();
   }, [checkAuth]);
 
-  const signOut = async () => {
-    try {
-      await supabase.auth.signOut();
+  const signOut = () => {
+    // Clear local state immediately — no waiting on network
+    setUser(null);
+    localStorage.removeItem('userPlatform');
+    localStorage.removeItem('auth_provider');
+    localStorage.removeItem('teamleader_oauth_state');
+    localStorage.removeItem('pipedrive_oauth_state');
+    localStorage.removeItem('odoo_oauth_state');
 
-      // Clear all authentication-related localStorage
-      localStorage.removeItem('userPlatform');
-      localStorage.removeItem('auth_provider');
-      localStorage.removeItem('teamleader_oauth_state');
-      localStorage.removeItem('pipedrive_oauth_state');
-      localStorage.removeItem('odoo_oauth_state');
+    // Fire the Supabase signOut in the background (invalidates the server token)
+    supabase.auth.signOut().catch(() => {});
 
-      setUser(null);
-      setUserPlatformStorage(null);
-
-      // Force reload
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Sign out error:', error);
-      localStorage.clear();
-      setUser(null);
-      setUserPlatformStorage(null);
-      window.location.href = '/';
-    }
+    // Send to the login page, not / (which would bounce authed users back to /dashboard)
+    window.location.href = '/signup';
   };
 
   return { user, loading, signOut };
