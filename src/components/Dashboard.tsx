@@ -343,7 +343,7 @@ export const Dashboard: React.FC = () => {
                     Unlock the full VoiceLink experience
                   </h3>
                   <p className="text-white/55 text-sm font-instrument mt-1">
-                    Start your free trial — no credit card required upfront. Cancel anytime.
+                    Try everything VoiceLink has to offer, free for 14 days. Cancel anytime.
                   </p>
                 </div>
                 <button
