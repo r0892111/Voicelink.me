@@ -56,51 +56,34 @@ export const Dashboard: React.FC = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
 
-      // ── Step 1: if returning from Stripe, confirm & save customer ID first ──
+      // If returning from Stripe, persist the customer ID before checking.
       const params    = new URLSearchParams(window.location.search);
       const sessionId = params.get('session_id');
       if (sessionId) {
         window.history.replaceState({}, '', '/dashboard');
-        const confirmRes  = await fetch(
+        await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-confirm-checkout`,
           {
             method:  'POST',
-            headers: {
-              Authorization:  `Bearer ${session.access_token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ session_id: sessionId }),
+            headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ session_id: sessionId }),
           },
-        );
-        const confirmData = await confirmRes.json();
-        if (confirmData.success) {
-          // Customer ID just saved — Stripe subscription may not be indexed
-          // yet, so trust this visit and load details in the background.
-          fetch(
-            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`,
-            { headers: { Authorization: `Bearer ${session.access_token}` } },
-          )
-            .then((r) => r.json())
-            .then((d) => { if (mounted.current && d.success && d.subscription) setSubInfo(d.subscription); })
-            .catch(() => {});
-          return;
-        }
-        // confirm failed — fall through to full check
+        ).catch(() => {});
       }
 
-      // ── Step 2: use stripe_customer_id to verify subscription with Stripe ──
+      // Always verify via stripe_customer_id in teamleader_users:
+      //   no customer ID → no subscription
+      //   customer ID present → call Stripe to confirm active/trialing
       const res  = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`,
         { headers: { Authorization: `Bearer ${session.access_token}` } },
       );
       const data = await res.json();
       if (!mounted.current) return;
-
       if (data.success && data.subscription) setSubInfo(data.subscription);
 
     } catch (err) {
       console.error('Subscription check failed:', err);
-      // On error let the user through — never block on a network failure
     } finally {
       if (mounted.current) setSubChecking(false);
     }
@@ -222,21 +205,6 @@ export const Dashboard: React.FC = () => {
             VoiceLink is ready when you are. Just open WhatsApp and start talking — we'll handle the rest.
           </p>
 
-          <div
-            className="flex flex-wrap gap-3"
-            style={{ animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.35s both' }}
-          >
-            <a
-              href="https://wa.me/32460229893"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center space-x-2 bg-navy hover:bg-navy-hover text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>Open WhatsApp</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
         </div>
       </section>
 
