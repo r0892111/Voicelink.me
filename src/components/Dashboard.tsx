@@ -98,18 +98,6 @@ export const Dashboard: React.FC = () => {
 
       if (data.success && data.subscription) setSubInfo(data.subscription);
 
-      const status   = data.subscription?.subscription_status;
-      const isActive = data.success && (status === 'active' || status === 'trialing');
-
-      if (!isActive) {
-        await StripeService.createCheckoutSession({
-          priceId:    PRICE_ID,
-          successUrl: `${window.location.origin}/dashboard`,
-          cancelUrl:  `${window.location.origin}/`,
-        });
-        return;
-      }
-
     } catch (err) {
       console.error('Subscription check failed:', err);
       // On error let the user through — never block on a network failure
@@ -130,6 +118,19 @@ export const Dashboard: React.FC = () => {
 
   const getPlatformLabel = () =>
     ({ teamleader: 'Teamleader', pipedrive: 'Pipedrive', odoo: 'Odoo' }[user?.platform || ''] || 'your CRM');
+
+  const startTrial = () =>
+    StripeService.createCheckoutSession({
+      priceId:    PRICE_ID,
+      successUrl: `${window.location.origin}/dashboard`,
+      cancelUrl:  `${window.location.origin}/`,
+    });
+
+  // Derived subscription state used for the banner
+  const subStatus    = subInfo?.subscription_status;
+  const isSubscribed = subStatus === 'active' || subStatus === 'trialing';
+  const isLapsed     = subStatus && !isSubscribed && subStatus !== 'none';
+  const needsTrial   = !subChecking && (!subStatus || subStatus === 'none');
 
   if (loading) {
     return (
@@ -350,6 +351,66 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* ── SUBSCRIPTION BANNER ── */}
+      {(needsTrial || isLapsed) && (
+        <section className="px-6 pb-6">
+          <div className="max-w-4xl mx-auto">
+            {needsTrial ? (
+              <div
+                className="relative overflow-hidden bg-navy rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-5"
+                style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.62s both' }}
+              >
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)' }}
+                  aria-hidden
+                />
+                <div className="relative flex-1">
+                  <div className="inline-flex items-center gap-2 bg-white/10 text-white/80 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                    <Sparkles className="w-3 h-3" />
+                    14-day free trial
+                  </div>
+                  <h3 className="font-general font-bold text-white text-lg leading-tight">
+                    Unlock the full VoiceLink experience
+                  </h3>
+                  <p className="text-white/55 text-sm font-instrument mt-1">
+                    Start your free trial — no credit card required upfront. Cancel anytime.
+                  </p>
+                </div>
+                <button
+                  onClick={startTrial}
+                  className="relative flex-shrink-0 inline-flex items-center gap-2 bg-white text-navy font-semibold text-sm py-3 px-6 rounded-full hover:bg-white/90 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
+                >
+                  Start Free Trial
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <div
+                className="bg-amber-50 border border-amber-200/70 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-5"
+                style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.62s both' }}
+              >
+                <div className="flex-1">
+                  <h3 className="font-general font-bold text-amber-800 text-lg leading-tight">
+                    Your subscription has ended
+                  </h3>
+                  <p className="text-amber-700/70 text-sm font-instrument mt-1">
+                    Renew to keep your CRM syncing with VoiceLink.
+                  </p>
+                </div>
+                <button
+                  onClick={startTrial}
+                  className="flex-shrink-0 inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm py-3 px-6 rounded-full transition-colors"
+                >
+                  Renew Now
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* ── SETUP CHECKLIST ── */}
       <section className="px-6 pb-8">
