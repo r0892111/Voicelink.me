@@ -23,7 +23,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { code, state, redirect_uri, is_test_user } = await req.json();
+    const { code, state, redirect_uri, is_test_user, test_phone } = await req.json();
 
     if (!code || !redirect_uri) {
       return new Response(
@@ -214,6 +214,17 @@ Deno.serve(async (req) => {
     if (tlUserError) {
       console.error('teamleader_users upsert failed:', tlUserError);
       // Continue - tokens are saved, we can still return session
+    }
+
+    // 6b. If test user, link back to test_users via tl_user_id
+    if (is_test_user && test_phone) {
+      const { error: testUserLinkError } = await supabase
+        .from('test_users')
+        .update({ tl_user_id: userId })
+        .eq('phone', test_phone);
+      if (testUserLinkError) {
+        console.error('test_users tl_user_id update failed:', testUserLinkError);
+      }
     }
 
     // 7. Generate magic link for session (avoids password)

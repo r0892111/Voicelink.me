@@ -65,7 +65,7 @@ export const Dashboard: React.FC = () => {
         .eq('user_id', session.user.id)
         .maybeSingle();
       if (tlUser?.is_test_user) {
-        if (mounted.current) navigate('/test-dashboard');
+        if (mounted.current) navigate('/test-dashboard', { replace: true });
         return;
       }
 

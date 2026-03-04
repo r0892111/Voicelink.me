@@ -128,7 +128,10 @@ export const AuthCallback: React.FC = () => {
         code,
         state,
         redirect_uri: redirectUri,
-        ...(isTestUserFlow && platform === 'teamleader' && { is_test_user: true }),
+        ...(isTestUserFlow && platform === 'teamleader' && {
+          is_test_user: true,
+          test_phone: localStorage.getItem('test_user_phone') ?? undefined,
+        }),
       };
 
       // For custom Odoo implementations, pass the OAuth URL to the backend

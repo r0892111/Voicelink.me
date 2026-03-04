@@ -35,15 +35,32 @@ export const TestDashboard: React.FC = () => {
   const [revoking, setRevoking]       = React.useState(false);
   const [tlConnected, setTlConnected] = React.useState<boolean | null>(null); // null = loading
 
-  // Check if Teamleader is connected for this phone
+  // Check if Teamleader is connected.
+  // Primary: active Supabase session → look up teamleader_users (works after magic link).
+  // Fallback: no session yet → check test_users.tl_user_id by phone.
   React.useEffect(() => {
-    if (!phone) { setTlConnected(false); return; }
-    supabase
-      .from('test_users')
-      .select('teamleader_id')
-      .eq('phone', phone)
-      .maybeSingle()
-      .then(({ data }) => setTlConnected(!!data?.teamleader_id));
+    const check = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data } = await supabase
+          .from('teamleader_users')
+          .select('user_id')
+          .eq('user_id', session.user.id)
+          .eq('is_test_user', true)
+          .maybeSingle();
+        setTlConnected(!!data);
+        return;
+      }
+      // No session yet (before TL connect) — use tl_user_id link by phone
+      if (!phone) { setTlConnected(false); return; }
+      const { data } = await supabase
+        .from('test_users')
+        .select('tl_user_id')
+        .eq('phone', phone)
+        .maybeSingle();
+      setTlConnected(!!data?.tl_user_id);
+    };
+    check();
   }, [phone]);
 
   const handleConnectTeamleader = async () => {
@@ -59,7 +76,7 @@ export const TestDashboard: React.FC = () => {
     setRevoking(true);
     await supabase
       .from('test_users')
-      .update({ teamleader_id: null, tl_access_token: null, tl_refresh_token: null, tl_token_expires_at: null })
+      .update({ tl_user_id: null })
       .eq('phone', phone);
     setTlConnected(false);
     setRevoking(false);
