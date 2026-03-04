@@ -309,12 +309,13 @@ export const AuthCallback: React.FC = () => {
       const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
       if (isTestUserFlow && platform === 'teamleader') {
         localStorage.removeItem('is_test_user_flow');
+        const testPhone = localStorage.getItem('test_user_phone') ?? undefined;
         localStorage.removeItem('test_user_phone');
         await supabase
           .from('teamleader_users')
           .update({ is_test_user: true })
           .eq('user_id', session.user.id);
-        navigate('/dashboard');
+        navigate('/test-dashboard', testPhone ? { state: { phone: testPhone } } : {});
         return;
       }
 
