@@ -123,16 +123,12 @@ export const AuthCallback: React.FC = () => {
       }
       
       const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
-      const testPhone      = localStorage.getItem('test_user_phone') ?? undefined;
 
       const requestBody: Record<string, unknown> = {
         code,
         state,
         redirect_uri: redirectUri,
-        ...(isTestUserFlow && platform === 'teamleader' && {
-          is_test_user: true,
-          test_phone:   testPhone,
-        }),
+        ...(isTestUserFlow && platform === 'teamleader' && { is_test_user: true }),
       };
 
       // For custom Odoo implementations, pass the OAuth URL to the backend
@@ -185,16 +181,6 @@ export const AuthCallback: React.FC = () => {
       if (!result.success) {
         setStatus('error');
         setMessage(result.error || t('auth.authenticationFailed'));
-        return;
-      }
-
-      // Test user: tokens stored in test_users, no auth session needed
-      if (result.is_test_user) {
-        localStorage.removeItem('is_test_user_flow');
-        localStorage.removeItem('test_user_phone');
-        setStatus('success');
-        setMessage('Teamleader connected!');
-        setTimeout(() => navigate('/test-dashboard', testPhone ? { state: { phone: testPhone } } : {}), 1500);
         return;
       }
 
@@ -336,6 +322,21 @@ export const AuthCallback: React.FC = () => {
         // Redirect to WhatsApp verification with auth_user_id
         navigate(withUTM(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`));
         return;
+      }
+
+      // Test users skip Stripe — check DB flag (works for first-time and returning users)
+      if (platform === 'teamleader') {
+        const { data: tlUser } = await supabase
+          .from('teamleader_users')
+          .select('is_test_user')
+          .eq('user_id', session.user.id)
+          .maybeSingle();
+        if (tlUser?.is_test_user) {
+          localStorage.removeItem('is_test_user_flow');
+          localStorage.removeItem('test_user_phone');
+          navigate('/test-dashboard');
+          return;
+        }
       }
 
       const hasActiveSubscription = await checkSubscriptionStatus();

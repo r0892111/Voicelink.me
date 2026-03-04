@@ -23,7 +23,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { code, state, redirect_uri, is_test_user, test_phone } = await req.json();
+    const { code, state, redirect_uri, is_test_user } = await req.json();
 
     if (!code || !redirect_uri) {
       return new Response(
@@ -111,61 +111,6 @@ Deno.serve(async (req) => {
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-    // ── Test user shortcut ────────────────────────────────────────────────────
-    // Also detect test users who authenticate normally (without is_test_user flag)
-    // by checking if their teamleader_id is already recorded in test_users.
-    if (!is_test_user && !test_phone) {
-      const { data: existingTestUser } = await supabase
-        .from('test_users')
-        .select('phone')
-        .eq('teamleader_id', tlUser.id)
-        .maybeSingle();
-      if (existingTestUser?.phone) {
-        // Re-enter the test user path using the stored phone
-        await supabase
-          .from('test_users')
-          .update({
-            tl_access_token:     tlAccessToken,
-            tl_refresh_token:    tlRefreshToken,
-            tl_token_expires_at: expiresAt,
-            updated_at:          new Date().toISOString(),
-          })
-          .eq('phone', existingTestUser.phone);
-        return new Response(
-          JSON.stringify({ success: true, is_test_user: true }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
-        );
-      }
-    }
-
-    // Store tokens directly in test_users — no auth.users / teamleader_users row needed.
-    if (is_test_user && test_phone) {
-      const { error: testUpdateError } = await supabase
-        .from('test_users')
-        .update({
-          teamleader_id:       tlUser.id,
-          tl_access_token:     tlAccessToken,
-          tl_refresh_token:    tlRefreshToken,
-          tl_token_expires_at: expiresAt,
-          updated_at:          new Date().toISOString(),
-        })
-        .eq('phone', test_phone);
-
-      if (testUpdateError) {
-        console.error('test_users token update failed:', testUpdateError);
-        return new Response(
-          JSON.stringify({ success: false, error: 'Failed to save tokens for test user' }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
-        );
-      }
-
-      return new Response(
-        JSON.stringify({ success: true, is_test_user: true }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
-      );
-    }
-    // ── End test user shortcut ───────────────────────────────────────────────
-
     // 4. Find or create Supabase user
     // Check teamleader_users first (existing Teamleader user)
     // Remote schema uses teamleader_id (from divine_heart migration)
@@ -252,13 +197,17 @@ Deno.serve(async (req) => {
     }
 
     // 6. Upsert teamleader_users for mapping (teamleader_id, user_info)
-    // Remote schema: teamleader_id UNIQUE, tokens in oauth_tokens
+    // is_test_user is only set on insert (not overwritten on conflict) so the
+    // flag persists across re-logins once it has been set.
+    const tlUserPayload: Record<string, unknown> = {
+      user_id:       userId,
+      teamleader_id: tlUser.id,
+      user_info:     { email, name, teamleader_id: tlUser.id },
+    };
+    if (is_test_user) tlUserPayload.is_test_user = true;
+
     const { error: tlUserError } = await supabase.from('teamleader_users').upsert(
-      {
-        user_id: userId,
-        teamleader_id: tlUser.id,
-        user_info: { email, name, teamleader_id: tlUser.id },
-      },
+      tlUserPayload,
       { onConflict: 'teamleader_id' }
     );
 

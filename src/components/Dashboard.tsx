@@ -30,8 +30,7 @@ export const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
   const navigate          = useNavigate();
   const wa                = useWhatsAppConnect(user);
-  const [subChecking, setSubChecking]   = useState(true);
-  const [isTestUser, setIsTestUser]     = useState(false);
+  const [subChecking, setSubChecking]     = useState(true);
   const [portalLoading, setPortalLoading] = useState(false);
   const mounted = useRef(true);
   useEffect(() => () => { mounted.current = false; }, []);
@@ -66,7 +65,7 @@ export const Dashboard: React.FC = () => {
         .eq('user_id', session.user.id)
         .maybeSingle();
       if (tlUser?.is_test_user) {
-        if (mounted.current) { setIsTestUser(true); setSubChecking(false); }
+        if (mounted.current) navigate('/test-dashboard');
         return;
       }
 
@@ -290,23 +289,12 @@ export const Dashboard: React.FC = () => {
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isTestUser || (!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing')) ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
-                <Star className={`w-5 h-5 ${isTestUser || (!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing')) ? 'text-emerald-500' : 'text-navy/50'}`} />
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <Star className={`w-5 h-5 ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'text-emerald-500' : 'text-navy/50'}`} />
               </div>
-              <span className="font-general font-semibold text-navy text-sm">
-                {isTestUser ? 'Access' : 'Subscription'}
-              </span>
+              <span className="font-general font-semibold text-navy text-sm">Subscription</span>
             </div>
-            {isTestUser ? (
-              <>
-                <p className="text-xs text-navy/50 font-instrument">Test access</p>
-                <div className="mt-3 flex items-center space-x-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  <span className="text-xs font-medium text-emerald-600">Active</span>
-                </div>
-              </>
-            ) : (
-              <>
+            <>
                 {subChecking ? (
                   <div className="h-3.5 w-28 bg-navy/[0.07] rounded-full animate-pulse mt-0.5" />
                 ) : (
@@ -375,13 +363,12 @@ export const Dashboard: React.FC = () => {
                   </button>
                 )}
               </>
-            )}
           </div>
         </div>
       </section>
 
       {/* ── SUBSCRIPTION BANNER ── */}
-      {!isTestUser && (needsTrial || isLapsed) && (
+      {(needsTrial || isLapsed) && (
         <section className="px-6 pb-6">
           <div className="max-w-4xl mx-auto">
             {needsTrial ? (
