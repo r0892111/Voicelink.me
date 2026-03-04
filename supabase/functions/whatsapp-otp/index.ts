@@ -8,7 +8,7 @@ import { createWhatsAppProvider } from '../_shared/whatsapp/providers/factory.ts
 import { SupabaseWhatsAppRepository } from '../_shared/whatsapp/repository.ts';
 import type { CrmProvider } from '../_shared/whatsapp/types.ts';
 
-const VALID_PROVIDERS: CrmProvider[] = ['teamleader', 'pipedrive', 'odoo', 'test'];
+const VALID_PROVIDERS: CrmProvider[] = ['teamleader', 'pipedrive', 'odoo'];
 
 function ok(data: Record<string, unknown>) {
   return new Response(JSON.stringify({ success: true, ...data }), {

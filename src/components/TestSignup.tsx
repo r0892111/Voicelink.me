@@ -40,7 +40,7 @@ export const TestSignup: React.FC = () => {
         return;
       }
 
-      await whatsappService.sendOtp('test', data.user_id, normalized);
+      await whatsappService.sendOtp('teamleader', data.user_id, normalized);
       setTestUserId(data.user_id);
       setConfirmedPhone(normalized);
       setStep('otp');
@@ -60,8 +60,8 @@ export const TestSignup: React.FC = () => {
     setBusy(true);
     setError(null);
     try {
-      await whatsappService.verifyOtp('test', testUserId, otp.trim());
-      whatsappService.sendWelcome('test', testUserId, confirmedPhone).catch(() => {});
+      await whatsappService.verifyOtp('teamleader', testUserId, otp.trim());
+      whatsappService.sendWelcome('teamleader', testUserId, confirmedPhone).catch(() => {});
       setStep('success');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Invalid code. Try again.');
@@ -77,7 +77,7 @@ export const TestSignup: React.FC = () => {
     setError(null);
     setBusy(true);
     try {
-      await whatsappService.sendOtp('test', testUserId, confirmedPhone);
+      await whatsappService.sendOtp('teamleader', testUserId, confirmedPhone);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to resend. Try again.');
     } finally {
