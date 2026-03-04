@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { LogOut, User, Menu, X, ArrowLeft, ArrowRight } from 'lucide-react';
+import { LogOut, User, Menu, X, ArrowLeft, ArrowRight, ChevronRight } from 'lucide-react';
 import { AuthPage } from './components/AuthPage';
 import { AuthCallback } from './components/AuthCallback';
 import { Dashboard } from './components/Dashboard';
@@ -56,6 +56,12 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  React.useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileMenuOpen]);
+
   // Check if we're on the homepage
   const isHomepage = location.pathname === '/';
 
@@ -87,10 +93,10 @@ function App() {
           {/* Navigation */}
           {!isLandingPage && !isSignupPage && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
-            {/* ── White logo on hero (homepage only, fades out on scroll) ── */}
+            {/* ── White logo on hero (homepage only, fades out on scroll) — desktop only ── */}
             {isHomepage && (
               <div
-                className="absolute pointer-events-auto cursor-pointer group transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                className="hidden min-[868px]:block absolute pointer-events-auto cursor-pointer group transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
                 style={{
                   top: scrolled ? '16px' : '28px',
                   left: 'clamp(12px, 1.5vw, 28px)',
@@ -109,8 +115,8 @@ function App() {
               </div>
             )}
 
-            {/* ── Centered nav pill ── */}
-            <div className="flex justify-center" style={{ paddingTop: scrolled ? '12px' : '20px', transition: 'padding-top 0.5s cubic-bezier(0.4,0,0.2,1)' }}>
+            {/* ── Centered nav pill — desktop only ── */}
+            <div className="hidden min-[868px]:flex justify-center" style={{ paddingTop: scrolled ? '12px' : '20px', transition: 'padding-top 0.5s cubic-bezier(0.4,0,0.2,1)' }}>
               <div className="pointer-events-auto bg-porcelain/80 backdrop-blur-xl shadow-lg border border-navy/[0.06] rounded-full px-2 py-1.5 flex items-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
                 {/* Logo inside pill — slides in when scrolled past hero (or always on non-homepage) */}
                 <div
@@ -134,32 +140,35 @@ function App() {
                 </div>
 
                 {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center space-x-0.5">
+                <div className="hidden min-[868px]:flex items-center space-x-0.5">
                   {isHomepage && (
                     <>
                       <button
-                        onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                        onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                         className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
-                      >{t('navigation.features')}</button>
+                      >{t('navigation.howItWorks')}</button>
+                      <button
+                        onClick={() => document.getElementById('crm-preview')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                        className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
+                      >{t('navigation.integrations')}</button>
                       <button
                         onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                         className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
                       >{t('navigation.pricing')}</button>
                       <button
-                        onClick={() => window.open('https://calendly.com/alex-finitsolutions/30min', '_blank')}
-                        className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
-                      >
-                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                        </svg>
-                        <span>Schedule Online Meeting</span>
-                      </button>
-                      <button
                         onClick={openContactModal}
                         className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
                       >
-                        Contact Us
+                        {t('navigation.contact')}
                       </button>
+                      <a
+                        href="https://finitsolutions.be"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
+                      >
+                        {t('navigation.maatwerkAI')}
+                      </a>
                     </>
                   )}
 
@@ -206,89 +215,164 @@ function App() {
                   )}
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="md:hidden p-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all duration-200"
-                >
-                  {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                </button>
               </div>
             </div>
 
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-              <div className="pointer-events-auto md:hidden mx-4 mt-2 bg-porcelain/95 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-navy/[0.06]">
-                <div className="flex flex-col space-y-2">
-                  <button
-                    onClick={() => { setIsMobileMenuOpen(false); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-                    className="text-gray-600 hover:text-gray-900 font-general font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-gray-50 hover:shadow-sm text-left"
-                  >{t('navigation.features')}</button>
-                  <button
-                    onClick={() => { setIsMobileMenuOpen(false); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-                    className="text-gray-600 hover:text-gray-900 font-general font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-gray-50 hover:shadow-sm text-left"
-                  >{t('navigation.pricing')}</button>
-                  <button
-                    onClick={() => window.open('https://calendly.com/alex-finitsolutions/30min', '_blank')}
-                    className="flex items-center space-x-3 text-gray-600 hover:text-gray-900 font-general font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-gray-50 hover:shadow-sm text-left"
-                  >
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                    </svg>
-                    <span>Schedule Online Meeting</span>
-                  </button>
-                  <button
-                    onClick={openContactModal}
-                    className="text-gray-600 hover:text-gray-900 font-general font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-gray-50 hover:shadow-sm text-left"
-                  >
-                    Contact Us
-                  </button>
+          </nav>
+          )}
 
-                  {/* Mobile Language Switcher */}
-                  <div className="px-4 py-2">
+          {/* Mobile hamburger button — always visible */}
+          {!isLandingPage && !isSignupPage && !isMobileMenuOpen && (
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu"
+              className="min-[868px]:hidden fixed top-3 right-4 z-[10000] p-2.5 bg-white/90 backdrop-blur-sm shadow-sm text-gray-700 hover:text-gray-900 hover:bg-white rounded-full transition-all duration-200"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          )}
+
+          {/* Full-screen mobile menu overlay */}
+          {!isLandingPage && !isSignupPage && isMobileMenuOpen && (
+            <div className="min-[868px]:hidden fixed inset-0 z-[10000] bg-porcelain flex flex-col overflow-y-auto">
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 pt-10 pb-6 flex-shrink-0">
+                <img
+                  src="/Finit Voicelink Blue.svg"
+                  alt="VoiceLink"
+                  className="h-10 w-auto cursor-pointer"
+                  onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/')); }}
+                />
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Close menu"
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-navy/8 text-navy/70 hover:bg-navy/12 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Primary CTA */}
+              <div className="px-6 pb-6 flex-shrink-0">
+                {user ? (
+                  <button
+                    onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/dashboard')); }}
+                    className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-4 rounded-full flex items-center justify-center gap-2 text-base transition-colors"
+                  >
+                    <span>{t('navigation.dashboard')}</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => { setIsMobileMenuOpen(false); navigateWithTransition(withUTM('/signup')); }}
+                    className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-4 rounded-full flex items-center justify-center gap-2 text-base transition-colors"
+                  >
+                    <span>{t('navigation.getStarted')}</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+
+              {/* Nav links */}
+              <div className="flex-1 px-6">
+                <div className="divide-y divide-navy/[0.08]">
+                  {/* Language switcher — first item */}
+                  <div className="py-4">
                     <LanguageSwitcher />
                   </div>
-
-                  {user ? (
-                    <div className="flex flex-col space-y-2 pt-3 border-t border-gray-200/50">
-                     {isHomepage && (
-                       <button
-                         onClick={() => navigate(withUTM('/dashboard'))}
-                         className="text-blue-600 hover:text-blue-700 font-medium transition-all duration-200 px-4 py-3 rounded-xl hover:bg-blue-50 hover:shadow-sm text-left"
-                       >
-                         {t('navigation.dashboard')}
-                       </button>
-                     )}
-                      <div className="flex items-center space-x-3 px-4 py-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl">
-                        <div className="w-9 h-9 bg-navy rounded-xl flex items-center justify-center shadow-sm">
-                          <User className="w-4 h-4 text-white" />
-                        </div>
-                        <div>
-                          <div className="text-gray-900 font-semibold text-sm">{user.name}</div>
-                          <div className="text-xs text-gray-500 capitalize">{user.platform}</div>
-                        </div>
-                      </div>
+                  {isHomepage ? (
+                    <>
                       <button
-                        onClick={signOut}
-                        className="flex items-center space-x-3 text-red-600 hover:text-red-700 transition-all duration-200 px-4 py-3 rounded-xl hover:bg-red-50 hover:shadow-sm font-medium text-left"
+                        onClick={() => { setIsMobileMenuOpen(false); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+                        className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
                       >
-                        <LogOut className="w-4 h-4" />
-                        <span>{t('navigation.signOut')}</span>
+                        <span>{t('navigation.howItWorks')}</span>
+                        <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
                       </button>
-                    </div>
+                      <button
+                        onClick={() => { setIsMobileMenuOpen(false); document.getElementById('crm-preview')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+                        className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
+                      >
+                        <span>{t('navigation.integrations')}</span>
+                        <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
+                      </button>
+                      <button
+                        onClick={() => { setIsMobileMenuOpen(false); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+                        className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
+                      >
+                        <span>{t('navigation.pricing')}</span>
+                        <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
+                      </button>
+                      <button
+                        onClick={() => { setIsMobileMenuOpen(false); openContactModal(); }}
+                        className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
+                      >
+                        <span>{t('navigation.contact')}</span>
+                        <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
+                      </button>
+                      <a
+                        href="https://finitsolutions.be"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl active:opacity-60 transition-opacity"
+                      >
+                        <span>{t('navigation.maatwerkAI')}</span>
+                        <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
+                      </a>
+                    </>
                   ) : (
                     <button
-                      onClick={() => navigateWithTransition(withUTM('/signup'))}
-                      className="group text-white font-semibold py-3 px-7 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-navy hover:bg-navy-hover"
+                      onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/')); }}
+                      className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
                     >
-                      <span>{t('navigation.getStarted')}</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <span>{t('navigation.home')}</span>
+                      <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
+                    </button>
+                  )}
+                  {user && (
+                    <button
+                      onClick={() => { setIsMobileMenuOpen(false); signOut(); }}
+                      className="w-full flex items-center justify-between py-3.5 text-red-500 font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
+                    >
+                      <span>{t('navigation.signOut')}</span>
+                      <LogOut className="w-5 h-5 text-red-400 flex-shrink-0" />
                     </button>
                   )}
                 </div>
               </div>
-            )}
-          </nav>
+
+              {/* Phone card */}
+              <div className="mx-6 mt-3 flex-shrink-0">
+                <p className="text-xl font-bold text-navy font-general mb-3 text-center">{t('navigation.urgentQuestions')}</p>
+                <div className="bg-white rounded-2xl px-6 py-5 text-center border border-navy/[0.06] shadow-lg flex-shrink-0">
+                  <p className="text-xs font-semibold tracking-widest text-navy/40 uppercase mb-2">{t('navigation.callUs')}</p>
+                  <a
+                    href="tel:+32495702314"
+                    className="block text-3xl font-bold text-navy tracking-tight leading-none underline underline-offset-4 decoration-navy/30 active:opacity-60 transition-opacity"
+                  >
+                    +32 495 70 23 14
+                  </a>
+                  <div className="w-8 h-px bg-navy/15 mx-auto my-3" />
+                  <p className="text-sm text-navy/50">{t('navigation.callHours')}</p>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="px-6 pt-4 pb-10 flex-shrink-0 flex flex-col items-center gap-4">
+                {user && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-navy rounded-lg flex items-center justify-center">
+                      <User className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-navy font-semibold text-sm leading-tight">{user.name}</div>
+                      <div className="text-navy/50 text-xs capitalize leading-tight">{user.platform}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           )}
 
           {/* Routes */}

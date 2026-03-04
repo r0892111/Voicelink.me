@@ -76,16 +76,6 @@
     "privacyPolicy": "Politique de Confidentialité"
   },
   "auth": {
-    "callback": {
-      "authenticating": "Authentification...",
-      "authenticationSuccessful": "Authentification Réussie !",
-      "authenticationFailed": "Échec de l'Authentification",
-      "processingAuth": "Traitement de l'authentification {{platform}}...",
-      "completingAuth": "Finalisation de l'authentification...",
-      "successfullyAuthenticated": "Authentifié avec succès avec {{platform}} !",
-      "redirectingToCheckout": "Redirection vers la commande d'abonnement...",
-      "returnToHome": "Retour à l'Accueil"
-    },
     "modal": {
       "title": "Commencez Votre Essai Gratuit",
       "subtitle": "Connectez votre CRM et commencez à utiliser VoiceLink instantanément",
@@ -93,98 +83,8 @@
       "freeTrialDescription": "Votre essai gratuit commence immédiatement après la connexion de votre CRM.",
       "connectTeamleader": "Connecter Teamleader",
       "connectPipedrive": "Connecter Pipedrive",
-      "connectOdoo": "Connecter Odoo",
-      "startTrialInstantly": "Commencez votre essai gratuit instantanément",
-      "alreadyHaveAccount": "Vous avez déjà un compte ?",
-      "signInDescription": "Connectez-vous simplement avec votre plateforme CRM ci-dessus pour vous connecter",
-      "secureOauth": "OAuth Sécurisé",
-      "noSetupFees": "Aucuns Frais d'Installation",
-      "cancelAnytime": "Annuler à Tout Moment",
-      "termsAgreement": "En connectant votre CRM, vous acceptez nos {{termsLink}} et {{privacyLink}}",
-      "termsOfService": "Conditions de Service",
-      "privacyPolicy": "Politique de Confidentialité"
-    },
-    "page": {
-      "signupSubtitle": "Essai gratuit de 14 jours. Connectez votre CRM pour commencer.",
-      "continueTeamleader": "Continuer avec Teamleader",
-      "continuePipedrive": "Continuer avec Pipedrive",
-      "continueOdoo": "Continuer avec Odoo"
-    },
-    "passiveTermsConsent": "En vous inscrivant, vous acceptez notre",
-    "invalidAuthenticationPlatform": "Plateforme d'authentification invalide",
-    "preparingCheckout": "Configuration de votre compte...",
-    "redirectingToCheckout": "Redirection vers le paiement...",
-    "checkingSubscription": "Vérification de votre abonnement...",
-    "temporarilyUnavailable": "Temporairement indisponible",
-    "forOdooAccountsOnly": "Choisissez votre type de compte Odoo",
-    "forSelfHostedInstances": "Pour les instances Odoo auto-hébergées",
-    "backToOdooOptions": "Retour aux options Odoo",
-    "backToLoginOptions": "Retour aux options de connexion",
-    "backToHome": "Retour à l'accueil",
-    "createAccount": "Créer un Compte",
-    "signIn": "Se Connecter",
-    "importantEmailAddress": "Important : Adresse e-mail",
-    "emailMatchWarning": "Cela crée votre compte VoiceLink (pas votre mot de passe Odoo). Votre e-mail doit correspondre à votre e-mail Odoo, sinon l'intégration ne fonctionnera pas. Vous pouvez choisir le mot de passe que vous préférez - il sera crypté et stocké en toute sécurité.",
-    "mustMatchOdooEmail": "Doit correspondre exactement à votre adresse e-mail Odoo",
-    "email": "E-mail",
-    "password": "Mot de passe",
-    "confirmPassword": "Confirmer le Mot de passe",
-    "chooseSecurePassword": "Choisissez un mot de passe sécurisé (min. 6 caractères)",
-    "creatingAccount": "Création du Compte...",
-    "signingIn": "Connexion en cours...",
-    "alreadyHaveAccountSignIn": "Vous avez déjà un compte ? Se connecter",
-    "needAccountSignUp": "Besoin d'un compte ? S'inscrire",
-    "chooseYourOdooType": "Choisissez votre type Odoo",
-    "selectOdooInstallationType": "Sélectionnez le type d'installation Odoo que vous utilisez",
-    "odooCloudTitle": "Odoo.com (Cloud)",
-    "odooCloudDescription": "Utilisez ceci si votre compte Odoo fonctionne sur le cloud officiel d'Odoo — votre URL de connexion ressemble à votreentreprise.odoo.com.",
-    "selfHostedOdooTitle": "Odoo Auto-hébergé",
-    "selfHostedOdooDescription": "Utilisez ceci si votre Odoo fonctionne sur votre propre serveur ou domaine personnalisé — par exemple odoo.votreentreprise.com ou similaire.",
-    "connectingTo": "Connexion à {{provider}}...",
-    "pleaseWait": "Veuillez patienter...",
-    "error": "Erreur",
-    "signUp": "S'inscrire",
-    "logIn": "Se Connecter",
-    "signInToAccount": "Se Connecter à Votre Compte",
-    "authenticationFailed": "Échec de l'authentification",
-    "missingAuthenticationParameters": "Paramètres d'authentification manquants",
-    "invalidStateParameter": "Paramètre d'état invalide",
-    "failedToEstablishSession": "Échec de l'établissement de la session",
-    "completingAuthentication": "Finalisation de l'authentification...",
-    "authenticationFailedFor": "Échec de l'authentification pour {{provider}}"
-  },
-  "teamManagement": {
-    "title": "Gestion d'Équipe",
-    "subtitle": "Gérez vos membres d'équipe et invitations",
-    "accountOwner": "Propriétaire du Compte",
-    "admin": "Admin",
-    "teamMembers": "Membres d'Équipe",
-    "teamSize": "Taille de l'Équipe",
-    "slotsRemaining": "{{count}} places restantes",
-    "pending": "En Attente",
-    "verified": "Vérifié",
-    "notVerified": "Non Vérifié",
-    "addNewMember": "Ajouter un Nouveau Membre",
-    "selectCompanyUser": "Sélectionner un Utilisateur de l'Entreprise",
-    "loadingUsers": "Chargement des utilisateurs de l'entreprise...",
-    "selectedUserDetails": "Détails de l'Utilisateur Sélectionné",
-    "name": "Nom",
-    "email": "E-mail",
-    "phone": "Téléphone",
-    "notProvided": "Non fourni",
-    "whatsappNumber": "Numéro WhatsApp (si différent du téléphone)",
-    "whatsappNumberPlaceholder": "+33 1 23 45 67 89",
-    "fullName": "Nom Complet",
-    "fullNamePlaceholder": "Entrez le nom complet",
-    "emailAddress": "Adresse E-mail",
-    "emailPlaceholder": "Entrez l'adresse e-mail",
-    "sendingInvitation": "Envoi de l'Invitation...",
-    "saveAndInvite": "Sauvegarder et Inviter",
-    "clearSelection": "Effacer la Sélection",
-    "addNewUser": "Ajouter un Nouvel Utilisateur",
-    "teamLimitReached": "Limite d'Équipe Atteinte",
-    "teamLimitMessage": "Vous avez atteint votre limite d'équipe de {{total}} utilisateurs. Mettez à niveau votre abonnement pour ajouter plus de membres d'équipe.",
-    "upgradeSubscription": "Mettre à Niveau l'Abonnement"
+      "connectOdoo": "Connecter Odoo"
+    }
   },
   "teamManagement": {
     "title": "Gestion d'Équipe",
@@ -302,7 +202,14 @@
     "support": "Support",
     "signOut": "Se déconnecter",
     "getStarted": "Commencer Gratuitement",
-    "backToHome": "Retour à l'accueil"
+    "backToHome": "Retour à l'accueil",
+    "howItWorks": "Comment ça marche",
+    "integrations": "Ce que ça fait",
+    "contact": "Contact",
+    "maatwerkAI": "IA sur mesure",
+    "urgentQuestions": "Préférez-vous un contact direct ?",
+    "callUs": "Appelez-nous",
+    "callHours": "lun-sam · 8h30-19h"
   },
   "hero": {
     "title": "Simplement...",
@@ -329,17 +236,6 @@
     "dontSeeYourCrm": "Vous utilisez un autre CRM ou logiciel ? Nous créons des solutions sur mesure pour toute plateforme que vous utilisez au quotidien.",
     "contactForCustom": "Contactez-nous pour une solution sur mesure"
   },
-  "auth": {
-    "modal": {
-      "title": "Commencez Votre Essai Gratuit",
-      "subtitle": "Connectez votre CRM et commencez à utiliser VoiceLink instantanément",
-      "freeTrialBanner": "Essai Gratuit de 14 Jours Commence Maintenant",
-      "freeTrialDescription": "Votre essai gratuit commence immédiatement après la connexion de votre CRM.",
-      "connectTeamleader": "Connecter Teamleader",
-      "connectPipedrive": "Connecter Pipedrive",
-      "connectOdoo": "Connecter Odoo"
-    }
-  },
   "dashboard": {
     "welcome": "Bon retour, {{name}} !",
     "connectedToPlatform": "Vous êtes connecté à {{platform}}. Vos données CRM et outils sont prêts à utiliser.",
@@ -347,13 +243,11 @@
     "upgradeExperience": "Améliorez Votre Expérience",
     "welcomeDefault": "Bon retour, Utilisateur Premium !",
     "subscriptionActive": "Votre abonnement VoiceLink est actif",
-    
     "platformConnection": {
       "title": "{{platform}}",
       "connectedActive": "Connecté et Actif",
       "integrationReady": "L'intégration est en ligne et prête pour les notes vocales"
     },
-
     "accountProfile": {
       "title": "Profil du Compte",
       "subtitle": "Informations de votre compte CRM",
@@ -366,7 +260,6 @@
       "whatsappStatus": "Statut WhatsApp",
       "phone": "Téléphone",
       "accountId": "ID du Compte",
-
       "emailStatus": "Statut E-mail",
       "contact": "Contact",
       "account": "Compte",
@@ -659,8 +552,8 @@
     "tailoredImplementation": "Implémentation sur mesure"
   },
   "finalCta": {
-    "title": "Prêt à Transformer Votre Flux de Travail ?",
-    "subtitle": "Plus vous ajoutez d'utilisateurs, plus vous économisez. Commencez gratuitement, évoluez à un prix abordable. Connectez votre WhatsApp et commencez votre essai gratuit aujourd'hui.",
+    "title": "Parlez. Votre CRM fait le reste.",
+    "subtitle": "Connectez WhatsApp, envoyez un message vocal et VoiceLink inscrit contacts, notes et tâches directement dans votre CRM.",
     "startFreeTrial": "Commencer l'Essai Gratuit",
     "watchDemo": "Voir la Démo",
     "freeTrialFeatures": {
@@ -840,16 +733,29 @@
   "faq": {
     "title": "Questions fréquentes",
     "q1": "Comment fonctionne VoiceLink ?",
-    "a1": "Envoyez une note vocale WhatsApp à VoiceLink. Notre IA la transcrit, extrait les contacts, tâches et notes, puis synchronise tout automatiquement avec votre CRM.",
-    "q2": "Quels CRM sont supportés ?",
-    "a2": "Nous supportons actuellement Teamleader, Pipedrive et Odoo. D'autres intégrations arrivent bientôt — contactez-nous si vous avez besoin d'une connexion sur mesure.",
-    "q3": "Mes données sont-elles sécurisées ?",
-    "a3": "Oui. Nous utilisons OAuth pour les connexions CRM, chiffrons toutes les données en transit et au repos, et ne stockons jamais vos enregistrements vocaux après traitement.",
-    "q4": "Combien de temps prend l'installation ?",
-    "a4": "Environ 2 minutes. Connectez votre CRM en un clic, vérifiez votre numéro WhatsApp et c'est parti.",
-    "q5": "Puis-je utiliser VoiceLink en plusieurs langues ?",
-    "a5": "Oui. VoiceLink supporte l'anglais, le néerlandais, le français et l'allemand pour le traitement vocal et l'interface.",
-    "q6": "Que se passe-t-il pendant l'essai gratuit ?",
-    "a6": "Vous avez accès à toutes les fonctionnalités pendant 14 jours. Aucune carte bancaire requise. Annulez à tout moment."
+    "a1": "Envoyez un message vocal ou texte WhatsApp à VoiceLink. Notre IA comprend ce que vous voulez dire et synchronise automatiquement les bonnes actions dans votre CRM — contacts, tâches, notes, réunions et plus encore. Le tout en moins de 30 secondes.",
+    "q2": "Dois-je installer une application ?",
+    "a2": "Non. VoiceLink fonctionne entièrement via WhatsApp, que vous utilisez déjà. Ajoutez notre numéro VoiceLink à vos contacts, vérifiez votre numéro une fois, et c'est prêt. Aucune application supplémentaire, aucun nouveau mot de passe.",
+    "q3": "Combien de temps prend l'installation ?",
+    "a3": "Environ 2 minutes. Connectez votre CRM en un clic, vérifiez votre numéro WhatsApp, et c'est tout. Aucune compétence technique ou support informatique nécessaire.",
+    "q4": "Comment VoiceLink sait-il ce que je veux dire ?",
+    "a4": "VoiceLink reconnaît automatiquement les noms, entreprises, deals et autres données déjà dans votre CRM. Il lie votre message au bon contact ou enregistrement. Si quelque chose n'existe pas encore, VoiceLink peut le créer automatiquement.",
+    "q5": "Mes données sont-elles sécurisées ?",
+    "a5": "Oui. VoiceLink est conforme au RGPD européen. Nous utilisons OAuth pour les connexions CRM, chiffrons toutes les données en transit et ne stockons jamais vos enregistrements vocaux après traitement.",
+    "q6": "Combien coûte VoiceLink après l'essai gratuit ?",
+    "a6": "Après 14 jours d'essai gratuit, choisissez un abonnement adapté à votre usage et à la taille de votre équipe. Tarifs transparents, sans frais cachés, résiliable mensuellement. Aucune carte bancaire requise pour l'essai.",
+    "q7": "VoiceLink fonctionne-t-il en plusieurs langues ?",
+    "a7": "Oui. VoiceLink comprend pratiquement toutes les langues. Vous pouvez parler ou écrire dans la langue qui vous convient — néerlandais, anglais, français, allemand, espagnol et bien d'autres. VoiceLink répond toujours dans la même langue que vous."
+  },
+  "footer": {
+    "ctaHeadline": "Parlez. On s'occupe du reste.",
+    "ctaSubline": "Un seul message vocal sur WhatsApp suffit pour garder votre CRM à jour.",
+    "copyright": "© 2025 Finit Solutions",
+    "privacy": "Confidentialité",
+    "saasAgreement": "Accord SaaS",
+    "disclaimer": "Avertissement",
+    "cookiePolicy": "Politique des cookies",
+    "cookieSettings": "Paramètres des cookies",
+    "support": "Support"
   }
 }

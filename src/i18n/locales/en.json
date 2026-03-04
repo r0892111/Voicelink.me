@@ -19,9 +19,9 @@
     "premiumMonthly": "Premium Monthly",
     "advancedCrmFeatures": "Advanced CRM features and priority support",
     "updateDatabaseName": "Update database name",
-    "enterOdooDatabaseName": "Enter your Odoo database name",
-    "enterNewApiKey": "Enter new API key to update",
-    "enterOdooApiKey": "Enter your Odoo API key",
+    "enterOdooDatabaseName": "Enter Odoo database name",
+    "enterNewApiKey": "Enter new API key",
+    "enterOdooApiKey": "Enter Odoo API key",
     "odooApiInstructions": {
       "title": "How to get your Odoo API Key",
       "step1": "Log in to your Odoo account",
@@ -43,10 +43,6 @@
     "active": "Active",
     "inactive": "Inactive",
     "notProvided": "Not provided",
-    "updateDatabaseName": "Update database name",
-    "enterOdooDatabaseName": "Enter Odoo database name",
-    "enterNewApiKey": "Enter new API key",
-    "enterOdooApiKey": "Enter Odoo API key",
     "selectUserAccount": "Select your user account",
     "accessRightsTab": "Go to the 'Access Rights' tab",
     "generateOrCopyApiKey": "Generate or copy your API key",
@@ -112,7 +108,14 @@
     "support": "Support",
     "signOut": "Sign Out",
     "getStarted": "Get Started Free",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "howItWorks": "How it works",
+    "integrations": "What it does",
+    "contact": "Contact",
+    "maatwerkAI": "Custom AI",
+    "urgentQuestions": "Prefer direct contact?",
+    "callUs": "Call us anytime",
+    "callHours": "Mon-Sat · 8:30-19:00"
   },
   "hero": {
     "title": "Just...",
@@ -640,8 +643,8 @@
     "tailoredImplementation": "Tailored implementation"
   },
   "finalCta": {
-    "title": "Ready to Transform Your Workflow?",
-    "subtitle": "The more users you add, the more you save. Start free, scale affordably. Connect your WhatsApp and start your free trial today.",
+    "title": "Talk. Your CRM does the rest.",
+    "subtitle": "Connect WhatsApp, send a voice note, and VoiceLink writes contacts, notes and tasks straight to your CRM.",
     "startFreeTrial": "Start Free Trial",
     "watchDemo": "Watch Demo",
     "freeTrialFeatures": {
@@ -667,6 +670,8 @@
     "prefersThursday": "Prefers Thursday PM calls"
   },
   "footer": {
+    "ctaHeadline": "Talk. We'll take care of the rest.",
+    "ctaSubline": "One voice note on WhatsApp is all it takes to keep your CRM up to date.",
     "copyright": "© 2025 Finit Solutions",
     "privacy": "Privacy",
     "saasAgreement": "SaaS Agreement",
@@ -834,16 +839,18 @@
   "faq": {
     "title": "Frequently asked questions",
     "q1": "How does VoiceLink work?",
-    "a1": "Send a WhatsApp voice note to VoiceLink. Our AI transcribes it, extracts contacts, tasks, and notes, then syncs everything to your CRM automatically.",
-    "q2": "Which CRMs are supported?",
-    "a2": "We currently support Teamleader, Pipedrive, and Odoo. More integrations are coming soon — contact us if you need a custom connection.",
-    "q3": "Is my data secure?",
-    "a3": "Yes. We use OAuth for CRM connections, encrypt all data in transit and at rest, and never store your voice recordings after processing.",
-    "q4": "How long does setup take?",
-    "a4": "About 2 minutes. Connect your CRM with one click, verify your WhatsApp number, and you're ready to go.",
-    "q5": "Can I use VoiceLink in multiple languages?",
-    "a5": "Yes. VoiceLink supports English, Dutch, French, and German for voice processing and the interface.",
-    "q6": "What happens during the free trial?",
-    "a6": "You get full access to all features for 14 days. No credit card required. Cancel anytime."
+    "a1": "Send a WhatsApp voice note or text message to VoiceLink. Our AI understands what you mean and automatically syncs the right actions to your CRM — contacts, tasks, notes, meetings, and more. The whole process takes less than 30 seconds.",
+    "q2": "Do I need to install an app?",
+    "a2": "No. VoiceLink works entirely through WhatsApp, which you already have on your phone. Add our VoiceLink number as a contact, verify your number once, and you're ready to go. No extra app, no new password.",
+    "q3": "How long does setup take?",
+    "a3": "About 2 minutes. Connect your CRM with one click, verify your WhatsApp number, and you're done. No technical knowledge or IT support needed.",
+    "q4": "How does VoiceLink know what I mean?",
+    "a4": "VoiceLink automatically recognizes names, companies, deals, and other data already in your CRM. It links your message to the right contact or record automatically. If something doesn't exist yet, VoiceLink can create it for you.",
+    "q5": "Is my data secure?",
+    "a5": "Yes. VoiceLink is built in compliance with European GDPR regulations. We use OAuth for CRM connections, encrypt all data in transit, and never store your voice recordings after processing.",
+    "q6": "What does VoiceLink cost after the free trial?",
+    "a6": "After your 14-day free trial, choose a plan that fits your usage and team size. Transparent pricing, no hidden costs, cancel monthly. No credit card required for the trial.",
+    "q7": "Does VoiceLink work in multiple languages?",
+    "a7": "Yes. VoiceLink understands virtually all languages. You can speak or type in whichever language feels most natural — Dutch, English, French, German, Spanish, and more. VoiceLink always responds in the same language you used."
   }
 }

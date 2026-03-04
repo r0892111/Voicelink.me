@@ -11,7 +11,7 @@ interface Language {
 
 const languages: Language[] = [
   { code: 'en', name: 'English', nativeName: 'English', flag: '🇺🇸' },
-  { code: 'nl', name: 'Dutch', nativeName: 'Nederlands', flag: '🇳🇱' },
+  { code: 'nl', name: 'Dutch', nativeName: 'Nederlands', flag: '🇧🇪' },
   { code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷' },
   { code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
 ];
@@ -34,11 +34,11 @@ export const LanguageSwitcher: React.FC = () => {
         className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
         aria-label={t('common.changeLanguage')}
       >
-        <Globe className="w-4 h-4 text-gray-600" />
-        <span className="text-sm font-medium text-gray-700">
+        <Globe className="w-5 h-5 text-gray-600" />
+        <span className="text-base font-medium text-gray-700">
           {currentLang.flag} {currentLang.code.toUpperCase()}
         </span>
-        <ChevronDown className={`w-4 h-4 text-gray-600 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-5 h-5 text-gray-600 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       
       {isOpen && (

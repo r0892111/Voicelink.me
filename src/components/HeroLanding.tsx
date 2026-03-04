@@ -10,7 +10,7 @@ const WhatsAppPreview: React.FC = () => {
 
   return (
     <div
-      className="w-full max-w-[360px] sm:max-w-[380px] rounded-[20px] overflow-hidden shadow-2xl border"
+      className="w-[360px] rounded-[20px] overflow-hidden shadow-2xl border"
       style={{
         backgroundColor: '#0b141a',
         borderColor: 'rgba(0,0,0,0.08)',
@@ -164,37 +164,72 @@ export const HeroLanding: React.FC = () => {
           />
         </div>
 
-        <div className="flex-1 flex items-start justify-end pt-4 sm:pt-10">
-          <div className="w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
-            <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 2xl:gap-20 items-center lg:items-start lg:justify-end">
-              <div className="space-y-3 sm:space-y-5 animate-fade-in-left flex flex-col items-center lg:items-start text-center lg:text-left flex-1 min-w-0">
-                <h1
-                  className="font-general font-bold text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-tight animate-scale-in text-navy whitespace-nowrap"
-                  style={{ animationDelay: '0.2s' }}
-                >
-                  <span className="underline">Talk</span> to your CRM with{' '}
-                  <span className="underline">VoiceLink</span>.
-                </h1>
+        {/* Content area — takes remaining height */}
+        <div className="flex-1 relative">
 
-                <button
-                  onClick={handleStartTrial}
-                  className="vl-cta-nudge group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
-                  style={{ animation: 'vlCtaNudge 2.2s ease-in-out infinite' }}
-                >
-                  <span className="text-sm sm:text-base">Start free trial now</span>
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-
-                <div className="text-[11px] sm:text-sm text-center lg:text-left text-muted-blue">
-                  Setup your VoiceLink WhatsApp in 3 minutes
-                </div>
+          {/* ── DESKTOP (lg+): side-by-side, static, no animations ── */}
+          <div className="hidden lg:flex h-full pt-4 px-10 2xl:px-16">
+            {/* Text — left column */}
+            <div style={{ flex: '0 0 46%' }} className="pt-10 xl:pt-12 space-y-5 flex flex-col items-start text-left">
+              <h1
+                className="font-general font-bold text-4xl xl:text-6xl 2xl:text-8xl leading-tight text-navy whitespace-nowrap"
+              >
+                <span className="underline">Talk</span> to your CRM with{' '}
+                <span className="underline">VoiceLink</span>.
+              </h1>
+              <button
+                onClick={handleStartTrial}
+                className="vl-cta-nudge group text-white font-semibold py-4 px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
+                style={{ animation: 'vlCtaNudge 2.2s ease-in-out infinite' }}
+              >
+                <span className="text-base">Start free trial now</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <div className="text-sm text-muted-blue">
+                Setup your VoiceLink WhatsApp in 3 minutes
               </div>
+            </div>
 
-              <div className="flex-shrink-0 flex flex-col items-center lg:items-end gap-3 animate-fade-in-up lg:mr-[5vw] 2xl:mr-[8vw]" style={{ animationDelay: '0.25s' }}>
+            {/* Phone — right column, centered, clipped to hero height, no animation */}
+            <div style={{ flex: '1' }} className="flex justify-center items-start pt-2 overflow-hidden h-full">
+              <div className="lg:scale-[1.1] xl:scale-[1.2] 2xl:scale-[1.4] origin-top">
                 <WhatsAppPreview />
               </div>
             </div>
           </div>
+
+          {/* ── MOBILE / TABLET (< lg): text top, phone anchored to bottom ── */}
+
+          {/* Text block — sits at top in normal flow */}
+          <div className="lg:hidden px-4 sm:px-6 pt-4 sm:pt-8 space-y-3 sm:space-y-5 flex flex-col items-center text-center animate-fade-in-left">
+            <h1
+              className="font-general font-bold text-2xl sm:text-4xl md:text-5xl leading-tight animate-scale-in text-navy whitespace-nowrap"
+              style={{ animationDelay: '0.2s' }}
+            >
+              <span className="underline">Talk</span> to your CRM with{' '}
+              <span className="underline">VoiceLink</span>.
+            </h1>
+            <button
+              onClick={handleStartTrial}
+              className="vl-cta-nudge group text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
+              style={{ animation: 'vlCtaNudge 2.2s ease-in-out infinite' }}
+            >
+              <span className="text-sm sm:text-base">Start free trial now</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <div className="text-[11px] sm:text-sm text-muted-blue">
+              Setup your VoiceLink WhatsApp in 3 minutes
+            </div>
+          </div>
+
+          {/* Phone — absolutely pinned to bottom center, fixed size, clips at overflow-hidden */}
+          <div
+            className="lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2 animate-fade-in-up"
+            style={{ animationDelay: '0.25s' }}
+          >
+            <WhatsAppPreview />
+          </div>
+
         </div>
       </section>
     </div>

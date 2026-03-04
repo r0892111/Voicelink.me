@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { CheckCircle, Play, ArrowRight } from 'lucide-react';
+import { CheckCircle, Play, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { useI18n } from '../hooks/useI18n';
 import { trackCTAClick } from '../utils/analytics';
 import { withUTM } from '../utils/utm';
 import { gsap, ScrollTrigger } from '../lib/gsap';
 import { usePageTransition } from '../hooks/usePageTransition';
+import { useIsCompactHero } from '../hooks/useBreakpoint';
 
 const typewriterPhrases = [
   "to your CRM.",
@@ -375,7 +376,7 @@ const cardStrings = {
     c5InputPlaceholder: 'Typ een bericht',
     c5Timestamp: 'Zojuist',
     // Card 6
-    c6Title: 'Slimme Notities',
+    c6Title: 'Dump je gedachten',
     c6Voice: 'Oké, net weg bij Janssen, ze willen de pilot nog twee maanden verlengen, oh en ze maken zich zorgen over de API-limieten van het huidige plan. Trouwens, ik kwam Peter van CloudSync tegen op de parking, blijkbaar is hun CRM-migratie helemaal vastgelopen, misschien de moeite om contact op te nemen, hij leek gefrustreerd.',
     c6Note1Header: 'Janssen & Co',
     c6Note1Bullet1: 'Wil pilot met 2 maanden verlengen',
@@ -472,7 +473,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
             <path d="M3 9l1.5-5h15L21 9" /><path d="M3 9h18v12H3V9z" /><path d="M9 21V14h6v7" />
           </svg>
           <div className="min-w-0">
-            <div className="text-slate-blue/50 uppercase tracking-wider" style={{ fontSize: 'clamp(8px, 0.65vw, 10px)' }}>{s.c1Company}</div>
+            <div className="text-slate-blue/50 uppercase tracking-wider" style={{ fontSize: 'clamp(10px, 0.65vw, 10px)' }}>{s.c1Company}</div>
             <div className="font-medium text-navy truncate" style={{ fontSize: 'clamp(12px, 1vw, 15px)' }}>TechFlow Solutions</div>
           </div>
         </div>
@@ -482,7 +483,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
           </svg>
           <div className="min-w-0">
-            <div className="text-slate-blue/50 uppercase tracking-wider" style={{ fontSize: 'clamp(8px, 0.65vw, 10px)' }}>{s.c1Phone}</div>
+            <div className="text-slate-blue/50 uppercase tracking-wider" style={{ fontSize: 'clamp(10px, 0.65vw, 10px)' }}>{s.c1Phone}</div>
             <div className="text-navy" style={{ fontSize: 'clamp(12px, 1vw, 15px)' }}>+32 456 789 123</div>
           </div>
         </div>
@@ -492,7 +493,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
             <rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" />
           </svg>
           <div className="min-w-0">
-            <div className="text-slate-blue/50 uppercase tracking-wider" style={{ fontSize: 'clamp(8px, 0.65vw, 10px)' }}>{s.c1Email}</div>
+            <div className="text-slate-blue/50 uppercase tracking-wider" style={{ fontSize: 'clamp(10px, 0.65vw, 10px)' }}>{s.c1Email}</div>
             <div className="text-navy/80 truncate" style={{ fontSize: 'clamp(12px, 1vw, 15px)' }}>sarah@techflow.be</div>
           </div>
         </div>
@@ -501,13 +502,13 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
       <div className="mt-3 flex flex-wrap gap-1.5">
         <div
           className="px-2.5 py-0.5 rounded-full bg-navy text-white font-medium"
-          style={{ fontSize: 'clamp(9px, 0.75vw, 11px)' }}
+          style={{ fontSize: 'clamp(10px, 0.75vw, 11px)' }}
         >
           {s.c1TagHot}
         </div>
         <div
           className="px-2.5 py-0.5 rounded-full bg-glow-blue/20 text-navy/80 font-medium"
-          style={{ fontSize: 'clamp(9px, 0.75vw, 11px)' }}
+          style={{ fontSize: 'clamp(10px, 0.75vw, 11px)' }}
         >
           {s.c1TagEnterprise}
         </div>
@@ -532,48 +533,6 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
       <VoiceQuote text={s.c2Voice} compact waveformIndex={1} hideArrow />
       {/* Curly arrow + calendar wrapper */}
       <div className="relative">
-        {/* Curly SVG arrow — starts right (under transcript), twirls, points to Wed 5PM slot */}
-        <svg
-          className="absolute pointer-events-none"
-          style={{
-            width: '100%',
-            height: '100%',
-            top: 0,
-            left: 0,
-            zIndex: 2,
-            overflow: 'visible',
-          }}
-          viewBox="0 0 200 200"
-          preserveAspectRatio="none"
-          fill="none"
-        >
-          <path
-            d={[
-              'M 114 8',            // start: right after "Follow-up Scheduled" header
-              'C 118 8, 120 12, 120 20',  // horizontal exit, then curve down-right
-              'C 122 38, 122 44, 114 44', // twirl: quarter arc top-right
-              'C 106 44, 102 40, 102 34', // twirl: quarter arc bottom-left
-              'C 102 26, 108 22, 116 28', // twirl: exit up-right
-              'C 134 34, 132 52, 120 64', // sweep further right then down
-              'C 112 73, 111 78, 111 82', // smooth vertical approach into target
-            ].join(' ')}
-            stroke="#1A2D63"
-            strokeOpacity="0.35"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-          {/* Arrowhead pointing down into the 5PM slot */}
-          <path
-            d="M 106 78 L 111 86 L 116 78"
-            stroke="#1A2D63"
-            strokeOpacity="0.4"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          />
-        </svg>
-
         {/* CRM header */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
@@ -594,7 +553,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
               <div
                 key={day}
                 className={`text-center py-1.5 border-l border-navy/[0.06] ${idx === 2 ? 'font-semibold text-navy' : 'text-slate-blue/50'}`}
-                style={{ fontSize: 'clamp(9px, 0.75vw, 12px)' }}
+                style={{ fontSize: 'clamp(10px, 0.75vw, 12px)' }}
               >
                 {day}
               </div>
@@ -645,7 +604,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
             style={{
               width: 'clamp(1.5rem, 1.8vw, 2rem)',
               height: 'clamp(1.5rem, 1.8vw, 2rem)',
-              fontSize: 'clamp(8px, 0.65vw, 11px)',
+              fontSize: 'clamp(10px, 0.65vw, 11px)',
             }}
           >
             SM
@@ -675,7 +634,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
         </div>
         <div
           className="mt-1.5 flex items-center gap-1.5 text-slate-blue/40 italic"
-          style={{ fontSize: 'clamp(9px, 0.75vw, 12px)' }}
+          style={{ fontSize: 'clamp(10px, 0.75vw, 12px)' }}
         >
           <svg style={{ width: 'clamp(10px, 0.8vw, 13px)', height: 'clamp(10px, 0.8vw, 13px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
             <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
@@ -726,7 +685,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
               className={`text-center py-1.5 ${i < 3 ? 'border-r border-navy/[0.06]' : ''} ${
                 i === 2 ? 'font-semibold text-navy bg-navy/[0.05]' : 'text-slate-blue/50'
               }`}
-              style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}
+              style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}
             >
               {col}
             </div>
@@ -745,7 +704,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
                 className="rounded-lg border-2 border-dashed border-navy/[0.12] p-2 flex flex-col items-center justify-center"
                 style={{ animation: 'ghostFadeIn 1s ease-out 0.5s both', minHeight: 'clamp(60px, 5.5vw, 95px)' }}
               >
-                <div className="text-navy/20 font-medium truncate w-full text-center" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>
+                <div className="text-navy/20 font-medium truncate w-full text-center" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>
                   BuildPro
                 </div>
               </div>
@@ -778,7 +737,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
                     <rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
                   </svg>
                 </div>
-                <span className="font-semibold text-navy truncate" style={{ fontSize: 'clamp(9px, 0.8vw, 12px)' }}>BuildPro</span>
+                <span className="font-semibold text-navy truncate" style={{ fontSize: 'clamp(10px, 0.8vw, 12px)' }}>BuildPro</span>
               </div>
               <div className="font-bold text-navy" style={{ fontSize: 'clamp(12px, 1.05vw, 16px)' }}>€45,000</div>
               <div className="flex items-center gap-1 mt-1">
@@ -793,7 +752,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
                 >
                   JV
                 </div>
-                <span className="text-slate-blue/70 truncate" style={{ fontSize: 'clamp(8px, 0.65vw, 10px)' }}>Jan de Vries</span>
+                <span className="text-slate-blue/70 truncate" style={{ fontSize: 'clamp(10px, 0.65vw, 10px)' }}>Jan de Vries</span>
               </div>
             </div>
           </div>
@@ -810,7 +769,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
           style={{
             width: 'clamp(1.5rem, 1.8vw, 2rem)',
             height: 'clamp(1.5rem, 1.8vw, 2rem)',
-            fontSize: 'clamp(8px, 0.65vw, 11px)',
+            fontSize: 'clamp(10px, 0.65vw, 11px)',
           }}
         >
           JV
@@ -1002,7 +961,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
               <p>{s.c5Goodbye}</p>
             </div>
           </div>
-          <div className="text-slate-blue/40 mt-1 ml-1" style={{ fontSize: 'clamp(8px, 0.65vw, 10px)' }}>{s.c5Timestamp}</div>
+          <div className="text-slate-blue/40 mt-1 ml-1" style={{ fontSize: 'clamp(10px, 0.65vw, 10px)' }}>{s.c5Timestamp}</div>
         </div>
       </div>
 
@@ -1056,25 +1015,25 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
           {/* Note header with contact */}
           <div
             className="flex items-center gap-2 border-b border-navy/[0.06]"
-            style={{ padding: 'clamp(6px, 0.5vw, 10px) clamp(8px, 0.7vw, 12px)' }}
+            style={{ padding: 'clamp(6px, 0.5vw, 10px) clamp(10px, 0.7vw, 12px)' }}
           >
             <svg style={{ width: 'clamp(12px, 0.9vw, 15px)', height: 'clamp(12px, 0.9vw, 15px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy/40 flex-shrink-0">
               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="13" y2="17" />
             </svg>
             <span className="font-semibold text-navy" style={{ fontSize: 'clamp(10px, 0.85vw, 13px)' }}>{s.c6Note1Header}</span>
-            <span className="text-slate-blue/40 ml-auto" style={{ fontSize: 'clamp(8px, 0.65vw, 11px)' }}>{s.c6Timestamp}</span>
+            <span className="text-slate-blue/40 ml-auto" style={{ fontSize: 'clamp(10px, 0.65vw, 11px)' }}>{s.c6Timestamp}</span>
           </div>
           {/* Note body — lined paper feel */}
           <div
-            style={{ padding: 'clamp(6px, 0.55vw, 10px) clamp(8px, 0.7vw, 12px)' }}
+            style={{ padding: 'clamp(6px, 0.55vw, 10px) clamp(10px, 0.7vw, 12px)' }}
           >
             <div className="space-y-1">
               <div className="flex items-start gap-1.5">
-                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
                 <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.8vw, 13px)', lineHeight: '1.4' }}>{s.c6Note1Bullet1}</span>
               </div>
               <div className="flex items-start gap-1.5">
-                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
                 <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.8vw, 13px)', lineHeight: '1.4' }}>{s.c6Note1Bullet2}</span>
               </div>
             </div>
@@ -1090,24 +1049,24 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
         >
           <div
             className="flex items-center gap-2 border-b border-navy/[0.06]"
-            style={{ padding: 'clamp(6px, 0.5vw, 10px) clamp(8px, 0.7vw, 12px)' }}
+            style={{ padding: 'clamp(6px, 0.5vw, 10px) clamp(10px, 0.7vw, 12px)' }}
           >
             <svg style={{ width: 'clamp(12px, 0.9vw, 15px)', height: 'clamp(12px, 0.9vw, 15px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy/40 flex-shrink-0">
               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="13" y2="17" />
             </svg>
             <span className="font-semibold text-navy" style={{ fontSize: 'clamp(10px, 0.85vw, 13px)' }}>{s.c6Note2Header}</span>
-            <span className="text-slate-blue/40 ml-auto" style={{ fontSize: 'clamp(8px, 0.65vw, 11px)' }}>{s.c6Timestamp}</span>
+            <span className="text-slate-blue/40 ml-auto" style={{ fontSize: 'clamp(10px, 0.65vw, 11px)' }}>{s.c6Timestamp}</span>
           </div>
           <div
-            style={{ padding: 'clamp(6px, 0.55vw, 10px) clamp(8px, 0.7vw, 12px)' }}
+            style={{ padding: 'clamp(6px, 0.55vw, 10px) clamp(10px, 0.7vw, 12px)' }}
           >
             <div className="space-y-1">
               <div className="flex items-start gap-1.5">
-                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
                 <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.8vw, 13px)', lineHeight: '1.4' }}>{s.c6Note2Bullet1}</span>
               </div>
               <div className="flex items-start gap-1.5">
-                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
                 <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.8vw, 13px)', lineHeight: '1.4' }}>{s.c6Note2Bullet2}</span>
               </div>
             </div>
@@ -1137,25 +1096,25 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
       {/* Contact card + Note card side by side */}
       <div className="flex gap-2">
         {/* Left: Contact card with upsell tag */}
-        <div className="flex-shrink-0 rounded-lg bg-navy/[0.03] border border-navy/[0.06] flex flex-col items-center" style={{ padding: 'clamp(8px, 0.7vw, 12px)', width: '38%' }}>
+        <div className="flex-shrink-0 rounded-lg bg-navy/[0.03] border border-navy/[0.06] flex flex-col items-center" style={{ padding: 'clamp(10px, 0.7vw, 12px)', width: '38%' }}>
           <div
             className="rounded-full bg-navy/10 flex items-center justify-center text-navy font-semibold"
             style={{
               width: 'clamp(1.75rem, 1.8vw, 2.25rem)',
               height: 'clamp(1.75rem, 1.8vw, 2.25rem)',
-              fontSize: 'clamp(8px, 0.65vw, 11px)',
+              fontSize: 'clamp(10px, 0.65vw, 11px)',
             }}
           >
             SM
           </div>
           <span className="font-semibold text-navy mt-1.5 text-center leading-tight" style={{ fontSize: 'clamp(10px, 0.85vw, 13px)' }}>Sophie</span>
-          <span className="text-slate-blue/60 text-center leading-tight" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>MediTech</span>
+          <span className="text-slate-blue/60 text-center leading-tight" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>MediTech</span>
           {/* Upsell tag */}
           <div
             className="mt-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-navy/[0.06] border border-navy/[0.10]"
-            style={{ fontSize: 'clamp(8px, 0.65vw, 11px)' }}
+            style={{ fontSize: 'clamp(10px, 0.65vw, 11px)' }}
           >
-            <svg style={{ width: 'clamp(9px, 0.7vw, 11px)', height: 'clamp(9px, 0.7vw, 11px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy/60">
+            <svg style={{ width: 'clamp(10px, 0.7vw, 11px)', height: 'clamp(10px, 0.7vw, 11px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy/60">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
             </svg>
             <span className="font-semibold text-navy">{s.c7Tag}</span>
@@ -1164,25 +1123,25 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
 
         {/* Right: Note card with insights */}
         <div className="flex-1 min-w-0 rounded-lg border border-navy/[0.08] overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(240,244,250,0.6), rgba(255,255,255,0.6))' }}>
-          <div className="flex items-center gap-1.5 border-b border-navy/[0.06]" style={{ padding: 'clamp(5px, 0.4vw, 8px) clamp(8px, 0.7vw, 12px)' }}>
+          <div className="flex items-center gap-1.5 border-b border-navy/[0.06]" style={{ padding: 'clamp(5px, 0.4vw, 8px) clamp(10px, 0.7vw, 12px)' }}>
             <svg style={{ width: 'clamp(11px, 0.85vw, 14px)', height: 'clamp(11px, 0.85vw, 14px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy/40">
               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="13" y2="17" />
             </svg>
-            <span className="font-semibold text-navy" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)' }}>{s.c7NoteHeader}</span>
+            <span className="font-semibold text-navy" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)' }}>{s.c7NoteHeader}</span>
           </div>
-          <div style={{ padding: 'clamp(6px, 0.5vw, 10px) clamp(8px, 0.7vw, 12px)' }}>
+          <div style={{ padding: 'clamp(6px, 0.5vw, 10px) clamp(10px, 0.7vw, 12px)' }}>
             <div className="space-y-1">
               <div className="flex items-start gap-1.5">
-                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
-                <span className="text-slate-blue/80" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c7Bullet1}</span>
+                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+                <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c7Bullet1}</span>
               </div>
               <div className="flex items-start gap-1.5">
-                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
-                <span className="text-slate-blue/80" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c7Bullet2}</span>
+                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+                <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c7Bullet2}</span>
               </div>
               <div className="flex items-start gap-1.5">
-                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
-                <span className="text-slate-blue/80" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c7Bullet3}</span>
+                <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+                <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c7Bullet3}</span>
               </div>
             </div>
           </div>
@@ -1206,7 +1165,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
           <div className="flex-1 border-r border-navy/[0.06]">
             {['8:00', '9:00', '10:00'].map((time) => (
               <div key={time} className="flex items-center border-b border-navy/[0.04] last:border-b-0" style={{ padding: 'clamp(5px, 0.45vw, 8px) clamp(6px, 0.5vw, 10px)', minHeight: 'clamp(24px, 2vw, 32px)' }}>
-                <span className="text-slate-blue/25" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>{time}</span>
+                <span className="text-slate-blue/25" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>{time}</span>
               </div>
             ))}
           </div>
@@ -1218,12 +1177,12 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
                   <div className="flex items-center gap-1.5 w-full rounded bg-navy/[0.07] -my-0.5" style={{ padding: 'clamp(3px, 0.3vw, 5px) clamp(5px, 0.4vw, 8px)' }}>
                     <div className="rounded-sm bg-navy/80" style={{ width: 'clamp(2px, 0.2vw, 3px)', height: 'clamp(16px, 1.3vw, 22px)' }} />
                     <div className="min-w-0">
-                      <div className="font-semibold text-navy truncate" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)' }}>{s.c7TaskTitle}</div>
-                      <div className="text-slate-blue/50 truncate" style={{ fontSize: 'clamp(8px, 0.65vw, 10px)' }}>Sophie · MediTech</div>
+                      <div className="font-semibold text-navy truncate" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)' }}>{s.c7TaskTitle}</div>
+                      <div className="text-slate-blue/50 truncate" style={{ fontSize: 'clamp(10px, 0.65vw, 10px)' }}>Sophie · MediTech</div>
                     </div>
                   </div>
                 ) : (
-                  <span className="text-slate-blue/25" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>{time}</span>
+                  <span className="text-slate-blue/25" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>{time}</span>
                 )}
               </div>
             ))}
@@ -1253,7 +1212,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
       {/* CRM record — DataFlow account with assignee change */}
       <div className="rounded-xl bg-navy/[0.03] border border-navy/[0.06] overflow-hidden">
         {/* Account header */}
-        <div className="flex items-center gap-2 border-b border-navy/[0.06]" style={{ padding: 'clamp(8px, 0.65vw, 12px) clamp(10px, 0.8vw, 14px)' }}>
+        <div className="flex items-center gap-2 border-b border-navy/[0.06]" style={{ padding: 'clamp(10px, 0.65vw, 12px) clamp(10px, 0.8vw, 14px)' }}>
           <svg style={{ width: 'clamp(14px, 1.1vw, 18px)', height: 'clamp(14px, 1.1vw, 18px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy/40 flex-shrink-0">
             <path d="M3 9l1.5-5h15L21 9" /><path d="M3 9h18v12H3V9z" /><path d="M9 21V14h6v7" />
           </svg>
@@ -1261,8 +1220,8 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
         </div>
 
         {/* Assignee field — the core change */}
-        <div className="border-b border-navy/[0.06]" style={{ padding: 'clamp(8px, 0.65vw, 12px) clamp(10px, 0.8vw, 14px)' }}>
-          <span className="uppercase tracking-wider text-slate-blue/50 block" style={{ fontSize: 'clamp(8px, 0.65vw, 10px)', marginBottom: 'clamp(5px, 0.4vw, 8px)' }}>{s.c8Assignee}</span>
+        <div className="border-b border-navy/[0.06]" style={{ padding: 'clamp(10px, 0.65vw, 12px) clamp(10px, 0.8vw, 14px)' }}>
+          <span className="uppercase tracking-wider text-slate-blue/50 block" style={{ fontSize: 'clamp(10px, 0.65vw, 10px)', marginBottom: 'clamp(5px, 0.4vw, 8px)' }}>{s.c8Assignee}</span>
           <div className="flex items-center gap-3">
             {/* From */}
             <div className="flex items-center gap-1.5">
@@ -1271,7 +1230,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
                 style={{
                   width: 'clamp(2rem, 2.2vw, 2.75rem)',
                   height: 'clamp(2rem, 2.2vw, 2.75rem)',
-                  fontSize: 'clamp(9px, 0.75vw, 12px)',
+                  fontSize: 'clamp(10px, 0.75vw, 12px)',
                 }}
               >
                 JD
@@ -1290,7 +1249,7 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
                 style={{
                   width: 'clamp(2rem, 2.2vw, 2.75rem)',
                   height: 'clamp(2rem, 2.2vw, 2.75rem)',
-                  fontSize: 'clamp(9px, 0.75vw, 12px)',
+                  fontSize: 'clamp(10px, 0.75vw, 12px)',
                 }}
               >
                 EM
@@ -1325,21 +1284,21 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
 
       {/* Handoff note */}
       <div className="mt-2.5 rounded-lg border border-navy/[0.08] overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(240,244,250,0.6), rgba(255,255,255,0.6))' }}>
-        <div className="flex items-center gap-1.5 border-b border-navy/[0.06]" style={{ padding: 'clamp(5px, 0.4vw, 8px) clamp(8px, 0.7vw, 12px)' }}>
+        <div className="flex items-center gap-1.5 border-b border-navy/[0.06]" style={{ padding: 'clamp(5px, 0.4vw, 8px) clamp(10px, 0.7vw, 12px)' }}>
           <svg style={{ width: 'clamp(11px, 0.85vw, 14px)', height: 'clamp(11px, 0.85vw, 14px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy/40">
             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="13" y2="17" />
           </svg>
-          <span className="font-semibold text-navy" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)' }}>{s.c8NoteHeader}</span>
+          <span className="font-semibold text-navy" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)' }}>{s.c8NoteHeader}</span>
         </div>
-        <div style={{ padding: 'clamp(6px, 0.5vw, 10px) clamp(8px, 0.7vw, 12px)' }}>
+        <div style={{ padding: 'clamp(6px, 0.5vw, 10px) clamp(10px, 0.7vw, 12px)' }}>
           <div className="space-y-1">
             <div className="flex items-start gap-1.5">
-              <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
-              <span className="text-slate-blue/80" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c8Bullet1}</span>
+              <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+              <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c8Bullet1}</span>
             </div>
             <div className="flex items-start gap-1.5">
-              <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
-              <span className="text-slate-blue/80" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c8Bullet2}</span>
+              <span className="text-navy/30 flex-shrink-0" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', lineHeight: '1.5' }}>•</span>
+              <span className="text-slate-blue/80" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', lineHeight: '1.4' }}>{s.c8Bullet2}</span>
             </div>
           </div>
         </div>
@@ -1371,13 +1330,13 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
         <div className="border-b border-navy/[0.06]" style={{ padding: 'clamp(7px, 0.6vw, 10px) clamp(10px, 0.85vw, 14px)' }}>
           <div className="flex items-center justify-between">
             <span className="font-bold text-navy" style={{ fontSize: 'clamp(11px, 0.9vw, 15px)' }}>Quote #1247</span>
-            <span className="text-slate-blue/40" style={{ fontSize: 'clamp(8px, 0.65vw, 11px)' }}>{s.c9Status}</span>
+            <span className="text-slate-blue/40" style={{ fontSize: 'clamp(10px, 0.65vw, 11px)' }}>{s.c9Status}</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="uppercase tracking-wider text-slate-blue/40" style={{ fontSize: 'clamp(7px, 0.55vw, 9px)' }}>{s.c9To}</span>
-            <span className="text-navy/70 font-medium" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>Lucas Peeters</span>
+            <span className="text-navy/70 font-medium" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>Lucas Peeters</span>
             <span className="text-navy/20">|</span>
-            <span className="text-navy/50" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>GreenTech Solutions</span>
+            <span className="text-navy/50" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>GreenTech Solutions</span>
           </div>
         </div>
 
@@ -1391,31 +1350,31 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
           </div>
           {/* Row 1 */}
           <div className="flex items-center border-b border-navy/[0.04]" style={{ padding: 'clamp(4px, 0.35vw, 6px) clamp(10px, 0.85vw, 14px)' }}>
-            <span className="flex-1 text-navy/80" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)' }}>{s.c9Item1}</span>
-            <span className="text-slate-blue/50 text-right" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', width: 'clamp(28px, 2.5vw, 40px)' }}>50</span>
-            <span className="text-navy text-right" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', width: 'clamp(55px, 5vw, 75px)' }}>€18,750.00</span>
+            <span className="flex-1 text-navy/80" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)' }}>{s.c9Item1}</span>
+            <span className="text-slate-blue/50 text-right" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', width: 'clamp(28px, 2.5vw, 40px)' }}>50</span>
+            <span className="text-navy text-right" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', width: 'clamp(55px, 5vw, 75px)' }}>€18,750.00</span>
           </div>
           {/* Row 2 */}
           <div className="flex items-center border-b border-navy/[0.04]" style={{ padding: 'clamp(4px, 0.35vw, 6px) clamp(10px, 0.85vw, 14px)' }}>
-            <span className="flex-1 text-navy/80" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)' }}>{s.c9Item2}</span>
-            <span className="text-slate-blue/50 text-right" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', width: 'clamp(28px, 2.5vw, 40px)' }}>1</span>
-            <span className="text-navy text-right" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', width: 'clamp(55px, 5vw, 75px)' }}>€4,200.00</span>
+            <span className="flex-1 text-navy/80" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)' }}>{s.c9Item2}</span>
+            <span className="text-slate-blue/50 text-right" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', width: 'clamp(28px, 2.5vw, 40px)' }}>1</span>
+            <span className="text-navy text-right" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', width: 'clamp(55px, 5vw, 75px)' }}>€4,200.00</span>
           </div>
           {/* Row 3 */}
           <div className="flex items-center border-b border-navy/[0.06]" style={{ padding: 'clamp(4px, 0.35vw, 6px) clamp(10px, 0.85vw, 14px)' }}>
-            <span className="flex-1 text-navy/80" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)' }}>{s.c9Item3}</span>
-            <span className="text-slate-blue/50 text-right" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', width: 'clamp(28px, 2.5vw, 40px)' }}>1</span>
-            <span className="text-navy text-right" style={{ fontSize: 'clamp(9px, 0.75vw, 12px)', width: 'clamp(55px, 5vw, 75px)' }}>€2,400.00</span>
+            <span className="flex-1 text-navy/80" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)' }}>{s.c9Item3}</span>
+            <span className="text-slate-blue/50 text-right" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', width: 'clamp(28px, 2.5vw, 40px)' }}>1</span>
+            <span className="text-navy text-right" style={{ fontSize: 'clamp(10px, 0.75vw, 12px)', width: 'clamp(55px, 5vw, 75px)' }}>€2,400.00</span>
           </div>
           {/* Subtotal + VAT + Total */}
           <div style={{ padding: 'clamp(5px, 0.4vw, 7px) clamp(10px, 0.85vw, 14px)' }}>
             <div className="flex items-center justify-end gap-3">
-              <span className="text-slate-blue/50" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>{s.c9Subtotal}</span>
-              <span className="text-navy/70" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', width: 'clamp(55px, 5vw, 75px)', textAlign: 'right' }}>€25,350.00</span>
+              <span className="text-slate-blue/50" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>{s.c9Subtotal}</span>
+              <span className="text-navy/70" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', width: 'clamp(55px, 5vw, 75px)', textAlign: 'right' }}>€25,350.00</span>
             </div>
             <div className="flex items-center justify-end gap-3 mb-1">
-              <span className="text-slate-blue/50" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>{s.c9Vat}</span>
-              <span className="text-navy/70" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', width: 'clamp(55px, 5vw, 75px)', textAlign: 'right' }}>€5,323.50</span>
+              <span className="text-slate-blue/50" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>{s.c9Vat}</span>
+              <span className="text-navy/70" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)', width: 'clamp(55px, 5vw, 75px)', textAlign: 'right' }}>€5,323.50</span>
             </div>
             <div className="flex items-center justify-end gap-3 pt-1 border-t border-navy/[0.08]">
               <span className="font-semibold text-navy" style={{ fontSize: 'clamp(10px, 0.85vw, 13px)' }}>{s.c9Total}</span>
@@ -1430,9 +1389,9 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
             <svg style={{ width: 'clamp(11px, 0.85vw, 14px)', height: 'clamp(11px, 0.85vw, 14px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-slate-blue/30 flex-shrink-0">
               <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
             </svg>
-            <span className="text-slate-blue/50" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>{s.c9Due}</span>
+            <span className="text-slate-blue/50" style={{ fontSize: 'clamp(10px, 0.7vw, 11px)' }}>{s.c9Due}</span>
           </div>
-          <div className="flex items-center gap-1.5 bg-navy text-white rounded-md cursor-pointer" style={{ padding: 'clamp(4px, 0.35vw, 6px) clamp(10px, 0.85vw, 14px)', fontSize: 'clamp(9px, 0.75vw, 12px)' }}>
+          <div className="flex items-center gap-1.5 bg-navy text-white rounded-md cursor-pointer" style={{ padding: 'clamp(4px, 0.35vw, 6px) clamp(10px, 0.85vw, 14px)', fontSize: 'clamp(10px, 0.75vw, 12px)' }}>
             <svg style={{ width: 'clamp(10px, 0.8vw, 13px)', height: 'clamp(10px, 0.8vw, 13px)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
             </svg>
@@ -1446,20 +1405,28 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
   );
 };
 
-const CrmPreviewCards: React.FC = () => {
+export const CrmPreviewCards: React.FC = () => {
   const { t, currentLanguage } = useI18n();
   const cardLocale = getCardLocale(currentLanguage);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const trackRef = React.useRef<HTMLDivElement>(null);
+  const mobileScrollRef = React.useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [currentCardIdx, setCurrentCardIdx] = useState(0);
+  const TOTAL_CARDS = 9;
 
   // Scroll state refs (not state — avoid re-renders on every frame)
   const offsetRef = React.useRef(0);
   const velocityRef = React.useRef(0);
-  const autoSpeed = 50; // px per second (delta-time based)
+  const snapTargetRef = React.useRef<number | null>(null);
+  const lastRenderedIdx = React.useRef(0);
+  const currentCardIdxRef = React.useRef(0);
+  const isArrowNavRef = React.useRef(false);
+  const arrowNavTimeout = React.useRef<ReturnType<typeof setTimeout>>();
   const hovering = React.useRef(false);
   const userInteracting = React.useRef(false);
   const userTimeout = React.useRef<ReturnType<typeof setTimeout>>();
+  const wheelMomentumTimeout = React.useRef<ReturnType<typeof setTimeout>>();
   const rafRef = React.useRef<number>();
   const lastFrameTime = React.useRef(0);
   const touchLastX = React.useRef(0);
@@ -1467,6 +1434,20 @@ const CrmPreviewCards: React.FC = () => {
   const recentVelocities = React.useRef<number[]>([]);
   const lastMoveTime = React.useRef(0);
   const friction = 0.92; // per 16ms frame
+
+  // Proportional zoom for screens wider than 1440px (14" reference), capped at 1.25×
+  const [zoom, setZoom] = useState(1);
+  const zoomRef = React.useRef(1);
+  useEffect(() => {
+    const update = () => {
+      const z = window.innerWidth > 1440 ? Math.min(window.innerWidth / 1440, 1.25) : 1;
+      zoomRef.current = z;
+      setZoom(z);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   // Element recycling refs
   const cardElsRef = React.useRef<HTMLElement[]>([]);
@@ -1564,6 +1545,7 @@ const CrmPreviewCards: React.FC = () => {
       const delta = pendingDelta.current;
       if (delta !== 0) {
         pendingDelta.current = 0;
+        snapTargetRef.current = null; // user overrides any snap in progress
         offsetRef.current = wrapOffset(offsetRef.current + delta);
         // Don't overwrite velocity here — it's tracked separately via recentVelocities
       } else if (userInteracting.current) {
@@ -1575,17 +1557,30 @@ const CrmPreviewCards: React.FC = () => {
         } else {
           velocityRef.current = 0;
         }
-      } else if (!hovering.current) {
-        // Auto-scroll (paused on hover)
-        velocityRef.current = 0;
-        if (!prefersReduced) {
-          offsetRef.current = wrapOffset(offsetRef.current + (autoSpeed / 60) * dt);
+      } else if (snapTargetRef.current !== null) {
+        // Smooth snap animation toward arrow-click target
+        const diff = snapTargetRef.current - offsetRef.current;
+        if (Math.abs(diff) < 0.5) {
+          offsetRef.current = wrapOffset(snapTargetRef.current);
+          snapTargetRef.current = null;
+        } else {
+          offsetRef.current = offsetRef.current + diff * Math.min(0.14 * dt, 1);
         }
       }
 
       // Position each card individually with wrapping
       const cards = cardElsRef.current;
       const stride = strideRef.current;
+
+      // Update progress bar index — skip during snap animation to avoid flickering
+      if (stride > 0 && snapTargetRef.current === null) {
+        const rawIdx = Math.round(offsetRef.current / stride);
+        const idx = ((rawIdx % TOTAL_CARDS) + TOTAL_CARDS) % TOTAL_CARDS;
+        if (idx !== lastRenderedIdx.current) {
+          lastRenderedIdx.current = idx;
+          setCurrentCardIdx(idx);
+        }
+      }
       const tw = totalWidthRef.current;
       if (cards.length > 0 && tw > 0) {
         const offset = offsetRef.current;
@@ -1604,30 +1599,6 @@ const CrmPreviewCards: React.FC = () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [isVisible, wrapOffset]);
-
-  // Wheel handler — batch deltas for the rAF loop
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onWheel = (e: WheelEvent) => {
-      const absX = Math.abs(e.deltaX);
-      const absY = Math.abs(e.deltaY);
-
-      // Only intercept clearly horizontal scrolls (2:1 ratio + minimum threshold)
-      // This prevents vertical page scrolling from interfering with the carousel
-      if (absX < 3 || absX < absY * 2) return;
-
-      e.preventDefault();
-      userInteracting.current = true;
-      pendingDelta.current += e.deltaX;
-      trackVelocity(e.deltaX);
-      scheduleResume();
-    };
-
-    container.addEventListener('wheel', onWheel, { passive: false });
-    return () => container.removeEventListener('wheel', onWheel);
-  }, [scheduleResume]);
 
   // Helper: track velocity samples from user input for smooth momentum on release
   const trackVelocity = useCallback((dx: number) => {
@@ -1658,6 +1629,43 @@ const CrmPreviewCards: React.FC = () => {
     return sum / weight;
   }, []);
 
+  // Wheel handler — batch deltas for the rAF loop
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const onWheel = (e: WheelEvent) => {
+      const absX = Math.abs(e.deltaX);
+      const absY = Math.abs(e.deltaY);
+
+      // Only intercept clearly horizontal scrolls (3:1 ratio + 8px minimum).
+      // The tighter threshold prevents accidental carousel nudges from the
+      // small horizontal components that macOS trackpads emit at the start/end
+      // of a mostly-vertical scroll gesture.
+      if (absX < 8 || absX < absY * 3) return;
+
+      userInteracting.current = true;
+      const wdx = e.deltaX / zoomRef.current;
+      pendingDelta.current += wdx;
+      trackVelocity(wdx);
+      scheduleResume();
+
+      // 80ms after the last wheel event, hand the captured velocity to the
+      // friction loop so the carousel coasts to a smooth stop instead of
+      // freezing abruptly (wheel events don't fire a "release" event like touch).
+      clearTimeout(wheelMomentumTimeout.current);
+      wheelMomentumTimeout.current = setTimeout(() => {
+        velocityRef.current = computeReleaseVelocity();
+      }, 80);
+    };
+
+    // passive: true — lets the browser keep vertical page scrolling on the fast
+    // path without waiting for this handler. Safe to drop preventDefault() here
+    // because the page has no horizontal overflow to scroll anyway.
+    container.addEventListener('wheel', onWheel, { passive: true });
+    return () => container.removeEventListener('wheel', onWheel);
+  }, [scheduleResume, computeReleaseVelocity]);
+
   // Touch handlers — swipe with momentum
   useEffect(() => {
     const container = containerRef.current;
@@ -1674,7 +1682,7 @@ const CrmPreviewCards: React.FC = () => {
 
     const onTouchMove = (e: TouchEvent) => {
       const x = e.touches[0].clientX;
-      const dx = touchLastX.current - x;
+      const dx = (touchLastX.current - x) / zoomRef.current;
       touchLastX.current = x;
       pendingDelta.current += dx;
       trackVelocity(dx);
@@ -1719,7 +1727,7 @@ const CrmPreviewCards: React.FC = () => {
     const onMouseMove = (e: MouseEvent) => {
       if (!dragging) return;
       e.preventDefault();
-      const dx = lastX - e.clientX;
+      const dx = (lastX - e.clientX) / zoomRef.current;
       lastX = e.clientX;
       if (Math.abs(dx) > 0) dragMoved = true;
       pendingDelta.current += dx;
@@ -1756,59 +1764,132 @@ const CrmPreviewCards: React.FC = () => {
     };
   }, [scheduleResume, trackVelocity, computeReleaseVelocity]);
 
+  // Mobile scroll → update progress bar
+  useEffect(() => {
+    const el = mobileScrollRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      // Suppress scroll-based updates during arrow navigation to avoid flickering
+      if (isArrowNavRef.current) return;
+      const cardW = (el.firstElementChild as HTMLElement)?.offsetWidth || el.clientWidth;
+      const gap = 16; // gap-4
+      const idx = Math.round(el.scrollLeft / (cardW + gap));
+      const clamped = Math.max(0, Math.min(TOTAL_CARDS - 1, idx));
+      currentCardIdxRef.current = clamped;
+      setCurrentCardIdx(clamped);
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [TOTAL_CARDS]);
+
+  // Arrow navigation — works for both desktop (snap) and mobile (native scroll)
+  const navigate = useCallback((dir: 1 | -1) => {
+    // Desktop: smooth snap to adjacent card
+    const stride = strideRef.current;
+    if (stride > 0) {
+      const snapped = Math.round(offsetRef.current / stride) * stride;
+      snapTargetRef.current = snapped + dir * stride;
+      const rawIdx = Math.round(snapTargetRef.current / stride);
+      const newIdx = ((rawIdx % TOTAL_CARDS) + TOTAL_CARDS) % TOTAL_CARDS;
+      lastRenderedIdx.current = newIdx;
+      currentCardIdxRef.current = newIdx;
+      setCurrentCardIdx(newIdx);
+    }
+    // Mobile: scroll to exact card position with wrap-around
+    const el = mobileScrollRef.current;
+    if (el) {
+      const cardW = (el.firstElementChild as HTMLElement)?.offsetWidth || el.clientWidth;
+      const newIdx = ((currentCardIdxRef.current + dir) % TOTAL_CARDS + TOTAL_CARDS) % TOTAL_CARDS;
+      currentCardIdxRef.current = newIdx;
+      setCurrentCardIdx(newIdx);
+      // Suppress scroll event updates while smooth scroll animates
+      isArrowNavRef.current = true;
+      clearTimeout(arrowNavTimeout.current);
+      arrowNavTimeout.current = setTimeout(() => { isArrowNavRef.current = false; }, 500);
+      el.scrollTo({ left: newIdx * (cardW + 16), behavior: 'smooth' });
+    }
+  }, [TOTAL_CARDS]);
+
   const cardBase = "relative flex-shrink-0 bg-white rounded-2xl shadow-lg shadow-black/8 border border-navy/[0.06]" +
-    " w-[clamp(320px,26vw,600px)]" +
+    " w-[420px]" +
     " p-[clamp(1.5rem,1.8vw,2.75rem)]" +
     " pt-[clamp(1.75rem,2vw,2.75rem)]" +
+    " pb-[clamp(1rem,1.1vw,1.75rem)]" +
     " rounded-[clamp(16px,1.2vw,20px)]";
 
+  const mobileCardBase = "relative flex-shrink-0 snap-center bg-white rounded-2xl shadow-lg shadow-black/8 border border-navy/[0.06]" +
+    " w-[calc(100svw-2.5rem)]" +
+    " p-5 pt-6 pb-5 rounded-[16px]";
+
   return (
-    <div className="relative pb-16 md:pb-24" style={{ marginTop: '0' }}>
-      {/* Decorative corner — flows from hero bottom-right, compact, matched curvature */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none hidden md:block"
-        viewBox="0 0 1440 900"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M1470,-30 L1239.5,-30 C1239.5,90 1225.5,115 1320.5,138 C1430.5,162 1415.5,176 1470,190 Z"
-          fill="#1A2D63"
-        />
-        <path
-          d="M1248,-30 C1248,87 1232.5,112 1326,136 C1435.5,159 1420.5,173 1476,186
-             L1471,198 C1410.5,183 1428.5,168 1319,145 C1218.5,123 1232,87 1232,-30 L1248,-30 Z"
-          fill="#7B8DB5"
-        />
-      </svg>
+    <div style={{ zoom }}>
+    <div className="relative pb-4 md:pb-6" style={{ marginTop: '0' }}>
       <h2
-        className="font-general font-bold text-navy text-center mb-20"
+        className="font-general font-bold text-navy text-center mb-6 md:mb-8 mt-6 md:mt-0 max-w-[260px] mx-auto md:max-w-none"
         style={{ fontSize: 'clamp(1.75rem, calc(1.2rem + 2vw), 3.25rem)', letterSpacing: '-0.02em' }}
       >
         {t('hero.carouselTitle')}
       </h2>
-      <div
-        ref={containerRef}
-        className="w-full relative overflow-hidden cursor-grab active:cursor-grabbing"
-        style={{ touchAction: 'pan-y' }}
-        onMouseEnter={() => { hovering.current = true; }}
-        onMouseLeave={() => { hovering.current = false; }}
-      >
-      <div
-        ref={trackRef}
-        className="will-change-transform"
-        style={{
-          position: 'relative',
-          height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
-          gap: 'clamp(1rem, 1.25vw, 1.75rem)',
-          opacity: containerHeight > 0 ? 1 : 0,
-          transition: 'opacity 0.6s ease-out',
-          backfaceVisibility: 'hidden',
-        }}
-      >
-        <CardContent cardBase={cardBase} locale={cardLocale} />
+
+      {/* Navigation controls — arrows + progress bar */}
+      <div className="flex items-center gap-4 mb-5 px-5 md:px-2 md:max-w-sm md:mx-auto">
+        <button
+          onClick={() => navigate(-1)}
+          aria-label="Previous card"
+          className="flex-shrink-0 w-9 h-9 rounded-full border border-navy/20 bg-white flex items-center justify-center text-navy/60 hover:text-navy hover:border-navy/40 hover:bg-navy/5 transition-colors"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <div className="flex-1 h-[3px] bg-navy/10 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-navy rounded-full transition-all duration-300 ease-out"
+            style={{ width: `${((currentCardIdx + 1) / TOTAL_CARDS) * 100}%` }}
+          />
+        </div>
+        <button
+          onClick={() => navigate(1)}
+          aria-label="Next card"
+          className="flex-shrink-0 w-9 h-9 rounded-full border border-navy/20 bg-white flex items-center justify-center text-navy/60 hover:text-navy hover:border-navy/40 hover:bg-navy/5 transition-colors"
+        >
+          <ChevronRight size={18} />
+        </button>
       </div>
+
+      {/* Mobile: native snap scroll, one card at a time */}
+      <div
+        ref={mobileScrollRef}
+        className="md:hidden overflow-x-auto snap-x snap-mandatory flex gap-4 px-5 pt-5 pb-6"
+        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+      >
+        <CardContent cardBase={mobileCardBase} locale={cardLocale} />
       </div>
+
+      {/* Desktop: custom carousel with arrow navigation */}
+      <div className="hidden md:block">
+        <div
+          ref={containerRef}
+          className="w-full relative overflow-hidden cursor-grab active:cursor-grabbing"
+          style={{ touchAction: 'pan-y' }}
+          onMouseEnter={() => { hovering.current = true; }}
+          onMouseLeave={() => { hovering.current = false; }}
+        >
+        <div
+          ref={trackRef}
+          className="will-change-transform"
+          style={{
+            position: 'relative',
+            height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
+            gap: 'clamp(1rem, 1.25vw, 1.75rem)',
+            opacity: containerHeight > 0 ? 1 : 0,
+            transition: 'opacity 0.6s ease-out',
+            backfaceVisibility: 'hidden',
+          }}
+        >
+          <CardContent cardBase={cardBase} locale={cardLocale} />
+        </div>
+        </div>
+      </div>
+    </div>
     </div>
   );
 };
@@ -1818,49 +1899,38 @@ export const HeroDemo: React.FC = () => {
   const { t } = useI18n();
   const { displayedText, isDrawing, currentPhraseIndex } = useTypewriter(typewriterPhrases);
   const showTalkDot = currentPhraseIndex !== 0; // hide "." after "Talk" when "to your CRM." is active
-  const phoneMockRef = useRef<HTMLDivElement>(null);
-  const heroWrapperRef = useRef<HTMLDivElement>(null);
+  const isCompact = useIsCompactHero();
+  const mobilePhoneRef = useRef<HTMLDivElement>(null);
 
-  // Phone mock scrolls up slightly as user scrolls into the cards section
+  // Mobile-only: scroll-driven upward parallax on the phone mock
   useEffect(() => {
-    const el = phoneMockRef.current;
-    if (!el) return;
-
-    // Wait for the CSS fade-in animation to finish, then set up GSAP
-    // so it doesn't conflict with the CSS transform mid-animation
-    const onEnd = () => {
-      el.style.animation = 'none';
-      el.style.opacity = '1';
-
-      const mm = gsap.matchMedia();
-      mm.add('(min-width: 640px)', () => {
-        gsap.to(el, {
-          y: '-42vh',
-          ease: 'none',
-          immediateRender: true,
-          scrollTrigger: {
-            start: 'top top',
-            end: '+=600',
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
-      });
-      (el as any).__gsapMM = mm;
-    };
-
-    el.addEventListener('animationend', onEnd, { once: true });
+    if (!isCompact || !mobilePhoneRef.current) return;
+    const tween = gsap.to(mobilePhoneRef.current, {
+      y: window.innerWidth >= 417 ? '-200svh' : '-120svh',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.documentElement,
+        start: 'top top',
+        end: '30% top',
+        scrub: true,
+      },
+    });
     return () => {
-      el.removeEventListener('animationend', onEnd);
-      (el as any).__gsapMM?.revert();
+      (tween as any).scrollTrigger?.kill();
+      tween.kill();
     };
-  }, []);
+  }, [isCompact]);
 
   return (
-    <div className="w-full" ref={heroWrapperRef}>
+    <div className="w-full">
       {/* Hero Content — Fixed layout with absolute positioning */}
       <section className="relative" style={{ height: '100svh', overflowX: 'clip', overflowY: 'visible' }}>
-        {/* Decorative corner waves */}
+        {/* Mobile: Blue logo next to hamburger */}
+        <div className="md:hidden absolute top-3 right-[72px] z-20 pointer-events-none flex items-center" style={{ height: '44px' }}>
+          <img src="/Finit Voicelink Blue.svg" alt="VoiceLink" className="h-9 w-auto" />
+        </div>
+
+        {/* Decorative corner waves — desktop (landscape) */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none hidden md:block hero-animate-waves"
           viewBox="0 0 1440 900"
@@ -1889,125 +1959,166 @@ export const HeroDemo: React.FC = () => {
           />
         </svg>
 
-        {/* Left-side content — single grid container with fixed rows so subtitle/CTA never shift */}
-        <div
-          className="absolute left-6 sm:left-10 lg:left-[14vw] 2xl:left-[16vw] right-4 sm:right-[46%] lg:right-[44%] z-10 grid"
-          style={{
-            top: 0,
-            bottom: 0,
-            gridTemplateRows: '47% 3% auto 1fr',
-          }}
+        {/* Top-left corner — same desktop paths, cropped viewBox */}
+        <svg
+          className="absolute left-0 pointer-events-none block md:hidden hero-animate-waves"
+          style={{ top: '-8px' }}
+          width="128" height="240"
+          viewBox="-30 -30 255 480"
+          overflow="visible"
+          aria-hidden="true"
         >
-          {/* Row 1: Heading — self-end so text anchors at bottom of row, overflows upward */}
-          <div className="self-end overflow-visible hero-animate-heading">
-            <h1 className="font-general leading-[1] tracking-tight text-navy text-center lg:text-left" style={{ fontSize: 'clamp(2.5rem, calc(1.8rem + 1.2vw + 1.5vh), 6rem)' }}>
-              <span className="font-bold" style={{
-                letterSpacing: '-0.025em',
-                WebkitFontSmoothing: 'antialiased',
-              }}>
-                Just... Talk{showTalkDot ? '.' : ''}
-              </span>
-              <br />
-              <span className="font-black italic">
-                <TypewriterText text={displayedText} isDrawing={isDrawing} />
-              </span>
-              <span className="inline-block w-[3px] h-[1em] bg-[#1A2D63] ml-1 animate-pulse align-baseline" />
-            </h1>
-          </div>
-
-          {/* Row 2: Fixed gap — never collapses */}
-          <div />
-
-          {/* Row 3: Subtitle + CTAs — pinned by grid row, never shifts */}
-          <div>
-            {/* Subtitle */}
-            <div className="hero-animate-subtitle">
-              <p className="font-instrument text-slate-blue leading-relaxed max-w-lg mx-auto lg:mx-0 text-center lg:text-left" style={{ fontSize: 'clamp(1rem, calc(0.7rem + 0.3vw + 0.35vh), 1.375rem)' }}>
-                {t('hero.subtitle1_pre')}{' '}
-                <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" className="inline-block h-[3.2em] w-auto align-[-1em] -mx-2" style={{ clipPath: 'inset(0 6% 0 6%)' }} draggable={false} />{' '}
-                {t('hero.subtitle1_mid')}{' '}
-                <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>{' '}
-                {t('hero.subtitle1_post')}
-              </p>
-            </div>
-
-            {/* CTAs */}
-            <div className="hero-animate-ctas" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 2rem)' }}>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                <button
-                  onClick={() => {
-                    trackCTAClick('Get Started Free - Hero', '/');
-                    navigateWithTransition(withUTM('/signup'));
-                  }}
-                  className="group bg-navy text-white text-[15px] font-medium px-6 py-3 rounded-full flex items-center justify-center gap-2.5 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10"
-                >
-                  <span>{t('hero.getStartedFree')}</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button
-                  className="group border-2 border-navy text-navy text-[15px] font-medium px-6 py-3 rounded-full flex items-center justify-center gap-2.5 transition-colors hover:bg-navy/5"
-                  onClick={() => {
-                    trackCTAClick('Watch Demo - Hero', '/');
-                    const el = document.getElementById('how-it-works');
-                    if (el) window.scrollTo({ top: el.offsetTop - 10, behavior: 'smooth' });
-                  }}
-                >
-                  <Play className="w-5 h-5" />
-                  <span>{t('hero.watchDemo')}</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Checkmarks */}
-            <div className="hero-animate-checks" style={{ marginTop: 'clamp(0.5rem, calc(0.35rem + 0.6vh), 1.25rem)' }}>
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-sm text-muted-blue">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-navy" />
-                  <span>{t('hero.oneClickSetup')}</span>
-                </div>
-                <span className="hidden sm:inline">·</span>
-                <div className="flex items-start space-x-2">
-                  <CheckCircle className="w-4 h-4 text-navy mt-0.5" />
-                  <span className="leading-snug whitespace-pre-line">{t('hero.whatsappSetup')}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Row 4: Remaining space */}
-          <div />
-        </div>
-
-        {/* Phone Mockup — right side of hero, scales with viewport */}
-        <div
-          ref={phoneMockRef}
-          className="absolute hero-animate-phone hidden sm:flex items-end justify-center"
-          style={{
-            right: '6vw',
-            top: '15svh',
-            bottom: '-35svh',
-            width: '46vw',
-            zIndex: 60,
-            pointerEvents: 'none',
-          }}
-        >
-          <img
-            src="/whatsapp phone mock.png"
-            alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes"
-            className="h-auto"
-            style={{
-              width: 'clamp(280px, 35vw, 850px)',
-              transform: 'rotate(5deg)',
-              filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))',
-            }}
-            draggable={false}
+          <path
+            d="M-30,-30 L220,-30 C170,60 230,140 130,200 C30,260 60,310 -30,360 L-30,430 Z"
+            fill="#1A2D63"
           />
-        </div>
+          <path
+            d="M222,-55 C177,25 220,135 125,195 C30,255 30,318 -55,368
+               L-34,397 C31,352 30,272 140,212 C240,157 197,42 236,-25 L222,-55 Z"
+            fill="#7B8DB5"
+          />
+        </svg>
+        {/* Bottom-right corner — same desktop paths, cropped viewBox */}
+        <svg
+          className="absolute bottom-0 right-0 pointer-events-none block md:hidden"
+          style={{ bottom: '-6px' }}
+          width="143" height="250"
+          viewBox="1183 440 285 500"
+          aria-hidden="true"
+        >
+          <path
+            d="M1470,940 L1240,940 C1240,750 1200,690 1320,645 C1450,598 1400,540 1470,460 Z"
+            fill="#1A2D63"
+          />
+          <path
+            d="M1248,940 C1248,755 1205,693 1325,648 C1455,601 1405,543 1475,465
+               L1470,452 C1398,535 1448,595 1318,642 C1195,688 1232,750 1232,940 L1248,940 Z"
+            fill="#7B8DB5"
+          />
+        </svg>
+
+        {/* ── COMPACT (mobile/tablet): text column + phone anchored at bottom ── */}
+        {isCompact && (
+          <>
+            <div className="absolute z-10 left-[4%] right-[4%] flex flex-col items-center text-center" style={{ top: '20svh', bottom: '45svh' }}>
+              <div className="overflow-visible hero-animate-heading">
+                <h1 className="font-general leading-[1] tracking-tight text-navy text-center" style={{ fontSize: 'clamp(1.7rem, calc(0.7rem + 3vw + 1.5vh), 3.2rem)' }}>
+                  <span className="font-bold" style={{ letterSpacing: '-0.025em', WebkitFontSmoothing: 'antialiased' }}>
+                    Just... Talk{showTalkDot ? '.' : ''}
+                  </span>
+                  <br />
+                  <span className="font-black italic">
+                    <TypewriterText text={displayedText} isDrawing={isDrawing} />
+                  </span>
+                  <span className="inline-block w-[3px] h-[1em] bg-[#1A2D63] ml-1 animate-pulse align-baseline" />
+                </h1>
+              </div>
+              <div className="w-full max-w-lg">
+                <div className="hero-animate-subtitle">
+                  <p className="font-instrument text-slate-blue leading-relaxed max-w-lg mx-auto text-center" style={{ fontSize: 'clamp(1rem, calc(0.7rem + 0.3vw + 0.35vh), 1.375rem)' }}>
+                    {t('hero.subtitle1_pre')}{' '}
+                    <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" className="inline-block h-[3.2em] w-auto align-[-1em] -mx-2" style={{ clipPath: 'inset(0 6% 0 6%)' }} draggable={false} />{' '}
+                    {t('hero.subtitle1_mid')}{' '}
+                    <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>
+                    <span className="block" style={{ marginTop: '-0.7em', lineHeight: '1.5' }}>{t('hero.subtitle1_post')}</span>
+                  </p>
+                </div>
+                <div className="hero-animate-ctas" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 2rem)' }}>
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                    <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[13px] px-5 py-2.5">
+                      <span>{t('hero.getStartedFree')}</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                    <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-[13px] px-5 py-2.5" onClick={() => { trackCTAClick('Watch Demo - Hero', '/'); const el = document.getElementById('how-it-works'); if (el) window.scrollTo({ top: el.offsetTop - 10, behavior: 'smooth' }); }}>
+                      <Play className="w-4 h-4" />
+                      <span>{t('hero.watchDemo')}</span>
+                    </button>
+                  </div>
+                </div>
+                <div className="hero-animate-checks" style={{ marginTop: 'clamp(0.5rem, calc(0.35rem + 0.6vh), 1.25rem)' }}>
+                  <div className="flex sm:flex-row flex-col items-start justify-start gap-x-6 gap-y-1.5 text-sm text-muted-blue w-fit mx-auto">
+                    <div className="flex items-center space-x-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.oneClickSetup')}</span></div>
+                    <span className="hidden sm:inline">·</span>
+                    <div className="flex items-center space-x-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.whatsappSetup')}</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Outer div handles centering; inner div has the animation so transforms don't conflict */}
+            <div ref={mobilePhoneRef} className="absolute" style={{ left: '50%', transform: 'translateX(-50%)', top: '66svh', width: 'min(460px, 86vw)', zIndex: 60, pointerEvents: 'none' }}>
+              <div className="flex items-start justify-center hero-animate-phone-bottom">
+                <img src="/whatsapp phone mock.png" alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes" style={{ width: 'min(460px, 97vw)', height: 'auto', transform: 'rotate(5deg)', filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))' }} draggable={false} />
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ── DESKTOP: centered flex row, text left + phone right ── */}
+        {!isCompact && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center" style={{ padding: '6vh 6vw 0', gap: 'clamp(0.25rem, 0.5vw, 1rem)' }}>
+            {/* Text column */}
+            <div className="flex flex-col items-start text-left flex-1 min-w-0 max-w-[540px] xl:max-w-[660px] 2xl:max-w-[800px]">
+              <div className="overflow-visible hero-animate-heading w-full">
+                <h1 className="font-general leading-[1] tracking-tight text-navy text-left" style={{ fontSize: 'clamp(2.5rem, calc(1.8rem + 1.2vw + 1.5vh), 6rem)' }}>
+                  <span className="font-bold" style={{ letterSpacing: '-0.025em', WebkitFontSmoothing: 'antialiased' }}>
+                    Just... Talk{showTalkDot ? '.' : ''}
+                  </span>
+                  <br />
+                  <span className="font-black italic">
+                    <TypewriterText text={displayedText} isDrawing={isDrawing} />
+                  </span>
+                  <span className="inline-block w-[3px] h-[1em] bg-[#1A2D63] ml-1 animate-pulse align-baseline" />
+                </h1>
+              </div>
+              <div className="hero-animate-subtitle w-full" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 1.5rem)' }}>
+                <p className="font-instrument text-slate-blue leading-relaxed text-left max-w-[520px]" style={{ fontSize: 'clamp(1rem, calc(0.7rem + 0.3vw + 0.35vh), 1.375rem)' }}>
+                  {t('hero.subtitle1_pre')}{' '}
+                  <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" className="inline-block h-[3.2em] w-auto align-[-1em] -mx-2" style={{ clipPath: 'inset(0 6% 0 6%)' }} draggable={false} />{' '}
+                  {t('hero.subtitle1_mid')}{' '}
+                  <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>{' '}
+                  {t('hero.subtitle1_post')}
+                </p>
+              </div>
+              <div className="hero-animate-ctas w-full" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 2rem)' }}>
+                <div className="flex flex-row gap-4 justify-start">
+                  <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[15px] px-6 py-3">
+                    <span>{t('hero.getStartedFree')}</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                  <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-[15px] px-6 py-3" onClick={() => { trackCTAClick('Watch Demo - Hero', '/'); const el = document.getElementById('how-it-works'); if (el) window.scrollTo({ top: el.offsetTop - 10, behavior: 'smooth' }); }}>
+                    <Play className="w-5 h-5" />
+                    <span>{t('hero.watchDemo')}</span>
+                  </button>
+                </div>
+              </div>
+              <div className="hero-animate-checks w-full" style={{ marginTop: 'clamp(0.5rem, calc(0.35rem + 0.6vh), 1.25rem)' }}>
+                <div className="flex flex-wrap items-center justify-start gap-x-6 gap-y-2 text-sm text-muted-blue">
+                  <div className="flex items-center space-x-2"><CheckCircle className="w-4 h-4 text-navy" /><span>{t('hero.oneClickSetup')}</span></div>
+                  <span className="hidden sm:inline">·</span>
+                  <div className="flex items-start space-x-2 max-w-[180px]"><CheckCircle className="w-4 h-4 text-navy mt-0.5 flex-shrink-0" /><span className="leading-snug whitespace-pre-line">{t('hero.whatsappSetup')}</span></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div className="flex-shrink-0">
+              <img
+                src="/whatsapp phone mock.png"
+                alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes"
+                style={{
+                  width: 'auto',
+                  height: 'clamp(540px, 92svh, 1020px)',
+                  transform: 'rotate(7deg)',
+                  filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))',
+                }}
+                draggable={false}
+              />
+            </div>
+          </div>
+        )}
 
       </section>
 
-      {/* Partial CRM Preview - Centered Below */}
-      <CrmPreviewCards />
     </div>
   );
 };

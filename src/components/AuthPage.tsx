@@ -240,7 +240,7 @@ export const AuthPage: React.FC = () => {
   /* ─── Sub-screens ─── */
 
   const renderOdooTypeSelection = () => (
-    <div className="w-full max-w-lg ml-auto mr-8">
+    <div className="w-full max-w-lg mx-auto lg:ml-auto lg:mr-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-general font-bold text-navy mb-4">{t('auth.chooseYourOdooType')}</h1>
         <p className="text-lg sm:text-xl font-instrument text-slate-blue">{t('auth.selectOdooInstallationType')}</p>
@@ -283,7 +283,7 @@ export const AuthPage: React.FC = () => {
   );
 
   const renderSelfHostedLogin = () => (
-    <div className="w-full max-w-lg ml-auto mr-8">
+    <div className="w-full max-w-lg mx-auto lg:ml-auto lg:mr-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-general font-bold text-navy mb-4">
           {isSignup ? t('auth.createAccount') : t('auth.signIn')}
@@ -392,7 +392,7 @@ export const AuthPage: React.FC = () => {
   const renderMainForm = () => {
     const btnAnimClasses = ['auth-animate-btn-1', 'auth-animate-btn-2', 'auth-animate-btn-3'];
     return (
-    <div className="w-full max-w-lg ml-auto mr-8">
+    <div className="w-full max-w-lg mx-auto lg:ml-auto lg:mr-8">
       <h1 className="text-3xl sm:text-4xl lg:text-5xl font-general font-bold text-navy mb-3 text-center leading-tight auth-animate-title">
         {globalAuthMode === 'signup' ? t('auth.modal.title') : t('auth.signInToAccount')}
       </h1>
@@ -413,32 +413,32 @@ export const AuthPage: React.FC = () => {
           const isDisabled = disabledProviders.includes(provider.name);
           return (
             <button key={provider.name} onClick={() => !isDisabled && handleSignIn(provider)} disabled={loadingProvider !== null || isDisabled}
-              className={`${btnAnimClasses[idx] || 'auth-animate-btn-3'} group w-full bg-white border-2 border-navy/10 text-navy font-semibold py-4 px-5 sm:px-7 rounded-2xl transition-all duration-300 flex items-center justify-between shadow-sm ${
+              className={`${btnAnimClasses[idx] || 'auth-animate-btn-3'} group w-full bg-white border-2 border-navy/10 text-navy font-semibold py-2.5 sm:py-4 px-4 sm:px-7 rounded-2xl transition-all duration-300 flex items-center justify-between shadow-sm ${
                 isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:border-navy/20 hover:shadow-lg hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'}`}>
               {isLoading ? (
                 <div className="flex items-center justify-center w-full">
-                  <Loader2 className="w-6 h-6 animate-spin text-navy mr-3" />
-                  <span className="text-lg font-instrument text-slate-blue">{t('auth.connectingTo', { provider: provider.displayName })}</span>
+                  <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 animate-spin text-navy mr-3" />
+                  <span className="text-base sm:text-lg font-instrument text-slate-blue">{t('auth.connectingTo', { provider: provider.displayName })}</span>
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center space-x-4">
-                    <div className={`w-12 h-12 bg-navy/5 rounded-xl flex items-center justify-center transition-colors ${!isDisabled && 'group-hover:bg-navy/10'}`}>
-                      <img src={getProviderLogo(provider.name) || ''} alt={provider.displayName} className="w-7 h-7 object-contain" />
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-navy/5 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${!isDisabled && 'group-hover:bg-navy/10'}`}>
+                      <img src={getProviderLogo(provider.name) || ''} alt={provider.displayName} className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
                     </div>
                     <div className="text-left">
-                      <div className="text-lg font-general font-semibold text-navy">
+                      <div className="text-sm sm:text-lg font-general font-semibold text-navy leading-tight">
                         {provider.name === 'teamleader' && t('auth.page.continueTeamleader')}
                         {provider.name === 'pipedrive' && t('auth.page.continuePipedrive')}
                         {provider.name === 'odoo' && t('auth.page.continueOdoo')}
                       </div>
-                      <div className="text-sm font-instrument text-muted-blue">
+                      <div className="text-xs sm:text-sm font-instrument text-muted-blue mt-0.5">
                         {isDisabled ? t('auth.temporarilyUnavailable') : (provider.name === 'odoo' ? t('auth.forOdooAccountsOnly') : t('auth.modal.startTrialInstantly'))}
                       </div>
                     </div>
                   </div>
-                  <div className={`w-10 h-10 rounded-full bg-navy/5 flex items-center justify-center transition-colors ${!isDisabled && 'group-hover:bg-navy/10'}`}>
-                    <ArrowRight className="w-5 h-5 text-navy" />
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-navy/5 flex-shrink-0 flex items-center justify-center transition-colors ${!isDisabled && 'group-hover:bg-navy/10'}`}>
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-navy" />
                   </div>
                 </>
               )}
@@ -476,33 +476,61 @@ export const AuthPage: React.FC = () => {
     <div className="h-screen bg-porcelain relative overflow-hidden flex flex-col">
       <CornerWaves />
 
+      {/* Top-left corner wave — mobile only */}
+      <svg
+        className="absolute left-0 pointer-events-none block md:hidden"
+        style={{ top: '-8px' }}
+        width="128" height="240"
+        viewBox="-30 -30 255 480"
+        overflow="visible"
+        aria-hidden="true"
+      >
+        <path d="M-30,-30 L220,-30 C170,60 230,140 130,200 C30,260 60,310 -30,360 L-30,430 Z" fill="#1A2D63" />
+        <path d="M222,-55 C177,25 220,135 125,195 C30,255 30,318 -55,368 L-34,397 C31,352 30,272 140,212 C240,157 197,42 236,-25 L222,-55 Z" fill="#7B8DB5" />
+      </svg>
+      {/* Bottom-right corner wave — mobile only */}
+      <svg
+        className="absolute bottom-0 right-0 pointer-events-none block md:hidden"
+        style={{ bottom: '-6px' }}
+        width="143" height="250"
+        viewBox="1183 440 285 500"
+        aria-hidden="true"
+      >
+        <path d="M1470,940 L1240,940 C1240,750 1200,690 1320,645 C1450,598 1400,540 1470,460 Z" fill="#1A2D63" />
+        <path d="M1248,940 C1248,755 1205,693 1325,648 C1455,601 1405,543 1475,465 L1470,452 C1398,535 1448,595 1318,642 C1195,688 1232,750 1232,940 L1248,940 Z" fill="#7B8DB5" />
+      </svg>
+
       {/* Top bar — back pill, logo, language switcher */}
-      <div className="relative z-20 flex items-start justify-between px-6 sm:px-10 py-4 auth-animate-topbar shrink-0">
-        <div className="flex flex-col items-center gap-4">
+      <div className="relative z-20 flex items-center justify-between px-6 sm:px-10 py-4 auth-animate-topbar shrink-0">
+        <div className="flex flex-col items-start gap-4">
           <button
             onClick={() => navigateWithTransition(withUTM('/'))}
             className="group inline-flex items-center gap-2 py-2 px-4 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300"
           >
-            <div className="flex items-center justify-center w-6 h-6 rounded-full bg-navy/5 group-hover:bg-navy/10 transition-colors duration-200">
-              <ArrowLeft className="w-3 h-3 text-navy group-hover:-translate-x-0.5 transition-all" />
-            </div>
-            <span className="text-sm font-instrument font-medium text-navy">{t('auth.backToHome')}</span>
+            <ArrowLeft className="w-4 h-4 text-navy group-hover:-translate-x-0.5 transition-all" />
+            <span className="hidden md:inline text-sm font-instrument font-medium text-navy">{t('auth.backToHome')}</span>
           </button>
           <img
             src="/Finit Voicelink White.svg"
             alt={t('common.voiceLink')}
-            className="h-12 sm:h-14 w-auto"
+            className="hidden md:block h-12 sm:h-14 w-auto"
           />
         </div>
+        {/* Mobile-only: centered blue logo */}
+        <img
+          src="/Finit Voicelink Blue.svg"
+          alt={t('common.voiceLink')}
+          className="block md:hidden absolute left-1/2 -translate-x-1/2 h-9 w-auto pointer-events-none"
+        />
         <div>
           <LanguageSwitcher />
         </div>
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex min-h-0" style={{ marginTop: '-9vh' }}>
-        {/* Left side: form — pushed toward center */}
-        <div className="w-full lg:w-[55%] flex items-center justify-end relative z-10 px-6 sm:px-10 lg:pl-4 lg:pr-0">
+      <div className="flex-1 flex min-h-0 md:-mt-[9vh]">
+        {/* Left side: form — centered on mobile, pushed toward center on desktop */}
+        <div className="w-full lg:w-[55%] flex items-center justify-center lg:justify-end relative z-10 px-6 sm:px-10 lg:pl-4 lg:pr-0 pb-[32vh] lg:pb-0">
           {redirectingMessage && (
             <div className="absolute inset-0 bg-porcelain/95 flex flex-col items-center justify-center z-50">
               <Loader2 className="w-14 h-14 text-navy animate-spin mb-5" />
@@ -529,6 +557,20 @@ export const AuthPage: React.FC = () => {
             }}
           />
         </div>
+      </div>
+      {/* Mobile phone mock — pinned to bottom, behind form content */}
+      <div className="block lg:hidden absolute left-1/2 -translate-x-1/2 pointer-events-none z-0" style={{ top: '65vh', width: 'min(380px, 88vw)' }}>
+        <img
+          src="/whatsapp phone mock.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            width: '100%',
+            height: 'auto',
+            transform: 'rotate(5deg)',
+            filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.15))',
+          }}
+        />
       </div>
     </div>
   );

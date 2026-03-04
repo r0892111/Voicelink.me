@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useI18n } from '../hooks/useI18n';
+import { useScaleFactor, useIsMobile } from '../hooks/useBreakpoint';
 
 type Phase = 'idle' | 'voice' | 'transcript' | 'thinking' | 'reply' | 'crm' | 'done';
 
 const TRANSCRIPT_TEXT = "Just had a call with Sarah Mitchell from TechFlow Solutions. She's the procurement manager. Her number is 0456 789 123, email sarah@techflow.be. Enterprise client, very promising. She mentioned they're migrating from Salesforce next quarter.";
+
+const TRANSCRIPT_TEXT_NL = "Net gebeld met Sarah Mitchell van TechFlow Solutions. Ze is de aankoopmanager. Haar nummer is 0456 789 123, e-mail sarah@techflow.be. Enterprise klant, heel veelbelovend. Ze zei dat ze volgend kwartaal migreren van Salesforce.";
 
 const REPLY_LINES = [
   { emoji: '\u2705', text: 'Contact created: Sarah Mitchell' },
@@ -12,6 +15,15 @@ const REPLY_LINES = [
   { emoji: '\uD83D\uDCE7', text: 'sarah@techflow.be' },
   { emoji: '\uD83C\uDFF7\uFE0F', text: 'Hot Lead \u00B7 Enterprise Client' },
   { emoji: '\uD83D\uDD04', text: 'Migrating from Salesforce next Q' },
+];
+
+const REPLY_LINES_NL = [
+  { emoji: '\u2705', text: 'Contact aangemaakt: Sarah Mitchell' },
+  { emoji: '\uD83C\uDFE2', text: 'TechFlow Solutions \u2014 Aankoopmanager' },
+  { emoji: '\uD83D\uDCDE', text: '0456 789 123' },
+  { emoji: '\uD83D\uDCE7', text: 'sarah@techflow.be' },
+  { emoji: '\uD83C\uDFF7\uFE0F', text: 'Hot Lead \u00B7 Enterprise Klant' },
+  { emoji: '\uD83D\uDD04', text: 'Migreert volgend kwartaal van Salesforce' },
 ];
 
 // Generate natural-looking waveform with envelope
@@ -38,12 +50,25 @@ const CRM_CONTACT_ROWS = [
   { label: 'Telefoonnummer', value: '0456 789 123', isLink: true },
 ];
 
+const CRM_CONTACT_ROWS_NL = [
+  { label: 'Bedrijf', value: 'TechFlow Solutions' },
+  { label: 'Functie', value: 'Aankoopmanager' },
+  { label: 'E-mail', value: 'sarah@techflow.be', isLink: true },
+  { label: 'Telefoonnummer', value: '0456 789 123', isLink: true },
+];
+
 const CRM_TAGS = ['Hot Lead', 'Enterprise'];
 
 const CRM_NOTE_BULLETS = [
   'Procurement Manager at TechFlow Solutions',
   'Enterprise client — very promising',
   'Migrating from Salesforce next quarter',
+];
+
+const CRM_NOTE_BULLETS_NL = [
+  'Aankoopmanager bij TechFlow Solutions',
+  'Enterprise klant — zeer veelbelovend',
+  'Migreert volgend kwartaal van Salesforce',
 ];
 
 // Sidebar items matching Teamleader nav
@@ -55,13 +80,25 @@ const CRM_SIDEBAR_ITEMS = [
 ];
 
 export const HowItWorksDemo: React.FC = () => {
-  const { t } = useI18n();
+  const { t, currentLanguage } = useI18n();
+  const isNl = currentLanguage === 'nl';
+  const transcriptText = isNl ? TRANSCRIPT_TEXT_NL : TRANSCRIPT_TEXT;
+  const replyLines = isNl ? REPLY_LINES_NL : REPLY_LINES;
+  const crmContactRows = isNl ? CRM_CONTACT_ROWS_NL : CRM_CONTACT_ROWS;
+  const crmNoteBullets = isNl ? CRM_NOTE_BULLETS_NL : CRM_NOTE_BULLETS;
+  const crmUpdatedLabel = isNl ? 'CRM Bijgewerkt' : 'CRM Updated';
+  const typeMessagePlaceholder = isNl ? 'Typ een bericht' : 'Type a message';
+
+  const transcriptTextRef = useRef(transcriptText);
+  useEffect(() => { transcriptTextRef.current = transcriptText; }, [transcriptText]);
+
   const [phase, setPhase] = useState<Phase>('idle');
   const [activeStep, setActiveStep] = useState(0);
   const [transcriptProgress, setTranscriptProgress] = useState(0);
   const [replyLinesShown, setReplyLinesShown] = useState(0);
   const [crmFieldsShown, setCrmFieldsShown] = useState(0);
   const [bubbleShifted, setBubbleShifted] = useState(false);
+  const [crmScrolled, setCrmScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [loopFading, setLoopFading] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -100,7 +137,7 @@ export const HowItWorksDemo: React.FC = () => {
     let charIndex = 0;
     transcriptDoneRef.current = false;
     const type = () => {
-      if (charIndex < TRANSCRIPT_TEXT.length) {
+      if (charIndex < transcriptTextRef.current.length) {
         charIndex++;
         setTranscriptProgress(charIndex);
         rafRef.current = requestAnimationFrame(() => {
@@ -123,6 +160,7 @@ export const HowItWorksDemo: React.FC = () => {
     setReplyLinesShown(0);
     setCrmFieldsShown(0);
     setBubbleShifted(false);
+    setCrmScrolled(false);
     transcriptDoneRef.current = false;
 
     addTimeout(() => {
@@ -153,6 +191,8 @@ export const HowItWorksDemo: React.FC = () => {
               addTimeout(() => setCrmFieldsShown(prev => prev + 1), i * 180);
             }
             addTimeout(() => setPhase('done'), totalCrmElements * 180 + 500);
+            // Trigger scroll reveal of background info on mobile
+            addTimeout(() => setCrmScrolled(true), (2 + CRM_CONTACT_ROWS.length) * 180 + 400);
           }, replyDuration);
         }, 2000);
       });
@@ -188,11 +228,14 @@ export const HowItWorksDemo: React.FC = () => {
 
   const showCrm = phaseGte('crm');
 
+  const scale = useScaleFactor();
+  const isMobile = useIsMobile();
+
   return (
-    <div ref={containerRef} className="flex flex-col lg:flex-row gap-8 lg:gap-14 items-start" style={{ minHeight: '500px' }}>
+    <div ref={containerRef} className="flex flex-col lg:flex-row gap-8 lg:gap-14 items-start" style={{ minHeight: Math.round(500 * scale) }}>
 
       {/* ─── macOS Window + Chat ─── */}
-      <div className="w-full lg:w-[60%] flex-shrink-0">
+      <div className="w-full lg:w-[55%] flex-shrink-0">
         <div className="relative">
           {/* Backdrop shadow — elevated "floating" effect */}
           <div
@@ -210,6 +253,7 @@ export const HowItWorksDemo: React.FC = () => {
               boxShadow: '0 35px 80px -8px rgba(0,0,0,0.24), 0 20px 44px -6px rgba(0,0,0,0.16), 0 8px 20px rgba(0,0,0,0.08)',
               opacity: loopFading ? 0 : 1,
               transition: 'opacity 0.6s ease',
+              zoom: scale,
             }}
           >
 
@@ -227,7 +271,7 @@ export const HowItWorksDemo: React.FC = () => {
             {/* ── Content area (fixed total height, both views overlap) ── */}
             <div
               className="relative overflow-hidden"
-              style={{ height: '436px' }}
+              style={{ height: 436 }}
             >
               {/* ── WhatsApp full view (header + chat + input) ── */}
               <div
@@ -264,17 +308,17 @@ export const HowItWorksDemo: React.FC = () => {
               >
                 {/* ── User voice bubble (sent — light green) — absolutely positioned ── */}
                 <div
-                  className="absolute right-[40px] md:right-[52px] left-[40px] md:left-[52px]"
+                  className="absolute right-[16px] md:right-[52px] left-[16px] md:left-[52px]"
                   style={{
-                    bottom: '240px',
+                    bottom: isMobile ? 220 : 240,
                     opacity: phase === 'idle' ? 0 : 1,
                     transform: phase === 'idle'
-                      ? 'translateY(230px)'
+                      ? `translateY(${isMobile ? 210 : 230}px)`
                       : bubbleShifted
-                        ? 'translateY(0)'
+                        ? `translateY(${isMobile ? -22 : 0}px)`
                         : phaseGte('thinking')
-                          ? 'translateY(190px)'
-                          : 'translateY(230px)',
+                          ? `translateY(${isMobile ? 170 : 190}px)`
+                          : `translateY(${isMobile ? 210 : 230}px)`,
                     transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
                   }}
                 >
@@ -358,10 +402,18 @@ export const HowItWorksDemo: React.FC = () => {
                             transition: 'opacity 0.3s ease',
                           }}
                         >
-                          <p className="text-[12px] leading-[1.6] text-[#111b21]/70 font-instrument">
+                          <p
+                            className="text-[12px] leading-[1.6] text-[#111b21]/70 font-instrument"
+                            style={isMobile ? {
+                              WebkitLineClamp: 4,
+                              WebkitBoxOrient: 'vertical' as const,
+                              display: '-webkit-box',
+                              overflow: 'hidden',
+                            } : undefined}
+                          >
                             <span className="text-[9.5px] uppercase tracking-[0.08em] text-[#667781]/70 font-semibold block mb-[2px]">Transcript</span>
-                            {TRANSCRIPT_TEXT.slice(0, transcriptProgress)}
-                            {transcriptProgress < TRANSCRIPT_TEXT.length && (
+                            {transcriptText.slice(0, transcriptProgress)}
+                            {transcriptProgress < transcriptText.length && (
                               <span className="inline-block w-[1.5px] h-[11px] bg-[#111b21]/40 ml-[1px] align-text-bottom animate-blink" />
                             )}
                           </p>
@@ -375,7 +427,7 @@ export const HowItWorksDemo: React.FC = () => {
 
                 {/* ── Typing indicator bubble (received — white) ── */}
                 <div
-                  className="absolute left-[40px] md:left-[52px] right-[40px] md:right-[52px]"
+                  className="absolute left-[16px] md:left-[52px] right-[16px] md:right-[52px]"
                   style={{
                     bottom: '10px',
                     opacity: phase === 'thinking' ? 1 : 0,
@@ -403,10 +455,10 @@ export const HowItWorksDemo: React.FC = () => {
 
                 {/* ── Bot reply bubble (received — white) — slides up like the green bubble ── */}
                 <div
-                  className="absolute left-[40px] md:left-[52px] right-[40px] md:right-[52px]"
+                  className="absolute left-[16px] md:left-[52px] right-[16px] md:right-[52px]"
                   style={{
                     bottom: '10px',
-                    opacity: phase === 'idle' || phase === 'voice' || phase === 'transcript' ? 0 : 1,
+                    opacity: phase === 'idle' || phase === 'voice' || phase === 'transcript' || phase === 'thinking' ? 0 : 1,
                     transform: phaseGte('reply')
                       ? 'translateY(0)'
                       : 'translateY(230px)',
@@ -432,10 +484,10 @@ export const HowItWorksDemo: React.FC = () => {
                     <div className="bg-white rounded-[8px] rounded-tl-none px-[10px] py-[7px] shadow-[0_1px_1px_rgba(0,0,0,0.06)]">
                       <div>
                         <div className="text-[12px] font-instrument font-semibold text-[#008069] mb-[4px]">
-                          CRM Updated
+                          {crmUpdatedLabel}
                         </div>
                         <div className="space-y-[3px]">
-                          {REPLY_LINES.map((line, i) => (
+                          {replyLines.map((line, i) => (
                             <div
                               key={i}
                               style={{
@@ -466,7 +518,7 @@ export const HowItWorksDemo: React.FC = () => {
                   <svg className="w-[22px] h-[22px] text-[#54656f] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
                   </svg>
-                  <span className="text-[14px] text-[#667781] font-instrument flex-1">Type a message</span>
+                  <span className="text-[14px] text-[#667781] font-instrument flex-1">{typeMessagePlaceholder}</span>
                   <svg className="w-[22px] h-[22px] text-[#54656f] flex-shrink-0 rotate-[135deg]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
                   </svg>
@@ -586,8 +638,100 @@ export const HowItWorksDemo: React.FC = () => {
                     <span className="font-instrument text-[9px]" style={{ color: '#50B0B1' }}>&larr; Overzicht contacten</span>
                   </div>
 
-                  {/* Content: two cards side by side */}
-                  <div className="flex-1 px-3 pb-3 flex gap-2.5 overflow-hidden min-h-0">
+                  {/* Content: cards — mobile stacked, desktop side-by-side */}
+
+                  {/* ── MOBILE: vertical stack with scroll reveal ── */}
+                  <div className="flex md:hidden flex-1 px-3 pb-3 flex-col gap-2 overflow-hidden min-h-0 relative">
+                    {/* Scrollable inner wrapper */}
+                    <div
+                      className="flex flex-col gap-2"
+                      style={{
+                        transform: crmScrolled ? 'translateY(-82px)' : 'translateY(0)',
+                        transition: 'transform 1.1s cubic-bezier(0.22, 1, 0.36, 1)',
+                      }}
+                    >
+                      {/* Contact card (mobile) */}
+                      <div
+                        className="rounded-lg border bg-white overflow-hidden flex flex-col flex-shrink-0"
+                        style={{
+                          borderColor: '#e8eaed',
+                          opacity: crmFieldsShown > 0 ? 1 : 0,
+                          transform: crmFieldsShown > 0 ? 'translateY(0)' : 'translateY(6px)',
+                          transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+                        }}
+                      >
+                        <div className="flex items-center justify-between px-3 py-2 border-b" style={{ borderColor: '#f0f1f3' }}>
+                          <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>Contactinformatie</span>
+                          <div className="flex items-center gap-1.5">
+                            <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2.5 px-3 py-2.5" style={{ opacity: crmFieldsShown > 0 ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+                          <div className="rounded-full flex items-center justify-center font-semibold flex-shrink-0" style={{ width: '32px', height: '32px', fontSize: '11px', backgroundColor: '#50B0B1', color: 'white' }}>SM</div>
+                          <span className="font-instrument font-medium text-[13px]" style={{ color: '#1f2937' }}>Sarah Mitchell</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 px-3 pb-2" style={{ opacity: crmFieldsShown > 1 ? 1 : 0, transform: crmFieldsShown > 1 ? 'translateY(0)' : 'translateY(3px)', transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+                          {CRM_TAGS.map((tag) => (
+                            <span key={tag} className="inline-flex items-center px-2 py-[2px] rounded-full font-instrument text-[9px] font-medium" style={{ border: '1px solid #e0e2e5', color: '#4b5563', backgroundColor: 'white' }}>{tag}</span>
+                          ))}
+                        </div>
+                        <div>
+                          {crmContactRows.map((row, i) => (
+                            <div key={row.label} className="flex items-baseline gap-2 px-3 py-[5px]" style={{ opacity: crmFieldsShown > i + 2 ? 1 : 0, transform: crmFieldsShown > i + 2 ? 'translateX(0)' : 'translateX(-4px)', transition: `all 0.3s cubic-bezier(0.22, 1, 0.36, 1) ${i * 50}ms` }}>
+                              <span className="font-instrument text-[10px] font-semibold flex-shrink-0" style={{ color: '#374151', width: '42%' }}>{row.label}</span>
+                              <span className="font-instrument text-[10px] truncate" style={{ color: row.isLink ? '#50B0B1' : '#4b5563' }}>{row.value}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Achtergrondinformatie card (mobile — slides up with scroll) */}
+                      <div
+                        className="rounded-lg border bg-white overflow-hidden flex flex-col flex-shrink-0"
+                        style={{
+                          borderColor: '#e8eaed',
+                          opacity: crmScrolled ? 1 : 0,
+                          transform: crmScrolled ? 'translateY(0)' : 'translateY(18px)',
+                          transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+                        }}
+                      >
+                        <div className="flex items-center justify-between px-3 py-2 border-b" style={{ borderColor: '#f0f1f3' }}>
+                          <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>Achtergrondinformatie</span>
+                          <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </div>
+                        <div className="flex-1 px-3 py-2.5">
+                          <div className="space-y-1.5">
+                            {crmNoteBullets.map((bullet, i) => {
+                              const bulletIndex = crmContactRows.length + 2 + i + 1;
+                              return (
+                                <div key={i} className="flex items-start gap-1.5" style={{ opacity: crmFieldsShown >= bulletIndex ? 1 : 0, transform: crmFieldsShown >= bulletIndex ? 'translateY(0)' : 'translateY(4px)', transition: `all 0.3s cubic-bezier(0.22, 1, 0.36, 1) ${i * 40}ms` }}>
+                                  <span className="flex-shrink-0" style={{ color: '#9ca3af', fontSize: '10px', lineHeight: '1.5' }}>•</span>
+                                  <span className="font-instrument text-[10px] leading-[1.5]" style={{ color: '#4b5563' }}>{bullet}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Scroll indicator track + thumb */}
+                    <div className="absolute right-1.5 top-4 bottom-4 w-[2px] rounded-full" style={{ backgroundColor: 'rgba(0,0,0,0.06)' }}>
+                      <div
+                        className="absolute left-0 right-0 rounded-full"
+                        style={{
+                          backgroundColor: 'rgba(0,0,0,0.16)',
+                          top: crmScrolled ? '45%' : '4%',
+                          height: '28%',
+                          transition: 'top 1.1s cubic-bezier(0.22, 1, 0.36, 1)',
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* ── DESKTOP: side-by-side ── */}
+                  <div className="hidden md:flex flex-1 px-3 pb-3 gap-2.5 overflow-hidden min-h-0">
 
                     {/* Left: Contactinformatie card */}
                     <div
@@ -657,7 +801,7 @@ export const HowItWorksDemo: React.FC = () => {
 
                       {/* Field-value rows (Teamleader style: label left, value right) */}
                       <div className="flex-1 overflow-hidden">
-                        {CRM_CONTACT_ROWS.map((row, i) => (
+                        {crmContactRows.map((row, i) => (
                           <div
                             key={row.label}
                             className="flex items-baseline gap-2 px-3 py-[5px]"
@@ -686,7 +830,7 @@ export const HowItWorksDemo: React.FC = () => {
 
                     {/* Right: Achtergrondinformatie card (note) */}
                     <div
-                      className="rounded-lg border bg-white overflow-hidden flex flex-col"
+                      className="flex flex-col rounded-lg border bg-white overflow-hidden"
                       style={{
                         borderColor: '#e8eaed',
                         width: '42%',
@@ -705,8 +849,8 @@ export const HowItWorksDemo: React.FC = () => {
                       {/* Note body */}
                       <div className="flex-1 px-3 py-2.5">
                         <div className="space-y-1.5">
-                          {CRM_NOTE_BULLETS.map((bullet, i) => {
-                            const bulletIndex = CRM_CONTACT_ROWS.length + 2 + i + 1;
+                          {crmNoteBullets.map((bullet, i) => {
+                            const bulletIndex = crmContactRows.length + 2 + i + 1;
                             return (
                               <div
                                 key={i}
@@ -730,14 +874,14 @@ export const HowItWorksDemo: React.FC = () => {
                   </div>
 
                   {/* Collapsible sections at bottom (just hints, like the screenshot) */}
-                  <div className="px-3 pb-2 flex-shrink-0 space-y-[3px]">
+                  <div className="hidden md:block px-3 pb-2 flex-shrink-0 space-y-[3px]">
                     {['Deals (0)', 'Afspraken (0)'].map((section, i) => (
                       <div
                         key={section}
                         className="flex items-center justify-between px-2.5 py-[5px] rounded bg-white border"
                         style={{
                           borderColor: '#e8eaed',
-                          opacity: crmFieldsShown > CRM_CONTACT_ROWS.length + CRM_NOTE_BULLETS.length + 1 ? 0.7 : 0,
+                          opacity: crmFieldsShown > crmContactRows.length + crmNoteBullets.length + 1 ? 0.7 : 0,
                           transition: `opacity 0.3s ease ${i * 60 + 100}ms`,
                         }}
                       >
@@ -759,7 +903,7 @@ export const HowItWorksDemo: React.FC = () => {
 
       {/* ─── Step Timeline (vertically centered) ─── */}
       <div
-        className="w-full lg:w-[40%] flex items-center justify-center lg:-mt-2"
+        className="w-full lg:w-[45%] flex items-center justify-center lg:-mt-2"
         style={{
           opacity: loopFading ? 0 : 1,
           transition: 'opacity 0.6s ease',
@@ -836,26 +980,26 @@ export const HowItWorksDemo: React.FC = () => {
 
                 {/* Text */}
                 <div
-                  className="pt-[10px] pb-8"
+                  className="pt-[10px] pb-3"
                   style={{
-                    opacity: isActive ? 1 : 0.28,
-                    transform: isActive ? 'translateX(0)' : 'translateX(3px)',
+                    opacity: isMobile || isActive ? 1 : 0.28,
+                    transform: isMobile || isActive ? 'translateX(0)' : 'translateX(3px)',
                     transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
                   }}
                 >
                   <h4
-                    className="font-general font-bold text-[17px] lg:text-[18px] leading-tight mb-1.5"
+                    className="font-general font-bold text-[17px] lg:text-[18px] xl:text-[20px] 2xl:text-[22px] leading-tight mb-1.5"
                     style={{
-                      color: isActive ? '#1A2D63' : 'rgba(26, 45, 99, 0.35)',
+                      color: isMobile || isActive ? '#1A2D63' : 'rgba(26, 45, 99, 0.35)',
                       transition: 'color 0.5s',
                     }}
                   >
                     {step.title}
                   </h4>
                   <p
-                    className="font-instrument text-[14px] lg:text-[15px] leading-relaxed max-w-[440px]"
+                    className="font-instrument text-[14px] lg:text-[15px] xl:text-[16px] 2xl:text-[17px] leading-relaxed max-w-[500px] xl:max-w-[580px]"
                     style={{
-                      color: isActive ? 'rgba(26, 45, 99, 0.52)' : 'rgba(26, 45, 99, 0.2)',
+                      color: isMobile || isActive ? 'rgba(26, 45, 99, 0.52)' : 'rgba(26, 45, 99, 0.2)',
                       transition: 'color 0.5s',
                     }}
                   >

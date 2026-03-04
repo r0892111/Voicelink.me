@@ -30,6 +30,11 @@
 }
 
 /* Finit Design System — Base */
+html,
+body {
+  overflow-x: hidden;
+}
+
 html {
   font-size: 15px;
   scroll-behavior: smooth;
@@ -265,6 +270,12 @@ html {
 .hero-animate-ctas     { animation: hero-fade-up    0.6s cubic-bezier(0.22,1,0.36,1) 0.4s  both; }
 .hero-animate-checks   { animation: hero-fade-up    0.5s cubic-bezier(0.22,1,0.36,1) 0.55s both; }
 .hero-animate-phone    { animation: hero-phone-in   0.8s cubic-bezier(0.22,1,0.36,1) 0.2s  both; }
+
+@keyframes hero-phone-in-bottom {
+  from { opacity: 0; transform: translateY(60px) scale(0.94); filter: blur(3px); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    filter: blur(0); }
+}
+.hero-animate-phone-bottom { animation: hero-phone-in-bottom 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s both; }
 
 /* ── Auth page entrance animations ── */
 @keyframes auth-slide-down {

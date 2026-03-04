@@ -82,25 +82,6 @@
     "privacyPolicy": "Datenschutzerklärung"
   },
   "auth": {
-    "invalidAuthenticationPlatform": "Ungültige Authentifizierungsplattform",
-    "authenticationFailed": "Authentifizierung fehlgeschlagen",
-    "missingAuthenticationParameters": "Fehlende Authentifizierungsparameter",
-    "invalidStateParameter": "Ungültiger State-Parameter",
-    "failedToEstablishSession": "Sitzung einrichten fehlgeschlagen",
-    "completingAuthentication": "Authentifizierung wird abgeschlossen...",
-    "authenticationFailedFor": "Authentifizierung fehlgeschlagen für {{provider}}"
-  },
-  "auth": {
-    "callback": {
-      "authenticating": "Authentifizierung...",
-      "authenticationSuccessful": "Authentifizierung Erfolgreich!",
-      "authenticationFailed": "Authentifizierung Fehlgeschlagen",
-      "processingAuth": "{{platform}} Authentifizierung wird verarbeitet...",
-      "completingAuth": "Authentifizierung wird abgeschlossen...",
-      "successfullyAuthenticated": "Erfolgreich mit {{platform}} authentifiziert!",
-      "redirectingToCheckout": "Weiterleitung zur Abonnement-Kasse...",
-      "returnToHome": "Zurück zur Startseite"
-    },
     "modal": {
       "title": "Starten Sie Ihre Kostenlose Testversion",
       "subtitle": "Verbinden Sie Ihr CRM und beginnen Sie sofort mit VoiceLink",
@@ -108,65 +89,8 @@
       "freeTrialDescription": "Ihre kostenlose Testversion beginnt sofort nach der Verbindung Ihres CRM.",
       "connectTeamleader": "Teamleader Verbinden",
       "connectPipedrive": "Pipedrive Verbinden",
-      "connectOdoo": "Odoo Verbinden",
-      "startTrialInstantly": "Starten Sie Ihre kostenlose Testversion sofort",
-      "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
-      "signInDescription": "Verbinden Sie sich einfach mit Ihrer CRM-Plattform oben, um sich anzumelden",
-      "secureOauth": "Sicheres OAuth",
-      "noSetupFees": "Keine Einrichtungsgebühren",
-      "cancelAnytime": "Jederzeit Kündbar",
-      "termsAgreement": "Durch die Verbindung Ihres CRM stimmen Sie unseren {{termsLink}} und {{privacyLink}} zu",
-      "termsOfService": "Nutzungsbedingungen",
-      "privacyPolicy": "Datenschutzrichtlinie"
-    },
-    "page": {
-      "signupSubtitle": "14 Tage kostenlos testen. Verbinden Sie Ihr CRM, um loszulegen.",
-      "continueTeamleader": "Weiter mit Teamleader",
-      "continuePipedrive": "Weiter mit Pipedrive",
-      "continueOdoo": "Weiter mit Odoo"
-    },
-    "passiveTermsConsent": "Mit der Anmeldung stimmen Sie unserer",
-    "preparingCheckout": "Ihr Konto wird eingerichtet...",
-    "redirectingToCheckout": "Weiterleitung zur Kasse...",
-    "checkingSubscription": "Ihr Abonnement wird überprüft...",
-    "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
-    "forOdooAccountsOnly": "Wählen Sie Ihren Odoo-Kontotyp",
-    "forSelfHostedInstances": "Für selbst gehostete Odoo-Instanzen",
-    "backToOdooOptions": "Zurück zu Odoo-Optionen",
-    "backToLoginOptions": "Zurück zu Anmeldeoptionen",
-    "backToHome": "Zurück zur Startseite",
-    "createAccount": "Konto Erstellen",
-    "signIn": "Anmelden",
-    "importantEmailAddress": "Wichtig: E-Mail-Adresse",
-    "emailMatchWarning": "Dies erstellt Ihr VoiceLink-Konto (nicht Ihr Odoo-Passwort). Ihre E-Mail muss mit Ihrer Odoo-E-Mail übereinstimmen, sonst funktioniert die Integration nicht. Sie können ein beliebiges Passwort wählen - es wird sicher verschlüsselt und gespeichert.",
-    "mustMatchOdooEmail": "Muss genau mit Ihrer Odoo-E-Mail-Adresse übereinstimmen",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "confirmPassword": "Passwort Bestätigen",
-    "chooseSecurePassword": "Wählen Sie ein sicheres Passwort (min. 6 Zeichen)",
-    "creatingAccount": "Konto Wird Erstellt...",
-    "signingIn": "Anmeldung Läuft...",
-    "alreadyHaveAccountSignIn": "Haben Sie bereits ein Konto? Anmelden",
-    "needAccountSignUp": "Brauchen Sie ein Konto? Registrieren",
-    "chooseYourOdooType": "Wählen Sie Ihren Odoo-Typ",
-    "selectOdooInstallationType": "Wählen Sie den Typ Ihrer Odoo-Installation",
-    "odooCloudTitle": "Odoo.com (Cloud)",
-    "odooCloudDescription": "Verwenden Sie dies, wenn Ihr Odoo-Konto auf Odoos offizieller Cloud läuft — Ihre Anmelde-URL sieht aus wie ihrfirma.odoo.com.",
-    "selfHostedOdooTitle": "Selbst Gehostetes Odoo",
-    "selfHostedOdooDescription": "Verwenden Sie dies, wenn Ihr Odoo auf Ihrem eigenen Server oder einer benutzerdefinierten Domäne läuft — zum Beispiel odoo.ihrfirma.com oder ähnlich.",
-    "connectingTo": "Verbindung zu {{provider}}...",
-    "pleaseWait": "Bitte warten...",
-    "error": "Fehler",
-    "signUp": "Registrieren",
-    "logIn": "Anmelden",
-    "signInToAccount": "Bei Ihrem Konto Anmelden",
-    "invalidAuthenticationPlatform": "Ungültige Authentifizierungsplattform",
-    "authenticationFailed": "Authentifizierung fehlgeschlagen",
-    "missingAuthenticationParameters": "Fehlende Authentifizierungsparameter",
-    "invalidStateParameter": "Ungültiger State-Parameter",
-    "failedToEstablishSession": "Sitzung einrichten fehlgeschlagen",
-    "completingAuthentication": "Authentifizierung wird abgeschlossen...",
-    "authenticationFailedFor": "Authentifizierung fehlgeschlagen für {{provider}}"
+      "connectOdoo": "Odoo Verbinden"
+    }
   },
   "teamManagement": {
     "title": "Team-Verwaltung",
@@ -205,41 +129,11 @@
     "integration": "WhatsApp Integration",
     "verified": "WhatsApp Verifiziert",
     "connectedTo": "Verbunden mit {{number}}",
-    "activeReady": "Aktiv & Bereit",
-    "readyDescription": "Ihre WhatsApp-Nummer ist verifiziert und bereit, Sprachnotiz-Bestätigungen zu empfangen. Sie können jetzt Sprachnachrichten an VoiceLink senden!",
-    "changeNumber": "WhatsApp-Nummer Ändern",
-    "changeDescription": "Trennen Sie die Verbindung, um eine andere WhatsApp-Nummer zu verbinden",
-    "disconnect": "Trennen",
-    "disconnecting": "Trennung...",
-    "verificationPending": "WhatsApp-Verifizierung Ausstehend",
-    "pendingDescription": "Ihre WhatsApp-Verifizierung steht aus. Bitte schließen Sie den Verifizierungsprozess ab, um VoiceLink zu verwenden.",
-    "refreshStatus": "Status Aktualisieren",
-    "whatsappNumber": "WhatsApp-Nummer",
+    "whatsappNumber": "WhatsApp Nummer",
     "includeCountryCode": "Ländercode einschließen (z.B. +49 für Deutschland)",
-    "validPhoneRequired": "Bitte geben Sie eine gültige internationale Telefonnummer ein",
     "sendVerificationCode": "Bestätigungscode Senden",
-    "sending": "Senden...",
-    "verificationCodeSent": "Bestätigungscode Gesendet",
-    "codeSentTo": "Wir haben einen 6-stelligen Code an {{number}} gesendet",
-    "codeExpires": "Code läuft ab um {{time}}",
     "verificationCode": "Bestätigungscode",
-    "enterCode": "6-stelligen Code eingeben",
-    "verifying": "Verifizierung...",
-    "verify": "Verifizieren",
-    "resendCode": "Code Erneut Senden",
-    "verifiedSuccessfully": "WhatsApp-Nummer erfolgreich verifiziert!",
-    "verificationPage": {
-      "invalidLink": "Ungültiger Verifizierungslink",
-      "wrongPlace": "Es sieht so aus, als wären Sie am falschen Ort. Diese Seite benötigt einen gültigen Verifizierungslink mit Benutzer-ID und OTP-Code Parametern.",
-      "returnToHome": "Zurück zur Startseite",
-      "useProperLink": "Wenn Sie einen Verifizierungslink erhalten haben, verwenden Sie bitte diesen Link.",
-      "autoFilled": "Verifizierungscode Automatisch Ausgefüllt",
-      "autoFilledDescription": "Ihr Verifizierungscode wurde automatisch aus dem sicheren Link ausgefüllt. Klicken Sie einfach auf verifizieren, um den Prozess abzuschließen.",
-      "secureVerification": "Sichere Verifizierung",
-      "linkExpires": "Dieser Verifizierungslink ist einzigartig und läuft nach der Verwendung für Ihre Sicherheit ab.",
-      "enterSixDigitCode": "Geben Sie den 6-stelligen Code aus Ihrer WhatsApp-Nachricht ein",
-      "redirectingToDashboard": "Weiterleitung zum Dashboard in 3 Sekunden..."
-    }
+    "verify": "Verifizieren"
   },
   "contact": {
     "title": "Kontaktieren Sie Uns",
@@ -261,6 +155,8 @@
     "submitFailed": "Nachricht senden fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
   },
   "footer": {
+    "ctaHeadline": "Sprechen Sie. Wir kümmern uns um den Rest.",
+    "ctaSubline": "Eine Sprachnachricht auf WhatsApp genügt, um Ihr CRM aktuell zu halten.",
     "copyright": "© 2025 Finit Solutions",
     "privacy": "Datenschutz",
     "saasAgreement": "SaaS-Vereinbarung",
@@ -356,25 +252,6 @@
     "lastMonth": "Letzter Monat",
     "nextMonth": "Nächster Monat"
   },
-  "contact": {
-    "title": "Kontaktieren Sie Uns",
-    "subtitle": "Nehmen Sie Kontakt mit unserem Team für persönliche Unterstützung auf",
-    "fullName": "Vollständiger Name",
-    "fullNamePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
-    "emailAddress": "E-Mail-Adresse",
-    "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
-    "phoneNumber": "Telefonnummer",
-    "phonePlaceholder": "+49 123 456 789",
-    "message": "Nachricht",
-    "messagePlaceholder": "Erzählen Sie uns von Ihren Bedürfnissen oder stellen Sie Ihre Fragen...",
-    "sendMessage": "Nachricht Senden",
-    "sendingMessage": "Nachricht wird gesendet...",
-    "messageSent": "Nachricht Gesendet!",
-    "thankYouMessage": "Vielen Dank, dass Sie uns kontaktiert haben. Wir werden Ihnen innerhalb von 24 Stunden antworten.",
-    "responseTime": "Wir antworten innerhalb von 24 Stunden an Werktagen",
-    "required": "Erforderlich",
-    "submitFailed": "Nachricht senden fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
-  },
   "numbers": {
     "currency": "€{{amount}}",
     "percentage": "{{value}}%",
@@ -388,7 +265,14 @@
     "support": "Support",
     "signOut": "Abmelden",
     "getStarted": "Kostenlos Starten",
-    "backToHome": "Zurück zur Startseite"
+    "backToHome": "Zurück zur Startseite",
+    "howItWorks": "So funktioniert's",
+    "integrations": "Was es kann",
+    "contact": "Kontakt",
+    "maatwerkAI": "Individuelle KI",
+    "urgentQuestions": "Lieber direkt Kontakt?",
+    "callUs": "Rufen Sie uns an",
+    "callHours": "Mo-Sa · 8:30-19:00"
   },
   "hero": {
     "title": "Einfach...",
@@ -404,17 +288,6 @@
     "oneClickSetup": "Ein-Klick CRM Verbindung",
     "whatsappSetup": "WhatsApp verbinden\nin 2 Minuten",
     "carouselTitle": "See what VoiceLink does inside your CRM"
-  },
-  "auth": {
-    "modal": {
-      "title": "Starten Sie Ihre Kostenlose Testversion",
-      "subtitle": "Verbinden Sie Ihr CRM und beginnen Sie sofort mit VoiceLink",
-      "freeTrialBanner": "14-Tage Kostenlose Testversion Beginnt Jetzt",
-      "freeTrialDescription": "Ihre kostenlose Testversion beginnt sofort nach der Verbindung Ihres CRM.",
-      "connectTeamleader": "Teamleader Verbinden",
-      "connectPipedrive": "Pipedrive Verbinden",
-      "connectOdoo": "Odoo Verbinden"
-    }
   },
   "dashboard": {
     "welcome": "Willkommen zurück, {{name}}!",
@@ -626,7 +499,6 @@
       },
       "needHelp": "Hilfe Benötigt?"
     },
-    "supportCenter": "Support-Center",
     "gettingStarted": {
       "title": "Bereit zu Beginnen?",
       "subtitle": "Folgen Sie diesen einfachen Schritten, um VoiceLink zu nutzen",
@@ -643,16 +515,6 @@
         "description": "Verbinden Sie Ihre WhatsApp-Nummer, um Sprachnotiz-Bestätigungen zu erhalten und VoiceLink zu nutzen"
       }
     }
-  },
-  "whatsapp": {
-    "integration": "WhatsApp Integration",
-    "verified": "WhatsApp Verifiziert",
-    "connectedTo": "Verbunden mit {{number}}",
-    "whatsappNumber": "WhatsApp Nummer",
-    "includeCountryCode": "Ländercode einschließen (z.B. +49 für Deutschland)",
-    "sendVerificationCode": "Bestätigungscode Senden",
-    "verificationCode": "Bestätigungscode",
-    "verify": "Verifizieren"
   },
   "howItWorks": {
     "title": "Wie funktioniert es?",
@@ -749,8 +611,8 @@
     }
   },
   "finalCta": {
-    "title": "Bereit, Ihren Workflow zu Transformieren?",
-    "subtitle": "Je mehr Benutzer Sie hinzufügen, desto mehr sparen Sie. Starten Sie kostenlos, skalieren Sie erschwinglich. Verbinden Sie Ihr WhatsApp und starten Sie heute Ihre kostenlose Testversion.",
+    "title": "Sprechen Sie. Ihr CRM erledigt den Rest.",
+    "subtitle": "Verbinden Sie WhatsApp, senden Sie eine Sprachnachricht – VoiceLink schreibt Kontakte, Notizen und Aufgaben direkt in Ihr CRM.",
     "startFreeTrial": "Kostenlose Testversion Starten",
     "watchDemo": "Demo Ansehen",
     "freeTrialFeatures": {
@@ -846,16 +708,18 @@
   "faq": {
     "title": "Häufig gestellte Fragen",
     "q1": "Wie funktioniert VoiceLink?",
-    "a1": "Senden Sie eine WhatsApp-Sprachnachricht an VoiceLink. Unsere KI transkribiert sie, extrahiert Kontakte, Aufgaben und Notizen und synchronisiert alles automatisch mit Ihrem CRM.",
-    "q2": "Welche CRMs werden unterstützt?",
-    "a2": "Wir unterstützen derzeit Teamleader, Pipedrive und Odoo. Weitere Integrationen folgen bald — kontaktieren Sie uns, wenn Sie eine individuelle Anbindung benötigen.",
-    "q3": "Sind meine Daten sicher?",
-    "a3": "Ja. Wir verwenden OAuth für CRM-Verbindungen, verschlüsseln alle Daten bei Übertragung und Speicherung und speichern Ihre Sprachaufnahmen nach der Verarbeitung nie.",
-    "q4": "Wie lange dauert die Einrichtung?",
-    "a4": "Etwa 2 Minuten. Verbinden Sie Ihr CRM mit einem Klick, verifizieren Sie Ihre WhatsApp-Nummer und los geht's.",
-    "q5": "Kann ich VoiceLink in mehreren Sprachen nutzen?",
-    "a5": "Ja. VoiceLink unterstützt Englisch, Niederländisch, Französisch und Deutsch für Sprachverarbeitung und Benutzeroberfläche.",
-    "q6": "Was passiert während der kostenlosen Testphase?",
-    "a6": "Sie erhalten vollen Zugang zu allen Funktionen für 14 Tage. Keine Kreditkarte erforderlich. Jederzeit kündbar."
+    "a1": "Senden Sie eine WhatsApp-Sprachnachricht oder Textnachricht an VoiceLink. Unsere KI versteht, was Sie meinen, und synchronisiert automatisch die richtigen Aktionen mit Ihrem CRM — Kontakte, Aufgaben, Notizen, Meetings und mehr. Der gesamte Vorgang dauert weniger als 30 Sekunden.",
+    "q2": "Muss ich eine App installieren?",
+    "a2": "Nein. VoiceLink funktioniert vollständig über WhatsApp, das Sie bereits nutzen. Fügen Sie unsere VoiceLink-Nummer als Kontakt hinzu, verifizieren Sie Ihre Nummer einmal, und schon sind Sie startklar. Keine zusätzliche App, kein neues Passwort.",
+    "q3": "Wie lange dauert die Einrichtung?",
+    "a3": "Etwa 2 Minuten. Verbinden Sie Ihr CRM mit einem Klick, verifizieren Sie Ihre WhatsApp-Nummer, und fertig. Keine technischen Kenntnisse oder IT-Unterstützung nötig.",
+    "q4": "Woher weiß VoiceLink, was ich meine?",
+    "a4": "VoiceLink erkennt automatisch Namen, Unternehmen, Deals und andere Daten aus Ihrem CRM und verknüpft Ihre Nachricht mit dem richtigen Kontakt oder Datensatz. Falls etwas noch nicht existiert, kann VoiceLink es automatisch anlegen.",
+    "q5": "Sind meine Daten sicher?",
+    "a5": "Ja. VoiceLink wurde gemäß den europäischen DSGVO-Vorschriften entwickelt. Wir verwenden OAuth für CRM-Verbindungen, verschlüsseln alle Daten bei der Übertragung und speichern Ihre Sprachaufnahmen nach der Verarbeitung nie.",
+    "q6": "Was kostet VoiceLink nach der kostenlosen Testphase?",
+    "a6": "Nach Ihrer 14-tägigen kostenlosen Testphase wählen Sie einen Plan, der zu Ihrer Nutzung passt. Transparente Preise, keine versteckten Kosten, monatlich kündbar. Keine Kreditkarte für die Testphase erforderlich.",
+    "q7": "Funktioniert VoiceLink in mehreren Sprachen?",
+    "a7": "Ja. VoiceLink versteht nahezu alle Sprachen. Sie können in der Sprache sprechen oder schreiben, die sich am natürlichsten anfühlt — Niederländisch, Englisch, Französisch, Deutsch, Spanisch und viele mehr. VoiceLink antwortet immer in Ihrer Sprache."
   }
 }
