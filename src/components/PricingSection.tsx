@@ -123,8 +123,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
       const gap = 16; // gap-4
       const idx = Math.round(el.scrollLeft / (cardW + gap));
       const clamped = Math.max(0, Math.min(TOTAL_PLANS - 1, idx));
-      currentCardIdxRef.current = clamped;
-      setCurrentCardIdx(clamped);
+      if (clamped !== currentCardIdxRef.current) {
+        currentCardIdxRef.current = clamped;
+        setCurrentCardIdx(clamped);
+      }
     };
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
@@ -172,8 +174,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         </button>
         <div className="flex-1 h-[3px] bg-navy/10 rounded-full overflow-hidden">
           <div
-            className="h-full bg-navy rounded-full transition-all duration-300 ease-out"
-            style={{ width: `${((currentCardIdx + 1) / TOTAL_PLANS) * 100}%` }}
+            className="h-full bg-navy rounded-full"
+            style={{ width: `${((currentCardIdx + 1) / TOTAL_PLANS) * 100}%`, transition: 'width 0.25s ease-out', willChange: 'width' }}
           />
         </div>
         <button

@@ -315,7 +315,7 @@ export const HowItWorksDemo: React.FC = () => {
                     transform: phase === 'idle'
                       ? `translateY(${isMobile ? 210 : 230}px)`
                       : bubbleShifted
-                        ? `translateY(${isMobile ? -22 : 0}px)`
+                        ? `translateY(${isMobile ? -80 : 0}px)`
                         : phaseGte('thinking')
                           ? `translateY(${isMobile ? 170 : 190}px)`
                           : `translateY(${isMobile ? 210 : 230}px)`,

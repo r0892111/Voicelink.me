@@ -27,7 +27,7 @@ const resources = {
 // Clear invalid language from localStorage and determine initial language
 const supportedLanguages = ['en', 'nl', 'fr', 'de'];
 const storedLanguage = localStorage.getItem('i18nextLng');
-let initialLanguage = 'en'; // Default to English
+let initialLanguage = 'nl'; // Default to Dutch
 
 console.log('i18n init - storedLanguage:', storedLanguage);
 console.log('i18n init - supportedLanguages:', supportedLanguages);
@@ -41,7 +41,7 @@ if (storedLanguage && supportedLanguages.includes(storedLanguage)) {
   console.log('i18n init - clearing invalid stored language:', storedLanguage);
   localStorage.removeItem('i18nextLng');
 } else {
-  console.log('i18n init - no stored language, using default:', initialLanguage);
+  console.log('i18n init - no stored language, defaulting to Dutch (nl):', initialLanguage);
 }
 
 i18n

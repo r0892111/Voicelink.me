@@ -44,7 +44,7 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({
   return (
     <div
       className="relative w-full"
-      style={{ backgroundColor: fromColor, marginTop: -1, marginBottom: -1 }}
+      style={{ backgroundColor: fromColor, marginTop: -1, marginBottom: -1, transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}
       aria-hidden="true"
     >
       <svg

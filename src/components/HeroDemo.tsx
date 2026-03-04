@@ -1775,8 +1775,10 @@ export const CrmPreviewCards: React.FC = () => {
       const gap = 16; // gap-4
       const idx = Math.round(el.scrollLeft / (cardW + gap));
       const clamped = Math.max(0, Math.min(TOTAL_CARDS - 1, idx));
-      currentCardIdxRef.current = clamped;
-      setCurrentCardIdx(clamped);
+      if (clamped !== currentCardIdxRef.current) {
+        currentCardIdxRef.current = clamped;
+        setCurrentCardIdx(clamped);
+      }
     };
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
@@ -1799,7 +1801,9 @@ export const CrmPreviewCards: React.FC = () => {
     const el = mobileScrollRef.current;
     if (el) {
       const cardW = (el.firstElementChild as HTMLElement)?.offsetWidth || el.clientWidth;
-      const newIdx = ((currentCardIdxRef.current + dir) % TOTAL_CARDS + TOTAL_CARDS) % TOTAL_CARDS;
+      const gap = 16;
+      const currentIdx = Math.round(el.scrollLeft / (cardW + gap));
+      const newIdx = Math.max(0, Math.min(TOTAL_CARDS - 1, currentIdx + dir));
       currentCardIdxRef.current = newIdx;
       setCurrentCardIdx(newIdx);
       // Suppress scroll event updates while smooth scroll animates
@@ -1842,8 +1846,8 @@ export const CrmPreviewCards: React.FC = () => {
         </button>
         <div className="flex-1 h-[3px] bg-navy/10 rounded-full overflow-hidden">
           <div
-            className="h-full bg-navy rounded-full transition-all duration-300 ease-out"
-            style={{ width: `${((currentCardIdx + 1) / TOTAL_CARDS) * 100}%` }}
+            className="h-full bg-navy rounded-full"
+            style={{ width: `${((currentCardIdx + 1) / TOTAL_CARDS) * 100}%`, transition: 'width 0.25s ease-out', willChange: 'width' }}
           />
         </div>
         <button
@@ -1906,13 +1910,15 @@ export const HeroDemo: React.FC = () => {
   useEffect(() => {
     if (!isCompact || !mobilePhoneRef.current) return;
     const tween = gsap.to(mobilePhoneRef.current, {
-      y: window.innerWidth >= 417 ? '-200svh' : '-120svh',
+      y: window.innerWidth >= 417 ? '-200vh' : '-120vh',
       ease: 'none',
+      force3D: true,
       scrollTrigger: {
         trigger: document.documentElement,
         start: 'top top',
         end: '30% top',
-        scrub: true,
+        scrub: 0.5,
+        invalidateOnRefresh: true,
       },
     });
     return () => {
