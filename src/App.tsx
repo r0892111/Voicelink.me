@@ -47,11 +47,19 @@ function App() {
   }, [location]);
 
   // After OAuth magic-link redirect, Supabase sends the user back to the site
-  // root (/) with an #access_token hash. Detect that case and forward to /dashboard.
-  // We do NOT redirect on every authenticated visit so users can navigate home freely.
+  // root (/) with an #access_token hash. Detect that case and forward to the
+  // correct destination. Test users go straight to /test-dashboard to avoid
+  // a double-mount through /dashboard.
   React.useEffect(() => {
     if (!loading && user && location.pathname === '/' && window.location.hash.includes('access_token')) {
-      navigate(withUTM('/dashboard'), { replace: true });
+      const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
+      if (isTestUserFlow) {
+        localStorage.removeItem('is_test_user_flow');
+        localStorage.removeItem('test_user_phone');
+        navigate('/test-dashboard', { replace: true });
+      } else {
+        navigate(withUTM('/dashboard'), { replace: true });
+      }
     }
   }, [user, loading, location.pathname]);
 
