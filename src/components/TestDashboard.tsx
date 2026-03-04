@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { NoiseOverlay } from './ui/NoiseOverlay';
 import { AuthService } from '../services/authService';
+import { supabase } from '../lib/supabase';
 
 const tips = [
   { emoji: '🗣️', text: 'Start with "Just spoke with [Name]" to log a contact.' },
@@ -24,15 +25,31 @@ const tips = [
 
 export const TestDashboard: React.FC = () => {
   const location = useLocation();
-  const phone    = (location.state as { phone?: string } | null)?.phone ?? null;
-  const [connecting, setConnecting] = React.useState(false);
+
+  // Phone: prefer location.state, fall back to localStorage (survives refreshes)
+  const statePhone = (location.state as { phone?: string } | null)?.phone ?? null;
+  const phone = statePhone ?? localStorage.getItem('test_user_phone_display') ?? null;
+  if (statePhone) localStorage.setItem('test_user_phone_display', statePhone);
+
+  const [connecting, setConnecting]   = React.useState(false);
+  const [tlConnected, setTlConnected] = React.useState<boolean | null>(null); // null = loading
+
+  // Check if Teamleader is connected for this phone
+  React.useEffect(() => {
+    if (!phone) { setTlConnected(false); return; }
+    supabase
+      .from('test_users')
+      .select('teamleader_id')
+      .eq('phone', phone)
+      .maybeSingle()
+      .then(({ data }) => setTlConnected(!!data?.teamleader_id));
+  }, [phone]);
 
   const handleConnectTeamleader = async () => {
     setConnecting(true);
     localStorage.setItem('is_test_user_flow', 'true');
     if (phone) localStorage.setItem('test_user_phone', phone);
     await AuthService.createTeamleaderAuth().initiateAuth();
-    // initiateAuth() redirects, so we only reach here on error
     setConnecting(false);
   };
 
@@ -83,7 +100,8 @@ export const TestDashboard: React.FC = () => {
 
       {/* ── STATUS CARDS ── */}
       <section className="px-6 pb-8">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* WhatsApp */}
           <div
             className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm"
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.42s both' }}
@@ -101,9 +119,38 @@ export const TestDashboard: React.FC = () => {
             </div>
           </div>
 
+          {/* Teamleader */}
           <div
             className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm"
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.5s both' }}
+          >
+            <div className="flex items-center space-x-3 mb-2">
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${tlConnected ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <Link2 className={`w-5 h-5 ${tlConnected ? 'text-emerald-500' : 'text-navy/35'}`} />
+              </div>
+              <span className="font-general font-semibold text-navy text-sm">Teamleader</span>
+            </div>
+            <p className="text-xs text-navy/50">
+              {tlConnected === null ? '—' : tlConnected ? 'Account linked' : 'Not yet connected'}
+            </p>
+            <div className="mt-3 flex items-center space-x-1.5">
+              {tlConnected === null ? (
+                <div className="h-3 w-16 bg-navy/[0.07] rounded-full animate-pulse" />
+              ) : (
+                <>
+                  <div className={`w-1.5 h-1.5 rounded-full ${tlConnected ? 'bg-emerald-400' : 'bg-navy/20'}`} />
+                  <span className={`text-xs font-medium ${tlConnected ? 'text-emerald-600' : 'text-navy/40'}`}>
+                    {tlConnected ? 'Connected' : 'Not connected'}
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Status */}
+          <div
+            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm"
+            style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
               <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center">
@@ -120,40 +167,42 @@ export const TestDashboard: React.FC = () => {
         </div>
       </section>
 
-      {/* ── CONNECT TEAMLEADER ── */}
-      <section className="px-6 pb-8">
-        <div className="max-w-4xl mx-auto">
-          <div
-            className="bg-white/80 backdrop-blur-sm rounded-3xl border border-navy/[0.07] shadow-sm p-7"
-            style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.55s both' }}
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center gap-5">
-              <div className="flex items-center space-x-3 flex-1">
-                <div className="w-10 h-10 rounded-2xl bg-navy/[0.06] flex items-center justify-center flex-shrink-0">
-                  <Link2 className="w-5 h-5 text-navy/60" />
+      {/* ── CONNECT TEAMLEADER (only when not yet connected) ── */}
+      {tlConnected === false && (
+        <section className="px-6 pb-8">
+          <div className="max-w-4xl mx-auto">
+            <div
+              className="bg-white/80 backdrop-blur-sm rounded-3xl border border-navy/[0.07] shadow-sm p-7"
+              style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.55s both' }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+                <div className="flex items-center space-x-3 flex-1">
+                  <div className="w-10 h-10 rounded-2xl bg-navy/[0.06] flex items-center justify-center flex-shrink-0">
+                    <Link2 className="w-5 h-5 text-navy/60" />
+                  </div>
+                  <div>
+                    <h3 className="font-general font-bold text-navy text-base leading-tight">Connect Teamleader</h3>
+                    <p className="text-xs text-navy/45 mt-0.5">
+                      Link your Teamleader account so voice notes flow straight into your CRM.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-general font-bold text-navy text-base leading-tight">Connect Teamleader</h3>
-                  <p className="text-xs text-navy/45 mt-0.5">
-                    Link your Teamleader account so voice notes flow straight into your CRM.
-                  </p>
-                </div>
+                <button
+                  onClick={handleConnectTeamleader}
+                  disabled={connecting}
+                  className="flex-shrink-0 inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy-hover disabled:bg-navy/40 text-white font-semibold text-sm py-2.5 px-5 rounded-full transition-all duration-200 hover:shadow-md disabled:cursor-not-allowed"
+                >
+                  {connecting ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" />Connecting…</>
+                  ) : (
+                    <>Connect<ArrowRight className="w-4 h-4" /></>
+                  )}
+                </button>
               </div>
-              <button
-                onClick={handleConnectTeamleader}
-                disabled={connecting}
-                className="flex-shrink-0 inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy-hover disabled:bg-navy/40 text-white font-semibold text-sm py-2.5 px-5 rounded-full transition-all duration-200 hover:shadow-md disabled:cursor-not-allowed"
-              >
-                {connecting ? (
-                  <><Loader2 className="w-4 h-4 animate-spin" />Connecting…</>
-                ) : (
-                  <>Connect<ArrowRight className="w-4 h-4" /></>
-                )}
-              </button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── BOTTOM GRID: TIPS + SUPPORT ── */}
       <section className="px-6 pb-16">
