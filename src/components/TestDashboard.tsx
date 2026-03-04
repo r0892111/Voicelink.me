@@ -32,6 +32,7 @@ export const TestDashboard: React.FC = () => {
   if (statePhone) localStorage.setItem('test_user_phone_display', statePhone);
 
   const [connecting, setConnecting]   = React.useState(false);
+  const [revoking, setRevoking]       = React.useState(false);
   const [tlConnected, setTlConnected] = React.useState<boolean | null>(null); // null = loading
 
   // Check if Teamleader is connected for this phone
@@ -51,6 +52,17 @@ export const TestDashboard: React.FC = () => {
     if (phone) localStorage.setItem('test_user_phone', phone);
     await AuthService.createTeamleaderAuth().initiateAuth();
     setConnecting(false);
+  };
+
+  const handleRevoke = async () => {
+    if (!phone) return;
+    setRevoking(true);
+    await supabase
+      .from('test_users')
+      .update({ teamleader_id: null, tl_access_token: null, tl_refresh_token: null, tl_token_expires_at: null })
+      .eq('phone', phone);
+    setTlConnected(false);
+    setRevoking(false);
   };
 
   return (
@@ -133,16 +145,27 @@ export const TestDashboard: React.FC = () => {
             <p className="text-xs text-navy/50">
               {tlConnected === null ? '—' : tlConnected ? 'Account linked' : 'Not yet connected'}
             </p>
-            <div className="mt-3 flex items-center space-x-1.5">
-              {tlConnected === null ? (
-                <div className="h-3 w-16 bg-navy/[0.07] rounded-full animate-pulse" />
-              ) : (
-                <>
-                  <div className={`w-1.5 h-1.5 rounded-full ${tlConnected ? 'bg-emerald-400' : 'bg-navy/20'}`} />
-                  <span className={`text-xs font-medium ${tlConnected ? 'text-emerald-600' : 'text-navy/40'}`}>
-                    {tlConnected ? 'Connected' : 'Not connected'}
-                  </span>
-                </>
+            <div className="mt-3 flex items-center justify-between">
+              <div className="flex items-center space-x-1.5">
+                {tlConnected === null ? (
+                  <div className="h-3 w-16 bg-navy/[0.07] rounded-full animate-pulse" />
+                ) : (
+                  <>
+                    <div className={`w-1.5 h-1.5 rounded-full ${tlConnected ? 'bg-emerald-400' : 'bg-navy/20'}`} />
+                    <span className={`text-xs font-medium ${tlConnected ? 'text-emerald-600' : 'text-navy/40'}`}>
+                      {tlConnected ? 'Connected' : 'Not connected'}
+                    </span>
+                  </>
+                )}
+              </div>
+              {tlConnected && (
+                <button
+                  onClick={handleRevoke}
+                  disabled={revoking}
+                  className="text-xs text-navy/35 hover:text-red-500 transition-colors disabled:opacity-40"
+                >
+                  {revoking ? 'Revoking…' : 'Revoke'}
+                </button>
               )}
             </div>
           </div>
