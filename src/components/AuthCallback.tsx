@@ -122,10 +122,17 @@ export const AuthCallback: React.FC = () => {
         redirectUri = import.meta.env.VITE_TEAMLEADER_REDIRECT_URI;
       }
       
-      const requestBody: Record<string, string> = {
+      const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
+      const testPhone      = localStorage.getItem('test_user_phone') ?? undefined;
+
+      const requestBody: Record<string, unknown> = {
         code,
         state,
         redirect_uri: redirectUri,
+        ...(isTestUserFlow && platform === 'teamleader' && {
+          is_test_user: true,
+          test_phone:   testPhone,
+        }),
       };
 
       // For custom Odoo implementations, pass the OAuth URL to the backend
@@ -178,6 +185,16 @@ export const AuthCallback: React.FC = () => {
       if (!result.success) {
         setStatus('error');
         setMessage(result.error || t('auth.authenticationFailed'));
+        return;
+      }
+
+      // Test user: tokens stored in test_users, no auth session needed
+      if (result.is_test_user) {
+        localStorage.removeItem('is_test_user_flow');
+        localStorage.removeItem('test_user_phone');
+        setStatus('success');
+        setMessage('Teamleader connected!');
+        setTimeout(() => navigate('/test-dashboard', testPhone ? { state: { phone: testPhone } } : {}), 1500);
         return;
       }
 
@@ -305,20 +322,6 @@ export const AuthCallback: React.FC = () => {
 
       console.log('Session verified in redirect check:', { userId: session.user.id, email: session.user.email });
 
-      // Check if this is a test user connecting Teamleader
-      const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
-      if (isTestUserFlow && platform === 'teamleader') {
-        localStorage.removeItem('is_test_user_flow');
-        const testPhone = localStorage.getItem('test_user_phone') ?? undefined;
-        localStorage.removeItem('test_user_phone');
-        await supabase
-          .from('teamleader_users')
-          .update({ is_test_user: true })
-          .eq('user_id', session.user.id);
-        navigate('/test-dashboard', testPhone ? { state: { phone: testPhone } } : {});
-        return;
-      }
-
       // Check if we're in WhatsApp verification flow
       const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
       const whatsappUserId = localStorage.getItem('whatsapp_verification_user_id');
@@ -333,19 +336,6 @@ export const AuthCallback: React.FC = () => {
         // Redirect to WhatsApp verification with auth_user_id
         navigate(withUTM(`/verify-whatsapp?user_id=${whatsappUserId}&otp_code=${whatsappOtpCode}&auth_user_id=${session.user.id}`));
         return;
-      }
-
-      // Test users skip Stripe entirely — check DB flag regardless of localStorage
-      if (platform === 'teamleader') {
-        const { data: tlUser } = await supabase
-          .from('teamleader_users')
-          .select('is_test_user')
-          .eq('user_id', session.user.id)
-          .maybeSingle();
-        if (tlUser?.is_test_user) {
-          navigate('/test-dashboard');
-          return;
-        }
       }
 
       const hasActiveSubscription = await checkSubscriptionStatus();
