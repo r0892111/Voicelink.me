@@ -288,7 +288,7 @@ export const TestDashboard: React.FC = () => {
       {/* Footer */}
       <footer className="pb-10 px-6 text-center">
         <p className="text-xs text-navy/28">
-          © 2025 Finit Solutions ·{' '}
+          © 2026 Finit Solutions ·{' '}
           <a href="/privacy-policy" className="hover:text-navy/50 transition-colors">Privacy</a>{' '}·{' '}
           <a href="/support" className="hover:text-navy/50 transition-colors">Support</a>
         </p>
