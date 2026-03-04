@@ -335,6 +335,19 @@ export const AuthCallback: React.FC = () => {
         return;
       }
 
+      // Test users skip Stripe entirely — check DB flag regardless of localStorage
+      if (platform === 'teamleader') {
+        const { data: tlUser } = await supabase
+          .from('teamleader_users')
+          .select('is_test_user')
+          .eq('user_id', session.user.id)
+          .maybeSingle();
+        if (tlUser?.is_test_user) {
+          navigate('/test-dashboard');
+          return;
+        }
+      }
+
       const hasActiveSubscription = await checkSubscriptionStatus();
 
       if (hasActiveSubscription) {
