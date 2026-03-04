@@ -302,7 +302,7 @@ const cardStrings = {
     c8Bullet2: 'API setup done, awaiting data migration',
     c8Confirm: 'Handoff completed',
     // Card 9
-    c9Title: 'Create Quotes & Invoices',
+    c9Title: 'Quotes & Invoices',
     c9Soon: '',
     c9Voice: 'Lucas from GreenTech needs a quote for 50 solar panels, installation, and a 2-year maintenance contract. Deadline is end of month.',
     c9Status: 'Draft',
@@ -410,7 +410,7 @@ const cardStrings = {
     c8Bullet2: 'API-setup klaar, wacht op datamigratie',
     c8Confirm: 'Overdracht voltooid',
     // Card 9
-    c9Title: 'Offertes & Facturen Opmaken',
+    c9Title: 'Offertes & Facturen',
     c9Soon: '',
     c9Voice: 'Lucas van GreenTech heeft een offerte nodig voor 50 zonnepanelen, installatie en een onderhoudscontract van 2 jaar. Deadline is einde van de maand.',
     c9Status: 'Concept',
@@ -1407,40 +1407,19 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
 export const CrmPreviewCards: React.FC = () => {
   const { t, currentLanguage } = useI18n();
   const cardLocale = getCardLocale(currentLanguage);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const trackRef = React.useRef<HTMLDivElement>(null);
   const mobileScrollRef = React.useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const desktopScrollRef = React.useRef<HTMLDivElement>(null);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const TOTAL_CARDS = 9;
-
-  // Scroll state refs (not state — avoid re-renders on every frame)
-  const offsetRef = React.useRef(0);
-  const velocityRef = React.useRef(0);
-  const snapTargetRef = React.useRef<number | null>(null);
-  const lastRenderedIdx = React.useRef(0);
   const currentCardIdxRef = React.useRef(0);
   const isArrowNavRef = React.useRef(false);
   const arrowNavTimeout = React.useRef<ReturnType<typeof setTimeout>>();
-  const hovering = React.useRef(false);
-  const userInteracting = React.useRef(false);
-  const userTimeout = React.useRef<ReturnType<typeof setTimeout>>();
-  const wheelMomentumTimeout = React.useRef<ReturnType<typeof setTimeout>>();
-  const rafRef = React.useRef<number>();
-  const lastFrameTime = React.useRef(0);
-  const touchLastX = React.useRef(0);
-  const pendingDelta = React.useRef(0);
-  const recentVelocities = React.useRef<number[]>([]);
-  const lastMoveTime = React.useRef(0);
-  const friction = 0.92; // per 16ms frame
 
   // Proportional zoom for screens wider than 1440px (14" reference), capped at 1.25×
   const [zoom, setZoom] = useState(1);
-  const zoomRef = React.useRef(1);
   useEffect(() => {
     const update = () => {
       const z = window.innerWidth > 1440 ? Math.min(window.innerWidth / 1440, 1.25) : 1;
-      zoomRef.current = z;
       setZoom(z);
     };
     update();
@@ -1448,330 +1427,32 @@ export const CrmPreviewCards: React.FC = () => {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // Element recycling refs
-  const cardElsRef = React.useRef<HTMLElement[]>([]);
-  const strideRef = React.useRef(0);
-  const totalWidthRef = React.useRef(0);
-  const [containerHeight, setContainerHeight] = useState<number>(0);
-
-  // Intersection observer
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -5% 0px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  // After mount, grab card elements and measure dimensions (independent of visibility)
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const measure = () => {
-      const children = Array.from(track.children) as HTMLElement[];
-      if (children.length === 0) return;
-      cardElsRef.current = children;
-
-      const gap = parseFloat(getComputedStyle(track).gap) || 20;
-      const cardWidth = children[0].offsetWidth;
-      const stride = cardWidth + gap;
-      strideRef.current = stride;
-      totalWidthRef.current = children.length * stride;
-
-      // Find the tallest card and set all cards to that height
-      const maxHeight = Math.max(...children.map(c => c.offsetHeight));
-      children.forEach((card) => {
-        card.style.height = `${maxHeight}px`;
-      });
-
-      // Set explicit height so the container doesn't collapse with absolute children
-      // Account for the track's pb-8 pt-4 padding
-      setContainerHeight(maxHeight + 48); // pt-4 (16px) + pb-8 (32px)
-
-      // Apply absolute positioning to each card
-      children.forEach((card) => {
-        card.style.position = 'absolute';
-        card.style.top = '16px'; // pt-4
-        card.style.willChange = 'transform';
-      });
-    };
-
-    // Small delay to ensure cards are rendered and styled
-    requestAnimationFrame(() => {
-      measure();
-    });
-
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  // Resume auto-scroll after user stops interacting
-  const scheduleResume = useCallback(() => {
-    clearTimeout(userTimeout.current);
-    userTimeout.current = setTimeout(() => {
-      userInteracting.current = false;
-    }, 500);
-  }, []);
-
-  // Wrap a value into [0, totalWidth) for infinite loop
-  const wrapOffset = useCallback((val: number) => {
-    const tw = totalWidthRef.current;
-    if (tw <= 0) return val;
-    return ((val % tw) + tw) % tw;
-  }, []);
-
-  // Single animation loop — applies auto-scroll, user deltas, and momentum
-  // Uses delta-time for consistent speed across all frame rates
-  useEffect(() => {
-    if (!isVisible) return;
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    lastFrameTime.current = performance.now();
-
-    const tick = (now: number) => {
-      const dt = Math.min(now - lastFrameTime.current, 64) / 16; // normalise to 60fps units, cap at ~4 frames
-      lastFrameTime.current = now;
-
-      // Consume any batched user input delta
-      const delta = pendingDelta.current;
-      if (delta !== 0) {
-        pendingDelta.current = 0;
-        snapTargetRef.current = null; // user overrides any snap in progress
-        offsetRef.current = wrapOffset(offsetRef.current + delta);
-        // Don't overwrite velocity here — it's tracked separately via recentVelocities
-      } else if (userInteracting.current) {
-        // Apply momentum with friction while user recently interacted
-        if (Math.abs(velocityRef.current) > 0.3) {
-          const frictionDt = Math.pow(friction, dt);
-          velocityRef.current *= frictionDt;
-          offsetRef.current = wrapOffset(offsetRef.current + velocityRef.current * dt);
-        } else {
-          velocityRef.current = 0;
-        }
-      } else if (snapTargetRef.current !== null) {
-        // Smooth snap animation toward arrow-click target
-        const diff = snapTargetRef.current - offsetRef.current;
-        if (Math.abs(diff) < 0.5) {
-          offsetRef.current = wrapOffset(snapTargetRef.current);
-          snapTargetRef.current = null;
-        } else {
-          offsetRef.current = offsetRef.current + diff * Math.min(0.14 * dt, 1);
-        }
-      }
-
-      // Position each card individually with wrapping
-      const cards = cardElsRef.current;
-      const stride = strideRef.current;
-
-      // Update progress bar index — skip during snap animation to avoid flickering
-      if (stride > 0 && snapTargetRef.current === null) {
-        const rawIdx = Math.round(offsetRef.current / stride);
-        const idx = ((rawIdx % TOTAL_CARDS) + TOTAL_CARDS) % TOTAL_CARDS;
-        if (idx !== lastRenderedIdx.current) {
-          lastRenderedIdx.current = idx;
-          setCurrentCardIdx(idx);
-        }
-      }
-      const tw = totalWidthRef.current;
-      if (cards.length > 0 && tw > 0) {
-        const offset = offsetRef.current;
-        for (let i = 0; i < cards.length; i++) {
-          const logicalX = i * stride;
-          let visualX = ((logicalX - offset) % tw + tw) % tw;
-          // Wrap cards that are too far right back to the left
-          if (visualX > tw - stride) visualX -= tw;
-          cards[i].style.transform = `translate3d(${visualX}px, 0, 0)`;
-        }
-      }
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [isVisible, wrapOffset]);
-
-  // Helper: track velocity samples from user input for smooth momentum on release
-  const trackVelocity = useCallback((dx: number) => {
-    const now = performance.now();
-    const dt = now - lastMoveTime.current;
-    lastMoveTime.current = now;
-    if (dt > 0 && dt < 200) {
-      // px per 16ms frame equivalent
-      const v = (dx / dt) * 16;
-      const vels = recentVelocities.current;
-      vels.push(v);
-      if (vels.length > 5) vels.shift();
-    }
-  }, []);
-
-  // Helper: compute release velocity from recent samples (weighted average)
-  const computeReleaseVelocity = useCallback(() => {
-    const vels = recentVelocities.current;
-    if (vels.length === 0) return 0;
-    // Weight recent samples more heavily
-    let sum = 0, weight = 0;
-    for (let i = 0; i < vels.length; i++) {
-      const w = i + 1;
-      sum += vels[i] * w;
-      weight += w;
-    }
-    recentVelocities.current = [];
-    return sum / weight;
-  }, []);
-
-  // Wheel handler — batch deltas for the rAF loop
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onWheel = (e: WheelEvent) => {
-      const absX = Math.abs(e.deltaX);
-      const absY = Math.abs(e.deltaY);
-
-      // Only intercept clearly horizontal scrolls (3:1 ratio + 8px minimum).
-      // The tighter threshold prevents accidental carousel nudges from the
-      // small horizontal components that macOS trackpads emit at the start/end
-      // of a mostly-vertical scroll gesture.
-      if (absX < 8 || absX < absY * 3) return;
-
-      userInteracting.current = true;
-      const wdx = e.deltaX / zoomRef.current;
-      pendingDelta.current += wdx;
-      trackVelocity(wdx);
-      scheduleResume();
-
-      // 80ms after the last wheel event, hand the captured velocity to the
-      // friction loop so the carousel coasts to a smooth stop instead of
-      // freezing abruptly (wheel events don't fire a "release" event like touch).
-      clearTimeout(wheelMomentumTimeout.current);
-      wheelMomentumTimeout.current = setTimeout(() => {
-        velocityRef.current = computeReleaseVelocity();
-      }, 80);
-    };
-
-    // passive: true — lets the browser keep vertical page scrolling on the fast
-    // path without waiting for this handler. Safe to drop preventDefault() here
-    // because the page has no horizontal overflow to scroll anyway.
-    container.addEventListener('wheel', onWheel, { passive: true });
-    return () => container.removeEventListener('wheel', onWheel);
-  }, [scheduleResume, computeReleaseVelocity]);
-
-  // Touch handlers — swipe with momentum
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onTouchStart = (e: TouchEvent) => {
-      userInteracting.current = true;
-      velocityRef.current = 0;
-      recentVelocities.current = [];
-      clearTimeout(userTimeout.current);
-      touchLastX.current = e.touches[0].clientX;
-      lastMoveTime.current = performance.now();
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      const x = e.touches[0].clientX;
-      const dx = (touchLastX.current - x) / zoomRef.current;
-      touchLastX.current = x;
-      pendingDelta.current += dx;
-      trackVelocity(dx);
-    };
-
-    const onTouchEnd = () => {
-      velocityRef.current = computeReleaseVelocity();
-      scheduleResume();
-    };
-
-    container.addEventListener('touchstart', onTouchStart, { passive: true });
-    container.addEventListener('touchmove', onTouchMove, { passive: true });
-    container.addEventListener('touchend', onTouchEnd, { passive: true });
-    return () => {
-      container.removeEventListener('touchstart', onTouchStart);
-      container.removeEventListener('touchmove', onTouchMove);
-      container.removeEventListener('touchend', onTouchEnd);
-    };
-  }, [scheduleResume, trackVelocity, computeReleaseVelocity]);
-
-  // Mouse drag handlers — click and drag to scroll
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    let dragging = false;
-    let lastX = 0;
-    let dragMoved = false;
-
-    const onMouseDown = (e: MouseEvent) => {
-      dragging = true;
-      dragMoved = false;
-      lastX = e.clientX;
-      userInteracting.current = true;
-      velocityRef.current = 0;
-      recentVelocities.current = [];
-      lastMoveTime.current = performance.now();
-      clearTimeout(userTimeout.current);
-      container.style.cursor = 'grabbing';
-      document.body.style.userSelect = 'none';
-    };
-
-    const onMouseMove = (e: MouseEvent) => {
-      if (!dragging) return;
-      e.preventDefault();
-      const dx = (lastX - e.clientX) / zoomRef.current;
-      lastX = e.clientX;
-      if (Math.abs(dx) > 0) dragMoved = true;
-      pendingDelta.current += dx;
-      trackVelocity(dx);
-    };
-
-    const onMouseUp = () => {
-      if (!dragging) return;
-      dragging = false;
-      container.style.cursor = '';
-      document.body.style.userSelect = '';
-      velocityRef.current = computeReleaseVelocity();
-      scheduleResume();
-    };
-
-    // Prevent text selection and link dragging while dragging cards
-    const onDragStart = (e: Event) => { if (dragging) e.preventDefault(); };
-    const onClick = (e: MouseEvent) => {
-      // If we were dragging, suppress the click so links/buttons inside cards don't fire
-      if (dragMoved) { e.preventDefault(); e.stopPropagation(); }
-    };
-
-    container.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
-    container.addEventListener('dragstart', onDragStart);
-    container.addEventListener('click', onClick, true);
-    return () => {
-      container.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-      container.removeEventListener('dragstart', onDragStart);
-      container.removeEventListener('click', onClick, true);
-    };
-  }, [scheduleResume, trackVelocity, computeReleaseVelocity]);
-
   // Mobile scroll → update progress bar
   useEffect(() => {
     const el = mobileScrollRef.current;
     if (!el) return;
     const onScroll = () => {
-      // Suppress scroll-based updates during arrow navigation to avoid flickering
       if (isArrowNavRef.current) return;
       const cardW = (el.firstElementChild as HTMLElement)?.offsetWidth || el.clientWidth;
-      const gap = 16; // gap-4
+      const idx = Math.round(el.scrollLeft / (cardW + 16));
+      const clamped = Math.max(0, Math.min(TOTAL_CARDS - 1, idx));
+      if (clamped !== currentCardIdxRef.current) {
+        currentCardIdxRef.current = clamped;
+        setCurrentCardIdx(clamped);
+      }
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [TOTAL_CARDS]);
+
+  // Desktop scroll → update progress bar
+  useEffect(() => {
+    const el = desktopScrollRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      if (isArrowNavRef.current) return;
+      const cardW = (el.firstElementChild as HTMLElement)?.offsetWidth || 420;
+      const gap = parseFloat(getComputedStyle(el).gap) || 20;
       const idx = Math.round(el.scrollLeft / (cardW + gap));
       const clamped = Math.max(0, Math.min(TOTAL_CARDS - 1, idx));
       if (clamped !== currentCardIdxRef.current) {
@@ -1783,32 +1464,27 @@ export const CrmPreviewCards: React.FC = () => {
     return () => el.removeEventListener('scroll', onScroll);
   }, [TOTAL_CARDS]);
 
-  // Arrow navigation — works for both desktop (snap) and mobile (native scroll)
+  // Arrow navigation — same logic for desktop and mobile
   const navigate = useCallback((dir: 1 | -1) => {
-    // Desktop: smooth snap to adjacent card
-    const stride = strideRef.current;
-    if (stride > 0) {
-      const snapped = Math.round(offsetRef.current / stride) * stride;
-      snapTargetRef.current = snapped + dir * stride;
-      const rawIdx = Math.round(snapTargetRef.current / stride);
-      const newIdx = ((rawIdx % TOTAL_CARDS) + TOTAL_CARDS) % TOTAL_CARDS;
-      lastRenderedIdx.current = newIdx;
-      currentCardIdxRef.current = newIdx;
-      setCurrentCardIdx(newIdx);
+    const newIdx = Math.max(0, Math.min(TOTAL_CARDS - 1, currentCardIdxRef.current + dir));
+    currentCardIdxRef.current = newIdx;
+    setCurrentCardIdx(newIdx);
+
+    isArrowNavRef.current = true;
+    clearTimeout(arrowNavTimeout.current);
+    arrowNavTimeout.current = setTimeout(() => { isArrowNavRef.current = false; }, 600);
+
+    // Desktop
+    const desktopEl = desktopScrollRef.current;
+    if (desktopEl) {
+      const cardW = (desktopEl.firstElementChild as HTMLElement)?.offsetWidth || 420;
+      const gap = parseFloat(getComputedStyle(desktopEl).gap) || 20;
+      desktopEl.scrollTo({ left: newIdx * (cardW + gap), behavior: 'smooth' });
     }
-    // Mobile: scroll to exact card position with wrap-around
+    // Mobile
     const el = mobileScrollRef.current;
     if (el) {
       const cardW = (el.firstElementChild as HTMLElement)?.offsetWidth || el.clientWidth;
-      const gap = 16;
-      const currentIdx = Math.round(el.scrollLeft / (cardW + gap));
-      const newIdx = Math.max(0, Math.min(TOTAL_CARDS - 1, currentIdx + dir));
-      currentCardIdxRef.current = newIdx;
-      setCurrentCardIdx(newIdx);
-      // Suppress scroll event updates while smooth scroll animates
-      isArrowNavRef.current = true;
-      clearTimeout(arrowNavTimeout.current);
-      arrowNavTimeout.current = setTimeout(() => { isArrowNavRef.current = false; }, 500);
       el.scrollTo({ left: newIdx * (cardW + 16), behavior: 'smooth' });
     }
   }, [TOTAL_CARDS]);
@@ -1846,7 +1522,7 @@ export const CrmPreviewCards: React.FC = () => {
         <div className="flex-1 h-[3px] bg-navy/10 rounded-full overflow-hidden">
           <div
             className="h-full bg-navy rounded-full"
-            style={{ width: `${((currentCardIdx + 1) / TOTAL_CARDS) * 100}%`, transition: 'width 0.25s ease-out', willChange: 'width' }}
+            style={{ width: `${((currentCardIdx + 1) / TOTAL_CARDS) * 100}%`, transition: 'width 0.4s ease-out', willChange: 'width' }}
           />
         </div>
         <button
@@ -1867,30 +1543,18 @@ export const CrmPreviewCards: React.FC = () => {
         <CardContent cardBase={mobileCardBase} locale={cardLocale} />
       </div>
 
-      {/* Desktop: custom carousel with arrow navigation */}
-      <div className="hidden md:block">
-        <div
-          ref={containerRef}
-          className="w-full relative overflow-hidden cursor-grab active:cursor-grabbing"
-          style={{ touchAction: 'pan-y' }}
-          onMouseEnter={() => { hovering.current = true; }}
-          onMouseLeave={() => { hovering.current = false; }}
-        >
-        <div
-          ref={trackRef}
-          className="will-change-transform"
-          style={{
-            position: 'relative',
-            height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
-            gap: 'clamp(1rem, 1.25vw, 1.75rem)',
-            opacity: containerHeight > 0 ? 1 : 0,
-            transition: 'opacity 0.6s ease-out',
-            backfaceVisibility: 'hidden',
-          }}
-        >
-          <CardContent cardBase={cardBase} locale={cardLocale} />
-        </div>
-        </div>
+      {/* Desktop: native snap scroll, same logic as mobile */}
+      <div
+        ref={desktopScrollRef}
+        className="hidden md:flex gap-5 overflow-x-scroll snap-x snap-mandatory pt-5 pb-8"
+        style={{
+          scrollbarWidth: 'none',
+          paddingLeft: '5%',
+          paddingRight: '5%',
+          scrollPaddingLeft: '5%',
+        } as React.CSSProperties}
+      >
+        <CardContent cardBase={`${cardBase} snap-start`} locale={cardLocale} />
       </div>
     </div>
     </div>
