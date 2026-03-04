@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
-interface AuthUser {
+export interface AuthUser {
   id: string;
   email: string;
   name: string;
@@ -29,7 +29,7 @@ export const useAuth = () => {
       return;
     }
     isCheckingAuthRef.current = true;
-    
+
     try {
       const { data: { session } } = await supabase.auth.getSession();
 
@@ -39,68 +39,51 @@ export const useAuth = () => {
         return;
       }
 
-      const userId = session.user.id;
+      const platform = (localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider') || 'teamleader') as AuthUser['platform'];
+      if (['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
+        setUserPlatformStorage(platform);
+      }
 
-      // 1️⃣ Trust platform from localStorage first
-      let platform = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
+      const metadata = session.user.user_metadata || {};
+      let name: string = metadata.name || '';
 
-      if (platform && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
-        // Only query the platform-specific table
-        const { data: userData } = await supabase
-          .from(`${platform}_users`)
-          .select('id, user_info')
-          .eq('user_id', userId)
-          .is('deleted_at', null)
-          .single();
-
-        if (userData) {
-          setUserPlatformStorage(platform);
-
-          const userName = getUserName(platform as AuthUser['platform'], userData.user_info);
-          setUser({
-            id: userId,
-            email: session.user.email || '',
-            name: userName,
-            platform: platform as AuthUser['platform'],
-            user_info: userData,
-          });
-
-          setLoading(false);
-          return;
+      // If the stored name looks like a placeholder (e.g. "teamleader_undefined"),
+      // fall back to querying the platform-specific table for the real name.
+      const nameIsCorrupt = !name || name.includes('undefined') || /^(teamleader|pipedrive|odoo)_/.test(name);
+      if (nameIsCorrupt && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
+        try {
+          const { data: platformRow } = await supabase
+            .from(`${platform}_users`)
+            .select('user_info')
+            .eq('user_id', session.user.id)
+            .is('deleted_at', null)
+            .maybeSingle();
+          const info = platformRow?.user_info;
+          if (info?.name && !info.name.includes('undefined')) {
+            name = info.name;
+          } else if (info?.first_name || info?.last_name) {
+            name = [info.first_name, info.last_name].filter(Boolean).join(' ');
+          }
+        } catch (_) {
+          // ignore — we'll fall through to the email fallback
         }
       }
 
-      // 2️⃣ Fallback: determine platform by scanning tables in safe order
-      const platforms: AuthUser['platform'][] = ['teamleader', 'pipedrive', 'odoo'];
-
-      for (const platformName of platforms) {
-        const { data: userData } = await supabase
-          .from(`${platformName}_users`)
-          .select('id, user_info')
-          .eq('user_id', userId)
-          .is('deleted_at', null)
-          .single();
-
-        if (userData) {
-          setUserPlatformStorage(platformName);
-
-          const userName = getUserName(platformName, userData.user_info);
-          setUser({
-            id: userId,
-            email: session.user.email || '',
-            name: userName,
-            platform: platformName,
-            user_info: userData.user_info,
-          });
-
-          setLoading(false);
-          return;
-        }
+      if (!name || name.includes('undefined')) {
+        // The stored email may also be a placeholder (teamleader_undefined@placeholder.local)
+        // — fall back to a generic label rather than propagate the bad string.
+        const emailPrefix = session.user.email?.split('@')[0] || '';
+        const emailIsBad = !emailPrefix || emailPrefix.includes('undefined') || /^(teamleader|pipedrive|odoo)_/.test(emailPrefix);
+        name = emailIsBad ? 'there' : emailPrefix;
       }
 
-      // 3️⃣ No user found
-      setUser(null);
-      setUserPlatformStorage(null);
+      setUser({
+        id: session.user.id,
+        email: session.user.email || '',
+        name,
+        platform: ['teamleader', 'pipedrive', 'odoo'].includes(platform) ? platform : 'teamleader',
+        user_info: metadata,
+      });
     } catch (error) {
       console.error('Auth check error:', error);
       setUser(null);
@@ -125,47 +108,19 @@ export const useAuth = () => {
     return () => subscription.unsubscribe();
   }, [checkAuth]);
 
-
-  
-  const getUserName = (platform: AuthUser['platform'], userInfo: any) => {
-    console.log(userInfo);
-    switch (platform) {
-      case 'teamleader':
-        return userInfo?.first_name && userInfo?.last_name
-          ? `${userInfo.first_name} ${userInfo.last_name}`
-          : userInfo?.email || 'TeamLeader User';
-      case 'pipedrive':
-        return userInfo?.name || userInfo?.email || 'Pipedrive User';
-      case 'odoo':
-        return userInfo?.name || 'Odoo User';
-      default:
-        return 'User';
-    }
-  };
-
   const signOut = async () => {
-    try {
-      await supabase.auth.signOut();
+    setUser(null);
+    localStorage.removeItem('userPlatform');
+    localStorage.removeItem('auth_provider');
+    localStorage.removeItem('teamleader_oauth_state');
+    localStorage.removeItem('pipedrive_oauth_state');
+    localStorage.removeItem('odoo_oauth_state');
 
-      // Clear all authentication-related localStorage
-      localStorage.removeItem('userPlatform');
-      localStorage.removeItem('auth_provider');
-      localStorage.removeItem('teamleader_oauth_state');
-      localStorage.removeItem('pipedrive_oauth_state');
-      localStorage.removeItem('odoo_oauth_state');
+    // Must await so Supabase clears its own localStorage before the page reloads,
+    // otherwise checkAuth() finds the old session on the next render.
+    await supabase.auth.signOut().catch(() => {});
 
-      setUser(null);
-      setUserPlatformStorage(null);
-
-      // Force reload
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Sign out error:', error);
-      localStorage.clear();
-      setUser(null);
-      setUserPlatformStorage(null);
-      window.location.href = '/';
-    }
+    window.location.href = '/signup';
   };
 
   return { user, loading, signOut };

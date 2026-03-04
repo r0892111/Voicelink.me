@@ -1,230 +1,625 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  MessageCircle,
+  CheckCircle,
+  Zap,
+  ArrowRight,
+  Clock,
+  Mic,
+  BookOpen,
+  Calendar,
+  Sparkles,
+  Headphones,
+  Star,
+  ChevronDown,
+  X,
+  ExternalLink,
+} from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { useSubscription } from '../hooks/useSubscription';
-import { useI18n } from '../hooks/useI18n';
-import { Users, Zap, Settings, ShoppingBag } from 'lucide-react';
-import { UserInfoCard } from './UserInfoCard';
-import { BuyButton } from './BuyButton';
-import { SubscriptionDashboard } from './SubscriptionDashboard';
-import { supabase } from '../lib/supabase';
+import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
+import { WhatsAppConnectForm } from './WhatsAppConnectForm';
 import { StripeService } from '../services/stripeService';
+import { supabase } from '../lib/supabase';
+import { withUTM } from '../utils/utm';
+import { NoiseOverlay } from './ui/NoiseOverlay';
+
+const PRICE_ID = 'price_1S5o6zLPohnizGblsQq7OYCT';
 
 export const Dashboard: React.FC = () => {
-  const { user } = useAuth();
-  const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription();
-  const { t } = useI18n();
-  const navigate = useNavigate();
-  const subscriptionCheckInProgress = useRef(false);
+  const { user, loading } = useAuth();
+  const navigate          = useNavigate();
+  const wa                = useWhatsAppConnect(user);
+  const [subChecking, setSubChecking]     = useState(true);
+  const [portalLoading, setPortalLoading] = useState(false);
+  const mounted = useRef(true);
+  useEffect(() => () => { mounted.current = false; }, []);
 
-  // Shared function to perform subscription check (prevents duplication)
-  const performSubscriptionCheck = async (session: any, provider: string) => {
-    // Prevent concurrent execution
-    if (subscriptionCheckInProgress.current) {
-      console.log('Subscription check already in progress, skipping');
-      return;
-    }
+  interface SubInfo {
+    subscription_status: string;
+    trial_end: number | null;
+    current_period_end: number | null;
+    plan_name: string | null;
+    amount: number | null;
+    currency: string | null;
+    interval: string | null;
+  }
+  const [subInfo, setSubInfo] = useState<SubInfo | null>(null);
 
-    subscriptionCheckInProgress.current = true;
+  // Redirect unauthenticated users + check subscription
+  useEffect(() => {
+    if (loading) return;
+    if (!user) { navigate(withUTM('/signup')); return; }
+    checkSubscription();
+  }, [user, loading]);
 
+  const checkSubscription = async () => {
     try {
-      console.log('Checking subscription for provider:', provider);
-      
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=${provider || 'unknown'}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
 
-      const result = await response.json();
-      console.log('Subscription check result:', result);
-      
-      const hasActiveSub = result.success && (result.subscription?.subscription_status === 'active' || result.subscription?.subscription_status === 'trialing');
-
-      if (!hasActiveSub) {
-        console.log('No active subscription, redirecting to Stripe checkout');
-        await StripeService.createCheckoutSession({
-          priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
-          quantity: 1,
-          successUrl: `${window.location.origin}/dashboard`,
-          cancelUrl: `${window.location.origin}/dashboard`,
-        });
-      } else {
-        console.log('User has active subscription');
+      // Skip Stripe entirely for test users
+      const { data: tlUser } = await supabase
+        .from('teamleader_users')
+        .select('is_test_user')
+        .eq('user_id', session.user.id)
+        .maybeSingle();
+      if (tlUser?.is_test_user) {
+        if (mounted.current) navigate('/test-dashboard', { replace: true });
+        return;
       }
-    } catch (error) {
-      console.error('Error checking subscription:', error);
+
+      // If returning from Stripe, persist the customer ID before checking.
+      const params    = new URLSearchParams(window.location.search);
+      const sessionId = params.get('session_id');
+      if (sessionId) {
+        window.history.replaceState({}, '', '/dashboard');
+        await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-confirm-checkout`,
+          {
+            method:  'POST',
+            headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ session_id: sessionId }),
+          },
+        ).catch(() => {});
+      }
+
+      // Always verify via stripe_customer_id in teamleader_users:
+      //   no customer ID → no subscription
+      //   customer ID present → call Stripe to confirm active/trialing
+      const res  = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`,
+        { headers: { Authorization: `Bearer ${session.access_token}` } },
+      );
+      const data = await res.json();
+      if (!mounted.current) return;
+      if (data.success && data.subscription) setSubInfo(data.subscription);
+
+    } catch (err) {
+      console.error('Subscription check failed:', err);
     } finally {
-      subscriptionCheckInProgress.current = false;
+      if (mounted.current) setSubChecking(false);
     }
   };
 
-  // Check for pending subscription check after magic link redirect (for Teamleader auth)
-  // This runs ONLY on mount to avoid race conditions with auth state listener
-  useEffect(() => {
-    const checkPendingSubscription = async () => {
-      const pendingCheck = sessionStorage.getItem('pending_subscription_check');
-      const authPlatform = sessionStorage.getItem('auth_platform');
-      
-      console.log('Mount check - pending subscription:', { pendingCheck, authPlatform, hasUser: !!user });
-      
-      if (pendingCheck === 'true' && authPlatform) {
-        // Wait a bit for session to be established (magic link might need time)
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        
-        console.log('Mount check - session:', { hasSession: !!session, error: sessionError, userId: session?.user?.id });
-        
-        if (session?.user) {
-          // Atomically check and clear flag to prevent race conditions
-          // Check flag again after delay to ensure we still need to process
-          const stillPending = sessionStorage.getItem('pending_subscription_check');
-          if (stillPending === 'true') {
-            // Clear the flag immediately to prevent duplicate checks
-            sessionStorage.removeItem('pending_subscription_check');
-            sessionStorage.removeItem('auth_platform');
-            
-            const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform') || authPlatform;
-            await performSubscriptionCheck(session, provider);
-          } else {
-            console.log('Flag already cleared by another handler, skipping');
-          }
-        }
-      }
-    };
-    
-    // Run only once on mount
-    checkPendingSubscription();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty deps - only run on mount
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  const getTimeGreeting = () => {
+    const h = new Date().getHours();
+    if (h < 12) return 'Good morning';
+    if (h < 17) return 'Good afternoon';
+    return 'Good evening';
+  };
 
-  // Listen for auth state changes to catch when session is established via magic link
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        const pendingCheck = sessionStorage.getItem('pending_subscription_check');
-        const authPlatform = sessionStorage.getItem('auth_platform');
-        
-        console.log('Auth state SIGNED_IN - checking flag:', { pendingCheck, authPlatform });
-        
-        if (pendingCheck === 'true' && authPlatform) {
-          // Atomically check and clear flag to prevent race conditions
-          const stillPending = sessionStorage.getItem('pending_subscription_check');
-          if (stillPending === 'true') {
-            console.log('Auth state changed to SIGNED_IN, checking subscription');
-            
-            // Clear the flag immediately
-            sessionStorage.removeItem('pending_subscription_check');
-            sessionStorage.removeItem('auth_platform');
-            
-            const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform') || authPlatform;
-            await performSubscriptionCheck(session, provider);
-          } else {
-            console.log('Flag already cleared by mount check, skipping');
-          }
-        }
-      }
+  const getFirstName = () => user?.name?.split(' ')[0] || 'there';
+
+  const getPlatformLabel = () =>
+    ({ teamleader: 'Teamleader', pipedrive: 'Pipedrive', odoo: 'Odoo' }[user?.platform || ''] || 'your CRM');
+
+  const startTrial = () =>
+    StripeService.createCheckoutSession({
+      priceId:    PRICE_ID,
+      successUrl: `${window.location.origin}/dashboard`,
+      cancelUrl:  `${window.location.origin}/`,
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  const getPlatformIcon = (platform: string) => {
-    switch (platform) {
-      case 'teamleader':
-        return <Users className="w-6 h-6 text-emerald-600" />;
-      case 'pipedrive':
-        return <Zap className="w-6 h-6 text-orange-500" />;
-      case 'odoo':
-        return <Settings className="w-6 h-6 text-purple-600" />;
-      default:
-        return <Users className="w-6 h-6 text-gray-600" />;
+  const openPortal = async () => {
+    setPortalLoading(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const res  = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-portal`,
+        {
+          method:  'POST',
+          headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ return_url: `${window.location.origin}/dashboard` }),
+        },
+      );
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch (err) {
+      console.error('Portal error:', err);
+    } finally {
+      setPortalLoading(false);
     }
   };
 
-  // Show loading state while checking subscription
-  if (subscriptionLoading) {
+  // Derived subscription state used for the banner
+  const subStatus    = subInfo?.subscription_status;
+  const isSubscribed = subStatus === 'active' || subStatus === 'trialing';
+  const isLapsed     = subStatus && !isSubscribed && subStatus !== 'none';
+  const needsTrial   = !subChecking && (!subStatus || subStatus === 'none');
+
+  if (loading) {
     return (
-      <div className="flex items-center justify-center py-16">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">{t('common.loadingDashboard')}</p>
-        </div>
+      <div className="min-h-screen bg-porcelain flex items-center justify-center">
+        <div className="dot-loader" />
       </div>
     );
   }
 
-  // Show subscription dashboard if user has active subscription
-  if (hasActiveSubscription) {
-    return <SubscriptionDashboard />;
-  }
+  if (!user) return null;
 
-  // Show regular dashboard for users without subscription
+  const setupSteps = [
+    {
+      n: 1,
+      done: true,
+      title: `${getPlatformLabel()} Connected`,
+      description: 'Your CRM is linked and syncing. Voice note data will flow in automatically.',
+    },
+    {
+      n: 2,
+      done: wa.status === 'active',
+      pending: wa.status === 'pending',
+      title: 'Connect WhatsApp',
+      description:
+        wa.status === 'active'
+          ? `Verified · ${wa.number}`
+          : wa.status === 'pending'
+          ? 'Verification pending — check your WhatsApp for the code.'
+          : 'Link your WhatsApp number to start sending voice notes.',
+    },
+    {
+      n: 3,
+      done: wa.status === 'active',
+      title: 'Send Your First Voice Note',
+      description:
+        'Open WhatsApp, send a voice message to VoiceLink, and watch your CRM update in seconds.',
+    },
+  ];
+
+  const tips = [
+    { emoji: '🗣️', text: 'Start with "Just spoke with [Name]" to log a contact.' },
+    { emoji: '📅', text: '"Call him back Monday at 3 PM" creates a task automatically.' },
+    { emoji: '🎯', text: 'One person per voice note keeps things accurate.' },
+    { emoji: '✍️', text: 'Spell tricky names letter-by-letter for perfect CRM input.' },
+  ];
+
   return (
-    <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="bg-white rounded-xl shadow-sm p-8">
-        <div className="flex items-center space-x-3 mb-4">
-          {user && getPlatformIcon(user.platform)}
-          <h1 className="text-3xl font-bold text-gray-900">
-            {t('dashboard.welcome', { name: user?.name || 'User' })}
-          </h1>
-        </div>
-        <p className="text-gray-600">
-          {t('dashboard.connectedToPlatform', { 
-            platform: user?.platform && user.platform.charAt(0).toUpperCase() + user.platform.slice(1) 
-          })}
-        </p>
-      </div>
+    <div className="min-h-screen bg-porcelain font-instrument relative">
+      <NoiseOverlay />
 
-      {/* Platform Info */}
-      <div className="bg-white rounded-xl shadow-sm p-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">{t('dashboard.platformInformation')}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="font-medium text-gray-900 mb-2">{t('common.platform')}</h3>
-            <div className="flex items-center space-x-2">
-              {user && getPlatformIcon(user.platform)}
-              <span className="capitalize font-medium">{user?.platform}</span>
+      {/* ── HERO GREETING ── */}
+      <section className="pt-10 pb-10 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
+          <div
+            className="absolute -top-40 -right-32 w-[560px] h-[560px] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(26,45,99,0.07) 0%, transparent 70%)' }}
+          />
+          <div
+            className="absolute top-16 -left-24 w-[380px] h-[380px] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(71,93,143,0.05) 0%, transparent 70%)' }}
+          />
+        </div>
+
+        <div className="max-w-4xl mx-auto relative">
+          <div
+            className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-navy/[0.08] rounded-full px-4 py-1.5 mb-5 shadow-sm"
+            style={{ animation: 'hero-subtitle-in 0.5s cubic-bezier(0.22,1,0.36,1) 0.05s both' }}
+          >
+            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-sm font-medium text-navy/65 font-instrument">
+              {getPlatformLabel()} — Connected &amp; Active
+            </span>
+          </div>
+
+          <h1
+            className="font-general font-bold text-navy leading-[1.08] mb-4"
+            style={{
+              fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+              animation: 'hero-slide-in 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both',
+            }}
+          >
+            {getTimeGreeting()}, {getFirstName()}! 👋
+          </h1>
+
+          <p
+            className="text-lg md:text-xl text-navy/55 font-instrument font-medium max-w-xl mb-8 leading-relaxed"
+            style={{ animation: 'hero-subtitle-in 0.6s cubic-bezier(0.22,1,0.36,1) 0.22s both' }}
+          >
+            VoiceLink is ready when you are. Just open WhatsApp and start talking — we'll handle the rest.
+          </p>
+
+        </div>
+      </section>
+
+      {/* ── STATUS CARDS ── */}
+      <section className="px-6 pb-8">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div
+            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
+            style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.42s both' }}
+          >
+            <div className="flex items-center space-x-3 mb-2">
+              <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-emerald-500" />
+              </div>
+              <span className="font-general font-semibold text-navy text-sm">CRM</span>
+            </div>
+            <p className="text-xs text-navy/50 font-instrument">{getPlatformLabel()} is connected &amp; syncing</p>
+            <div className="mt-3 flex items-center space-x-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="text-xs font-medium text-emerald-600">Live</span>
             </div>
           </div>
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h3 className="font-medium text-gray-900 mb-2">{t('userInfo.emailAddress')}</h3>
-            <p className="text-gray-600">{user?.email}</p>
+
+          <div
+            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
+            style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.5s both' }}
+          >
+            <div className="flex items-center space-x-3 mb-2">
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${wa.status === 'active' ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <MessageCircle className={`w-5 h-5 ${wa.status === 'active' ? 'text-emerald-500' : 'text-navy/35'}`} />
+              </div>
+              <span className="font-general font-semibold text-navy text-sm">WhatsApp</span>
+            </div>
+            <p className="text-xs text-navy/50 font-instrument truncate">
+              {wa.status === 'active' ? wa.number : wa.status === 'pending' ? 'Verification pending' : 'Not yet connected'}
+            </p>
+            <div className="mt-3 flex items-center space-x-1.5">
+              <div className={`w-1.5 h-1.5 rounded-full ${wa.status === 'active' ? 'bg-emerald-400' : wa.status === 'pending' ? 'bg-amber-400' : 'bg-navy/20'}`} />
+              <span className={`text-xs font-medium ${wa.status === 'active' ? 'text-emerald-600' : wa.status === 'pending' ? 'text-amber-600' : 'text-navy/40'}`}>
+                {wa.status === 'active' ? 'Connected' : wa.status === 'pending' ? 'Pending' : 'Not connected'}
+              </span>
+            </div>
+          </div>
+
+          <div
+            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
+            style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
+          >
+            <div className="flex items-center space-x-3 mb-2">
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <Star className={`w-5 h-5 ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'text-emerald-500' : 'text-navy/50'}`} />
+              </div>
+              <span className="font-general font-semibold text-navy text-sm">Subscription</span>
+            </div>
+            <>
+                {subChecking ? (
+                  <div className="h-3.5 w-28 bg-navy/[0.07] rounded-full animate-pulse mt-0.5" />
+                ) : (
+                  <p className="text-xs text-navy/50 font-instrument truncate">
+                    {subInfo?.plan_name ?? 'VoiceLink'}
+                    {subInfo?.amount != null && subInfo?.currency && (
+                      <span className="ml-1">
+                        · {(subInfo.amount / 100).toLocaleString('en', { style: 'currency', currency: subInfo.currency.toUpperCase() })}{subInfo.interval ? `/${subInfo.interval}` : ''}
+                      </span>
+                    )}
+                  </p>
+                )}
+                <div className="mt-3 space-y-1">
+                  {subChecking && (
+                    <div className="h-3 w-20 bg-navy/[0.07] rounded-full animate-pulse" />
+                  )}
+                  {!subChecking && subInfo?.subscription_status === 'trialing' && (
+                    <>
+                      <div className="flex items-center space-x-1.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                        <span className="text-xs font-medium text-amber-600">
+                          Free trial · {subInfo.trial_end ? Math.max(0, Math.ceil((subInfo.trial_end * 1000 - Date.now()) / 86_400_000)) : '—'} days left
+                        </span>
+                      </div>
+                      {subInfo.trial_end && (
+                        <p className="text-xs text-navy/40 font-instrument pl-3">
+                          Billing starts {new Date(subInfo.trial_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </p>
+                      )}
+                    </>
+                  )}
+                  {!subChecking && subInfo?.subscription_status === 'active' && (
+                    <>
+                      <div className="flex items-center space-x-1.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        <span className="text-xs font-medium text-emerald-600">Active</span>
+                      </div>
+                      {subInfo.current_period_end && (
+                        <p className="text-xs text-navy/40 font-instrument pl-3">
+                          Renews {new Date(subInfo.current_period_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </p>
+                      )}
+                    </>
+                  )}
+                  {!subChecking && subInfo?.subscription_status === 'past_due' && (
+                    <div className="flex items-center space-x-1.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                      <span className="text-xs font-medium text-red-600">Payment due</span>
+                    </div>
+                  )}
+                  {!subChecking && (!subInfo || subInfo.subscription_status === 'none') && (
+                    <div className="flex items-center space-x-1.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-navy/20" />
+                      <span className="text-xs font-medium text-navy/40">—</span>
+                    </div>
+                  )}
+                </div>
+                {!subChecking && isSubscribed && (
+                  <button
+                    onClick={openPortal}
+                    disabled={portalLoading}
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy transition-colors disabled:opacity-40"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    {portalLoading ? 'Opening…' : 'Manage subscription'}
+                  </button>
+                )}
+              </>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* User Information */}
-      {user?.user_info && (
-        <UserInfoCard 
-          platform={user.platform}
-          userInfo={user.user_info}
-        />
+      {/* ── SUBSCRIPTION BANNER ── */}
+      {(needsTrial || isLapsed) && (
+        <section className="px-6 pb-6">
+          <div className="max-w-4xl mx-auto">
+            {needsTrial ? (
+              <div
+                className="relative overflow-hidden bg-navy rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-5"
+                style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.62s both' }}
+              >
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)' }}
+                  aria-hidden
+                />
+                <div className="relative flex-1">
+                  <div className="inline-flex items-center gap-2 bg-white/10 text-white/80 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                    <Sparkles className="w-3 h-3" />
+                    14-day free trial
+                  </div>
+                  <h3 className="font-general font-bold text-white text-lg leading-tight">
+                    Unlock the full VoiceLink experience
+                  </h3>
+                  <p className="text-white/55 text-sm font-instrument mt-1">
+                    Try everything VoiceLink has to offer, free for 14 days. Cancel anytime.
+                  </p>
+                </div>
+                <button
+                  onClick={startTrial}
+                  className="relative flex-shrink-0 inline-flex items-center gap-2 bg-white text-navy font-semibold text-sm py-3 px-6 rounded-full hover:bg-white/90 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
+                >
+                  Start Free Trial
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <div
+                className="bg-amber-50 border border-amber-200/70 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-5"
+                style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.62s both' }}
+              >
+                <div className="flex-1">
+                  <h3 className="font-general font-bold text-amber-800 text-lg leading-tight">
+                    Your subscription has ended
+                  </h3>
+                  <p className="text-amber-700/70 text-sm font-instrument mt-1">
+                    Renew to keep your CRM syncing with VoiceLink.
+                  </p>
+                </div>
+                <button
+                  onClick={startTrial}
+                  className="flex-shrink-0 inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm py-3 px-6 rounded-full transition-colors"
+                >
+                  Renew Now
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
       )}
 
-      {/* Quick Purchase Section */}
-      <div className="bg-white rounded-xl shadow-sm p-8">
-        <div className="flex items-center space-x-2 mb-6">
-          <ShoppingBag className="w-6 h-6 text-blue-600" />
-          <h2 className="text-xl font-semibold text-gray-900">{t('dashboard.upgradeExperience')}</h2>
+      {/* ── SETUP CHECKLIST ── */}
+      <section className="px-6 pb-8">
+        <div className="max-w-4xl mx-auto">
+          <div
+            className="bg-white/80 backdrop-blur-sm rounded-3xl border border-navy/[0.07] shadow-sm p-7 md:p-9"
+            style={{ animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.62s both' }}
+          >
+            <div className="flex items-center space-x-3 mb-1">
+              <Zap className="w-5 h-5 text-navy/60" />
+              <h2 className="font-general font-bold text-navy text-xl">Your Setup Checklist</h2>
+            </div>
+            <p className="text-sm text-navy/45 font-instrument mb-7 ml-8">
+              Three quick steps to get fully up and running
+            </p>
+
+            <div className="space-y-3">
+              {setupSteps.map((step) => (
+                <div key={step.n}>
+                  {/* ── Step row ── */}
+                  <div
+                    className={`flex items-start gap-4 p-4 rounded-2xl transition-colors duration-200 ${
+                      step.done
+                        ? 'bg-emerald-50/70 border border-emerald-100/80'
+                        : step.n === 2 && wa.open
+                        ? 'bg-navy/[0.05] border border-navy/[0.09] rounded-b-none'
+                        : 'bg-navy/[0.03] border border-transparent hover:border-navy/[0.06]'
+                    }`}
+                  >
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        step.done ? 'bg-emerald-100 text-emerald-600' : 'bg-navy/[0.07] text-navy/45'
+                      }`}
+                    >
+                      {step.done ? (
+                        <CheckCircle className="w-4 h-4" />
+                      ) : (
+                        <span className="text-sm font-bold font-general">{step.n}</span>
+                      )}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`font-general font-semibold text-sm ${step.done ? 'text-emerald-700' : 'text-navy'}`}>
+                          {step.title}
+                        </span>
+                        {step.pending && (
+                          <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                            <Clock className="w-3 h-3" />
+                            Pending
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-navy/50 font-instrument mt-0.5 leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+
+                    {/* "Connect Now" toggle — only step 2 when not yet connected */}
+                    {step.n === 2 && wa.status === 'not_set' && (
+                      <button
+                        onClick={wa.toggle}
+                        className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
+                      >
+                        {wa.open ? (
+                          <>
+                            <X className="w-3 h-3" />
+                            Cancel
+                          </>
+                        ) : (
+                          <>
+                            Connect Now
+                            <ChevronDown className="w-3 h-3" />
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* ── Inline WA form (step 2 only) ── */}
+                  {step.n === 2 && wa.status === 'not_set' && (
+                    <WhatsAppConnectForm
+                      open={wa.open}
+                      step={wa.step}
+                      phone={wa.phone}
+                      otp={wa.otp}
+                      busy={wa.busy}
+                      error={wa.error}
+                      success={wa.success}
+                      onPhoneChange={(v) => { wa.setPhone(v); }}
+                      onOtpChange={(v) => { wa.setOtp(v); }}
+                      onSendOtp={wa.sendOtp}
+                      onVerifyOtp={wa.verifyOtp}
+                      onBackToPhone={wa.backToPhone}
+                      onResendOtp={wa.resendOtp}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <BuyButton
-            priceId="price_1S5o6zLPohnizGblsQq7OYCT"
-            productName={t('common.premiumMonthly')}
-            price="€29.90/mo"
-            description={t('common.advancedCrmFeatures')}
-          />
-          
+      </section>
+
+      {/* ── BOTTOM GRID: TIPS + SUPPORT ── */}
+      <section className="px-6 pb-16">
+        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-5">
+          {/* Tips */}
+          <div
+            className="bg-white/80 backdrop-blur-sm rounded-3xl border border-navy/[0.07] shadow-sm p-7"
+            style={{ animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.7s both' }}
+          >
+            <div className="flex items-center space-x-3 mb-5">
+              <div className="w-10 h-10 rounded-2xl bg-navy flex items-center justify-center shadow-sm flex-shrink-0">
+                <Mic className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-general font-bold text-navy text-base leading-tight">How to Use VoiceLink</h3>
+                <p className="text-xs text-navy/40 font-instrument">Tips for the best results</p>
+              </div>
+            </div>
+            <ul className="space-y-3.5">
+              {tips.map((tip, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-base leading-tight mt-0.5 flex-shrink-0">{tip.emoji}</span>
+                  <span className="text-sm text-navy/60 font-instrument leading-relaxed">{tip.text}</span>
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={() => navigate(withUTM('/support'))}
+              className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy transition-colors"
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              View full usage guide
+              <ArrowRight className="w-3 h-3" />
+            </button>
+          </div>
+
+          {/* Support */}
+          <div
+            className="bg-navy rounded-3xl p-7 relative overflow-hidden shadow-lg"
+            style={{ animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.78s both' }}
+          >
+            <div
+              className="absolute inset-0 pointer-events-none rounded-3xl"
+              style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.07) 0%, transparent 55%)' }}
+              aria-hidden
+            />
+            <div className="relative">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-general font-bold text-white text-base leading-tight">Need a Hand?</h3>
+                  <p className="text-xs text-white/45 font-instrument">We're here for you</p>
+                </div>
+              </div>
+              <p className="text-sm text-white/60 font-instrument leading-relaxed mb-6">
+                Our team loves helping new users get the most out of VoiceLink. Reach out anytime — we usually respond within a few hours.
+              </p>
+              <div className="flex flex-col gap-2.5">
+                <a
+                  href="https://calendly.com/alex-finitsolutions/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-navy font-semibold text-sm py-2.5 px-5 rounded-full hover:bg-white/90 transition-all duration-200 hover:shadow-md"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Book a Call
+                </a>
+                <button
+                  onClick={() => navigate(withUTM('/support'))}
+                  className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 text-white font-semibold text-sm py-2.5 px-5 rounded-full transition-colors border border-white/[0.12]"
+                >
+                  <Headphones className="w-4 h-4" />
+                  Support Center
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="pb-10 px-6 text-center">
+        <p className="text-xs text-navy/28 font-instrument">
+          © 2026 Finit Solutions ·{' '}
+          <a href="/privacy-policy" className="hover:text-navy/50 transition-colors">Privacy</a>{' '}·{' '}
+          <a href="/saas-agreement" className="hover:text-navy/50 transition-colors">SaaS Agreement</a>{' '}·{' '}
+          <a href="/support" className="hover:text-navy/50 transition-colors">Support</a>
+        </p>
+      </footer>
     </div>
   );
 };

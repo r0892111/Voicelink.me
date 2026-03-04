@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npx tsc:*)",
+      "Bash(supabase functions:*)",
+      "Bash(supabase migration:*)",
+      "Bash(supabase db:*)",
+      "Bash(__NEW_LINE_ebc0cb43b97b8836__ echo:*)",
+      "Bash(__NEW_LINE_408b173c01d625d1__ echo:*)",
+      "Bash(__NEW_LINE_2fc7276f08328369__ echo:*)",
+      "Bash(__NEW_LINE_47c91eab88fd1fbc__ echo:*)",
+      "Bash(__NEW_LINE_1ff321e31aeb498e__ echo:*)"
+    ]
+  }
+}
