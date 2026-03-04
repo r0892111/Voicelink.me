@@ -39,12 +39,13 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({
   variant = 0,
 }) => {
   const data = sectionDividerData[variant % sectionDividerData.length];
-  const fillPath = `${data.fill} L1920,160 L0,160 Z`;
+  // Extend fill well past the SVG bottom so toColor bleeds over any sub-pixel gap on Safari iOS
+  const fillPath = `${data.fill} L1920,600 L0,600 Z`;
 
   return (
     <div
       className="relative w-full"
-      style={{ backgroundColor: fromColor, marginTop: -1, marginBottom: -1, transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}
+      style={{ backgroundColor: fromColor, marginTop: -2, marginBottom: -2 }}
       aria-hidden="true"
     >
       <svg
@@ -52,7 +53,7 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({
         preserveAspectRatio="none"
         className="w-full block h-[50px] md:h-[75px] lg:h-[100px]"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ overflow: 'visible' }}
+        style={{ overflow: 'visible', display: 'block' }}
       >
         {/* Layer 1: Fill — transitions from fromColor to toColor */}
         <path d={fillPath} fill={toColor} />
