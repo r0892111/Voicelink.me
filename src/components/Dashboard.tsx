@@ -14,6 +14,7 @@ import {
   Star,
   ChevronDown,
   X,
+  ExternalLink,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
@@ -29,8 +30,9 @@ export const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
   const navigate          = useNavigate();
   const wa                = useWhatsAppConnect(user);
-  const [subChecking, setSubChecking] = useState(true);
-  const [isTestUser, setIsTestUser]   = useState(false);
+  const [subChecking, setSubChecking]   = useState(true);
+  const [isTestUser, setIsTestUser]     = useState(false);
+  const [portalLoading, setPortalLoading] = useState(false);
   const mounted = useRef(true);
   useEffect(() => () => { mounted.current = false; }, []);
 
@@ -120,6 +122,28 @@ export const Dashboard: React.FC = () => {
       successUrl: `${window.location.origin}/dashboard`,
       cancelUrl:  `${window.location.origin}/`,
     });
+
+  const openPortal = async () => {
+    setPortalLoading(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const res  = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-portal`,
+        {
+          method:  'POST',
+          headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ return_url: `${window.location.origin}/dashboard` }),
+        },
+      );
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch (err) {
+      console.error('Portal error:', err);
+    } finally {
+      setPortalLoading(false);
+    }
+  };
 
   // Derived subscription state used for the banner
   const subStatus    = subInfo?.subscription_status;
@@ -340,6 +364,16 @@ export const Dashboard: React.FC = () => {
                     </div>
                   )}
                 </div>
+                {!subChecking && isSubscribed && (
+                  <button
+                    onClick={openPortal}
+                    disabled={portalLoading}
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy transition-colors disabled:opacity-40"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    {portalLoading ? 'Opening…' : 'Manage subscription'}
+                  </button>
+                )}
               </>
             )}
           </div>

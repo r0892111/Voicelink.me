@@ -5,7 +5,9 @@
       "Bash(npx tsc:*)",
       "Bash(supabase functions:*)",
       "Bash(supabase migration:*)",
-      "Bash(supabase db:*)"
+      "Bash(supabase db:*)",
+      "Bash(__NEW_LINE_ebc0cb43b97b8836__ echo:*)",
+      "Bash(__NEW_LINE_408b173c01d625d1__ echo:*)"
     ]
   }
 }
