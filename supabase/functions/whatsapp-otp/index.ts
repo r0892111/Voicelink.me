@@ -70,14 +70,6 @@ Deno.serve(async (req) => {
 
       await repo.markVerified(crm_user_id, record.phone);
 
-      // Persist phone on the platform user row for easy lookup
-      if (crm_provider === 'teamleader') {
-        await supabase
-          .from('teamleader_users')
-          .update({ phone: record.phone })
-          .eq('user_id', crm_user_id);
-      }
-
       return ok({});
     }
 

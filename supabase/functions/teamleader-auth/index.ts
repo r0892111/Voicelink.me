@@ -205,7 +205,10 @@ Deno.serve(async (req) => {
       user_info:     { email, name, teamleader_id: tlUser.id },
     };
     if (is_test_user) tlUserPayload.is_test_user = true;
-    if (test_phone) tlUserPayload.phone = test_phone;
+    if (test_phone) {
+      tlUserPayload.whatsapp_number = test_phone;
+      tlUserPayload.whatsapp_status = 'active';
+    }
 
     const { error: tlUserError } = await supabase.from('teamleader_users').upsert(
       tlUserPayload,
