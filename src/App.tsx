@@ -47,10 +47,10 @@ function App() {
   }, [location]);
 
   // After OAuth magic-link redirect, Supabase sends the user back to the site
-  // root (/). If they're authenticated and on the homepage, send them to the
-  // dashboard instead of showing the marketing page.
+  // root (/) with an #access_token hash. Detect that case and forward to /dashboard.
+  // We do NOT redirect on every authenticated visit so users can navigate home freely.
   React.useEffect(() => {
-    if (!loading && user && location.pathname === '/') {
+    if (!loading && user && location.pathname === '/' && window.location.hash.includes('access_token')) {
       navigate(withUTM('/dashboard'), { replace: true });
     }
   }, [user, loading, location.pathname]);

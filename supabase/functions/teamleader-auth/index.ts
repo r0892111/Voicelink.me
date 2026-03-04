@@ -112,6 +112,32 @@ Deno.serve(async (req) => {
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
     // ── Test user shortcut ────────────────────────────────────────────────────
+    // Also detect test users who authenticate normally (without is_test_user flag)
+    // by checking if their teamleader_id is already recorded in test_users.
+    if (!is_test_user && !test_phone) {
+      const { data: existingTestUser } = await supabase
+        .from('test_users')
+        .select('phone')
+        .eq('teamleader_id', tlUser.id)
+        .maybeSingle();
+      if (existingTestUser?.phone) {
+        // Re-enter the test user path using the stored phone
+        await supabase
+          .from('test_users')
+          .update({
+            tl_access_token:     tlAccessToken,
+            tl_refresh_token:    tlRefreshToken,
+            tl_token_expires_at: expiresAt,
+            updated_at:          new Date().toISOString(),
+          })
+          .eq('phone', existingTestUser.phone);
+        return new Response(
+          JSON.stringify({ success: true, is_test_user: true }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        );
+      }
+    }
+
     // Store tokens directly in test_users — no auth.users / teamleader_users row needed.
     if (is_test_user && test_phone) {
       const { error: testUpdateError } = await supabase

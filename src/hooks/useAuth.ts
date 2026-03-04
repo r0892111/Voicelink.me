@@ -108,8 +108,7 @@ export const useAuth = () => {
     return () => subscription.unsubscribe();
   }, [checkAuth]);
 
-  const signOut = () => {
-    // Clear local state immediately — no waiting on network
+  const signOut = async () => {
     setUser(null);
     localStorage.removeItem('userPlatform');
     localStorage.removeItem('auth_provider');
@@ -117,10 +116,10 @@ export const useAuth = () => {
     localStorage.removeItem('pipedrive_oauth_state');
     localStorage.removeItem('odoo_oauth_state');
 
-    // Fire the Supabase signOut in the background (invalidates the server token)
-    supabase.auth.signOut().catch(() => {});
+    // Must await so Supabase clears its own localStorage before the page reloads,
+    // otherwise checkAuth() finds the old session on the next render.
+    await supabase.auth.signOut().catch(() => {});
 
-    // Send to the login page, not / (which would bounce authed users back to /dashboard)
     window.location.href = '/signup';
   };
 
