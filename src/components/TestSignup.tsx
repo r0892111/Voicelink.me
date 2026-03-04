@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { whatsappService } from '../services/whatsappService';
 import { MessageCircle, Loader2, Check, AlertCircle, ArrowLeft } from 'lucide-react';
@@ -7,9 +8,10 @@ const phoneRegex = /^\+[1-9]\d{6,14}$/;
 const normalizePhone = (v: string) => v.trim().replace(/[\s\-().]/g, '');
 const isValidPhone   = (v: string) => phoneRegex.test(normalizePhone(v));
 
-type Step = 'phone' | 'otp' | 'success';
+type Step = 'phone' | 'otp';
 
 export const TestSignup: React.FC = () => {
+  const navigate = useNavigate();
   const [phone,          setPhone]         = React.useState('');
   const [otp,            setOtp]           = React.useState('');
   const [step,           setStep]          = React.useState<Step>('phone');
@@ -62,7 +64,7 @@ export const TestSignup: React.FC = () => {
     try {
       await whatsappService.verifyOtp('test', testUserId, otp.trim());
       whatsappService.sendWelcome('test', testUserId, confirmedPhone).catch(() => {});
-      setStep('success');
+      navigate('/test-dashboard', { state: { phone: confirmedPhone } });
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Invalid code. Try again.');
     } finally {
@@ -205,19 +207,6 @@ export const TestSignup: React.FC = () => {
                   Didn't get a message? Resend code
                 </button>
               </div>
-            </div>
-          )}
-
-          {/* ── Success step ── */}
-          {step === 'success' && (
-            <div className="p-10 text-center">
-              <div className="w-14 h-14 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center mx-auto mb-5">
-                <Check className="w-6 h-6 text-emerald-500" strokeWidth={2.5} />
-              </div>
-              <h1 className="font-general text-xl font-bold text-navy mb-2">You're all set</h1>
-              <p className="text-sm text-slate-blue leading-relaxed">
-                Your WhatsApp is connected. VoiceLink will now sync your voice messages to your CRM.
-              </p>
             </div>
           )}
 

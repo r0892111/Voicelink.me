@@ -17,6 +17,7 @@ import Disclaimer from './components/Disclaimer';
 import CookiePolicy from './components/CookiePolicy';
 import Support from './components/Support';
 import { TestSignup } from './components/TestSignup';
+import { TestDashboard } from './components/TestDashboard';
 import { useAuth } from './hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ConsentProvider } from './contexts/ConsentContext';
@@ -69,6 +70,7 @@ function App() {
   // Check if we're on the landing page (hide navigation)
   const isLandingPage = location.pathname === '/landing';
   const isSignupPage = location.pathname === '/signup';
+  const isTestPage = location.pathname === '/test' || location.pathname === '/test-dashboard';
 
   const openContactModal = () => {
     setIsContactModalOpen(true);
@@ -92,7 +94,7 @@ function App() {
         <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage ? 'h-screen overflow-hidden' : ''}`}>
           <NoiseOverlay />
           {/* Navigation */}
-          {!isLandingPage && !isSignupPage && (
+          {!isLandingPage && !isSignupPage && !isTestPage && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
             {/* ── White logo on hero (homepage only, fades out on scroll) ── */}
             {isHomepage && (
@@ -299,7 +301,7 @@ function App() {
           )}
 
           {/* Routes */}
-          <div className={isLandingPage || isSignupPage || isHomepage ? "" : "pt-20"}>
+          <div className={isLandingPage || isSignupPage || isHomepage || isTestPage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
               <Route path="/signup" element={<AuthPage />} />
@@ -316,6 +318,7 @@ function App() {
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/support" element={<Support />} />
               <Route path="/test" element={<TestSignup />} />
+              <Route path="/test-dashboard" element={<TestDashboard />} />
               {/* Fallback route for debugging */}
               <Route path="*" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-red-600">No route matched: {location.pathname}</h1><p>Available routes: /, /dashboard, /verify-whatsapp, etc.</p></div>} />
             </Routes>
