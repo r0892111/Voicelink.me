@@ -302,8 +302,8 @@ const cardStrings = {
     c8Bullet2: 'API setup done, awaiting data migration',
     c8Confirm: 'Handoff completed',
     // Card 9
-    c9Title: 'Draft Quotes',
-    c9Soon: '(soon)',
+    c9Title: 'Create Quotes & Invoices',
+    c9Soon: '',
     c9Voice: 'Lucas from GreenTech needs a quote for 50 solar panels, installation, and a 2-year maintenance contract. Deadline is end of month.',
     c9Status: 'Draft',
     c9To: 'To:',
@@ -410,8 +410,8 @@ const cardStrings = {
     c8Bullet2: 'API-setup klaar, wacht op datamigratie',
     c8Confirm: 'Overdracht voltooid',
     // Card 9
-    c9Title: 'Offertes Opstellen',
-    c9Soon: '(binnenkort)',
+    c9Title: 'Offertes & Facturen Opmaken',
+    c9Soon: '',
     c9Voice: 'Lucas van GreenTech heeft een offerte nodig voor 50 zonnepanelen, installatie en een onderhoudscontract van 2 jaar. Deadline is einde van de maand.',
     c9Status: 'Concept',
     c9To: 'Aan:',
@@ -1320,7 +1320,6 @@ const CardContent: React.FC<{ cardBase: string; locale?: CardLocale }> = ({ card
     <div className={cardBase}>
       <div className="absolute left-[clamp(1rem,1.4vw,2rem)] top-0 -translate-y-1/2">
         <span className="font-general font-bold text-navy tracking-tight" style={{ fontSize: 'clamp(22px, 2vw, 30px)' }}>{s.c9Title}</span>
-        <span className="ml-1 font-general font-bold text-navy tracking-tight" style={{ fontSize: 'clamp(16px, 1.4vw, 22px)' }}>{s.c9Soon}</span>
       </div>
       <VoiceQuote text={s.c9Voice} compact waveformIndex={8} />
 

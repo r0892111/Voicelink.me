@@ -284,7 +284,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   {plan.highlighted && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
                 </button>
               )}
-              <p className="text-center text-xs text-muted-blue mt-3">{t('pricing.freeTrial')}</p>
+              {!plan.isEnterprise && (
+                <p className="text-center text-xs text-muted-blue mt-3">{t('pricing.freeTrial')}</p>
+              )}
             </div>
           );
         })}
@@ -417,9 +419,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   )}
                 </button>
               )}
-              <p className="text-center text-xs text-muted-blue mt-3">
-                {t('pricing.freeTrial')}
-              </p>
+              {!plan.isEnterprise && (
+                <p className="text-center text-xs text-muted-blue mt-3">
+                  {t('pricing.freeTrial')}
+                </p>
+              )}
             </div>
           );
         })}
