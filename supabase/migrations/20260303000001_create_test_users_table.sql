@@ -25,11 +25,18 @@ CREATE TABLE IF NOT EXISTS public.test_users (
 ALTER TABLE public.test_users ENABLE ROW LEVEL SECURITY;
 
 -- Anon users can look up their own record by phone (needed for the /test page).
-CREATE POLICY "test_users: anon can select"
-  ON public.test_users
-  FOR SELECT
-  TO anon, authenticated
-  USING (true);
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'test_users' AND policyname = 'test_users: anon can select'
+  ) THEN
+    CREATE POLICY "test_users: anon can select"
+      ON public.test_users
+      FOR SELECT
+      TO anon, authenticated
+      USING (true);
+  END IF;
+END $$;
 
 -- No public inserts — admins manage this table directly in the Supabase UI.
 

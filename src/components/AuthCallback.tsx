@@ -305,6 +305,19 @@ export const AuthCallback: React.FC = () => {
 
       console.log('Session verified in redirect check:', { userId: session.user.id, email: session.user.email });
 
+      // Check if this is a test user connecting Teamleader
+      const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
+      if (isTestUserFlow && platform === 'teamleader') {
+        localStorage.removeItem('is_test_user_flow');
+        localStorage.removeItem('test_user_phone');
+        await supabase
+          .from('teamleader_users')
+          .update({ is_test_user: true })
+          .eq('user_id', session.user.id);
+        navigate('/dashboard');
+        return;
+      }
+
       // Check if we're in WhatsApp verification flow
       const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
       const whatsappUserId = localStorage.getItem('whatsapp_verification_user_id');

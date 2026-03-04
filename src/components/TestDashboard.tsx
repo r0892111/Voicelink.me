@@ -9,8 +9,11 @@ import {
   Sparkles,
   Headphones,
   ArrowRight,
+  Link2,
+  Loader2,
 } from 'lucide-react';
 import { NoiseOverlay } from './ui/NoiseOverlay';
+import { AuthService } from '../services/authService';
 
 const tips = [
   { emoji: '🗣️', text: 'Start with "Just spoke with [Name]" to log a contact.' },
@@ -22,6 +25,16 @@ const tips = [
 export const TestDashboard: React.FC = () => {
   const location = useLocation();
   const phone    = (location.state as { phone?: string } | null)?.phone ?? null;
+  const [connecting, setConnecting] = React.useState(false);
+
+  const handleConnectTeamleader = async () => {
+    setConnecting(true);
+    localStorage.setItem('is_test_user_flow', 'true');
+    if (phone) localStorage.setItem('test_user_phone', phone);
+    await AuthService.createTeamleaderAuth().initiateAuth();
+    // initiateAuth() redirects, so we only reach here on error
+    setConnecting(false);
+  };
 
   return (
     <div className="min-h-screen bg-porcelain font-instrument relative">
@@ -102,6 +115,41 @@ export const TestDashboard: React.FC = () => {
             <div className="mt-3 flex items-center space-x-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span className="text-xs font-medium text-emerald-600">Live</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONNECT TEAMLEADER ── */}
+      <section className="px-6 pb-8">
+        <div className="max-w-4xl mx-auto">
+          <div
+            className="bg-white/80 backdrop-blur-sm rounded-3xl border border-navy/[0.07] shadow-sm p-7"
+            style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.55s both' }}
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+              <div className="flex items-center space-x-3 flex-1">
+                <div className="w-10 h-10 rounded-2xl bg-navy/[0.06] flex items-center justify-center flex-shrink-0">
+                  <Link2 className="w-5 h-5 text-navy/60" />
+                </div>
+                <div>
+                  <h3 className="font-general font-bold text-navy text-base leading-tight">Connect Teamleader</h3>
+                  <p className="text-xs text-navy/45 mt-0.5">
+                    Link your Teamleader account so voice notes flow straight into your CRM.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleConnectTeamleader}
+                disabled={connecting}
+                className="flex-shrink-0 inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy-hover disabled:bg-navy/40 text-white font-semibold text-sm py-2.5 px-5 rounded-full transition-all duration-200 hover:shadow-md disabled:cursor-not-allowed"
+              >
+                {connecting ? (
+                  <><Loader2 className="w-4 h-4 animate-spin" />Connecting…</>
+                ) : (
+                  <>Connect<ArrowRight className="w-4 h-4" /></>
+                )}
+              </button>
             </div>
           </div>
         </div>

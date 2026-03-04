@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npx tsc:*)",
+      "Bash(supabase functions:*)",
+      "Bash(supabase migration:*)",
+      "Bash(supabase db:*)"
+    ]
+  }
+}

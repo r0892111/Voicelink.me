@@ -30,6 +30,7 @@ export const Dashboard: React.FC = () => {
   const navigate          = useNavigate();
   const wa                = useWhatsAppConnect(user);
   const [subChecking, setSubChecking] = useState(true);
+  const [isTestUser, setIsTestUser]   = useState(false);
   const mounted = useRef(true);
   useEffect(() => () => { mounted.current = false; }, []);
 
@@ -55,6 +56,17 @@ export const Dashboard: React.FC = () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
+
+      // Skip Stripe entirely for test users
+      const { data: tlUser } = await supabase
+        .from('teamleader_users')
+        .select('is_test_user')
+        .eq('user_id', session.user.id)
+        .maybeSingle();
+      if (tlUser?.is_test_user) {
+        if (mounted.current) { setIsTestUser(true); setSubChecking(false); }
+        return;
+      }
 
       // If returning from Stripe, persist the customer ID before checking.
       const params    = new URLSearchParams(window.location.search);
@@ -254,74 +266,88 @@ export const Dashboard: React.FC = () => {
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
-                <Star className={`w-5 h-5 ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'text-emerald-500' : 'text-navy/50'}`} />
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isTestUser || (!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing')) ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                <Star className={`w-5 h-5 ${isTestUser || (!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing')) ? 'text-emerald-500' : 'text-navy/50'}`} />
               </div>
-              <span className="font-general font-semibold text-navy text-sm">Subscription</span>
+              <span className="font-general font-semibold text-navy text-sm">
+                {isTestUser ? 'Access' : 'Subscription'}
+              </span>
             </div>
-            {subChecking ? (
-              <div className="h-3.5 w-28 bg-navy/[0.07] rounded-full animate-pulse mt-0.5" />
+            {isTestUser ? (
+              <>
+                <p className="text-xs text-navy/50 font-instrument">Test access</p>
+                <div className="mt-3 flex items-center space-x-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="text-xs font-medium text-emerald-600">Active</span>
+                </div>
+              </>
             ) : (
-              <p className="text-xs text-navy/50 font-instrument truncate">
-                {subInfo?.plan_name ?? 'VoiceLink'}
-                {subInfo?.amount != null && subInfo?.currency && (
-                  <span className="ml-1">
-                    · {(subInfo.amount / 100).toLocaleString('en', { style: 'currency', currency: subInfo.currency.toUpperCase() })}{subInfo.interval ? `/${subInfo.interval}` : ''}
-                  </span>
+              <>
+                {subChecking ? (
+                  <div className="h-3.5 w-28 bg-navy/[0.07] rounded-full animate-pulse mt-0.5" />
+                ) : (
+                  <p className="text-xs text-navy/50 font-instrument truncate">
+                    {subInfo?.plan_name ?? 'VoiceLink'}
+                    {subInfo?.amount != null && subInfo?.currency && (
+                      <span className="ml-1">
+                        · {(subInfo.amount / 100).toLocaleString('en', { style: 'currency', currency: subInfo.currency.toUpperCase() })}{subInfo.interval ? `/${subInfo.interval}` : ''}
+                      </span>
+                    )}
+                  </p>
                 )}
-              </p>
+                <div className="mt-3 space-y-1">
+                  {subChecking && (
+                    <div className="h-3 w-20 bg-navy/[0.07] rounded-full animate-pulse" />
+                  )}
+                  {!subChecking && subInfo?.subscription_status === 'trialing' && (
+                    <>
+                      <div className="flex items-center space-x-1.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                        <span className="text-xs font-medium text-amber-600">
+                          Free trial · {subInfo.trial_end ? Math.max(0, Math.ceil((subInfo.trial_end * 1000 - Date.now()) / 86_400_000)) : '—'} days left
+                        </span>
+                      </div>
+                      {subInfo.trial_end && (
+                        <p className="text-xs text-navy/40 font-instrument pl-3">
+                          Billing starts {new Date(subInfo.trial_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </p>
+                      )}
+                    </>
+                  )}
+                  {!subChecking && subInfo?.subscription_status === 'active' && (
+                    <>
+                      <div className="flex items-center space-x-1.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        <span className="text-xs font-medium text-emerald-600">Active</span>
+                      </div>
+                      {subInfo.current_period_end && (
+                        <p className="text-xs text-navy/40 font-instrument pl-3">
+                          Renews {new Date(subInfo.current_period_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </p>
+                      )}
+                    </>
+                  )}
+                  {!subChecking && subInfo?.subscription_status === 'past_due' && (
+                    <div className="flex items-center space-x-1.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                      <span className="text-xs font-medium text-red-600">Payment due</span>
+                    </div>
+                  )}
+                  {!subChecking && (!subInfo || subInfo.subscription_status === 'none') && (
+                    <div className="flex items-center space-x-1.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-navy/20" />
+                      <span className="text-xs font-medium text-navy/40">—</span>
+                    </div>
+                  )}
+                </div>
+              </>
             )}
-            <div className="mt-3 space-y-1">
-              {subChecking && (
-                <div className="h-3 w-20 bg-navy/[0.07] rounded-full animate-pulse" />
-              )}
-              {!subChecking && subInfo?.subscription_status === 'trialing' && (
-                <>
-                  <div className="flex items-center space-x-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                    <span className="text-xs font-medium text-amber-600">
-                      Free trial · {subInfo.trial_end ? Math.max(0, Math.ceil((subInfo.trial_end * 1000 - Date.now()) / 86_400_000)) : '—'} days left
-                    </span>
-                  </div>
-                  {subInfo.trial_end && (
-                    <p className="text-xs text-navy/40 font-instrument pl-3">
-                      Billing starts {new Date(subInfo.trial_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
-                    </p>
-                  )}
-                </>
-              )}
-              {!subChecking && subInfo?.subscription_status === 'active' && (
-                <>
-                  <div className="flex items-center space-x-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <span className="text-xs font-medium text-emerald-600">Active</span>
-                  </div>
-                  {subInfo.current_period_end && (
-                    <p className="text-xs text-navy/40 font-instrument pl-3">
-                      Renews {new Date(subInfo.current_period_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
-                    </p>
-                  )}
-                </>
-              )}
-              {!subChecking && subInfo?.subscription_status === 'past_due' && (
-                <div className="flex items-center space-x-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                  <span className="text-xs font-medium text-red-600">Payment due</span>
-                </div>
-              )}
-              {!subChecking && (!subInfo || subInfo.subscription_status === 'none') && (
-                <div className="flex items-center space-x-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-navy/20" />
-                  <span className="text-xs font-medium text-navy/40">—</span>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </section>
 
       {/* ── SUBSCRIPTION BANNER ── */}
-      {(needsTrial || isLapsed) && (
+      {!isTestUser && (needsTrial || isLapsed) && (
         <section className="px-6 pb-6">
           <div className="max-w-4xl mx-auto">
             {needsTrial ? (
