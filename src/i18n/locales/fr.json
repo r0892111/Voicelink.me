@@ -447,7 +447,9 @@
       "topUpAvailable": "Recharges de messages disponibles",
       "discountedTopUp": "Recharges de messages à prix réduit",
       "largerTopUps": "Recharges plus importantes",
-      "sla": "SLA personnalisé"
+      "sla": "SLA personnalisé",
+      "emailSupport": "Support par e-mail",
+      "autoTopUp": "Recharge automatique disponible"
     },
     "perUserPerMonth": "/utilisateur/mois",
     "messagesPerMonth": "{{count}} messages/utilisateur/mois",
@@ -460,19 +462,36 @@
     "custom": "Sur mesure",
     "getCustomQuote": "Obtenir un Devis",
     "allPlansInclude": "Tous les plans incluent la synchronisation CRM en temps réel, l'intégration WhatsApp et le support multilingue.",
+    "free": "Gratuit",
+    "users": "utilisateurs",
+    "oneTimeCredits": "{{count}} crédits uniques",
+    "creditsPerUserPerMonth": "{{count}} crédits/utilisateur/mois",
+    "voiceMessages": "messages vocaux",
+    "autoTopUpInfo": "Recharge automatique — €7 par 100 crédits",
     "cards": {
+      "freetrial": {
+        "name": "Essai Gratuit",
+        "description": "Essayez avant d'acheter",
+        "cta": "Commencer Gratuitement",
+        "subtext": "100 crédits gratuits — sans carte",
+        "billingNote": "Crédits uniques, sans carte"
+      },
       "starter": {
         "name": "Starter",
-        "description": "Pour les petites équipes (1–3 utilisateurs)"
+        "description": "Utilisation occasionnelle",
+        "cta": "Commencer avec Starter",
+        "subtext": "Support par e-mail inclus"
       },
       "professional": {
         "name": "Professionnel",
-        "description": "Pour les équipes en croissance (1–10 utilisateurs)",
-        "badge": "Le Plus Populaire"
+        "description": "Utilisation quotidienne",
+        "badge": "Le Plus Populaire",
+        "cta": "Passer à Professional"
       },
       "business": {
         "name": "Business",
-        "description": "Pour les grandes équipes (1–25 utilisateurs)"
+        "description": "Utilisation intensive",
+        "cta": "Passer à Business"
       },
       "enterprise": {
         "name": "Entreprise",

@@ -528,7 +528,9 @@
       "topUpAvailable": "Top-up messages available",
       "discountedTopUp": "Discounted top-up messages",
       "largerTopUps": "Larger top-up bundles",
-      "sla": "Custom SLA"
+      "sla": "Custom SLA",
+      "emailSupport": "Email support",
+      "autoTopUp": "Auto top-up available"
     },
     "perUserPerMonth": "/user/month",
     "messagesPerMonth": "{{count}} messages/user/month",
@@ -541,19 +543,36 @@
     "custom": "Custom",
     "getCustomQuote": "Get Custom Quote",
     "allPlansInclude": "All plans include real-time CRM sync, WhatsApp integration, and multi-language support.",
+    "free": "Free",
+    "users": "users",
+    "oneTimeCredits": "{{count}} one-time credits",
+    "creditsPerUserPerMonth": "{{count}} credits/user/month",
+    "voiceMessages": "voice messages",
+    "autoTopUpInfo": "Auto top-up — €7 per 100 credits",
     "cards": {
+      "freetrial": {
+        "name": "Free Trial",
+        "description": "Try before you buy",
+        "cta": "Start Free",
+        "subtext": "100 free credits — no card needed",
+        "billingNote": "One-time credits, no card needed"
+      },
       "starter": {
         "name": "Starter",
-        "description": "For small teams (1–3 users)"
+        "description": "For casual users",
+        "cta": "Start with Starter",
+        "subtext": "Email support included"
       },
       "professional": {
         "name": "Professional",
-        "description": "For growing teams (1–10 users)",
-        "badge": "Most Popular"
+        "description": "For daily users",
+        "badge": "Most Popular",
+        "cta": "Go to Professional"
       },
       "business": {
         "name": "Business",
-        "description": "For larger teams (1–25 users)"
+        "description": "For power users",
+        "cta": "Go to Business"
       },
       "enterprise": {
         "name": "Enterprise",

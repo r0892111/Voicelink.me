@@ -16,6 +16,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Disclaimer from './components/Disclaimer';
 import CookiePolicy from './components/CookiePolicy';
 import Support from './components/Support';
+import { ConferenceBanner } from './components/ConferenceBanner';
 import { TestSignup } from './components/TestSignup';
 import { TestDashboard } from './components/TestDashboard';
 import { useAuth } from './hooks/useAuth';
@@ -82,7 +83,7 @@ function App() {
   const isHomepage = location.pathname === '/';
 
   // Check if we're on the landing page (hide navigation)
-  const isLandingPage = location.pathname === '/landing';
+  const isLandingPage = location.pathname === '/landing' || location.pathname === '/banner';
   const isSignupPage = location.pathname === '/signup';
   const isTestPage = location.pathname === '/test' || location.pathname === '/test-dashboard';
 
@@ -409,6 +410,7 @@ function App() {
               <Route path="/disclaimer" element={<Disclaimer />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/support" element={<Support />} />
+              <Route path="/banner" element={<ConferenceBanner />} />
               <Route path="/test" element={<TestSignup />} />
               <Route path="/test-dashboard" element={<TestDashboard />} />
               {/* Fallback route for debugging */}

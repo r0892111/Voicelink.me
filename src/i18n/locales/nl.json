@@ -506,7 +506,9 @@
       "topUpAvailable": "Extra berichten beschikbaar",
       "discountedTopUp": "Extra berichten met korting",
       "largerTopUps": "Grotere opwaardeer-bundels",
-      "sla": "Aangepaste SLA"
+      "sla": "Aangepaste SLA",
+      "emailSupport": "E-mail support",
+      "autoTopUp": "Auto top-up beschikbaar"
     },
     "perUserPerMonth": "/gebruiker/maand",
     "messagesPerMonth": "{{count}} berichten/gebruiker/maand",
@@ -519,19 +521,36 @@
     "custom": "Aangepast",
     "getCustomQuote": "Vraag Offerte Aan",
     "allPlansInclude": "Alle plannen bevatten real-time CRM synchronisatie, WhatsApp integratie en meertalige ondersteuning.",
+    "free": "Gratis",
+    "users": "gebruikers",
+    "oneTimeCredits": "{{count}} eenmalige credits",
+    "creditsPerUserPerMonth": "{{count}} credits/gebruiker/maand",
+    "voiceMessages": "berichten",
+    "autoTopUpInfo": "Auto top-up beschikbaar — €7 per 100 credits",
     "cards": {
+      "freetrial": {
+        "name": "Gratis Proberen",
+        "description": "Probeer voor je koopt",
+        "cta": "Start Gratis",
+        "subtext": "100 gratis credits — geen kaart nodig",
+        "billingNote": "Eenmalige credits, geen kaart nodig"
+      },
       "starter": {
         "name": "Starter",
-        "description": "Voor kleine teams (1–3 gebruikers)"
+        "description": "Voor licht gebruik",
+        "cta": "Start met Starter",
+        "subtext": "E-mail support inbegrepen"
       },
       "professional": {
         "name": "Professional",
-        "description": "Voor groeiende teams (1–10 gebruikers)",
-        "badge": "Meest Populair"
+        "description": "Voor dagelijks gebruik",
+        "badge": "Meest Populair",
+        "cta": "Ga naar Professional"
       },
       "business": {
         "name": "Business",
-        "description": "Voor grotere teams (1–25 gebruikers)"
+        "description": "Voor intensief gebruik",
+        "cta": "Ga naar Business"
       },
       "enterprise": {
         "name": "Enterprise",

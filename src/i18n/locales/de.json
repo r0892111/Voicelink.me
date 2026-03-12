@@ -576,7 +576,9 @@
       "topUpAvailable": "Zusätzliche Nachrichten verfügbar",
       "discountedTopUp": "Vergünstigte Zusatznachrichten",
       "largerTopUps": "Größere Auflade-Pakete",
-      "sla": "Individuelles SLA"
+      "sla": "Individuelles SLA",
+      "emailSupport": "E-Mail-Support",
+      "autoTopUp": "Auto-Aufladung verfügbar"
     },
     "perUserPerMonth": "/Benutzer/Monat",
     "messagesPerMonth": "{{count}} Nachrichten/Benutzer/Monat",
@@ -589,19 +591,36 @@
     "custom": "Individuell",
     "getCustomQuote": "Angebot Anfordern",
     "allPlansInclude": "Alle Pläne beinhalten Echtzeit-CRM-Synchronisation, WhatsApp-Integration und mehrsprachige Unterstützung.",
+    "free": "Kostenlos",
+    "users": "Benutzer",
+    "oneTimeCredits": "{{count}} einmalige Credits",
+    "creditsPerUserPerMonth": "{{count}} Credits/Benutzer/Monat",
+    "voiceMessages": "Sprachnachrichten",
+    "autoTopUpInfo": "Auto-Aufladung — €7 pro 100 Credits",
     "cards": {
+      "freetrial": {
+        "name": "Kostenlose Testversion",
+        "description": "Testen Sie vor dem Kauf",
+        "cta": "Kostenlos Starten",
+        "subtext": "100 kostenlose Credits — keine Karte nötig",
+        "billingNote": "Einmalige Credits, keine Karte nötig"
+      },
       "starter": {
         "name": "Starter",
-        "description": "Für kleine Teams (1–3 Benutzer)"
+        "description": "Für gelegentliche Nutzung",
+        "cta": "Mit Starter Beginnen",
+        "subtext": "E-Mail-Support inklusive"
       },
       "professional": {
         "name": "Professional",
-        "description": "Für wachsende Teams (1–10 Benutzer)",
-        "badge": "Am Beliebtesten"
+        "description": "Für tägliche Nutzung",
+        "badge": "Am Beliebtesten",
+        "cta": "Zu Professional Wechseln"
       },
       "business": {
         "name": "Business",
-        "description": "Für größere Teams (1–25 Benutzer)"
+        "description": "Für intensive Nutzung",
+        "cta": "Zu Business Wechseln"
       },
       "enterprise": {
         "name": "Enterprise",
