@@ -48,19 +48,11 @@ function App() {
   }, [location]);
 
   // After OAuth magic-link redirect, Supabase sends the user back to the site
-  // root (/) with an #access_token hash. Detect that case and forward to the
-  // correct destination. Test users go straight to /test-dashboard to avoid
-  // a double-mount through /dashboard.
+  // root (/) with an #access_token hash. Detect that case and forward to /dashboard.
+  // We do NOT redirect on every authenticated visit so users can navigate home freely.
   React.useEffect(() => {
     if (!loading && user && location.pathname === '/' && window.location.hash.includes('access_token')) {
-      const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
-      if (isTestUserFlow) {
-        localStorage.removeItem('is_test_user_flow');
-        localStorage.removeItem('test_user_phone');
-        navigate('/test-dashboard', { replace: true });
-      } else {
-        navigate(withUTM('/dashboard'), { replace: true });
-      }
+      navigate(withUTM('/dashboard'), { replace: true });
     }
   }, [user, loading, location.pathname]);
 
@@ -224,7 +216,7 @@ function App() {
                     </div>
                   ) : (
                     <button
-                      onClick={() => { /* TEMPORARY: redirect to early access section instead of /signup */ if (isHomepage) { document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else { navigate(withUTM('/')); setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); } }}
+                      onClick={() => navigateWithTransition(withUTM('/signup'))}
                       className="group text-white font-semibold py-2.5 px-6 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-navy hover:bg-navy-hover"
                     >
                       <span>{t('navigation.getStarted')}</span>
@@ -282,7 +274,7 @@ function App() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => { setIsMobileMenuOpen(false); /* TEMPORARY: redirect to early access section instead of /signup */ if (isHomepage) { document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else { navigate(withUTM('/')); setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); } }}
+                    onClick={() => { setIsMobileMenuOpen(false); navigateWithTransition(withUTM('/signup')); }}
                     className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-4 rounded-full flex items-center justify-center gap-2 text-base transition-colors"
                   >
                     <span>{t('navigation.getStarted')}</span>

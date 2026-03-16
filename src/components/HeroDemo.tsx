@@ -1694,7 +1694,7 @@ export const HeroDemo: React.FC = () => {
                 </div>
                 <div className="hero-animate-ctas" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 2rem)' }}>
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                    <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[13px] px-5 py-2.5">
+                    <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); /* TEMPORARY: scroll to early access */ document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[13px] px-5 py-2.5">
                       <span>{t('hero.getStartedFree')}</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -1750,7 +1750,7 @@ export const HeroDemo: React.FC = () => {
               </div>
               <div className="hero-animate-ctas w-full" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 2rem)' }}>
                 <div className="flex flex-row gap-4 justify-start">
-                  <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[15px] px-6 py-3">
+                  <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); /* TEMPORARY: scroll to early access */ document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[15px] px-6 py-3">
                     <span>{t('hero.getStartedFree')}</span>
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>

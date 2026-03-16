@@ -32,10 +32,19 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
     setSubmitStatus('idle');
 
     try {
-      // Simulate API call - replace with actual endpoint
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // For now, just show success
+      const response = await fetch('https://alexfinit.app.n8n.cloud/webhook/d41c28c8-9a57-42da-9057-90958b09967a', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) throw new Error('Submission failed');
       setSubmitStatus('success');
       
       // Reset form after success

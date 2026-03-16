@@ -740,5 +740,105 @@
     "a6": "Nach Ihrer 14-tägigen kostenlosen Testphase wählen Sie einen Plan, der zu Ihrer Nutzung passt. Transparente Preise, keine versteckten Kosten, monatlich kündbar. Keine Kreditkarte für die Testphase erforderlich.",
     "q7": "Funktioniert VoiceLink in mehreren Sprachen?",
     "a7": "Ja. VoiceLink versteht nahezu alle Sprachen. Sie können in der Sprache sprechen oder schreiben, die sich am natürlichsten anfühlt — Niederländisch, Englisch, Französisch, Deutsch, Spanisch und viele mehr. VoiceLink antwortet immer in Ihrer Sprache."
+  },
+  "supportPage": {
+    "hero": {
+      "title": "Wie können wir helfen?",
+      "subtitle": "Unser Team hilft Ihnen gerne, das Beste aus VoiceLink herauszuholen. Kontaktieren Sie uns jederzeit — wir antworten in der Regel innerhalb weniger Stunden."
+    },
+    "contact": {
+      "email": {
+        "title": "E-Mail senden",
+        "description": "Senden Sie uns eine detaillierte Nachricht und wir antworten so schnell wie möglich.",
+        "response": "Antwort in der Regel innerhalb von 24 Stunden"
+      },
+      "phone": {
+        "title": "Rufen Sie uns an",
+        "description": "Lieber telefonieren? Rufen Sie uns an für direkte, persönliche Unterstützung.",
+        "hours": "Mo–Sa · 8:30–19:00"
+      },
+      "form": {
+        "title": "Kontaktformular",
+        "description": "Füllen Sie unser Kontaktformular aus und wir melden uns so schnell wie möglich bei Ihnen.",
+        "cta": "Formular öffnen"
+      }
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "setup": {
+        "q": "Wie starte ich mit VoiceLink?",
+        "a": "Der Start dauert etwa 2 Minuten. Erstellen Sie ein Konto, verbinden Sie Ihr CRM über OAuth und verifizieren Sie Ihre WhatsApp-Nummer. Sobald verifiziert, können Sie sofort Sprachnachrichten und Textnachrichten an VoiceLink senden."
+      },
+      "whatsapp": {
+        "q": "Ich erhalte den WhatsApp-Verifizierungscode nicht",
+        "a": "Stellen Sie sicher, dass Sie Ihre Nummer mit der richtigen Landesvorwahl eingegeben haben (z.B. +32 für Belgien). Überprüfen Sie, ob WhatsApp aktiv und mit dem Internet verbunden ist. Wenn Sie den Code immer noch nicht erhalten, versuchen Sie es nach einigen Minuten erneut oder kontaktieren Sie uns direkt."
+      },
+      "crm": {
+        "q": "Welche CRM-Plattformen unterstützt VoiceLink?",
+        "a": "VoiceLink integriert sich derzeit mit Teamleader, Pipedrive und Odoo. Wir arbeiten aktiv daran, weitere Plattformen hinzuzufügen. Teilen Sie uns mit, welches CRM Sie nutzen, und wir halten Sie auf dem Laufenden."
+      },
+      "languages": {
+        "q": "Welche Sprachen versteht VoiceLink?",
+        "a": "VoiceLink versteht nahezu alle Sprachen. Sie können Sprachnachrichten oder Textnachrichten auf Niederländisch, Englisch, Französisch, Deutsch, Spanisch und vielen weiteren Sprachen senden. VoiceLink antwortet immer in der Sprache, die Sie verwendet haben."
+      },
+      "billing": {
+        "q": "Wie funktioniert die Abrechnung?",
+        "a": "Nach Ihrer 14-tägigen kostenlosen Testphase wählen Sie einen Plan, der zu Ihnen passt. Alle Pläne werden monatlich abgerechnet und sind jederzeit kündbar. Keine Kreditkarte erforderlich zum Start."
+      },
+      "data": {
+        "q": "Sind meine Daten sicher?",
+        "a": "Absolut. VoiceLink ist vollständig DSGVO-konform. Wir verwenden OAuth für CRM-Verbindungen, verschlüsseln alle Daten bei der Übertragung und speichern Ihre Sprachaufnahmen nach der Verarbeitung nie."
+      }
+    },
+    "resources": {
+      "readMore": "Mehr erfahren",
+      "privacy": {
+        "title": "Datenschutzrichtlinie",
+        "description": "Erfahren Sie, wie wir Ihre persönlichen Daten schützen."
+      },
+      "saas": {
+        "title": "SaaS-Vereinbarung",
+        "description": "Lesen Sie unsere Nutzungsbedingungen und Servicekonditionen."
+      },
+      "whatsapp": {
+        "title": "Chatten Sie mit uns",
+        "description": "Senden Sie uns eine WhatsApp-Nachricht für schnelle Fragen.",
+        "cta": "WhatsApp öffnen"
+      }
+    },
+    "cta": {
+      "title": "Bereit, VoiceLink auszuprobieren?",
+      "subtitle": "Starten Sie Ihre kostenlose 14-tägige Testphase. Keine Kreditkarte erforderlich.",
+      "button": "Kostenlos testen"
+    }
+  },
+  "earlyAccess": {
+    "title": "Werden Sie kostenloser Testbenutzer",
+    "subtitle": "Wir suchen Unternehmen, die Teamleader aktiv nutzen und bereit sind, ehrlich zu teilen, wie sie mit ihrem CRM arbeiten.",
+    "lookingForTitle": "Was möchten wir wissen?",
+    "lookingForDescription": "Wir sind neugierig, wie Sie täglich mit Ihrem CRM umgehen: was gut läuft, aber besonders wo es hakt.",
+    "pain1": "Die größten Engpässe in der täglichen Verwaltung",
+    "pain2": "Frustrationen oder Workarounds, die Sie derzeit verwenden",
+    "pain3": "Anwendungsfälle, die Sie bei VoiceLink vermissen oder anders sehen möchten",
+    "rewardTitle": "Was bekommen Sie dafür?",
+    "rewardDescription": "Kostenloser Zugang für ein ganzes Jahr, plus die Chance, an einem Produkt mitzubauen, das Ihre tägliche Arbeit erleichtert.",
+    "formTitle": "Anmelden",
+    "name": "Name",
+    "namePlaceholder": "Vollständiger Name",
+    "phone": "Telefonnummer",
+    "phonePlaceholder": "+32 495 12 34 56",
+    "companyName": "Firmenname",
+    "companyPlaceholder": "Name Ihres Unternehmens",
+    "employeeCount": "Anzahl der VoiceLink-Benutzer",
+    "employeeLabel": "Benutzer",
+    "description": "Zusätzliche Informationen",
+    "optional": "optional",
+    "descriptionPlaceholder": "Z.B. Wie intensiv nutzen Sie Teamleader? Wo liegen die Probleme? Weitere Anmerkungen?",
+    "submitButton": "Als Testbenutzer anmelden",
+    "submitting": "Wird gesendet...",
+    "submitError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "successTitle": "Danke für Ihre Anmeldung!",
+    "successMessage": "Wir melden uns innerhalb von 24 Stunden bei Ihnen, um ein kurzes Kennenlerngespräch zu planen und Sie mit dem System vertraut zu machen.",
+    "successContact": ""
   }
 }

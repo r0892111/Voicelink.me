@@ -776,5 +776,105 @@
     "cookiePolicy": "Politique des cookies",
     "cookieSettings": "Paramètres des cookies",
     "support": "Support"
+  },
+  "supportPage": {
+    "hero": {
+      "title": "Comment pouvons-nous vous aider ?",
+      "subtitle": "Notre équipe est prête à vous aider à tirer le meilleur parti de VoiceLink. Contactez-nous à tout moment — nous répondons généralement en quelques heures."
+    },
+    "contact": {
+      "email": {
+        "title": "Envoyez-nous un e-mail",
+        "description": "Envoyez-nous un message détaillé et nous vous répondrons rapidement.",
+        "response": "Réponse généralement sous 24 heures"
+      },
+      "phone": {
+        "title": "Appelez-nous",
+        "description": "Vous préférez parler ? Appelez-nous pour une assistance directe et personnalisée.",
+        "hours": "Lun–Sam · 8h30–19h00"
+      },
+      "form": {
+        "title": "Formulaire de contact",
+        "description": "Remplissez notre formulaire de contact et nous vous répondrons dès que possible.",
+        "cta": "Ouvrir le formulaire"
+      }
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "setup": {
+        "q": "Comment démarrer avec VoiceLink ?",
+        "a": "La mise en route prend environ 2 minutes. Inscrivez-vous, connectez votre CRM via OAuth et vérifiez votre numéro WhatsApp. Une fois vérifié, vous pouvez immédiatement envoyer des messages vocaux et textuels à VoiceLink."
+      },
+      "whatsapp": {
+        "q": "Je ne reçois pas le code de vérification WhatsApp",
+        "a": "Vérifiez que vous avez saisi votre numéro avec le bon indicatif pays (ex. +32 pour la Belgique). Assurez-vous que WhatsApp est actif et connecté à Internet. Si vous ne recevez toujours pas le code, réessayez après quelques minutes ou contactez-nous directement."
+      },
+      "crm": {
+        "q": "Quels CRM sont compatibles avec VoiceLink ?",
+        "a": "VoiceLink s'intègre actuellement avec Teamleader, Pipedrive et Odoo. Nous travaillons activement à l'ajout de nouvelles plateformes. Dites-nous quel CRM vous utilisez et nous vous tiendrons informé."
+      },
+      "languages": {
+        "q": "Quelles langues VoiceLink comprend-il ?",
+        "a": "VoiceLink comprend pratiquement toutes les langues. Vous pouvez envoyer des messages vocaux ou textuels en néerlandais, anglais, français, allemand, espagnol et bien d'autres. VoiceLink répond toujours dans la langue que vous avez utilisée."
+      },
+      "billing": {
+        "q": "Comment fonctionne la facturation ?",
+        "a": "Après votre essai gratuit de 14 jours, choisissez un abonnement adapté à vos besoins. Tous les abonnements sont facturés mensuellement et résiliables à tout moment. Aucune carte de crédit n'est requise pour commencer."
+      },
+      "data": {
+        "q": "Mes données sont-elles en sécurité ?",
+        "a": "Absolument. VoiceLink est entièrement conforme au RGPD européen. Nous utilisons OAuth pour les connexions CRM, chiffrons toutes les données en transit et ne conservons jamais vos enregistrements vocaux après traitement."
+      }
+    },
+    "resources": {
+      "readMore": "En savoir plus",
+      "privacy": {
+        "title": "Politique de confidentialité",
+        "description": "Découvrez comment nous protégeons vos données personnelles."
+      },
+      "saas": {
+        "title": "Accord SaaS",
+        "description": "Consultez nos conditions d'utilisation et de service."
+      },
+      "whatsapp": {
+        "title": "Chattez avec nous",
+        "description": "Envoyez-nous un message WhatsApp pour vos questions rapides.",
+        "cta": "Ouvrir WhatsApp"
+      }
+    },
+    "cta": {
+      "title": "Prêt à essayer VoiceLink ?",
+      "subtitle": "Commencez votre essai gratuit de 14 jours. Aucune carte de crédit requise.",
+      "button": "Démarrer l'essai gratuit"
+    }
+  },
+  "earlyAccess": {
+    "title": "Devenez testeur gratuit",
+    "subtitle": "Nous recherchons des entreprises qui utilisent activement Teamleader et qui sont prêtes à partager honnêtement leur expérience CRM.",
+    "lookingForTitle": "Que voulons-nous savoir ?",
+    "lookingForDescription": "Nous sommes curieux de savoir comment vous gérez votre CRM au quotidien : ce qui fonctionne bien, mais surtout ce qui pose problème.",
+    "pain1": "Les principaux obstacles dans l'administration quotidienne",
+    "pain2": "Les frustrations ou solutions de contournement que vous utilisez actuellement",
+    "pain3": "Les cas d'utilisation que vous aimeriez voir dans VoiceLink ou qui pourraient être améliorés",
+    "rewardTitle": "Qu'est-ce que vous y gagnez ?",
+    "rewardDescription": "Un accès gratuit pendant un an complet, plus la possibilité de contribuer à un produit qui facilite votre travail quotidien.",
+    "formTitle": "Inscrivez-vous",
+    "name": "Nom",
+    "namePlaceholder": "Nom complet",
+    "phone": "Numéro de téléphone",
+    "phonePlaceholder": "+32 495 12 34 56",
+    "companyName": "Nom de l'entreprise",
+    "companyPlaceholder": "Le nom de votre entreprise",
+    "employeeCount": "Nombre d'utilisateurs VoiceLink",
+    "employeeLabel": "utilisateurs",
+    "description": "Informations supplémentaires",
+    "optional": "optionnel",
+    "descriptionPlaceholder": "Par ex. À quel point utilisez-vous Teamleader ? Où sont les problèmes ? Remarques supplémentaires ?",
+    "submitButton": "S'inscrire comme testeur",
+    "submitting": "Envoi en cours...",
+    "submitError": "Une erreur s'est produite. Veuillez réessayer.",
+    "successTitle": "Merci pour votre inscription !",
+    "successMessage": "Nous vous contacterons dans les 24 heures pour planifier une courte introduction et vous aider à démarrer avec le système.",
+    "successContact": ""
   }
 }

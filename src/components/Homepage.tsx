@@ -2,7 +2,9 @@ import React from 'react';
 import { Zap, MessageCircle, Play, ArrowRight, CheckCircle, ChevronDown, Star, PhoneOff, StickyNote, TrendingDown, Snowflake, Phone, Mail, Linkedin } from 'lucide-react';
 import { HowItWorksDemo } from './HowItWorksDemo';
 import { HeroDemo, CrmPreviewCards } from './HeroDemo';
-import { PricingSection } from './PricingSection';
+// TEMPORARY: PricingSection replaced by EarlyAccessSection — revert by uncommenting PricingSection and removing EarlyAccessSection
+// import { PricingSection } from './PricingSection';
+import { EarlyAccessSection } from './EarlyAccessSection';
 import { LogoCarousel } from './ui/LogoCarousel';
 import { SectionDivider } from './ui/SectionDivider';
 import { ScrollAnimation } from './ui/ScrollAnimation';
@@ -237,7 +239,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
                 />
               </h2>
               <button
-                onClick={() => { trackCTAClick('try_free_integrations', '/'); navigateWithTransition(withUTM('/signup')); }}
+                onClick={() => { trackCTAClick('try_free_integrations', '/'); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
                 className="relative z-10 bg-navy hover:bg-navy-hover text-white font-medium text-[15px] py-3.5 px-8 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] mb-8"
               >
                 {t('integrations.tryForFree')}
@@ -292,12 +294,11 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
       {/* Divider: Testimonials → Pricing (navy → porcelain) */}
       <SectionDivider fromColor="#1A2D63" toColor="#FDFBF7" variant={2} />
 
-      {/* ───────── 8. PRICING ───────── */}
+      {/* ───────── 8. EARLY ACCESS (TEMPORARY — replaces Pricing) ───────── */}
       <ScrollAnimation>
         <section id="pricing" className="py-8 2xl:py-12 relative z-10 scroll-mt-24">
-          <PricingSection
-            openContactModal={openContactModal}
-          />
+          {/* TEMPORARY: To revert, replace EarlyAccessSection with: <PricingSection openContactModal={openContactModal} /> */}
+          <EarlyAccessSection />
         </section>
       </ScrollAnimation>
 
@@ -362,7 +363,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
-                    onClick={() => { trackCTAClick('start_free_trial', '/'); navigateWithTransition(withUTM('/signup')); }}
+                    onClick={() => { trackCTAClick('start_free_trial', '/'); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
                     className="group bg-navy hover:bg-navy-hover text-white font-medium text-[15px] py-4 px-8 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                   >
                     <span>{t('finalCta.startFreeTrial')}</span>
@@ -418,7 +419,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
               </div>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3">
               <button
-                onClick={() => { trackCTAClick('start_free_trial', '/'); navigateWithTransition(withUTM('/signup')); }}
+                onClick={() => { trackCTAClick('start_free_trial', '/'); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
                 className="group bg-white text-navy font-semibold text-sm py-3 px-6 rounded-full hover:bg-white/90 transition-all duration-200 flex items-center gap-2 w-fit"
               >
                 {t('finalCta.startFreeTrial')}

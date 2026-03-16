@@ -863,5 +863,105 @@
     "a6": "Na 14 dagen kies je een maandelijks opzegbaar abonnement. Transparante prijzen, geen verborgen kosten.",
     "q7": "Werkt VoiceLink in meerdere talen?",
     "a7": "Ja. VoiceLink begrijpt vrijwel alle talen en reageert altijd in de taal waarin jij sprak of typte."
+  },
+  "supportPage": {
+    "hero": {
+      "title": "Hoe kunnen we helpen?",
+      "subtitle": "Ons team staat klaar om je te helpen het meeste uit VoiceLink te halen. Neem gerust contact op — we reageren meestal binnen enkele uren."
+    },
+    "contact": {
+      "email": {
+        "title": "Mail ons",
+        "description": "Stuur ons een gedetailleerd bericht en we antwoorden zo snel mogelijk.",
+        "response": "Antwoord meestal binnen 24 uur"
+      },
+      "phone": {
+        "title": "Bel ons",
+        "description": "Liever even bellen? Neem contact op voor directe, persoonlijke ondersteuning.",
+        "hours": "Ma–Za · 8:30–19:00"
+      },
+      "form": {
+        "title": "Contactformulier",
+        "description": "Vul ons contactformulier in en we nemen zo snel mogelijk contact met je op.",
+        "cta": "Open contactformulier"
+      }
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "setup": {
+        "q": "Hoe ga ik aan de slag met VoiceLink?",
+        "a": "Starten duurt ongeveer 2 minuten. Maak een account aan, koppel je CRM via OAuth en verifieer je WhatsApp-nummer. Zodra dat klaar is, kan je meteen spraakberichten en tekstberichten naar VoiceLink sturen."
+      },
+      "whatsapp": {
+        "q": "Ik ontvang de WhatsApp-verificatiecode niet",
+        "a": "Controleer of je je nummer met de juiste landcode hebt ingevoerd (bijv. +32 voor België). Zorg dat je WhatsApp actief is en verbonden met het internet. Ontvang je de code nog steeds niet? Probeer het na enkele minuten opnieuw of neem rechtstreeks contact met ons op."
+      },
+      "crm": {
+        "q": "Welke CRM-platformen ondersteunt VoiceLink?",
+        "a": "VoiceLink werkt momenteel met Teamleader, Pipedrive en Odoo. We werken actief aan het toevoegen van meer platformen. Laat ons weten welk CRM je gebruikt en we houden je op de hoogte."
+      },
+      "languages": {
+        "q": "Welke talen begrijpt VoiceLink?",
+        "a": "VoiceLink begrijpt vrijwel alle talen. Je kan spraakberichten of tekstberichten sturen in het Nederlands, Engels, Frans, Duits, Spaans en nog veel meer. VoiceLink reageert altijd in dezelfde taal die jij gebruikte."
+      },
+      "billing": {
+        "q": "Hoe werkt de facturatie?",
+        "a": "Na je gratis proefperiode van 14 dagen kies je een abonnement dat bij je past. Alle abonnementen worden maandelijks gefactureerd en zijn op elk moment opzegbaar. Geen creditcard nodig om te starten."
+      },
+      "data": {
+        "q": "Zijn mijn gegevens veilig?",
+        "a": "Absoluut. VoiceLink is volledig gebouwd volgens de Europese GDPR-regels. We gebruiken OAuth voor CRM-koppelingen, versleutelen alle gegevens tijdens verzending en bewaren spraakberichten nooit na verwerking."
+      }
+    },
+    "resources": {
+      "readMore": "Lees meer",
+      "privacy": {
+        "title": "Privacybeleid",
+        "description": "Ontdek hoe we je persoonlijke gegevens beschermen."
+      },
+      "saas": {
+        "title": "SaaS-overeenkomst",
+        "description": "Bekijk onze algemene voorwaarden en gebruiksvoorwaarden."
+      },
+      "whatsapp": {
+        "title": "Chat met ons",
+        "description": "Stuur ons een WhatsApp-bericht voor snelle vragen.",
+        "cta": "Open WhatsApp"
+      }
+    },
+    "cta": {
+      "title": "Klaar om VoiceLink te proberen?",
+      "subtitle": "Start je gratis proefperiode van 14 dagen. Geen creditcard nodig.",
+      "button": "Start gratis proefperiode"
+    }
+  },
+  "earlyAccess": {
+    "title": "Word gratis testgebruiker",
+    "subtitle": "We zoeken bedrijven die Teamleader actief gebruiken en bereid zijn om eerlijk te delen hoe ze met hun CRM omgaan.",
+    "lookingForTitle": "Wat willen we weten?",
+    "lookingForDescription": "We zijn benieuwd naar hoe jullie dagelijks met jullie CRM omgaan: waar het vlot loopt, maar zeker ook waar het wringt.",
+    "pain1": "De grootste knelpunten bij dagelijkse administratie",
+    "pain2": "Irritaties of workarounds die jullie nu hanteren",
+    "pain3": "Usecases die jullie bij VoiceLink missen of graag anders zouden zien",
+    "rewardTitle": "Wat krijg je ervoor terug?",
+    "rewardDescription": "Gratis toegang voor een volledig jaar, plus de kans om mee te bouwen aan een product dat jullie dagelijks werk makkelijker maakt.",
+    "formTitle": "Meld je aan",
+    "name": "Naam",
+    "namePlaceholder": "Volledige naam",
+    "phone": "Telefoonnummer",
+    "phonePlaceholder": "+32 495 12 34 56",
+    "companyName": "Bedrijfsnaam",
+    "companyPlaceholder": "Naam van je bedrijf",
+    "employeeCount": "Aantal gebruikers voor VoiceLink",
+    "employeeLabel": "gebruikers",
+    "description": "Extra info",
+    "optional": "optioneel",
+    "descriptionPlaceholder": "Bijv. Hoe intensief gebruik je Teamleader? Waar liggen de knelpunten? Extra opmerkingen?",
+    "submitButton": "Aanmelden als testgebruiker",
+    "submitting": "Bezig met verzenden...",
+    "submitError": "Er is een fout opgetreden. Probeer het opnieuw.",
+    "successTitle": "Bedankt voor je aanmelding!",
+    "successMessage": "We nemen binnen 24 uur contact met je op om een kort kennismakingsgesprek in te plannen en je op weg te helpen.",
+    "successContact": ""
   }
 }
