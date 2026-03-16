@@ -11,7 +11,9 @@
       "Bash(__NEW_LINE_2fc7276f08328369__ echo:*)",
       "Bash(__NEW_LINE_47c91eab88fd1fbc__ echo:*)",
       "Bash(__NEW_LINE_1ff321e31aeb498e__ echo:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)"
     ]
   }
 }
