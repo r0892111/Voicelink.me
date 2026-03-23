@@ -12,6 +12,8 @@ export interface MetaProviderConfig {
   otpTemplateLang: string;
   welcomeTemplateName: string;
   welcomeTemplateLang: string;
+  teamInviteTemplateName: string;
+  teamInviteTemplateLang: string;
 }
 
 function normalisePhone(phone: string): string {
@@ -45,6 +47,26 @@ export class MetaWhatsAppProvider implements IWhatsAppProvider {
         name: this.cfg.welcomeTemplateName,
         language: { code: this.cfg.welcomeTemplateLang },
         components: [],
+      },
+    });
+  }
+
+  async sendTeamInvite(toPhone: string, adminName: string, inviteUrl: string): Promise<void> {
+    await this.post({
+      to: normalisePhone(toPhone),
+      type: 'template',
+      template: {
+        name: this.cfg.teamInviteTemplateName,
+        language: { code: this.cfg.teamInviteTemplateLang },
+        components: [
+          {
+            type: 'body',
+            parameters: [
+              { type: 'text', text: adminName },
+              { type: 'text', text: inviteUrl },
+            ],
+          },
+        ],
       },
     });
   }

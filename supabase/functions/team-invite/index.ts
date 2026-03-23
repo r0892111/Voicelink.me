@@ -5,6 +5,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
+import { createWhatsAppProvider } from '../_shared/whatsapp/providers/factory.ts';
 
 // ── Tier seat limits (mirrors src/config/teamPricing.ts) ─────────────────────
 const TIER_SEAT_LIMITS: Record<string, number | null> = {
@@ -220,18 +221,18 @@ Deno.serve(async (req) => {
         }
       }
 
-      // ── Send WhatsApp notification (best-effort) ────────────────────────
+      // ── Send WhatsApp invite (best-effort) ────────────────────────────
       if ((method === 'whatsapp' || method === 'both') && phone) {
         try {
-          const fnUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/whatsapp-welcome`;
-          await fetch(fnUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
-            },
-            body: JSON.stringify({ phone_number: phone }),
-          });
+          const siteUrl = Deno.env.get('SITE_URL') ?? 'https://voicelink.me';
+          const inviteUrl = `${siteUrl}/invite?token=${invitationToken}`;
+          const adminInfo = adminRow.user_info as Record<string, unknown> | null;
+          const adminName = (adminInfo?.name as string)
+            || [adminInfo?.first_name, adminInfo?.last_name].filter(Boolean).join(' ')
+            || 'Your manager';
+
+          const provider = createWhatsAppProvider();
+          await provider.sendTeamInvite(phone, adminName, inviteUrl);
         } catch (waErr) {
           console.error('team-invite: whatsapp send error (non-fatal)', waErr);
         }
@@ -264,20 +265,14 @@ Deno.serve(async (req) => {
         return json({ success: false, error: 'Only pending invitations can be cancelled.' }, 400);
       }
 
-      // Set status to declined and soft-delete
-      const { error: updateErr } = await supabase
+      // Hard-delete the pending invite row so the teamleader_id slot is freed
+      const { error: deleteErr } = await supabase
         .from('teamleader_users')
-        .update({
-          invitation_status: 'declined',
-          invitation_token: null,
-          invitation_expires_at: null,
-          deleted_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })
+        .delete()
         .eq('id', member_id);
 
-      if (updateErr) {
-        console.error('team-invite: cancel error', updateErr);
+      if (deleteErr) {
+        console.error('team-invite: cancel error', deleteErr);
         return json({ success: false, error: 'Failed to cancel invitation.' }, 500);
       }
 
@@ -309,19 +304,14 @@ Deno.serve(async (req) => {
         return json({ success: false, error: 'Admins cannot remove themselves.' }, 400);
       }
 
-      // Soft-delete
-      const { error: updateErr } = await supabase
+      // Hard-delete the member row so the teamleader_id slot is freed
+      const { error: deleteErr } = await supabase
         .from('teamleader_users')
-        .update({
-          invitation_token: null,
-          invitation_expires_at: null,
-          deleted_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })
+        .delete()
         .eq('id', member_id);
 
-      if (updateErr) {
-        console.error('team-invite: remove error', updateErr);
+      if (deleteErr) {
+        console.error('team-invite: remove error', deleteErr);
         return json({ success: false, error: 'Failed to remove member.' }, 500);
       }
 
@@ -400,15 +390,15 @@ Deno.serve(async (req) => {
 
       if ((method === 'whatsapp' || method === 'both') && phone) {
         try {
-          const fnUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/whatsapp-welcome`;
-          await fetch(fnUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
-            },
-            body: JSON.stringify({ phone_number: phone }),
-          });
+          const siteUrl = Deno.env.get('SITE_URL') ?? 'https://voicelink.me';
+          const inviteUrl = `${siteUrl}/invite?token=${newToken}`;
+          const adminInfo = adminRow.user_info as Record<string, unknown> | null;
+          const adminName = (adminInfo?.name as string)
+            || [adminInfo?.first_name, adminInfo?.last_name].filter(Boolean).join(' ')
+            || 'Your manager';
+
+          const provider = createWhatsAppProvider();
+          await provider.sendTeamInvite(phone, adminName, inviteUrl);
         } catch (waErr) {
           console.error('team-invite: resend whatsapp error (non-fatal)', waErr);
         }

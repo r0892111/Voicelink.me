@@ -12,10 +12,14 @@ export interface TwilioProviderConfig {
   otpTemplateSid?: string;
   /** Twilio Content Template SID for the welcome message. Optional. */
   welcomeTemplateSid?: string;
+  /** Twilio Content Template SID for team invite message. Optional. */
+  teamInviteTemplateSid?: string;
   /** Plain-text fallback used when no otpTemplateSid is configured. */
   otpFallbackBody: string;
   /** Plain-text fallback used when no welcomeTemplateSid is configured. */
   welcomeFallbackBody: string;
+  /** Plain-text fallback used when no teamInviteTemplateSid is configured. */
+  teamInviteFallbackBody: string;
 }
 
 function normalisePhone(phone: string): string {
@@ -47,6 +51,21 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
       params.set('ContentVariables', JSON.stringify({}));
     } else {
       params.set('Body', this.cfg.welcomeFallbackBody);
+    }
+
+    await this.post(params);
+  }
+
+  async sendTeamInvite(toPhone: string, adminName: string, inviteUrl: string): Promise<void> {
+    const params = this.baseParams(normalisePhone(toPhone));
+
+    if (this.cfg.teamInviteTemplateSid) {
+      params.set('ContentSid', this.cfg.teamInviteTemplateSid);
+      params.set('ContentVariables', JSON.stringify({ '1': adminName, '2': inviteUrl }));
+    } else {
+      params.set('Body', this.cfg.teamInviteFallbackBody
+        .replace('{admin_name}', adminName)
+        .replace('{invite_url}', inviteUrl));
     }
 
     await this.post(params);

@@ -37,10 +37,12 @@ function createMetaProvider(): MetaWhatsAppProvider {
   return new MetaWhatsAppProvider({
     phoneNumberId,
     accessToken,
-    otpTemplateName:     Deno.env.get('META_WHATSAPP_OTP_TEMPLATE_NAME')     ?? 'voicelink_otp',
-    otpTemplateLang:     Deno.env.get('META_WHATSAPP_OTP_TEMPLATE_LANG')     ?? 'en_US',
-    welcomeTemplateName: Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_NAME') ?? 'voicelink_welcome',
-    welcomeTemplateLang: Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_LANG') ?? 'en_US',
+    otpTemplateName:        Deno.env.get('META_WHATSAPP_OTP_TEMPLATE_NAME')         ?? 'voicelink_otp',
+    otpTemplateLang:        Deno.env.get('META_WHATSAPP_OTP_TEMPLATE_LANG')         ?? 'en_US',
+    welcomeTemplateName:    Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_NAME')     ?? 'voicelink_welcome',
+    welcomeTemplateLang:    Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_LANG')     ?? 'en_US',
+    teamInviteTemplateName: Deno.env.get('META_WHATSAPP_TEAM_INVITE_TEMPLATE_NAME') ?? 'voicelink_team_invite',
+    teamInviteTemplateLang: Deno.env.get('META_WHATSAPP_TEAM_INVITE_TEMPLATE_LANG') ?? 'en_US',
   });
 }
 
@@ -59,9 +61,11 @@ function createTwilioProvider(): TwilioWhatsAppProvider {
     accountSid,
     authToken,
     fromNumber,
-    otpTemplateSid:     Deno.env.get('TWILIO_WHATSAPP_OTP_TEMPLATE_SID'),
-    welcomeTemplateSid: Deno.env.get('TWILIO_WHATSAPP_WELCOME_TEMPLATE_SID'),
-    otpFallbackBody:     'Your VoiceLink verification code is: {code}. Valid for 10 minutes.',
-    welcomeFallbackBody: 'Welcome to VoiceLink! Your WhatsApp is now connected.',
+    otpTemplateSid:        Deno.env.get('TWILIO_WHATSAPP_OTP_TEMPLATE_SID'),
+    welcomeTemplateSid:    Deno.env.get('TWILIO_WHATSAPP_WELCOME_TEMPLATE_SID'),
+    teamInviteTemplateSid: Deno.env.get('TWILIO_WHATSAPP_TEAM_INVITE_TEMPLATE_SID'),
+    otpFallbackBody:        'Your VoiceLink verification code is: {code}. Valid for 10 minutes.',
+    welcomeFallbackBody:    'Welcome to VoiceLink! Your WhatsApp is now connected.',
+    teamInviteFallbackBody: 'Hi! {admin_name} has invited you to join their VoiceLink team. Accept your invite here: {invite_url}',
   });
 }

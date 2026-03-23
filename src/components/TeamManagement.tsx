@@ -12,6 +12,7 @@ import {
   X,
   Loader2,
   AlertTriangle,
+  Phone,
 } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
 import { useTeamManagement } from '../hooks/useTeamManagement';
@@ -31,6 +32,7 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({ user }) => {
   // ── Local UI state ─────────────────────────────────────────────────────────
   const [showInvitePanel, setShowInvitePanel] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<TeamleaderEmployee | null>(null);
+  const [invitePhone, setInvitePhone] = useState('');
   const [inviteMethod, setInviteMethod] = useState<InviteMethod>('email');
 
   // Confirm dialog
@@ -70,8 +72,11 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({ user }) => {
 
   const handleInvite = async () => {
     if (!selectedEmployee) return;
-    await team.invite(selectedEmployee, inviteMethod);
+    // Use the edited phone number instead of the TL one
+    const employeeWithPhone = { ...selectedEmployee, phone: invitePhone || undefined };
+    await team.invite(employeeWithPhone, inviteMethod);
     setSelectedEmployee(null);
+    setInvitePhone('');
     setInviteMethod('email');
   };
 
@@ -323,9 +328,15 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({ user }) => {
                   return (
                     <button
                       key={emp.id}
-                      onClick={() =>
-                        setSelectedEmployee(isSelected ? null : emp)
-                      }
+                      onClick={() => {
+                        if (isSelected) {
+                          setSelectedEmployee(null);
+                          setInvitePhone('');
+                        } else {
+                          setSelectedEmployee(emp);
+                          setInvitePhone(emp.phone ?? '');
+                        }
+                      }}
                       disabled={emp.alreadyInvited}
                       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
                         emp.alreadyInvited
@@ -386,6 +397,21 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({ user }) => {
                   >
                     <X className="w-4 h-4" />
                   </button>
+                </div>
+
+                {/* Phone number (editable) */}
+                <div>
+                  <label className="text-xs font-medium text-navy/50 font-instrument mb-1.5 flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5" />
+                    {t('teamManagement.phoneNumber')}
+                  </label>
+                  <input
+                    type="tel"
+                    value={invitePhone}
+                    onChange={(e) => setInvitePhone(e.target.value)}
+                    placeholder="+32 470 00 00 00"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-navy/[0.08] text-sm text-navy placeholder:text-navy/30 font-instrument focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy/20 transition-all"
+                  />
                 </div>
 
                 {/* Invite method selector */}

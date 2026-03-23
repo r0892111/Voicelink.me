@@ -12,5 +12,10 @@ export interface IWhatsAppWelcomeSender {
   sendWelcome(toPhone: string): Promise<void>;
 }
 
-/** Combined provider for implementations that support both operations. */
-export type IWhatsAppProvider = IWhatsAppOtpSender & IWhatsAppWelcomeSender;
+/** Sends a team invite message with admin name and invite link. */
+export interface IWhatsAppTeamInviteSender {
+  sendTeamInvite(toPhone: string, adminName: string, inviteUrl: string): Promise<void>;
+}
+
+/** Combined provider for implementations that support all operations. */
+export type IWhatsAppProvider = IWhatsAppOtpSender & IWhatsAppWelcomeSender & IWhatsAppTeamInviteSender;
