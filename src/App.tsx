@@ -20,7 +20,7 @@ import { ConferenceBanner } from './components/ConferenceBanner';
 import { TestSignup } from './components/TestSignup';
 import { TestDashboard } from './components/TestDashboard';
 import { useAuth } from './hooks/useAuth';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { ConsentProvider } from './contexts/ConsentContext';
 import { CookieBanner } from './components/CookieBanner';
 import { CookieSettingsModal } from './components/CookieSettingsModal';
@@ -397,7 +397,9 @@ function App() {
           <div className={isLandingPage || isSignupPage || isHomepage || isTestPage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
-              <Route path="/signup" element={<AuthPage />} />
+              {/* TEMPORARILY OFFLINE: uncomment to re-enable signup page */}
+              {/* <Route path="/signup" element={<AuthPage />} /> */}
+              <Route path="/signup" element={<Navigate to="/" replace />} />
               <Route path="/landing" element={<HeroLanding />} />
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
