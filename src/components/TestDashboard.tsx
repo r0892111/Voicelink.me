@@ -14,7 +14,10 @@ import {
 } from 'lucide-react';
 import { NoiseOverlay } from './ui/NoiseOverlay';
 import { AuthService } from '../services/authService';
+import { TeamManagement } from './TeamManagement';
+import { useTeamRole } from '../hooks/useTeamRole';
 import { supabase } from '../lib/supabase';
+import type { AuthUser } from '../hooks/useAuth';
 
 const tips = [
   { emoji: '🗣️', text: 'Start with "Just spoke with [Name]" to log a contact.' },
@@ -34,6 +37,25 @@ export const TestDashboard: React.FC = () => {
   const [connecting, setConnecting]   = React.useState(false);
   const [revoking, setRevoking]       = React.useState(false);
   const [tlConnected, setTlConnected] = React.useState<boolean | null>(null); // null = loading
+  const [teamUser, setTeamUser]       = React.useState<AuthUser | null>(null);
+  const { isAdmin } = useTeamRole(teamUser);
+
+  // Check if this is the nomulpe admin user — show team management if so
+  React.useEffect(() => {
+    const checkTeamUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user?.email === 'nomulpe@outlook.com') {
+        setTeamUser({
+          id: session.user.id,
+          email: session.user.email,
+          name: 'Jord Goossens',
+          platform: 'teamleader',
+          user_info: {},
+        });
+      }
+    };
+    checkTeamUser();
+  }, []);
 
   // Check if Teamleader is connected.
   // Primary: active Supabase session → look up teamleader_users (works after magic link).
@@ -243,6 +265,9 @@ export const TestDashboard: React.FC = () => {
           </div>
         </section>
       )}
+
+      {/* ── TEAM MANAGEMENT (nomulpe only) ── */}
+      {isAdmin && teamUser && <TeamManagement user={teamUser} />}
 
       {/* ── BOTTOM GRID: TIPS + SUPPORT ── */}
       <section className="px-6 pb-16">
