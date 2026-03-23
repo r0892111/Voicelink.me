@@ -18,18 +18,22 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
+import { useTeamRole } from '../hooks/useTeamRole';
 import { WhatsAppConnectForm } from './WhatsAppConnectForm';
+import { TeamManagement } from './TeamManagement';
 import { StripeService } from '../services/stripeService';
 import { supabase } from '../lib/supabase';
 import { withUTM } from '../utils/utm';
 import { NoiseOverlay } from './ui/NoiseOverlay';
+import { DEFAULT_TIER } from '../config/teamPricing';
 
-const PRICE_ID = 'price_1S5o6zLPohnizGblsQq7OYCT';
+const PRICE_ID = DEFAULT_TIER.monthlyPriceId;
 
 export const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
   const navigate          = useNavigate();
   const wa                = useWhatsAppConnect(user);
+  const { isAdmin, isMember, adminName, loading: roleLoading } = useTeamRole(user);
   const [subChecking, setSubChecking]     = useState(true);
   const [portalLoading, setPortalLoading] = useState(false);
   const mounted = useRef(true);
@@ -284,91 +288,114 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
-            style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
-          >
-            <div className="flex items-center space-x-3 mb-2">
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
-                <Star className={`w-5 h-5 ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'text-emerald-500' : 'text-navy/50'}`} />
-              </div>
-              <span className="font-general font-semibold text-navy text-sm">Subscription</span>
-            </div>
-            <>
-                {subChecking ? (
-                  <div className="h-3.5 w-28 bg-navy/[0.07] rounded-full animate-pulse mt-0.5" />
-                ) : (
-                  <p className="text-xs text-navy/50 font-instrument truncate">
-                    {subInfo?.plan_name ?? 'VoiceLink'}
-                    {subInfo?.amount != null && subInfo?.currency && (
-                      <span className="ml-1">
-                        · {(subInfo.amount / 100).toLocaleString('en', { style: 'currency', currency: subInfo.currency.toUpperCase() })}{subInfo.interval ? `/${subInfo.interval}` : ''}
-                      </span>
-                    )}
-                  </p>
-                )}
-                <div className="mt-3 space-y-1">
-                  {subChecking && (
-                    <div className="h-3 w-20 bg-navy/[0.07] rounded-full animate-pulse" />
-                  )}
-                  {!subChecking && subInfo?.subscription_status === 'trialing' && (
-                    <>
-                      <div className="flex items-center space-x-1.5">
-                        <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                        <span className="text-xs font-medium text-amber-600">
-                          Free trial · {subInfo.trial_end ? Math.max(0, Math.ceil((subInfo.trial_end * 1000 - Date.now()) / 86_400_000)) : '—'} days left
-                        </span>
-                      </div>
-                      {subInfo.trial_end && (
-                        <p className="text-xs text-navy/40 font-instrument pl-3">
-                          Billing starts {new Date(subInfo.trial_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        </p>
-                      )}
-                    </>
-                  )}
-                  {!subChecking && subInfo?.subscription_status === 'active' && (
-                    <>
-                      <div className="flex items-center space-x-1.5">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        <span className="text-xs font-medium text-emerald-600">Active</span>
-                      </div>
-                      {subInfo.current_period_end && (
-                        <p className="text-xs text-navy/40 font-instrument pl-3">
-                          Renews {new Date(subInfo.current_period_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        </p>
-                      )}
-                    </>
-                  )}
-                  {!subChecking && subInfo?.subscription_status === 'past_due' && (
-                    <div className="flex items-center space-x-1.5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                      <span className="text-xs font-medium text-red-600">Payment due</span>
-                    </div>
-                  )}
-                  {!subChecking && (!subInfo || subInfo.subscription_status === 'none') && (
-                    <div className="flex items-center space-x-1.5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-navy/20" />
-                      <span className="text-xs font-medium text-navy/40">—</span>
-                    </div>
-                  )}
+          {/* Subscription card — admins see full detail, members see "Managed by" */}
+          {isMember ? (
+            <div
+              className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
+              style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
+            >
+              <div className="flex items-center space-x-3 mb-2">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-emerald-50">
+                  <Star className="w-5 h-5 text-emerald-500" />
                 </div>
-                {!subChecking && isSubscribed && (
-                  <button
-                    onClick={openPortal}
-                    disabled={portalLoading}
-                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy transition-colors disabled:opacity-40"
-                  >
-                    <ExternalLink className="w-3 h-3" />
-                    {portalLoading ? 'Opening…' : 'Manage subscription'}
-                  </button>
-                )}
-              </>
-          </div>
+                <span className="font-general font-semibold text-navy text-sm">Subscription</span>
+              </div>
+              <p className="text-xs text-navy/50 font-instrument">Managed by {adminName || 'your admin'}</p>
+              <div className="mt-3 flex items-center space-x-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="text-xs font-medium text-emerald-600">Active</span>
+              </div>
+            </div>
+          ) : (
+            <div
+              className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
+              style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
+            >
+              <div className="flex items-center space-x-3 mb-2">
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                  <Star className={`w-5 h-5 ${!subChecking && (subInfo?.subscription_status === 'active' || subInfo?.subscription_status === 'trialing') ? 'text-emerald-500' : 'text-navy/50'}`} />
+                </div>
+                <span className="font-general font-semibold text-navy text-sm">Subscription</span>
+              </div>
+              <>
+                  {subChecking ? (
+                    <div className="h-3.5 w-28 bg-navy/[0.07] rounded-full animate-pulse mt-0.5" />
+                  ) : (
+                    <p className="text-xs text-navy/50 font-instrument truncate">
+                      {subInfo?.plan_name ?? 'VoiceLink'}
+                      {subInfo?.amount != null && subInfo?.currency && (
+                        <span className="ml-1">
+                          · {(subInfo.amount / 100).toLocaleString('en', { style: 'currency', currency: subInfo.currency.toUpperCase() })}{subInfo.interval ? `/${subInfo.interval}` : ''}
+                        </span>
+                      )}
+                    </p>
+                  )}
+                  <div className="mt-3 space-y-1">
+                    {subChecking && (
+                      <div className="h-3 w-20 bg-navy/[0.07] rounded-full animate-pulse" />
+                    )}
+                    {!subChecking && subInfo?.subscription_status === 'trialing' && (
+                      <>
+                        <div className="flex items-center space-x-1.5">
+                          <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                          <span className="text-xs font-medium text-amber-600">
+                            Free trial · {subInfo.trial_end ? Math.max(0, Math.ceil((subInfo.trial_end * 1000 - Date.now()) / 86_400_000)) : '—'} days left
+                          </span>
+                        </div>
+                        {subInfo.trial_end && (
+                          <p className="text-xs text-navy/40 font-instrument pl-3">
+                            Billing starts {new Date(subInfo.trial_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          </p>
+                        )}
+                      </>
+                    )}
+                    {!subChecking && subInfo?.subscription_status === 'active' && (
+                      <>
+                        <div className="flex items-center space-x-1.5">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span className="text-xs font-medium text-emerald-600">Active</span>
+                        </div>
+                        {subInfo.current_period_end && (
+                          <p className="text-xs text-navy/40 font-instrument pl-3">
+                            Renews {new Date(subInfo.current_period_end * 1000).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          </p>
+                        )}
+                      </>
+                    )}
+                    {!subChecking && subInfo?.subscription_status === 'past_due' && (
+                      <div className="flex items-center space-x-1.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                        <span className="text-xs font-medium text-red-600">Payment due</span>
+                      </div>
+                    )}
+                    {!subChecking && (!subInfo || subInfo.subscription_status === 'none') && (
+                      <div className="flex items-center space-x-1.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-navy/20" />
+                        <span className="text-xs font-medium text-navy/40">—</span>
+                      </div>
+                    )}
+                  </div>
+                  {!subChecking && isSubscribed && (
+                    <button
+                      onClick={openPortal}
+                      disabled={portalLoading}
+                      className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy transition-colors disabled:opacity-40"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      {portalLoading ? 'Opening…' : 'Manage subscription'}
+                    </button>
+                  )}
+                </>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* ── SUBSCRIPTION BANNER ── */}
-      {(needsTrial || isLapsed) && (
+      {/* ── TEAM MANAGEMENT (admin only) ── */}
+      {isAdmin && user && <TeamManagement user={user} />}
+
+      {/* ── SUBSCRIPTION BANNER (hidden for members) ── */}
+      {!isMember && (needsTrial || isLapsed) && (
         <section className="px-6 pb-6">
           <div className="max-w-4xl mx-auto">
             {needsTrial ? (

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
+import { DEFAULT_TIER } from '../config/teamPricing';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
 import { trackTrialStarted } from '../utils/analytics';
@@ -124,6 +125,9 @@ export const AuthCallback: React.FC = () => {
       
       const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
 
+      // Check if this is a team invite flow
+      const inviteToken = localStorage.getItem('team_invite_token');
+
       const requestBody: Record<string, unknown> = {
         code,
         state,
@@ -132,6 +136,7 @@ export const AuthCallback: React.FC = () => {
           is_test_user: true,
           test_phone: localStorage.getItem('test_user_phone') ?? undefined,
         }),
+        ...(inviteToken && { invitation_token: inviteToken }),
       };
 
       // For custom Odoo implementations, pass the OAuth URL to the backend
@@ -327,6 +332,14 @@ export const AuthCallback: React.FC = () => {
         return;
       }
 
+      // Team invite flow — skip Stripe, member uses admin's subscription
+      const pendingInviteToken = localStorage.getItem('team_invite_token');
+      if (pendingInviteToken) {
+        localStorage.removeItem('team_invite_token');
+        navigate(withUTM('/dashboard'));
+        return;
+      }
+
       // Test users skip Stripe — check DB flag (works for first-time and returning users)
       if (platform === 'teamleader') {
         const { data: tlUser } = await supabase
@@ -385,7 +398,7 @@ export const AuthCallback: React.FC = () => {
 
         // Use the starter tier price ID for single user
         await StripeService.createCheckoutSession({
-          priceId: 'price_1S5o6zLPohnizGblsQq7OYCT',
+          priceId: DEFAULT_TIER.monthlyPriceId,
           quantity: 1,
           successUrl: `${window.location.origin}/dashboard`,
           cancelUrl: `${window.location.origin}/dashboard`,
