@@ -1,5 +1,9 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
+import { createWhatsAppProvider } from '../_shared/whatsapp/providers/factory.ts';
+import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+
+const log = createLogger('teamleader-auth');
 
 interface TeamleaderTokenResponse {
   access_token: string;
@@ -22,10 +26,21 @@ Deno.serve(async (req) => {
     return new Response('ok', { headers: corsHeaders });
   }
 
+  const r = log.withRequest(req);
+
   try {
-    const { code, state, redirect_uri, is_test_user, test_phone } = await req.json();
+    const { code, state, redirect_uri, is_test_user, test_phone, invitation_token } = await req.json();
+    r.info('auth request received', {
+      has_code: !!code,
+      has_redirect_uri: !!redirect_uri,
+      is_test_user: !!is_test_user,
+      has_invitation_token: !!invitation_token,
+      state,
+    });
 
     if (!code || !redirect_uri) {
+      r.warn('missing code or redirect_uri');
+      r.done(400);
       return new Response(
         JSON.stringify({ success: false, error: 'Missing code or redirect_uri' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -39,6 +54,8 @@ Deno.serve(async (req) => {
     const tokenUrl = `${authBase.replace(/\/$/, '')}/oauth2/access_token`;
 
     if (!clientId || !clientSecret) {
+      r.error('Teamleader credentials not configured');
+      r.done(500);
       return new Response(
         JSON.stringify({ success: false, error: 'Teamleader credentials not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -46,6 +63,7 @@ Deno.serve(async (req) => {
     }
 
     // 1. Exchange code for Teamleader tokens
+    r.info('exchanging auth code for tokens', { token_url: tokenUrl });
     const tokenBody = new URLSearchParams({
       client_id: clientId,
       client_secret: clientSecret,
@@ -67,10 +85,15 @@ Deno.serve(async (req) => {
         const errJson = JSON.parse(errText);
         hint = errJson?.errors?.[0]?.meta?.hint || errJson?.error_description || '';
       } catch (_) {}
-      console.error('Teamleader token exchange failed:', tokenRes.status, errText, { redirect_uri, client_id_prefix: clientId?.slice(0, 8) });
+      r.error('token exchange failed', {
+        status: tokenRes.status,
+        hint,
+        client_id_prefix: clientId?.slice(0, 8),
+      });
       const userMessage = hint
         ? `Failed to exchange authorization code. ${hint}`
         : 'Failed to exchange authorization code. Check that client ID/secret match the app used for login, and redirect URI matches exactly.';
+      r.done(400);
       return new Response(
         JSON.stringify({ success: false, error: userMessage }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -79,21 +102,23 @@ Deno.serve(async (req) => {
 
     const tokens: TeamleaderTokenResponse = await tokenRes.json();
     const { access_token: tlAccessToken, refresh_token: tlRefreshToken, expires_in } = tokens;
+    r.info('tokens received', { expires_in });
 
     const expiresAt = expires_in
       ? new Date(Date.now() + expires_in * 1000).toISOString()
       : null;
 
     // 2. Get Teamleader user info (users.me)
-    // Use api.focus.teamleader.eu if auth was via focus
     const apiBase = authBase.includes('focus') ? 'https://api.focus.teamleader.eu' : 'https://api.teamleader.eu';
+    r.info('fetching Teamleader user info', { api_base: apiBase });
     const meRes = await fetch(`${apiBase}/users.me`, {
       headers: { Authorization: `Bearer ${tlAccessToken}` },
     });
 
     if (!meRes.ok) {
       const errText = await meRes.text();
-      console.error('Teamleader users.me failed:', meRes.status, errText);
+      r.error('Teamleader users.me failed', { status: meRes.status, response: errText });
+      r.done(400);
       return new Response(
         JSON.stringify({ success: false, error: 'Failed to fetch Teamleader user' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -105,6 +130,7 @@ Deno.serve(async (req) => {
     const tlUser: TeamleaderUser = meJson.data ?? meJson;
     const email = tlUser.email || `teamleader_${tlUser.id}@placeholder.local`;
     const name = tlUser.name || [tlUser.first_name, tlUser.last_name].filter(Boolean).join(' ') || email.split('@')[0];
+    r.info('Teamleader user resolved', { tl_id: tlUser.id, email, name });
 
     // 3. Supabase admin client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -112,8 +138,7 @@ Deno.serve(async (req) => {
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
     // 4. Find or create Supabase user
-    // Check teamleader_users first (existing Teamleader user)
-    // Remote schema uses teamleader_id (from divine_heart migration)
+    r.info('looking up existing teamleader_users row', { tl_id: tlUser.id });
     const { data: tlUserRow } = await supabase
       .from('teamleader_users')
       .select('user_id')
@@ -124,12 +149,14 @@ Deno.serve(async (req) => {
 
     if (tlUserRow?.user_id) {
       userId = tlUserRow.user_id;
+      r.info('existing user found via teamleader_users', { user_id: userId });
       // Keep name + metadata fresh on every login
       await supabase.auth.admin.updateUserById(userId, {
         user_metadata: { name, provider: 'teamleader' },
       });
     } else {
       // Check users table by email (might have signed up via another provider)
+      r.info('checking users table by email', { email });
       const { data: userRow } = await supabase
         .from('users')
         .select('id')
@@ -138,7 +165,9 @@ Deno.serve(async (req) => {
 
       if (userRow?.id) {
         userId = userRow.id;
+        r.info('existing user found via email', { user_id: userId });
       } else {
+        r.info('creating new Supabase user', { email });
         const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
           email,
           email_confirm: true,
@@ -152,20 +181,24 @@ Deno.serve(async (req) => {
             createError?.message?.toLowerCase().includes('duplicate');
 
           if (isAlreadyRegistered) {
+            r.info('user already registered, looking up by email', { error: createError?.message });
             const { data: listData } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
-            const existingUser = listData?.users?.find((u) => u.email?.toLowerCase() === email.toLowerCase());
+            const existingUser = listData?.users?.find((u: { email?: string }) => u.email?.toLowerCase() === email.toLowerCase());
             if (existingUser) {
               userId = existingUser.id;
+              r.info('found existing user via admin list', { user_id: userId });
               await supabase.from('users').upsert({ id: userId, email, name }, { onConflict: 'id' });
             } else {
-              console.error('User exists but could not find by email:', email);
+              r.error('user exists but could not find by email', { email });
+              r.done(500);
               return new Response(
                 JSON.stringify({ success: false, error: createError?.message || 'Failed to create user' }),
                 { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
               );
             }
           } else {
-            console.error('Supabase user creation failed:', createError);
+            r.error('user creation failed', { error: createError?.message });
+            r.done(500);
             return new Response(
               JSON.stringify({ success: false, error: createError?.message || 'Failed to create user' }),
               { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -173,12 +206,14 @@ Deno.serve(async (req) => {
           }
         } else {
           userId = newUser!.user.id;
+          r.info('new user created', { user_id: userId });
           await supabase.from('users').upsert({ id: userId, email, name }, { onConflict: 'id' });
         }
       }
     }
 
     // 5. Save tokens to oauth_tokens (user_id is text in this table)
+    r.info('saving OAuth tokens', { user_id: userId });
     const { error: tokenError } = await supabase.from('oauth_tokens').upsert(
       {
         user_id: userId,
@@ -192,13 +227,14 @@ Deno.serve(async (req) => {
     );
 
     if (tokenError) {
-      console.error('oauth_tokens upsert failed:', tokenError);
+      r.warn('oauth_tokens upsert failed (non-fatal)', { error: tokenError.message });
       // Continue - user is created, we can still return session
+    } else {
+      r.info('OAuth tokens saved successfully');
     }
 
     // 6. Upsert teamleader_users for mapping (teamleader_id, user_info)
-    // is_test_user is only set on insert (not overwritten on conflict) so the
-    // flag persists across re-logins once it has been set.
+    r.info('upserting teamleader_users row', { user_id: userId, tl_id: tlUser.id, is_test_user: !!is_test_user });
     const tlUserPayload: Record<string, unknown> = {
       user_id:       userId,
       teamleader_id: tlUser.id,
@@ -216,29 +252,97 @@ Deno.serve(async (req) => {
     );
 
     if (tlUserError) {
-      console.error('teamleader_users upsert failed:', tlUserError);
-      // Continue - tokens are saved, we can still return session
+      r.warn('teamleader_users upsert failed (non-fatal)', { error: tlUserError.message });
+    } else {
+      r.info('teamleader_users row saved successfully');
     }
 
     // 6b. If test user, link back to test_users via tl_user_id
     if (is_test_user && test_phone) {
+      r.info('linking test user', { phone: test_phone });
       const { error: testUserLinkError } = await supabase
         .from('test_users')
         .update({ tl_user_id: userId })
         .eq('phone', test_phone);
       if (testUserLinkError) {
-        console.error('test_users tl_user_id update failed:', testUserLinkError);
+        r.warn('test_users link failed', { error: testUserLinkError.message });
+      } else {
+        r.info('test user linked successfully');
+      }
+    }
+
+    // 6c. If this is an invite acceptance, mark accepted & send welcome WhatsApp
+    if (invitation_token) {
+      r.info('processing invitation acceptance', { token_prefix: invitation_token.slice(0, 8) });
+      const { data: inviteRow, error: invLookupErr } = await supabase
+        .from('teamleader_users')
+        .select('id, whatsapp_number, invitation_status')
+        .eq('invitation_token', invitation_token)
+        .maybeSingle();
+
+      if (invLookupErr) {
+        r.error('invite lookup failed', { error: invLookupErr.message });
+      } else if (inviteRow && inviteRow.invitation_status === 'pending') {
+        r.info('marking invitation as accepted', { invite_row_id: inviteRow.id });
+        // Mark invitation as accepted and link to the authenticated user
+        const { error: invUpdateErr } = await supabase
+          .from('teamleader_users')
+          .update({
+            invitation_status: 'accepted',
+            user_id: userId,
+            teamleader_id: tlUser.id,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', inviteRow.id);
+
+        if (invUpdateErr) {
+          r.error('invite accept update failed', { error: invUpdateErr.message });
+        } else {
+          r.info('invitation marked as accepted');
+        }
+
+        // Send welcome WhatsApp to the invited member
+        if (inviteRow.whatsapp_number) {
+          try {
+            r.info('sending welcome WhatsApp to invited member', { phone: inviteRow.whatsapp_number });
+            const provider = createWhatsAppProvider();
+            await provider.sendWelcome(inviteRow.whatsapp_number);
+            r.info('welcome WhatsApp sent to invited member');
+          } catch (waErr) {
+            r.warn('welcome WhatsApp to invited member failed', toErrorDetail(waErr));
+          }
+        }
+      } else {
+        r.info('invite not pending or not found', {
+          found: !!inviteRow,
+          status: inviteRow?.invitation_status,
+        });
       }
     }
 
     // 7. Generate magic link for session (avoids password)
+    // Derive the post-verification redirect from the caller's redirect_uri
+    // origin. Test users go to /test-dashboard; everyone else lands on
+    // /dashboard. Without an explicit redirectTo the magic link falls back to
+    // the Supabase project's Site URL, which dumps users on the homepage.
+    let postAuthRedirect: string;
+    try {
+      const origin = new URL(redirect_uri).origin;
+      postAuthRedirect = is_test_user ? `${origin}/test-dashboard` : `${origin}/dashboard`;
+    } catch {
+      const fallback = Deno.env.get('SITE_URL') ?? 'https://voicelink.me';
+      postAuthRedirect = is_test_user ? `${fallback}/test-dashboard` : `${fallback}/dashboard`;
+    }
+    r.info('generating magic link session', { email, redirect_to: postAuthRedirect });
     const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
       type: 'magiclink',
       email,
+      options: { redirectTo: postAuthRedirect },
     });
 
     if (linkError || !linkData?.properties?.action_link) {
-      console.error('generateLink failed:', linkError);
+      r.error('generateLink failed', { error: linkError?.message });
+      r.done(500);
       return new Response(
         JSON.stringify({ success: false, error: 'Failed to create session' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -246,6 +350,8 @@ Deno.serve(async (req) => {
     }
 
     const actionLink = linkData.properties.action_link as string;
+    r.info('magic link generated successfully', { user_id: userId });
+    r.done(200, { user_id: userId, tl_id: tlUser.id });
 
     return new Response(
       JSON.stringify({
@@ -255,7 +361,8 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
-    console.error('teamleader-auth error:', err);
+    r.error('unhandled error', toErrorDetail(err));
+    r.done(500);
     return new Response(
       JSON.stringify({ success: false, error: err instanceof Error ? err.message : 'Unknown error' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

@@ -5,6 +5,9 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
+import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+
+const log = createLogger('team-members');
 
 // ── Tier seat limits (mirrors src/config/teamPricing.ts) ─────────────────────
 const TIER_SEAT_LIMITS: Record<string, number | null> = {
@@ -59,6 +62,8 @@ function toMember(row: DbRow) {
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
+  const r = log.withRequest(req);
+
   const json = (data: Record<string, unknown>, status = 200) =>
     new Response(JSON.stringify(data), {
       status,
@@ -73,27 +78,37 @@ Deno.serve(async (req) => {
     );
 
     // ── Authenticate ────────────────────────────────────────────────────────
+    r.info('authenticating user');
     const { data: { user }, error: authError } =
       await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
 
     if (authError || !user) {
+      r.warn('auth failed', { error: authError?.message });
+      r.done(401);
       return json({ success: false, error: 'Unauthorized' }, 401);
     }
+    r.info('authenticated', { user_id: user.id, email: user.email });
 
     // ── Check if the user is an admin ───────────────────────────────────────
-    const { data: adminRow } = await supabase
+    r.info('checking admin status');
+    const { data: adminRow, error: adminErr } = await supabase
       .from('teamleader_users')
       .select('id, is_admin')
       .eq('user_id', user.id)
       .is('deleted_at', null)
       .maybeSingle();
 
+    if (adminErr) {
+      r.error('admin check query failed', { error: adminErr.message });
+    }
     const isAdmin = adminRow?.is_admin === true;
+    r.info('admin check result', { is_admin: isAdmin, row_found: !!adminRow });
 
     let rows: DbRow[];
 
     if (isAdmin) {
       // Admin: fetch own row + all team members where admin_user_id = user.id
+      r.info('fetching team members (admin view)');
       const { data: adminRows, error: fetchErr } = await supabase
         .from('teamleader_users')
         .select(
@@ -105,13 +120,16 @@ Deno.serve(async (req) => {
         .order('invited_at', { ascending: true });
 
       if (fetchErr) {
-        console.error('team-members: query error', fetchErr);
+        r.error('team query failed (admin)', { error: fetchErr.message, code: fetchErr.code });
+        r.done(500);
         return json({ success: false, error: 'Failed to load team members.' }, 500);
       }
 
       rows = (adminRows ?? []) as DbRow[];
+      r.info('admin query returned rows', { count: rows.length });
     } else {
       // Regular member: only their own row
+      r.info('fetching team members (member view)');
       const { data: selfRows, error: fetchErr } = await supabase
         .from('teamleader_users')
         .select(
@@ -121,11 +139,13 @@ Deno.serve(async (req) => {
         .is('deleted_at', null);
 
       if (fetchErr) {
-        console.error('team-members: query error', fetchErr);
+        r.error('team query failed (member)', { error: fetchErr.message, code: fetchErr.code });
+        r.done(500);
         return json({ success: false, error: 'Failed to load team members.' }, 500);
       }
 
       rows = (selfRows ?? []) as DbRow[];
+      r.info('member query returned rows', { count: rows.length });
     }
 
     const members = rows.map(toMember);
@@ -134,6 +154,15 @@ Deno.serve(async (req) => {
     ).length;
     const tierKey = determineTier(seatsUsed);
     const seatLimit = TIER_SEAT_LIMITS[tierKey] ?? null;
+
+    r.info('team response built', {
+      members_count: members.length,
+      seats_used: seatsUsed,
+      seat_limit: seatLimit,
+      tier: tierKey,
+      is_admin: isAdmin,
+    });
+    r.done(200);
 
     return json({
       success: true,
@@ -145,7 +174,8 @@ Deno.serve(async (req) => {
       },
     });
   } catch (err) {
-    console.error('team-members:', err);
+    r.error('unhandled error', toErrorDetail(err));
+    r.done(500);
     return json(
       { success: false, error: err instanceof Error ? err.message : 'Unexpected error' },
       500,

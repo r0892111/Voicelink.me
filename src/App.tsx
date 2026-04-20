@@ -5,7 +5,14 @@ import { AuthPage } from './components/AuthPage';
 import { AuthCallback } from './components/AuthCallback';
 import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
-import { Dashboard } from './components/Dashboard';
+import { DashboardLayout } from './components/DashboardLayout';
+import { DashboardHome } from './components/DashboardHome';
+import { DashboardTeam } from './components/DashboardTeam';
+import { DashboardUsage } from './components/DashboardUsage';
+import { DashboardSettings } from './components/DashboardSettings';
+import { DashboardProfile } from './components/DashboardProfile';
+import { DashboardBilling } from './components/DashboardBilling';
+import { DashboardGuide } from './components/DashboardGuide';
 import { ContactFormModal } from './components/ContactFormModal';
 import { FieldServiceLanding } from './components/FieldServiceLanding';
 import { InstallatorsLanding } from './components/InstallatorsLanding';
@@ -88,6 +95,7 @@ function App() {
   const isSignupPage = location.pathname === '/signup';
   const isInvitePage = location.pathname === '/invite';
   const isTestPage = location.pathname === '/test' || location.pathname === '/test-dashboard';
+  const isDashboardRoute = location.pathname === '/dashboard' || location.pathname.startsWith('/dashboard/');
 
   const openContactModal = () => {
     setIsContactModalOpen(true);
@@ -109,9 +117,9 @@ function App() {
       <RTLProvider>
         <AnalyticsListener />
         <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage ? 'h-screen overflow-hidden' : ''}`}>
-          <NoiseOverlay />
+          {!isDashboardRoute && <NoiseOverlay />}
           {/* Navigation */}
-          {!isLandingPage && !isSignupPage && !isInvitePage && !isTestPage && (
+          {!isLandingPage && !isSignupPage && !isInvitePage && !isTestPage && !isDashboardRoute && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
             {/* ── White logo on hero (homepage only, fades out on scroll) — desktop only ── */}
             {isHomepage && (
@@ -242,7 +250,7 @@ function App() {
           )}
 
           {/* Mobile hamburger button — always visible */}
-          {!isLandingPage && !isSignupPage && !isInvitePage && !isMobileMenuOpen && (
+          {!isLandingPage && !isSignupPage && !isInvitePage && !isDashboardRoute && !isMobileMenuOpen && (
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open menu"
@@ -253,7 +261,7 @@ function App() {
           )}
 
           {/* Full-screen mobile menu overlay */}
-          {!isLandingPage && !isSignupPage && !isInvitePage && isMobileMenuOpen && (
+          {!isLandingPage && !isSignupPage && !isInvitePage && !isDashboardRoute && isMobileMenuOpen && (
             <div className="min-[868px]:hidden fixed inset-0 z-[10000] bg-porcelain flex flex-col overflow-y-auto">
               {/* Header */}
               <div className="flex items-center justify-between px-6 pt-10 pb-6 flex-shrink-0">
@@ -396,7 +404,7 @@ function App() {
           )}
 
           {/* Routes */}
-          <div className={isLandingPage || isSignupPage || isInvitePage || isHomepage || isTestPage ? "" : "pt-20"}>
+          <div className={isLandingPage || isSignupPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
               {/* TEMPORARILY OFFLINE: uncomment to re-enable signup page */}
@@ -407,7 +415,15 @@ function App() {
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route index element={<DashboardHome />} />
+                <Route path="team" element={<DashboardTeam />} />
+                <Route path="usage" element={<DashboardUsage />} />
+                <Route path="settings" element={<DashboardSettings />} />
+                <Route path="profile" element={<DashboardProfile />} />
+                <Route path="billing" element={<DashboardBilling />} />
+                <Route path="guide" element={<DashboardGuide />} />
+              </Route>
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/success" element={<SuccessPage />} />
               <Route path="/saas-agreement" element={<SaasAgreement />} />

@@ -96,10 +96,38 @@ export const TestDashboard: React.FC = () => {
   const handleRevoke = async () => {
     if (!phone) return;
     setRevoking(true);
+
+    // Grab the current session so we can wipe its Supabase-side state too.
+    // The "connected" check looks at teamleader_users when a session exists,
+    // so clearing test_users alone isn't enough — the row + OAuth token must
+    // go, and the session has to end.
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (session?.user) {
+      // Remove the CRM link + OAuth token. Hard-delete is fine here: this is
+      // the test-user revoke button whose whole point is "start clean".
+      await supabase
+        .from('teamleader_users')
+        .delete()
+        .eq('user_id', session.user.id)
+        .eq('is_test_user', true);
+
+      await supabase
+        .from('oauth_tokens')
+        .delete()
+        .eq('user_id', session.user.id)
+        .eq('provider', 'teamleader');
+    }
+
+    // Break the phone → tl link stored on test_users as well.
     await supabase
       .from('test_users')
       .update({ tl_user_id: null })
       .eq('phone', phone);
+
+    // End the session so the check effect hits the no-session branch next load.
+    await supabase.auth.signOut();
+
     setTlConnected(false);
     setRevoking(false);
   };

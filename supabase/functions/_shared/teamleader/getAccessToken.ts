@@ -7,6 +7,9 @@
 //   // use token in Teamleader API calls
 
 import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createLogger, toErrorDetail } from '../logger.ts';
+
+const log = createLogger('getTestUserAccessToken');
 
 const REFRESH_BUFFER_MS = 5 * 60 * 1000; // refresh 5 min before expiry
 
@@ -20,14 +23,20 @@ export async function getTestUserAccessToken(
   supabase: SupabaseClient,
   phone: string,
 ): Promise<string> {
+  log.info('fetching test user token', { phone });
+
   const { data, error } = await supabase
     .from('test_users')
     .select('tl_access_token, tl_refresh_token, tl_token_expires_at')
     .eq('phone', phone)
     .maybeSingle<TokenRow>();
 
-  if (error || !data) throw new Error('Test user not found');
+  if (error || !data) {
+    log.error('test user not found', { phone, error: error?.message });
+    throw new Error('Test user not found');
+  }
   if (!data.tl_access_token || !data.tl_refresh_token) {
+    log.error('teamleader not connected for test user', { phone });
     throw new Error('Teamleader not connected for this test user');
   }
 
@@ -36,9 +45,14 @@ export async function getTestUserAccessToken(
     : 0;
   const needsRefresh = Date.now() >= expiresAt - REFRESH_BUFFER_MS;
 
-  if (!needsRefresh) return data.tl_access_token;
+  if (!needsRefresh) {
+    log.info('token still valid, no refresh needed', { phone, expires_at: data.tl_token_expires_at });
+    return data.tl_access_token;
+  }
 
   // ── Refresh ───────────────────────────────────────────────────────────────
+  log.info('token expired or near expiry, refreshing', { phone, expires_at: data.tl_token_expires_at });
+
   const clientId     = Deno.env.get('TEAMLEADER_CLIENT_ID')!;
   const clientSecret = Deno.env.get('TEAMLEADER_CLIENT_SECRET')!;
   const authBase     = Deno.env.get('TEAMLEADER_AUTH_BASE_URL') || 'https://app.teamleader.eu';
@@ -57,6 +71,7 @@ export async function getTestUserAccessToken(
 
   if (!res.ok) {
     const text = await res.text();
+    log.error('token refresh failed', { phone, status: res.status, response: text });
     throw new Error(`Token refresh failed (${res.status}): ${text}`);
   }
 
@@ -67,6 +82,7 @@ export async function getTestUserAccessToken(
   };
 
   const newExpiresAt = new Date(Date.now() + tokens.expires_in * 1000).toISOString();
+  log.info('token refreshed successfully', { phone, new_expires_at: newExpiresAt });
 
   await supabase
     .from('test_users')
@@ -78,5 +94,6 @@ export async function getTestUserAccessToken(
     })
     .eq('phone', phone);
 
+  log.info('refreshed tokens saved to DB', { phone });
   return tokens.access_token;
 }

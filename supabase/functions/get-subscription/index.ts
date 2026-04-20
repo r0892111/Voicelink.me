@@ -4,9 +4,14 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
+import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+
+const log = createLogger('get-subscription');
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  const r = log.withRequest(req);
 
   const json = (data: Record<string, unknown>, status = 200) =>
     new Response(JSON.stringify(data), {
@@ -21,11 +26,18 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
+    r.info('authenticating user');
     const { data: { user }, error: authError } =
       await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
 
-    if (authError || !user) return json({ success: false, error: 'Unauthorized' }, 401);
+    if (authError || !user) {
+      r.warn('auth failed', { error: authError?.message });
+      r.done(401);
+      return json({ success: false, error: 'Unauthorized' }, 401);
+    }
+    r.info('authenticated', { user_id: user.id, email: user.email });
 
+    r.info('looking up stripe_customer_id');
     const { data: row } = await supabase
       .from('teamleader_users')
       .select('stripe_customer_id')
@@ -33,9 +45,12 @@ Deno.serve(async (req) => {
       .maybeSingle();
 
     if (!row?.stripe_customer_id) {
+      r.info('no stripe customer found', { user_id: user.id });
+      r.done(200, { subscription_status: 'none' });
       return json({ success: true, subscription: { subscription_status: 'none' } });
     }
 
+    r.info('fetching subscriptions from Stripe', { customer_id: row.stripe_customer_id });
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
 
     const subscriptions = await stripe.subscriptions.list({
@@ -45,11 +60,15 @@ Deno.serve(async (req) => {
       expand:   ['data.items.data.price'],
     });
 
+    r.info('stripe returned subscriptions', { count: subscriptions.data.length });
+
     const sub =
       subscriptions.data.find((s) => s.status === 'active' || s.status === 'trialing') ??
       subscriptions.data[0];
 
     if (!sub) {
+      r.info('no subscription found for customer');
+      r.done(200, { subscription_status: 'none' });
       return json({ success: true, subscription: { subscription_status: 'none' } });
     }
 
@@ -57,10 +76,12 @@ Deno.serve(async (req) => {
     const productId = typeof price?.product === 'string' ? price.product : price?.product?.id;
     let   planName  = 'VoiceLink';
     if (productId) {
+      r.info('retrieving product name', { product_id: productId });
       const product = await stripe.products.retrieve(productId);
       planName = product.name ?? planName;
     }
 
+    r.done(200, { subscription_status: sub.status, plan: planName });
     return json({
       success: true,
       subscription: {
@@ -74,7 +95,8 @@ Deno.serve(async (req) => {
       },
     });
   } catch (err) {
-    console.error('get-subscription:', err);
+    r.error('unhandled error', toErrorDetail(err));
+    r.done(500);
     return json({ success: false, error: err instanceof Error ? err.message : 'Unexpected error' }, 500);
   }
 });

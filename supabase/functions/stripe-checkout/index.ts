@@ -4,9 +4,14 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
+import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+
+const log = createLogger('stripe-checkout');
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  const r = log.withRequest(req);
 
   const json = (data: Record<string, unknown>, status = 200) =>
     new Response(JSON.stringify(data), {
@@ -21,14 +26,25 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
+    r.info('authenticating user');
     const { data: { user }, error: authError } =
       await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
 
-    if (authError || !user) return json({ error: 'Unauthorized' }, 401);
+    if (authError || !user) {
+      r.warn('auth failed', { error: authError?.message });
+      r.done(401);
+      return json({ error: 'Unauthorized' }, 401);
+    }
+    r.info('authenticated', { user_id: user.id, email: user.email });
 
     const { price_id, success_url, cancel_url } = await req.json();
+    r.info('creating checkout session', { price_id, user_id: user.id });
 
-    if (!price_id) return json({ error: 'Missing price_id' }, 400);
+    if (!price_id) {
+      r.warn('missing price_id');
+      r.done(400);
+      return json({ error: 'Missing price_id' }, 400);
+    }
 
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
 
@@ -46,9 +62,12 @@ Deno.serve(async (req) => {
       },
     });
 
+    r.info('checkout session created', { session_id: session.id, url_present: !!session.url });
+    r.done(200);
     return json({ success: true, checkout_url: session.url });
   } catch (err) {
-    console.error('stripe-checkout:', err);
+    r.error('unhandled error', toErrorDetail(err));
+    r.done(500);
     return json({ error: err instanceof Error ? err.message : 'Unexpected error' }, 500);
   }
 });

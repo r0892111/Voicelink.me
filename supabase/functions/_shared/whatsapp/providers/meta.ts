@@ -4,6 +4,9 @@
 //      never touching this one.
 
 import type { IWhatsAppProvider } from './interface.ts';
+import { createLogger, toErrorDetail } from '../../logger.ts';
+
+const log = createLogger('whatsapp-meta');
 
 export interface MetaProviderConfig {
   phoneNumberId: string;
@@ -26,6 +29,7 @@ export class MetaWhatsAppProvider implements IWhatsAppProvider {
   constructor(private readonly cfg: MetaProviderConfig) {}
 
   async sendOtp(toPhone: string, code: string): Promise<void> {
+    log.info('sendOtp', { to: normalisePhone(toPhone), template: this.cfg.otpTemplateName });
     await this.post({
       to: normalisePhone(toPhone),
       type: 'template',
@@ -37,9 +41,11 @@ export class MetaWhatsAppProvider implements IWhatsAppProvider {
         ],
       },
     });
+    log.info('sendOtp completed', { to: normalisePhone(toPhone) });
   }
 
   async sendWelcome(toPhone: string): Promise<void> {
+    log.info('sendWelcome', { to: normalisePhone(toPhone), template: this.cfg.welcomeTemplateName });
     await this.post({
       to: normalisePhone(toPhone),
       type: 'template',
@@ -49,9 +55,11 @@ export class MetaWhatsAppProvider implements IWhatsAppProvider {
         components: [],
       },
     });
+    log.info('sendWelcome completed', { to: normalisePhone(toPhone) });
   }
 
   async sendTeamInvite(toPhone: string, adminName: string, inviteUrl: string): Promise<void> {
+    log.info('sendTeamInvite', { to: normalisePhone(toPhone), template: this.cfg.teamInviteTemplateName, admin_name: adminName });
     await this.post({
       to: normalisePhone(toPhone),
       type: 'template',
@@ -69,24 +77,33 @@ export class MetaWhatsAppProvider implements IWhatsAppProvider {
         ],
       },
     });
+    log.info('sendTeamInvite completed', { to: normalisePhone(toPhone) });
   }
 
   private async post(payload: Record<string, unknown>): Promise<void> {
-    const res = await fetch(
-      `${this.apiBase}/${this.cfg.phoneNumberId}/messages`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${this.cfg.accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ messaging_product: 'whatsapp', ...payload }),
+    const url = `${this.apiBase}/${this.cfg.phoneNumberId}/messages`;
+    log.debug('Meta API POST', { url, to: payload.to });
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${this.cfg.accessToken}`,
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ messaging_product: 'whatsapp', ...payload }),
+    });
 
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
-      throw new Error(body?.error?.message ?? `Meta API error ${res.status}`);
+      const errorMsg = body?.error?.message ?? `Meta API error ${res.status}`;
+      log.error('Meta API request failed', {
+        status: res.status,
+        error: errorMsg,
+        to: payload.to,
+      });
+      throw new Error(errorMsg);
     }
+
+    log.debug('Meta API request succeeded', { status: res.status, to: payload.to });
   }
 }

@@ -6,9 +6,13 @@
 import type { IWhatsAppProvider } from './interface.ts';
 import { MetaWhatsAppProvider } from './meta.ts';
 import { TwilioWhatsAppProvider } from './twilio.ts';
+import { createLogger } from '../../logger.ts';
+
+const log = createLogger('whatsapp-factory');
 
 export function createWhatsAppProvider(): IWhatsAppProvider {
   const providerName = Deno.env.get('WHATSAPP_PROVIDER') ?? 'meta';
+  log.info('creating WhatsApp provider', { provider: providerName });
 
   switch (providerName) {
     case 'meta':
@@ -18,6 +22,7 @@ export function createWhatsAppProvider(): IWhatsAppProvider {
       return createTwilioProvider();
 
     default:
+      log.error('unknown provider', { provider: providerName });
       throw new Error(
         `Unknown WHATSAPP_PROVIDER "${providerName}". Supported: meta, twilio`,
       );
@@ -29,11 +34,16 @@ function createMetaProvider(): MetaWhatsAppProvider {
   const accessToken   = Deno.env.get('META_WHATSAPP_ACCESS_TOKEN');
 
   if (!phoneNumberId || !accessToken) {
+    log.error('missing Meta WhatsApp secrets', {
+      has_phone_number_id: !!phoneNumberId,
+      has_access_token: !!accessToken,
+    });
     throw new Error(
       'Missing required secrets: META_WHATSAPP_PHONE_NUMBER_ID, META_WHATSAPP_ACCESS_TOKEN',
     );
   }
 
+  log.info('Meta WhatsApp provider created', { phone_number_id: phoneNumberId });
   return new MetaWhatsAppProvider({
     phoneNumberId,
     accessToken,
@@ -52,11 +62,17 @@ function createTwilioProvider(): TwilioWhatsAppProvider {
   const fromNumber = Deno.env.get('TWILIO_WHATSAPP_FROM');
 
   if (!accountSid || !authToken || !fromNumber) {
+    log.error('missing Twilio secrets', {
+      has_account_sid: !!accountSid,
+      has_auth_token: !!authToken,
+      has_from_number: !!fromNumber,
+    });
     throw new Error(
       'Missing required secrets: TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM',
     );
   }
 
+  log.info('Twilio WhatsApp provider created');
   return new TwilioWhatsAppProvider({
     accountSid,
     authToken,

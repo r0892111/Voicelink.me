@@ -225,26 +225,24 @@ export const AuthCallback: React.FC = () => {
       if (result.session_url) {
         setMessage(t('auth.completingAuthentication'));
         
-        // Fix redirect_to parameter in session_url to use current origin instead of localhost
+        // Fix redirect_to parameter so the magic link lands on the same origin
+        // the user started the OAuth flow on (localhost in dev, voicelink.me in
+        // prod). The edge function already sets redirect_to based on the
+        // caller's redirect_uri, but we re-anchor here as a belt-and-braces
+        // fix for any cached session_url from an older deployment.
         let fixedSessionUrl = result.session_url;
         try {
           const url = new URL(result.session_url);
           const redirectTo = url.searchParams.get('redirect_to');
           if (redirectTo) {
-            // Replace any localhost URL with current origin (voicelink.me in production)
-            const currentOrigin = window.location.origin; // Will be https://voicelink.me in production
-            let fixedRedirectTo = redirectTo;
-            
-            // Replace localhost with current origin
-            if (redirectTo.includes('localhost')) {
-              fixedRedirectTo = redirectTo.replace(/https?:\/\/localhost(:\d+)?/, currentOrigin);
-            }
-            
-            // Ensure we're using the correct protocol (https in production)
-            if (currentOrigin.includes('voicelink.me') && fixedRedirectTo.startsWith('http://')) {
-              fixedRedirectTo = fixedRedirectTo.replace('http://', 'https://');
-            }
-            
+            const currentOrigin = window.location.origin;
+            const redirectToUrl = new URL(redirectTo);
+
+            // Rewrite the origin of redirect_to to the current origin, but
+            // preserve whatever path/query was set (e.g. /dashboard).
+            const fixedRedirectTo =
+              currentOrigin + redirectToUrl.pathname + redirectToUrl.search + redirectToUrl.hash;
+
             url.searchParams.set('redirect_to', fixedRedirectTo);
             fixedSessionUrl = url.toString();
             console.log('Fixed session_url redirect_to:', { original: redirectTo, fixed: fixedRedirectTo, currentOrigin });

@@ -1,6 +1,9 @@
 // ── Twilio WhatsApp provider ──────────────────────────────────────────────────
 
 import type { IWhatsAppProvider } from './interface.ts';
+import { createLogger } from '../../logger.ts';
+
+const log = createLogger('whatsapp-twilio');
 
 export interface TwilioProviderConfig {
   accountSid: string;
@@ -31,6 +34,7 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
   constructor(private readonly cfg: TwilioProviderConfig) {}
 
   async sendOtp(toPhone: string, code: string): Promise<void> {
+    log.info('sendOtp', { to: normalisePhone(toPhone), has_template: !!this.cfg.otpTemplateSid });
     const params = this.baseParams(normalisePhone(toPhone));
 
     if (this.cfg.otpTemplateSid) {
@@ -41,9 +45,11 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
     }
 
     await this.post(params);
+    log.info('sendOtp completed', { to: normalisePhone(toPhone) });
   }
 
   async sendWelcome(toPhone: string): Promise<void> {
+    log.info('sendWelcome', { to: normalisePhone(toPhone), has_template: !!this.cfg.welcomeTemplateSid });
     const params = this.baseParams(normalisePhone(toPhone));
 
     if (this.cfg.welcomeTemplateSid) {
@@ -54,9 +60,11 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
     }
 
     await this.post(params);
+    log.info('sendWelcome completed', { to: normalisePhone(toPhone) });
   }
 
   async sendTeamInvite(toPhone: string, adminName: string, inviteUrl: string): Promise<void> {
+    log.info('sendTeamInvite', { to: normalisePhone(toPhone), admin_name: adminName, has_template: !!this.cfg.teamInviteTemplateSid });
     const params = this.baseParams(normalisePhone(toPhone));
 
     if (this.cfg.teamInviteTemplateSid) {
@@ -69,6 +77,7 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
     }
 
     await this.post(params);
+    log.info('sendTeamInvite completed', { to: normalisePhone(toPhone) });
   }
 
   private baseParams(to: string): URLSearchParams {
@@ -82,6 +91,8 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
     const url = `https://api.twilio.com/2010-04-01/Accounts/${this.cfg.accountSid}/Messages.json`;
     const credentials = btoa(`${this.cfg.accountSid}:${this.cfg.authToken}`);
 
+    log.debug('Twilio API POST', { to: params.get('To') });
+
     const res = await fetch(url, {
       method: 'POST',
       headers: {
@@ -93,7 +104,15 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
 
     if (!res.ok) {
       const json = await res.json().catch(() => ({}));
-      throw new Error(json?.message ?? `Twilio API error ${res.status}`);
+      const errorMsg = json?.message ?? `Twilio API error ${res.status}`;
+      log.error('Twilio API request failed', {
+        status: res.status,
+        error: errorMsg,
+        to: params.get('To'),
+      });
+      throw new Error(errorMsg);
     }
+
+    log.debug('Twilio API request succeeded', { status: res.status, to: params.get('To') });
   }
 }
