@@ -25,36 +25,83 @@ interface ConsentProviderProps {
   children: React.ReactNode;
 }
 
+// ─── Google Analytics helpers ────────────────────────────────────────────────
+// We load gtag.js lazily — only after the user explicitly grants analytics
+// consent. Revoking consent removes the script and clears any `_ga*` cookies
+// that were already placed so the browser stops phoning home.
+
+const GA_MEASUREMENT_ID = 'G-V2GHSHWX23';
+const GA_SCRIPT_ID = 'voicelink-gtag-script';
+
+function loadGoogleAnalytics(): void {
+  if (typeof window === 'undefined') return;
+  if (document.getElementById(GA_SCRIPT_ID)) return; // already loaded
+
+  const s = document.createElement('script');
+  s.id = GA_SCRIPT_ID;
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(s);
+
+  // window.gtag + dataLayer are pre-created in index.html.
+  window.gtag?.('js', new Date());
+  window.gtag?.('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+}
+
+function unloadGoogleAnalytics(): void {
+  if (typeof window === 'undefined') return;
+  document.getElementById(GA_SCRIPT_ID)?.remove();
+
+  // Tell any already-loaded gtag to stop collecting.
+  (window as unknown as Record<string, boolean>)[`ga-disable-${GA_MEASUREMENT_ID}`] = true;
+
+  // Best-effort cookie cleanup. GA cookies are first-party on the current
+  // host with path=/ and (in production) domain=.voicelink.me.
+  const host = window.location.hostname;
+  const domains = [host, `.${host.replace(/^www\./, '')}`];
+  const names = ['_ga', '_gid', '_gat', `_ga_${GA_MEASUREMENT_ID.replace(/^G-/, '')}`];
+  for (const name of names) {
+    for (const domain of domains) {
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${domain}`;
+    }
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+  }
+}
+
+function applyConsent(consent: Record<string, boolean>): void {
+  if (consent.analytics) loadGoogleAnalytics();
+  else unloadGoogleAnalytics();
+}
+
 export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) => {
-  const [showBanner, setShowBanner] = useState(false); // Start with false initially
+  const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<Record<string, boolean>>({});
 
   // Listen for custom event to open settings
   useEffect(() => {
-    const handleOpenSettings = () => {
-      setShowSettings(true);
-    };
-
+    const handleOpenSettings = () => setShowSettings(true);
     window.addEventListener('openCookieSettings', handleOpenSettings);
     return () => window.removeEventListener('openCookieSettings', handleOpenSettings);
   }, []);
 
   useEffect(() => {
-    // Check if user has already made a consent choice
+    // Restore consent choice from localStorage on mount, and apply it so GA
+    // loads/stays-unloaded before the user interacts again.
     const savedConsent = localStorage.getItem('cookie-consent');
-    
     if (savedConsent) {
       try {
         const parsedConsent = JSON.parse(savedConsent);
         setConsent(parsedConsent);
-        setShowBanner(false); // Hide banner if consent exists
-      } catch (error) {
-        console.error('Error parsing consent:', error);
-        setShowBanner(true); // Show banner on error
+        setShowBanner(false);
+        applyConsent(parsedConsent);
+      } catch {
+        setShowBanner(true);
       }
     } else {
-      setShowBanner(true); // Show banner if no consent found
+      setShowBanner(true);
+      // No prior consent → make sure nothing analytics-related is loaded.
+      unloadGoogleAnalytics();
     }
   }, []);
 
@@ -63,60 +110,44 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     localStorage.setItem('cookie-consent', JSON.stringify(newConsent));
     setShowBanner(false);
     setShowSettings(false);
-
-    // Dispatch event for UTM tracking and other consent-dependent features
+    applyConsent(newConsent);
     window.dispatchEvent(new Event('consentChanged'));
   };
 
   const acceptAll = () => {
-    const allConsent = {
+    saveConsent({
       essential: true,
       analytics: true,
       marketing: true,
       preferences: true,
-    };
-    saveConsent(allConsent);
-    setShowBanner(false);
+    });
   };
 
   const rejectAll = () => {
-    const essentialOnly = {
+    saveConsent({
       essential: true,
       analytics: false,
       marketing: false,
       preferences: false,
-    };
-    saveConsent(essentialOnly);
-    setShowBanner(false);
+    });
   };
 
-  const openSettings = () => {
-    setShowSettings(true);
-  };
-
-  const closeSettings = () => {
-    setShowSettings(false);
-  };
+  const openSettings = () => setShowSettings(true);
+  const closeSettings = () => setShowSettings(false);
 
   const closeBanner = () => {
-    setShowBanner(false);
-    // Also save essential-only consent when closing
-    const essentialOnly = {
+    // Closing the banner without an explicit choice counts as essential-only
+    // (the strictest option). Under GDPR/ePrivacy, "X out" is NOT implied
+    // consent for non-essential cookies.
+    saveConsent({
       essential: true,
       analytics: false,
       marketing: false,
       preferences: false,
-    };
-    localStorage.setItem('cookie-consent', JSON.stringify(essentialOnly));
-    setConsent(essentialOnly);
-
-    // Dispatch event for consent-dependent features
-    window.dispatchEvent(new Event('consentChanged'));
+    });
   };
 
-  const hasConsent = (category: string): boolean => {
-    return consent[category] === true;
-  };
+  const hasConsent = (category: string): boolean => consent[category] === true;
 
   return (
     <ConsentContext.Provider

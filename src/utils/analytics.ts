@@ -20,19 +20,16 @@ export interface EventParams {
 }
 
 function hasAnalyticsConsent(): boolean {
+  // Opt-in by default: if no consent record exists, analytics is OFF.
+  // Only returns true when the user has explicitly granted
+  // { analytics: true } via the cookie banner or settings modal.
   try {
     const consent = localStorage.getItem('cookie-consent');
-    if (!consent) {
-      console.log('[Analytics] No consent found, allowing by default');
-      return true;
-    }
+    if (!consent) return false;
     const parsed = JSON.parse(consent);
-    const hasConsent = parsed.analytics === true;
-    console.log('[Analytics] Consent check:', hasConsent);
-    return hasConsent;
-  } catch (error) {
-    console.warn('[Analytics] Error checking consent:', error);
-    return true;
+    return parsed.analytics === true;
+  } catch {
+    return false;
   }
 }
 

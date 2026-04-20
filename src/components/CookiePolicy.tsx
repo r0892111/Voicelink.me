@@ -21,7 +21,7 @@ const CookiePolicy: React.FC = () => {
 
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Cookie Statement</h1>
-            <p className="text-sm text-gray-600">Version 20.08.2025</p>
+            <p className="text-sm text-gray-600">Version 20.04.2026</p>
           </div>
         </div>
 
@@ -134,16 +134,84 @@ const CookiePolicy: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
+                    {/* ── Essential ── */}
                     <tr className="border-t border-gray-300">
-                      <td className="p-3 align-top border-r border-gray-300"></td>
-                      <td className="p-3 align-top border-r border-gray-300"></td>
-                      <td className="p-3 align-top border-r border-gray-300"></td>
-                      <td className="p-3 align-top border-r border-gray-300"></td>
-                      <td className="p-3 align-top"></td>
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">cookie-consent</td>
+                      <td className="p-3 align-top border-r border-gray-300">Essential</td>
+                      <td className="p-3 align-top border-r border-gray-300">Finit Solutions (first-party, localStorage)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Stores your cookie preferences so we don't show the banner on every visit.</td>
+                      <td className="p-3 align-top">Until cleared</td>
+                    </tr>
+                    <tr className="border-t border-gray-300">
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">sb-*-auth-token</td>
+                      <td className="p-3 align-top border-r border-gray-300">Essential</td>
+                      <td className="p-3 align-top border-r border-gray-300">Supabase (first-party, localStorage)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Keeps you signed in to your VoiceLink account between sessions.</td>
+                      <td className="p-3 align-top">Session (+ refresh)</td>
+                    </tr>
+                    <tr className="border-t border-gray-300">
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">userPlatform, auth_provider</td>
+                      <td className="p-3 align-top border-r border-gray-300">Essential</td>
+                      <td className="p-3 align-top border-r border-gray-300">Finit Solutions (first-party, localStorage)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Remembers which CRM (Teamleader / Pipedrive / Odoo) your account is linked to.</td>
+                      <td className="p-3 align-top">Until sign-out</td>
+                    </tr>
+                    <tr className="border-t border-gray-300">
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">i18nextLng</td>
+                      <td className="p-3 align-top border-r border-gray-300">Preferences</td>
+                      <td className="p-3 align-top border-r border-gray-300">Finit Solutions (first-party, localStorage)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Remembers the language you selected (EN / NL / FR / DE).</td>
+                      <td className="p-3 align-top">Until cleared</td>
+                    </tr>
+
+                    {/* ── Analytics (consent-gated) ── */}
+                    <tr className="border-t border-gray-300">
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">_ga</td>
+                      <td className="p-3 align-top border-r border-gray-300">Analytics (non-essential)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Google Analytics (third-party)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Distinguishes unique visitors so we can measure aggregate platform usage.</td>
+                      <td className="p-3 align-top">2 years</td>
+                    </tr>
+                    <tr className="border-t border-gray-300">
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">_ga_V2GHSHWX23</td>
+                      <td className="p-3 align-top border-r border-gray-300">Analytics (non-essential)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Google Analytics (third-party)</td>
+                      <td className="p-3 align-top border-r border-gray-300">GA4 session persistence for this property (IP anonymised).</td>
+                      <td className="p-3 align-top">2 years</td>
+                    </tr>
+                    <tr className="border-t border-gray-300">
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">_gid</td>
+                      <td className="p-3 align-top border-r border-gray-300">Analytics (non-essential)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Google Analytics (third-party)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Distinguishes users for a 24-hour window.</td>
+                      <td className="p-3 align-top">24 hours</td>
+                    </tr>
+
+                    {/* ── Third-party during OAuth / payments (only on those flows) ── */}
+                    <tr className="border-t border-gray-300">
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">__stripe_mid, __stripe_sid, m</td>
+                      <td className="p-3 align-top border-r border-gray-300">Essential (payment)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Stripe (third-party)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Fraud prevention and payment-session continuity. Loaded only on the billing / checkout flows.</td>
+                      <td className="p-3 align-top">1 year / session</td>
+                    </tr>
+                    <tr className="border-t border-gray-300">
+                      <td className="p-3 align-top border-r border-gray-300 font-mono text-xs">Teamleader session cookies</td>
+                      <td className="p-3 align-top border-r border-gray-300">Essential (authentication)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Teamleader (third-party)</td>
+                      <td className="p-3 align-top border-r border-gray-300">Set only on teamleader.eu during the OAuth redirect. Governed by Teamleader's own cookie policy.</td>
+                      <td className="p-3 align-top">See Teamleader</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <p className="leading-relaxed mb-6 text-sm text-gray-700">
+                <strong>Analytics cookies are strictly opt-in.</strong> We do not load Google Analytics
+                until you accept them explicitly through the cookie banner or settings. Withdrawing
+                consent immediately unloads the analytics script and clears any <code>_ga*</code>
+                cookies that were already placed.
+              </p>
 
               <p className="leading-relaxed mb-6">
                 Please read our <a href="https://voicelink.me/privacy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">privacy statement</a> to learn about how we process personal data, how we secure them, how long we retain them and what privacy rights you have.
@@ -154,11 +222,22 @@ const CookiePolicy: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Accepting cookies</h3>
 
               <p className="leading-relaxed mb-4">
-                On your first visit to our platform, a cookie banner appears. By means of this cookie banner, we inform you about which cookies we use, and we ask you whether we may use certain cookies. You are free to agree to this or not.
+                On your first visit to our platform, a cookie banner appears. It lists each category
+                of non-essential cookies and asks whether we may set them. Non-essential cookies
+                (analytics, marketing, preferences) are <strong>not placed until you give explicit
+                consent</strong>. Closing the banner without a choice is treated as a refusal of all
+                non-essential cookies.
+              </p>
+
+              <p className="leading-relaxed mb-4">
+                You can change your choice at any time by opening the cookie-settings modal via the
+                "Cookie settings" link in the footer. Withdrawing consent removes the corresponding
+                scripts and clears the related cookies from your browser on the next page load.
               </p>
 
               <p className="leading-relaxed mb-6">
-                Please note that some functionalities on our platform may not work or may not work fully if not all cookies are accepted.
+                Essential cookies and authenticated-session storage are always active — without them
+                the platform cannot keep you signed in or process your CRM connection.
               </p>
             </div>
 

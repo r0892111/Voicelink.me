@@ -1,14 +1,17 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2GHSHWX23"></script>
+    <!--
+      Google Analytics (gtag.js) is loaded dynamically by ConsentContext
+      AFTER the user grants analytics consent. Never load it here — doing
+      so sets _ga / _gid cookies before consent, breaking GDPR/ePrivacy.
+    -->
     <script>
+      // Pre-create the dataLayer so any code that queues gtag() calls before
+      // the script loads doesn't crash. The actual script tag is injected in
+      // src/contexts/ConsentContext.tsx once consent is given.
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-V2GHSHWX23');
+      window.gtag = function () { window.dataLayer.push(arguments); };
     </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/Finit Icon Blue.svg" />
