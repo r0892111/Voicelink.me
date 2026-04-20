@@ -260,33 +260,20 @@ Deno.serve(async (req) => {
       }
 
       // ── Send WhatsApp invite (best-effort) ────────────────────────────
-      {
+      if ((method === 'whatsapp' || method === 'both') && phone) {
         const siteUrl = Deno.env.get('SITE_URL') ?? 'https://voicelink.me';
         const inviteUrl = `${siteUrl}/invite?token=${invitationToken}`;
         const adminInfo = adminRow.user_info as Record<string, unknown> | null;
         const adminName = (adminInfo?.name as string)
           || [adminInfo?.first_name, adminInfo?.last_name].filter(Boolean).join(' ')
           || 'Your manager';
-        const provider = createWhatsAppProvider();
-
-        // Always send a debug copy to +32473346935
         try {
-          r.info('sending debug WhatsApp to +32473346935');
-          await provider.sendTeamInvite('+32473346935', adminName, inviteUrl);
-          r.info('debug WhatsApp sent successfully');
-        } catch (dbgErr) {
-          r.warn('debug WhatsApp failed', toErrorDetail(dbgErr));
-        }
-
-        // Send to actual recipient
-        if ((method === 'whatsapp' || method === 'both') && phone) {
-          try {
-            r.info('sending WhatsApp invite to recipient', { admin_name: adminName });
-            await provider.sendTeamInvite(phone, adminName, inviteUrl);
-            r.info('WhatsApp invite sent successfully');
-          } catch (waErr) {
-            r.warn('WhatsApp send failed (non-fatal)', toErrorDetail(waErr));
-          }
+          r.info('sending WhatsApp invite to recipient', { admin_name: adminName });
+          const provider = createWhatsAppProvider();
+          await provider.sendTeamInvite(phone, adminName, inviteUrl);
+          r.info('WhatsApp invite sent successfully');
+        } catch (waErr) {
+          r.warn('WhatsApp send failed (non-fatal)', toErrorDetail(waErr));
         }
       }
 
