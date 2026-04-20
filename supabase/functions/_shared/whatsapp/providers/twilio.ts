@@ -25,6 +25,17 @@ export interface TwilioProviderConfig {
   teamInviteFallbackBody: string;
 }
 
+export interface TwilioSendResult {
+  sid: string | null;
+  status: string | null;
+  error_code: string | number | null;
+  error_message: string | null;
+  to: string | null;
+  from: string | null;
+  used_template_sid: string | null;
+  used_body: string | null;
+}
+
 function normalisePhone(phone: string): string {
   const clean = phone.trim().replace(/\s/g, '');
   return clean.startsWith('+') ? clean : `+${clean}`;
@@ -33,34 +44,57 @@ function normalisePhone(phone: string): string {
 export class TwilioWhatsAppProvider implements IWhatsAppProvider {
   constructor(private readonly cfg: TwilioProviderConfig) {}
 
+  /** Last-call Twilio response. Read by welcome / invite handlers to surface
+   *  message SID + status into their HTTP response for debugging silent drops. */
+  lastResult: TwilioSendResult | null = null;
+
   async sendOtp(toPhone: string, code: string): Promise<void> {
     log.info('sendOtp', { to: normalisePhone(toPhone), has_template: !!this.cfg.otpTemplateSid });
     const params = this.baseParams(normalisePhone(toPhone));
 
+    let usedTemplate: string | null = null;
+    let usedBody: string | null = null;
     if (this.cfg.otpTemplateSid) {
       params.set('ContentSid', this.cfg.otpTemplateSid);
       params.set('ContentVariables', JSON.stringify({ '1': code }));
+      usedTemplate = this.cfg.otpTemplateSid;
     } else {
-      params.set('Body', this.cfg.otpFallbackBody.replace('{code}', code));
+      const body = this.cfg.otpFallbackBody.replace('{code}', code);
+      params.set('Body', body);
+      usedBody = body;
     }
 
-    await this.post(params);
-    log.info('sendOtp completed', { to: normalisePhone(toPhone) });
+    this.lastResult = await this.post(params, usedTemplate, usedBody);
+    log.info('sendOtp completed', {
+      to: normalisePhone(toPhone),
+      sid: this.lastResult.sid,
+      status: this.lastResult.status,
+    });
   }
 
   async sendWelcome(toPhone: string): Promise<void> {
     log.info('sendWelcome', { to: normalisePhone(toPhone), has_template: !!this.cfg.welcomeTemplateSid });
     const params = this.baseParams(normalisePhone(toPhone));
 
+    let usedTemplate: string | null = null;
+    let usedBody: string | null = null;
     if (this.cfg.welcomeTemplateSid) {
       params.set('ContentSid', this.cfg.welcomeTemplateSid);
       params.set('ContentVariables', JSON.stringify({}));
+      usedTemplate = this.cfg.welcomeTemplateSid;
     } else {
       params.set('Body', this.cfg.welcomeFallbackBody);
+      usedBody = this.cfg.welcomeFallbackBody;
     }
 
-    await this.post(params);
-    log.info('sendWelcome completed', { to: normalisePhone(toPhone) });
+    this.lastResult = await this.post(params, usedTemplate, usedBody);
+    log.info('sendWelcome completed', {
+      to: normalisePhone(toPhone),
+      sid: this.lastResult.sid,
+      status: this.lastResult.status,
+      error_code: this.lastResult.error_code,
+      error_message: this.lastResult.error_message,
+    });
   }
 
   async sendTeamInvite(toPhone: string, adminName: string, inviteUrl: string): Promise<void> {
@@ -87,7 +121,11 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
     });
   }
 
-  private async post(params: URLSearchParams): Promise<void> {
+  private async post(
+    params: URLSearchParams,
+    usedTemplate: string | null,
+    usedBody: string | null,
+  ): Promise<TwilioSendResult> {
     const url = `https://api.twilio.com/2010-04-01/Accounts/${this.cfg.accountSid}/Messages.json`;
     const credentials = btoa(`${this.cfg.accountSid}:${this.cfg.authToken}`);
 
@@ -102,17 +140,46 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
       body: params.toString(),
     });
 
+    const rawText = await res.text().catch(() => '');
+    let json: Record<string, unknown> = {};
+    try { json = rawText ? JSON.parse(rawText) : {}; } catch { /* non-JSON */ }
+
     if (!res.ok) {
-      const json = await res.json().catch(() => ({}));
-      const errorMsg = json?.message ?? `Twilio API error ${res.status}`;
+      const errorMsg = (json as { message?: string }).message ?? `Twilio API error ${res.status}`;
+      const errorCode = (json as { code?: string | number }).code ?? null;
       log.error('Twilio API request failed', {
         status: res.status,
         error: errorMsg,
+        error_code: errorCode,
+        raw_body: rawText.slice(0, 2000),
         to: params.get('To'),
       });
-      throw new Error(errorMsg);
+      const err = new Error(errorMsg);
+      Object.assign(err, {
+        twilio_status: res.status,
+        twilio_error_code: errorCode,
+        twilio_raw_body: rawText.slice(0, 2000),
+      });
+      throw err;
     }
 
-    log.debug('Twilio API request succeeded', { status: res.status, to: params.get('To') });
+    const result: TwilioSendResult = {
+      sid:           (json as { sid?: string }).sid ?? null,
+      status:        (json as { status?: string }).status ?? null,
+      error_code:    (json as { error_code?: string | number }).error_code ?? null,
+      error_message: (json as { error_message?: string }).error_message ?? null,
+      to:            (json as { to?: string }).to ?? null,
+      from:          (json as { from?: string }).from ?? null,
+      used_template_sid: usedTemplate,
+      used_body:     usedBody,
+    };
+    log.debug('Twilio API request succeeded', {
+      status: res.status,
+      sid: result.sid,
+      msg_status: result.status,
+      error_code: result.error_code,
+      to: result.to,
+    });
+    return result;
   }
 }

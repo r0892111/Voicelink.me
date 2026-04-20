@@ -118,10 +118,20 @@ export function createLogger(functionName: string): Logger {
   };
 }
 
-/** Safely extract a loggable error object (message + name, no stack in prod). */
+/** Safely extract a loggable error object (message + name, no stack in prod).
+ *  Also picks up any `meta_*` or `twilio_*` fields that providers attach via
+ *  Object.assign, so provider-level error detail (Meta fbtrace_id, error codes,
+ *  raw response body) bubbles up into the structured log / response. */
 export function toErrorDetail(err: unknown): Record<string, unknown> {
   if (err instanceof Error) {
-    return { error: err.message, error_name: err.name };
+    const base: Record<string, unknown> = { error: err.message, error_name: err.name };
+    const anyErr = err as unknown as Record<string, unknown>;
+    for (const key of Object.keys(anyErr)) {
+      if (key.startsWith('meta_') || key.startsWith('twilio_')) {
+        base[key] = anyErr[key];
+      }
+    }
+    return base;
   }
   return { error: String(err) };
 }
