@@ -67,13 +67,15 @@ Deno.serve(async (req) => {
       // Gate: user must have started their Stripe trial before connecting
       // WhatsApp. `stripe_customer_id` is created by the checkout flow, so a
       // null value means the user has never started a trial or subscribed.
-      // The `test` provider is used during the early-access test flow and is
-      // exempt (test users bypass Stripe entirely).
+      // For invited members (is_admin=false with admin_user_id), the
+      // subscription lives on the admin's row — check that instead so
+      // members inherit their admin's trial/paid status. The `test` provider
+      // is used during the early-access test flow and is exempt.
       if (crm_provider !== 'test') {
         r.info('checking subscription gate', { crm_user_id });
         const { data: gateRow, error: gateErr } = await supabase
           .from(`${crm_provider}_users`)
-          .select('stripe_customer_id')
+          .select('stripe_customer_id, is_admin, admin_user_id')
           .eq('user_id', crm_user_id)
           .maybeSingle();
 
@@ -82,10 +84,30 @@ Deno.serve(async (req) => {
           r.done(500);
           return fail('Subscription check failed. Please try again.', 500);
         }
-        if (!gateRow?.stripe_customer_id) {
-          r.warn('no stripe customer — trial not started', { crm_user_id });
+
+        let gateCustomerId: string | null = gateRow?.stripe_customer_id ?? null;
+        if (gateRow && !gateRow.is_admin && gateRow.admin_user_id) {
+          r.info('caller is member, resolving admin subscription gate', { admin_user_id: gateRow.admin_user_id });
+          const { data: adminRow } = await supabase
+            .from(`${crm_provider}_users`)
+            .select('stripe_customer_id')
+            .eq('user_id', gateRow.admin_user_id)
+            .maybeSingle();
+          gateCustomerId = adminRow?.stripe_customer_id ?? null;
+        }
+
+        if (!gateCustomerId) {
+          r.warn('no stripe customer — trial not started', {
+            crm_user_id,
+            is_member: gateRow && !gateRow.is_admin,
+          });
           r.done(402);
-          return fail('Start your free trial before connecting WhatsApp.', 402);
+          return fail(
+            gateRow && !gateRow.is_admin
+              ? 'Your workspace admin must start the free trial before you can connect WhatsApp.'
+              : 'Start your free trial before connecting WhatsApp.',
+            402,
+          );
         }
       }
 

@@ -4,7 +4,7 @@ import { useDashboardContext } from '../hooks/useDashboardContext';
 import { WhatsAppConnectForm } from './WhatsAppConnectForm';
 
 export function DashboardSettings() {
-  const { wa, subscription } = useDashboardContext();
+  const { wa, subscription, role } = useDashboardContext();
   const isConnected = wa.status === 'active';
   const subStatus = subscription.info?.subscription_status;
   const canConnect = subStatus === 'active' || subStatus === 'trialing';
@@ -49,6 +49,20 @@ export function DashboardSettings() {
           <div className="bg-navy/[0.03] rounded-xl px-4 py-3">
             <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-0.5">Connected number</p>
             <p className="text-navy font-medium font-mono">{wa.number}</p>
+          </div>
+        ) : !canConnect && role.isMember ? (
+          <div className="bg-navy/[0.03] border border-navy/[0.07] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-navy/[0.06] flex items-center justify-center flex-shrink-0">
+              <Lock className="w-5 h-5 text-navy/60" />
+            </div>
+            <div className="flex-1">
+              <p className="font-general font-semibold text-navy text-sm">Waiting on your admin</p>
+              <p className="text-navy/55 text-sm mt-0.5">
+                {role.adminName
+                  ? `${role.adminName} needs to activate the workspace trial before you can connect WhatsApp.`
+                  : 'Your workspace admin needs to activate the trial before you can connect WhatsApp.'}
+              </p>
+            </div>
           </div>
         ) : !canConnect ? (
           <div className="bg-navy/[0.03] border border-navy/[0.07] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center gap-4">

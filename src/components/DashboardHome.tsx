@@ -402,7 +402,7 @@ export function DashboardHome() {
                           )}
                         </button>
                       )}
-                      {step.n === 2 && wa.status === 'not_set' && !canConnectWhatsApp && !subscription.checking && (
+                      {step.n === 2 && wa.status === 'not_set' && !canConnectWhatsApp && !subscription.checking && !role.isMember && (
                         <button
                           onClick={subscription.startTrial}
                           className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
@@ -410,6 +410,11 @@ export function DashboardHome() {
                           Start Trial First
                           <ArrowRight className="w-3 h-3" />
                         </button>
+                      )}
+                      {step.n === 2 && wa.status === 'not_set' && !canConnectWhatsApp && !subscription.checking && role.isMember && (
+                        <span className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy/[0.05] text-navy/60 text-xs font-semibold px-4 py-2 rounded-full">
+                          Awaiting admin
+                        </span>
                       )}
                     </div>
 

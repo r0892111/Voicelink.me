@@ -40,21 +40,39 @@ Deno.serve(async (req) => {
     r.info('looking up stripe_customer_id');
     const { data: row } = await supabase
       .from('teamleader_users')
-      .select('stripe_customer_id')
+      .select('stripe_customer_id, is_admin, admin_user_id')
       .eq('user_id', user.id)
+      .is('deleted_at', null)
       .maybeSingle();
 
-    if (!row?.stripe_customer_id) {
-      r.info('no stripe customer found', { user_id: user.id });
+    // For invited members (is_admin=false with an admin_user_id), the
+    // subscription lives on the admin's row — members don't have their own
+    // Stripe customer. Resolve the admin's row instead so the dashboard
+    // reflects the team-level subscription state and members aren't
+    // prompted to start a trial they don't own.
+    let stripeCustomerId: string | null = row?.stripe_customer_id ?? null;
+    if (row && !row.is_admin && row.admin_user_id) {
+      r.info('caller is member, resolving admin subscription', { admin_user_id: row.admin_user_id });
+      const { data: adminRow } = await supabase
+        .from('teamleader_users')
+        .select('stripe_customer_id')
+        .eq('user_id', row.admin_user_id)
+        .is('deleted_at', null)
+        .maybeSingle();
+      stripeCustomerId = adminRow?.stripe_customer_id ?? null;
+    }
+
+    if (!stripeCustomerId) {
+      r.info('no stripe customer found', { user_id: user.id, is_member: row && !row.is_admin });
       r.done(200, { subscription_status: 'none' });
       return json({ success: true, subscription: { subscription_status: 'none' } });
     }
 
-    r.info('fetching subscriptions from Stripe', { customer_id: row.stripe_customer_id });
+    r.info('fetching subscriptions from Stripe', { customer_id: stripeCustomerId });
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
 
     const subscriptions = await stripe.subscriptions.list({
-      customer: row.stripe_customer_id,
+      customer: stripeCustomerId,
       status:   'all',
       limit:    5,
       expand:   ['data.items.data.price'],
