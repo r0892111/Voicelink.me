@@ -50,7 +50,7 @@ const Disclaimer: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-4">
-                Finit Solutions, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1020.600.643 (RPR Leuven) (hereinafter "Finit Solutions", "we" or "us").
+                Finit Solutions, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1036.433.716 (RPR Leuven) (hereinafter "Finit Solutions", "we" or "us").
               </p>
 
               <p className="leading-relaxed mb-4">

@@ -62,7 +62,7 @@ export default function SaasAgreementPage() {
               
               <div className="ml-6 mb-4">
                 <p className="mb-2">
-                  <strong>1. FINIT SOLUTIONS</strong>, located at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1020.600.643 (RPR Leuven);
+                  <strong>1. FINIT SOLUTIONS</strong>, located at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1036.433.716 (RPR Leuven);
                 </p>
                 <p className="ml-4 mb-4">
                   Hereinafter referred to as "<strong>FINIT SOLUTIONS</strong>";

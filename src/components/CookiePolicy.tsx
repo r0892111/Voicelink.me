@@ -34,7 +34,7 @@ const CookiePolicy: React.FC = () => {
               </p>
 
               <p className="leading-relaxed mb-8">
-                We, Finit Solutions, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1020.600.643 (RPR Leuven) (hereinafter "Finit Solutions", "we" or "us"), wish to inform visitors to our platform through this cookie statement about which cookies and/or similar technologies are used on our platform, why we do so and how you can delete or disable cookies.
+                We, Finit Solutions, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1036.433.716 (RPR Leuven) (hereinafter "Finit Solutions", "we" or "us"), wish to inform visitors to our platform through this cookie statement about which cookies and/or similar technologies are used on our platform, why we do so and how you can delete or disable cookies.
               </p>
 
               <p className="leading-relaxed mb-8">

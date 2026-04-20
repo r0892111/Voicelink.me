@@ -51,7 +51,7 @@ const PrivacyPolicy: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Who are we?</h3>
               
               <p className="leading-relaxed mb-4">
-                FINIT SOLUTIONS, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1020.600.643 (RPR Leuven)
+                FINIT SOLUTIONS, established at Guldensporenlaan 9, 3120 Tremelo and registered in the Crossroads Bank for Enterprises under number 1036.433.716 (RPR Leuven)
               </p>
               
               <p className="leading-relaxed mb-6">

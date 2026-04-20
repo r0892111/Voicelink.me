@@ -485,7 +485,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
               className="h-8 w-auto"
             />
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-white/35">
-              <span>BTW: BE1020600643</span>
+              <span>BTW: BE1036433716</span>
               <a href="/privacy-policy" className="hover:text-white/70 transition-colors">{t('footer.privacy')}</a>
               <a href="/cookie-policy" className="hover:text-white/70 transition-colors">{t('footer.cookiePolicy')}</a>
               <a href="/disclaimer" className="hover:text-white/70 transition-colors">{t('footer.disclaimer')}</a>
