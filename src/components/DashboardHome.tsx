@@ -12,8 +12,6 @@ import {
   ChevronDown,
   X,
   ExternalLink,
-  Users,
-  BarChart3,
 } from 'lucide-react';
 import { useDashboardContext } from '../hooks/useDashboardContext';
 import { WhatsAppConnectForm } from './WhatsAppConnectForm';
@@ -437,62 +435,6 @@ export function DashboardHome() {
                     )}
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── QUICK ACTIONS (fully set up) ── */}
-      {fullySetUp && (
-        <section className="px-6 pb-8">
-          <div className="max-w-4xl mx-auto">
-            <div
-              className="bg-white/80 backdrop-blur-sm rounded-3xl border border-navy/[0.07] shadow-sm p-7"
-              style={{ animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.62s both' }}
-            >
-              <div className="flex items-center space-x-3 mb-5">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-100 flex items-center justify-center">
-                  <CheckCircle className="w-5 h-5 text-emerald-600" />
-                </div>
-                <div>
-                  <h2 className="font-general font-bold text-navy text-lg leading-tight">You're all set</h2>
-                  <p className="text-xs text-navy/45">Everything's connected — jump back into your workflow.</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <a
-                  href={`https://wa.me/${(wa.number || '').replace(/[^0-9]/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex flex-col items-start gap-2 p-4 rounded-2xl bg-navy/[0.03] hover:bg-navy/[0.06] border border-navy/[0.05] transition-colors"
-                >
-                  <Mic className="w-5 h-5 text-navy/60 group-hover:text-navy transition-colors" />
-                  <span className="font-general font-semibold text-sm text-navy">Send voice note</span>
-                </a>
-                {role.isAdmin && (
-                  <button
-                    onClick={() => navigate('/dashboard/team')}
-                    className="group flex flex-col items-start gap-2 p-4 rounded-2xl bg-navy/[0.03] hover:bg-navy/[0.06] border border-navy/[0.05] transition-colors text-left"
-                  >
-                    <Users className="w-5 h-5 text-navy/60 group-hover:text-navy transition-colors" />
-                    <span className="font-general font-semibold text-sm text-navy">Invite teammate</span>
-                  </button>
-                )}
-                <button
-                  onClick={() => navigate('/dashboard/usage')}
-                  className="group flex flex-col items-start gap-2 p-4 rounded-2xl bg-navy/[0.03] hover:bg-navy/[0.06] border border-navy/[0.05] transition-colors text-left"
-                >
-                  <BarChart3 className="w-5 h-5 text-navy/60 group-hover:text-navy transition-colors" />
-                  <span className="font-general font-semibold text-sm text-navy">View usage</span>
-                </button>
-                <button
-                  onClick={() => navigate('/dashboard/guide')}
-                  className="group flex flex-col items-start gap-2 p-4 rounded-2xl bg-navy/[0.03] hover:bg-navy/[0.06] border border-navy/[0.05] transition-colors text-left"
-                >
-                  <BookOpen className="w-5 h-5 text-navy/60 group-hover:text-navy transition-colors" />
-                  <span className="font-general font-semibold text-sm text-navy">User guide</span>
-                </button>
               </div>
             </div>
           </div>
