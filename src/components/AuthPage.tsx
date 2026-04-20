@@ -35,6 +35,16 @@ export const AuthPage: React.FC = () => {
 
   const disabledProviders: string[] = [];
 
+  // Clear any leftover test-user flags on mount. If the visitor is on /signup,
+  // they're doing the real flow — stale keys from a prior /test-dashboard
+  // session would otherwise cause AuthCallback to mark the new account as a
+  // test user and inject a phantom WhatsApp number.
+  React.useEffect(() => {
+    localStorage.removeItem('is_test_user_flow');
+    localStorage.removeItem('test_user_phone');
+    localStorage.removeItem('test_user_phone_display');
+  }, []);
+
   /* ─── Auth handlers (unchanged) ─── */
 
   const handleSignIn = async (provider: AuthProvider) => {
