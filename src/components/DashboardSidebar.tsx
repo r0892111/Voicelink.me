@@ -13,6 +13,7 @@ import {
   Lock,
 } from 'lucide-react';
 import type { AuthUser } from '../hooks/useAuth';
+import { useI18n } from '../hooks/useI18n';
 
 export interface DashboardSidebarProps {
   user: AuthUser;
@@ -23,42 +24,43 @@ export interface DashboardSidebarProps {
 
 interface NavItem {
   to: string;
-  label: string;
+  labelKey: string;
   icon: React.ComponentType<{ className?: string }>;
   adminOnly?: boolean;
   end?: boolean;
 }
 
 interface NavGroup {
-  label: string;
+  labelKey: string;
   items: NavItem[];
 }
 
 const NAV_GROUPS: NavGroup[] = [
   {
-    label: 'Main',
+    labelKey: 'dash.nav.groupMain',
     items: [
-      { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, end: true },
-      { to: '/dashboard/team', label: 'Team', icon: Users, adminOnly: true },
-      { to: '/dashboard/usage', label: 'Usage', icon: BarChart3 },
+      { to: '/dashboard',         labelKey: 'dash.nav.dashboard', icon: LayoutDashboard, end: true },
+      { to: '/dashboard/team',    labelKey: 'dash.nav.team',      icon: Users,           adminOnly: true },
+      { to: '/dashboard/usage',   labelKey: 'dash.nav.usage',     icon: BarChart3 },
     ],
   },
   {
-    label: 'Account',
+    labelKey: 'dash.nav.groupAccount',
     items: [
-      { to: '/dashboard/settings', label: 'Settings', icon: Settings },
-      { to: '/dashboard/profile', label: 'Profile', icon: UserCircle },
-      { to: '/dashboard/billing', label: 'Billing', icon: CreditCard, adminOnly: true },
+      { to: '/dashboard/settings', labelKey: 'dash.nav.settings', icon: Settings },
+      { to: '/dashboard/profile',  labelKey: 'dash.nav.profile',  icon: UserCircle },
+      { to: '/dashboard/billing',  labelKey: 'dash.nav.billing',  icon: CreditCard, adminOnly: true },
     ],
   },
   {
-    label: 'Help',
-    items: [{ to: '/dashboard/guide', label: 'User Guide', icon: BookOpen }],
+    labelKey: 'dash.nav.groupHelp',
+    items: [{ to: '/dashboard/guide', labelKey: 'dash.nav.guide', icon: BookOpen }],
   },
 ];
 
 export function DashboardSidebar({ user, isAdmin, onSignOut, onNavigate }: DashboardSidebarProps) {
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const initials = user.name
     .split(' ')
@@ -86,14 +88,15 @@ export function DashboardSidebar({ user, isAdmin, onSignOut, onNavigate }: Dashb
 
       <nav className="flex-1 overflow-y-auto px-3 pb-4">
         {NAV_GROUPS.map((group) => (
-          <div key={group.label} className="mb-6">
+          <div key={group.labelKey} className="mb-6">
             <p className="px-3 mb-2 text-[10px] uppercase tracking-widest font-semibold text-navy/35">
-              {group.label}
+              {t(group.labelKey)}
             </p>
             <ul className="space-y-0.5">
               {group.items.map((item) => {
                 const locked = item.adminOnly && !isAdmin;
                 const Icon = item.icon;
+                const label = t(item.labelKey);
 
                 if (locked) {
                   return (
@@ -101,14 +104,14 @@ export function DashboardSidebar({ user, isAdmin, onSignOut, onNavigate }: Dashb
                       <div className="group/locked relative">
                         <div className="flex items-center gap-3 px-3 py-2 rounded-lg text-navy/35 cursor-not-allowed transition-colors group-hover/locked:bg-navy/[0.03] group-hover/locked:text-navy/50">
                           <Icon className="w-4 h-4" />
-                          <span className="text-sm font-medium flex-1">{item.label}</span>
+                          <span className="text-sm font-medium flex-1">{label}</span>
                           <Lock className="w-3 h-3 transition-transform group-hover/locked:scale-110" />
                         </div>
                         <div
                           role="tooltip"
                           className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 z-50 whitespace-nowrap rounded-lg bg-navy text-white text-xs font-medium px-2.5 py-1.5 shadow-lg opacity-0 translate-x-[-4px] group-hover/locked:opacity-100 group-hover/locked:translate-x-0 transition-all duration-150"
                         >
-                          Admin-only — managed by your workspace admin
+                          {t('dash.nav.adminOnlyTooltip')}
                           <span className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-navy" />
                         </div>
                       </div>
@@ -136,7 +139,7 @@ export function DashboardSidebar({ user, isAdmin, onSignOut, onNavigate }: Dashb
                             <span className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-r-full bg-navy" />
                           )}
                           <Icon className="w-4 h-4" />
-                          <span className="flex-1">{item.label}</span>
+                          <span className="flex-1">{label}</span>
                         </>
                       )}
                     </NavLink>
@@ -163,7 +166,7 @@ export function DashboardSidebar({ user, isAdmin, onSignOut, onNavigate }: Dashb
           className="mt-1 w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-navy/60 hover:text-red-600 hover:bg-red-50/50 transition-colors"
         >
           <LogOut className="w-4 h-4" />
-          <span>Sign out</span>
+          <span>{t('dash.nav.signOut')}</span>
         </button>
       </div>
     </aside>

@@ -11,6 +11,7 @@ import { withUTM } from '../utils/utm';
 import { DashboardSidebar } from './DashboardSidebar';
 import { DashboardTopBar } from './DashboardTopBar';
 import { DashboardContext, type SubscriptionInfo } from '../hooks/useDashboardContext';
+import { useI18n } from '../hooks/useI18n';
 
 // Dev-only impersonation: karel@... — a real teamleader_users row with
 // analytics data (120 messages, $3.10 spend as of 2026-04-12). Used when
@@ -30,27 +31,28 @@ const DEV_PREVIEW_USER: AuthUser = {
 
 const PRICE_ID = DEFAULT_TIER.monthlyPriceId;
 
-const PAGE_TITLES: Array<{ pattern: string; title: string }> = [
-  { pattern: '/dashboard', title: 'Dashboard' },
-  { pattern: '/dashboard/team', title: 'Team' },
-  { pattern: '/dashboard/usage', title: 'Usage' },
-  { pattern: '/dashboard/settings', title: 'Settings' },
-  { pattern: '/dashboard/profile', title: 'Profile' },
-  { pattern: '/dashboard/billing', title: 'Billing' },
-  { pattern: '/dashboard/guide', title: 'User Guide' },
+const PAGE_TITLES: Array<{ pattern: string; key: string }> = [
+  { pattern: '/dashboard',          key: 'dash.nav.dashboard' },
+  { pattern: '/dashboard/team',     key: 'dash.nav.team' },
+  { pattern: '/dashboard/usage',    key: 'dash.nav.usage' },
+  { pattern: '/dashboard/settings', key: 'dash.nav.settings' },
+  { pattern: '/dashboard/profile',  key: 'dash.nav.profile' },
+  { pattern: '/dashboard/billing',  key: 'dash.nav.billing' },
+  { pattern: '/dashboard/guide',    key: 'dash.nav.guide' },
 ];
 
-function resolvePageTitle(pathname: string): string {
+function resolvePageTitleKey(pathname: string): string {
   for (const entry of PAGE_TITLES) {
     if (matchPath({ path: entry.pattern, end: true }, pathname)) {
-      return entry.title;
+      return entry.key;
     }
   }
-  return 'Dashboard';
+  return 'dash.nav.dashboard';
 }
 
 export function DashboardLayout() {
   const { user: realUser, loading, signOut } = useAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -225,7 +227,8 @@ export function DashboardLayout() {
     }
   };
 
-  const pageTitle = useMemo(() => resolvePageTitle(location.pathname), [location.pathname]);
+  const pageTitleKey = useMemo(() => resolvePageTitleKey(location.pathname), [location.pathname]);
+  const pageTitle = t(pageTitleKey);
 
   if (loading || !user) {
     return (
@@ -276,7 +279,7 @@ export function DashboardLayout() {
               />
               <button
                 onClick={() => setDrawerOpen(false)}
-                aria-label="Close sidebar"
+                aria-label={t('dash.nav.closeSidebar')}
                 className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-navy/5 text-navy/60 hover:text-navy hover:bg-navy/10 transition-colors"
               >
                 <X className="w-4 h-4" />

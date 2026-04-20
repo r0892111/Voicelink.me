@@ -11,6 +11,7 @@ import {
   Mic,
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useI18n } from '../hooks/useI18n';
 
 interface UsageStats {
   messages_sent: number;
@@ -38,22 +39,8 @@ function formatNumber(value: number): string {
   return new Intl.NumberFormat('en-US').format(Math.round(value));
 }
 
-function formatRelative(iso: string | null): string {
-  if (!iso) return 'No activity yet';
-  const ts = Date.parse(iso);
-  if (Number.isNaN(ts)) return 'No activity yet';
-  const diff = Date.now() - ts;
-  const minutes = Math.floor(diff / 60_000);
-  if (minutes < 1) return 'Just now';
-  if (minutes < 60) return `${minutes} min ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours} hr ago`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `${days} day${days === 1 ? '' : 's'} ago`;
-  return new Date(ts).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-}
-
 export function DashboardUsage() {
+  const { t, currentLanguage } = useI18n();
   const [stats, setStats] = useState<UsageStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -96,17 +83,32 @@ export function DashboardUsage() {
     return () => { cancelled = true; };
   }, []);
 
+  function formatRelative(iso: string | null): string {
+    if (!iso) return t('dash.usage.relNone');
+    const ts = Date.parse(iso);
+    if (Number.isNaN(ts)) return t('dash.usage.relNone');
+    const diff = Date.now() - ts;
+    const minutes = Math.floor(diff / 60_000);
+    if (minutes < 1) return t('dash.usage.relJustNow');
+    if (minutes < 60) return t('dash.usage.relMinutes', { n: minutes });
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return t('dash.usage.relHours', { n: hours });
+    const days = Math.floor(hours / 24);
+    if (days < 30) return t(days === 1 ? 'dash.usage.relDaysOne' : 'dash.usage.relDaysMany', { n: days });
+    return new Date(ts).toLocaleDateString(currentLanguage, {
+      day: 'numeric', month: 'short', year: 'numeric',
+    });
+  }
+
   return (
     <div className="max-w-5xl mx-auto px-6 pt-10 pb-16">
       <header className="mb-8">
         <div className="flex items-center gap-2.5 text-navy/50 mb-2">
           <BarChart3 className="w-4 h-4" />
-          <span className="text-xs uppercase tracking-widest font-semibold">Insights</span>
+          <span className="text-xs uppercase tracking-widest font-semibold">{t('dash.usage.eyebrow')}</span>
         </div>
-        <h1 className="font-general font-bold text-navy text-3xl tracking-tight">Usage</h1>
-        <p className="text-navy/60 mt-1.5">
-          Cumulative VoiceLink activity for your account.
-        </p>
+        <h1 className="font-general font-bold text-navy text-3xl tracking-tight">{t('dash.usage.title')}</h1>
+        <p className="text-navy/60 mt-1.5">{t('dash.usage.subtitle')}</p>
       </header>
 
       {loading ? (
@@ -124,19 +126,26 @@ export function DashboardUsage() {
         </div>
       ) : error ? (
         <div className="bg-red-50 border border-red-100 rounded-2xl p-6">
-          <p className="text-sm text-red-700 font-medium">Couldn't load usage</p>
+          <p className="text-sm text-red-700 font-medium">{t('dash.usage.errorTitle')}</p>
           <p className="text-sm text-red-600/80 mt-1">{error}</p>
         </div>
       ) : !stats ? (
         <EmptyState />
       ) : (
-        <UsageContent stats={stats} />
+        <UsageContent stats={stats} formatRelative={formatRelative} />
       )}
     </div>
   );
 }
 
-function UsageContent({ stats }: { stats: UsageStats }) {
+function UsageContent({
+  stats,
+  formatRelative,
+}: {
+  stats: UsageStats;
+  formatRelative: (iso: string | null) => string;
+}) {
+  const { t, currentLanguage } = useI18n();
   const sonnetPct = stats.total_cost > 0 ? (stats.sonnet_cost / stats.total_cost) * 100 : 0;
   const haikuPct = stats.total_cost > 0 ? (stats.haiku_cost / stats.total_cost) * 100 : 0;
   const consolidationPct =
@@ -145,31 +154,29 @@ function UsageContent({ stats }: { stats: UsageStats }) {
   const metrics = [
     {
       icon: MessageSquare,
-      label: 'Messages sent',
+      label: t('dash.usage.metricMessages'),
       value: formatNumber(stats.messages_sent),
-      hint: 'All time',
+      hint: t('dash.usage.metricMessagesHint'),
     },
     {
       icon: Coins,
-      label: 'Total spend',
+      label: t('dash.usage.metricSpend'),
       value: formatUsd(stats.total_cost),
-      hint: 'LLM processing',
+      hint: t('dash.usage.metricSpendHint'),
     },
     {
       icon: Type,
-      label: 'Avg length',
+      label: t('dash.usage.metricAvgLength'),
       value: `${formatNumber(stats.avg_message_length)}`,
-      hint: 'Chars / message',
+      hint: t('dash.usage.metricAvgLengthHint'),
     },
     {
       icon: Clock,
-      label: 'Last activity',
+      label: t('dash.usage.metricLastActivity'),
       value: formatRelative(stats.last_activity),
       hint: stats.last_activity
-        ? new Date(stats.last_activity).toLocaleDateString('en-US', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
+        ? new Date(stats.last_activity).toLocaleDateString(currentLanguage, {
+            day: 'numeric', month: 'short', year: 'numeric',
           })
         : '—',
     },
@@ -200,31 +207,18 @@ function UsageContent({ stats }: { stats: UsageStats }) {
           <div className="flex items-center gap-2.5 mb-5">
             <Sparkles className="w-4 h-4 text-navy/60" />
             <h2 className="font-general font-semibold text-navy text-sm uppercase tracking-widest">
-              Spend by model
+              {t('dash.usage.spendByModel')}
             </h2>
           </div>
 
-          <CostRow
-            label="Sonnet"
-            amount={stats.sonnet_cost}
-            pct={sonnetPct}
-            dotClass="bg-navy"
-          />
-          <CostRow
-            label="Haiku"
-            amount={stats.haiku_cost}
-            pct={haikuPct}
-            dotClass="bg-slate-blue"
-          />
-          <CostRow
-            label="Consolidation"
-            amount={stats.consolidation_cost}
-            pct={consolidationPct}
-            dotClass="bg-muted-blue"
-          />
+          <CostRow label="Sonnet"        amount={stats.sonnet_cost}        pct={sonnetPct}        dotClass="bg-navy" />
+          <CostRow label="Haiku"         amount={stats.haiku_cost}         pct={haikuPct}         dotClass="bg-slate-blue" />
+          <CostRow label="Consolidation" amount={stats.consolidation_cost} pct={consolidationPct} dotClass="bg-muted-blue" />
 
           <div className="mt-5 pt-4 border-t border-navy/[0.07] flex items-baseline justify-between">
-            <span className="text-xs uppercase tracking-widest font-semibold text-navy/40">Total</span>
+            <span className="text-xs uppercase tracking-widest font-semibold text-navy/40">
+              {t('dash.usage.total')}
+            </span>
             <span className="font-general font-bold text-navy text-lg">
               {formatUsd(stats.total_cost)}
             </span>
@@ -235,7 +229,7 @@ function UsageContent({ stats }: { stats: UsageStats }) {
           <div className="flex items-center gap-2.5 mb-5">
             <Mic className="w-4 h-4 text-navy/60" />
             <h2 className="font-general font-semibold text-navy text-sm uppercase tracking-widest">
-              Tokens processed
+              {t('dash.usage.tokensProcessed')}
             </h2>
           </div>
 
@@ -246,12 +240,12 @@ function UsageContent({ stats }: { stats: UsageStats }) {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-0.5">
-                  Input
+                  {t('dash.usage.inputTokens')}
                 </p>
                 <p className="font-general font-bold text-navy text-xl">
                   {formatNumber(stats.input_tokens_spent)}
                 </p>
-                <p className="text-navy/45 text-xs">From your voice notes</p>
+                <p className="text-navy/45 text-xs">{t('dash.usage.inputTokensHint')}</p>
               </div>
             </div>
 
@@ -261,12 +255,12 @@ function UsageContent({ stats }: { stats: UsageStats }) {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-0.5">
-                  Output
+                  {t('dash.usage.outputTokens')}
                 </p>
                 <p className="font-general font-bold text-navy text-xl">
                   {formatNumber(stats.output_tokens_spent)}
                 </p>
-                <p className="text-navy/45 text-xs">CRM updates + summaries</p>
+                <p className="text-navy/45 text-xs">{t('dash.usage.outputTokensHint')}</p>
               </div>
             </div>
           </div>
@@ -274,7 +268,7 @@ function UsageContent({ stats }: { stats: UsageStats }) {
           {stats.environments.length > 0 && (
             <div className="mt-5 pt-4 border-t border-navy/[0.07] flex items-center gap-2 flex-wrap">
               <span className="text-xs uppercase tracking-widest font-semibold text-navy/40">
-                Environments
+                {t('dash.usage.environments')}
               </span>
               {Array.from(new Set(stats.environments)).map((env) => (
                 <span
@@ -290,13 +284,13 @@ function UsageContent({ stats }: { stats: UsageStats }) {
       </div>
 
       <section className="bg-white/60 backdrop-blur-sm rounded-2xl border border-dashed border-navy/15 p-6 text-center">
-        <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-2">Coming soon</p>
-        <h3 className="font-general font-semibold text-navy text-lg mb-1">
-          Weekly trends &amp; per-teammate breakdown
-        </h3>
-        <p className="text-navy/60 text-sm max-w-md mx-auto">
-          Time-series charts and team rollups land once we start snapshotting daily activity.
+        <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-2">
+          {t('dash.usage.comingSoonLabel')}
         </p>
+        <h3 className="font-general font-semibold text-navy text-lg mb-1">
+          {t('dash.usage.comingSoonTitle')}
+        </h3>
+        <p className="text-navy/60 text-sm max-w-md mx-auto">{t('dash.usage.comingSoonBody')}</p>
       </section>
     </>
   );
@@ -338,15 +332,14 @@ function CostRow({
 }
 
 function EmptyState() {
+  const { t } = useI18n();
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-10 text-center">
       <div className="w-14 h-14 rounded-2xl bg-navy/[0.06] flex items-center justify-center mx-auto mb-4">
         <BarChart3 className="w-6 h-6 text-navy/50" />
       </div>
-      <h3 className="font-general font-semibold text-navy text-lg mb-1.5">No usage yet</h3>
-      <p className="text-navy/60 text-sm max-w-md mx-auto">
-        Send your first WhatsApp voice note to VoiceLink and your activity will show up here.
-      </p>
+      <h3 className="font-general font-semibold text-navy text-lg mb-1.5">{t('dash.usage.emptyTitle')}</h3>
+      <p className="text-navy/60 text-sm max-w-md mx-auto">{t('dash.usage.emptyBody')}</p>
     </div>
   );
 }
