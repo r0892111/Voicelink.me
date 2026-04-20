@@ -64,6 +64,31 @@ Deno.serve(async (req) => {
         return fail('Missing phone_number');
       }
 
+      // Gate: user must have started their Stripe trial before connecting
+      // WhatsApp. `stripe_customer_id` is created by the checkout flow, so a
+      // null value means the user has never started a trial or subscribed.
+      // The `test` provider is used during the early-access test flow and is
+      // exempt (test users bypass Stripe entirely).
+      if (crm_provider !== 'test') {
+        r.info('checking subscription gate', { crm_user_id });
+        const { data: gateRow, error: gateErr } = await supabase
+          .from(`${crm_provider}_users`)
+          .select('stripe_customer_id')
+          .eq('user_id', crm_user_id)
+          .maybeSingle();
+
+        if (gateErr) {
+          r.error('gate lookup failed', { message: gateErr.message });
+          r.done(500);
+          return fail('Subscription check failed. Please try again.', 500);
+        }
+        if (!gateRow?.stripe_customer_id) {
+          r.warn('no stripe customer — trial not started', { crm_user_id });
+          r.done(402);
+          return fail('Start your free trial before connecting WhatsApp.', 402);
+        }
+      }
+
       const code      = generateOtp();
       const expiresAt = buildExpiresAt(10);
 

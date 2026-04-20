@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
-import { Settings, Phone, CheckCircle2 } from 'lucide-react';
+import { Settings, Phone, CheckCircle2, Lock, ArrowRight } from 'lucide-react';
 import { useDashboardContext } from '../hooks/useDashboardContext';
 import { WhatsAppConnectForm } from './WhatsAppConnectForm';
 
 export function DashboardSettings() {
-  const { wa } = useDashboardContext();
+  const { wa, subscription } = useDashboardContext();
   const isConnected = wa.status === 'active';
+  const subStatus = subscription.info?.subscription_status;
+  const canConnect = subStatus === 'active' || subStatus === 'trialing';
 
   useEffect(() => {
-    if (!isConnected && !wa.open) wa.toggle();
-  }, [isConnected]);
+    if (!isConnected && canConnect && !wa.open) wa.toggle();
+  }, [isConnected, canConnect]);
 
   return (
     <div className="max-w-4xl mx-auto px-6 pt-10 pb-16">
@@ -47,6 +49,25 @@ export function DashboardSettings() {
           <div className="bg-navy/[0.03] rounded-xl px-4 py-3">
             <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-0.5">Connected number</p>
             <p className="text-navy font-medium font-mono">{wa.number}</p>
+          </div>
+        ) : !canConnect ? (
+          <div className="bg-navy/[0.03] border border-navy/[0.07] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-navy/[0.06] flex items-center justify-center flex-shrink-0">
+              <Lock className="w-5 h-5 text-navy/60" />
+            </div>
+            <div className="flex-1">
+              <p className="font-general font-semibold text-navy text-sm">Start your free trial first</p>
+              <p className="text-navy/55 text-sm mt-0.5">
+                Activate your 14-day free trial to unlock WhatsApp connection.
+              </p>
+            </div>
+            <button
+              onClick={subscription.startTrial}
+              className="flex-shrink-0 inline-flex items-center gap-2 bg-navy hover:bg-navy-hover text-white font-semibold text-sm py-2.5 px-5 rounded-full transition-colors"
+            >
+              Start Free Trial
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         ) : (
           <WhatsAppConnectForm

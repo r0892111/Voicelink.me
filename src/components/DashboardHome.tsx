@@ -50,6 +50,7 @@ export function DashboardHome() {
   const isSubscribed = subStatus === 'active' || subStatus === 'trialing';
   const isLapsed = !!subStatus && !isSubscribed && subStatus !== 'none';
   const needsTrial = !subscription.checking && (!subStatus || subStatus === 'none');
+  const canConnectWhatsApp = isSubscribed;
   const fullySetUp = wa.status === 'active';
 
   const setupSteps = [
@@ -383,7 +384,7 @@ export function DashboardHome() {
                         <p className="text-xs text-navy/50 mt-0.5 leading-relaxed">{step.description}</p>
                       </div>
 
-                      {step.n === 2 && wa.status === 'not_set' && (
+                      {step.n === 2 && wa.status === 'not_set' && canConnectWhatsApp && (
                         <button
                           onClick={wa.toggle}
                           className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
@@ -401,9 +402,18 @@ export function DashboardHome() {
                           )}
                         </button>
                       )}
+                      {step.n === 2 && wa.status === 'not_set' && !canConnectWhatsApp && !subscription.checking && (
+                        <button
+                          onClick={subscription.startTrial}
+                          className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
+                        >
+                          Start Trial First
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
                     </div>
 
-                    {step.n === 2 && wa.status === 'not_set' && (
+                    {step.n === 2 && wa.status === 'not_set' && canConnectWhatsApp && (
                       <WhatsAppConnectForm
                         open={wa.open}
                         step={wa.step}
