@@ -2,6 +2,7 @@ import React from 'react';
 import { Zap, MessageCircle, Play, ArrowRight, CheckCircle, ChevronDown, Star, PhoneOff, StickyNote, TrendingDown, Snowflake, Phone, Mail, Linkedin } from 'lucide-react';
 import { HowItWorksDemo } from './HowItWorksDemo';
 import { HeroDemo, CrmPreviewCards } from './HeroDemo';
+import { UserGuidePreview } from './UserGuidePreview';
 import { PricingSection } from './PricingSection';
 import { LogoCarousel } from './ui/LogoCarousel';
 import { SectionDivider } from './ui/SectionDivider';
@@ -220,8 +221,14 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
         <CrmPreviewCards />
       </div>
 
-      {/* Divider: CRM Preview → Integrations */}
+      {/* Divider: CRM Preview → User Guide Preview */}
       <SectionDivider fromColor="#FDFBF7" toColor="#FDFBF7" variant={0} />
+
+      {/* ───────── 5b. USER GUIDE PREVIEW ("Just say what happened") ───────── */}
+      <UserGuidePreview />
+
+      {/* Divider: User Guide Preview → Integrations */}
+      <SectionDivider fromColor="#FDFBF7" toColor="#FDFBF7" variant={3} />
 
       {/* ───────── 6. INTEGRATIONS ───────── */}
       <ScrollAnimation>
