@@ -207,6 +207,18 @@
     "completingAuthentication": "Completing authentication...",
     "authenticationFailedFor": "Authentication failed for {{provider}}"
   },
+  "invite": {
+    "verifying": "Verifying your invitation…",
+    "title": "You're invited to VoiceLink",
+    "description": "{{name}} wants you to join their team on VoiceLink. Connect your Teamleader account in one click to get started.",
+    "invitedYou": "Invited you to their team",
+    "acceptCta": "Accept & Connect Teamleader",
+    "termsNotice": "By continuing, you agree to the SaaS Agreement and Privacy Policy.",
+    "expiredTitle": "This invitation has expired",
+    "expiredMessage": "Ask your admin to send you a new invitation link.",
+    "invalidTitle": "Invitation not found",
+    "invalidMessage": "This invitation link is invalid or has already been used."
+  },
   "teamManagement": {
     "title": "Team Management",
     "subtitle": "Manage your team members and invitations",
@@ -274,7 +286,6 @@
     "statusPending": "Pending",
     "statusDeclined": "Declined",
     "statusExpired": "Expired",
-    "accountOwner": "Account Owner",
     "you": "you",
     "resendInvitation": "Resend Invitation",
     "cancelInvitation": "Cancel Invitation"

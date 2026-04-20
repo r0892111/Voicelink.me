@@ -185,10 +185,22 @@
     "completingAuthentication": "Authenticatie voltooien...",
     "authenticationFailedFor": "Authenticatie mislukt voor {{provider}}"
   },
+  "invite": {
+    "verifying": "Uitnodiging controleren…",
+    "title": "Je bent uitgenodigd voor VoiceLink",
+    "description": "{{name}} wil je toevoegen aan hun VoiceLink-team. Koppel je Teamleader-account met één klik om te beginnen.",
+    "invitedYou": "Heeft je uitgenodigd voor hun team",
+    "acceptCta": "Accepteren & Teamleader koppelen",
+    "termsNotice": "Door verder te gaan ga je akkoord met de SaaS-overeenkomst en het Privacybeleid.",
+    "expiredTitle": "Deze uitnodiging is verlopen",
+    "expiredMessage": "Vraag je admin om een nieuwe uitnodigingslink te sturen.",
+    "invalidTitle": "Uitnodiging niet gevonden",
+    "invalidMessage": "Deze uitnodigingslink is ongeldig of al gebruikt."
+  },
   "teamManagement": {
     "title": "Teambeheer",
     "subtitle": "Beheer uw teamleden en uitnodigingen",
-    "accountOwner": "Accounteigenaar",
+    "accountOwner": "Account Eigenaar",
     "admin": "Admin",
     "teamMembers": "Teamleden",
     "teamSize": "Teamgrootte",
@@ -252,7 +264,6 @@
     "statusPending": "In afwachting",
     "statusDeclined": "Geweigerd",
     "statusExpired": "Verlopen",
-    "accountOwner": "Account Eigenaar",
     "you": "jij",
     "resendInvitation": "Uitnodiging Opnieuw Verzenden",
     "cancelInvitation": "Uitnodiging Annuleren"

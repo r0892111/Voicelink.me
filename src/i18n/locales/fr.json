@@ -86,6 +86,18 @@
       "connectOdoo": "Connecter Odoo"
     }
   },
+  "invite": {
+    "verifying": "Vérification de votre invitation…",
+    "title": "Vous êtes invité à rejoindre VoiceLink",
+    "description": "{{name}} souhaite vous ajouter à son équipe VoiceLink. Connectez votre compte Teamleader en un clic pour commencer.",
+    "invitedYou": "Vous a invité à rejoindre son équipe",
+    "acceptCta": "Accepter & connecter Teamleader",
+    "termsNotice": "En continuant, vous acceptez le Contrat SaaS et la Politique de confidentialité.",
+    "expiredTitle": "Cette invitation a expiré",
+    "expiredMessage": "Demandez à votre administrateur de vous envoyer un nouveau lien d'invitation.",
+    "invalidTitle": "Invitation introuvable",
+    "invalidMessage": "Ce lien d'invitation est invalide ou a déjà été utilisé."
+  },
   "teamManagement": {
     "title": "Gestion d'Équipe",
     "subtitle": "Gérez vos membres d'équipe et invitations",
@@ -151,7 +163,6 @@
     "statusPending": "En attente",
     "statusDeclined": "Refusé",
     "statusExpired": "Expiré",
-    "accountOwner": "Propriétaire du Compte",
     "you": "vous",
     "resendInvitation": "Renvoyer l'Invitation",
     "cancelInvitation": "Annuler l'Invitation"
