@@ -137,9 +137,7 @@ export const HeroLanding: React.FC = () => {
 
   const handleStartTrial = () => {
     trackCTAClick('start_free_trial', '/landing');
-    /* TEMPORARY: redirect to homepage early access section instead of /signup */
-    navigate(withUTM('/'));
-    setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+    navigate(withUTM('/signup'));
   };
 
   return (

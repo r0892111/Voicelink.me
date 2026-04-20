@@ -28,7 +28,7 @@ import { TestSignup } from './components/TestSignup';
 import { TestDashboard } from './components/TestDashboard';
 import { InviteAccept } from './components/InviteAccept';
 import { useAuth } from './hooks/useAuth';
-import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ConsentProvider } from './contexts/ConsentContext';
 import { CookieBanner } from './components/CookieBanner';
 import { CookieSettingsModal } from './components/CookieSettingsModal';
@@ -234,7 +234,7 @@ function App() {
                     </div>
                   ) : (
                     <button
-                      onClick={() => { /* TEMPORARY: redirect to early access section instead of /signup */ if (isHomepage) { document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else { navigate(withUTM('/')); setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); } }}
+                      onClick={() => navigate(withUTM('/signup'))}
                       className="group text-white font-semibold py-2.5 px-6 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2 bg-navy hover:bg-navy-hover"
                     >
                       <span>{t('navigation.getStarted')}</span>
@@ -292,7 +292,7 @@ function App() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => { setIsMobileMenuOpen(false); /* TEMPORARY: redirect to early access section instead of /signup */ if (isHomepage) { document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else { navigate(withUTM('/')); setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); } }}
+                    onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/signup')); }}
                     className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-4 rounded-full flex items-center justify-center gap-2 text-base transition-colors"
                   >
                     <span>{t('navigation.getStarted')}</span>
@@ -407,9 +407,7 @@ function App() {
           <div className={isLandingPage || isSignupPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
-              {/* TEMPORARILY OFFLINE: uncomment to re-enable signup page */}
-              {/* <Route path="/signup" element={<AuthPage />} /> */}
-              <Route path="/signup" element={<Navigate to="/" replace />} />
+              <Route path="/signup" element={<AuthPage />} />
               <Route path="/landing" element={<HeroLanding />} />
               <Route path="/invite" element={<InviteAccept />} />
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />

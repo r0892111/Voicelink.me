@@ -2,9 +2,7 @@ import React from 'react';
 import { Zap, MessageCircle, Play, ArrowRight, CheckCircle, ChevronDown, Star, PhoneOff, StickyNote, TrendingDown, Snowflake, Phone, Mail, Linkedin } from 'lucide-react';
 import { HowItWorksDemo } from './HowItWorksDemo';
 import { HeroDemo, CrmPreviewCards } from './HeroDemo';
-// TEMPORARY: PricingSection replaced by EarlyAccessSection — revert by uncommenting PricingSection and removing EarlyAccessSection
-// import { PricingSection } from './PricingSection';
-import { EarlyAccessSection } from './EarlyAccessSection';
+import { PricingSection } from './PricingSection';
 import { LogoCarousel } from './ui/LogoCarousel';
 import { SectionDivider } from './ui/SectionDivider';
 import { ScrollAnimation } from './ui/ScrollAnimation';
@@ -294,11 +292,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
       {/* Divider: Testimonials → Pricing (navy → porcelain) */}
       <SectionDivider fromColor="#1A2D63" toColor="#FDFBF7" variant={2} />
 
-      {/* ───────── 8. EARLY ACCESS (TEMPORARY — replaces Pricing) ───────── */}
+      {/* ───────── 8. PRICING ───────── */}
       <ScrollAnimation>
         <section id="pricing" className="py-8 2xl:py-12 relative z-10 scroll-mt-24">
-          {/* TEMPORARY: To revert, replace EarlyAccessSection with: <PricingSection openContactModal={openContactModal} /> */}
-          <EarlyAccessSection />
+          <PricingSection openContactModal={openContactModal} />
         </section>
       </ScrollAnimation>
 

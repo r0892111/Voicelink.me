@@ -60,9 +60,7 @@ export const LandingPageTemplate: React.FC<LandingPageProps> = ({
                 <button
                   onClick={() => {
                     trackCTAClick('Get Started Free - Landing Page', window.location.pathname);
-                    /* TEMPORARY: redirect to homepage early access section instead of /signup */
-                    navigate(withUTM('/'));
-                    setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+                    navigate(withUTM('/signup'));
                   }}
                   className="group text-white font-semibold py-4 px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
                 >
@@ -277,9 +275,7 @@ export const LandingPageTemplate: React.FC<LandingPageProps> = ({
           <button
             onClick={() => {
               trackCTAClick('Get Started Free - Final CTA Landing Page', window.location.pathname);
-              /* TEMPORARY: redirect to homepage early access section instead of /signup */
-              navigate(withUTM('/'));
-              setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+              navigate(withUTM('/signup'));
             }}
             className="group text-white font-semibold py-4 px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] inline-flex items-center space-x-2"
           >
