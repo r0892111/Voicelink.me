@@ -14,108 +14,55 @@ import {
   Mail,
   MessageCircle,
 } from 'lucide-react';
+import { useI18n } from '../hooks/useI18n';
 
-const QUICK_START = [
-  {
-    n: 1,
-    title: 'Open WhatsApp',
-    body: 'Chat with the VoiceLink number your admin gave you.',
-  },
-  {
-    n: 2,
-    title: 'Record a voice note',
-    body: "Speak naturally — like you're dictating to a colleague.",
-  },
-  {
-    n: 3,
-    title: 'Send',
-    body: 'Within a minute you get a reply confirming what was logged.',
-  },
-];
-
-const CHEAT_SHEET: Array<{ goal: string; example: string }> = [
-  { goal: 'Create a company',   example: '"Add a new company called Finit Solutions, VAT number BE0123456789"' },
-  { goal: 'Create a contact',   example: '"Add Sarah Leclercq at Delta NV, she\'s the procurement manager"' },
-  { goal: 'Create a deal',      example: '"Create a deal for Alpha Solutions — Website Redesign, 3-month project"' },
-  { goal: 'Update a record',    example: '"Update Delta NV\'s website to delta.com"' },
-  { goal: 'Log a past call',    example: '"I just called Marc for 15 minutes about the contract renewal"' },
-  { goal: 'Log a past meeting', example: '"I had a meeting with Jan. We discussed pricing. He wants a discount."' },
-  { goal: 'Schedule a meeting', example: '"Schedule a meeting with Jan and Marc next Tuesday at 14:00"' },
-  { goal: 'Create a task',      example: '"Remind me to send the proposal to Jan next Friday — urgent"' },
-  { goal: 'Complete a task',    example: '"Mark the demo prep as done"' },
-  { goal: 'Create a quotation', example: '"Create an offerte for Alpha Solutions with the standard package"' },
-  { goal: 'Register a payment', example: '"Mark invoice INV-2024-001 as paid"' },
-  { goal: 'Find something',     example: '"Show me all deals for Delta NV"' },
-  { goal: 'Mark deal won/lost', example: '"The SEO contract is won"' },
-];
-
-const DOS = [
-  { title: 'Use real names', body: '"Delta NV", "Jan de Vos", "Website Redesign" — specific beats vague.' },
-  { title: 'Add one distinguishing detail', body: '"Marc at Delta" is better than just "Marc" when a name could be ambiguous.' },
-  { title: 'Speak naturally about dates', body: '"Next Friday", "tomorrow at 3", "end of the month" — all work.' },
-  { title: 'Combine several actions', body: 'List multiple things in one voice note — VoiceLink figures out the order.' },
-  { title: 'Mark urgent work', body: 'Say "urgent" or "ASAP" for high-priority tasks. Defaults to normal otherwise.' },
-  { title: 'Use your own language', body: 'Dutch, English, French, German — VoiceLink replies in the same language.' },
-];
-
-const DONTS = [
-  { title: 'Worry about keywords', body: 'There aren\'t any — speak the way you think.' },
-  { title: 'Monologue for 5 minutes', body: 'Voice notes of 15–60 seconds work best.' },
-  { title: 'Rely on pronouns across gaps', body: 'After ~10 minutes of silence, VoiceLink starts a new context.' },
-  { title: 'Attach files', body: 'VoiceLink only reads voice and text — no images, PDFs, or attachments.' },
-];
-
-const DIALOGUES: Array<{ situation: string; voicelink: string; you: string }> = [
-  { situation: 'Two matches (e.g., two Jans)', voicelink: '"I found Jan Voortman at Delta and Jan Hendrickx at Finit. Which one?"', you: '"Jan at Delta" or "the first one"' },
-  { situation: 'Missing info',                 voicelink: '"What\'s Sarah\'s last name?"',                                          you: '"Leclercq"' },
-  { situation: 'Duplicate risk',               voicelink: '"A contact named Jane Smith already exists. Update her instead?"',       you: '"Yes, update her" or "No, create new"' },
-  { situation: 'VAT lookup confirm',           voicelink: '"BE0123… is registered as \'Finit Solutions NV\'. Correct?"',           you: '"Yes" / "No"' },
-];
-
-const LIMITS = [
-  { title: 'Send emails', body: 'Quotations and invoices are prepared in Teamleader; you send them from there.' },
-  { title: 'Attach files', body: 'PDFs, images, and contracts via WhatsApp aren\'t supported yet.' },
-  { title: 'Schedule for later', body: '"Send this at 3pm" won\'t work — VoiceLink acts immediately.' },
-  { title: 'Bulk edits', body: '30+ records in one message is blocked by a safety limit.' },
-  { title: 'Undo automatically', body: 'But you can say "delete the task I just created" as a follow-up.' },
-];
-
-const TROUBLESHOOTING: Array<{ problem: string; cause: string; fix: string }> = [
-  { problem: 'No reply after 2 minutes',        cause: 'Network or API hiccup',        fix: 'Resend the voice note, or contact support.' },
-  { problem: 'Picked the wrong person',         cause: 'Name too common',              fix: 'Add a detail: "Jan at Delta", "Marc Peeters".' },
-  { problem: 'Language switched mid-reply',     cause: 'Very short ambiguous input',   fix: 'Reply in your language — it locks in again.' },
-  { problem: 'Custom field didn\'t update',     cause: 'Field name not recognised',    fix: 'Use the exact Teamleader label, or ask your admin.' },
-  { problem: '"Contact already exists"',        cause: 'Duplicate-protection guard',   fix: 'Reply "update her" or "create new".' },
-];
+interface Step     { title: string; body: string }
+interface Row      { goal: string; example: string }
+interface Dialogue { situation: string; voicelink: string; you: string }
+interface Issue    { problem: string; cause: string; fix: string }
+interface Tip      { title: string; body: string }
+interface Limit    { title: string; body: string }
+interface RefItem  { label: string; body: string }
 
 export function DashboardGuide() {
+  const { t } = useI18n();
+
+  const steps        = (t('userGuide.quickStart.steps',      { returnObjects: true }) as Step[])     ?? [];
+  const cheatRows    = (t('userGuide.cheatSheet.rows',       { returnObjects: true }) as Row[])      ?? [];
+  const dos          = (t('userGuide.tips.dos',              { returnObjects: true }) as Tip[])      ?? [];
+  const donts        = (t('userGuide.tips.donts',            { returnObjects: true }) as Tip[])      ?? [];
+  const confirms     = (t('userGuide.talkingBack.confirmations', { returnObjects: true }) as string[]) ?? [];
+  const dialogues    = (t('userGuide.talkingBack.dialogues', { returnObjects: true }) as Dialogue[]) ?? [];
+  const limits       = (t('userGuide.limits.items',          { returnObjects: true }) as Limit[])    ?? [];
+  const troubleRows  = (t('userGuide.troubleshooting.rows',  { returnObjects: true }) as Issue[])    ?? [];
+  const refCards     = (t('userGuide.reference.cards',       { returnObjects: true }) as RefItem[])  ?? [];
+
   return (
     <div className="max-w-4xl mx-auto px-6 pt-10 pb-16 font-instrument">
       {/* ── HEADER ── */}
       <header className="mb-10">
         <div className="flex items-center gap-2.5 text-navy/50 mb-2">
           <BookOpen className="w-4 h-4" />
-          <span className="text-xs uppercase tracking-widest font-semibold">Help</span>
+          <span className="text-xs uppercase tracking-widest font-semibold">{t('userGuide.eyebrow')}</span>
         </div>
         <h1 className="font-general font-bold text-navy text-3xl sm:text-4xl tracking-tight mb-3">
-          VoiceLink user guide
+          {t('userGuide.title')}
         </h1>
         <p className="text-navy/65 text-lg leading-relaxed max-w-2xl">
-          Send a WhatsApp voice note. VoiceLink logs it into your CRM for you — no forms,
-          no clicking, no logging in. Here's how to get the most out of it.
+          {t('userGuide.intro')}
         </p>
       </header>
 
-      {/* ── 1. QUICK START ── */}
-      <Section icon={Zap} eyebrow="Quick start" title="In 30 seconds">
+      {/* ── QUICK START ── */}
+      <Section icon={Zap} eyebrow={t('userGuide.quickStart.eyebrow')} title={t('userGuide.quickStart.title')}>
         <div className="grid sm:grid-cols-3 gap-3 mb-5">
-          {QUICK_START.map((s) => (
+          {steps.map((s, i) => (
             <div
-              key={s.n}
+              key={s.title}
               className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-5"
             >
               <div className="w-8 h-8 rounded-full bg-navy text-white text-sm font-bold font-general flex items-center justify-center mb-3">
-                {s.n}
+                {i + 1}
               </div>
               <h3 className="font-general font-semibold text-navy text-base mb-1">{s.title}</h3>
               <p className="text-navy/60 text-sm leading-relaxed">{s.body}</p>
@@ -125,78 +72,80 @@ export function DashboardGuide() {
 
         <Callout>
           <p className="text-navy/80 italic mb-2 text-[15px] leading-relaxed">
-            "I just met Jan at Delta NV. They want a 15% discount on the premium package.
-            Create a follow-up task for next Friday, and add Sarah Leclercq — she's their
-            new procurement manager."
+            {t('userGuide.quickStart.calloutQuote')}
           </p>
           <p className="text-navy/55 text-sm">
-            That one message creates <strong className="text-navy/80">one meeting report,
-            one deal update, one task, and one new contact</strong> — all linked correctly
-            in Teamleader.
+            {t('userGuide.quickStart.calloutSummaryPrefix')}{' '}
+            <strong className="text-navy/80">{t('userGuide.quickStart.calloutSummaryBold')}</strong>{' '}
+            {t('userGuide.quickStart.calloutSummarySuffix')}
           </p>
         </Callout>
       </Section>
 
-      {/* ── 2. CHEAT SHEET ── */}
-      <Section icon={ListChecks} eyebrow="Cheat sheet" title="What you can do">
+      {/* ── CHEAT SHEET ── */}
+      <Section icon={ListChecks} eyebrow={t('userGuide.cheatSheet.eyebrow')} title={t('userGuide.cheatSheet.title')}>
         <p className="text-navy/60 text-sm mb-5 leading-relaxed">
-          VoiceLink handles <strong className="text-navy/80">16 CRM entity types</strong>.
-          You don't need to memorise them — speak naturally and combine several in one
-          message if you want.
+          {t('userGuide.cheatSheet.introPrefix')}{' '}
+          <strong className="text-navy/80">{t('userGuide.cheatSheet.introBold')}</strong>
+          {t('userGuide.cheatSheet.introSuffix')}
         </p>
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm overflow-hidden">
           <div className="hidden md:grid grid-cols-[220px_1fr] gap-4 px-5 py-3 bg-navy/[0.03] border-b border-navy/[0.07]">
-            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">Goal</p>
-            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">Say something like…</p>
+            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">{t('userGuide.cheatSheet.colGoal')}</p>
+            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">{t('userGuide.cheatSheet.colSay')}</p>
           </div>
           <ul className="divide-y divide-navy/[0.05]">
-            {CHEAT_SHEET.map(({ goal, example }) => (
-              <li key={goal} className="md:grid md:grid-cols-[220px_1fr] gap-4 px-5 py-3.5">
-                <p className="font-general font-semibold text-navy text-sm mb-1 md:mb-0">{goal}</p>
-                <p className="text-navy/65 text-sm italic leading-relaxed">{example}</p>
+            {cheatRows.map((r) => (
+              <li key={r.goal} className="md:grid md:grid-cols-[220px_1fr] gap-4 px-5 py-3.5">
+                <p className="font-general font-semibold text-navy text-sm mb-1 md:mb-0">{r.goal}</p>
+                <p className="text-navy/65 text-sm italic leading-relaxed">{r.example}</p>
               </li>
             ))}
           </ul>
         </div>
       </Section>
 
-      {/* ── 3. TIPS ── */}
-      <Section icon={Lightbulb} eyebrow="Tips" title="What works, what doesn't">
+      {/* ── TIPS ── */}
+      <Section icon={Lightbulb} eyebrow={t('userGuide.tips.eyebrow')} title={t('userGuide.tips.title')}>
         <div className="grid md:grid-cols-2 gap-4">
-          <TipColumn title="Do" items={DOS} icon={CheckCircle2} tone="positive" />
-          <TipColumn title="Don't" items={DONTS} icon={XCircle} tone="negative" />
+          <TipColumn title={t('userGuide.tips.doLabel')}   items={dos}   icon={CheckCircle2} tone="positive" />
+          <TipColumn title={t('userGuide.tips.dontLabel')} items={donts} icon={XCircle}      tone="negative" />
         </div>
       </Section>
 
-      {/* ── 4. DIALOGUES ── */}
-      <Section icon={MessageSquare} eyebrow="Talking back" title="How VoiceLink replies">
+      {/* ── TALKING BACK ── */}
+      <Section icon={MessageSquare} eyebrow={t('userGuide.talkingBack.eyebrow')} title={t('userGuide.talkingBack.title')}>
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-5 mb-4">
-          <p className="text-xs uppercase tracking-widest font-semibold text-navy/45 mb-3">When it just does the job</p>
+          <p className="text-xs uppercase tracking-widest font-semibold text-navy/45 mb-3">
+            {t('userGuide.talkingBack.whenJustDoes')}
+          </p>
           <div className="space-y-2 font-mono text-sm text-navy/75">
-            <p>✅ Contact Sarah Leclercq created, linked to Delta NV</p>
-            <p>✅ Task "Follow up with Jan" created — due Friday</p>
-            <p>✅ Deal updated: premium package, 15% discount noted</p>
+            {confirms.map((line) => (<p key={line}>{line}</p>))}
           </div>
         </div>
 
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm overflow-hidden">
           <div className="px-5 py-3 bg-navy/[0.03] border-b border-navy/[0.07]">
             <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">
-              When it needs to ask
+              {t('userGuide.talkingBack.whenNeedsToAsk')}
             </p>
           </div>
           <ul className="divide-y divide-navy/[0.05]">
-            {DIALOGUES.map(({ situation, voicelink, you }) => (
-              <li key={situation} className="px-5 py-4 space-y-2">
-                <p className="font-general font-semibold text-navy text-sm">{situation}</p>
+            {dialogues.map((d) => (
+              <li key={d.situation} className="px-5 py-4 space-y-2">
+                <p className="font-general font-semibold text-navy text-sm">{d.situation}</p>
                 <div className="pl-4 border-l-2 border-navy/15">
                   <p className="text-navy/60 text-sm italic mb-1.5">
-                    <span className="text-navy/45 not-italic font-semibold mr-1">VoiceLink:</span>
-                    {voicelink}
+                    <span className="text-navy/45 not-italic font-semibold mr-1">
+                      {t('userGuide.talkingBack.voicelinkLabel')}
+                    </span>
+                    {d.voicelink}
                   </p>
                   <p className="text-navy/60 text-sm italic">
-                    <span className="text-navy/45 not-italic font-semibold mr-1">You:</span>
-                    {you}
+                    <span className="text-navy/45 not-italic font-semibold mr-1">
+                      {t('userGuide.talkingBack.youLabel')}
+                    </span>
+                    {d.you}
                   </p>
                 </div>
               </li>
@@ -205,53 +154,51 @@ export function DashboardGuide() {
         </div>
 
         <p className="text-navy/55 text-sm mt-4 leading-relaxed">
-          Small typos or speech-to-text mistakes? VoiceLink matches on sound and spelling,
-          so <em>"Marc Pieters"</em> still finds <em>"Marc Peeters"</em> without asking.
+          {t('userGuide.talkingBack.fuzzyMatchNote')}
         </p>
       </Section>
 
-      {/* ── 5. MEMORY ── */}
-      <Section icon={Brain} eyebrow="Context" title="Memory & follow-ups">
+      {/* ── MEMORY ── */}
+      <Section icon={Brain} eyebrow={t('userGuide.memory.eyebrow')} title={t('userGuide.memory.title')}>
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-6 space-y-3 text-sm leading-relaxed">
           <p className="text-navy/70">
-            <strong className="text-navy">Within a conversation</strong> (~10 min active):
-            VoiceLink remembers the last 5 exchanges. You can say <em>"her"</em>, <em>"that
-            company"</em>, <em>"yes do it"</em> and it knows what you mean.
+            <strong className="text-navy">{t('userGuide.memory.withinBold')}</strong>
+            {t('userGuide.memory.withinRest')}
           </p>
           <p className="text-navy/70">
-            <strong className="text-navy">After 10 minutes silent</strong>: the context
-            resets. Name your entities explicitly in your next message.
+            <strong className="text-navy">{t('userGuide.memory.silentBold')}</strong>
+            {t('userGuide.memory.silentRest')}
           </p>
           <p className="text-navy/70">
-            <strong className="text-navy">Across conversations</strong>: VoiceLink doesn't
-            remember past chats — but your Teamleader data is, of course, persistent.
+            <strong className="text-navy">{t('userGuide.memory.acrossBold')}</strong>
+            {t('userGuide.memory.acrossRest')}
           </p>
         </div>
       </Section>
 
-      {/* ── 6. PREVIEW ── */}
-      <Section icon={Eye} eyebrow="Safety net" title="Preview before you execute">
+      {/* ── PREVIEW ── */}
+      <Section icon={Eye} eyebrow={t('userGuide.preview.eyebrow')} title={t('userGuide.preview.title')}>
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-6 space-y-3 text-sm leading-relaxed">
-          <p className="text-navy/70">Not sure what VoiceLink will do? Ask for a plan:</p>
+          <p className="text-navy/70">{t('userGuide.preview.intro')}</p>
           <div className="bg-navy/[0.04] rounded-xl px-4 py-3 text-navy/75 italic">
-            "Show me what you would do, but don't execute yet."
+            {t('userGuide.preview.quote')}
           </div>
-          <p className="text-navy/70">You'll get a plan with 📌 markers. Then:</p>
+          <p className="text-navy/70">{t('userGuide.preview.planNote')}</p>
           <div className="grid sm:grid-cols-2 gap-3">
             <div className="bg-emerald-50 rounded-xl px-4 py-3 text-emerald-800 italic text-sm">
-              "Yes, do it."
+              {t('userGuide.preview.yes')}
             </div>
             <div className="bg-amber-50 rounded-xl px-4 py-3 text-amber-800 italic text-sm">
-              "Cancel." or "Change X to Y first."
+              {t('userGuide.preview.cancel')}
             </div>
           </div>
         </div>
       </Section>
 
-      {/* ── 7. LIMITS ── */}
-      <Section icon={AlertTriangle} eyebrow="Limits" title="What VoiceLink can't do (yet)">
+      {/* ── LIMITS ── */}
+      <Section icon={AlertTriangle} eyebrow={t('userGuide.limits.eyebrow')} title={t('userGuide.limits.title')}>
         <ul className="grid sm:grid-cols-2 gap-3">
-          {LIMITS.map((l) => (
+          {limits.map((l) => (
             <li
               key={l.title}
               className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-4 flex items-start gap-3"
@@ -266,50 +213,40 @@ export function DashboardGuide() {
         </ul>
       </Section>
 
-      {/* ── 8. TROUBLESHOOTING ── */}
-      <Section icon={Wrench} eyebrow="If something's off" title="Troubleshooting">
+      {/* ── TROUBLESHOOTING ── */}
+      <Section icon={Wrench} eyebrow={t('userGuide.troubleshooting.eyebrow')} title={t('userGuide.troubleshooting.title')}>
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm overflow-hidden">
           <div className="hidden md:grid grid-cols-[1fr_1fr_1.3fr] gap-4 px-5 py-3 bg-navy/[0.03] border-b border-navy/[0.07]">
-            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">Problem</p>
-            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">Likely cause</p>
-            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">Fix</p>
+            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">{t('userGuide.troubleshooting.colProblem')}</p>
+            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">{t('userGuide.troubleshooting.colCause')}</p>
+            <p className="text-xs uppercase tracking-widest font-semibold text-navy/45">{t('userGuide.troubleshooting.colFix')}</p>
           </div>
           <ul className="divide-y divide-navy/[0.05]">
-            {TROUBLESHOOTING.map((t) => (
-              <li key={t.problem} className="md:grid md:grid-cols-[1fr_1fr_1.3fr] gap-4 px-5 py-3.5 space-y-1 md:space-y-0">
-                <p className="font-general font-semibold text-navy text-sm">{t.problem}</p>
-                <p className="text-navy/55 text-sm">{t.cause}</p>
-                <p className="text-navy/70 text-sm">{t.fix}</p>
+            {troubleRows.map((r) => (
+              <li key={r.problem} className="md:grid md:grid-cols-[1fr_1fr_1.3fr] gap-4 px-5 py-3.5 space-y-1 md:space-y-0">
+                <p className="font-general font-semibold text-navy text-sm">{r.problem}</p>
+                <p className="text-navy/55 text-sm">{r.cause}</p>
+                <p className="text-navy/70 text-sm">{r.fix}</p>
               </li>
             ))}
           </ul>
         </div>
       </Section>
 
-      {/* ── 9. QUICK REFERENCE ── */}
-      <Section icon={Mic} eyebrow="Remember this" title="Quick reference">
+      {/* ── QUICK REFERENCE ── */}
+      <Section icon={Mic} eyebrow={t('userGuide.reference.eyebrow')} title={t('userGuide.reference.title')}>
         <div className="grid sm:grid-cols-3 gap-3">
-          <RefCard
-            label="The one rule"
-            body="Speak to VoiceLink the way you'd speak to a helpful colleague who has full access to Teamleader."
-          />
-          <RefCard
-            label="The one trick"
-            body="When in doubt, name things explicitly — the exact company, the exact person."
-          />
-          <RefCard
-            label="The one limit"
-            body='Voice notes execute immediately. Preview with "show me first" for a safety net.'
-          />
+          {refCards.map((c) => (
+            <RefCard key={c.label} label={c.label} body={c.body} />
+          ))}
         </div>
       </Section>
 
       {/* ── SUPPORT ── */}
       <section className="bg-navy text-white rounded-2xl p-6 mb-4">
-        <h3 className="font-general font-semibold text-lg mb-1.5">Need a hand?</h3>
+        <h3 className="font-general font-semibold text-lg mb-1.5">{t('userGuide.support.title')}</h3>
         <p className="text-white/75 text-sm mb-4 leading-relaxed">
-          Email works best for feature requests and bug reports. Include the approximate
-          time of the voice note so we can trace it in logs.
+          {t('userGuide.support.body')}
         </p>
         <div className="flex flex-wrap gap-2">
           <a
@@ -326,20 +263,20 @@ export function DashboardGuide() {
             className="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-2 rounded-full font-semibold text-sm hover:bg-white/15 transition-colors"
           >
             <MessageCircle className="w-4 h-4" />
-            Chat on WhatsApp
+            {t('userGuide.support.whatsappLabel')}
           </a>
         </div>
       </section>
 
       <p className="text-xs text-navy/40 text-center">
-        Teamleader questions (not VoiceLink)?{' '}
+        {t('userGuide.support.teamleaderPrefix')}{' '}
         <a
           href="https://help.teamleader.eu"
           target="_blank"
           rel="noopener noreferrer"
           className="text-navy/60 hover:text-navy underline"
         >
-          help.teamleader.eu
+          {t('userGuide.support.teamleaderLinkText')}
         </a>
       </p>
     </div>
@@ -384,7 +321,7 @@ function TipColumn({
   tone,
 }: {
   title: string;
-  items: Array<{ title: string; body: string }>;
+  items: Tip[];
   icon: React.ComponentType<{ className?: string }>;
   tone: 'positive' | 'negative';
 }) {

@@ -269,81 +269,328 @@
     "cancelInvitation": "Uitnodiging Annuleren"
   },
   "userGuide": {
-    "title": "Dagelijkse Gebruikersgids",
-    "subtitle": "VoiceLink werkt het beste wanneer je je updates gestructureerd en duidelijk uitspreekt",
-    "recordingContacts": {
-      "title": "1. Contacten Opnemen",
-      "startWith": "Begin met:",
-      "example1": "\"Net gebeld/gesproken met [NAAM]\"",
-      "example2": "of \"[NAAM] heeft net bezocht\"",
-      "names": "Namen:",
-      "namesTip": "Spreek langzaam en spel moeilijke namen letter voor letter",
-      "phoneEmail": "Telefoon/E-mail:",
-      "phoneEmailTip": "Optioneel, maar spel altijd bij twijfel",
-      "newVsExisting": "Nieuwe vs. Bestaande Contacten:",
-      "newVsExistingTip": "VoiceLink zoekt automatisch naar bestaande records en maakt nieuwe contacten aan wanneer nodig."
+    "eyebrow": "Hulp",
+    "title": "VoiceLink gebruikershandleiding",
+    "intro": "Stuur een WhatsApp-spraakbericht. VoiceLink registreert het voor jou in je CRM — geen formulieren, geen klikken, geen inloggen. Zo haal je er het meeste uit.",
+    "quickStart": {
+      "eyebrow": "Snelstart",
+      "title": "In 30 seconden",
+      "steps": [
+        {
+          "title": "Open WhatsApp",
+          "body": "Chat met het VoiceLink-nummer dat je admin je heeft gegeven."
+        },
+        {
+          "title": "Neem een spraakbericht op",
+          "body": "Praat natuurlijk — alsof je dicteert aan een collega."
+        },
+        {
+          "title": "Verstuur",
+          "body": "Binnen een minuut krijg je een antwoord dat bevestigt wat er is geregistreerd."
+        }
+      ],
+      "calloutQuote": "\"Ik heb net Jan van Delta NV ontmoet. Ze willen 15% korting op het premium pakket. Maak een opvolgtaak voor volgende vrijdag en voeg Sarah Leclercq toe — ze is hun nieuwe inkoopmanager.\"",
+      "calloutSummaryPrefix": "Dat ene bericht maakt",
+      "calloutSummaryBold": "één meetingrapport, één deal-update, één taak en één nieuw contact",
+      "calloutSummarySuffix": "— allemaal correct gekoppeld in Teamleader."
     },
-    "conversationInfo": {
-      "title": "2. Gespreksinformatie",
-      "description": "Deel belangrijke informatie alsof je het aan een collega vertelt.",
-      "example": "Voorbeeld:",
-      "exampleText": "\"Hij is geïnteresseerd in product X, wil volgende week een demo en vroeg me de prijslijst te sturen.\"",
-      "tip": "Tip:",
-      "tipText": "Hoe meer details je geeft, hoe beter VoiceLink je CRM kan vullen. Het systeem maakt automatisch tags en rapporten als aantekeningen."
+    "cheatSheet": {
+      "eyebrow": "Spiekbriefje",
+      "title": "Wat je kan doen",
+      "introPrefix": "VoiceLink ondersteunt",
+      "introBold": "16 CRM-entiteiten",
+      "introSuffix": ". Je hoeft ze niet te onthouden — praat natuurlijk en combineer er meerdere in één bericht als je wilt.",
+      "colGoal": "Doel",
+      "colSay": "Zeg iets als…",
+      "rows": [
+        {
+          "goal": "Bedrijf aanmaken",
+          "example": "\"Voeg een nieuw bedrijf toe, Finit Solutions, BTW-nummer BE0123456789\""
+        },
+        {
+          "goal": "Contact aanmaken",
+          "example": "\"Voeg Sarah Leclercq toe bij Delta NV, ze is de inkoopmanager\""
+        },
+        {
+          "goal": "Deal aanmaken",
+          "example": "\"Maak een deal voor Alpha Solutions — Website Redesign, 3 maanden\""
+        },
+        {
+          "goal": "Record bijwerken",
+          "example": "\"Update de website van Delta NV naar delta.com\""
+        },
+        {
+          "goal": "Telefoontje loggen",
+          "example": "\"Ik heb net 15 minuten met Marc gebeld over de contractverlenging\""
+        },
+        {
+          "goal": "Meeting achteraf loggen",
+          "example": "\"Ik had een meeting met Jan. We bespraken prijzen. Hij wil korting.\""
+        },
+        {
+          "goal": "Meeting plannen",
+          "example": "\"Plan een meeting met Jan en Marc volgende dinsdag om 14:00\""
+        },
+        {
+          "goal": "Taak aanmaken",
+          "example": "\"Herinner me om de offerte naar Jan te sturen volgende vrijdag — dringend\""
+        },
+        {
+          "goal": "Taak afwerken",
+          "example": "\"Markeer de demo-voorbereiding als klaar\""
+        },
+        {
+          "goal": "Offerte aanmaken",
+          "example": "\"Maak een offerte voor Alpha Solutions met het standaardpakket\""
+        },
+        {
+          "goal": "Betaling registreren",
+          "example": "\"Markeer factuur INV-2024-001 als betaald\""
+        },
+        {
+          "goal": "Iets opzoeken",
+          "example": "\"Toon me alle deals voor Delta NV\""
+        },
+        {
+          "goal": "Deal gewonnen/verloren",
+          "example": "\"Het SEO-contract is gewonnen\""
+        }
+      ]
     },
-    "calendarTasks": {
-      "title": "3. Kalender- en Taakbeheer",
-      "description": "VoiceLink kan automatisch afspraken en taken aanmaken of bijwerken.",
-      "callbacks": "📞 Terugbellen:",
-      "callback1": "\"Ik moet hem maandag om 15:00 terugbellen\"",
-      "callback2": "\"Ik zou hem morgenochtend moeten bellen\"",
-      "appointments": "📅 Afspraken:",
-      "appointment1": "\"Hij komt volgende dinsdag om 14:00\"",
-      "appointment2": "\"Meeting in Tremelo op 29 mei om 13:00\"",
-      "tasks": "✅ Taken:",
-      "task1": "\"Catalogus morgen versturen\"",
-      "task2": "\"Offerte voorbereiden voor vrijdag 14:00\"",
-      "updates": "🔄 Updates:",
-      "update1": "\"Meeting met Marianna verplaatst naar dinsdag 12:00\"",
-      "update2": "\"Jeff heeft niet geantwoord, morgen opnieuw proberen\""
+    "tips": {
+      "eyebrow": "Tips",
+      "title": "Wat werkt en wat niet",
+      "doLabel": "Wel doen",
+      "dontLabel": "Niet doen",
+      "dos": [
+        {
+          "title": "Gebruik echte namen",
+          "body": "\"Delta NV\", \"Jan de Vos\", \"Website Redesign\" — specifiek is beter dan vaag."
+        },
+        {
+          "title": "Voeg een onderscheidend detail toe",
+          "body": "\"Marc bij Delta\" is beter dan alleen \"Marc\" als een naam dubbelzinnig kan zijn."
+        },
+        {
+          "title": "Praat natuurlijk over data",
+          "body": "\"Volgende vrijdag\", \"morgen om 15u\", \"eind van de maand\" — alles werkt."
+        },
+        {
+          "title": "Combineer meerdere acties",
+          "body": "Noem meerdere dingen in één spraakbericht — VoiceLink zoekt de juiste volgorde uit."
+        },
+        {
+          "title": "Markeer dringend werk",
+          "body": "Zeg \"dringend\" of \"ASAP\" voor taken met hoge prioriteit. Anders is de standaard normaal."
+        },
+        {
+          "title": "Gebruik je eigen taal",
+          "body": "Nederlands, Engels, Frans, Duits — VoiceLink antwoordt in dezelfde taal."
+        }
+      ],
+      "donts": [
+        {
+          "title": "Piekeren over trefwoorden",
+          "body": "Er zijn er geen — praat zoals je denkt."
+        },
+        {
+          "title": "5 minuten lang monologen",
+          "body": "Spraakberichten van 15–60 seconden werken het best."
+        },
+        {
+          "title": "Vertrouwen op verwijzingen na een pauze",
+          "body": "Na ~10 minuten stilte begint VoiceLink opnieuw."
+        },
+        {
+          "title": "Bestanden meesturen",
+          "body": "VoiceLink leest alleen spraak en tekst — geen afbeeldingen, pdf's of bijlagen."
+        }
+      ]
     },
-    "bestPractices": {
-      "title": "4. Beste Praktijken voor Optimaal Gebruik",
-      "speakClearly": {
-        "title": "Duidelijk Spreken",
-        "description": "Spreek duidelijk en langzaam in standaard Engels"
-      },
-      "spellingMode": {
-        "title": "Spelmodus",
-        "description": "Spel letters voor namen, e-mails en telefoonnummers wanneer je twijfelt"
-      },
-      "autoScheduling": {
-        "title": "Auto-inplanning",
-        "description": "Geen tijd genoemd? VoiceLink vindt automatisch een geschikte tijd"
-      },
-      "keepFocused": {
-        "title": "Gefocust Blijven",
-        "description": "Eén update per bericht is het meest betrouwbaar"
-      },
-      "important": "Belangrijk:",
-      "importantText": "Je kunt slechts één contact per bericht bijwerken. Wil je meerdere personen in je CRM bijwerken? Neem ze op met aparte spraaknotities via WhatsApp."
+    "talkingBack": {
+      "eyebrow": "Terugpraten",
+      "title": "Hoe VoiceLink antwoordt",
+      "whenJustDoes": "Wanneer het gewoon werkt",
+      "whenNeedsToAsk": "Wanneer het moet vragen",
+      "confirmations": [
+        "✅ Contact Sarah Leclercq aangemaakt, gekoppeld aan Delta NV",
+        "✅ Taak \"Jan opvolgen\" aangemaakt — vervalt vrijdag",
+        "✅ Deal bijgewerkt: premium pakket, 15% korting genoteerd"
+      ],
+      "voicelinkLabel": "VoiceLink:",
+      "youLabel": "Jij:",
+      "dialogues": [
+        {
+          "situation": "Twee matches (bv. twee Jannen)",
+          "voicelink": "\"Ik vond Jan Voortman bij Delta en Jan Hendrickx bij Finit. Welke?\"",
+          "you": "\"Jan bij Delta\" of \"de eerste\""
+        },
+        {
+          "situation": "Ontbrekende info",
+          "voicelink": "\"Wat is de achternaam van Sarah?\"",
+          "you": "\"Leclercq\""
+        },
+        {
+          "situation": "Dubbel risico",
+          "voicelink": "\"Een contact Jane Smith bestaat al. Haar bijwerken?\"",
+          "you": "\"Ja, werk haar bij\" of \"Nee, nieuw aanmaken\""
+        },
+        {
+          "situation": "BTW-controle bevestigen",
+          "voicelink": "\"BE0123… staat geregistreerd als 'Finit Solutions NV'. Klopt dat?\"",
+          "you": "\"Ja\" / \"Nee\""
+        }
+      ],
+      "fuzzyMatchNote": "Kleine typo's of spraak-naar-tekst fouten? VoiceLink matcht op klank en spelling, dus \"Marc Pieters\" vindt nog steeds \"Marc Peeters\" zonder vragen."
+    },
+    "memory": {
+      "eyebrow": "Context",
+      "title": "Geheugen & opvolging",
+      "withinBold": "Binnen een gesprek",
+      "withinRest": " (~10 min actief): VoiceLink onthoudt de laatste 5 uitwisselingen. Je kan zeggen \"haar\", \"dat bedrijf\", \"ja doe maar\" en het weet wat je bedoelt.",
+      "silentBold": "Na 10 minuten stilte",
+      "silentRest": ": de context reset. Benoem je entiteiten expliciet in je volgende bericht.",
+      "acrossBold": "Tussen gesprekken",
+      "acrossRest": ": VoiceLink onthoudt geen eerdere chats — maar je Teamleader-data blijft natuurlijk permanent."
+    },
+    "preview": {
+      "eyebrow": "Vangnet",
+      "title": "Bekijk eerst, voer daarna uit",
+      "intro": "Niet zeker wat VoiceLink zal doen? Vraag een overzicht:",
+      "quote": "\"Toon me wat je zou doen, maar voer het nog niet uit.\"",
+      "planNote": "Je krijgt een plan met 📌 markeringen. Daarna:",
+      "yes": "\"Ja, doe maar.\"",
+      "cancel": "\"Annuleer.\" of \"Wijzig eerst X naar Y.\""
+    },
+    "limits": {
+      "eyebrow": "Beperkingen",
+      "title": "Wat VoiceLink (nog) niet kan",
+      "items": [
+        {
+          "title": "E-mails versturen",
+          "body": "Offertes en facturen worden klaargemaakt in Teamleader; van daaruit verstuur je ze."
+        },
+        {
+          "title": "Bestanden koppelen",
+          "body": "Pdf's, afbeeldingen en contracten via WhatsApp zijn nog niet ondersteund."
+        },
+        {
+          "title": "Plannen voor later",
+          "body": "\"Verstuur dit om 15u\" werkt niet — VoiceLink handelt meteen."
+        },
+        {
+          "title": "Bulk-aanpassingen",
+          "body": "Meer dan 30 records in één bericht wordt geblokkeerd door een veiligheidslimiet."
+        },
+        {
+          "title": "Automatisch ongedaan maken",
+          "body": "Maar je kan zeggen \"verwijder de taak die ik net aanmaakte\" als opvolging."
+        }
+      ]
     },
     "troubleshooting": {
-      "title": "5. Probleemoplossing",
-      "noConnection": {
-        "title": "Geen verbinding?",
-        "description": "Controleer internetverbinding en API-instellingen"
-      },
-      "wrongInput": {
-        "title": "Verkeerde invoer?",
-        "description": "Stuur correcties via nieuw spraakbericht"
-      },
-      "transcriptionErrors": {
-        "title": "Transcriptiefouten?",
-        "description": "Spreek duidelijk zonder achtergrondgeluid"
-      }
+      "eyebrow": "Als er iets mis gaat",
+      "title": "Problemen oplossen",
+      "colProblem": "Probleem",
+      "colCause": "Waarschijnlijke oorzaak",
+      "colFix": "Oplossing",
+      "rows": [
+        {
+          "problem": "Geen antwoord na 2 minuten",
+          "cause": "Netwerk- of API-storing",
+          "fix": "Verstuur het spraakbericht opnieuw, of contacteer support."
+        },
+        {
+          "problem": "Verkeerde persoon gekozen",
+          "cause": "Naam te algemeen",
+          "fix": "Voeg een detail toe: \"Jan bij Delta\", \"Marc Peeters\"."
+        },
+        {
+          "problem": "Taal wisselde halverwege",
+          "cause": "Zeer kort dubbelzinnig bericht",
+          "fix": "Antwoord in je taal — die zet zich dan weer vast."
+        },
+        {
+          "problem": "Aangepast veld werd niet bijgewerkt",
+          "cause": "Veldnaam niet herkend",
+          "fix": "Gebruik het exacte Teamleader-label, of vraag je admin."
+        },
+        {
+          "problem": "\"Contact bestaat al\"",
+          "cause": "Beveiliging tegen duplicaten",
+          "fix": "Antwoord \"werk haar bij\" of \"maak nieuw\"."
+        }
+      ]
     },
-    "needHelp": "Hulp Nodig?"
+    "reference": {
+      "eyebrow": "Onthoud dit",
+      "title": "Snelle referentie",
+      "cards": [
+        {
+          "label": "De ene regel",
+          "body": "Praat met VoiceLink zoals je zou praten met een behulpzame collega die volledige toegang heeft tot Teamleader."
+        },
+        {
+          "label": "De ene truc",
+          "body": "Bij twijfel, benoem dingen expliciet — het exacte bedrijf, de exacte persoon."
+        },
+        {
+          "label": "De ene limiet",
+          "body": "Spraakberichten worden meteen uitgevoerd. Vraag \"toon me eerst\" voor een vangnet."
+        }
+      ]
+    },
+    "support": {
+      "title": "Hulp nodig?",
+      "body": "E-mail werkt het best voor feature requests en bugmeldingen. Vermeld ongeveer de tijd van het spraakbericht zodat we het in de logs kunnen terugvinden.",
+      "whatsappLabel": "Chat via WhatsApp",
+      "teamleaderPrefix": "Vragen over Teamleader (niet VoiceLink)?",
+      "teamleaderLinkText": "help.teamleader.eu"
+    }
+  },
+  "guidePreview": {
+    "badge": "Zo gebruik je het",
+    "title": "Zeg gewoon wat er gebeurd is.",
+    "subtitle": "Geen trefwoorden, geen syntax. Praat zoals je het aan een collega zou vertellen — VoiceLink zet het om in de juiste CRM-acties.",
+    "youSayLabel": "Jij zegt",
+    "voicelinkLabel": "VoiceLink doet",
+    "examples": [
+      {
+        "youSay": "\"Net Jan gezien bij Delta NV. Ze willen 15% korting op het premium pakket. Volg hem op volgende vrijdag.\"",
+        "outcomes": [
+          "Meetingrapport geregistreerd op Delta NV",
+          "Deal bijgewerkt met notitie over 15% korting",
+          "Taak \"Jan opvolgen\" aangemaakt — vervalt vrijdag"
+        ]
+      },
+      {
+        "youSay": "\"Voeg Sarah Leclercq toe als contact bij Delta NV, ze is de nieuwe inkoopmanager.\"",
+        "outcomes": [
+          "Contact Sarah Leclercq aangemaakt",
+          "Gekoppeld aan Delta NV met rol \"Inkoopmanager\""
+        ]
+      },
+      {
+        "youSay": "\"Ik heb net 15 minuten met Marc Peeters gebeld over de contractverlenging. Hij wil vrijdag een nieuwe offerte.\"",
+        "outcomes": [
+          "Gesprek geregistreerd op Marc Peeters — 15 min",
+          "Taak \"Nieuwe offerte voor Marc\" aangemaakt — vervalt vrijdag"
+        ]
+      },
+      {
+        "youSay": "\"Het SEO-contract met Alpha Solutions is gewonnen.\"",
+        "outcomes": [
+          "Deal status bijgewerkt naar Gewonnen",
+          "Gekoppelde taak als klaar gemarkeerd"
+        ]
+      }
+    ],
+    "tipsTitle": "Snelle tips",
+    "tips": [
+      "Gebruik echte namen — \"Delta NV\" is beter dan \"dat bedrijf\".",
+      "Combineer meerdere acties in één bericht — VoiceLink zet ze op orde.",
+      "Spreek 1 van 4 talen: EN / NL / FR / DE."
+    ]
   },
   "dashboard": {
     "welcome": "Welkom terug, {{name}}!",
