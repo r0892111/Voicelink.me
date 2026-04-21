@@ -21,7 +21,7 @@ const CookiePolicy: React.FC = () => {
 
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Cookie Statement</h1>
-            <p className="text-sm text-gray-600">Version 20.04.2026</p>
+            <p className="text-sm text-gray-600">Version 21.04.2026</p>
           </div>
         </div>
 

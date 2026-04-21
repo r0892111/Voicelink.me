@@ -9,6 +9,8 @@ interface ConsentContextType {
   closeSettings: () => void;
   closeBanner: () => void;
   hasConsent: (category: string) => boolean;
+  /** Persist a partial set of category choices. Essential is always true. */
+  saveChoices: (choices: { analytics: boolean; preferences: boolean }) => void;
 }
 
 const ConsentContext = createContext<ConsentContextType | undefined>(undefined);
@@ -115,21 +117,15 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
   };
 
   const acceptAll = () => {
-    saveConsent({
-      essential: true,
-      analytics: true,
-      marketing: true,
-      preferences: true,
-    });
+    saveConsent({ essential: true, analytics: true, preferences: true });
   };
 
   const rejectAll = () => {
-    saveConsent({
-      essential: true,
-      analytics: false,
-      marketing: false,
-      preferences: false,
-    });
+    saveConsent({ essential: true, analytics: false, preferences: false });
+  };
+
+  const saveChoices = (choices: { analytics: boolean; preferences: boolean }) => {
+    saveConsent({ essential: true, ...choices });
   };
 
   const openSettings = () => setShowSettings(true);
@@ -139,12 +135,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
     // Closing the banner without an explicit choice counts as essential-only
     // (the strictest option). Under GDPR/ePrivacy, "X out" is NOT implied
     // consent for non-essential cookies.
-    saveConsent({
-      essential: true,
-      analytics: false,
-      marketing: false,
-      preferences: false,
-    });
+    saveConsent({ essential: true, analytics: false, preferences: false });
   };
 
   const hasConsent = (category: string): boolean => consent[category] === true;
@@ -160,6 +151,7 @@ export const ConsentProvider: React.FC<ConsentProviderProps> = ({ children }) =>
         closeSettings,
         closeBanner,
         hasConsent,
+        saveChoices,
       }}
     >
       {children}

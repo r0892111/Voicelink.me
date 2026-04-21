@@ -5,7 +5,6 @@ import { ChevronDown, ChevronUp, X } from 'lucide-react';
 interface ConsentChoices {
   essential: boolean;
   analytics: boolean;
-  marketing: boolean;
   preferences: boolean;
 }
 
@@ -17,35 +16,41 @@ interface CategoryInfo {
   cookies: string[];
 }
 
+// Only lists categories we actually use. Marketing is intentionally absent —
+// we don't run Meta Pixel, Google Ads, LinkedIn Insight, or any ad network.
+// If that changes, add a category here AND wire up its load/unload in
+// ConsentContext before shipping.
 const categories: CategoryInfo[] = [
   {
     key: 'essential',
     title: 'Essential',
-    description: 'Necessary for the site to function (security, load balancing, cookie preferences).',
+    description:
+      'Required for the platform to work: keeping you signed in, remembering your CRM connection, and storing your cookie choices.',
     required: true,
-    cookies: ['cookie-consent', 'session-id', '__Secure-*', 'PHPSESSID']
+    cookies: [
+      'cookie-consent',
+      'sb-*-auth-token (Supabase session)',
+      'userPlatform, auth_provider',
+      '__stripe_mid, __stripe_sid, m (Stripe — billing only)',
+      'Teamleader session (teamleader.eu only — during OAuth)',
+    ],
   },
   {
     key: 'analytics',
     title: 'Analytics',
-    description: 'Help us understand how the site is used (anonymous statistics).',
+    description:
+      'Google Analytics 4, with IP anonymisation. Helps us understand aggregate platform usage. Never loaded until you accept this category.',
     required: false,
-    cookies: ['_ga', '_ga_*', '_gid', '_gat', '_gtag_*']
-  },
-  {
-    key: 'marketing',
-    title: 'Marketing',
-    description: 'Enables personalized advertisements and measurements.',
-    required: false,
-    cookies: ['_fbp', '_fbc', 'fr', 'ads/ga-audiences', 'IDE', 'test_cookie']
+    cookies: ['_ga', '_ga_V2GHSHWX23', '_gid'],
   },
   {
     key: 'preferences',
     title: 'Preferences',
-    description: 'For loading external media and sharing buttons.',
+    description:
+      'Remembers your language choice (EN / NL / FR / DE) so the interface stays in the language you selected.',
     required: false,
-    cookies: ['VISITOR_INFO1_LIVE', 'YSC', 'CONSENT', 'SOCS']
-  }
+    cookies: ['i18nextLng'],
+  },
 ];
 
 interface SwitchProps {
@@ -74,11 +79,10 @@ const Switch: React.FC<SwitchProps> = ({ checked, onCheckedChange, 'aria-label':
 );
 
 export const CookieSettingsModal: React.FC = () => {
-  const { showSettings, closeSettings, acceptAll, rejectAll, hasConsent } = useConsent();
+  const { showSettings, closeSettings, acceptAll, rejectAll, hasConsent, saveChoices } = useConsent();
   const [localChoices, setLocalChoices] = useState<ConsentChoices>({
     essential: true,
     analytics: hasConsent('analytics'),
-    marketing: hasConsent('marketing'),
     preferences: hasConsent('preferences'),
   });
   const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>({});
@@ -99,14 +103,13 @@ export const CookieSettingsModal: React.FC = () => {
   };
 
   const handleSave = () => {
-    localStorage.setItem('cookie-consent', JSON.stringify({
-      essential: true,
+    // Delegates to ConsentContext so the choice is stored AND the
+    // corresponding scripts/cookies are loaded or unloaded in one place.
+    saveChoices({
       analytics: localChoices.analytics,
-      marketing: localChoices.marketing,
       preferences: localChoices.preferences,
-    }));
+    });
     closeSettings();
-    window.location.reload();
   };
 
   const toggleCategoryExpansion = (categoryKey: string) => {
