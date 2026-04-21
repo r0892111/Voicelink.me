@@ -83,6 +83,20 @@ const STARTER_YEARLY  = Math.round(STARTER_MONTHLY * YEARLY_DISCOUNT); // €19.
 // ─── Products we manage ──────────────────────────────────────────────────────
 const PRODUCTS = [
   {
+    key: 'free_trial',
+    name: 'VoiceLink Free Trial',
+    description: '100 credits · 1 month · no charge, upgrade anytime.',
+    prices: [
+      {
+        key: 'free_trial_monthly',
+        nickname: 'Free Trial · Monthly',
+        interval: 'month',
+        billing_scheme: 'per_unit',
+        unit_amount: 0,
+      },
+    ],
+  },
+  {
     key: 'starter',
     name: 'VoiceLink Starter',
     description: 'For solo operators. 350 credits/user/month (~35–50 voice messages).',

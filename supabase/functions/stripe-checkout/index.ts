@@ -63,11 +63,12 @@ Deno.serve(async (req) => {
       cancel_url:           cancel_url  ?? `${Deno.env.get('SITE_URL') ?? ''}/`,
       client_reference_id:  user.id,
       allow_promotion_codes: true,
-      subscription_data: {
-        // 1-month free trial (was 14 days). Pairs with the 100 credits we
-        // hand out during the trial — users get 1 month to burn through them.
-        trial_period_days: 30,
-      },
+      // Skip card collection when the price is €0 (the Free Trial product).
+      // Stripe still asks for a card for any priced line item.
+      payment_method_collection: 'if_required',
+      // No trial_period_days here: the free trial is its own €0 Stripe
+      // product (VoiceLink Free Trial). Paid plans are paid from day one —
+      // users who want to try first take the dedicated trial product.
     });
 
     r.info('checkout session created', { session_id: session.id, url_present: !!session.url });
