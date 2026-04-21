@@ -148,10 +148,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
   const [billingPeriod, setBillingPeriod] = React.useState<BillingPeriod>('monthly');
   const [currentCardIdx, setCurrentCardIdx] = React.useState(0);
   const [userCounts, setUserCounts] = React.useState<Record<string, number>>({
+    starter: 1,
     professional: 1,
     business: 1,
   });
   const [inputValues, setInputValues] = React.useState<Record<string, string>>({
+    starter: '1',
     professional: '1',
     business: '1',
   });
@@ -219,7 +221,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
   };
 
   const renderUserControl = (plan: PricingPlan) => {
-    if (!plan.hasVolumeDiscounts) return null;
+    // Show the user counter on every paid plan — Starter, Professional,
+    // Business. Free Trial is a one-person account so it stays hidden.
+    // Starter has no volume discounts, so the per-user price stays flat; the
+    // counter just scales the Stripe quantity (and the team's seat count).
+    if (plan.isFreeTrial) return null;
     const count = userCounts[plan.key] ?? 1;
     const displayValue = inputValues[plan.key] ?? String(count);
     return (
