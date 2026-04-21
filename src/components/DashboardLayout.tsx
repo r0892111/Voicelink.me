@@ -264,7 +264,11 @@ export function DashboardLayout() {
   const subStatus = subInfo?.subscription_status;
   const hasActiveSubscription = subStatus === 'active' || subStatus === 'trialing';
 
-  if (loading || !user) {
+  // Full-screen loader while auth + subscription resolve. Previously only
+  // blocked on auth; the dashboard would render an empty shell and the
+  // subscription card / trial banner would flicker in a second later. We
+  // now wait for both before rendering anything.
+  if (loading || !user || subChecking) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />

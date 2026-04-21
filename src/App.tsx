@@ -107,7 +107,7 @@ function App() {
   };
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
+      <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />
       </div>
     );

@@ -543,10 +543,12 @@ export const AuthPage: React.FC = () => {
         {/* Left side: form — centered on mobile, pushed toward center on desktop */}
         <div className="w-full lg:w-[55%] flex items-center justify-center lg:justify-end relative z-10 px-6 sm:px-10 lg:pl-4 lg:pr-0 pb-[32vh] lg:pb-0">
           {redirectingMessage && (
-            <div className="absolute inset-0 bg-porcelain/95 flex flex-col items-center justify-center z-50">
-              <Loader2 className="w-14 h-14 text-navy animate-spin mb-5" />
-              <p className="text-xl font-general font-medium text-navy">{redirectingMessage}</p>
-              <p className="text-base font-instrument text-slate-blue mt-2">{t('auth.pleaseWait')}</p>
+            <div className="absolute inset-0 bg-porcelain/95 backdrop-blur-sm flex flex-col items-center justify-center z-50 px-6">
+              <div className="w-14 h-14 rounded-2xl bg-navy/[0.05] flex items-center justify-center mb-5">
+                <Loader2 className="w-6 h-6 text-navy/60 animate-spin" />
+              </div>
+              <p className="text-lg font-general font-semibold text-navy text-center">{redirectingMessage}</p>
+              <p className="text-sm font-instrument text-navy/55 mt-1.5 text-center">{t('auth.pleaseWait')}</p>
             </div>
           )}
 

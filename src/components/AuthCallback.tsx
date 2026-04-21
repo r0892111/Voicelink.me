@@ -434,49 +434,50 @@ export const AuthCallback: React.FC = () => {
     }
   };
 
-  const getIcon = () => {
-    switch (status) {
-      case 'loading':
-        return <Loader2 className="w-12 h-12 animate-spin text-blue-600" />;
-      case 'success':
-        return <CheckCircle className="w-12 h-12 text-green-600" />;
-      case 'error':
-        return <XCircle className="w-12 h-12 text-red-600" />;
-    }
-  };
-
-  const getStatusColor = () => {
-    switch (status) {
-      case 'loading': return 'text-blue-600';
-      case 'success': return 'text-green-600';
-      case 'error': return 'text-red-600';
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-8 text-center">
-        <div className="flex justify-center mb-6">{getIcon()}</div>
+    <div className="min-h-screen bg-porcelain flex items-center justify-center px-4 font-instrument">
+      <div className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-3xl border border-navy/[0.07] shadow-sm p-8 text-center">
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <img src="/Finit Voicelink Blue.svg" alt="VoiceLink" className="h-7 w-auto" />
+        </div>
 
-        <h1 className={`text-2xl font-bold mb-4 ${getStatusColor()}`}>
+        {/* Status icon */}
+        <div className="flex justify-center mb-5">
+          {status === 'loading' && (
+            <div className="w-14 h-14 rounded-2xl bg-navy/[0.05] flex items-center justify-center">
+              <Loader2 className="w-6 h-6 text-navy/60 animate-spin" />
+            </div>
+          )}
+          {status === 'success' && (
+            <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center">
+              <CheckCircle className="w-7 h-7 text-emerald-500" />
+            </div>
+          )}
+          {status === 'error' && (
+            <div className="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center">
+              <XCircle className="w-7 h-7 text-red-500" />
+            </div>
+          )}
+        </div>
+
+        {/* Title */}
+        <h1 className="font-general font-bold text-navy text-xl mb-2">
           {status === 'loading' && t('auth.callback.authenticating')}
           {status === 'success' && t('auth.callback.authenticationSuccessful')}
           {status === 'error' && t('auth.callback.authenticationFailed')}
         </h1>
 
-        <p className="text-gray-600 mb-6">{message}</p>
+        {/* Message */}
+        <p className="text-sm text-navy/60 leading-relaxed mb-6">{message}</p>
 
         {status === 'error' && (
           <button
             onClick={() => navigate(withUTM('/'))}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 bg-navy text-white text-sm font-semibold py-2.5 px-5 rounded-full hover:bg-navy-hover transition-colors"
           >
             {t('auth.callback.returnToHome')}
           </button>
-        )}
-
-        {status === 'success' && (
-          <p className="text-sm text-gray-500">{t('auth.callback.redirectingToCheckout')}</p>
         )}
       </div>
     </div>
