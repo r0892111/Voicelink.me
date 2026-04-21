@@ -7,6 +7,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
 import { getOAuthAccessToken } from '../_shared/teamleader/getOAuthAccessToken.ts';
 import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+import { normalizePhone } from '../_shared/phone.ts';
 
 const log = createLogger('teamleader-employees');
 
@@ -115,10 +116,14 @@ Deno.serve(async (req) => {
     r.info('existing team members found', { existing_count: existingTlIds.size });
 
     // ── Map to response shape ───────────────────────────────────────────────
+    // Teamleader returns phones in whatever format users typed them — normalise
+    // to E.164 before sending to the client so downstream WhatsApp OTP calls
+    // don't fail on "0473..." local numbers.
     const employees = tlUsers.map((u) => {
-      const phone = u.telephones?.find((t) => t.type === 'mobile')?.number
+      const rawPhone = u.telephones?.find((t) => t.type === 'mobile')?.number
         ?? u.telephones?.[0]?.number
         ?? undefined;
+      const phone = normalizePhone(rawPhone) ?? undefined;
 
       return {
         id: u.id,

@@ -7,6 +7,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createWhatsAppProvider } from '../_shared/whatsapp/providers/factory.ts';
 import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+import { normalizePhone } from '../_shared/phone.ts';
 
 const log = createLogger('team-invite');
 
@@ -150,13 +151,17 @@ Deno.serve(async (req) => {
 
     // ── SEND ────────────────────────────────────────────────────────────────
     if (action === 'send') {
-      const { teamleader_id, name, email, phone, invite_method } = body as {
+      const { teamleader_id, name, email, phone: rawPhone, invite_method } = body as {
         teamleader_id: string;
         name: string;
         email: string;
         phone?: string;
         invite_method?: string;
       };
+
+      // Normalise before store / send so downstream WhatsApp OTP receives a
+      // valid E.164 number regardless of how the TL API returned it.
+      const phone = normalizePhone(rawPhone) ?? undefined;
 
       r.info('send invite requested', { teamleader_id, email, phone: phone ? '***' : undefined, method: invite_method });
 
@@ -242,7 +247,9 @@ Deno.serve(async (req) => {
       if (method === 'email' || method === 'both') {
         try {
           const siteUrl = Deno.env.get('SITE_URL') ?? 'https://voicelink.me';
-          const redirectTo = `${siteUrl}/invite/accept?token=${invitationToken}`;
+          // `/invite?token=…` is the actual mounted route (InviteAccept.tsx).
+          // `/invite/accept` was a typo — landed the user on the 404 fallback.
+          const redirectTo = `${siteUrl}/invite?token=${invitationToken}`;
 
           r.info('sending invitation email', { email, redirect_to: redirectTo });
           const emailResult = await supabase.auth.admin.inviteUserByEmail(email, {
@@ -441,17 +448,19 @@ Deno.serve(async (req) => {
         return json({ success: false, error: 'Failed to resend invitation.' }, 500);
       }
 
-      // Re-send email and/or WhatsApp
+      // Re-send email and/or WhatsApp. Re-normalise on read in case older
+      // pending-invite rows were stored before we added the insert-side
+      // normaliser.
       const info = memberRow.user_info ?? {};
       const email = (info as Record<string, unknown>).email as string | undefined;
-      const phone = memberRow.phone as string | undefined;
+      const phone = normalizePhone(memberRow.phone as string | undefined) ?? undefined;
       const method = invite_method ?? (phone ? 'both' : 'email');
       r.info('resending notifications', { method, has_email: !!email, has_phone: !!phone });
 
       if ((method === 'email' || method === 'both') && email) {
         try {
           const siteUrl = Deno.env.get('SITE_URL') ?? 'https://voicelink.me';
-          const redirectTo = `${siteUrl}/invite/accept?token=${newToken}`;
+          const redirectTo = `${siteUrl}/invite?token=${newToken}`;
 
           r.info('resending invitation email', { email });
           await supabase.auth.admin.inviteUserByEmail(email, {
