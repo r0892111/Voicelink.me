@@ -230,6 +230,9 @@ export function DashboardLayout() {
   const pageTitleKey = useMemo(() => resolvePageTitleKey(location.pathname), [location.pathname]);
   const pageTitle = t(pageTitleKey);
 
+  const subStatus = subInfo?.subscription_status;
+  const hasActiveSubscription = subStatus === 'active' || subStatus === 'trialing';
+
   if (loading || !user) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
@@ -260,7 +263,13 @@ export function DashboardLayout() {
     <DashboardContext.Provider value={ctxValue}>
       <div className="min-h-screen bg-porcelain">
         <aside className="hidden lg:block fixed top-0 left-0 h-screen w-64 z-30">
-          <DashboardSidebar user={user} isAdmin={role.isAdmin} onSignOut={signOut} />
+          <DashboardSidebar
+            user={user}
+            isAdmin={role.isAdmin}
+            isMember={role.isMember}
+            hasActiveSubscription={hasActiveSubscription}
+            onSignOut={signOut}
+          />
         </aside>
 
         {drawerOpen && (
@@ -274,6 +283,8 @@ export function DashboardLayout() {
               <DashboardSidebar
                 user={user}
                 isAdmin={role.isAdmin}
+                isMember={role.isMember}
+                hasActiveSubscription={hasActiveSubscription}
                 onSignOut={signOut}
                 onNavigate={() => setDrawerOpen(false)}
               />

@@ -1277,7 +1277,9 @@
       "groupHelp": "Hulp",
       "adminOnlyTooltip": "Alleen voor admins — beheerd door je workspace-admin",
       "openSidebar": "Zijbalk openen",
-      "closeSidebar": "Zijbalk sluiten"
+      "closeSidebar": "Zijbalk sluiten",
+      "subscriptionLockedTooltip": "Start je gratis proefperiode om te ontgrendelen",
+      "subscriptionLockedMemberTooltip": "Wachten tot je admin de proefperiode start"
     },
     "platforms": {
       "teamleader": "Teamleader",
@@ -1322,7 +1324,7 @@
       "checklistTitle": "Je instellingen-checklist",
       "checklistSubtitle": "Drie stappen om volledig operationeel te zijn",
       "stepCrmTitle": "{{platform}} verbonden",
-      "stepCrmBody": "Je CRM is gekoppeld en synchroniseert. Spraakberichten komen automatisch binnen.",
+      "stepCrmBody": "Je CRM is gekoppeld. Spraakberichten worden gesynchroniseerd zodra je de proefperiode activeert en WhatsApp hieronder koppelt.",
       "stepWaTitle": "WhatsApp verbinden",
       "stepWaBodyActive": "Geverifieerd · {{number}}",
       "stepWaBodyPending": "Verificatie in behandeling — check je WhatsApp voor de code.",
@@ -1335,26 +1337,34 @@
       "startTrialFirst": "Start eerst proefperiode",
       "awaitingAdmin": "Wachten op admin",
       "tipsTitle": "Hoe gebruik je VoiceLink",
-      "tipsSubtitle": "Tips voor het beste resultaat",
-      "tipsList": [
+      "tipsSubtitle": "Zeg gewoon wat er gebeurd is — VoiceLink regelt de rest.",
+      "viewFullGuide": "Volledige handleiding bekijken",
+      "youSayLabel": "Jij zegt",
+      "voicelinkLabel": "VoiceLink doet",
+      "cheats": [
         {
-          "emoji": "🗣️",
-          "text": "Begin met \"Net gesproken met [Naam]\" om een contact te loggen."
+          "youSay": "\"Net Jan gezien bij Delta NV. Ze willen 15% korting op het premium pakket. Volg hem op volgende vrijdag.\"",
+          "outcomes": [
+            "Meetingrapport geregistreerd op Delta NV",
+            "Deal bijgewerkt met notitie over 15% korting",
+            "Taak \"Jan opvolgen\" aangemaakt — vervalt vrijdag"
+          ]
         },
         {
-          "emoji": "📅",
-          "text": "\"Bel hem maandag om 15u terug\" maakt automatisch een taak aan."
+          "youSay": "\"Voeg Sarah Leclercq toe als contact bij Delta NV, ze is de nieuwe inkoopmanager.\"",
+          "outcomes": [
+            "Contact Sarah Leclercq aangemaakt",
+            "Gekoppeld aan Delta NV met rol \"Inkoopmanager\""
+          ]
         },
         {
-          "emoji": "🎯",
-          "text": "Eén persoon per spraakbericht houdt alles accuraat."
-        },
-        {
-          "emoji": "✍️",
-          "text": "Spel moeilijke namen letter per letter voor perfecte CRM-invoer."
+          "youSay": "\"Ik heb net 15 minuten met Marc gebeld over de contractverlenging.\"",
+          "outcomes": [
+            "Gesprek geregistreerd op Marc — 15 min",
+            "Notitie over contractverlenging toegevoegd"
+          ]
         }
-      ],
-      "viewFullGuide": "Volledige handleiding bekijken"
+      ]
     },
     "team": {
       "eyebrow": "Workspace",

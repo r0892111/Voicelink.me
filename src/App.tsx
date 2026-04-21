@@ -13,6 +13,7 @@ import { DashboardSettings } from './components/DashboardSettings';
 import { DashboardProfile } from './components/DashboardProfile';
 import { DashboardBilling } from './components/DashboardBilling';
 import { DashboardGuide } from './components/DashboardGuide';
+import { SubscriptionGate } from './components/SubscriptionGate';
 import { ContactFormModal } from './components/ContactFormModal';
 import { FieldServiceLanding } from './components/FieldServiceLanding';
 import { InstallatorsLanding } from './components/InstallatorsLanding';
@@ -415,12 +416,12 @@ function App() {
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
               <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route index element={<DashboardHome />} />
-                <Route path="team" element={<DashboardTeam />} />
-                <Route path="usage" element={<DashboardUsage />} />
-                <Route path="settings" element={<DashboardSettings />} />
-                <Route path="profile" element={<DashboardProfile />} />
-                <Route path="billing" element={<DashboardBilling />} />
-                <Route path="guide" element={<DashboardGuide />} />
+                <Route path="team"     element={<SubscriptionGate><DashboardTeam /></SubscriptionGate>} />
+                <Route path="usage"    element={<SubscriptionGate><DashboardUsage /></SubscriptionGate>} />
+                <Route path="settings" element={<SubscriptionGate><DashboardSettings /></SubscriptionGate>} />
+                <Route path="profile"  element={<SubscriptionGate><DashboardProfile /></SubscriptionGate>} />
+                <Route path="billing"  element={<SubscriptionGate><DashboardBilling /></SubscriptionGate>} />
+                <Route path="guide"    element={<DashboardGuide />} />
               </Route>
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/success" element={<SuccessPage />} />

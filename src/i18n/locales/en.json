@@ -1285,7 +1285,9 @@
       "groupHelp": "Help",
       "adminOnlyTooltip": "Admin-only — managed by your workspace admin",
       "openSidebar": "Open sidebar",
-      "closeSidebar": "Close sidebar"
+      "closeSidebar": "Close sidebar",
+      "subscriptionLockedTooltip": "Start your free trial to unlock",
+      "subscriptionLockedMemberTooltip": "Waiting on your admin to start the trial"
     },
     "platforms": {
       "teamleader": "Teamleader",
@@ -1330,7 +1332,7 @@
       "checklistTitle": "Your Setup Checklist",
       "checklistSubtitle": "Three quick steps to get fully up and running",
       "stepCrmTitle": "{{platform}} Connected",
-      "stepCrmBody": "Your CRM is linked and syncing. Voice note data will flow in automatically.",
+      "stepCrmBody": "Your CRM is linked. Voice notes will start syncing once you activate the trial and connect WhatsApp below.",
       "stepWaTitle": "Connect WhatsApp",
       "stepWaBodyActive": "Verified · {{number}}",
       "stepWaBodyPending": "Verification pending — check your WhatsApp for the code.",
@@ -1342,27 +1344,35 @@
       "cancel": "Cancel",
       "startTrialFirst": "Start Trial First",
       "awaitingAdmin": "Awaiting admin",
-      "tipsTitle": "How to Use VoiceLink",
-      "tipsSubtitle": "Tips for the best results",
-      "tipsList": [
+      "tipsTitle": "How to use VoiceLink",
+      "tipsSubtitle": "Just say what happened — VoiceLink figures out the rest.",
+      "viewFullGuide": "View full user guide",
+      "youSayLabel": "You say",
+      "voicelinkLabel": "VoiceLink does",
+      "cheats": [
         {
-          "emoji": "🗣️",
-          "text": "Start with \"Just spoke with [Name]\" to log a contact."
+          "youSay": "\"Just met Jan at Delta NV. They want a 15% discount on the premium package. Follow up with him next Friday.\"",
+          "outcomes": [
+            "Meeting report logged on Delta NV",
+            "Deal updated with the 15% discount note",
+            "Task \"Follow up with Jan\" created — due Friday"
+          ]
         },
         {
-          "emoji": "📅",
-          "text": "\"Call him back Monday at 3 PM\" creates a task automatically."
+          "youSay": "\"Add Sarah Leclercq as a contact at Delta NV, she's the new procurement manager.\"",
+          "outcomes": [
+            "Contact Sarah Leclercq created",
+            "Linked to Delta NV with role \"Procurement Manager\""
+          ]
         },
         {
-          "emoji": "🎯",
-          "text": "One person per voice note keeps things accurate."
-        },
-        {
-          "emoji": "✍️",
-          "text": "Spell tricky names letter-by-letter for perfect CRM input."
+          "youSay": "\"I just called Marc for 15 minutes about the contract renewal.\"",
+          "outcomes": [
+            "Call logged on Marc — 15 min",
+            "Note about contract renewal attached"
+          ]
         }
-      ],
-      "viewFullGuide": "View full user guide"
+      ]
     },
     "team": {
       "eyebrow": "Workspace",

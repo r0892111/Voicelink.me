@@ -1231,7 +1231,9 @@
       "groupHelp": "Hilfe",
       "adminOnlyTooltip": "Nur für Admins — verwaltet von deinem Workspace-Admin",
       "openSidebar": "Seitenleiste öffnen",
-      "closeSidebar": "Seitenleiste schließen"
+      "closeSidebar": "Seitenleiste schließen",
+      "subscriptionLockedTooltip": "Starte deinen Gratis-Test zum Entsperren",
+      "subscriptionLockedMemberTooltip": "Warten bis dein Admin den Test startet"
     },
     "platforms": {
       "teamleader": "Teamleader",
@@ -1276,7 +1278,7 @@
       "checklistTitle": "Deine Setup-Checkliste",
       "checklistSubtitle": "Drei schnelle Schritte, um startklar zu sein",
       "stepCrmTitle": "{{platform}} verbunden",
-      "stepCrmBody": "Dein CRM ist verbunden und synchronisiert. Sprachnachricht-Daten fließen automatisch ein.",
+      "stepCrmBody": "Dein CRM ist verbunden. Sprachnachrichten werden synchronisiert, sobald du den Test aktivierst und WhatsApp unten verbindest.",
       "stepWaTitle": "WhatsApp verbinden",
       "stepWaBodyActive": "Verifiziert · {{number}}",
       "stepWaBodyPending": "Verifizierung läuft — schau in WhatsApp nach dem Code.",
@@ -1289,26 +1291,34 @@
       "startTrialFirst": "Zuerst Test starten",
       "awaitingAdmin": "Wartet auf Admin",
       "tipsTitle": "So nutzt du VoiceLink",
-      "tipsSubtitle": "Tipps für beste Ergebnisse",
-      "tipsList": [
+      "tipsSubtitle": "Sag einfach, was passiert ist — VoiceLink kümmert sich um den Rest.",
+      "viewFullGuide": "Vollständiges Handbuch anzeigen",
+      "youSayLabel": "Du sagst",
+      "voicelinkLabel": "VoiceLink tut",
+      "cheats": [
         {
-          "emoji": "🗣️",
-          "text": "Beginne mit \"Gerade mit [Name] gesprochen\", um einen Kontakt zu loggen."
+          "youSay": "\"Gerade Jan bei Delta NV getroffen. Sie wollen 15% Rabatt auf das Premium-Paket. Follow-up nächsten Freitag.\"",
+          "outcomes": [
+            "Meeting-Report auf Delta NV protokolliert",
+            "Deal mit Rabatt-Notiz (15%) aktualisiert",
+            "Aufgabe \"Jan nachfassen\" angelegt — fällig Freitag"
+          ]
         },
         {
-          "emoji": "📅",
-          "text": "\"Ruf ihn Montag um 15 Uhr zurück\" erstellt automatisch eine Aufgabe."
+          "youSay": "\"Füge Sarah Leclercq als Kontakt bei Delta NV hinzu, sie ist die neue Einkaufsleiterin.\"",
+          "outcomes": [
+            "Kontakt Sarah Leclercq angelegt",
+            "Mit Delta NV verknüpft, Rolle \"Einkaufsleiterin\""
+          ]
         },
         {
-          "emoji": "🎯",
-          "text": "Eine Person pro Sprachnachricht hält alles präzise."
-        },
-        {
-          "emoji": "✍️",
-          "text": "Schwierige Namen buchstabiere Buchstabe für Buchstabe für perfekte CRM-Eingabe."
+          "youSay": "\"Ich habe gerade 15 Minuten mit Marc über die Vertragsverlängerung telefoniert.\"",
+          "outcomes": [
+            "Anruf auf Marc protokolliert — 15 Min",
+            "Notiz zur Vertragsverlängerung angehängt"
+          ]
         }
-      ],
-      "viewFullGuide": "Vollständiges Handbuch anzeigen"
+      ]
     },
     "team": {
       "eyebrow": "Workspace",

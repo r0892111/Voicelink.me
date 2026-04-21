@@ -18,6 +18,8 @@ import { useI18n } from '../hooks/useI18n';
 export interface DashboardSidebarProps {
   user: AuthUser;
   isAdmin: boolean;
+  hasActiveSubscription: boolean;
+  isMember: boolean;
   onSignOut: () => void;
   onNavigate?: () => void;
 }
@@ -27,6 +29,9 @@ interface NavItem {
   labelKey: string;
   icon: React.ComponentType<{ className?: string }>;
   adminOnly?: boolean;
+  /** Requires an active / trialing subscription on the workspace. Only
+   *  Dashboard home and User Guide stay open without one. */
+  subscriptionRequired?: boolean;
   end?: boolean;
 }
 
@@ -40,16 +45,16 @@ const NAV_GROUPS: NavGroup[] = [
     labelKey: 'dash.nav.groupMain',
     items: [
       { to: '/dashboard',         labelKey: 'dash.nav.dashboard', icon: LayoutDashboard, end: true },
-      { to: '/dashboard/team',    labelKey: 'dash.nav.team',      icon: Users,           adminOnly: true },
-      { to: '/dashboard/usage',   labelKey: 'dash.nav.usage',     icon: BarChart3 },
+      { to: '/dashboard/team',    labelKey: 'dash.nav.team',      icon: Users,           adminOnly: true, subscriptionRequired: true },
+      { to: '/dashboard/usage',   labelKey: 'dash.nav.usage',     icon: BarChart3,       subscriptionRequired: true },
     ],
   },
   {
     labelKey: 'dash.nav.groupAccount',
     items: [
-      { to: '/dashboard/settings', labelKey: 'dash.nav.settings', icon: Settings },
-      { to: '/dashboard/profile',  labelKey: 'dash.nav.profile',  icon: UserCircle },
-      { to: '/dashboard/billing',  labelKey: 'dash.nav.billing',  icon: CreditCard, adminOnly: true },
+      { to: '/dashboard/settings', labelKey: 'dash.nav.settings', icon: Settings,    subscriptionRequired: true },
+      { to: '/dashboard/profile',  labelKey: 'dash.nav.profile',  icon: UserCircle,  subscriptionRequired: true },
+      { to: '/dashboard/billing',  labelKey: 'dash.nav.billing',  icon: CreditCard,  adminOnly: true, subscriptionRequired: true },
     ],
   },
   {
@@ -58,7 +63,40 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
-export function DashboardSidebar({ user, isAdmin, onSignOut, onNavigate }: DashboardSidebarProps) {
+type LockReason = 'admin' | 'subscription_admin' | 'subscription_member' | null;
+
+function resolveLock(
+  item: NavItem,
+  isAdmin: boolean,
+  hasActiveSubscription: boolean,
+  isMember: boolean,
+): LockReason {
+  if (item.adminOnly && !isAdmin) return 'admin';
+  if (item.subscriptionRequired && !hasActiveSubscription) {
+    return isMember ? 'subscription_member' : 'subscription_admin';
+  }
+  return null;
+}
+
+function tooltipKey(reason: Exclude<LockReason, null>): string {
+  switch (reason) {
+    case 'admin':
+      return 'dash.nav.adminOnlyTooltip';
+    case 'subscription_admin':
+      return 'dash.nav.subscriptionLockedTooltip';
+    case 'subscription_member':
+      return 'dash.nav.subscriptionLockedMemberTooltip';
+  }
+}
+
+export function DashboardSidebar({
+  user,
+  isAdmin,
+  hasActiveSubscription,
+  isMember,
+  onSignOut,
+  onNavigate,
+}: DashboardSidebarProps) {
   const navigate = useNavigate();
   const { t } = useI18n();
 
@@ -94,11 +132,12 @@ export function DashboardSidebar({ user, isAdmin, onSignOut, onNavigate }: Dashb
             </p>
             <ul className="space-y-0.5">
               {group.items.map((item) => {
-                const locked = item.adminOnly && !isAdmin;
+                const lockReason = resolveLock(item, isAdmin, hasActiveSubscription, isMember);
                 const Icon = item.icon;
                 const label = t(item.labelKey);
 
-                if (locked) {
+                if (lockReason) {
+                  const tooltip = t(tooltipKey(lockReason));
                   return (
                     <li key={item.to}>
                       <div className="group/locked relative">
@@ -111,7 +150,7 @@ export function DashboardSidebar({ user, isAdmin, onSignOut, onNavigate }: Dashb
                           role="tooltip"
                           className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 z-50 whitespace-nowrap rounded-lg bg-navy text-white text-xs font-medium px-2.5 py-1.5 shadow-lg opacity-0 translate-x-[-4px] group-hover/locked:opacity-100 group-hover/locked:translate-x-0 transition-all duration-150"
                         >
-                          {t('dash.nav.adminOnlyTooltip')}
+                          {tooltip}
                           <span className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-navy" />
                         </div>
                       </div>

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   MessageCircle,
   CheckCircle,
+  CheckCircle2,
   Zap,
   ArrowRight,
   Clock,
@@ -18,7 +19,10 @@ import { WhatsAppConnectForm } from './WhatsAppConnectForm';
 import { withUTM } from '../utils/utm';
 import { useI18n } from '../hooks/useI18n';
 
-interface Tip { emoji: string; text: string }
+interface CheatExample {
+  youSay: string;
+  outcomes: string[];
+}
 
 export function DashboardHome() {
   const navigate = useNavigate();
@@ -44,7 +48,7 @@ export function DashboardHome() {
     return t('dash.home.greetingEvening');
   }
 
-  const tips = (t('dash.home.tipsList', { returnObjects: true }) as Tip[]) ?? [];
+  const cheats = (t('dash.home.cheats', { returnObjects: true }) as CheatExample[]) ?? [];
 
   const setupSteps = [
     {
@@ -451,30 +455,65 @@ export function DashboardHome() {
         </section>
       )}
 
-      {/* ── TIPS ── */}
+      {/* ── HOW TO USE (You say → VoiceLink does) ── */}
       <section className="px-6 pb-16">
         <div className="max-w-4xl mx-auto">
           <div
             className="bg-white/80 backdrop-blur-sm rounded-3xl border border-navy/[0.07] shadow-sm p-7"
             style={{ animation: 'hero-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.7s both' }}
           >
-            <div className="flex items-center space-x-3 mb-5">
+            <div className="flex items-center space-x-3 mb-6">
               <div className="w-10 h-10 rounded-2xl bg-navy flex items-center justify-center shadow-sm flex-shrink-0">
                 <Mic className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-general font-bold text-navy text-base leading-tight">{t('dash.home.tipsTitle')}</h3>
+                <h3 className="font-general font-bold text-navy text-base leading-tight">
+                  {t('dash.home.tipsTitle')}
+                </h3>
                 <p className="text-xs text-navy/40">{t('dash.home.tipsSubtitle')}</p>
               </div>
             </div>
-            <ul className="space-y-3.5">
-              {tips.map((tip, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="text-base leading-tight mt-0.5 flex-shrink-0">{tip.emoji}</span>
-                  <span className="text-sm text-navy/60 leading-relaxed">{tip.text}</span>
-                </li>
+
+            <div className="space-y-4">
+              {cheats.map((ex, i) => (
+                <article
+                  key={i}
+                  className="bg-navy/[0.02] rounded-2xl border border-navy/[0.06] p-5"
+                >
+                  {/* You say */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+                      <Mic className="w-3 h-3 text-emerald-600" />
+                    </div>
+                    <span className="text-[11px] uppercase tracking-widest font-semibold text-navy/45">
+                      {t('dash.home.youSayLabel')}
+                    </span>
+                  </div>
+                  <p className="text-navy/75 text-sm italic leading-relaxed pl-8 mb-3">
+                    {ex.youSay}
+                  </p>
+
+                  {/* VoiceLink does */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-navy flex items-center justify-center flex-shrink-0">
+                      <Sparkles className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-[11px] uppercase tracking-widest font-semibold text-navy/45">
+                      {t('dash.home.voicelinkLabel')}
+                    </span>
+                  </div>
+                  <ul className="space-y-1.5 pl-8">
+                    {ex.outcomes.map((o) => (
+                      <li key={o} className="flex items-start gap-2 text-sm text-navy/65 leading-relaxed">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                        <span>{o}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
               ))}
-            </ul>
+            </div>
+
             <button
               onClick={() => navigate(withUTM('/dashboard/guide'))}
               className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy transition-colors"

@@ -1190,7 +1190,9 @@
       "groupHelp": "Aide",
       "adminOnlyTooltip": "Réservé aux admins — géré par votre admin",
       "openSidebar": "Ouvrir la barre latérale",
-      "closeSidebar": "Fermer la barre latérale"
+      "closeSidebar": "Fermer la barre latérale",
+      "subscriptionLockedTooltip": "Démarrez votre essai gratuit pour débloquer",
+      "subscriptionLockedMemberTooltip": "En attente du démarrage de l'essai par votre admin"
     },
     "platforms": {
       "teamleader": "Teamleader",
@@ -1235,7 +1237,7 @@
       "checklistTitle": "Votre checklist de démarrage",
       "checklistSubtitle": "Trois étapes pour être pleinement opérationnel",
       "stepCrmTitle": "{{platform}} connecté",
-      "stepCrmBody": "Votre CRM est lié et se synchronise. Les notes vocales arriveront automatiquement.",
+      "stepCrmBody": "Votre CRM est connecté. Les notes vocales se synchroniseront dès que vous activerez l'essai et connecterez WhatsApp ci-dessous.",
       "stepWaTitle": "Connecter WhatsApp",
       "stepWaBodyActive": "Vérifié · {{number}}",
       "stepWaBodyPending": "Vérification en cours — consultez votre WhatsApp pour le code.",
@@ -1248,26 +1250,34 @@
       "startTrialFirst": "Démarrer l'essai d'abord",
       "awaitingAdmin": "En attente de l'admin",
       "tipsTitle": "Comment utiliser VoiceLink",
-      "tipsSubtitle": "Conseils pour de meilleurs résultats",
-      "tipsList": [
+      "tipsSubtitle": "Dites simplement ce qui s'est passé — VoiceLink s'occupe du reste.",
+      "viewFullGuide": "Voir le guide complet",
+      "youSayLabel": "Vous dites",
+      "voicelinkLabel": "VoiceLink fait",
+      "cheats": [
         {
-          "emoji": "🗣️",
-          "text": "Commencez par \"Je viens de parler avec [Nom]\" pour enregistrer un contact."
+          "youSay": "\"Je viens de voir Jan chez Delta NV. Ils veulent 15% de remise sur le pack premium. Fais un suivi vendredi prochain.\"",
+          "outcomes": [
+            "Compte-rendu de réunion enregistré sur Delta NV",
+            "Deal mis à jour avec la note de 15% de remise",
+            "Tâche \"Suivi de Jan\" créée — échéance vendredi"
+          ]
         },
         {
-          "emoji": "📅",
-          "text": "\"Rappelle-le lundi à 15h\" crée automatiquement une tâche."
+          "youSay": "\"Ajoute Sarah Leclercq comme contact chez Delta NV, c'est la nouvelle responsable achats.\"",
+          "outcomes": [
+            "Contact Sarah Leclercq créé",
+            "Lié à Delta NV avec le rôle \"Responsable achats\""
+          ]
         },
         {
-          "emoji": "🎯",
-          "text": "Une personne par note vocale garde tout précis."
-        },
-        {
-          "emoji": "✍️",
-          "text": "Épelez les noms difficiles lettre par lettre pour une saisie CRM parfaite."
+          "youSay": "\"J'ai appelé Marc 15 minutes pour le renouvellement du contrat.\"",
+          "outcomes": [
+            "Appel enregistré sur Marc — 15 min",
+            "Note sur le renouvellement du contrat attachée"
+          ]
         }
-      ],
-      "viewFullGuide": "Voir le guide complet"
+      ]
     },
     "team": {
       "eyebrow": "Espace de travail",
