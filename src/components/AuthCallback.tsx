@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
-import { DEFAULT_TIER, getStripePriceId } from '../config/teamPricing';
+import { getStripePriceId } from '../config/teamPricing';
 import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCheckout';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
@@ -396,34 +396,36 @@ export const AuthCallback: React.FC = () => {
 
         navigate(withUTM('/dashboard'));
       } else {
-        // User doesn't have subscription → redirect to Stripe Checkout.
-        // If they landed here via a homepage paid-plan CTA (PricingSection),
-        // we stored their choice in localStorage; resolve it back to the
-        // correct Stripe price ID + quantity. Falls back to Starter / 1 seat
-        // for users who entered /signup directly.
-        setMessage(t('auth.callback.redirectingToCheckout'));
-
+        // No active subscription. If the user arrived via a homepage paid-
+        // plan CTA we have a pendingCheckout intent in localStorage — route
+        // them straight into Stripe Checkout for that plan. Otherwise this
+        // is a "Get Started Free" signup: send them to /dashboard where the
+        // trial banner invites them to start the free trial on their own
+        // terms. We must NOT auto-Stripe every no-sub signup, or the free-
+        // trial CTA becomes a forced-checkout funnel.
         const pending = consumePendingCheckout();
-        let priceId = DEFAULT_TIER.monthlyPriceId;
-        let quantity = 1;
         if (pending) {
-          const resolved = getStripePriceId(
+          const priceId = getStripePriceId(
             pending.tierKey,
             pending.interval === 'yearly' ? 'year' : 'month',
           );
-          if (resolved) {
-            priceId = resolved;
-            quantity = pending.quantity;
+          if (priceId) {
+            setMessage(t('auth.callback.redirectingToCheckout'));
+            clearPendingCheckout();
+            await StripeService.createCheckoutSession({
+              priceId,
+              quantity: pending.quantity,
+              successUrl: `${window.location.origin}/dashboard`,
+              cancelUrl: `${window.location.origin}/dashboard`,
+            });
+            return;
           }
+          // Unknown tier key (shouldn't happen) — fall through to dashboard
+          // so the user isn't stuck.
           clearPendingCheckout();
         }
 
-        await StripeService.createCheckoutSession({
-          priceId,
-          quantity,
-          successUrl: `${window.location.origin}/dashboard`,
-          cancelUrl: `${window.location.origin}/dashboard`,
-        });
+        navigate(withUTM('/dashboard'));
       }
     } catch (error) {
       console.error('Error during subscription check/redirect:', error);
