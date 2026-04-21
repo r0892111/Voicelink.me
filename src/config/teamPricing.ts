@@ -66,12 +66,6 @@ export const TEAM_TIERS: TeamTier[] = [
 /** Default tier used for single-user signups. */
 export const DEFAULT_TIER = TEAM_TIERS[0];
 
-/** Stripe price ID for the free trial (€0/month, 100 credits, 1 month).
- *  Used by the "Start free" CTA on the dashboard — a separate product from
- *  Starter/Pro/Business so the checkout screen shows trial-specific copy
- *  instead of "VoiceLink Starter · 350 credits/user/month". */
-export const FREE_TRIAL_PRICE_ID = 'price_1TOfEzLPohnizGblm61hDXFF';
-
 /** Return the tier that fits a given seat count. */
 export function getTierForSeatCount(seats: number): TeamTier {
   const tier = TEAM_TIERS.find(

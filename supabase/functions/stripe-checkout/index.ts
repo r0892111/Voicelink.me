@@ -37,8 +37,8 @@ Deno.serve(async (req) => {
     }
     r.info('authenticated', { user_id: user.id, email: user.email });
 
-    const { price_id, quantity, success_url, cancel_url } = await req.json();
-    r.info('creating checkout session', { price_id, quantity, user_id: user.id });
+    const { price_id, quantity, success_url, cancel_url, trial_days } = await req.json();
+    r.info('creating checkout session', { price_id, quantity, trial_days, user_id: user.id });
 
     if (!price_id) {
       r.warn('missing price_id');
@@ -54,6 +54,10 @@ Deno.serve(async (req) => {
 
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
 
+    // Clamp trial_days to a sensible range. 0 / undefined = no trial (paid
+    // immediately). 30 is what "Start free" sends; we cap at 90 for safety.
+    const trialDays = Math.max(0, Math.min(90, Number(trial_days) || 0));
+
     const session = await stripe.checkout.sessions.create({
       mode:                 'subscription',
       payment_method_types: ['card'],
@@ -63,12 +67,12 @@ Deno.serve(async (req) => {
       cancel_url:           cancel_url  ?? `${Deno.env.get('SITE_URL') ?? ''}/`,
       client_reference_id:  user.id,
       allow_promotion_codes: true,
-      // Skip card collection when the price is €0 (the Free Trial product).
-      // Stripe still asks for a card for any priced line item.
-      payment_method_collection: 'if_required',
-      // No trial_period_days here: the free trial is its own €0 Stripe
-      // product (VoiceLink Free Trial). Paid plans are paid from day one —
-      // users who want to try first take the dedicated trial product.
+      // The "Start free" CTA requests trial_days=30. Pass it through so the
+      // subscription goes into the `trialing` state with the same card on
+      // file — Stripe auto-charges once the trial ends, no second checkout.
+      // Homepage paid-plan CTAs don't send trial_days, so those users pay
+      // from day one.
+      ...(trialDays > 0 ? { subscription_data: { trial_period_days: trialDays } } : {}),
     });
 
     r.info('checkout session created', { session_id: session.id, url_present: !!session.url });

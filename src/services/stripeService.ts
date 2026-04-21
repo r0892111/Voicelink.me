@@ -6,6 +6,12 @@ export interface CheckoutOptions {
   successUrl?: string;
   cancelUrl?: string;
   crmProvider?: string;
+  /** When set, Stripe gives the subscription this many trial days before
+   *  the first charge. Used by the "Start free" CTA to deliver a 1-month
+   *  trial that auto-converts to the paid plan (Starter). Paid-plan
+   *  checkouts from the homepage leave this undefined so the user pays
+   *  immediately — they've already decided to subscribe. */
+  trialDays?: number;
 }
 
 export class StripeService {
@@ -31,6 +37,7 @@ export class StripeService {
           success_url: options.successUrl || `${window.location.origin}/success`,
           cancel_url: options.cancelUrl || `${window.location.origin}/`,
           crm_provider: crmProvider,
+          trial_days: options.trialDays,
         }),
       });
 

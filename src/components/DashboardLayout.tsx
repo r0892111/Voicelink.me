@@ -6,7 +6,7 @@ import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
 import { useTeamRole } from '../hooks/useTeamRole';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
-import { FREE_TRIAL_PRICE_ID, getStripePriceId } from '../config/teamPricing';
+import { DEFAULT_TIER, getStripePriceId } from '../config/teamPricing';
 import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCheckout';
 import { withUTM } from '../utils/utm';
 import { DashboardSidebar } from './DashboardSidebar';
@@ -221,13 +221,15 @@ export function DashboardLayout() {
   };
 
   const startTrial = async () => {
-    // Free trial = the dedicated VoiceLink Free Trial Stripe product (€0/mo,
-    // its own name + description). Using Starter's priceId used to make the
-    // checkout page say "VoiceLink Starter · 350 credits/user/month", which
-    // was misleading — the trial is conceptually a different offering.
+    // Free trial flows into a real Starter subscription: user picks up a
+    // 30-day trial on the Starter plan, card collected at checkout, auto-
+    // converts to €24/month after the trial unless they cancel. Classic SaaS
+    // model — zero friction to convert vs. the earlier €0-trial-product
+    // approach that required a second checkout round to upgrade.
     await StripeService.createCheckoutSession({
-      priceId: FREE_TRIAL_PRICE_ID,
+      priceId: DEFAULT_TIER.monthlyPriceId,
       quantity: 1,
+      trialDays: 30,
       successUrl: `${window.location.origin}/dashboard`,
       cancelUrl: `${window.location.origin}/`,
     });
