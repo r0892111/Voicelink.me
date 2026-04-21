@@ -39,6 +39,7 @@ import { AnalyticsListener } from './components/AnalyticsListener';
 import { withUTM } from './utils/utm';
 import { NoiseOverlay } from './components/ui/NoiseOverlay';
 import { PageTransitionProvider, usePageTransition } from './hooks/usePageTransition';
+import { consumeTestFlow, clearTestFlow } from './utils/testFlow';
 
 function App() {
   const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
@@ -61,10 +62,9 @@ function App() {
   // a double-mount through /dashboard.
   React.useEffect(() => {
     if (!loading && user && location.pathname === '/' && window.location.hash.includes('access_token')) {
-      const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
-      if (isTestUserFlow) {
-        localStorage.removeItem('is_test_user_flow');
-        localStorage.removeItem('test_user_phone');
+      const { isTest } = consumeTestFlow();
+      if (isTest) {
+        clearTestFlow();
         navigate('/test-dashboard', { replace: true });
       } else {
         navigate(withUTM('/dashboard'), { replace: true });

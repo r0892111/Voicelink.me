@@ -165,7 +165,8 @@
     "statusExpired": "Expiré",
     "you": "vous",
     "resendInvitation": "Renvoyer l'Invitation",
-    "cancelInvitation": "Annuler l'Invitation"
+    "cancelInvitation": "Annuler l'Invitation",
+    "seatLimitReached": "Limite de places atteinte. Passez à un forfait supérieur pour inviter plus de coéquipiers."
   },
   "userGuide": {
     "eyebrow": "Aide",

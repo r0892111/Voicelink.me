@@ -7,6 +7,7 @@ import { DEFAULT_TIER } from '../config/teamPricing';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
 import { trackTrialStarted } from '../utils/analytics';
+import { consumeTestFlow, clearTestFlow } from '../utils/testFlow';
 
 type CallbackStatus = 'loading' | 'success' | 'error';
 
@@ -123,7 +124,11 @@ export const AuthCallback: React.FC = () => {
         redirectUri = import.meta.env.VITE_TEAMLEADER_REDIRECT_URI;
       }
       
-      const isTestUserFlow = localStorage.getItem('is_test_user_flow') === 'true';
+      // Only honor the test-user intent if the flag was set within the last
+      // 10 minutes (see src/utils/testFlow.ts). Legacy plain-text 'true'
+      // values from earlier test sessions are ignored so they can't hijack
+      // a fresh /signup attempt.
+      const { isTest: isTestUserFlow, phone: testPhone } = consumeTestFlow();
 
       // Check if this is a team invite flow
       const inviteToken = localStorage.getItem('team_invite_token');
@@ -134,7 +139,7 @@ export const AuthCallback: React.FC = () => {
         redirect_uri: redirectUri,
         ...(isTestUserFlow && platform === 'teamleader' && {
           is_test_user: true,
-          test_phone: localStorage.getItem('test_user_phone') ?? undefined,
+          test_phone: testPhone ?? undefined,
         }),
         ...(inviteToken && { invitation_token: inviteToken }),
       };
@@ -346,8 +351,7 @@ export const AuthCallback: React.FC = () => {
           .eq('user_id', session.user.id)
           .maybeSingle();
         if (tlUser?.is_test_user) {
-          localStorage.removeItem('is_test_user_flow');
-          localStorage.removeItem('test_user_phone');
+          clearTestFlow();
           navigate('/test-dashboard');
           return;
         }

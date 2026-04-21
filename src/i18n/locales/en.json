@@ -288,7 +288,8 @@
     "statusExpired": "Expired",
     "you": "you",
     "resendInvitation": "Resend Invitation",
-    "cancelInvitation": "Cancel Invitation"
+    "cancelInvitation": "Cancel Invitation",
+    "seatLimitReached": "Seat limit reached. Upgrade your plan to invite more teammates."
   },
   "userGuide": {
     "eyebrow": "Help",

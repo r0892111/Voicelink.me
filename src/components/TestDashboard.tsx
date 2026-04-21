@@ -18,6 +18,7 @@ import { TeamManagement } from './TeamManagement';
 import { useTeamRole } from '../hooks/useTeamRole';
 import { supabase } from '../lib/supabase';
 import type { AuthUser } from '../hooks/useAuth';
+import { markTestFlow } from '../utils/testFlow';
 
 const tips = [
   { emoji: '🗣️', text: 'Start with "Just spoke with [Name]" to log a contact.' },
@@ -87,8 +88,9 @@ export const TestDashboard: React.FC = () => {
 
   const handleConnectTeamleader = async () => {
     setConnecting(true);
-    localStorage.setItem('is_test_user_flow', 'true');
-    if (phone) localStorage.setItem('test_user_phone', phone);
+    // TTL-stamped flag (10 min). See src/utils/testFlow.ts — prevents stale
+    // flags from hijacking a later real /signup attempt.
+    markTestFlow(phone);
     await AuthService.createTeamleaderAuth().initiateAuth();
     setConnecting(false);
   };

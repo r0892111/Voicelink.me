@@ -11,6 +11,7 @@ import { withUTM } from '../utils/utm';
 import { trackSignupStart } from '../utils/analytics';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { usePageTransition } from '../hooks/usePageTransition';
+import { clearTestFlow } from '../utils/testFlow';
 
 export const AuthPage: React.FC = () => {
   const { t } = useI18n();
@@ -38,11 +39,11 @@ export const AuthPage: React.FC = () => {
   // Clear any leftover test-user flags on mount. If the visitor is on /signup,
   // they're doing the real flow — stale keys from a prior /test-dashboard
   // session would otherwise cause AuthCallback to mark the new account as a
-  // test user and inject a phantom WhatsApp number.
+  // test user and inject a phantom WhatsApp number. The TTL guard in
+  // consumeTestFlow is a second line of defence; this explicit clear is the
+  // first.
   React.useEffect(() => {
-    localStorage.removeItem('is_test_user_flow');
-    localStorage.removeItem('test_user_phone');
-    localStorage.removeItem('test_user_phone_display');
+    clearTestFlow();
   }, []);
 
   /* ─── Auth handlers (unchanged) ─── */

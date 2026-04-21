@@ -266,7 +266,8 @@
     "statusExpired": "Verlopen",
     "you": "jij",
     "resendInvitation": "Uitnodiging Opnieuw Verzenden",
-    "cancelInvitation": "Uitnodiging Annuleren"
+    "cancelInvitation": "Uitnodiging Annuleren",
+    "seatLimitReached": "Plaatslimiet bereikt. Upgrade je abonnement om meer teamleden uit te nodigen."
   },
   "userGuide": {
     "eyebrow": "Hulp",

@@ -173,7 +173,8 @@
     "statusExpired": "Abgelaufen",
     "you": "Sie",
     "resendInvitation": "Einladung Erneut Senden",
-    "cancelInvitation": "Einladung Abbrechen"
+    "cancelInvitation": "Einladung Abbrechen",
+    "seatLimitReached": "Platzlimit erreicht. Upgrade deinen Plan, um mehr Teammitglieder einzuladen."
   },
   "whatsapp": {
     "integration": "WhatsApp Integration",
