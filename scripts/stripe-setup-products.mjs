@@ -38,13 +38,15 @@ if (!SECRET) {
   console.error('  Export it first, e.g.:   export STRIPE_SECRET_KEY=sk_test_...');
   process.exit(1);
 }
-if (!SECRET.startsWith('sk_test_') && !SECRET.startsWith('sk_live_')) {
-  console.error('✗ STRIPE_SECRET_KEY does not look like a Stripe secret key.');
+const VALID_PREFIXES = ['sk_test_', 'sk_live_', 'rk_test_', 'rk_live_'];
+if (!VALID_PREFIXES.some((p) => SECRET.startsWith(p))) {
+  console.error('✗ STRIPE_SECRET_KEY does not look like a Stripe key.');
+  console.error('  Expected one of: sk_test_, sk_live_, rk_test_, rk_live_');
   process.exit(1);
 }
 
 const stripe = new Stripe(SECRET);
-const MODE = SECRET.startsWith('sk_live_') ? 'LIVE' : 'TEST';
+const MODE = SECRET.includes('_live_') ? 'LIVE' : 'TEST';
 const VLNS = 'voicelink';                 // metadata namespace
 const YEARLY_DISCOUNT = 0.8;              // 20% off annual
 
@@ -178,7 +180,10 @@ async function findPrice(productId, priceKey) {
 
 function describePrice(p) {
   if (p.billing_scheme === 'tiered') {
-    return `tiered (volume, ${p.tiers.length} brackets)`;
+    // `tiers` on a newly-created Price isn't expanded by default; fall back
+    // to our local definition when the API response doesn't include it.
+    const n = Array.isArray(p.tiers) ? p.tiers.length : undefined;
+    return n != null ? `tiered (volume, ${n} brackets)` : 'tiered (volume)';
   }
   return `€${(p.unit_amount / 100).toFixed(2)}`;
 }

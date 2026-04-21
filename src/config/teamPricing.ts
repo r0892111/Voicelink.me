@@ -17,40 +17,43 @@ export interface TeamTier {
 // PRICING TIERS — update prices, seat ranges, and Stripe IDs here.
 // The Stripe price IDs below are placeholders — replace once created in Stripe.
 // ──────────────────────────────────────────────────────────────────────────────
+// Tier base prices and message quotas mirror PricingSection.tsx.
+// Seat ranges are informational only — the per-seat price comes from the
+// Stripe volume-tier ladder attached to each priceId below.
 export const TEAM_TIERS: TeamTier[] = [
   {
     key: 'starter',
     minSeats: 1,
-    maxSeats: 3,
-    monthlyPricePerSeat: 19,
-    yearlyPricePerSeat: 15,
-    monthlyPriceId: 'price_1S5o6zLPohnizGblsQq7OYCT', // existing starter monthly
-    yearlyPriceId: 'price_PLACEHOLDER_starter_yearly',
-    messagesPerUser: 30,
+    maxSeats: 1,
+    monthlyPricePerSeat: 24,
+    yearlyPricePerSeat: 19.20,
+    monthlyPriceId: 'price_1TOZ1cLPohnizGblBAttd82T',
+    yearlyPriceId:  'price_1TOZ1dLPohnizGbl56BBL8BJ',
+    messagesPerUser: 350,
   },
   {
     key: 'professional',
-    minSeats: 4,
-    maxSeats: 10,
-    monthlyPricePerSeat: 34,
-    yearlyPricePerSeat: 27,
-    monthlyPriceId: 'price_PLACEHOLDER_professional_monthly',
-    yearlyPriceId: 'price_PLACEHOLDER_professional_yearly',
-    messagesPerUser: 60,
+    minSeats: 1,
+    maxSeats: 50,
+    monthlyPricePerSeat: 59,
+    yearlyPricePerSeat: 47.20,
+    monthlyPriceId: 'price_1TOZ1eLPohnizGbldPFhRy1m',
+    yearlyPriceId:  'price_1TOZ25LPohnizGbll2UCxFpu',
+    messagesPerUser: 1000,
   },
   {
     key: 'business',
-    minSeats: 11,
-    maxSeats: 25,
-    monthlyPricePerSeat: 49,
-    yearlyPricePerSeat: 39,
-    monthlyPriceId: 'price_PLACEHOLDER_business_monthly',
-    yearlyPriceId: 'price_PLACEHOLDER_business_yearly',
-    messagesPerUser: 100,
+    minSeats: 1,
+    maxSeats: 50,
+    monthlyPricePerSeat: 109,
+    yearlyPricePerSeat: 87.20,
+    monthlyPriceId: 'price_1TOZ26LPohnizGblXfd6OqxQ',
+    yearlyPriceId:  'price_1TOZ26LPohnizGblh8BYsGWM',
+    messagesPerUser: 2000,
   },
   {
     key: 'enterprise',
-    minSeats: 26,
+    minSeats: 51,
     maxSeats: null,
     monthlyPricePerSeat: 0,
     yearlyPricePerSeat: 0,
