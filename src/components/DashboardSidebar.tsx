@@ -124,7 +124,11 @@ export function DashboardSidebar({
         </button>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-3 pb-4">
+      {/* No overflow-y-auto here: browsers implicitly clip overflow-x when
+          any overflow value is set, which would hide the tooltips that
+          extend rightward beyond the sidebar. Our nav has ~7 fixed items
+          so scrolling isn't needed on any reasonable screen size. */}
+      <nav className="flex-1 px-3 pb-4">
         {NAV_GROUPS.map((group) => (
           <div key={group.labelKey} className="mb-6">
             <p className="px-3 mb-2 text-[10px] uppercase tracking-widest font-semibold text-navy/35">
