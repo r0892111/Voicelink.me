@@ -55,7 +55,7 @@ const plans: PricingPlan[] = [
     highlighted: false,
     baseMonthlyPrice: 0,
     credits: 100,
-    creditsApprox: '10–14',
+    creditsApprox: '20–30',
     hasVolumeDiscounts: false,
     volumeTiers: [],
     hasAutoTopUp: false,
