@@ -37,8 +37,8 @@ Deno.serve(async (req) => {
     }
     r.info('authenticated', { user_id: user.id, email: user.email });
 
-    const { price_id, success_url, cancel_url } = await req.json();
-    r.info('creating checkout session', { price_id, user_id: user.id });
+    const { price_id, quantity, success_url, cancel_url } = await req.json();
+    r.info('creating checkout session', { price_id, quantity, user_id: user.id });
 
     if (!price_id) {
       r.warn('missing price_id');
@@ -46,12 +46,18 @@ Deno.serve(async (req) => {
       return json({ error: 'Missing price_id' }, 400);
     }
 
+    // Quantity matters for volume-tier plans (Professional / Business): the
+    // Stripe Price is tiered, and the per-unit amount depends on how many
+    // seats are bought. Previously hardcoded to 1, which billed a 10-user
+    // team at the 1-3-bracket rate.
+    const qty = Math.max(1, Math.min(50, Number(quantity) || 1));
+
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
 
     const session = await stripe.checkout.sessions.create({
       mode:                 'subscription',
       payment_method_types: ['card'],
-      line_items:           [{ price: price_id, quantity: 1 }],
+      line_items:           [{ price: price_id, quantity: qty }],
       // {CHECKOUT_SESSION_ID} is a Stripe template literal — it gets replaced with the real session ID on redirect
       success_url:          `${success_url ?? `${Deno.env.get('SITE_URL') ?? ''}/dashboard`}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url:           cancel_url  ?? `${Deno.env.get('SITE_URL') ?? ''}/`,

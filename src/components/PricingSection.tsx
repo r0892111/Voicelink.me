@@ -4,6 +4,7 @@ import { BillingPeriodSwitch, BillingPeriod } from './BillingPeriodSwitch';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
 import { usePageTransition } from '../hooks/usePageTransition';
+import { markPendingCheckout } from '../utils/pendingCheckout';
 
 interface PricingSectionProps {
   openContactModal: () => void;
@@ -195,6 +196,28 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
     el.scrollTo({ left: newIdx * (cardW + 16), behavior: 'smooth' });
   }, []);
 
+  // Route a plan-card click:
+  //  - Free Trial: /signup as before.
+  //  - Paid plan: persist the intent in localStorage and send to /signup so
+  //    the user goes through the Teamleader OAuth flow first. AuthCallback
+  //    picks up the intent after OAuth and launches Stripe Checkout, so the
+  //    user never lands on /dashboard without an active subscription.
+  //    Even if they're already authenticated we route via /signup → OAuth
+  //    to guarantee the Teamleader connection is in place before billing.
+  const handleCtaClick = (plan: PricingPlan) => {
+    if (plan.isFreeTrial) {
+      navigateWithTransition(withUTM('/signup'));
+      return;
+    }
+
+    const interval: 'monthly' | 'yearly' =
+      billingPeriod === 'yearly' ? 'yearly' : 'monthly';
+    const quantity = userCounts[plan.key] ?? 1;
+
+    markPendingCheckout({ tierKey: plan.key, interval, quantity });
+    navigateWithTransition(withUTM('/signup'));
+  };
+
   const renderUserControl = (plan: PricingPlan) => {
     if (!plan.hasVolumeDiscounts) return null;
     const count = userCounts[plan.key] ?? 1;
@@ -354,7 +377,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
 
         {/* CTA */}
         <button
-          onClick={() => navigateWithTransition(withUTM('/signup'))}
+          onClick={() => handleCtaClick(plan)}
           className={`w-full font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 group ${
             plan.highlighted
               ? 'bg-navy text-white hover:bg-navy-hover hover:shadow-xl'

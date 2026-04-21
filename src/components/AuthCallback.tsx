@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
-import { DEFAULT_TIER } from '../config/teamPricing';
+import { DEFAULT_TIER, getStripePriceId } from '../config/teamPricing';
+import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCheckout';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
 import { trackTrialStarted } from '../utils/analytics';
@@ -395,13 +396,31 @@ export const AuthCallback: React.FC = () => {
 
         navigate(withUTM('/dashboard'));
       } else {
-        // User doesn't have subscription, redirect to Stripe checkout
+        // User doesn't have subscription → redirect to Stripe Checkout.
+        // If they landed here via a homepage paid-plan CTA (PricingSection),
+        // we stored their choice in localStorage; resolve it back to the
+        // correct Stripe price ID + quantity. Falls back to Starter / 1 seat
+        // for users who entered /signup directly.
         setMessage(t('auth.callback.redirectingToCheckout'));
 
-        // Use the starter tier price ID for single user
+        const pending = consumePendingCheckout();
+        let priceId = DEFAULT_TIER.monthlyPriceId;
+        let quantity = 1;
+        if (pending) {
+          const resolved = getStripePriceId(
+            pending.tierKey,
+            pending.interval === 'yearly' ? 'year' : 'month',
+          );
+          if (resolved) {
+            priceId = resolved;
+            quantity = pending.quantity;
+          }
+          clearPendingCheckout();
+        }
+
         await StripeService.createCheckoutSession({
-          priceId: DEFAULT_TIER.monthlyPriceId,
-          quantity: 1,
+          priceId,
+          quantity,
           successUrl: `${window.location.origin}/dashboard`,
           cancelUrl: `${window.location.origin}/dashboard`,
         });
