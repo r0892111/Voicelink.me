@@ -136,7 +136,7 @@
     "modal": {
       "title": "Start Your Free Trial",
       "subtitle": "Connect your CRM and begin using VoiceLink instantly",
-      "freeTrialBanner": "14-Day Free Trial Starts Now",
+      "freeTrialBanner": "1-Month Free Trial Starts Now",
       "freeTrialDescription": "Your free trial begins immediately upon connecting your CRM.",
       "connectTeamleader": "Connect Teamleader",
       "connectPipedrive": "Connect Pipedrive",
@@ -149,7 +149,7 @@
       "cancelAnytime": "Cancel Anytime"
     },
     "page": {
-      "signupSubtitle": "14-day free trial. Connect your CRM to get started.",
+      "signupSubtitle": "1-Month Free Trial. Connect your CRM to get started.",
       "continueTeamleader": "Continue with Teamleader",
       "continuePipedrive": "Continue with Pipedrive",
       "continueOdoo": "Continue with Odoo"
@@ -837,7 +837,7 @@
     "topUpLabel": "Need more?",
     "topUpMessages": "messages",
     "startFreeTrial": "Start Free Trial",
-    "freeTrial": "14-day free trial",
+    "freeTrial": "1-Month Free Trial",
     "custom": "Custom",
     "getCustomQuote": "Get Custom Quote",
     "allPlansInclude": "All plans include real-time CRM sync, WhatsApp integration, and multi-language support.",
@@ -965,7 +965,7 @@
     "startFreeTrial": "Start Free Trial",
     "watchDemo": "Watch Demo",
     "freeTrialFeatures": {
-      "freeTrialDays": "14-day free trial",
+      "freeTrialDays": "1-Month Free Trial",
       "noSetupFees": "No setup fees",
       "cancelAnytime": "Cancel anytime"
     }
@@ -1166,7 +1166,7 @@
     "q5": "Is my data secure?",
     "a5": "Yes. VoiceLink is built in compliance with European GDPR regulations. We use OAuth for CRM connections, encrypt all data in transit, and never store your voice recordings after processing.",
     "q6": "What does VoiceLink cost after the free trial?",
-    "a6": "After your 14-day free trial, choose a plan that fits your usage and team size. Transparent pricing, no hidden costs, cancel monthly. No credit card required for the trial.",
+    "a6": "After your 1-Month Free Trial, choose a plan that fits your usage and team size. Transparent pricing, no hidden costs, cancel monthly. No credit card required for the trial.",
     "q7": "Does VoiceLink work in multiple languages?",
     "a7": "Yes. VoiceLink understands virtually all languages. You can speak or type in whichever language feels most natural — Dutch, English, French, German, Spanish, and more. VoiceLink always responds in the same language you used."
   },
@@ -1212,7 +1212,7 @@
       },
       "billing": {
         "q": "How does billing work?",
-        "a": "After your 14-day free trial, choose a plan that fits your needs. All plans are billed monthly and can be cancelled at any time. No credit card is required to start your trial."
+        "a": "After your 1-Month Free Trial, choose a plan that fits your needs. All plans are billed monthly and can be cancelled at any time. No credit card is required to start your trial."
       },
       "data": {
         "q": "Is my data secure?",
@@ -1237,7 +1237,7 @@
     },
     "cta": {
       "title": "Ready to try VoiceLink?",
-      "subtitle": "Start your free 14-day trial. No credit card required.",
+      "subtitle": "Start your free 1-month trial. No credit card required.",
       "button": "Start free trial"
     }
   },
@@ -1322,9 +1322,9 @@
       "subscriptionRenews": "Renews {{date}}",
       "subscriptionPaymentDue": "Payment due",
       "manageSubscription": "Manage subscription",
-      "trialBannerBadge": "14-day free trial",
+      "trialBannerBadge": "1-Month Free Trial",
       "trialBannerTitle": "Unlock the full VoiceLink experience",
-      "trialBannerSubtitle": "Try everything VoiceLink has to offer, free for 14 days. Cancel anytime.",
+      "trialBannerSubtitle": "Try everything VoiceLink has to offer, free for 1 month. Cancel anytime.",
       "trialBannerCta": "Start Free Trial",
       "lapsedBannerTitle": "Your subscription has ended",
       "lapsedBannerSubtitle": "Renew to keep your CRM syncing with VoiceLink.",
@@ -1453,7 +1453,7 @@
       "waitingAdminBodyWithName": "{{admin}} needs to activate the workspace trial before you can connect WhatsApp.",
       "waitingAdminBodyNoName": "Your workspace admin needs to activate the trial before you can connect WhatsApp.",
       "startTrialTitle": "Start your free trial first",
-      "startTrialBody": "Activate your 14-day free trial to unlock WhatsApp connection.",
+      "startTrialBody": "Activate your 1-Month Free Trial to unlock WhatsApp connection.",
       "startTrialCta": "Start Free Trial",
       "comingSoonLabel": "Coming soon",
       "comingSoonTitle": "Notifications & language",

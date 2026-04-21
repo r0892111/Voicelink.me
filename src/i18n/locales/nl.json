@@ -109,7 +109,7 @@
   },
   "auth": {
     "page": {
-      "signupSubtitle": "Probeer het 14 dagen gratis. Verbind je CRM om te starten.",
+      "signupSubtitle": "Probeer het 1 maand gratis. Verbind je CRM om te starten.",
       "continueTeamleader": "Doorgaan met Teamleader",
       "continuePipedrive": "Doorgaan met Pipedrive",
       "continueOdoo": "Doorgaan met Odoo"
@@ -128,7 +128,7 @@
     "modal": {
       "title": "Start Je Gratis Proefperiode",
       "subtitle": "Verbind je CRM en begin direct met VoiceLink",
-      "freeTrialBanner": "14-Dagen Gratis Proefperiode Begint Nu",
+      "freeTrialBanner": "1 Maand Gratis Proefperiode Begint Nu",
       "freeTrialDescription": "Je gratis proefperiode begint direct na het verbinden van je CRM.",
       "connectTeamleader": "Verbind Teamleader",
       "connectPipedrive": "Verbind Pipedrive",
@@ -815,7 +815,7 @@
     "topUpLabel": "Meer nodig?",
     "topUpMessages": "berichten",
     "startFreeTrial": "Start Gratis Proefperiode",
-    "freeTrial": "14-dagen gratis proefperiode",
+    "freeTrial": "1 maand gratis proefperiode",
     "custom": "Aangepast",
     "getCustomQuote": "Vraag Offerte Aan",
     "allPlansInclude": "Alle plannen bevatten real-time CRM synchronisatie, WhatsApp integratie en meertalige ondersteuning.",
@@ -1060,7 +1060,7 @@
     "startFreeTrial": "Start Gratis Proefperiode",
     "watchDemo": "Bekijk Demo",
     "freeTrialFeatures": {
-      "freeTrialDays": "14-dagen gratis proefperiode",
+      "freeTrialDays": "1 maand gratis proefperiode",
       "noSetupFees": "Geen installatiekosten",
       "cancelAnytime": "Altijd opzegbaar"
     }
@@ -1158,7 +1158,7 @@
     "q5": "Zijn mijn gegevens veilig?",
     "a5": "Ja. We voldoen aan GDPR, gebruiken OAuth voor CRM-koppelingen en bewaren spraakberichten nooit na verwerking.",
     "q6": "Wat kost VoiceLink na de gratis proefperiode?",
-    "a6": "Na 14 dagen kies je een maandelijks opzegbaar abonnement. Transparante prijzen, geen verborgen kosten.",
+    "a6": "Na 1 maand kies je een maandelijks opzegbaar abonnement. Transparante prijzen, geen verborgen kosten.",
     "q7": "Werkt VoiceLink in meerdere talen?",
     "a7": "Ja. VoiceLink begrijpt vrijwel alle talen en reageert altijd in de taal waarin jij sprak of typte."
   },
@@ -1204,7 +1204,7 @@
       },
       "billing": {
         "q": "Hoe werkt de facturatie?",
-        "a": "Na je gratis proefperiode van 14 dagen kies je een abonnement dat bij je past. Alle abonnementen worden maandelijks gefactureerd en zijn op elk moment opzegbaar. Geen creditcard nodig om te starten."
+        "a": "Na je gratis proefperiode van 1 maand kies je een abonnement dat bij je past. Alle abonnementen worden maandelijks gefactureerd en zijn op elk moment opzegbaar. Geen creditcard nodig om te starten."
       },
       "data": {
         "q": "Zijn mijn gegevens veilig?",
@@ -1229,7 +1229,7 @@
     },
     "cta": {
       "title": "Klaar om VoiceLink te proberen?",
-      "subtitle": "Start je gratis proefperiode van 14 dagen. Geen creditcard nodig.",
+      "subtitle": "Start je gratis proefperiode van 1 maand. Geen creditcard nodig.",
       "button": "Start gratis proefperiode"
     }
   },
@@ -1314,9 +1314,9 @@
       "subscriptionRenews": "Verlengt op {{date}}",
       "subscriptionPaymentDue": "Betaling vereist",
       "manageSubscription": "Abonnement beheren",
-      "trialBannerBadge": "14-daagse gratis proefperiode",
+      "trialBannerBadge": "1 maand gratis proefperiode",
       "trialBannerTitle": "Ontgrendel de volledige VoiceLink-ervaring",
-      "trialBannerSubtitle": "Probeer alles wat VoiceLink te bieden heeft, gratis voor 14 dagen. Op elk moment opzegbaar.",
+      "trialBannerSubtitle": "Probeer alles wat VoiceLink te bieden heeft, gratis voor 1 maand. Op elk moment opzegbaar.",
       "trialBannerCta": "Start Gratis Proefperiode",
       "lapsedBannerTitle": "Je abonnement is afgelopen",
       "lapsedBannerSubtitle": "Verleng om je CRM te blijven synchroniseren met VoiceLink.",
@@ -1445,7 +1445,7 @@
       "waitingAdminBodyWithName": "{{admin}} moet de workspace-proefperiode activeren voordat je WhatsApp kan verbinden.",
       "waitingAdminBodyNoName": "Je workspace-admin moet de proefperiode activeren voordat je WhatsApp kan verbinden.",
       "startTrialTitle": "Start eerst je gratis proefperiode",
-      "startTrialBody": "Activeer je 14-daagse gratis proefperiode om WhatsApp-verbinding te ontgrendelen.",
+      "startTrialBody": "Activeer je 1 maand gratis proefperiode om WhatsApp-verbinding te ontgrendelen.",
       "startTrialCta": "Start Gratis Proefperiode",
       "comingSoonLabel": "Binnenkort",
       "comingSoonTitle": "Notificaties & taal",

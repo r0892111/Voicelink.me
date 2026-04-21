@@ -64,7 +64,9 @@ Deno.serve(async (req) => {
       client_reference_id:  user.id,
       allow_promotion_codes: true,
       subscription_data: {
-        trial_period_days: 14,
+        // 1-month free trial (was 14 days). Pairs with the 100 credits we
+        // hand out during the trial — users get 1 month to burn through them.
+        trial_period_days: 30,
       },
     });
 

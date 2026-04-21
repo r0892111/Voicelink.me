@@ -79,7 +79,7 @@
     "modal": {
       "title": "Commencez Votre Essai Gratuit",
       "subtitle": "Connectez votre CRM et commencez à utiliser VoiceLink instantanément",
-      "freeTrialBanner": "Essai Gratuit de 14 Jours Commence Maintenant",
+      "freeTrialBanner": "Essai Gratuit de 1 Mois Commence Maintenant",
       "freeTrialDescription": "Votre essai gratuit commence immédiatement après la connexion de votre CRM.",
       "connectTeamleader": "Connecter Teamleader",
       "connectPipedrive": "Connecter Pipedrive",
@@ -756,7 +756,7 @@
     "topUpLabel": "Besoin de plus ?",
     "topUpMessages": "messages",
     "startFreeTrial": "Commencer l'Essai Gratuit",
-    "freeTrial": "Essai gratuit de 14 jours",
+    "freeTrial": "Essai gratuit de 1 mois",
     "custom": "Sur mesure",
     "getCustomQuote": "Obtenir un Devis",
     "allPlansInclude": "Tous les plans incluent la synchronisation CRM en temps réel, l'intégration WhatsApp et le support multilingue.",
@@ -874,7 +874,7 @@
     "startFreeTrial": "Commencer l'Essai Gratuit",
     "watchDemo": "Voir la Démo",
     "freeTrialFeatures": {
-      "freeTrialDays": "Essai gratuit de 14 jours",
+      "freeTrialDays": "Essai gratuit de 1 mois",
       "noSetupFees": "Aucuns frais d'installation",
       "cancelAnytime": "Annuler à tout moment"
     }
@@ -1060,7 +1060,7 @@
     "q5": "Mes données sont-elles sécurisées ?",
     "a5": "Oui. VoiceLink est conforme au RGPD européen. Nous utilisons OAuth pour les connexions CRM, chiffrons toutes les données en transit et ne stockons jamais vos enregistrements vocaux après traitement.",
     "q6": "Combien coûte VoiceLink après l'essai gratuit ?",
-    "a6": "Après 14 jours d'essai gratuit, choisissez un abonnement adapté à votre usage et à la taille de votre équipe. Tarifs transparents, sans frais cachés, résiliable mensuellement. Aucune carte bancaire requise pour l'essai.",
+    "a6": "Après 1 mois d'essai gratuit, choisissez un abonnement adapté à votre usage et à la taille de votre équipe. Tarifs transparents, sans frais cachés, résiliable mensuellement. Aucune carte bancaire requise pour l'essai.",
     "q7": "VoiceLink fonctionne-t-il en plusieurs langues ?",
     "a7": "Oui. VoiceLink comprend pratiquement toutes les langues. Vous pouvez parler ou écrire dans la langue qui vous convient — néerlandais, anglais, français, allemand, espagnol et bien d'autres. VoiceLink répond toujours dans la même langue que vous."
   },
@@ -1117,7 +1117,7 @@
       },
       "billing": {
         "q": "Comment fonctionne la facturation ?",
-        "a": "Après votre essai gratuit de 14 jours, choisissez un abonnement adapté à vos besoins. Tous les abonnements sont facturés mensuellement et résiliables à tout moment. Aucune carte de crédit n'est requise pour commencer."
+        "a": "Après votre essai gratuit de 1 mois, choisissez un abonnement adapté à vos besoins. Tous les abonnements sont facturés mensuellement et résiliables à tout moment. Aucune carte de crédit n'est requise pour commencer."
       },
       "data": {
         "q": "Mes données sont-elles en sécurité ?",
@@ -1142,7 +1142,7 @@
     },
     "cta": {
       "title": "Prêt à essayer VoiceLink ?",
-      "subtitle": "Commencez votre essai gratuit de 14 jours. Aucune carte de crédit requise.",
+      "subtitle": "Commencez votre essai gratuit de 1 mois. Aucune carte de crédit requise.",
       "button": "Démarrer l'essai gratuit"
     }
   },
@@ -1227,9 +1227,9 @@
       "subscriptionRenews": "Renouvellement le {{date}}",
       "subscriptionPaymentDue": "Paiement requis",
       "manageSubscription": "Gérer l'abonnement",
-      "trialBannerBadge": "Essai gratuit 14 jours",
+      "trialBannerBadge": "Essai gratuit 1 mois",
       "trialBannerTitle": "Débloquez l'expérience VoiceLink complète",
-      "trialBannerSubtitle": "Essayez tout ce que VoiceLink offre, gratuitement pendant 14 jours. Annulable à tout moment.",
+      "trialBannerSubtitle": "Essayez tout ce que VoiceLink offre, gratuitement pendant 1 mois. Annulable à tout moment.",
       "trialBannerCta": "Démarrer l'essai gratuit",
       "lapsedBannerTitle": "Votre abonnement est terminé",
       "lapsedBannerSubtitle": "Renouvelez pour continuer à synchroniser votre CRM avec VoiceLink.",
@@ -1358,7 +1358,7 @@
       "waitingAdminBodyWithName": "{{admin}} doit activer l'essai de l'espace avant que vous puissiez connecter WhatsApp.",
       "waitingAdminBodyNoName": "Votre admin doit activer l'essai avant que vous puissiez connecter WhatsApp.",
       "startTrialTitle": "Démarrez d'abord votre essai gratuit",
-      "startTrialBody": "Activez votre essai gratuit de 14 jours pour débloquer la connexion WhatsApp.",
+      "startTrialBody": "Activez votre essai gratuit de 1 mois pour débloquer la connexion WhatsApp.",
       "startTrialCta": "Démarrer l'essai gratuit",
       "comingSoonLabel": "Bientôt",
       "comingSoonTitle": "Notifications & langue",
