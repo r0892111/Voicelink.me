@@ -6,7 +6,8 @@ import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
 import { useTeamRole } from '../hooks/useTeamRole';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
-import { DEFAULT_TIER } from '../config/teamPricing';
+import { DEFAULT_TIER, getStripePriceId } from '../config/teamPricing';
+import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCheckout';
 import { withUTM } from '../utils/utm';
 import { DashboardSidebar } from './DashboardSidebar';
 import { DashboardTopBar } from './DashboardTopBar';
@@ -187,6 +188,32 @@ export function DashboardLayout() {
       const data = await res.json();
       if (!mounted.current) return;
       if (data.success && data.subscription) setSubInfo(data.subscription);
+
+      // If the user arrived here via a homepage paid-plan CTA and we still
+      // don't have an active subscription, the OAuth flow succeeded but the
+      // magic-link redirect path in AuthCallback bypassed Stripe. Trigger the
+      // checkout here as a safety net — pendingCheckout is TTL-guarded, so a
+      // stale intent from yesterday won't hijack a returning user who just
+      // wants to view their dashboard.
+      const status = data?.subscription?.subscription_status;
+      const noActiveSub = !status || (status !== 'active' && status !== 'trialing');
+      const pending = consumePendingCheckout();
+      if (noActiveSub && pending) {
+        const priceId = getStripePriceId(
+          pending.tierKey,
+          pending.interval === 'yearly' ? 'year' : 'month',
+        );
+        if (priceId) {
+          clearPendingCheckout();
+          await StripeService.createCheckoutSession({
+            priceId,
+            quantity: pending.quantity,
+            successUrl: `${window.location.origin}/dashboard`,
+            cancelUrl: `${window.location.origin}/dashboard`,
+          });
+          return; // window.location.href inside createCheckoutSession → we're leaving anyway
+        }
+      }
     } catch (err) {
       console.error('Subscription check failed:', err);
     } finally {
