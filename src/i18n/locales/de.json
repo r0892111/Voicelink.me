@@ -1438,7 +1438,7 @@
       "title": "So funktioniert's",
       "step1": {
         "title": "Registrieren Sie einen Lead",
-        "description": "Senden Sie eine E-Mail an partners@voicelink.me mit Name, Unternehmen und Kontext."
+        "description": "Senden Sie eine E-Mail an voicelink@finitsolutions.be mit Name, Unternehmen und Kontext."
       },
       "step2": {
         "title": "Kunde unterzeichnet innerhalb von 90 Tagen",
@@ -1477,7 +1477,7 @@
       },
       "attribution": {
         "title": "2. Zuschreibung und Lead-Registrierung",
-        "content": "Der Partner registriert einen Lead, indem er eine E-Mail an partners@voicelink.me mit Name, Unternehmen und Kontext sendet. Das Empfangsdatum gilt als Startpunkt.\n\nAttributionsfenster: 90 Tage. Wenn der Lead innerhalb von 90 Tagen nach der Registrierung ein Abonnement abschließt, geht die Provision an den Partner.\n\nBei doppelter Registrierung (zwei Partner vermitteln den gleichen Lead) zählt der zuerst registrierte Partner."
+        "content": "Der Partner registriert einen Lead, indem er eine E-Mail an voicelink@finitsolutions.be mit Name, Unternehmen und Kontext sendet. Das Empfangsdatum gilt als Startpunkt.\n\nAttributionsfenster: 90 Tage. Wenn der Lead innerhalb von 90 Tagen nach der Registrierung ein Abonnement abschließt, geht die Provision an den Partner.\n\nBei doppelter Registrierung (zwei Partner vermitteln den gleichen Lead) zählt der zuerst registrierte Partner."
       },
       "roles": {
         "title": "3. Rollenteilung",
@@ -1513,13 +1513,13 @@
         "submit": "Absenden",
         "submitting": "Wird übermittelt...",
         "success": "Danke! Wir melden uns bald bei Ihnen.",
-        "error": "Etwas ist schief gelaufen. Senden Sie uns eine E-Mail an partners@voicelink.me."
+        "error": "Etwas ist schief gelaufen. Senden Sie uns eine E-Mail an voicelink@finitsolutions.be."
       },
       "calendly": {
         "title": "Oder buchen Sie einen Anruf",
         "subtitle": "Möchten Sie erst einmal sprechen? Buchen Sie 20 Minuten mit unserem Team.",
         "cta": "In Calendly buchen",
-        "info": "Bei Fragen erreichen Sie uns unter partners@voicelink.me. Wir antworten innerhalb von 24 Stunden."
+        "info": "Bei Fragen erreichen Sie uns unter voicelink@finitsolutions.be. Wir antworten innerhalb von 24 Stunden."
       }
     }
   }

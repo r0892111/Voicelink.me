@@ -1484,7 +1484,7 @@
       "title": "Hoe het werkt",
       "step1": {
         "title": "Registreer een lead",
-        "description": "Stuur een mail naar partners@voicelink.me met naam, bedrijf en context."
+        "description": "Stuur een mail naar voicelink@finitsolutions.be met naam, bedrijf en context."
       },
       "step2": {
         "title": "Klant tekent binnen 90 dagen",
@@ -1523,7 +1523,7 @@
       },
       "attribution": {
         "title": "2. Attributie en leadregistratie",
-        "content": "Partner registreert een lead door een mail te sturen naar partners@voicelink.me met naam, bedrijf en context. Datum van ontvangst geldt als startpunt.\n\nAttributievenster: 90 dagen. Tekent de lead binnen 90 dagen na registratie een abonnement, dan is de commissie voor de partner.\n\nBij dubbele registratie (twee partners dezelfde lead) telt de eerst geregistreerde."
+        "content": "Partner registreert een lead door een mail te sturen naar voicelink@finitsolutions.be met naam, bedrijf en context. Datum van ontvangst geldt als startpunt.\n\nAttributievenster: 90 dagen. Tekent de lead binnen 90 dagen na registratie een abonnement, dan is de commissie voor de partner.\n\nBij dubbele registratie (twee partners dezelfde lead) telt de eerst geregistreerde."
       },
       "roles": {
         "title": "3. Rolverdeling",
@@ -1559,13 +1559,13 @@
         "submit": "Verzenden",
         "submitting": "Verzenden...",
         "success": "Bedankt! We nemen snel contact met je op.",
-        "error": "Er is iets misgegaan. Stuur een mail naar partners@voicelink.me."
+        "error": "Er is iets misgegaan. Stuur een mail naar voicelink@finitsolutions.be."
       },
       "calendly": {
         "title": "Of boek een call",
         "subtitle": "Liever eerst even sparren? Boek 20 minuten met ons team.",
         "cta": "Boek in Calendly",
-        "info": "Bij vragen kun je ons altijd bereiken op partners@voicelink.me. Reageren doen we binnen 24 uur."
+        "info": "Bij vragen kun je ons altijd bereiken op voicelink@finitsolutions.be. Reageren doen we binnen 24 uur."
       }
     }
   }

@@ -1492,7 +1492,7 @@
       "title": "How it works",
       "step1": {
         "title": "Register a lead",
-        "description": "Send an email to partners@voicelink.me with name, company, and context."
+        "description": "Send an email to voicelink@finitsolutions.be with name, company, and context."
       },
       "step2": {
         "title": "Customer signs within 90 days",
@@ -1531,7 +1531,7 @@
       },
       "attribution": {
         "title": "2. Attribution and lead registration",
-        "content": "Partner registers a lead by sending an email to partners@voicelink.me with name, company and context. Date of receipt serves as the starting point.\n\nAttribution window: 90 days. If the lead signs up within 90 days of registration, the commission goes to the partner.\n\nIn case of duplicate registration (two partners refer the same lead), the first registered partner counts."
+        "content": "Partner registers a lead by sending an email to voicelink@finitsolutions.be with name, company and context. Date of receipt serves as the starting point.\n\nAttribution window: 90 days. If the lead signs up within 90 days of registration, the commission goes to the partner.\n\nIn case of duplicate registration (two partners refer the same lead), the first registered partner counts."
       },
       "roles": {
         "title": "3. Role distribution",
@@ -1567,13 +1567,13 @@
         "submit": "Submit",
         "submitting": "Submitting...",
         "success": "Thank you! We'll get in touch soon.",
-        "error": "Something went wrong. Send us an email at partners@voicelink.me."
+        "error": "Something went wrong. Send us an email at voicelink@finitsolutions.be."
       },
       "calendly": {
         "title": "Or book a call",
         "subtitle": "Prefer to chat first? Book 20 minutes with our team.",
         "cta": "Book in Calendly",
-        "info": "If you have any questions, reach us at partners@voicelink.me. We respond within 24 hours."
+        "info": "If you have any questions, reach us at voicelink@finitsolutions.be. We respond within 24 hours."
       }
     }
   }

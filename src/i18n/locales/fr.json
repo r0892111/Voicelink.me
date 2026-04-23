@@ -1397,7 +1397,7 @@
       "title": "Comment ça marche",
       "step1": {
         "title": "Enregistrez un prospect",
-        "description": "Envoyez un e-mail à partners@voicelink.me avec le nom, l'entreprise et le contexte."
+        "description": "Envoyez un e-mail à voicelink@finitsolutions.be avec le nom, l'entreprise et le contexte."
       },
       "step2": {
         "title": "Le client signe dans les 90 jours",
@@ -1436,7 +1436,7 @@
       },
       "attribution": {
         "title": "2. Attribution et enregistrement des prospects",
-        "content": "Le partenaire enregistre un prospect en envoyant un e-mail à partners@voicelink.me avec le nom, l'entreprise et le contexte. La date de réception sert de point de départ.\n\nFenêtre d'attribution : 90 jours. Si le prospect s'abonne dans les 90 jours suivant l'enregistrement, la commission revient au partenaire.\n\nEn cas d'enregistrement en double (deux partenaires référent le même prospect), le premier partenaire enregistré compte."
+        "content": "Le partenaire enregistre un prospect en envoyant un e-mail à voicelink@finitsolutions.be avec le nom, l'entreprise et le contexte. La date de réception sert de point de départ.\n\nFenêtre d'attribution : 90 jours. Si le prospect s'abonne dans les 90 jours suivant l'enregistrement, la commission revient au partenaire.\n\nEn cas d'enregistrement en double (deux partenaires référent le même prospect), le premier partenaire enregistré compte."
       },
       "roles": {
         "title": "3. Répartition des rôles",
@@ -1472,13 +1472,13 @@
         "submit": "Soumettre",
         "submitting": "Envoi en cours...",
         "success": "Merci ! Nous vous contacterons bientôt.",
-        "error": "Quelque chose s'est mal passé. Envoyez-nous un e-mail à partners@voicelink.me."
+        "error": "Quelque chose s'est mal passé. Envoyez-nous un e-mail à voicelink@finitsolutions.be."
       },
       "calendly": {
         "title": "Ou réserver un appel",
         "subtitle": "Préférez discuter d'abord ? Réservez 20 minutes avec notre équipe.",
         "cta": "Réserver in Calendly",
-        "info": "Si vous avez des questions, contactez-nous à partners@voicelink.me. Nous répondons dans les 24 heures."
+        "info": "Si vous avez des questions, contactez-nous à voicelink@finitsolutions.be. Nous répondons dans les 24 heures."
       }
     }
   }
