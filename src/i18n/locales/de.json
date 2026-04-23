@@ -321,6 +321,7 @@
     "integrations": "Was es kann",
     "contact": "Kontakt",
     "maatwerkAI": "Individuelle KI",
+    "affiliate": "Partnerprogramm",
     "urgentQuestions": "Lieber direkt Kontakt?",
     "callUs": "Rufen Sie uns an",
     "callHours": "Mo-Sa · 8:30-19:00"
@@ -757,7 +758,9 @@
   },
   "features": {
     "dontSeeYourCrm": "Sie nutzen ein anderes CRM oder eine andere Software? Wir entwickeln maßgeschneiderte Lösungen für jede Plattform, die Sie täglich nutzen.",
-    "contactForCustom": "Kontaktieren Sie uns für eine maßgeschneiderte Lösung"
+    "contactForCustom": "Kontaktieren Sie uns für eine maßgeschneiderte Lösung",
+    "partnerProgramPrompt": "Sind Sie Berater, Integrator oder Reseller? Verdienen Sie 20% wiederkehrende Provision mit unserem Partnerprogramm.",
+    "partnerProgramCTA": "Entdecken Sie unser Partnerprogramm"
   },
   "integrations": {
     "title": "Funktioniert mit Ihrem CRM",
@@ -1417,6 +1420,107 @@
       "comingSoonLabel": "Demnächst",
       "comingSoonTitle": "Profil bearbeiten",
       "comingSoonBody": "Aktualisiere Anzeigenamen, Sprache und Benachrichtigungspräferenzen auf dieser Seite."
+    }
+  },
+  "affiliate": {
+    "hero": {
+      "title": "Generieren Sie wiederkehrende Einnahmen, indem Sie VoiceLink Ihrem Netzwerk vorstellen",
+      "subtitle": "Werden Sie VoiceLink-Partner und verdienen Sie 20% wiederkehrende Provisionen bei jedem vermittelten Kunden. Langes Attributionsfenster, monatliche Auszahlungen, alles bereitgestellt.",
+      "stat1": "wiederkehrende Provision",
+      "stat2": "Attributionsfenster",
+      "stat3": "Einnahmen nach Kündigung",
+      "days": "Tage",
+      "months": "Monate",
+      "cta1": "Partner werden",
+      "cta2": "Anruf buchen"
+    },
+    "howItWorks": {
+      "title": "So funktioniert's",
+      "step1": {
+        "title": "Registrieren Sie einen Lead",
+        "description": "Senden Sie eine E-Mail an partners@voicelink.me mit Name, Unternehmen und Kontext."
+      },
+      "step2": {
+        "title": "Kunde unterzeichnet innerhalb von 90 Tagen",
+        "description": "Wenn Ihr Lead innerhalb von 90 Tagen ein Abonnement abschließt, verdienen Sie Provision."
+      },
+      "step3": {
+        "title": "Erhalten Sie 20% wiederkehrend",
+        "description": "Solange Ihr Kunde bezahlt, erhalten Sie 20% des monatlichen Abonnementwerts."
+      },
+      "step4": {
+        "title": "Quartalsweise Auszahlung",
+        "description": "Monatlich bei 5+ aktiven Kunden, sonst quartalsweise nach Rechnung."
+      }
+    },
+    "whyPartner": {
+      "title": "Warum Partner werden?",
+      "point1": {
+        "title": "Wiederkehrend, nicht einmalig",
+        "description": "Bauen Sie ein Portfolio auf, nicht einmalige Provisionen. Langfristige Beziehung zu Ihren Kunden."
+      },
+      "point2": {
+        "title": "Lange Attributions- und Tail-Periode",
+        "description": "90 Tage, um einen Kunden einzuführen, 12 Monate Provision nach Kündigung. Echtes passives Einkommen."
+      },
+      "point3": {
+        "title": "Alles bereitgestellt",
+        "description": "Pitch Deck, Demo-Videos, One-Pager, FAQ. Sie stellen vor, wir kümmern uns um den Rest."
+      }
+    },
+    "accordion": {
+      "title": "Programmdetails",
+      "subtitle": "Alles, was Sie über das VoiceLink-Partnerprogramm wissen müssen",
+      "commission": {
+        "title": "1. Provision",
+        "content": "Der Partner erhält 20% wiederkehrende Provision auf den monatlichen Abonnementwert (MRR) jedes vermittelten Kunden, solange dieser Kunde aktiv ist und zahlt.\n\nDie Provision wird auf Basis des Netto-MRR berechnet (ohne MwSt., nach eventuellen Rabatten).\n\nDie Auszahlung erfolgt vierteljährlich nach Erhalt einer Rechnung vom Partner. Bei 5+ aktiven Kunden erfolgt die Auszahlung monatlich."
+      },
+      "attribution": {
+        "title": "2. Zuschreibung und Lead-Registrierung",
+        "content": "Der Partner registriert einen Lead, indem er eine E-Mail an partners@voicelink.me mit Name, Unternehmen und Kontext sendet. Das Empfangsdatum gilt als Startpunkt.\n\nAttributionsfenster: 90 Tage. Wenn der Lead innerhalb von 90 Tagen nach der Registrierung ein Abonnement abschließt, geht die Provision an den Partner.\n\nBei doppelter Registrierung (zwei Partner vermitteln den gleichen Lead) zählt der zuerst registrierte Partner."
+      },
+      "roles": {
+        "title": "3. Rollenteilung",
+        "content": "Partner: Stellt Prospects aus seinem eigenen Netzwerk vor und kann Demos mit von Finit Solutions bereitgestelltem Material durchführen (Pitch Deck, Demo-Videos, One-Pager, FAQ).\n\nProspects onboarden sich selbst über das Self-Service-Portal auf voicelink.me. Der Partner kann optional eine Demo geben, aber der Kunde aktiviert das Produkt selbst.\n\nFinit Solutions: Kümmert sich um das Produkt, Marketing- und Verkaufsmaterialien, Onboarding-Flow, Support, Abrechnung und Produktentwicklung.\n\nDer Endkunde hat eine direkte vertragliche Beziehung zu Finit Solutions. Der Partner hat keinen Zugriff auf Kundendaten, Sprachmemos oder CRM-Inhalte."
+      },
+      "pricing": {
+        "title": "4. Preisgestaltung und Rabatte",
+        "content": "Finit Solutions bestimmt den Preis. Der Partner kommuniziert die offizielle Preisgestaltung, und Rabatte oder Promotionen werden immer von Finit Solutions gewährt.\n\nPartner mit mindestens einem aktiven zahlenden Kunden im letzten Quartal behalten kostenlosen Zugriff auf ihr eigenes VoiceLink-Konto zum Testen und zu Demo-Zwecken."
+      },
+      "duration": {
+        "title": "5. Dauer und Beendigung",
+        "content": "Diese Vereinbarung ist auf unbestimmte Dauer gültig und kann von beiden Parteien schriftlich mit 30 Tagen Kündigungsfrist beendet werden.\n\nBei Beendigung läuft die wiederkehrende Provision weiterhin auf bestehenden Kunden bis zu 12 Monate nach Beendigung. Neue Registrierungen verfallen sofort."
+      },
+      "exclusivity": {
+        "title": "6. Exklusivität und Wettbewerbsverbot",
+        "content": "Keine Exklusivität: Beide Parteien können frei mit anderen Parteien zusammenarbeiten.\n\nNicht-Umgehung: Der Partner darf während der Laufzeit und 12 Monate nach Beendigung kein konkurrierendes Produkt entwickeln, bewerben oder weiterverkaufen, das VoiceLink direkt im CRM-Sprachautomatisierungsmarkt konkurrenziert."
+      },
+      "gdpr": {
+        "title": "7. DSGVO und Vertraulichkeit",
+        "content": "Finit Solutions ist der Verantwortliche für alle Kundendaten. Der Partner verarbeitet keine personenbezogenen Daten im Zusammenhang mit dieser Zusammenarbeit.\n\nBeiden Parteien behandeln kommerzielle Informationen (Pipeline, Preisgestaltung, Kundennamen) vertraulich."
+      }
+    },
+    "conversion": {
+      "title": "Bereit, Partner zu werden?",
+      "form": {
+        "title": "Anmelden",
+        "name": "Vollständiger Name",
+        "phone": "Telefonnummer",
+        "email": "E-Mail-Adresse",
+        "company": "Unternehmen",
+        "context": "Kurzer Kontext",
+        "contextPlaceholder": "In welchem Netzwerk tätig und an welche Kunden denken Sie?",
+        "submit": "Absenden",
+        "submitting": "Wird übermittelt...",
+        "success": "Danke! Wir melden uns bald bei Ihnen.",
+        "error": "Etwas ist schief gelaufen. Senden Sie uns eine E-Mail an partners@voicelink.me."
+      },
+      "calendly": {
+        "title": "Oder buchen Sie einen Anruf",
+        "subtitle": "Möchten Sie erst einmal sprechen? Buchen Sie 20 Minuten mit unserem Team.",
+        "cta": "In Calendly buchen",
+        "info": "Bei Fragen erreichen Sie uns unter partners@voicelink.me. Wir antworten innerhalb von 24 Stunden."
+      }
     }
   }
 }

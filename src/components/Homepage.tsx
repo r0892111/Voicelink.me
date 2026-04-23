@@ -266,6 +266,17 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
                 <MessageCircle className="w-4 h-4 text-navy/50 group-hover:text-navy transition-colors" />
               </button>
             </div>
+
+            <div className="text-center mt-10 pt-8 border-t border-navy/10">
+              <p className="text-slate-blue mb-4 font-instrument max-w-xl mx-auto">{t('features.partnerProgramPrompt')}</p>
+              <button
+                onClick={() => { trackCTAClick('partner_program', '/'); navigate(withUTM('/affiliate')); }}
+                className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-navy/30 rounded-full shadow-lg hover:border-navy/50 hover:shadow-xl hover:scale-[1.02] transition-all group"
+              >
+                <span className="text-[15px] font-medium text-navy">{t('features.partnerProgramCTA')}</span>
+                <ArrowRight className="w-4 h-4 text-navy/50 group-hover:text-navy group-hover:translate-x-1 transition-all" />
+              </button>
+            </div>
           </div>
         </section>
       </ScrollAnimation>

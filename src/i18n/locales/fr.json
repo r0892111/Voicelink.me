@@ -505,6 +505,7 @@
     "integrations": "Ce que ça fait",
     "contact": "Contact",
     "maatwerkAI": "IA sur mesure",
+    "affiliate": "Programme partenaire",
     "urgentQuestions": "Préférez-vous un contact direct ?",
     "callUs": "Appelez-nous",
     "callHours": "lun-sam · 8h30-19h"
@@ -532,7 +533,9 @@
     "secureOauth": "OAuth sécurisé",
     "moreIntegrations": "Nous travaillons constamment à l'ajout de nouvelles intégrations CRM comme HubSpot, Salesforce, Zoho et plus pour rendre VoiceLink disponible pour tous.",
     "dontSeeYourCrm": "Vous utilisez un autre CRM ou logiciel ? Nous créons des solutions sur mesure pour toute plateforme que vous utilisez au quotidien.",
-    "contactForCustom": "Contactez-nous pour une solution sur mesure"
+    "contactForCustom": "Contactez-nous pour une solution sur mesure",
+    "partnerProgramPrompt": "Vous êtes consultant, intégrateur ou revendeur ? Gagnez 20% de commission récurrente avec notre programme partenaire.",
+    "partnerProgramCTA": "Découvrez notre programme partenaire"
   },
   "dashboard": {
     "welcome": "Bon retour, {{name}} !",
@@ -1376,6 +1379,107 @@
       "comingSoonLabel": "Bientôt",
       "comingSoonTitle": "Édition du profil",
       "comingSoonBody": "Mettez à jour votre nom, langue et préférences de notification depuis cette page."
+    }
+  },
+  "affiliate": {
+    "hero": {
+      "title": "Générez un revenu récurrent en présentant VoiceLink à votre réseau",
+      "subtitle": "Devenez partenaire VoiceLink et gagnez 20% de commission récurrente sur chaque client référé. Longue fenêtre d'attribution, versements mensuels, tout est fourni.",
+      "stat1": "commission récurrente",
+      "stat2": "fenêtre d'attribution",
+      "stat3": "revenus après résiliation",
+      "days": "jours",
+      "months": "mois",
+      "cta1": "Devenir partenaire",
+      "cta2": "Réserver un appel"
+    },
+    "howItWorks": {
+      "title": "Comment ça marche",
+      "step1": {
+        "title": "Enregistrez un prospect",
+        "description": "Envoyez un e-mail à partners@voicelink.me avec le nom, l'entreprise et le contexte."
+      },
+      "step2": {
+        "title": "Le client signe dans les 90 jours",
+        "description": "Si votre prospect s'abonne dans les 90 jours, vous gagnez la commission."
+      },
+      "step3": {
+        "title": "Recevez 20% de revenu récurrent",
+        "description": "Tant que votre client paie, vous recevez 20% de la valeur de son abonnement mensuel."
+      },
+      "step4": {
+        "title": "Versement trimestriel",
+        "description": "Mensuel si vous avez 5+ clients actifs, sinon trimestriel après facture."
+      }
+    },
+    "whyPartner": {
+      "title": "Pourquoi devenir partenaire?",
+      "point1": {
+        "title": "Récurrent, pas ponctuel",
+        "description": "Constituez un portefeuille, pas des commissions ponctuelles. Relation à long terme avec vos clients."
+      },
+      "point2": {
+        "title": "Attribution et revenus prolongés",
+        "description": "90 jours pour présenter un client, 12 mois de commission après résiliation. Vrai revenu passif."
+      },
+      "point3": {
+        "title": "Tout est fourni",
+        "description": "Deck de présentation, vidéos de démonstration, one-pager, FAQ. Vous présentez, nous gérons le reste."
+      }
+    },
+    "accordion": {
+      "title": "Détails du programme",
+      "subtitle": "Tout ce que vous devez savoir sur le programme partenaire VoiceLink",
+      "commission": {
+        "title": "1. Commission",
+        "content": "Le partenaire reçoit 20% de commission récurrente sur la valeur d'abonnement mensuel (MRR) de chaque client référé, tant que ce client est actif et paie.\n\nLa commission est calculée sur le MRR net (hors TVA, après les éventuelles réductions).\n\nLe versement s'effectue trimestriellement, après réception d'une facture du partenaire. À partir de 5+ clients actifs, nous passons à des versements mensuels."
+      },
+      "attribution": {
+        "title": "2. Attribution et enregistrement des prospects",
+        "content": "Le partenaire enregistre un prospect en envoyant un e-mail à partners@voicelink.me avec le nom, l'entreprise et le contexte. La date de réception sert de point de départ.\n\nFenêtre d'attribution : 90 jours. Si le prospect s'abonne dans les 90 jours suivant l'enregistrement, la commission revient au partenaire.\n\nEn cas d'enregistrement en double (deux partenaires référent le même prospect), le premier partenaire enregistré compte."
+      },
+      "roles": {
+        "title": "3. Répartition des rôles",
+        "content": "Partenaire : présente les prospects de son propre réseau et peut faire des démonstrations en utilisant le matériel fourni par Finit Solutions (deck, vidéos de démonstration, one-pager, FAQ).\n\nLes prospects se connectent eux-mêmes via le portail libre-service sur voicelink.me. Le partenaire peut éventuellement faire une démonstration, mais le client active le produit lui-même.\n\nFinit Solutions : gère le produit, le matériel marketing et commercial, le flux d'intégration, le support, la facturation et le développement du produit.\n\nLe client final a une relation contractuelle directe avec Finit Solutions. Le partenaire n'a accès à aucune donnée client, note vocale ou contenu CRM."
+      },
+      "pricing": {
+        "title": "4. Prix et réductions",
+        "content": "Finit Solutions détermine le prix. Le partenaire communique les prix officiels, et les réductions ou promotions sont toujours accordées par Finit Solutions.\n\nLes partenaires ayant au moins un client payant actif au cours du dernier trimestre conservent un accès gratuit à leur propre compte VoiceLink à des fins de test et de démonstration."
+      },
+      "duration": {
+        "title": "5. Durée et résiliation",
+        "content": "Cet accord est valable pour une durée indéterminée et peut être résilié par l'une ou l'autre partie par écrit avec un préavis de 30 jours.\n\nUpon résiliation, la commission récurrente continue sur les clients existants jusqu'à 12 mois après la résiliation. Les nouveaux enregistrements expirent immédiatement."
+      },
+      "exclusivity": {
+        "title": "6. Exclusivité et non-concurrence",
+        "content": "Pas d'exclusivité : les deux parties sont libres de collaborer avec d'autres partenaires.\n\nNon-contournement : le partenaire ne peut pas construire, promouvoir ou revendre un produit concurrent qui concurrence directement VoiceLink sur le marché de l'automatisation vocale CRM pendant la durée du contrat et 12 mois après la résiliation."
+      },
+      "gdpr": {
+        "title": "7. RGPD et confidentialité",
+        "content": "Finit Solutions est le responsable du traitement de toutes les données client. Le partenaire ne traite aucune donnée personnelle dans le cadre de cette coopération.\n\nLes deux parties traitent les informations commerciales (pipeline, prix, noms des clients) de manière confidentielle."
+      }
+    },
+    "conversion": {
+      "title": "Prêt à devenir partenaire?",
+      "form": {
+        "title": "S'inscrire",
+        "name": "Nom complet",
+        "phone": "Numéro de téléphone",
+        "email": "Adresse e-mail",
+        "company": "Entreprise",
+        "context": "Contexte bref",
+        "contextPlaceholder": "Dans quel réseau êtes-vous et quels clients avez-vous en tête?",
+        "submit": "Soumettre",
+        "submitting": "Envoi en cours...",
+        "success": "Merci ! Nous vous contacterons bientôt.",
+        "error": "Quelque chose s'est mal passé. Envoyez-nous un e-mail à partners@voicelink.me."
+      },
+      "calendly": {
+        "title": "Ou réserver un appel",
+        "subtitle": "Préférez discuter d'abord ? Réservez 20 minutes avec notre équipe.",
+        "cta": "Réserver in Calendly",
+        "info": "Si vous avez des questions, contactez-nous à partners@voicelink.me. Nous répondons dans les 24 heures."
+      }
     }
   }
 }
