@@ -36,7 +36,7 @@ export default function SaasAgreementPage() {
             {/* Download PDFs */}
             <div className="flex items-center justify-center gap-4 mb-8">
               <a
-                href="/SaaS Agreement en-US.pdf"
+                href="/SaaS_Agreement_Finit_Solutions.pdf"
                 download="SaaS_Agreement_English.pdf"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors text-sm font-medium"
               >
@@ -44,7 +44,7 @@ export default function SaasAgreementPage() {
                 Download English (PDF)
               </a>
               <a
-                href="/SaaS Overeenkomst.docx.pdf"
+                href="/SaaS_Overeenkomst_NL_updated.pdf"
                 download="SaaS_Overeenkomst_Dutch.pdf"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors text-sm font-medium"
               >
@@ -108,90 +108,199 @@ export default function SaasAgreementPage() {
               <h3 className="text-xl font-semibold mt-8 mb-3 underline">
                 Article 1a - Monthly fee
               </h3>
-              
+
               <p className="mb-4">
-                The monthly fee charged to the Customer for the Software and Services consists of:
+                VoiceLink is offered as a plan-based subscription. Each plan includes a monthly allocation of credits per User, which are consumed when the Software processes voice notes and other input into the Customer's CRM. The monthly fee charged to the Customer for the Software and Services consists of:
               </p>
 
               {/* Pricing Table */}
               <div className="overflow-x-auto mt-4 mb-6">
                 <table className="w-full border border-gray-300 text-sm">
+                  <thead>
+                    <tr className="border-b bg-gray-100">
+                      <th className="p-3 border-r text-left font-semibold">Plan</th>
+                      <th className="p-3 border-r text-left font-semibold">Users</th>
+                      <th className="p-3 border-r text-left font-semibold">Price per user per month</th>
+                      <th className="p-3 text-left font-semibold">Credits per user per month</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr className="border-b">
-                      <td className="p-3 border-r font-semibold bg-gray-50">VoiceLink</td>
-                      <td className="p-3 border-r">1-4 users</td>
-                      <td className="p-3">29.90 EUR per month per user</td>
+                      <td className="p-3 border-r font-semibold bg-gray-50">Free Trial</td>
+                      <td className="p-3 border-r">1</td>
+                      <td className="p-3 border-r">0 EUR (one-off)</td>
+                      <td className="p-3">100 (one-off)</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">5-9 users</td>
-                      <td className="p-3">27 EUR per month per user</td>
+                      <td className="p-3 border-r font-semibold bg-gray-50">Starter</td>
+                      <td className="p-3 border-r">1-50</td>
+                      <td className="p-3 border-r">24 EUR</td>
+                      <td className="p-3">350</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">10-24 users</td>
-                      <td className="p-3">24 EUR per month per user</td>
+                      <td className="p-3 border-r font-semibold bg-gray-50" rowSpan={6}>Professional</td>
+                      <td className="p-3 border-r">1-3</td>
+                      <td className="p-3 border-r">59.00 EUR</td>
+                      <td className="p-3">1,000</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">25-49 users</td>
-                      <td className="p-3">21 EUR per month per user</td>
+                      <td className="p-3 border-r">4-6</td>
+                      <td className="p-3 border-r">56.05 EUR</td>
+                      <td className="p-3">1,000</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">50-99 users</td>
-                      <td className="p-3">18 EUR per month per user</td>
+                      <td className="p-3 border-r">7-10</td>
+                      <td className="p-3 border-r">54.28 EUR</td>
+                      <td className="p-3">1,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">11-15</td>
+                      <td className="p-3 border-r">51.92 EUR</td>
+                      <td className="p-3">1,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">16-25</td>
+                      <td className="p-3 border-r">50.15 EUR</td>
+                      <td className="p-3">1,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">26-50</td>
+                      <td className="p-3 border-r">48.38 EUR</td>
+                      <td className="p-3">1,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r font-semibold bg-gray-50" rowSpan={5}>Business</td>
+                      <td className="p-3 border-r">1-3</td>
+                      <td className="p-3 border-r">109.00 EUR</td>
+                      <td className="p-3">2,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">4-6</td>
+                      <td className="p-3 border-r">103.55 EUR</td>
+                      <td className="p-3">2,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">7-10</td>
+                      <td className="p-3 border-r">100.28 EUR</td>
+                      <td className="p-3">2,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">11-15</td>
+                      <td className="p-3 border-r">95.92 EUR</td>
+                      <td className="p-3">2,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">16-50</td>
+                      <td className="p-3 border-r">92.65 EUR</td>
+                      <td className="p-3">2,000</td>
                     </tr>
                     <tr>
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">From 100 users</td>
-                      <td className="p-3">Enterprise - Custom Pricing</td>
+                      <td className="p-3 border-r font-semibold bg-gray-50">Enterprise</td>
+                      <td className="p-3 border-r">50+</td>
+                      <td className="p-3 border-r">Custom Pricing</td>
+                      <td className="p-3">Custom</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-{/* Article 1b */}
+
+              <p className="mb-4">
+                Prices stated above are exclusive of VAT. The price per User is automatically determined by the volume tier applicable to the total number of Users on the Customer's account at the time of billing. On the Starter plan, the per-User price is flat regardless of the number of Users.
+              </p>
+
+              <p className="mb-6">
+                <strong>Credits and auto top-up.</strong> One credit corresponds to one unit of processed input as defined on the Platform. Unused credits do not carry over to the next billing period. On the Professional and Business plans, if a User exhausts their monthly credit allocation, additional credits are automatically topped up at a rate of 7 EUR per 100 credits, unless the Customer has disabled automatic top-up in the account settings. The Free Trial credits are provided once at signup and are not renewed.
+              </p>
+
+              {/* Article 1b */}
               <h3 className="text-xl font-semibold mt-8 mb-3 underline">
                 Article 1b - Yearly fee
               </h3>
-              
+
               <p className="mb-4">
-                The yearly fee charged to the Customer for the Software and Services consists of:
+                If the Customer opts for yearly billing, a 20% discount is applied to the per-User price of the applicable plan and volume tier. The yearly fee is invoiced upfront for twelve (12) months of Services. The equivalent per-User prices are:
               </p>
 
               {/* Pricing Table */}
               <div className="overflow-x-auto mt-4 mb-6">
                 <table className="w-full border border-gray-300 text-sm">
+                  <thead>
+                    <tr className="border-b bg-gray-100">
+                      <th className="p-3 border-r text-left font-semibold">Plan</th>
+                      <th className="p-3 border-r text-left font-semibold">Users</th>
+                      <th className="p-3 border-r text-left font-semibold">Price per user per month (billed yearly)</th>
+                      <th className="p-3 text-left font-semibold">Credits per user per month</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr className="border-b">
-                      <td className="p-3 border-r font-semibold bg-gray-50">VoiceLink</td>
-                      <td className="p-3 border-r">1-4 users</td>
-                      <td className="p-3">23.92 EUR per month per user</td>
+                      <td className="p-3 border-r font-semibold bg-gray-50">Starter</td>
+                      <td className="p-3 border-r">1-50</td>
+                      <td className="p-3 border-r">19.20 EUR</td>
+                      <td className="p-3">350</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">5-9 users</td>
-                      <td className="p-3">21.60 EUR per month per user</td>
+                      <td className="p-3 border-r font-semibold bg-gray-50" rowSpan={6}>Professional</td>
+                      <td className="p-3 border-r">1-3</td>
+                      <td className="p-3 border-r">47.20 EUR</td>
+                      <td className="p-3">1,000</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">10-24 users</td>
-                      <td className="p-3">19.20 EUR per month per user</td>
+                      <td className="p-3 border-r">4-6</td>
+                      <td className="p-3 border-r">44.84 EUR</td>
+                      <td className="p-3">1,000</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">25-49 users</td>
-                      <td className="p-3">16.80 EUR per month per user</td>
+                      <td className="p-3 border-r">7-10</td>
+                      <td className="p-3 border-r">43.42 EUR</td>
+                      <td className="p-3">1,000</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">50-99 users</td>
-                      <td className="p-3">14.40 EUR per month per user</td>
+                      <td className="p-3 border-r">11-15</td>
+                      <td className="p-3 border-r">41.54 EUR</td>
+                      <td className="p-3">1,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">16-25</td>
+                      <td className="p-3 border-r">40.12 EUR</td>
+                      <td className="p-3">1,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">26-50</td>
+                      <td className="p-3 border-r">38.70 EUR</td>
+                      <td className="p-3">1,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r font-semibold bg-gray-50" rowSpan={5}>Business</td>
+                      <td className="p-3 border-r">1-3</td>
+                      <td className="p-3 border-r">87.20 EUR</td>
+                      <td className="p-3">2,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">4-6</td>
+                      <td className="p-3 border-r">82.84 EUR</td>
+                      <td className="p-3">2,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">7-10</td>
+                      <td className="p-3 border-r">80.22 EUR</td>
+                      <td className="p-3">2,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">11-15</td>
+                      <td className="p-3 border-r">76.74 EUR</td>
+                      <td className="p-3">2,000</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="p-3 border-r">16-50</td>
+                      <td className="p-3 border-r">74.12 EUR</td>
+                      <td className="p-3">2,000</td>
                     </tr>
                     <tr>
-                      <td className="p-3 border-r"></td>
-                      <td className="p-3 border-r">From 100 users</td>
-                      <td className="p-3">Enterprise - Custom Pricing</td>
+                      <td className="p-3 border-r font-semibold bg-gray-50">Enterprise</td>
+                      <td className="p-3 border-r">50+</td>
+                      <td className="p-3 border-r">Custom Pricing</td>
+                      <td className="p-3">Custom</td>
                     </tr>
                   </tbody>
                 </table>
@@ -385,7 +494,7 @@ export default function SaasAgreementPage() {
                 
                 <div className="space-y-4">
                   <p>
-                    The Customer shall pay a monthly fee, consisting of a fixed price per Solution, per User for the Services and the Software. The effective monthly fee owed by the Customer to FINIT SOLUTIONS shall be determined at the end of each month based on the actual formula (i.e., the effective applicable fixed fee, the number of users, and the Solutions) purchased by the Customer in the previous month. If FINIT SOLUTIONS determines that certain actions or behaviors are being taken that circumvent or attempt to circumvent the calculation of the monthly fee, FINIT SOLUTIONS has the right to charge the Customer a higher fee, after prior written notification to the Customer.
+                    The Customer shall pay a recurring fee for the Services and the Software, consisting of a fixed price per User on the plan selected by the Customer (Starter, Professional, or Business), as set out in Article 1a (monthly billing) or Article 1b (yearly billing). The effective fee owed by the Customer to FINIT SOLUTIONS is determined at the start of each billing period on the basis of the plan selected, the number of Users on the Customer's account, and the applicable volume tier. On the Professional and Business plans, additional credits consumed beyond the monthly allocation are invoiced via automatic top-up at the rate set out in Article 1a, unless automatic top-up has been disabled by the Customer. If FINIT SOLUTIONS determines that certain actions or behaviors are being taken that circumvent or attempt to circumvent the calculation of the fee, FINIT SOLUTIONS has the right to charge the Customer a higher fee, after prior written notification to the Customer.
                   </p>
                   
                   <p>
@@ -401,7 +510,7 @@ export default function SaasAgreementPage() {
                   </p>
                   
                   <p>
-                    The amount of the monthly fee is inclusive of VAT. The Customer is responsible for the payment of all other taxes and/or costs relating to the Software and the Services, including, but not limited to, hardware costs and internet connection costs.
+                    The amounts set out in Article 1a and Article 1b are exclusive of VAT. VAT is added to the invoice at the applicable rate, or reverse-charged for VAT-registered customers established in another EU member state, in accordance with applicable law. The Customer is responsible for the payment of all other taxes and/or costs relating to the Software and the Services, including, but not limited to, hardware costs and internet connection costs.
                   </p>
                   
                   <p>

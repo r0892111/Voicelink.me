@@ -499,6 +499,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
               <span>BTW: BE1036433716</span>
               <a href="/privacy-policy" className="hover:text-white/70 transition-colors">{t('footer.privacy')}</a>
               <a href="/cookie-policy" className="hover:text-white/70 transition-colors">{t('footer.cookiePolicy')}</a>
+              <a href="/saas-agreement" className="hover:text-white/70 transition-colors">{t('footer.saasAgreement')}</a>
               <a href="/disclaimer" className="hover:text-white/70 transition-colors">{t('footer.disclaimer')}</a>
               <button onClick={() => openSettings()} className="hover:text-white/70 transition-colors cursor-pointer">
                 {t('footer.cookieSettings')}
