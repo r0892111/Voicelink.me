@@ -1,15 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  BarChart3,
-  MessageSquare,
-  Coins,
-  Clock,
-  Type,
-  Sparkles,
-  ArrowUpRight,
-  ArrowDownLeft,
-  Mic,
-} from 'lucide-react';
+import { BarChart3, MessageSquare, Coins, Clock, Type } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useI18n } from '../hooks/useI18n';
 
@@ -26,17 +16,19 @@ interface UsageStats {
   environments: string[];
 }
 
-function formatUsd(value: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-}
+const INPUT_TOKENS_PER_CREDIT = 10_000;
 
 function formatNumber(value: number): string {
   return new Intl.NumberFormat('en-US').format(Math.round(value));
+}
+
+function formatCredits(inputTokens: number): string {
+  const credits = inputTokens / INPUT_TOKENS_PER_CREDIT;
+  const fractionDigits = credits >= 100 ? 0 : credits >= 10 ? 1 : 2;
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  }).format(credits);
 }
 
 export function DashboardUsage() {
@@ -146,10 +138,6 @@ function UsageContent({
   formatRelative: (iso: string | null) => string;
 }) {
   const { t, currentLanguage } = useI18n();
-  const sonnetPct = stats.total_cost > 0 ? (stats.sonnet_cost / stats.total_cost) * 100 : 0;
-  const haikuPct = stats.total_cost > 0 ? (stats.haiku_cost / stats.total_cost) * 100 : 0;
-  const consolidationPct =
-    stats.total_cost > 0 ? (stats.consolidation_cost / stats.total_cost) * 100 : 0;
 
   const metrics = [
     {
@@ -160,9 +148,9 @@ function UsageContent({
     },
     {
       icon: Coins,
-      label: t('dash.usage.metricSpend'),
-      value: formatUsd(stats.total_cost),
-      hint: t('dash.usage.metricSpendHint'),
+      label: t('dash.usage.metricCredits'),
+      value: formatCredits(stats.input_tokens_spent),
+      hint: t('dash.usage.metricCreditsHint'),
     },
     {
       icon: Type,
@@ -181,6 +169,8 @@ function UsageContent({
         : '—',
     },
   ];
+
+  const uniqueEnvironments = Array.from(new Set(stats.environments));
 
   return (
     <>
@@ -202,86 +192,21 @@ function UsageContent({
         ))}
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <section className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-6">
-          <div className="flex items-center gap-2.5 mb-5">
-            <Sparkles className="w-4 h-4 text-navy/60" />
-            <h2 className="font-general font-semibold text-navy text-sm uppercase tracking-widest">
-              {t('dash.usage.spendByModel')}
-            </h2>
-          </div>
-
-          <CostRow label="Sonnet"        amount={stats.sonnet_cost}        pct={sonnetPct}        dotClass="bg-navy" />
-          <CostRow label="Haiku"         amount={stats.haiku_cost}         pct={haikuPct}         dotClass="bg-slate-blue" />
-          <CostRow label="Consolidation" amount={stats.consolidation_cost} pct={consolidationPct} dotClass="bg-muted-blue" />
-
-          <div className="mt-5 pt-4 border-t border-navy/[0.07] flex items-baseline justify-between">
-            <span className="text-xs uppercase tracking-widest font-semibold text-navy/40">
-              {t('dash.usage.total')}
+      {uniqueEnvironments.length > 0 && (
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-5 mb-6 flex items-center gap-3 flex-wrap">
+          <span className="text-xs uppercase tracking-widest font-semibold text-navy/40">
+            {t('dash.usage.environments')}
+          </span>
+          {uniqueEnvironments.map((env) => (
+            <span
+              key={env}
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-navy/[0.06] text-navy/70 capitalize"
+            >
+              {env}
             </span>
-            <span className="font-general font-bold text-navy text-lg">
-              {formatUsd(stats.total_cost)}
-            </span>
-          </div>
-        </section>
-
-        <section className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-6">
-          <div className="flex items-center gap-2.5 mb-5">
-            <Mic className="w-4 h-4 text-navy/60" />
-            <h2 className="font-general font-semibold text-navy text-sm uppercase tracking-widest">
-              {t('dash.usage.tokensProcessed')}
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                <ArrowUpRight className="w-4 h-4 text-emerald-600" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-0.5">
-                  {t('dash.usage.inputTokens')}
-                </p>
-                <p className="font-general font-bold text-navy text-xl">
-                  {formatNumber(stats.input_tokens_spent)}
-                </p>
-                <p className="text-navy/45 text-xs">{t('dash.usage.inputTokensHint')}</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-navy/[0.06] flex items-center justify-center flex-shrink-0">
-                <ArrowDownLeft className="w-4 h-4 text-navy/70" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-0.5">
-                  {t('dash.usage.outputTokens')}
-                </p>
-                <p className="font-general font-bold text-navy text-xl">
-                  {formatNumber(stats.output_tokens_spent)}
-                </p>
-                <p className="text-navy/45 text-xs">{t('dash.usage.outputTokensHint')}</p>
-              </div>
-            </div>
-          </div>
-
-          {stats.environments.length > 0 && (
-            <div className="mt-5 pt-4 border-t border-navy/[0.07] flex items-center gap-2 flex-wrap">
-              <span className="text-xs uppercase tracking-widest font-semibold text-navy/40">
-                {t('dash.usage.environments')}
-              </span>
-              {Array.from(new Set(stats.environments)).map((env) => (
-                <span
-                  key={env}
-                  className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-navy/[0.06] text-navy/70 capitalize"
-                >
-                  {env}
-                </span>
-              ))}
-            </div>
-          )}
-        </section>
-      </div>
+          ))}
+        </div>
+      )}
 
       <section className="bg-white/60 backdrop-blur-sm rounded-2xl border border-dashed border-navy/15 p-6 text-center">
         <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-2">
@@ -293,41 +218,6 @@ function UsageContent({
         <p className="text-navy/60 text-sm max-w-md mx-auto">{t('dash.usage.comingSoonBody')}</p>
       </section>
     </>
-  );
-}
-
-function CostRow({
-  label,
-  amount,
-  pct,
-  dotClass,
-}: {
-  label: string;
-  amount: number;
-  pct: number;
-  dotClass: string;
-}) {
-  return (
-    <div className="mb-4 last:mb-0">
-      <div className="flex items-baseline justify-between mb-1.5">
-        <div className="flex items-center gap-2">
-          <span className={`w-2 h-2 rounded-full ${dotClass}`} />
-          <span className="text-sm font-medium text-navy/75">{label}</span>
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span className="text-sm font-semibold text-navy">{formatUsd(amount)}</span>
-          <span className="text-xs text-navy/40 tabular-nums w-10 text-right">
-            {pct.toFixed(0)}%
-          </span>
-        </div>
-      </div>
-      <div className="h-1.5 rounded-full bg-navy/[0.05] overflow-hidden">
-        <div
-          className={`h-full rounded-full ${dotClass} transition-[width] duration-500`}
-          style={{ width: `${Math.min(100, pct)}%` }}
-        />
-      </div>
-    </div>
   );
 }
 
