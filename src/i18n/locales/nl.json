@@ -88,6 +88,7 @@
     "integrations": "Wat het kan",
     "contact": "Contact",
     "maatwerkAI": "Maatwerk AI",
+    "affiliate": "Partnerprogramma",
     "urgentQuestions": "Liever direct contact?",
     "callUs": "Bel gerust op",
     "callHours": "ma-za · 8u30-19u"
@@ -865,7 +866,9 @@
     "secureOauth": "Veilige OAuth",
     "moreIntegrations": "We werken voortdurend aan het toevoegen van nieuwe CRM integraties zoals HubSpot, Salesforce, Zoho & meer om VoiceLink voor iedereen beschikbaar te maken.",
     "dontSeeYourCrm": "Gebruik je een ander CRM of software? Wij bouwen op maat gemaakte oplossingen voor elk platform dat je dagelijks gebruikt.",
-    "contactForCustom": "Ik wil een oplossing op maat"
+    "contactForCustom": "Ik wil een oplossing op maat",
+    "partnerProgramPrompt": "Ben je consultant, integrator of reseller? Verdien 20% recurring commissie met ons partnerprogramma.",
+    "partnerProgramCTA": "Ontdek ons partnerprogramma"
   },
   "howItWorks": {
     "title": "Hoe werkt het?",
@@ -1456,6 +1459,107 @@
       "comingSoonLabel": "Binnenkort",
       "comingSoonTitle": "Profiel bewerken",
       "comingSoonBody": "Pas je weergavenaam, taal en notificatievoorkeuren aan vanaf deze pagina."
+    }
+  },
+  "affiliate": {
+    "hero": {
+      "title": "Bouw recurring revenue door VoiceLink te introduceren bij je netwerk",
+      "subtitle": "Word partner van VoiceLink en ontvang 20% recurring commissie op elke doorverwezen klant. Lang attributievenster, maandelijkse uitbetalingen, alles geleverd.",
+      "stat1": "recurring commissie",
+      "stat2": "attributievenster",
+      "stat3": "tail na opzeg",
+      "days": "dagen",
+      "months": "maanden",
+      "cta1": "Word partner",
+      "cta2": "Boek een call"
+    },
+    "howItWorks": {
+      "title": "Hoe het werkt",
+      "step1": {
+        "title": "Registreer een lead",
+        "description": "Stuur een mail naar voicelink@finitsolutions.be met naam, bedrijf en context."
+      },
+      "step2": {
+        "title": "Klant tekent binnen 90 dagen",
+        "description": "Als je lead binnen 90 dagen een abonnement neemt, verdien je commissie."
+      },
+      "step3": {
+        "title": "Ontvang 20% recurring",
+        "description": "Zolang je klant betaalt, ontvang je 20% van hun maandelijkse abonnementswaarde."
+      },
+      "step4": {
+        "title": "Uitbetaling per kwartaal",
+        "description": "Maandelijks als je 5+ actieve klanten hebt, anders per kwartaal na factuur."
+      }
+    },
+    "whyPartner": {
+      "title": "Waarom partner worden?",
+      "point1": {
+        "title": "Recurring, niet one-shot",
+        "description": "Bouw een portfolio op, niet incidentele commissies. Langetermijnrelatie met je klanten."
+      },
+      "point2": {
+        "title": "Lange attributie en tail",
+        "description": "90 dagen om een klant te introduceren, 12 maanden commissie na beëindiging. Echt passief income."
+      },
+      "point3": {
+        "title": "Alles geleverd",
+        "description": "Pitch deck, demo-video's, one-pager, FAQ. Jij introduceert, wij doen de rest."
+      }
+    },
+    "accordion": {
+      "title": "Programmadetails",
+      "subtitle": "Alles wat je moet weten over het VoiceLink Partner Programma",
+      "commission": {
+        "title": "1. Commissie",
+        "content": "Partner ontvangt 20% recurring commissie op de maandelijkse abonnementswaarde (MRR) van elke doorverwezen klant, zolang die klant actief is en betaalt.\n\nCommissie wordt berekend op de netto MRR (exclusief BTW, na eventuele kortingen).\n\nUitbetaling gebeurt per kwartaal, na ontvangst van factuur van de partner. Bij 5+ actieve klanten schakelen we over naar maandelijkse uitbetaling."
+      },
+      "attribution": {
+        "title": "2. Attributie en leadregistratie",
+        "content": "Partner registreert een lead door een mail te sturen naar voicelink@finitsolutions.be met naam, bedrijf en context. Datum van ontvangst geldt als startpunt.\n\nAttributievenster: 90 dagen. Tekent de lead binnen 90 dagen na registratie een abonnement, dan is de commissie voor de partner.\n\nBij dubbele registratie (twee partners dezelfde lead) telt de eerst geregistreerde."
+      },
+      "roles": {
+        "title": "3. Rolverdeling",
+        "content": "Partner: maakt introductie bij prospects uit het eigen netwerk en kan zelf demo's geven met het door Finit Solutions geleverde materiaal (pitch deck, demo video's, one-pager, FAQ).\n\nProspects onboarden zichzelf via de self-service portal op voicelink.me. Partner kan desgewenst een demo geven, maar de klant activeert het product zelf.\n\nFinit Solutions: verzorgt het product, marketing- en salesmateriaal, onboarding-flow, support, facturatie en productontwikkeling.\n\nDe eindklant heeft een directe contractuele relatie met Finit Solutions. Partner heeft geen toegang tot klantdata, voice notes of CRM-inhoud."
+      },
+      "pricing": {
+        "title": "4. Pricing en kortingen",
+        "content": "Finit Solutions bepaalt de prijs. Partner communiceert de officiële pricing, en kortingen of promoties worden altijd door Finit Solutions toegekend.\n\nPartners met minstens één actieve betalende klant in het afgelopen kwartaal behouden gratis toegang tot een eigen VoiceLink-account voor dogfooding en demo-doeleinden."
+      },
+      "duration": {
+        "title": "5. Duur en beëindiging",
+        "content": "Deze afspraak is geldig voor onbepaalde duur en kan door beide partijen schriftelijk worden beëindigd met 30 dagen opzegtermijn.\n\nBij beëindiging blijft de recurring commissie lopen op bestaande klanten tot 12 maanden na opzeg. Nieuwe registraties vervallen direct."
+      },
+      "exclusivity": {
+        "title": "6. Exclusiviteit en non-concurrentie",
+        "content": "Geen exclusiviteit: beide partijen mogen vrij met andere partijen samenwerken.\n\nNon-circumvention: partner mag gedurende de looptijd en 12 maanden na beëindiging geen concurrerend product bouwen, promoten of reselling doen dat VoiceLink rechtstreeks beconcurreert op de markt van CRM voice-automatisering."
+      },
+      "gdpr": {
+        "title": "7. GDPR en vertrouwelijkheid",
+        "content": "Finit Solutions is data controller voor alle klantdata. Partner verwerkt geen persoonsgegevens in het kader van deze samenwerking.\n\nBeiden partijen behandelen commerciële informatie (pipeline, pricing, klantnamen) vertrouwelijk."
+      }
+    },
+    "conversion": {
+      "title": "Klaar om partner te worden?",
+      "form": {
+        "title": "Meld je aan",
+        "name": "Volledige naam",
+        "phone": "Telefoonnummer",
+        "email": "E-mailadres",
+        "company": "Bedrijf",
+        "context": "Korte toelichting",
+        "contextPlaceholder": "In welk netwerk zit je en wat voor klanten heb je in gedachten?",
+        "submit": "Verzenden",
+        "submitting": "Verzenden...",
+        "success": "Bedankt! We nemen snel contact met je op.",
+        "error": "Er is iets misgegaan. Stuur een mail naar voicelink@finitsolutions.be."
+      },
+      "calendly": {
+        "title": "Of boek een call",
+        "subtitle": "Liever eerst even sparren? Boek 20 minuten met ons team.",
+        "cta": "Boek in Calendly",
+        "info": "Bij vragen kun je ons altijd bereiken op voicelink@finitsolutions.be. Reageren doen we binnen 24 uur."
+      }
     }
   }
 }

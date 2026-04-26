@@ -113,6 +113,7 @@
     "integrations": "What it does",
     "contact": "Contact",
     "maatwerkAI": "Custom AI",
+    "affiliate": "Partner program",
     "urgentQuestions": "Prefer direct contact?",
     "callUs": "Call us anytime",
     "callHours": "Mon-Sat · 8:30-19:00"
@@ -887,7 +888,9 @@
     "secureOauth": "Secure OAuth",
     "moreIntegrations": "We're constantly working on adding new CRM integrations like HubSpot, Salesforce, Zoho & more to make VoiceLink available for everyone.",
     "dontSeeYourCrm": "Using a different CRM or software? We build custom solutions for any platform you use daily.",
-    "contactForCustom": "Get in touch for a custom solution"
+    "contactForCustom": "Get in touch for a custom solution",
+    "partnerProgramPrompt": "Are you a consultant, integrator, or reseller? Earn 20% recurring commission with our partner program.",
+    "partnerProgramCTA": "Discover our partner program"
   },
   "howItWorks": {
     "title": "How does it work?",
@@ -1464,6 +1467,107 @@
       "comingSoonLabel": "Coming soon",
       "comingSoonTitle": "Profile editing",
       "comingSoonBody": "Update your display name, language, and notification preferences from this page."
+    }
+  },
+  "affiliate": {
+    "hero": {
+      "title": "Build recurring revenue by introducing VoiceLink to your network",
+      "subtitle": "Become a VoiceLink partner and earn 20% recurring commission on every referred customer. Long attribution window, monthly payouts, everything provided.",
+      "stat1": "recurring commission",
+      "stat2": "attribution window",
+      "stat3": "tail after cancellation",
+      "days": "days",
+      "months": "months",
+      "cta1": "Become a partner",
+      "cta2": "Book a call"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "step1": {
+        "title": "Register a lead",
+        "description": "Send an email to voicelink@finitsolutions.be with name, company, and context."
+      },
+      "step2": {
+        "title": "Customer signs within 90 days",
+        "description": "If your lead subscribes within 90 days, you earn commission."
+      },
+      "step3": {
+        "title": "Receive 20% recurring",
+        "description": "As long as your customer pays, you receive 20% of their monthly subscription value."
+      },
+      "step4": {
+        "title": "Payout quarterly",
+        "description": "Monthly if you have 5+ active customers, otherwise quarterly after invoice."
+      }
+    },
+    "whyPartner": {
+      "title": "Why become a partner?",
+      "point1": {
+        "title": "Recurring, not one-shot",
+        "description": "Build a portfolio, not one-off commissions. Long-term relationship with your customers."
+      },
+      "point2": {
+        "title": "Long attribution and tail",
+        "description": "90 days to introduce a customer, 12 months commission after cancellation. True passive income."
+      },
+      "point3": {
+        "title": "Everything provided",
+        "description": "Pitch deck, demo videos, one-pager, FAQ. You introduce, we handle the rest."
+      }
+    },
+    "accordion": {
+      "title": "Program details",
+      "subtitle": "Everything you need to know about the VoiceLink Partner Program",
+      "commission": {
+        "title": "1. Commission",
+        "content": "Partner receives 20% recurring commission on the monthly subscription value (MRR) of each referred customer, as long as that customer is active and paying.\n\nCommission is calculated on the net MRR (excluding VAT, after any discounts).\n\nPayout occurs quarterly, after receipt of an invoice from the partner. At 5+ active customers, we switch to monthly payouts."
+      },
+      "attribution": {
+        "title": "2. Attribution and lead registration",
+        "content": "Partner registers a lead by sending an email to voicelink@finitsolutions.be with name, company and context. Date of receipt serves as the starting point.\n\nAttribution window: 90 days. If the lead signs up within 90 days of registration, the commission goes to the partner.\n\nIn case of duplicate registration (two partners refer the same lead), the first registered partner counts."
+      },
+      "roles": {
+        "title": "3. Role distribution",
+        "content": "Partner: introduces prospects from their own network and can give demos using materials provided by Finit Solutions (pitch deck, demo videos, one-pager, FAQ).\n\nProspects self-onboard via the self-service portal at voicelink.me. Partner can optionally give a demo, but the customer activates the product themselves.\n\nFinit Solutions: handles the product, marketing and sales materials, onboarding flow, support, billing and product development.\n\nThe end customer has a direct contractual relationship with Finit Solutions. Partner has no access to customer data, voice notes or CRM content."
+      },
+      "pricing": {
+        "title": "4. Pricing and discounts",
+        "content": "Finit Solutions determines the price. Partner communicates the official pricing, and discounts or promotions are always granted by Finit Solutions.\n\nPartners with at least one active paying customer in the past quarter retain free access to their own VoiceLink account for dogfooding and demo purposes."
+      },
+      "duration": {
+        "title": "5. Duration and termination",
+        "content": "This agreement is valid for an indefinite period and may be terminated by either party in writing with 30 days' notice.\n\nUpon termination, recurring commission continues on existing customers for up to 12 months after termination. New registrations expire immediately."
+      },
+      "exclusivity": {
+        "title": "6. Exclusivity and non-compete",
+        "content": "No exclusivity: both parties are free to collaborate with other parties.\n\nNon-circumvention: partner may not build, promote or resell a competing product that directly competes with VoiceLink in the CRM voice automation market during the term and 12 months after termination."
+      },
+      "gdpr": {
+        "title": "7. GDPR and confidentiality",
+        "content": "Finit Solutions is the data controller for all customer data. Partner processes no personal data in connection with this cooperation.\n\nBoth parties treat commercial information (pipeline, pricing, customer names) confidentially."
+      }
+    },
+    "conversion": {
+      "title": "Ready to become a partner?",
+      "form": {
+        "title": "Sign up",
+        "name": "Full name",
+        "phone": "Phone number",
+        "email": "Email address",
+        "company": "Company",
+        "context": "Brief context",
+        "contextPlaceholder": "What network are you in and what customers do you have in mind?",
+        "submit": "Submit",
+        "submitting": "Submitting...",
+        "success": "Thank you! We'll get in touch soon.",
+        "error": "Something went wrong. Send us an email at voicelink@finitsolutions.be."
+      },
+      "calendly": {
+        "title": "Or book a call",
+        "subtitle": "Prefer to chat first? Book 20 minutes with our team.",
+        "cta": "Book in Calendly",
+        "info": "If you have any questions, reach us at voicelink@finitsolutions.be. We respond within 24 hours."
+      }
     }
   }
 }

@@ -18,6 +18,7 @@ import { ContactFormModal } from './components/ContactFormModal';
 import { FieldServiceLanding } from './components/FieldServiceLanding';
 import { InstallatorsLanding } from './components/InstallatorsLanding';
 import { B2BSalesLanding } from './components/B2BSalesLanding';
+import { AffiliatePartner } from './components/AffiliatePartner';
 import { HeroLanding } from './components/HeroLanding';
 import SaasAgreement from './components/SaasAgreement';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -96,6 +97,7 @@ function App() {
   const isSignupPage = location.pathname === '/signup';
   const isInvitePage = location.pathname === '/invite';
   const isTestPage = location.pathname === '/test' || location.pathname === '/test-dashboard';
+  const isAffiliatePage = location.pathname === '/affiliate';
   const isDashboardRoute = location.pathname === '/dashboard' || location.pathname.startsWith('/dashboard/');
 
   const openContactModal = () => {
@@ -105,7 +107,9 @@ function App() {
   const closeContactModal = () => {
     setIsContactModalOpen(false);
   };
-  if (loading) {
+  
+  // Skip loading check for public pages that don't need auth
+  if (loading && !isLandingPage && !isSignupPage && !isInvitePage && !isTestPage && !isAffiliatePage) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />
@@ -198,6 +202,12 @@ function App() {
                       >
                         {t('navigation.maatwerkAI')}
                       </a>
+                      <button
+                        onClick={() => navigate(withUTM('/affiliate'))}
+                        className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
+                      >
+                        {t('navigation.affiliate')}
+                      </button>
                     </>
                   )}
 
@@ -349,6 +359,13 @@ function App() {
                         <span>{t('navigation.maatwerkAI')}</span>
                         <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
                       </a>
+                      <button
+                        onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/affiliate')); }}
+                        className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
+                      >
+                        <span>{t('navigation.affiliate')}</span>
+                        <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
+                      </button>
                     </>
                   ) : (
                     <button
@@ -405,7 +422,7 @@ function App() {
           )}
 
           {/* Routes */}
-          <div className={isLandingPage || isSignupPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute ? "" : "pt-20"}>
+          <div className={isLandingPage || isSignupPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
               <Route path="/signup" element={<AuthPage />} />
@@ -414,6 +431,7 @@ function App() {
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
+              <Route path="/affiliate" element={<AffiliatePartner />} />
               <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route index element={<DashboardHome />} />
                 <Route path="team"     element={<SubscriptionGate><DashboardTeam /></SubscriptionGate>} />
