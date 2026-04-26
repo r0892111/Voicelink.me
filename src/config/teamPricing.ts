@@ -10,14 +10,14 @@ export interface TeamTier {
   yearlyPricePerSeat: number;
   monthlyPriceId: string;        // Stripe price ID (per-seat, monthly)
   yearlyPriceId: string;         // Stripe price ID (per-seat, yearly)
-  messagesPerUser: number;
+  creditsPerUser: number;
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
 // PRICING TIERS — update prices, seat ranges, and Stripe IDs here.
 // The Stripe price IDs below are placeholders — replace once created in Stripe.
 // ──────────────────────────────────────────────────────────────────────────────
-// Tier base prices and message quotas mirror PricingSection.tsx.
+// Tier base prices and credit quotas mirror PricingSection.tsx.
 // Seat ranges are informational only — the per-seat price comes from the
 // Stripe volume-tier ladder attached to each priceId below.
 export const TEAM_TIERS: TeamTier[] = [
@@ -29,7 +29,7 @@ export const TEAM_TIERS: TeamTier[] = [
     yearlyPricePerSeat: 19.20,
     monthlyPriceId: 'price_1TOZ1cLPohnizGblBAttd82T',
     yearlyPriceId:  'price_1TOZ1dLPohnizGbl56BBL8BJ',
-    messagesPerUser: 350,
+    creditsPerUser: 350,
   },
   {
     key: 'professional',
@@ -39,7 +39,7 @@ export const TEAM_TIERS: TeamTier[] = [
     yearlyPricePerSeat: 47.20,
     monthlyPriceId: 'price_1TOZ1eLPohnizGbldPFhRy1m',
     yearlyPriceId:  'price_1TOZ25LPohnizGbll2UCxFpu',
-    messagesPerUser: 1000,
+    creditsPerUser: 1000,
   },
   {
     key: 'business',
@@ -49,7 +49,7 @@ export const TEAM_TIERS: TeamTier[] = [
     yearlyPricePerSeat: 87.20,
     monthlyPriceId: 'price_1TOZ26LPohnizGblXfd6OqxQ',
     yearlyPriceId:  'price_1TOZ26LPohnizGblh8BYsGWM',
-    messagesPerUser: 2000,
+    creditsPerUser: 2000,
   },
   {
     key: 'enterprise',
@@ -59,9 +59,12 @@ export const TEAM_TIERS: TeamTier[] = [
     yearlyPricePerSeat: 0,
     monthlyPriceId: '',
     yearlyPriceId: '',
-    messagesPerUser: 0,
+    creditsPerUser: 0,
   },
 ];
+
+/** Credits granted by the 1-month free trial product. */
+export const TRIAL_CREDITS = 100;
 
 /** Default tier used for single-user signups. */
 export const DEFAULT_TIER = TEAM_TIERS[0];
