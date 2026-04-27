@@ -1366,6 +1366,8 @@
       "metricMessagesHint": "Gesamt",
       "metricCredits": "Verwendete Credits",
       "trialBadge": "Kostenlose Testphase",
+      "unlimitedBadge": "Unbegrenzt",
+      "unlimitedHint": "Testkonto — keine Credit-Begrenzung.",
       "noPlanHint": "Aktiviere einen Plan, um dein Credit-Kontingent zu sehen.",
       "metricLastActivity": "Letzte Aktivität",
       "teamTitle": "Team-Nutzung",

@@ -1325,6 +1325,8 @@
       "metricMessagesHint": "Total",
       "metricCredits": "Crédits utilisés",
       "trialBadge": "Essai gratuit",
+      "unlimitedBadge": "Illimité",
+      "unlimitedHint": "Compte de test — aucune limite de crédits.",
       "noPlanHint": "Activez un plan pour voir votre quota de crédits.",
       "metricLastActivity": "Dernière activité",
       "teamTitle": "Utilisation de l'équipe",

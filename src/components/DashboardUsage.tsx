@@ -11,6 +11,7 @@ interface SelfUsage {
   messages_sent: number;
   last_activity: string | null;
   is_trial: boolean;
+  is_unlimited: boolean;
 }
 
 interface TeamMemberUsage {
@@ -19,6 +20,7 @@ interface TeamMemberUsage {
   credits_used: number;
   messages_sent: number;
   last_activity: string | null;
+  is_unlimited: boolean;
 }
 
 interface TeamUsage {
@@ -26,6 +28,7 @@ interface TeamUsage {
   credits_total: number | null;
   seats: number;
   is_trial: boolean;
+  is_unlimited: boolean;
   members: TeamMemberUsage[];
 }
 
@@ -200,7 +203,11 @@ function UsageContent({
             <p className="text-xs uppercase tracking-widest font-semibold text-navy/40">
               {t('dash.usage.metricCredits')}
             </p>
-            {self.is_trial && (
+            {self.is_unlimited ? (
+              <p className="text-[10px] uppercase tracking-widest font-semibold text-sky-600/80">
+                {t('dash.usage.unlimitedBadge')}
+              </p>
+            ) : self.is_trial && (
               <p className="text-[10px] uppercase tracking-widest font-semibold text-emerald-600/80">
                 {t('dash.usage.trialBadge')}
               </p>
@@ -211,20 +218,24 @@ function UsageContent({
         <div className="flex items-baseline justify-between mb-2">
           <p className="font-general font-bold text-navy text-3xl tabular-nums">
             {formatCredits(self.credits_used)}
-            {self.credits_total !== null && (
+            {self.is_unlimited ? (
+              <span className="text-navy/40 text-xl font-semibold ml-1">/ ∞</span>
+            ) : self.credits_total !== null && (
               <span className="text-navy/40 text-xl font-semibold ml-1">
                 / {formatCredits(self.credits_total)}
               </span>
             )}
           </p>
-          {self.credits_total !== null && (
+          {!self.is_unlimited && self.credits_total !== null && (
             <span className="text-sm font-semibold text-navy/60 tabular-nums">
               {creditsPct.toFixed(0)}%
             </span>
           )}
         </div>
 
-        {self.credits_total !== null ? (
+        {self.is_unlimited ? (
+          <p className="text-xs text-navy/45">{t('dash.usage.unlimitedHint')}</p>
+        ) : self.credits_total !== null ? (
           <div className="h-2 rounded-full bg-navy/[0.07] overflow-hidden">
             <div
               className={`h-full rounded-full ${barColor(creditsPct)} transition-[width] duration-500`}
@@ -320,18 +331,28 @@ function TeamPanel({ team }: { team: TeamUsage | null }) {
       <ul className="divide-y divide-navy/[0.06]">
         {team.members.map((m) => {
           const memberPct = pct(m.credits_used, perSeatCap);
+          const showBar = !m.is_unlimited && perSeatCap !== null;
           return (
             <li key={m.user_id} className="py-3 first:pt-0 last:pb-0">
               <div className="flex items-baseline justify-between mb-1.5">
-                <p className="text-sm font-semibold text-navy truncate pr-3">{m.name}</p>
+                <p className="text-sm font-semibold text-navy truncate pr-3">
+                  {m.name}
+                  {m.is_unlimited && (
+                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] uppercase tracking-widest font-semibold bg-sky-100 text-sky-700">
+                      {t('dash.usage.unlimitedBadge')}
+                    </span>
+                  )}
+                </p>
                 <p className="text-sm font-medium text-navy/70 tabular-nums whitespace-nowrap">
                   {formatCredits(m.credits_used)}
-                  {perSeatCap !== null && (
+                  {m.is_unlimited ? (
+                    <span className="text-navy/40 ml-1">/ ∞</span>
+                  ) : perSeatCap !== null && (
                     <span className="text-navy/40 ml-1">/ {formatCredits(perSeatCap)}</span>
                   )}
                 </p>
               </div>
-              {perSeatCap !== null && (
+              {showBar && (
                 <div className="h-1.5 rounded-full bg-navy/[0.05] overflow-hidden">
                   <div
                     className={`h-full rounded-full ${barColor(memberPct)} transition-[width] duration-500`}

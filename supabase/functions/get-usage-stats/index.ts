@@ -2,8 +2,9 @@
 // Default: cumulative usage for the authenticated user (credits + messages).
 // ?scope=team (admin only): per-member breakdown for the admin's workspace.
 //
-// Credits are the user-facing unit. 1 credit = 10,000 tokens (input + output).
+// Credits are the user-facing unit. 1 credit = 1,000 input tokens.
 // Cap is derived from the active Stripe subscription:
+//   is_test_user          → unlimited (no cap)
 //   trialing OR free price → TRIAL_CREDITS (100)
 //   paid                   → tier.creditsPerUser × seat quantity
 //
@@ -13,7 +14,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 
-const TOKENS_PER_CREDIT = 10_000;
+const TOKENS_PER_CREDIT = 1_000;
 const TRIAL_CREDITS = 100;
 
 // Mirror of src/config/teamPricing.ts — kept in sync manually.
@@ -32,7 +33,6 @@ interface AnalyticsRow {
   user_id: string;
   messages_sent: number | null;
   input_tokens_spent: number | null;
-  output_tokens_spent: number | null;
   last_activity: string | null;
   environment: string | null;
 }
@@ -52,6 +52,7 @@ interface MemberInfo {
   user_id: string;
   teamleader_id: string | null;
   name: string;
+  isTestUser: boolean;
 }
 
 function nameFromUserInfo(info: Record<string, unknown> | null): string {
@@ -66,7 +67,7 @@ function nameFromUserInfo(info: Record<string, unknown> | null): string {
 
 interface AggregatedUsage {
   messages_sent: number;
-  total_tokens_spent: number;   // input + output combined
+  input_tokens_spent: number;
   last_activity: string | null;
 }
 
@@ -75,8 +76,7 @@ function aggregate(rows: AnalyticsRow[]): AggregatedUsage {
   return rows.reduce<AggregatedUsage>(
     (acc, r) => {
       acc.messages_sent += Number(r.messages_sent ?? 0);
-      acc.total_tokens_spent +=
-        Number(r.input_tokens_spent ?? 0) + Number(r.output_tokens_spent ?? 0);
+      acc.input_tokens_spent += Number(r.input_tokens_spent ?? 0);
       const ts = r.last_activity ? Date.parse(r.last_activity) : 0;
       if (ts && ts > lastMs) {
         lastMs = ts;
@@ -84,7 +84,7 @@ function aggregate(rows: AnalyticsRow[]): AggregatedUsage {
       }
       return acc;
     },
-    { messages_sent: 0, total_tokens_spent: 0, last_activity: null },
+    { messages_sent: 0, input_tokens_spent: 0, last_activity: null },
   );
 }
 
@@ -93,6 +93,7 @@ interface CreditsContext {
   total: number | null;
   seats: number;
   isTrial: boolean;
+  isUnlimited: boolean;
 }
 
 async function resolveCredits(
@@ -102,24 +103,32 @@ async function resolveCredits(
   // Resolve which row owns the subscription. Members defer to admin's row.
   const { data: row } = await supabaseAdmin
     .from('teamleader_users')
-    .select('stripe_customer_id, is_admin, admin_user_id')
+    .select('stripe_customer_id, is_admin, admin_user_id, is_test_user')
     .eq('user_id', callerUserId)
     .is('deleted_at', null)
     .maybeSingle();
+
+  // Test users always run uncapped — no Stripe lookup needed.
+  if (row?.is_test_user) {
+    return { perSeat: null, total: null, seats: 0, isTrial: false, isUnlimited: true };
+  }
 
   let stripeCustomerId: string | null = row?.stripe_customer_id ?? null;
   if (row && !row.is_admin && row.admin_user_id) {
     const { data: adminRow } = await supabaseAdmin
       .from('teamleader_users')
-      .select('stripe_customer_id')
+      .select('stripe_customer_id, is_test_user')
       .eq('user_id', row.admin_user_id)
       .is('deleted_at', null)
       .maybeSingle();
+    if (adminRow?.is_test_user) {
+      return { perSeat: null, total: null, seats: 0, isTrial: false, isUnlimited: true };
+    }
     stripeCustomerId = adminRow?.stripe_customer_id ?? null;
   }
 
   if (!stripeCustomerId) {
-    return { perSeat: null, total: null, seats: 0, isTrial: false };
+    return { perSeat: null, total: null, seats: 0, isTrial: false, isUnlimited: false };
   }
 
   const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
@@ -133,7 +142,7 @@ async function resolveCredits(
     subs.data.find((s) => s.status === 'active' || s.status === 'trialing') ??
     subs.data[0];
 
-  if (!sub) return { perSeat: null, total: null, seats: 0, isTrial: false };
+  if (!sub) return { perSeat: null, total: null, seats: 0, isTrial: false, isUnlimited: false };
 
   const item = sub.items.data[0];
   const price = item?.price;
@@ -143,15 +152,15 @@ async function resolveCredits(
   const isTrial =
     sub.status === 'trialing' || (price?.unit_amount ?? 0) === 0;
   if (isTrial) {
-    return { perSeat: TRIAL_CREDITS, total: TRIAL_CREDITS, seats: 1, isTrial: true };
+    return { perSeat: TRIAL_CREDITS, total: TRIAL_CREDITS, seats: 1, isTrial: true, isUnlimited: false };
   }
 
   const priceId = price?.id ?? '';
   const perSeat = TIER_CREDITS_BY_PRICE_ID[priceId] ?? null;
   if (perSeat === null) {
-    return { perSeat: null, total: null, seats, isTrial: false };
+    return { perSeat: null, total: null, seats, isTrial: false, isUnlimited: false };
   }
-  return { perSeat, total: perSeat * seats, seats, isTrial: false };
+  return { perSeat, total: perSeat * seats, seats, isTrial: false, isUnlimited: false };
 }
 
 Deno.serve(async (req) => {
@@ -204,7 +213,7 @@ async function handleSelfScope(
 
   const { data: rows, error: analyticsError } = await supabase
     .from('analytics')
-    .select('user_id, messages_sent, input_tokens_spent, output_tokens_spent, last_activity, environment')
+    .select('user_id, messages_sent, input_tokens_spent, last_activity, environment')
     .eq('user_id', tl.teamleader_id);
 
   if (analyticsError) return json({ success: false, error: analyticsError.message }, 500);
@@ -220,6 +229,7 @@ async function handleSelfScope(
         messages_sent: 0,
         last_activity: null,
         is_trial: credits.isTrial,
+        is_unlimited: credits.isUnlimited,
       },
     });
   }
@@ -229,11 +239,12 @@ async function handleSelfScope(
   return json({
     success: true,
     usage: {
-      credits_used: tokensToCredits(totals.total_tokens_spent),
+      credits_used: tokensToCredits(totals.input_tokens_spent),
       credits_total: credits.total,
       messages_sent: totals.messages_sent,
       last_activity: totals.last_activity,
       is_trial: credits.isTrial,
+      is_unlimited: credits.isUnlimited,
     },
   });
 }
@@ -258,7 +269,7 @@ async function handleTeamScope(
   // Members linked to this admin + the admin themselves.
   const { data: memberRows, error: memberErr } = await supabase
     .from('teamleader_users')
-    .select('user_id, teamleader_id, user_info')
+    .select('user_id, teamleader_id, user_info, is_test_user')
     .or(`admin_user_id.eq.${callerUserId},user_id.eq.${callerUserId}`)
     .is('deleted_at', null);
 
@@ -268,6 +279,7 @@ async function handleTeamScope(
     user_id: r.user_id as string,
     teamleader_id: (r.teamleader_id as string | null) ?? null,
     name: nameFromUserInfo(r.user_info as Record<string, unknown> | null),
+    isTestUser: !!r.is_test_user,
   }));
 
   const teamleaderIds = members
@@ -278,7 +290,7 @@ async function handleTeamScope(
   if (teamleaderIds.length > 0) {
     const { data: rows, error: analyticsErr } = await supabase
       .from('analytics')
-      .select('user_id, messages_sent, input_tokens_spent, output_tokens_spent, last_activity, environment')
+      .select('user_id, messages_sent, input_tokens_spent, last_activity, environment')
       .in('user_id', teamleaderIds);
     if (analyticsErr) return json({ success: false, error: analyticsErr.message }, 500);
     analyticsRows = (rows ?? []) as AnalyticsRow[];
@@ -294,9 +306,10 @@ async function handleTeamScope(
     return {
       user_id: m.user_id,
       name: m.name,
-      credits_used: tokensToCredits(totals.total_tokens_spent),
+      credits_used: tokensToCredits(totals.input_tokens_spent),
       messages_sent: totals.messages_sent,
       last_activity: totals.last_activity,
+      is_unlimited: m.isTestUser,
     };
   });
 
@@ -310,6 +323,7 @@ async function handleTeamScope(
       credits_total: credits.total,
       seats: credits.seats,
       is_trial: credits.isTrial,
+      is_unlimited: credits.isUnlimited,
       members: memberUsage,
     },
   });

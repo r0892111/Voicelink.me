@@ -1412,6 +1412,8 @@
       "metricMessagesHint": "Totaal",
       "metricCredits": "Credits gebruikt",
       "trialBadge": "Gratis proefperiode",
+      "unlimitedBadge": "Onbeperkt",
+      "unlimitedHint": "Testaccount — er is geen credit-limiet.",
       "noPlanHint": "Activeer een abonnement om je credit-quota te zien.",
       "metricLastActivity": "Laatste activiteit",
       "teamTitle": "Teamgebruik",

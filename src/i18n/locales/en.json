@@ -1420,6 +1420,8 @@
       "metricMessagesHint": "All time",
       "metricCredits": "Credits used",
       "trialBadge": "Free trial",
+      "unlimitedBadge": "Unlimited",
+      "unlimitedHint": "Test account — credits are not capped.",
       "noPlanHint": "Activate a plan to see your credit allowance.",
       "metricLastActivity": "Last activity",
       "teamTitle": "Team usage",
