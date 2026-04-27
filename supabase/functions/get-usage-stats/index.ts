@@ -2,7 +2,7 @@
 // Default: cumulative usage for the authenticated user (credits + messages).
 // ?scope=team (admin only): per-member breakdown for the admin's workspace.
 //
-// Credits are the user-facing unit. 1 credit = 10,000 input tokens.
+// Credits are the user-facing unit. 1 credit = 10,000 tokens (input + output).
 // Cap is derived from the active Stripe subscription:
 //   trialing OR free price → TRIAL_CREDITS (100)
 //   paid                   → tier.creditsPerUser × seat quantity
@@ -13,7 +13,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 
-const INPUT_TOKENS_PER_CREDIT = 10_000;
+const TOKENS_PER_CREDIT = 10_000;
 const TRIAL_CREDITS = 100;
 
 // Mirror of src/config/teamPricing.ts — kept in sync manually.
@@ -32,6 +32,7 @@ interface AnalyticsRow {
   user_id: string;
   messages_sent: number | null;
   input_tokens_spent: number | null;
+  output_tokens_spent: number | null;
   last_activity: string | null;
   environment: string | null;
 }
@@ -44,7 +45,7 @@ function json(data: Record<string, unknown>, status = 200): Response {
 }
 
 function tokensToCredits(tokens: number): number {
-  return tokens / INPUT_TOKENS_PER_CREDIT;
+  return tokens / TOKENS_PER_CREDIT;
 }
 
 interface MemberInfo {
@@ -65,7 +66,7 @@ function nameFromUserInfo(info: Record<string, unknown> | null): string {
 
 interface AggregatedUsage {
   messages_sent: number;
-  input_tokens_spent: number;
+  total_tokens_spent: number;   // input + output combined
   last_activity: string | null;
 }
 
@@ -74,7 +75,8 @@ function aggregate(rows: AnalyticsRow[]): AggregatedUsage {
   return rows.reduce<AggregatedUsage>(
     (acc, r) => {
       acc.messages_sent += Number(r.messages_sent ?? 0);
-      acc.input_tokens_spent += Number(r.input_tokens_spent ?? 0);
+      acc.total_tokens_spent +=
+        Number(r.input_tokens_spent ?? 0) + Number(r.output_tokens_spent ?? 0);
       const ts = r.last_activity ? Date.parse(r.last_activity) : 0;
       if (ts && ts > lastMs) {
         lastMs = ts;
@@ -82,7 +84,7 @@ function aggregate(rows: AnalyticsRow[]): AggregatedUsage {
       }
       return acc;
     },
-    { messages_sent: 0, input_tokens_spent: 0, last_activity: null },
+    { messages_sent: 0, total_tokens_spent: 0, last_activity: null },
   );
 }
 
@@ -202,7 +204,7 @@ async function handleSelfScope(
 
   const { data: rows, error: analyticsError } = await supabase
     .from('analytics')
-    .select('user_id, messages_sent, input_tokens_spent, last_activity, environment')
+    .select('user_id, messages_sent, input_tokens_spent, output_tokens_spent, last_activity, environment')
     .eq('user_id', tl.teamleader_id);
 
   if (analyticsError) return json({ success: false, error: analyticsError.message }, 500);
@@ -227,7 +229,7 @@ async function handleSelfScope(
   return json({
     success: true,
     usage: {
-      credits_used: tokensToCredits(totals.input_tokens_spent),
+      credits_used: tokensToCredits(totals.total_tokens_spent),
       credits_total: credits.total,
       messages_sent: totals.messages_sent,
       last_activity: totals.last_activity,
@@ -276,7 +278,7 @@ async function handleTeamScope(
   if (teamleaderIds.length > 0) {
     const { data: rows, error: analyticsErr } = await supabase
       .from('analytics')
-      .select('user_id, messages_sent, input_tokens_spent, last_activity, environment')
+      .select('user_id, messages_sent, input_tokens_spent, output_tokens_spent, last_activity, environment')
       .in('user_id', teamleaderIds);
     if (analyticsErr) return json({ success: false, error: analyticsErr.message }, 500);
     analyticsRows = (rows ?? []) as AnalyticsRow[];
@@ -292,7 +294,7 @@ async function handleTeamScope(
     return {
       user_id: m.user_id,
       name: m.name,
-      credits_used: tokensToCredits(totals.input_tokens_spent),
+      credits_used: tokensToCredits(totals.total_tokens_spent),
       messages_sent: totals.messages_sent,
       last_activity: totals.last_activity,
     };
