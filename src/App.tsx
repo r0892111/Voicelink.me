@@ -95,6 +95,7 @@ function App() {
   // Check if we're on the landing page (hide navigation)
   const isLandingPage = location.pathname === '/landing' || location.pathname === '/banner';
   const isSignupPage = location.pathname === '/signup';
+  const isSigninPage = location.pathname === '/signin';
   const isInvitePage = location.pathname === '/invite';
   const isTestPage = location.pathname === '/test' || location.pathname === '/test-dashboard';
   const isAffiliatePage = location.pathname === '/affiliate';
@@ -109,7 +110,7 @@ function App() {
   };
   
   // Skip loading check for public pages that don't need auth
-  if (loading && !isLandingPage && !isSignupPage && !isInvitePage && !isTestPage && !isAffiliatePage) {
+  if (loading && !isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isAffiliatePage) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />
@@ -121,10 +122,10 @@ function App() {
     <ConsentProvider>
       <RTLProvider>
         <AnalyticsListener />
-        <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage ? 'h-screen overflow-hidden' : ''}`}>
+        <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage || isSigninPage ? 'h-screen overflow-hidden' : ''}`}>
           {!isDashboardRoute && <NoiseOverlay />}
           {/* Navigation */}
-          {!isLandingPage && !isSignupPage && !isInvitePage && !isTestPage && !isDashboardRoute && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isDashboardRoute && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
             {/* ── White logo on hero (homepage only, fades out on scroll) — desktop only ── */}
             {isHomepage && (
@@ -261,7 +262,7 @@ function App() {
           )}
 
           {/* Mobile hamburger button — always visible */}
-          {!isLandingPage && !isSignupPage && !isInvitePage && !isDashboardRoute && !isMobileMenuOpen && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isMobileMenuOpen && (
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open menu"
@@ -272,7 +273,7 @@ function App() {
           )}
 
           {/* Full-screen mobile menu overlay */}
-          {!isLandingPage && !isSignupPage && !isInvitePage && !isDashboardRoute && isMobileMenuOpen && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && isMobileMenuOpen && (
             <div className="min-[868px]:hidden fixed inset-0 z-[10000] bg-porcelain flex flex-col overflow-y-auto">
               {/* Header */}
               <div className="flex items-center justify-between px-6 pt-10 pb-6 flex-shrink-0">
@@ -422,10 +423,11 @@ function App() {
           )}
 
           {/* Routes */}
-          <div className={isLandingPage || isSignupPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage ? "" : "pt-20"}>
+          <div className={isLandingPage || isSignupPage || isSigninPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
               <Route path="/signup" element={<AuthPage />} />
+              <Route path="/signin" element={<AuthPage initialMode="login" />} />
               <Route path="/landing" element={<HeroLanding />} />
               <Route path="/invite" element={<InviteAccept />} />
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />

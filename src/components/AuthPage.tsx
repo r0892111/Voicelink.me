@@ -13,7 +13,11 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 import { usePageTransition } from '../hooks/usePageTransition';
 import { clearTestFlow } from '../utils/testFlow';
 
-export const AuthPage: React.FC = () => {
+interface AuthPageProps {
+  initialMode?: 'signup' | 'login';
+}
+
+export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) => {
   const { t } = useI18n();
   const navigate = useNavigate();
   const { navigateWithTransition } = usePageTransition();
@@ -29,7 +33,7 @@ export const AuthPage: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [isSignup, setIsSignup] = React.useState(true);
-  const [globalAuthMode, setGlobalAuthMode] = React.useState<'signup' | 'login'>('signup');
+  const [globalAuthMode, setGlobalAuthMode] = React.useState<'signup' | 'login'>(initialMode);
   const [emailLoading, setEmailLoading] = React.useState(false);
   const [emailError, setEmailError] = React.useState<string | null>(null);
   const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
