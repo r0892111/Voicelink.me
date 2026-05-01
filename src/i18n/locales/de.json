@@ -897,90 +897,90 @@
   },
   "userGuide": {
     "eyebrow": "Hilfe",
-    "title": "VoiceLink Benutzerhandbuch",
-    "intro": "Sende eine WhatsApp-Sprachnachricht. VoiceLink trägt sie für dich in dein CRM ein — keine Formulare, kein Klicken, kein Einloggen. So holst du am meisten heraus.",
+    "title": "VoiceLink-Benutzerhandbuch",
+    "intro": "Senden Sie eine WhatsApp-Sprachnachricht. VoiceLink trägt sie in Ihr CRM ein — keine Formulare, keine Klicks, keine Logins. Nach einem Prinzip gebaut: VoiceLink fragt nach, wenn es unsicher ist, statt zu raten.",
     "quickStart": {
       "eyebrow": "Schnellstart",
       "title": "In 30 Sekunden",
       "steps": [
         {
-          "title": "Öffne WhatsApp",
-          "body": "Schreibe die VoiceLink-Nummer an, die dein Admin dir gegeben hat."
+          "title": "WhatsApp öffnen",
+          "body": "Chatten Sie mit der VoiceLink-Nummer, die Ihr Administrator Ihnen gegeben hat."
         },
         {
           "title": "Sprachnachricht aufnehmen",
-          "body": "Sprich natürlich — als würdest du einem Kollegen diktieren."
+          "body": "Sprechen Sie natürlich — als würden Sie einem Kollegen diktieren."
         },
         {
-          "title": "Senden",
-          "body": "Innerhalb einer Minute kommt eine Bestätigung, was registriert wurde."
+          "title": "Antwort lesen",
+          "body": "Bei einfachen Nachrichten erhalten Sie eine Bestätigung; bei mehrdeutigen oder mehrteiligen Nachrichten erhalten Sie zuerst einen kurzen Plan zur Bestätigung."
         }
       ],
-      "calloutQuote": "\"Ich habe gerade Jan bei Delta NV getroffen. Sie wollen 15% Rabatt auf das Premium-Paket. Erstelle eine Follow-up-Aufgabe für nächsten Freitag und füge Sarah Leclercq hinzu — sie ist ihre neue Einkaufsleiterin.\"",
+      "calloutQuote": "\"Ich habe gerade Jan bei Delta NV getroffen. Sie wollen 15 % Rabatt auf das Premium-Paket. Erstelle eine Folgeaufgabe für nächsten Freitag und füge Sarah Leclercq hinzu — sie ist die neue Einkaufsleiterin.\"",
       "calloutSummaryPrefix": "Diese eine Nachricht erstellt",
-      "calloutSummaryBold": "einen Meeting-Report, ein Deal-Update, eine Aufgabe und einen neuen Kontakt",
-      "calloutSummarySuffix": "— alles korrekt in Teamleader verknüpft."
+      "calloutSummaryBold": "einen Meeting-Bericht, ein Deal-Update, eine Aufgabe und einen neuen Kontakt",
+      "calloutSummarySuffix": "— alle korrekt in Teamleader verknüpft."
     },
     "cheatSheet": {
       "eyebrow": "Spickzettel",
-      "title": "Was du machen kannst",
+      "title": "Was Sie tun können",
       "introPrefix": "VoiceLink unterstützt",
       "introBold": "16 CRM-Entitätstypen",
-      "introSuffix": ". Du musst sie nicht auswendig lernen — sprich natürlich und kombiniere mehrere in einer Nachricht, wenn du willst.",
+      "introSuffix": ". Sprechen Sie natürlich. Kombinieren Sie mehrere Aktionen in einer Sprachnachricht — VoiceLink liest die ganze Nachricht auf einmal, plant die Reihenfolge selbst und verknüpft die Datensätze korrekt.",
       "colGoal": "Ziel",
-      "colSay": "Sag etwas wie…",
+      "colSay": "Sagen Sie etwas wie…",
       "rows": [
         {
-          "goal": "Firma anlegen",
-          "example": "\"Füge eine neue Firma Finit Solutions hinzu, USt-IdNr. BE0123456789\""
+          "goal": "Unternehmen erstellen",
+          "example": "\"Füge ein neues Unternehmen namens Finit Solutions hinzu, USt-IdNr. BE0123456789\""
         },
         {
-          "goal": "Kontakt anlegen",
+          "goal": "Kontakt erstellen",
           "example": "\"Füge Sarah Leclercq bei Delta NV hinzu, sie ist die Einkaufsleiterin\""
         },
         {
-          "goal": "Deal anlegen",
-          "example": "\"Erstelle einen Deal für Alpha Solutions — Website-Relaunch, 3 Monate\""
+          "goal": "Deal erstellen",
+          "example": "\"Erstelle einen Deal für Alpha Solutions — Website-Redesign, 3-Monats-Projekt\""
         },
         {
           "goal": "Datensatz aktualisieren",
           "example": "\"Aktualisiere die Website von Delta NV auf delta.com\""
         },
         {
-          "goal": "Anruf loggen",
-          "example": "\"Ich habe gerade 15 Minuten mit Marc über die Vertragsverlängerung gesprochen\""
+          "goal": "Vergangenen Anruf protokollieren",
+          "example": "\"Ich habe gerade Marc 15 Minuten lang wegen der Vertragsverlängerung angerufen\""
         },
         {
-          "goal": "Meeting nachträglich loggen",
-          "example": "\"Ich hatte ein Meeting mit Jan. Wir haben Preise besprochen. Er will Rabatt.\""
+          "goal": "Vergangenes Meeting protokollieren",
+          "example": "\"Ich hatte ein Meeting mit Jan. Wir haben über Preise gesprochen. Er will einen Rabatt.\""
         },
         {
           "goal": "Meeting planen",
           "example": "\"Plane ein Meeting mit Jan und Marc nächsten Dienstag um 14:00\""
         },
         {
-          "goal": "Aufgabe anlegen",
-          "example": "\"Erinnere mich, Jan nächsten Freitag das Angebot zu schicken — dringend\""
+          "goal": "Aufgabe erstellen",
+          "example": "\"Erinnere mich daran, das Angebot nächsten Freitag an Jan zu schicken — dringend\""
         },
         {
           "goal": "Aufgabe abschließen",
           "example": "\"Markiere die Demo-Vorbereitung als erledigt\""
         },
         {
-          "goal": "Angebot anlegen",
+          "goal": "Angebot erstellen",
           "example": "\"Erstelle ein Angebot für Alpha Solutions mit dem Standardpaket\""
         },
         {
-          "goal": "Zahlung erfassen",
+          "goal": "Zahlung registrieren",
           "example": "\"Markiere Rechnung INV-2024-001 als bezahlt\""
         },
         {
-          "goal": "Etwas finden",
-          "example": "\"Zeig mir alle Deals für Delta NV\""
+          "goal": "Etwas suchen",
+          "example": "\"Zeige alle Deals für Delta NV\" / \"Finde Kontakte bei Alpha\""
         },
         {
-          "goal": "Deal gewonnen/verloren",
-          "example": "\"Der SEO-Vertrag ist gewonnen\""
+          "goal": "Deal als gewonnen/verloren markieren",
+          "example": "\"Der SEO-Vertrag ist gewonnen\" / \"Wir haben das Beratungsprojekt verloren\""
         }
       ]
     },
@@ -988,45 +988,45 @@
       "eyebrow": "Tipps",
       "title": "Was funktioniert, was nicht",
       "doLabel": "Tun",
-      "dontLabel": "Lassen",
+      "dontLabel": "Vermeiden",
       "dos": [
         {
           "title": "Echte Namen verwenden",
-          "body": "\"Delta NV\", \"Jan de Vos\", \"Website-Relaunch\" — konkret schlägt vage."
+          "body": "\"Delta NV\", \"Jan de Vos\", \"Website-Redesign\" — konkret schlägt vage."
         },
         {
-          "title": "Ein unterscheidendes Detail",
-          "body": "\"Marc bei Delta\" ist besser als nur \"Marc\", wenn ein Name mehrdeutig sein kann."
+          "title": "Ein unterscheidendes Detail hinzufügen",
+          "body": "\"Marc bei Delta\" ist besser als nur \"Marc\", wenn ein Name mehrdeutig sein könnte. Sonst fragt VoiceLink nach."
         },
         {
-          "title": "Natürlich über Daten sprechen",
-          "body": "\"Nächsten Freitag\", \"morgen um 15 Uhr\", \"Ende des Monats\" — alles funktioniert."
+          "title": "Natürlich über Datumsangaben sprechen",
+          "body": "\"Nächsten Freitag\", \"morgen um 15 Uhr\", \"Ende des Monats\", \"Montag um 10 Uhr\" funktionieren alle."
         },
         {
-          "title": "Aktionen kombinieren",
-          "body": "Nenne mehrere Dinge in einer Sprachnachricht — VoiceLink findet die richtige Reihenfolge."
+          "title": "Dringendes markieren",
+          "body": "Sagen Sie \"dringend\" oder \"ASAP\" für hochpriorisierte Aufgaben. Sonst gilt die Standard-Priorität."
         },
         {
-          "title": "Dringend markieren",
-          "body": "Sag \"dringend\" oder \"ASAP\" für hohe Priorität. Standard ist normal."
+          "title": "Eigene Sprache verwenden",
+          "body": "Niederländisch, Englisch, Französisch, Deutsch, Spanisch, Italienisch oder Portugiesisch — VoiceLink erkennt die Sprache und antwortet in derselben."
         },
         {
-          "title": "Deine eigene Sprache",
-          "body": "Niederländisch, Englisch, Französisch, Deutsch — VoiceLink antwortet in derselben Sprache."
+          "title": "Bei Unsicherheit explizit sein",
+          "body": "\"Vielleicht Thomas, oder vielleicht Tom\" → VoiceLink lässt den Namen leer und vermerkt die Unsicherheit in den Bemerkungen. Er rät nicht."
         }
       ],
       "donts": [
         {
-          "title": "Um Keywords sorgen",
-          "body": "Es gibt keine — sprich, wie du denkst."
+          "title": "Sich um Syntax sorgen",
+          "body": "Es gibt keine Schlüsselwörter — sprechen Sie wie Sie denken."
         },
         {
-          "title": "5 Minuten monologisieren",
+          "title": "5-Minuten-Monologe halten",
           "body": "Sprachnachrichten von 15–60 Sekunden funktionieren am besten."
         },
         {
-          "title": "Nach Pausen auf Pronomen zählen",
-          "body": "Nach ~10 Minuten Stille startet VoiceLink einen neuen Kontext."
+          "title": "Pronomen über lange Pausen verwenden",
+          "body": "Nach ~10 Minuten Stille beginnt VoiceLink ein neues Gespräch."
         },
         {
           "title": "Dateien anhängen",
@@ -1035,144 +1035,159 @@
       ]
     },
     "talkingBack": {
-      "eyebrow": "Rückmeldung",
+      "eyebrow": "Antworten",
       "title": "Wie VoiceLink antwortet",
-      "whenJustDoes": "Wenn es einfach klappt",
-      "whenNeedsToAsk": "Wenn nachgefragt werden muss",
+      "whenJustDoes": "Wenn die Nachricht klar ist",
+      "whenNeedsToAsk": "Wenn VoiceLink bei einem Detail unsicher ist",
       "confirmations": [
-        "✅ Kontakt Sarah Leclercq angelegt, mit Delta NV verknüpft",
-        "✅ Aufgabe \"Jan nachfassen\" angelegt — fällig Freitag",
-        "✅ Deal aktualisiert: Premium-Paket, 15% Rabatt notiert"
+        "✅ Kontakt Sarah Leclercq erstellt, mit Delta NV verknüpft",
+        "✅ Aufgabe \"Nachfassen Jan\" erstellt — fällig Freitag",
+        "✅ Deal aktualisiert: Premium-Paket, 15 % Rabatt notiert"
       ],
       "voicelinkLabel": "VoiceLink:",
-      "youLabel": "Du:",
+      "youLabel": "Sie:",
       "dialogues": [
         {
-          "situation": "Zwei Treffer (z.B. zwei Jans)",
-          "voicelink": "\"Ich habe Jan Voortman bei Delta und Jan Hendrickx bei Finit gefunden. Welchen?\"",
-          "you": "\"Jan bei Delta\" oder \"den ersten\""
+          "situation": "Zwei Treffer (z. B. zwei Jans)",
+          "voicelink": "\"Ich habe Jan Voortman bei Delta und Jan Hendrickx bei Finit gefunden. Welcher?\"",
+          "you": "\"Jan bei Delta\" oder \"der erste\""
         },
         {
-          "situation": "Fehlende Info",
+          "situation": "Fehlende Information",
           "voicelink": "\"Wie lautet Sarahs Nachname?\"",
           "you": "\"Leclercq\""
         },
         {
-          "situation": "Duplikat-Risiko",
-          "voicelink": "\"Ein Kontakt Jane Smith existiert bereits. Stattdessen aktualisieren?\"",
-          "you": "\"Ja, aktualisieren\" oder \"Nein, neu anlegen\""
+          "situation": "Mögliches Duplikat",
+          "voicelink": "\"Ein Kontakt namens Jane Smith existiert bereits. Stattdessen aktualisieren?\"",
+          "you": "\"Ja, aktualisiere sie\" oder \"Nein, neu erstellen\""
         },
         {
-          "situation": "USt-IdNr. bestätigen",
+          "situation": "USt-IdNr.-Bestätigung",
           "voicelink": "\"BE0123… ist als 'Finit Solutions NV' registriert. Korrekt?\"",
           "you": "\"Ja\" / \"Nein\""
+        },
+        {
+          "situation": "Vages zukünftiges Datum",
+          "voicelink": "\"Demo im Mai — wann genau? Oder soll ich eine Aufgabe zur Planung erstellen?\"",
+          "you": "\"Mach es zu einer Aufgabe\" / \"15. Mai um 10:00\""
         }
       ],
-      "fuzzyMatchNote": "Kleine Tippfehler oder Transkriptionsfehler? VoiceLink matcht auf Klang und Schreibweise, \"Marc Pieters\" findet also trotzdem \"Marc Peeters\" ohne Nachfrage."
+      "fuzzyMatchNote": "Kleine Tippfehler, Transkriptionsfehler, andere Schreibweisen — VoiceLink gleicht über Klang + Schreibweise ab. \"Marc Pieters\" findet immer noch \"Marc Peeters\", ohne nachzufragen."
     },
     "memory": {
       "eyebrow": "Kontext",
-      "title": "Gedächtnis & Follow-ups",
+      "title": "Kontext & Gedächtnis",
       "withinBold": "Innerhalb eines Gesprächs",
-      "withinRest": " (~10 Min aktiv): VoiceLink merkt sich die letzten 5 Wechsel. Du kannst \"sie\", \"diese Firma\", \"ja mach\" sagen und es weiß, was du meinst.",
+      "withinRest": " (~10 Min. aktiv): VoiceLink merkt sich die letzten 5 Austausche. Sie können \"sie\", \"das Unternehmen\", \"ja, mach\" sagen, und er weiß, wen oder was Sie meinen.",
       "silentBold": "Nach 10 Minuten Stille",
-      "silentRest": ": Der Kontext wird zurückgesetzt. Benenne deine Entitäten in der nächsten Nachricht explizit.",
+      "silentRest": ": Der Kontext wird zurückgesetzt, um sauber zu bleiben. Nennen Sie Ihre Entitäten in der nächsten Nachricht explizit.",
       "acrossBold": "Zwischen Gesprächen",
-      "acrossRest": ": VoiceLink merkt sich keine früheren Chats — aber deine Teamleader-Daten bleiben natürlich erhalten."
+      "acrossRest": ": VoiceLink trägt frühere Chats nicht weiter — aber Ihre Teamleader-Daten sind natürlich persistent."
     },
     "preview": {
       "eyebrow": "Sicherheitsnetz",
-      "title": "Vorschau vor der Ausführung",
-      "intro": "Nicht sicher, was VoiceLink tun wird? Bitte um einen Plan:",
-      "quote": "\"Zeig mir, was du tun würdest, aber führ es noch nicht aus.\"",
-      "planNote": "Du bekommst einen Plan mit 📌-Markern. Dann:",
+      "title": "Eine Vorschau erzwingen, wenn Sie wollen",
+      "intro": "Plan-Vorschau ist automatisch bei mehrdeutigen und mehrteiligen Nachrichten. Bei einfachen Einzelaufgaben führt VoiceLink direkt aus. Um eine Vorschau bei etwas zu erzwingen, das sonst automatisch ausgeführt würde:",
+      "quote": "\"Zeig mir, was du tun würdest, aber führe es noch nicht aus.\"",
+      "planNote": "Sie erhalten dasselbe 📌-Plan-Format. Dann:",
       "yes": "\"Ja, mach.\"",
-      "cancel": "\"Abbrechen.\" oder \"Erst X auf Y ändern.\""
+      "cancel": "\"Abbrechen.\" oder \"Ändere zuerst X in Y.\""
     },
     "limits": {
       "eyebrow": "Grenzen",
       "title": "Was VoiceLink (noch) nicht kann",
       "items": [
         {
-          "title": "E-Mails senden",
-          "body": "Angebote und Rechnungen werden in Teamleader vorbereitet; von dort verschickst du sie."
+          "title": "E-Mails versenden",
+          "body": "Angebote und Rechnungen werden in Teamleader vorbereitet; Sie versenden sie von dort."
         },
         {
           "title": "Dateien anhängen",
-          "body": "PDFs, Bilder und Verträge über WhatsApp werden noch nicht unterstützt."
+          "body": "PDFs, Bilder, Verträge per WhatsApp — nur Sprache und Text."
         },
         {
-          "title": "Für später planen",
+          "title": "Nachrichten für später planen",
           "body": "\"Sende das um 15 Uhr\" funktioniert nicht — VoiceLink handelt sofort."
         },
         {
-          "title": "Massenbearbeitungen",
-          "body": "Mehr als 30 Datensätze in einer Nachricht wird durch ein Sicherheitslimit blockiert."
+          "title": "30+ Datensätze auf einmal bearbeiten",
+          "body": "Sicherheitslimit für eine einzelne Nachricht."
         },
         {
-          "title": "Automatisches Rückgängigmachen",
-          "body": "Aber du kannst als Follow-up sagen: \"Lösche die Aufgabe, die ich gerade erstellt habe.\""
+          "title": "Nachträglich rückgängig machen",
+          "body": "Aber Sie können \"lösche die Aufgabe, die ich gerade erstellt habe\" als Folgenachricht sagen."
         }
       ]
     },
     "troubleshooting": {
-      "eyebrow": "Falls etwas nicht stimmt",
-      "title": "Fehlerbehebung",
+      "eyebrow": "Fehlerbehebung",
+      "title": "Wenn etwas schiefgeht",
       "colProblem": "Problem",
       "colCause": "Wahrscheinliche Ursache",
       "colFix": "Lösung",
       "rows": [
         {
-          "problem": "Keine Antwort nach 2 Min",
+          "problem": "Keine Antwort nach 2 Minuten",
           "cause": "Netzwerk- oder API-Aussetzer",
-          "fix": "Sprachnachricht erneut senden, oder Support kontaktieren."
+          "fix": "Senden Sie die Sprachnachricht erneut oder kontaktieren Sie den Support."
         },
         {
-          "problem": "Falsche Person gewählt",
-          "cause": "Name zu gebräuchlich",
-          "fix": "Detail hinzufügen: \"Jan bei Delta\", \"Marc Peeters\"."
+          "problem": "VoiceLink hat die falsche Person gewählt",
+          "cause": "Name zu häufig",
+          "fix": "Fügen Sie ein Detail hinzu: \"Jan bei Delta\", \"Marc Peeters\". Beim nächsten Mal fragt er nach, wenn er die Mehrdeutigkeit sieht."
         },
         {
-          "problem": "Sprache mitten in der Antwort gewechselt",
-          "cause": "Sehr kurzer mehrdeutiger Input",
-          "fix": "Antworte in deiner Sprache — sie fixiert sich wieder."
+          "problem": "Antwort vermischt Sprachen",
+          "cause": "Sehr kurze, mehrdeutige Eingabe",
+          "fix": "Antworten Sie in Ihrer Sprache — er rastet wieder ein."
         },
         {
           "problem": "Benutzerdefiniertes Feld nicht aktualisiert",
           "cause": "Feldname nicht erkannt",
-          "fix": "Nutze das exakte Teamleader-Label, oder frag deinen Admin."
+          "fix": "Verwenden Sie das exakte Feld-Label wie in Teamleader, oder fragen Sie Ihren Administrator."
         },
         {
           "problem": "\"Kontakt existiert bereits\"",
-          "cause": "Duplikatschutz",
-          "fix": "Antworte \"aktualisieren\" oder \"neu anlegen\"."
+          "cause": "Duplikat-Schutz",
+          "fix": "Antworten Sie \"aktualisiere sie\" oder \"neu erstellen\"."
+        },
+        {
+          "problem": "Sie haben \"ja\" geantwortet und nichts ist passiert",
+          "cause": "Der Plan ist abgelaufen (>10 Min.)",
+          "fix": "Senden Sie die ursprüngliche Nachricht erneut; VoiceLink plant neu und fragt erneut."
+        },
+        {
+          "problem": "Anruf-/Meeting-Log erscheint nicht",
+          "cause": "Früher — behoben; melden Sie neue Vorkommnisse",
+          "fix": "Verwenden Sie /feedback zum Melden."
         }
       ]
     },
     "reference": {
-      "eyebrow": "Merken",
-      "title": "Schnellreferenz",
+      "eyebrow": "Schnellreferenz",
+      "title": "Die drei Dinge, die Sie sich merken sollten",
       "cards": [
         {
           "label": "Die eine Regel",
-          "body": "Sprich mit VoiceLink wie mit einem hilfsbereiten Kollegen, der vollen Teamleader-Zugriff hat."
+          "body": "Sprechen Sie mit VoiceLink wie mit einem Kollegen, der vollen Zugriff auf Teamleader hat."
         },
         {
           "label": "Der eine Trick",
-          "body": "Im Zweifel Dinge explizit benennen — die exakte Firma, die exakte Person."
+          "body": "Im Zweifel Dinge explizit nennen. VoiceLink fragt nach, wenn er unsicher ist — aber Sie sparen einen Zug, indem Sie von Anfang an spezifisch sind."
         },
         {
-          "label": "Die eine Grenze",
-          "body": "Sprachnachrichten werden sofort ausgeführt. Vorschau mit \"zeig mir erst\" als Sicherheitsnetz."
+          "label": "Die eine Gewohnheit",
+          "body": "Lesen Sie den 📌-Plan, wenn er erscheint. Bestätigen oder anpassen, bevor er handelt."
         }
       ]
     },
     "support": {
-      "title": "Brauchst du Hilfe?",
-      "body": "E-Mail funktioniert am besten für Feature-Wünsche und Bug-Reports. Nenne die ungefähre Uhrzeit der Sprachnachricht, damit wir sie in den Logs finden.",
-      "whatsappLabel": "Per WhatsApp chatten",
-      "teamleaderPrefix": "Fragen zu Teamleader (nicht VoiceLink)?",
-      "teamleaderLinkText": "help.teamleader.eu"
+      "title": "Brauchen Sie Hilfe?",
+      "body": "Schreiben Sie eine E-Mail an alex@finitsolutions.be für Support. Senden Sie /feedback <Beschreibung> per WhatsApp für Bug-Meldungen oder Feature-Wünsche, oder mailen Sie mit der ungefähren Uhrzeit der Sprachnachricht. Antworten Sie \"STOP\" auf WhatsApp, um Service-Updates zu beenden.",
+      "whatsappLabel": "WhatsApp-Support",
+      "teamleaderPrefix": "Teamleader-Fragen (nicht VoiceLink)?",
+      "teamleaderLinkText": "Teamleader-Support"
     }
   },
   "guidePreview": {

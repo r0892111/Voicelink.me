@@ -295,7 +295,7 @@
   "userGuide": {
     "eyebrow": "Help",
     "title": "VoiceLink user guide",
-    "intro": "Send a WhatsApp voice note. VoiceLink logs it into your CRM for you — no forms, no clicking, no logging in. Here's how to get the most out of it.",
+    "intro": "Send a WhatsApp voice note. VoiceLink logs it into your CRM for you — no forms, no clicking, no logging in. Built around one principle: VoiceLink asks when it isn't sure, instead of guessing.",
     "quickStart": {
       "eyebrow": "Quick start",
       "title": "In 30 seconds",
@@ -309,8 +309,8 @@
           "body": "Speak naturally — like you're dictating to a colleague."
         },
         {
-          "title": "Send",
-          "body": "Within a minute you get a reply confirming what was logged."
+          "title": "Read the reply",
+          "body": "Simple messages get a confirmation; ambiguous or multi-task ones get a short plan to confirm first."
         }
       ],
       "calloutQuote": "\"I just met Jan at Delta NV. They want a 15% discount on the premium package. Create a follow-up task for next Friday, and add Sarah Leclercq — she's their new procurement manager.\"",
@@ -323,7 +323,7 @@
       "title": "What you can do",
       "introPrefix": "VoiceLink handles",
       "introBold": "16 CRM entity types",
-      "introSuffix": ". You don't need to memorise them — speak naturally and combine several in one message if you want.",
+      "introSuffix": ". Speak naturally. Combine several actions in one voice note — VoiceLink reads the full message at once, plans the order itself, and links the records correctly.",
       "colGoal": "Goal",
       "colSay": "Say something like…",
       "rows": [
@@ -373,11 +373,11 @@
         },
         {
           "goal": "Find something",
-          "example": "\"Show me all deals for Delta NV\""
+          "example": "\"Show me all deals for Delta NV\" / \"Find contacts at Alpha\""
         },
         {
           "goal": "Mark deal won/lost",
-          "example": "\"The SEO contract is won\""
+          "example": "\"The SEO contract is won\" / \"We lost the consulting project\""
         }
       ]
     },
@@ -393,29 +393,29 @@
         },
         {
           "title": "Add one distinguishing detail",
-          "body": "\"Marc at Delta\" is better than just \"Marc\" when a name could be ambiguous."
+          "body": "\"Marc at Delta\" beats \"Marc\" when a name could be ambiguous. If you don't, VoiceLink will ask."
         },
         {
           "title": "Speak naturally about dates",
-          "body": "\"Next Friday\", \"tomorrow at 3\", \"end of the month\" — all work."
-        },
-        {
-          "title": "Combine several actions",
-          "body": "List multiple things in one voice note — VoiceLink figures out the order."
+          "body": "\"Next Friday\", \"tomorrow at 3\", \"end of the month\", \"Monday at 10am\" all work."
         },
         {
           "title": "Mark urgent work",
-          "body": "Say \"urgent\" or \"ASAP\" for high-priority tasks. Defaults to normal otherwise."
+          "body": "Say \"urgent\" or \"ASAP\" for high-priority tasks. Otherwise default priority applies."
         },
         {
           "title": "Use your own language",
-          "body": "Dutch, English, French, German — VoiceLink replies in the same language."
+          "body": "Dutch, English, French, German, Spanish, Italian or Portuguese — VoiceLink detects the language and replies in the same one."
+        },
+        {
+          "title": "Be explicit when you're unsure",
+          "body": "\"Maybe Thomas, or could be Tom\" → VoiceLink leaves the name blank and notes the uncertainty in remarks. It will not guess."
         }
       ],
       "donts": [
         {
-          "title": "Worry about keywords",
-          "body": "There aren't any — speak the way you think."
+          "title": "Worry about syntax",
+          "body": "There aren't any keywords — speak the way you think."
         },
         {
           "title": "Monologue for 5 minutes",
@@ -423,7 +423,7 @@
         },
         {
           "title": "Rely on pronouns across gaps",
-          "body": "After ~10 minutes of silence, VoiceLink starts a new context."
+          "body": "After ~10 minutes of silence, VoiceLink starts a fresh conversation."
         },
         {
           "title": "Attach files",
@@ -434,8 +434,8 @@
     "talkingBack": {
       "eyebrow": "Talking back",
       "title": "How VoiceLink replies",
-      "whenJustDoes": "When it just does the job",
-      "whenNeedsToAsk": "When it needs to ask",
+      "whenJustDoes": "When the message is clear",
+      "whenNeedsToAsk": "When VoiceLink is unsure about something specific",
       "confirmations": [
         "✅ Contact Sarah Leclercq created, linked to Delta NV",
         "✅ Task \"Follow up with Jan\" created — due Friday",
@@ -450,12 +450,12 @@
           "you": "\"Jan at Delta\" or \"the first one\""
         },
         {
-          "situation": "Missing info",
+          "situation": "Missing identifying info",
           "voicelink": "\"What's Sarah's last name?\"",
           "you": "\"Leclercq\""
         },
         {
-          "situation": "Duplicate risk",
+          "situation": "Possible duplicate",
           "voicelink": "\"A contact named Jane Smith already exists. Update her instead?\"",
           "you": "\"Yes, update her\" or \"No, create new\""
         },
@@ -463,26 +463,31 @@
           "situation": "VAT lookup confirm",
           "voicelink": "\"BE0123… is registered as 'Finit Solutions NV'. Correct?\"",
           "you": "\"Yes\" / \"No\""
+        },
+        {
+          "situation": "Vague future date",
+          "voicelink": "\"Demo in May — when exactly? Or shall I create a task to schedule it?\"",
+          "you": "\"Make it a task\" / \"15 May at 10:00\""
         }
       ],
-      "fuzzyMatchNote": "Small typos or speech-to-text mistakes? VoiceLink matches on sound and spelling, so \"Marc Pieters\" still finds \"Marc Peeters\" without asking."
+      "fuzzyMatchNote": "Small typos, transcription mistakes, different spellings — VoiceLink matches on sound + spelling. \"Marc Pieters\" still finds \"Marc Peeters\" without asking."
     },
     "memory": {
       "eyebrow": "Context",
-      "title": "Memory & follow-ups",
+      "title": "Context & memory",
       "withinBold": "Within a conversation",
-      "withinRest": " (~10 min active): VoiceLink remembers the last 5 exchanges. You can say \"her\", \"that company\", \"yes do it\" and it knows what you mean.",
+      "withinRest": " (~10 min active): VoiceLink remembers the last 5 exchanges. You can say \"her\", \"that company\", \"yes do it\" and it knows who or what you mean.",
       "silentBold": "After 10 minutes silent",
-      "silentRest": ": the context resets. Name your entities explicitly in your next message.",
+      "silentRest": ": the context resets to keep things clean. Name your entities explicitly in your next message.",
       "acrossBold": "Across conversations",
-      "acrossRest": ": VoiceLink doesn't remember past chats — but your Teamleader data is, of course, persistent."
+      "acrossRest": ": VoiceLink doesn't carry past chats forward — but your Teamleader data is persistent (that's where it lives)."
     },
     "preview": {
       "eyebrow": "Safety net",
-      "title": "Preview before you execute",
-      "intro": "Not sure what VoiceLink will do? Ask for a plan:",
+      "title": "Forcing a preview when you want one",
+      "intro": "Plan-preview is automatic for ambiguous and multi-task messages. For straightforward single-task messages it executes directly. To force a preview on something that would otherwise auto-execute:",
       "quote": "\"Show me what you would do, but don't execute yet.\"",
-      "planNote": "You'll get a plan with 📌 markers. Then:",
+      "planNote": "You'll get the same 📌 plan format. Then:",
       "yes": "\"Yes, do it.\"",
       "cancel": "\"Cancel.\" or \"Change X to Y first.\""
     },
@@ -496,25 +501,25 @@
         },
         {
           "title": "Attach files",
-          "body": "PDFs, images, and contracts via WhatsApp aren't supported yet."
+          "body": "PDFs, images, contracts via WhatsApp — voice and text only."
         },
         {
-          "title": "Schedule for later",
+          "title": "Schedule messages for later",
           "body": "\"Send this at 3pm\" won't work — VoiceLink acts immediately."
         },
         {
-          "title": "Bulk edits",
-          "body": "30+ records in one message is blocked by a safety limit."
+          "title": "Bulk-edit 30+ records",
+          "body": "Safety limit on a single message."
         },
         {
-          "title": "Undo automatically",
+          "title": "Undo after the fact",
           "body": "But you can say \"delete the task I just created\" as a follow-up."
         }
       ]
     },
     "troubleshooting": {
-      "eyebrow": "If something's off",
-      "title": "Troubleshooting",
+      "eyebrow": "Troubleshooting",
+      "title": "When something goes sideways",
       "colProblem": "Problem",
       "colCause": "Likely cause",
       "colFix": "Fix",
@@ -525,51 +530,61 @@
           "fix": "Resend the voice note, or contact support."
         },
         {
-          "problem": "Picked the wrong person",
+          "problem": "VoiceLink picked the wrong person",
           "cause": "Name too common",
-          "fix": "Add a detail: \"Jan at Delta\", \"Marc Peeters\"."
+          "fix": "Add a detail: \"Jan at Delta\", \"Marc Peeters\". Next time it'll ask if it sees the same ambiguity."
         },
         {
-          "problem": "Language switched mid-reply",
+          "problem": "Reply mixes languages",
           "cause": "Very short ambiguous input",
-          "fix": "Reply in your language — it locks in again."
+          "fix": "Reply in your language — it'll lock in again."
         },
         {
           "problem": "Custom field didn't update",
           "cause": "Field name not recognised",
-          "fix": "Use the exact Teamleader label, or ask your admin."
+          "fix": "Use the exact field label as in Teamleader, or ask your admin."
         },
         {
           "problem": "\"Contact already exists\"",
-          "cause": "Duplicate-protection guard",
+          "cause": "Duplicate-protection match",
           "fix": "Reply \"update her\" or \"create new\"."
+        },
+        {
+          "problem": "You replied \"yes\" and nothing happened",
+          "cause": "The plan timed out (>10 min)",
+          "fix": "Resend the original message; VoiceLink will re-plan and ask again."
+        },
+        {
+          "problem": "Call/meeting log didn't appear",
+          "cause": "Past — fixed; please report any new occurrence",
+          "fix": "Use /feedback to flag."
         }
       ]
     },
     "reference": {
-      "eyebrow": "Remember this",
-      "title": "Quick reference",
+      "eyebrow": "Quick reference",
+      "title": "The three things to remember",
       "cards": [
         {
           "label": "The one rule",
-          "body": "Speak to VoiceLink the way you'd speak to a helpful colleague who has full access to Teamleader."
+          "body": "Speak to VoiceLink the way you'd speak to a colleague who has full Teamleader access."
         },
         {
           "label": "The one trick",
-          "body": "When in doubt, name things explicitly — the exact company, the exact person."
+          "body": "When in doubt, name things explicitly. VoiceLink will ask if it isn't sure — but you save a turn by being specific upfront."
         },
         {
-          "label": "The one limit",
-          "body": "Voice notes execute immediately. Preview with \"show me first\" for a safety net."
+          "label": "The one habit",
+          "body": "Read the 📌 plan when it appears. Confirm or adjust before it acts."
         }
       ]
     },
     "support": {
-      "title": "Need a hand?",
-      "body": "Email works best for feature requests and bug reports. Include the approximate time of the voice note so we can trace it in logs.",
-      "whatsappLabel": "Chat on WhatsApp",
+      "title": "Need help?",
+      "body": "Email alex@finitsolutions.be for support. Send /feedback <description> from WhatsApp for bug reports or feature requests, or email with the approximate time of the voice note. Reply \"STOP\" on WhatsApp to stop service updates.",
+      "whatsappLabel": "WhatsApp support",
       "teamleaderPrefix": "Teamleader questions (not VoiceLink)?",
-      "teamleaderLinkText": "help.teamleader.eu"
+      "teamleaderLinkText": "Teamleader support"
     }
   },
   "guidePreview": {

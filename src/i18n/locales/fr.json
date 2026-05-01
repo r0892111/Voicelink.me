@@ -171,72 +171,72 @@
   "userGuide": {
     "eyebrow": "Aide",
     "title": "Guide d'utilisation VoiceLink",
-    "intro": "Envoyez une note vocale WhatsApp. VoiceLink l'enregistre dans votre CRM pour vous — aucun formulaire, aucun clic, aucune connexion. Voici comment en tirer le meilleur parti.",
+    "intro": "Envoyez une note vocale WhatsApp. VoiceLink l'enregistre dans votre CRM — pas de formulaires, pas de clics, pas de connexion. Construit autour d'un principe : VoiceLink demande quand il n'est pas sûr, plutôt que de deviner.",
     "quickStart": {
       "eyebrow": "Démarrage rapide",
       "title": "En 30 secondes",
       "steps": [
         {
           "title": "Ouvrez WhatsApp",
-          "body": "Discutez avec le numéro VoiceLink que votre admin vous a donné."
+          "body": "Discutez avec le numéro VoiceLink que votre administrateur vous a donné."
         },
         {
           "title": "Enregistrez une note vocale",
           "body": "Parlez naturellement — comme si vous dictiez à un collègue."
         },
         {
-          "title": "Envoyez",
-          "body": "En moins d'une minute vous recevez une réponse confirmant ce qui a été enregistré."
+          "title": "Lisez la réponse",
+          "body": "Les messages simples reçoivent une confirmation ; les messages ambigus ou multi-tâches reçoivent d'abord un court plan à confirmer."
         }
       ],
-      "calloutQuote": "\"Je viens de rencontrer Jan chez Delta NV. Ils veulent 15% de remise sur le pack premium. Crée une tâche de suivi pour vendredi prochain, et ajoute Sarah Leclercq — c'est leur nouvelle responsable achats.\"",
+      "calloutQuote": "\"Je viens de rencontrer Jan chez Delta NV. Ils veulent 15 % de remise sur le pack premium. Crée une tâche de suivi pour vendredi prochain, et ajoute Sarah Leclercq — c'est leur nouvelle responsable des achats.\"",
       "calloutSummaryPrefix": "Ce seul message crée",
       "calloutSummaryBold": "un compte-rendu de réunion, une mise à jour de deal, une tâche et un nouveau contact",
-      "calloutSummarySuffix": "— le tout correctement lié dans Teamleader."
+      "calloutSummarySuffix": "— tous correctement liés dans Teamleader."
     },
     "cheatSheet": {
-      "eyebrow": "Antisèche",
+      "eyebrow": "Aide-mémoire",
       "title": "Ce que vous pouvez faire",
       "introPrefix": "VoiceLink gère",
       "introBold": "16 types d'entités CRM",
-      "introSuffix": ". Vous n'avez pas à les mémoriser — parlez naturellement et combinez-en plusieurs dans un message si vous le souhaitez.",
+      "introSuffix": ". Parlez naturellement. Combinez plusieurs actions dans une seule note vocale — VoiceLink lit le message complet, planifie l'ordre lui-même, et lie les enregistrements correctement.",
       "colGoal": "Objectif",
       "colSay": "Dites quelque chose comme…",
       "rows": [
         {
           "goal": "Créer une entreprise",
-          "example": "\"Ajoute une nouvelle entreprise, Finit Solutions, numéro de TVA BE0123456789\""
+          "example": "\"Ajoute une nouvelle entreprise appelée Finit Solutions, numéro de TVA BE0123456789\""
         },
         {
           "goal": "Créer un contact",
-          "example": "\"Ajoute Sarah Leclercq chez Delta NV, c'est la responsable achats\""
+          "example": "\"Ajoute Sarah Leclercq chez Delta NV, c'est la responsable des achats\""
         },
         {
           "goal": "Créer un deal",
-          "example": "\"Crée un deal pour Alpha Solutions — Refonte de site, projet 3 mois\""
+          "example": "\"Crée un deal pour Alpha Solutions — Refonte du site, projet de 3 mois\""
         },
         {
           "goal": "Mettre à jour un enregistrement",
-          "example": "\"Mets à jour le site web de Delta NV vers delta.com\""
+          "example": "\"Mets à jour le site de Delta NV vers delta.com\""
         },
         {
-          "goal": "Enregistrer un appel",
-          "example": "\"Je viens d'appeler Marc 15 minutes à propos du renouvellement\""
+          "goal": "Logger un appel passé",
+          "example": "\"Je viens d'appeler Marc pendant 15 minutes au sujet du renouvellement du contrat\""
         },
         {
-          "goal": "Enregistrer une réunion passée",
-          "example": "\"J'ai eu une réunion avec Jan. On a parlé prix. Il veut une remise.\""
+          "goal": "Logger une réunion passée",
+          "example": "\"J'ai eu une réunion avec Jan. Nous avons discuté du prix. Il veut une remise.\""
         },
         {
           "goal": "Planifier une réunion",
-          "example": "\"Planifie une réunion avec Jan et Marc mardi prochain à 14h\""
+          "example": "\"Planifie une réunion avec Jan et Marc mardi prochain à 14h00\""
         },
         {
           "goal": "Créer une tâche",
           "example": "\"Rappelle-moi d'envoyer la proposition à Jan vendredi prochain — urgent\""
         },
         {
-          "goal": "Clôturer une tâche",
+          "goal": "Terminer une tâche",
           "example": "\"Marque la préparation de la démo comme terminée\""
         },
         {
@@ -248,117 +248,122 @@
           "example": "\"Marque la facture INV-2024-001 comme payée\""
         },
         {
-          "goal": "Chercher quelque chose",
-          "example": "\"Montre-moi tous les deals pour Delta NV\""
+          "goal": "Trouver quelque chose",
+          "example": "\"Montre-moi tous les deals pour Delta NV\" / \"Trouve les contacts chez Alpha\""
         },
         {
-          "goal": "Marquer deal gagné/perdu",
-          "example": "\"Le contrat SEO est gagné\""
+          "goal": "Marquer un deal gagné/perdu",
+          "example": "\"Le contrat SEO est gagné\" / \"Nous avons perdu le projet de conseil\""
         }
       ]
     },
     "tips": {
       "eyebrow": "Conseils",
-      "title": "Ce qui marche, ce qui ne marche pas",
+      "title": "Ce qui fonctionne, ce qui ne fonctionne pas",
       "doLabel": "À faire",
       "dontLabel": "À éviter",
       "dos": [
         {
           "title": "Utilisez de vrais noms",
-          "body": "\"Delta NV\", \"Jan de Vos\", \"Refonte de site\" — précis vaut mieux que vague."
+          "body": "\"Delta NV\", \"Jan de Vos\", \"Refonte du site\" — précis vaut mieux que vague."
         },
         {
           "title": "Ajoutez un détail distinctif",
-          "body": "\"Marc chez Delta\" vaut mieux que juste \"Marc\" quand un nom peut être ambigu."
+          "body": "\"Marc chez Delta\" vaut mieux que \"Marc\" si un nom peut être ambigu. Sinon, VoiceLink demandera."
         },
         {
           "title": "Parlez naturellement des dates",
-          "body": "\"Vendredi prochain\", \"demain à 15h\", \"fin du mois\" — tout fonctionne."
+          "body": "\"Vendredi prochain\", \"demain à 15 h\", \"fin du mois\", \"lundi à 10 h\" fonctionnent tous."
         },
         {
-          "title": "Combinez plusieurs actions",
-          "body": "Listez plusieurs choses dans une note vocale — VoiceLink trouve le bon ordre."
+          "title": "Marquez le travail urgent",
+          "body": "Dites \"urgent\" ou \"ASAP\" pour les tâches prioritaires. Sinon la priorité par défaut s'applique."
         },
         {
-          "title": "Signalez les tâches urgentes",
-          "body": "Dites \"urgent\" ou \"ASAP\" pour les priorités hautes. Par défaut, c'est normal."
+          "title": "Utilisez votre propre langue",
+          "body": "Néerlandais, anglais, français, allemand, espagnol, italien ou portugais — VoiceLink détecte la langue et répond dans la même."
         },
         {
-          "title": "Utilisez votre langue",
-          "body": "Néerlandais, anglais, français, allemand — VoiceLink répond dans la même langue."
+          "title": "Soyez explicite quand vous doutez",
+          "body": "\"Peut-être Thomas, ou bien Tom\" → VoiceLink laisse le nom vide et note l'incertitude dans les remarques. Il ne devine pas."
         }
       ],
       "donts": [
         {
-          "title": "Vous soucier des mots-clés",
-          "body": "Il n'y en a pas — parlez comme vous pensez."
+          "title": "Vous soucier de la syntaxe",
+          "body": "Il n'y a pas de mots-clés — parlez comme vous pensez."
         },
         {
-          "title": "Monologuer 5 minutes",
-          "body": "Des notes vocales de 15–60 secondes marchent le mieux."
+          "title": "Faire un monologue de 5 minutes",
+          "body": "Les notes vocales de 15 à 60 secondes fonctionnent le mieux."
         },
         {
-          "title": "Compter sur les pronoms après une pause",
-          "body": "Après ~10 minutes de silence, VoiceLink repart de zéro."
+          "title": "Compter sur les pronoms après une longue pause",
+          "body": "Après ~10 minutes de silence, VoiceLink démarre une nouvelle conversation."
         },
         {
           "title": "Joindre des fichiers",
-          "body": "VoiceLink ne lit que la voix et le texte — pas d'images, de PDF ni de pièces jointes."
+          "body": "VoiceLink ne lit que la voix et le texte — pas d'images, de PDF ou de pièces jointes."
         }
       ]
     },
     "talkingBack": {
       "eyebrow": "Réponses",
       "title": "Comment VoiceLink répond",
-      "whenJustDoes": "Quand ça marche tout seul",
-      "whenNeedsToAsk": "Quand il a besoin de vérifier",
+      "whenJustDoes": "Quand le message est clair",
+      "whenNeedsToAsk": "Quand VoiceLink n'est pas sûr d'un détail",
       "confirmations": [
         "✅ Contact Sarah Leclercq créé, lié à Delta NV",
-        "✅ Tâche \"Suivi de Jan\" créée — échéance vendredi",
-        "✅ Deal mis à jour : pack premium, 15% de remise notée"
+        "✅ Tâche \"Suivi avec Jan\" créée — échéance vendredi",
+        "✅ Deal mis à jour : pack premium, 15 % de remise notée"
       ],
       "voicelinkLabel": "VoiceLink :",
       "youLabel": "Vous :",
       "dialogues": [
         {
-          "situation": "Deux correspondances (p.ex. deux Jans)",
+          "situation": "Deux correspondances (ex. deux Jans)",
           "voicelink": "\"J'ai trouvé Jan Voortman chez Delta et Jan Hendrickx chez Finit. Lequel ?\"",
           "you": "\"Jan chez Delta\" ou \"le premier\""
         },
         {
-          "situation": "Info manquante",
+          "situation": "Information manquante",
           "voicelink": "\"Quel est le nom de famille de Sarah ?\"",
           "you": "\"Leclercq\""
         },
         {
-          "situation": "Risque de doublon",
-          "voicelink": "\"Un contact Jane Smith existe déjà. La mettre à jour ?\"",
-          "you": "\"Oui, mets-la à jour\" ou \"Non, crée-en un nouveau\""
+          "situation": "Doublon possible",
+          "voicelink": "\"Un contact appelé Jane Smith existe déjà. La mettre à jour ?\"",
+          "you": "\"Oui, mets-la à jour\" ou \"Non, crée un nouveau\""
         },
         {
           "situation": "Confirmation TVA",
           "voicelink": "\"BE0123… est enregistré comme 'Finit Solutions NV'. Correct ?\"",
           "you": "\"Oui\" / \"Non\""
+        },
+        {
+          "situation": "Date future vague",
+          "voicelink": "\"Démo en mai — quand exactement ? Ou je crée une tâche pour le planifier ?\"",
+          "you": "\"Fais-en une tâche\" / \"15 mai à 10h00\""
         }
       ],
-      "fuzzyMatchNote": "Petites fautes ou erreurs de transcription ? VoiceLink associe sur le son et l'orthographe, donc \"Marc Pieters\" trouve toujours \"Marc Peeters\" sans demander."
+      "fuzzyMatchNote": "Petites fautes de frappe, erreurs de transcription, orthographes différentes — VoiceLink fait correspondre par son + orthographe. \"Marc Pieters\" trouve toujours \"Marc Peeters\" sans demander."
     },
     "memory": {
       "eyebrow": "Contexte",
-      "title": "Mémoire & suivi",
+      "title": "Contexte & mémoire",
       "withinBold": "Dans une conversation",
-      "withinRest": " (~10 min actif) : VoiceLink mémorise les 5 derniers échanges. Vous pouvez dire \"elle\", \"cette société\", \"oui vas-y\" et il comprend.",
+      "withinRest": " (~10 min actives) : VoiceLink se souvient des 5 derniers échanges. Vous pouvez dire \"elle\", \"cette entreprise\", \"oui vas-y\" et il sait de qui ou de quoi vous parlez.",
       "silentBold": "Après 10 minutes de silence",
-      "silentRest": " : le contexte se réinitialise. Nommez vos entités explicitement dans le message suivant.",
+      "silentRest": " : le contexte est réinitialisé pour rester propre. Nommez vos entités explicitement dans votre prochain message.",
       "acrossBold": "Entre conversations",
-      "acrossRest": " : VoiceLink ne retient pas les discussions passées — mais vos données Teamleader sont, bien sûr, persistantes."
+      "acrossRest": " : VoiceLink ne reporte pas les anciennes discussions — mais vos données Teamleader sont, bien sûr, persistantes."
     },
     "preview": {
       "eyebrow": "Filet de sécurité",
-      "title": "Prévisualisez avant d'exécuter",
-      "intro": "Pas sûr de ce que VoiceLink va faire ? Demandez un plan :",
-      "quote": "\"Montre-moi ce que tu ferais, mais n'exécute pas encore.\"",
-      "planNote": "Vous recevrez un plan avec des repères 📌. Ensuite :",
+      "title": "Forcer un aperçu quand vous le voulez",
+      "intro": "L'aperçu de plan est automatique pour les messages ambigus et multi-tâches. Pour les messages simples à tâche unique, VoiceLink exécute directement. Pour forcer un aperçu sur quelque chose qui s'exécuterait sinon automatiquement :",
+      "quote": "\"Montre-moi ce que tu ferais, mais ne l'exécute pas encore.\"",
+      "planNote": "Vous obtenez le même format de plan 📌. Ensuite :",
       "yes": "\"Oui, vas-y.\"",
       "cancel": "\"Annule.\" ou \"Change X en Y d'abord.\""
     },
@@ -372,80 +377,90 @@
         },
         {
           "title": "Joindre des fichiers",
-          "body": "PDF, images et contrats via WhatsApp ne sont pas encore supportés."
+          "body": "PDF, images, contrats via WhatsApp — voix et texte uniquement."
         },
         {
-          "title": "Planifier pour plus tard",
-          "body": "\"Envoie ça à 15h\" ne marche pas — VoiceLink agit immédiatement."
+          "title": "Programmer des messages",
+          "body": "\"Envoie ça à 15h\" ne fonctionne pas — VoiceLink agit immédiatement."
         },
         {
-          "title": "Modifications en masse",
-          "body": "Plus de 30 enregistrements en un message est bloqué par une limite de sécurité."
+          "title": "Modifier 30+ enregistrements en lot",
+          "body": "Limite de sécurité sur un seul message."
         },
         {
-          "title": "Annuler automatiquement",
+          "title": "Annuler après coup",
           "body": "Mais vous pouvez dire \"supprime la tâche que je viens de créer\" en suivi."
         }
       ]
     },
     "troubleshooting": {
-      "eyebrow": "Si quelque chose cloche",
-      "title": "Dépannage",
+      "eyebrow": "Dépannage",
+      "title": "Quand quelque chose dérape",
       "colProblem": "Problème",
       "colCause": "Cause probable",
       "colFix": "Solution",
       "rows": [
         {
-          "problem": "Pas de réponse après 2 min",
-          "cause": "Problème réseau ou API",
+          "problem": "Pas de réponse après 2 minutes",
+          "cause": "Hoquet réseau ou API",
           "fix": "Renvoyez la note vocale, ou contactez le support."
         },
         {
-          "problem": "Mauvaise personne choisie",
-          "cause": "Nom trop commun",
-          "fix": "Ajoutez un détail : \"Jan chez Delta\", \"Marc Peeters\"."
+          "problem": "VoiceLink a choisi la mauvaise personne",
+          "cause": "Nom trop courant",
+          "fix": "Ajoutez un détail : \"Jan chez Delta\", \"Marc Peeters\". La prochaine fois il demandera s'il voit la même ambiguïté."
         },
         {
-          "problem": "Langue changée en cours",
-          "cause": "Message très court ambigu",
-          "fix": "Répondez dans votre langue — elle se verrouille à nouveau."
+          "problem": "La réponse mélange les langues",
+          "cause": "Entrée très courte et ambiguë",
+          "fix": "Répondez dans votre langue — il se reverrouillera."
         },
         {
-          "problem": "Champ perso pas mis à jour",
-          "cause": "Nom du champ non reconnu",
-          "fix": "Utilisez le libellé Teamleader exact, ou demandez à votre admin."
+          "problem": "Le champ personnalisé n'a pas été mis à jour",
+          "cause": "Nom de champ non reconnu",
+          "fix": "Utilisez le label exact comme dans Teamleader, ou demandez à votre administrateur."
         },
         {
           "problem": "\"Le contact existe déjà\"",
-          "cause": "Protection anti-doublon",
+          "cause": "Correspondance de protection contre les doublons",
           "fix": "Répondez \"mets-la à jour\" ou \"crée un nouveau\"."
+        },
+        {
+          "problem": "Vous avez répondu \"oui\" et rien ne s'est passé",
+          "cause": "Le plan a expiré (>10 min)",
+          "fix": "Renvoyez le message original ; VoiceLink replanifiera et redemandera."
+        },
+        {
+          "problem": "Le log d'appel/réunion n'apparaît pas",
+          "cause": "Anciennement — corrigé ; signalez tout nouveau cas",
+          "fix": "Utilisez /feedback pour signaler."
         }
       ]
     },
     "reference": {
-      "eyebrow": "À retenir",
-      "title": "Référence rapide",
+      "eyebrow": "Référence rapide",
+      "title": "Les trois choses à retenir",
       "cards": [
         {
-          "label": "La règle",
-          "body": "Parlez à VoiceLink comme à un collègue serviable qui a un accès complet à Teamleader."
+          "label": "La règle unique",
+          "body": "Parlez à VoiceLink comme vous parleriez à un collègue ayant un accès complet à Teamleader."
         },
         {
-          "label": "L'astuce",
-          "body": "Dans le doute, nommez les choses explicitement — l'entreprise exacte, la personne exacte."
+          "label": "L'astuce unique",
+          "body": "Dans le doute, nommez les choses explicitement. VoiceLink demandera s'il n'est pas sûr — mais vous économisez un tour en étant précis dès le départ."
         },
         {
-          "label": "La limite",
-          "body": "Les notes vocales s'exécutent immédiatement. Prévisualisez avec \"montre-moi d'abord\" pour un filet de sécurité."
+          "label": "L'habitude unique",
+          "body": "Lisez le plan 📌 quand il apparaît. Confirmez ou ajustez avant qu'il n'agisse."
         }
       ]
     },
     "support": {
       "title": "Besoin d'aide ?",
-      "body": "L'e-mail marche mieux pour les demandes de fonctionnalités et les bugs. Indiquez l'heure approximative de la note vocale pour qu'on la retrouve dans les logs.",
-      "whatsappLabel": "Chat WhatsApp",
+      "body": "Envoyez un e-mail à alex@finitsolutions.be pour le support. Envoyez /feedback <description> via WhatsApp pour les rapports de bug ou les demandes de fonctionnalités, ou envoyez un e-mail avec l'heure approximative de la note vocale. Répondez \"STOP\" sur WhatsApp pour arrêter les mises à jour de service.",
+      "whatsappLabel": "Support WhatsApp",
       "teamleaderPrefix": "Questions Teamleader (pas VoiceLink) ?",
-      "teamleaderLinkText": "help.teamleader.eu"
+      "teamleaderLinkText": "Support Teamleader"
     }
   },
   "guidePreview": {
