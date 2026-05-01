@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
-import { getStripePriceId } from '../config/teamPricing';
+import { getStripePriceId } from '../lib/teamPricing';
 import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCheckout';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
@@ -405,7 +405,7 @@ export const AuthCallback: React.FC = () => {
         // trial CTA becomes a forced-checkout funnel.
         const pending = consumePendingCheckout();
         if (pending) {
-          const priceId = getStripePriceId(
+          const priceId = await getStripePriceId(
             pending.tierKey,
             pending.interval === 'yearly' ? 'year' : 'month',
           );

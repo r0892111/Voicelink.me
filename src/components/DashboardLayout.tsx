@@ -6,7 +6,7 @@ import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
 import { useTeamRole } from '../hooks/useTeamRole';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
-import { DEFAULT_TIER, getStripePriceId } from '../config/teamPricing';
+import { getDefaultTier, getStripePriceId } from '../lib/teamPricing';
 import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCheckout';
 import { withUTM } from '../utils/utm';
 import { DashboardSidebar } from './DashboardSidebar';
@@ -198,7 +198,7 @@ export function DashboardLayout() {
       const noActiveSub = !status || (status !== 'active' && status !== 'trialing');
       const pending = consumePendingCheckout();
       if (noActiveSub && pending) {
-        const priceId = getStripePriceId(
+        const priceId = await getStripePriceId(
           pending.tierKey,
           pending.interval === 'yearly' ? 'year' : 'month',
         );
@@ -226,8 +226,9 @@ export function DashboardLayout() {
     // converts to €24/month after the trial unless they cancel. Classic SaaS
     // model — zero friction to convert vs. the earlier €0-trial-product
     // approach that required a second checkout round to upgrade.
+    const { stripe_price_id } = await getDefaultTier();
     await StripeService.createCheckoutSession({
-      priceId: DEFAULT_TIER.monthlyPriceId,
+      priceId: stripe_price_id,
       quantity: 1,
       trialDays: 30,
       successUrl: `${window.location.origin}/dashboard`,

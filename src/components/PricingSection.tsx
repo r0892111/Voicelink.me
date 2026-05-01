@@ -225,7 +225,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
     // Business. Free Trial is a one-person account so it stays hidden.
     // Starter has no volume discounts, so the per-user price stays flat; the
     // counter just scales the Stripe quantity (and the team's seat count).
-    if (plan.isFreeTrial) return null;
+    // Starter is single-seat by design (plan_limits.max_seats = 1) — hide the
+    // counter so the Stripe checkout quantity stays 1. Free Trial is also
+    // single-seat. Counter only shows on Professional and Business.
+    if (plan.isFreeTrial || plan.key === 'starter') return null;
     const count = userCounts[plan.key] ?? 1;
     const displayValue = inputValues[plan.key] ?? String(count);
     return (
