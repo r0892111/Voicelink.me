@@ -6,7 +6,7 @@ import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
 import { useTeamRole } from '../hooks/useTeamRole';
 import { supabase } from '../lib/supabase';
 import { StripeService } from '../services/stripeService';
-import { getDefaultTier, getStripePriceId } from '../lib/teamPricing';
+import { getStripePriceId, getTrialTier } from '../lib/teamPricing';
 import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCheckout';
 import { withUTM } from '../utils/utm';
 import { DashboardSidebar } from './DashboardSidebar';
@@ -221,16 +221,15 @@ export function DashboardLayout() {
   };
 
   const startTrial = async () => {
-    // Free trial flows into a real Starter subscription: user picks up a
-    // 30-day trial on the Starter plan, card collected at checkout, auto-
-    // converts to €24/month after the trial unless they cancel. Classic SaaS
-    // model — zero friction to convert vs. the earlier €0-trial-product
-    // approach that required a second checkout round to upgrade.
-    const { stripe_price_id } = await getDefaultTier();
+    // Trial = a real €0/month subscription on the Free Trial product
+    // (voicelink_key=free_trial_monthly, 100 credits, refresh_policy=once).
+    // Conversion to a paid plan is a separate Customer Portal / Checkout
+    // flow — accepted trade-off vs. the previous Starter+trialDays approach
+    // so the trial allotment matches what the credit gate actually enforces.
+    const { stripe_price_id } = await getTrialTier();
     await StripeService.createCheckoutSession({
       priceId: stripe_price_id,
       quantity: 1,
-      trialDays: 30,
       successUrl: `${window.location.origin}/dashboard`,
       cancelUrl: `${window.location.origin}/`,
     });

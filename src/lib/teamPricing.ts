@@ -58,12 +58,12 @@ export async function getStripePriceId(
   return plans.find((p) => p.voicelink_key === key)?.stripe_price_id ?? null;
 }
 
-/** Default tier used for single-user signups (Starter monthly). */
-export async function getDefaultTier(): Promise<PlanLimit> {
+/** Tier new signups land on (Free Trial — €0, 100 credits, no card). */
+export async function getTrialTier(): Promise<PlanLimit> {
   const plans = await loadPlanLimits();
-  const def = plans.find((p) => p.voicelink_key === 'starter_monthly');
-  if (!def) throw new Error('starter_monthly missing from plan_limits');
-  return def;
+  const trial = plans.find((p) => p.voicelink_key === 'free_trial_monthly');
+  if (!trial) throw new Error('free_trial_monthly missing from plan_limits');
+  return trial;
 }
 
 /** Return all plan rows. */

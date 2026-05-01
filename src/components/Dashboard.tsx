@@ -25,7 +25,7 @@ import { StripeService } from '../services/stripeService';
 import { supabase } from '../lib/supabase';
 import { withUTM } from '../utils/utm';
 import { NoiseOverlay } from './ui/NoiseOverlay';
-import { getDefaultTier } from '../lib/teamPricing';
+import { getTrialTier } from '../lib/teamPricing';
 
 export const Dashboard: React.FC = () => {
   const { user, loading } = useAuth();
@@ -118,7 +118,7 @@ export const Dashboard: React.FC = () => {
     ({ teamleader: 'Teamleader', pipedrive: 'Pipedrive', odoo: 'Odoo' }[user?.platform || ''] || 'your CRM');
 
   const startTrial = async () => {
-    const { stripe_price_id } = await getDefaultTier();
+    const { stripe_price_id } = await getTrialTier();
     await StripeService.createCheckoutSession({
       priceId:    stripe_price_id,
       successUrl: `${window.location.origin}/dashboard`,
