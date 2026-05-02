@@ -76,11 +76,9 @@ export const TestDashboard: React.FC = () => {
       }
       // No session yet (before TL connect) — use tl_user_id link by phone
       if (!phone) { setTlConnected(false); return; }
-      const { data } = await supabase
-        .from('test_users')
-        .select('tl_user_id')
-        .eq('phone', phone)
-        .maybeSingle();
+      const { data: rows } = await supabase
+        .rpc('lookup_test_user_by_phone', { phone_in: phone });
+      const data = (rows as Array<{ tl_user_id: string | null }> | null)?.[0] ?? null;
       setTlConnected(!!data?.tl_user_id);
     };
     check();
@@ -122,10 +120,7 @@ export const TestDashboard: React.FC = () => {
     }
 
     // Break the phone → tl link stored on test_users as well.
-    await supabase
-      .from('test_users')
-      .update({ tl_user_id: null })
-      .eq('phone', phone);
+    await supabase.rpc('clear_test_user_tl_link', { phone_in: phone });
 
     // End the session so the check effect hits the no-session branch next load.
     await supabase.auth.signOut();

@@ -30,11 +30,9 @@ export const TestSignup: React.FC = () => {
     setBusy(true);
     setError(null);
     try {
-      const { data, error: dbError } = await supabase
-        .from('test_users')
-        .select('user_id, whatsapp_status')
-        .eq('phone', normalized)
-        .maybeSingle();
+      const { data: rows, error: dbError } = await supabase
+        .rpc('lookup_test_user_by_phone', { phone_in: normalized });
+      const data = (rows as Array<{ user_id: string; whatsapp_status: string }> | null)?.[0] ?? null;
 
       if (dbError) throw new Error('Something went wrong. Please try again.');
       if (!data) {
