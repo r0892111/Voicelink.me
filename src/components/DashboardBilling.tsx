@@ -1,6 +1,9 @@
-import { CreditCard, ExternalLink, Loader2, Lock } from 'lucide-react';
+import { CreditCard, ExternalLink, Loader2, Lock, Sparkles } from 'lucide-react';
 import { useDashboardContext } from '../hooks/useDashboardContext';
 import { useI18n } from '../hooks/useI18n';
+import { StripeService } from '../services/stripeService';
+import { getStripePriceId } from '../lib/teamPricing';
+import { withUTM } from '../utils/utm';
 
 const STATUS_TONE: Record<string, 'positive' | 'warning' | 'neutral'> = {
   active: 'positive',
@@ -32,6 +35,17 @@ function formatDate(timestamp: number | null, locale: string): string {
 export function DashboardBilling() {
   const { role, subscription } = useDashboardContext();
   const { t, currentLanguage } = useI18n();
+
+  const handleUpgradeToStarter = async () => {
+    const priceId = await getStripePriceId('starter', 'month');
+    if (!priceId) return;
+    await StripeService.createCheckoutSession({
+      priceId,
+      quantity: 1,
+      successUrl: `${window.location.origin}/dashboard`,
+      cancelUrl: `${window.location.origin}/dashboard/billing`,
+    });
+  };
 
   if (!role.isAdmin) {
     return (
@@ -127,18 +141,46 @@ export function DashboardBilling() {
               )}
             </dl>
 
-            <button
-              onClick={subscription.openPortal}
-              disabled={subscription.portalLoading}
-              className="inline-flex items-center gap-2 bg-navy text-white px-5 py-2.5 rounded-full font-semibold hover:bg-navy-hover transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              {subscription.portalLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <ExternalLink className="w-4 h-4" />
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={subscription.openPortal}
+                disabled={subscription.portalLoading}
+                className="inline-flex items-center gap-2 bg-navy text-white px-5 py-2.5 rounded-full font-semibold hover:bg-navy-hover transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {subscription.portalLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <ExternalLink className="w-4 h-4" />
+                )}
+                {t('dash.billing.managePortal')}
+              </button>
+              {info.voicelink_key === 'free_trial_monthly' && (
+                <button
+                  onClick={handleUpgradeToStarter}
+                  className="inline-flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-emerald-700 transition-colors"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  {t('dash.billing.upgradeCta')}
+                </button>
               )}
-              {t('dash.billing.managePortal')}
-            </button>
+            </div>
+
+            {info.voicelink_key === 'free_trial_monthly' && (
+              <div className="mt-6 p-4 rounded-xl bg-amber-50/60 border border-amber-200/60">
+                <p className="text-sm font-semibold text-navy mb-1">
+                  {t('dash.billing.upgradeBannerTitle')}
+                </p>
+                <p className="text-xs text-navy/60 mb-2">
+                  {t('dash.billing.upgradeBannerBody')}
+                </p>
+                <a
+                  href={withUTM('/')}
+                  className="text-xs font-semibold text-navy hover:text-navy-hover underline underline-offset-2"
+                >
+                  {t('dash.billing.compareAllPlans')}
+                </a>
+              </div>
+            )}
           </>
         ) : (
           <div className="text-center py-8">

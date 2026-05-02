@@ -99,7 +99,10 @@ Deno.serve(async (req) => {
       planName = product.name ?? planName;
     }
 
-    r.done(200, { subscription_status: sub.status, plan: planName });
+    const voicelinkKey =
+      (price?.metadata?.voicelink_key as string | undefined) ?? null;
+
+    r.done(200, { subscription_status: sub.status, plan: planName, voicelink_key: voicelinkKey });
     return json({
       success: true,
       subscription: {
@@ -107,6 +110,7 @@ Deno.serve(async (req) => {
         trial_end:           sub.trial_end ?? null,
         current_period_end:  sub.current_period_end ?? null,
         plan_name:           planName,
+        voicelink_key:       voicelinkKey,
         amount:              price?.unit_amount ?? null,
         currency:            price?.currency ?? null,
         interval:            price?.recurring?.interval ?? null,

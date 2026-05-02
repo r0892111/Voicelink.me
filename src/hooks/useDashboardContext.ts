@@ -7,6 +7,7 @@ export interface SubscriptionInfo {
   trial_end: number | null;
   current_period_end: number | null;
   plan_name: string | null;
+  voicelink_key: string | null;
   amount: number | null;
   currency: string | null;
   interval: string | null;

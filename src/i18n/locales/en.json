@@ -1425,7 +1425,11 @@
         "canceled": "Canceled",
         "incomplete": "Incomplete",
         "unpaid": "Unpaid"
-      }
+      },
+      "upgradeCta": "Upgrade to Starter — €24/month",
+      "upgradeBannerTitle": "Ready to keep going?",
+      "upgradeBannerBody": "Your free trial includes 100 credits. Starter unlocks 350 credits per user per month.",
+      "compareAllPlans": "Compare all plans"
     },
     "usage": {
       "eyebrow": "Insights",

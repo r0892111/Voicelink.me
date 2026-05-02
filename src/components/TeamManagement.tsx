@@ -152,7 +152,7 @@ export const TeamManagement: React.FC<TeamManagementProps> = ({ user }) => {
                 {t('teamManagement.seatLimitReached')}
               </p>
               <a
-                href="/dashboard?tab=billing"
+                href="/dashboard/billing"
                 className="text-xs font-semibold text-navy hover:text-navy-hover underline underline-offset-2 font-instrument"
               >
                 {t('teamManagement.upgradePlan')}

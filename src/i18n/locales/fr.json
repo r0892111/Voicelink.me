@@ -1330,7 +1330,11 @@
         "canceled": "Annulé",
         "incomplete": "Incomplet",
         "unpaid": "Impayé"
-      }
+      },
+      "upgradeCta": "Passer à Starter — 24 €/mois",
+      "upgradeBannerTitle": "Prêt à continuer ?",
+      "upgradeBannerBody": "Votre essai gratuit inclut 100 crédits. Starter débloque 350 crédits par utilisateur et par mois.",
+      "compareAllPlans": "Comparer tous les forfaits"
     },
     "usage": {
       "eyebrow": "Aperçu",

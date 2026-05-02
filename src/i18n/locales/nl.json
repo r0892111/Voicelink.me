@@ -1417,7 +1417,11 @@
         "canceled": "Geannuleerd",
         "incomplete": "Onvolledig",
         "unpaid": "Onbetaald"
-      }
+      },
+      "upgradeCta": "Upgrade naar Starter — €24/maand",
+      "upgradeBannerTitle": "Klaar om door te gaan?",
+      "upgradeBannerBody": "Je gratis proefperiode bevat 100 credits. Starter ontgrendelt 350 credits per gebruiker per maand.",
+      "compareAllPlans": "Alle plannen vergelijken"
     },
     "usage": {
       "eyebrow": "Inzichten",
