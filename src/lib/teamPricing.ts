@@ -70,3 +70,36 @@ export async function getTrialTier(): Promise<PlanLimit> {
 export async function getAllPlans(): Promise<PlanLimit[]> {
   return loadPlanLimits();
 }
+
+// ── Credit packs (one-time top-up purchases) ────────────────────────────────
+
+export interface CreditPack {
+  voicelink_key: string;       // e.g. 'credit_pack_500'
+  name: string;
+  credits: number;
+  amount_cents: number;
+  currency: string;
+  stripe_price_id: string;
+  active: boolean;
+}
+
+let creditPacksCache: Promise<CreditPack[]> | null = null;
+
+/** Active credit packs available for purchase (lowest credits first). */
+export async function getActiveCreditPacks(): Promise<CreditPack[]> {
+  if (!creditPacksCache) {
+    creditPacksCache = (async () => {
+      const { data, error } = await supabase
+        .from('credit_packs')
+        .select('voicelink_key,name,credits,amount_cents,currency,stripe_price_id,active')
+        .eq('active', true)
+        .order('credits', { ascending: true });
+      if (error || !data) {
+        creditPacksCache = null;
+        throw error ?? new Error('Failed to load credit_packs');
+      }
+      return data as CreditPack[];
+    })();
+  }
+  return creditPacksCache;
+}

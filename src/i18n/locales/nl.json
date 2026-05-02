@@ -1421,7 +1421,12 @@
       "upgradeCta": "Upgrade naar Starter — €24/maand",
       "upgradeBannerTitle": "Klaar om door te gaan?",
       "upgradeBannerBody": "Je gratis proefperiode bevat 100 credits. Starter ontgrendelt 350 credits per gebruiker per maand.",
-      "compareAllPlans": "Alle plannen vergelijken"
+      "compareAllPlans": "Alle plannen vergelijken",
+      "creditPacksEyebrow": "Add-ons",
+      "creditPacksTitle": "Extra credits kopen",
+      "creditPacksBody": "Eenmalige credit packs worden meteen aangerekend en toegevoegd aan je huidige periode — geen abonnementswijziging nodig.",
+      "creditPackQty": "{{count}} credits",
+      "buyPack": "Kopen"
     },
     "usage": {
       "eyebrow": "Inzichten",

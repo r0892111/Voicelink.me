@@ -1334,7 +1334,12 @@
       "upgradeCta": "Passer à Starter — 24 €/mois",
       "upgradeBannerTitle": "Prêt à continuer ?",
       "upgradeBannerBody": "Votre essai gratuit inclut 100 crédits. Starter débloque 350 crédits par utilisateur et par mois.",
-      "compareAllPlans": "Comparer tous les forfaits"
+      "compareAllPlans": "Comparer tous les forfaits",
+      "creditPacksEyebrow": "Compléments",
+      "creditPacksTitle": "Acheter des crédits supplémentaires",
+      "creditPacksBody": "Les packs de crédits ponctuels sont facturés immédiatement et ajoutés à votre période actuelle — aucun changement d'abonnement requis.",
+      "creditPackQty": "{{count}} crédits",
+      "buyPack": "Acheter"
     },
     "usage": {
       "eyebrow": "Aperçu",

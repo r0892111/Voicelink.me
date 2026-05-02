@@ -42,6 +42,7 @@ function subscriptionToRow(sub: Stripe.Subscription) {
 async function handleCheckoutCompleted(
   r: RequestLogger,
   supabase: SupabaseClient,
+  stripe: Stripe,
   session: Stripe.Checkout.Session,
 ) {
   const userId     = session.client_reference_id;
@@ -51,22 +52,123 @@ async function handleCheckoutCompleted(
     session_id: session.id,
     user_id: userId,
     customer_id: customerId,
+    mode: session.mode,
   });
 
-  if (!userId || !customerId) {
-    r.warn('missing userId or customerId on session', { user_id: userId, customer_id: customerId });
+  if (userId && customerId) {
+    const { error } = await supabase
+      .from('teamleader_users')
+      .update({ stripe_customer_id: customerId })
+      .eq('user_id', userId);
+
+    if (error) {
+      r.error('failed to save stripe_customer_id', { error: error.message, code: error.code, user_id: userId });
+    } else {
+      r.info('stripe_customer_id saved', { user_id: userId, customer_id: customerId });
+    }
+  } else {
+    r.warn('missing userId or customerId on session — skipping stripe_customer_id update', {
+      user_id: userId,
+      customer_id: customerId,
+    });
+  }
+
+  // One-time purchases (credit packs) write a credit_topups row so the
+  // credit gate can include the bought credits in the user's limit.
+  if (session.mode === 'payment' && customerId) {
+    await handleCreditPackPurchase(r, supabase, stripe, session, customerId);
+  }
+}
+
+async function handleCreditPackPurchase(
+  r: RequestLogger,
+  supabase: SupabaseClient,
+  stripe: Stripe,
+  session: Stripe.Checkout.Session,
+  customerId: string,
+) {
+  if (session.payment_status !== 'paid') {
+    r.info('non-paid session, skipping credit pack write', {
+      session_id: session.id,
+      payment_status: session.payment_status,
+    });
     return;
   }
 
-  const { error } = await supabase
-    .from('teamleader_users')
-    .update({ stripe_customer_id: customerId })
-    .eq('user_id', userId);
+  const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+    expand: ['data.price'],
+  });
 
-  if (error) {
-    r.error('failed to save stripe_customer_id', { error: error.message, code: error.code, user_id: userId });
-  } else {
-    r.info('stripe_customer_id saved', { user_id: userId, customer_id: customerId });
+  // Best-effort: resolve the buyer's teamleader_id; null is acceptable since
+  // the credit grant attaches to customer_id either way.
+  let teamleaderId: string | null = null;
+  if (session.client_reference_id) {
+    const { data: tlRow } = await supabase
+      .from('teamleader_users')
+      .select('teamleader_id')
+      .eq('user_id', session.client_reference_id)
+      .is('deleted_at', null)
+      .maybeSingle();
+    teamleaderId = (tlRow?.teamleader_id as string | undefined) ?? null;
+  }
+
+  const paymentId =
+    typeof session.payment_intent === 'string'
+      ? session.payment_intent
+      : session.payment_intent?.id ?? session.id;
+
+  for (const item of lineItems.data) {
+    const price = item.price;
+    const voicelinkKey = (price?.metadata?.voicelink_key as string | undefined) ?? null;
+    const creditsStr = (price?.metadata?.credits as string | undefined) ?? null;
+
+    if (!voicelinkKey?.startsWith('credit_pack_') || !creditsStr) {
+      r.info('line item is not a credit pack, skipping', {
+        price_id: price?.id,
+        voicelink_key: voicelinkKey,
+      });
+      continue;
+    }
+
+    const creditsPerPack = parseInt(creditsStr, 10);
+    if (!Number.isFinite(creditsPerPack) || creditsPerPack <= 0) {
+      r.warn('invalid credits metadata on price', { price_id: price?.id, credits: creditsStr });
+      continue;
+    }
+
+    const totalCredits = creditsPerPack * (item.quantity ?? 1);
+
+    const row = {
+      customer_id: customerId,
+      teamleader_id: teamleaderId,
+      stripe_payment_id: paymentId,
+      voicelink_key: voicelinkKey,
+      credits_added: totalCredits,
+      amount_cents: item.amount_total ?? 0,
+      currency: (item.currency ?? 'eur').toLowerCase(),
+      status: 'paid',
+      purchased_at: new Date(session.created * 1000).toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    r.info('writing credit_topups', {
+      voicelink_key: voicelinkKey,
+      credits: totalCredits,
+      amount_cents: row.amount_cents,
+    });
+
+    const { error } = await supabase
+      .from('credit_topups')
+      .upsert(row, { onConflict: 'stripe_payment_id' });
+
+    if (error) {
+      r.error('failed to upsert credit_topups', {
+        error: error.message,
+        code: error.code,
+        voicelink_key: voicelinkKey,
+        stripe_payment_id: paymentId,
+      });
+    }
   }
 }
 
@@ -133,7 +235,7 @@ Deno.serve(async (req) => {
 
   switch (event.type) {
     case 'checkout.session.completed':
-      await handleCheckoutCompleted(r, supabase, event.data.object as Stripe.Checkout.Session);
+      await handleCheckoutCompleted(r, supabase, stripe, event.data.object as Stripe.Checkout.Session);
       break;
 
     case 'customer.subscription.created':

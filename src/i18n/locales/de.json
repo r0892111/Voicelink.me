@@ -1375,7 +1375,12 @@
       "upgradeCta": "Auf Starter upgraden — 24 €/Monat",
       "upgradeBannerTitle": "Bereit, weiterzumachen?",
       "upgradeBannerBody": "Ihre kostenlose Testversion enthält 100 Credits. Starter schaltet 350 Credits pro Nutzer und Monat frei.",
-      "compareAllPlans": "Alle Pläne vergleichen"
+      "compareAllPlans": "Alle Pläne vergleichen",
+      "creditPacksEyebrow": "Add-ons",
+      "creditPacksTitle": "Extra Credits kaufen",
+      "creditPacksBody": "Einmalige Credit Packs werden sofort abgerechnet und Ihrer aktuellen Periode hinzugefügt — keine Abonnementänderung nötig.",
+      "creditPackQty": "{{count}} Credits",
+      "buyPack": "Kaufen"
     },
     "usage": {
       "eyebrow": "Einblicke",

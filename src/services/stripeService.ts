@@ -12,6 +12,9 @@ export interface CheckoutOptions {
    *  checkouts from the homepage leave this undefined so the user pays
    *  immediately — they've already decided to subscribe. */
   trialDays?: number;
+  /** 'subscription' (default) for plan signups; 'payment' for one-time
+   *  purchases (credit packs). */
+  mode?: 'subscription' | 'payment';
 }
 
 export class StripeService {
@@ -38,6 +41,7 @@ export class StripeService {
           cancel_url: options.cancelUrl || `${window.location.origin}/`,
           crm_provider: crmProvider,
           trial_days: options.trialDays,
+          mode: options.mode,
         }),
       });
 

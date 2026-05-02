@@ -37,8 +37,8 @@ Deno.serve(async (req) => {
     }
     r.info('authenticated', { user_id: user.id, email: user.email });
 
-    const { price_id, quantity, success_url, cancel_url, trial_days } = await req.json();
-    r.info('creating checkout session', { price_id, quantity, trial_days, user_id: user.id });
+    const { price_id, quantity, success_url, cancel_url, trial_days, mode } = await req.json();
+    r.info('creating checkout session', { price_id, quantity, trial_days, mode, user_id: user.id });
 
     if (!price_id) {
       r.warn('missing price_id');
@@ -58,22 +58,35 @@ Deno.serve(async (req) => {
     // immediately). 30 is what "Start free" sends; we cap at 90 for safety.
     const trialDays = Math.max(0, Math.min(90, Number(trial_days) || 0));
 
-    const session = await stripe.checkout.sessions.create({
-      mode:                 'subscription',
-      payment_method_types: ['card'],
+    // mode='payment' is the one-time-purchase flow (credit packs); the
+    // default 'subscription' mode handles plan signups.
+    const checkoutMode: 'subscription' | 'payment' =
+      mode === 'payment' ? 'payment' : 'subscription';
+
+    const baseParams = {
+      mode:                 checkoutMode,
+      payment_method_types: ['card'] as ['card'],
       line_items:           [{ price: price_id, quantity: qty }],
       // {CHECKOUT_SESSION_ID} is a Stripe template literal — it gets replaced with the real session ID on redirect
       success_url:          `${success_url ?? `${Deno.env.get('SITE_URL') ?? ''}/dashboard`}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url:           cancel_url  ?? `${Deno.env.get('SITE_URL') ?? ''}/`,
       client_reference_id:  user.id,
       allow_promotion_codes: true,
-      // The "Start free" CTA requests trial_days=30. Pass it through so the
-      // subscription goes into the `trialing` state with the same card on
-      // file — Stripe auto-charges once the trial ends, no second checkout.
-      // Homepage paid-plan CTAs don't send trial_days, so those users pay
-      // from day one.
-      ...(trialDays > 0 ? { subscription_data: { trial_period_days: trialDays } } : {}),
-    });
+    };
+
+    const session = await stripe.checkout.sessions.create(
+      checkoutMode === 'subscription'
+        ? {
+            ...baseParams,
+            // The "Start free" CTA requests trial_days=30. Pass it through so the
+            // subscription goes into the `trialing` state with the same card on
+            // file — Stripe auto-charges once the trial ends, no second checkout.
+            // Homepage paid-plan CTAs don't send trial_days, so those users pay
+            // from day one.
+            ...(trialDays > 0 ? { subscription_data: { trial_period_days: trialDays } } : {}),
+          }
+        : baseParams,
+    );
 
     r.info('checkout session created', { session_id: session.id, url_present: !!session.url });
     r.done(200);

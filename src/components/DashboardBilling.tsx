@@ -1,8 +1,9 @@
-import { CreditCard, ExternalLink, Loader2, Lock, Sparkles } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { CreditCard, ExternalLink, Loader2, Lock, Plus, Sparkles } from 'lucide-react';
 import { useDashboardContext } from '../hooks/useDashboardContext';
 import { useI18n } from '../hooks/useI18n';
 import { StripeService } from '../services/stripeService';
-import { getStripePriceId } from '../lib/teamPricing';
+import { getStripePriceId, getActiveCreditPacks, type CreditPack } from '../lib/teamPricing';
 import { withUTM } from '../utils/utm';
 
 const STATUS_TONE: Record<string, 'positive' | 'warning' | 'neutral'> = {
@@ -45,6 +46,29 @@ export function DashboardBilling() {
       successUrl: `${window.location.origin}/dashboard`,
       cancelUrl: `${window.location.origin}/dashboard/billing`,
     });
+  };
+
+  const [creditPacks, setCreditPacks] = useState<CreditPack[]>([]);
+  useEffect(() => {
+    getActiveCreditPacks().then(setCreditPacks).catch(() => setCreditPacks([]));
+  }, []);
+
+  const handleBuyCreditPack = async (pack: CreditPack) => {
+    await StripeService.createCheckoutSession({
+      priceId: pack.stripe_price_id,
+      quantity: 1,
+      mode: 'payment',
+      successUrl: `${window.location.origin}/dashboard/billing`,
+      cancelUrl: `${window.location.origin}/dashboard/billing`,
+    });
+  };
+
+  const formatPackPrice = (pack: CreditPack) => {
+    const amount = pack.amount_cents / 100;
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: pack.currency.toUpperCase(),
+    }).format(amount);
   };
 
   if (!role.isAdmin) {
@@ -195,15 +219,44 @@ export function DashboardBilling() {
         )}
       </section>
 
-      <section className="bg-white/60 backdrop-blur-sm rounded-2xl border border-dashed border-navy/15 p-6">
-        <p className="text-xs uppercase tracking-widest font-semibold text-navy/40 mb-2">
-          {t('dash.billing.comingSoonLabel')}
-        </p>
-        <h3 className="font-general font-semibold text-navy text-lg mb-1">
-          {t('dash.billing.comingSoonTitle')}
-        </h3>
-        <p className="text-navy/60 text-sm">{t('dash.billing.comingSoonBody')}</p>
-      </section>
+      {info && creditPacks.length > 0 && (
+        <section className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-6">
+          <div className="flex items-center gap-2.5 text-navy/50 mb-2">
+            <Plus className="w-4 h-4" />
+            <span className="text-xs uppercase tracking-widest font-semibold">
+              {t('dash.billing.creditPacksEyebrow')}
+            </span>
+          </div>
+          <h3 className="font-general font-semibold text-navy text-lg mb-1">
+            {t('dash.billing.creditPacksTitle')}
+          </h3>
+          <p className="text-navy/60 text-sm mb-5">
+            {t('dash.billing.creditPacksBody')}
+          </p>
+          <ul className="grid sm:grid-cols-2 gap-3">
+            {creditPacks.map((pack) => (
+              <li
+                key={pack.voicelink_key}
+                className="flex items-center justify-between gap-3 p-4 rounded-xl border border-navy/[0.07] bg-white"
+              >
+                <div>
+                  <p className="font-general font-semibold text-navy text-sm">
+                    {t('dash.billing.creditPackQty', { count: pack.credits })}
+                  </p>
+                  <p className="text-xs text-navy/55">{formatPackPrice(pack)}</p>
+                </div>
+                <button
+                  onClick={() => handleBuyCreditPack(pack)}
+                  className="inline-flex items-center gap-1.5 bg-navy text-white px-4 py-2 rounded-full font-semibold text-sm hover:bg-navy-hover transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  {t('dash.billing.buyPack')}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </div>
   );
 }
