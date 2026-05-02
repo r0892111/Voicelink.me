@@ -74,7 +74,7 @@ export async function getAllPlans(): Promise<PlanLimit[]> {
 // ── Credit packs (one-time top-up purchases) ────────────────────────────────
 
 export interface CreditPack {
-  voicelink_key: string;       // e.g. 'credit_pack_500'
+  voicelink_key: string;       // e.g. 'credit_pack_250'
   name: string;
   credits: number;
   amount_cents: number;
