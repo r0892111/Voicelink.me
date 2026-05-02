@@ -1399,6 +1399,19 @@
       "comingSoonLabel": "Bientôt",
       "comingSoonTitle": "Édition du profil",
       "comingSoonBody": "Mettez à jour votre nom, langue et préférences de notification depuis cette page."
+    },
+    "sync": {
+      "title": "Optimisez VoiceLink pour votre CRM",
+      "bodyNever": "Pré-chargez vos principaux contacts, entreprises et produits pour que VoiceLink trouve les bons enregistrements dès votre premier message. Cela prend environ une minute.",
+      "bodyInProgress": "Lecture de votre compte Teamleader — généralement 30 à 90 secondes. Restez sur cette page ou revenez plus tard.",
+      "bodyCompleted": "{{companies}} entreprises, {{contacts}} contacts et {{products}} produits synchronisés • il y a {{ago}}",
+      "bodyFailed": "Dernière synchronisation échouée : {{error}}",
+      "btnSync": "Synchroniser",
+      "btnResync": "Re-synchroniser",
+      "btnRetry": "Réessayer",
+      "errSession": "Reconnectez-vous pour synchroniser.",
+      "errKickoff": "Impossible de lancer la synchronisation, réessayez.",
+      "errUnknown": "Erreur inconnue"
     }
   },
   "affiliate": {

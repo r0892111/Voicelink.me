@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useDashboardContext } from '../hooks/useDashboardContext';
 import { WhatsAppConnectForm } from './WhatsAppConnectForm';
+import { BusinessSyncTile } from './BusinessSyncTile';
 import { withUTM } from '../utils/utm';
 import { useI18n } from '../hooks/useI18n';
 
@@ -451,6 +452,15 @@ export function DashboardHome() {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── BUSINESS SYNC (admins only, post-onboarding) ── */}
+      {fullySetUp && !role.isMember && (
+        <section className="px-6 pb-6">
+          <div className="max-w-4xl mx-auto">
+            <BusinessSyncTile />
           </div>
         </section>
       )}

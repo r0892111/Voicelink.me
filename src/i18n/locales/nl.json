@@ -1486,6 +1486,19 @@
       "comingSoonLabel": "Binnenkort",
       "comingSoonTitle": "Profiel bewerken",
       "comingSoonBody": "Pas je weergavenaam, taal en notificatievoorkeuren aan vanaf deze pagina."
+    },
+    "sync": {
+      "title": "Optimaliseer VoiceLink voor jouw CRM",
+      "bodyNever": "Laad je belangrijkste contacten, bedrijven en producten vooraf in zodat VoiceLink vanaf je eerste bericht de juiste records vindt. Duurt ongeveer een minuut.",
+      "bodyInProgress": "Je Teamleader-account wordt ingelezen — dit duurt meestal 30–90 seconden. Blijf op deze pagina of kom later terug.",
+      "bodyCompleted": "{{companies}} bedrijven, {{contacts}} contacten en {{products}} producten gesynchroniseerd • {{ago}} geleden",
+      "bodyFailed": "Laatste synchronisatie mislukt: {{error}}",
+      "btnSync": "Nu synchroniseren",
+      "btnResync": "Opnieuw synchroniseren",
+      "btnRetry": "Opnieuw proberen",
+      "errSession": "Meld opnieuw aan om te synchroniseren.",
+      "errKickoff": "Kon de synchronisatie niet starten, probeer het opnieuw.",
+      "errUnknown": "Onbekende fout"
     }
   },
   "affiliate": {

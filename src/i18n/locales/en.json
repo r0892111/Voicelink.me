@@ -1494,6 +1494,19 @@
       "comingSoonLabel": "Coming soon",
       "comingSoonTitle": "Profile editing",
       "comingSoonBody": "Update your display name, language, and notification preferences from this page."
+    },
+    "sync": {
+      "title": "Optimise VoiceLink for your CRM",
+      "bodyNever": "Pre-load your top contacts, companies and products so VoiceLink hits the right records from your first message. Takes about a minute.",
+      "bodyInProgress": "Reading your Teamleader account — this usually takes 30–90 seconds. Stay on this page or come back later.",
+      "bodyCompleted": "Synced {{companies}} companies, {{contacts}} contacts and {{products}} products • {{ago}} ago",
+      "bodyFailed": "Last sync failed: {{error}}",
+      "btnSync": "Sync now",
+      "btnResync": "Re-sync",
+      "btnRetry": "Retry",
+      "errSession": "Sign in again to sync.",
+      "errKickoff": "Couldn't start the sync, please try again.",
+      "errUnknown": "Unknown error"
     }
   },
   "affiliate": {
