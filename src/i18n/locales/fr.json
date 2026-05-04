@@ -1406,6 +1406,7 @@
       "bodyInProgress": "Lecture de votre compte Teamleader — généralement 30 à 90 secondes. Restez sur cette page ou revenez plus tard.",
       "bodyCompleted": "{{companies}} entreprises, {{contacts}} contacts et {{products}} produits synchronisés • il y a {{ago}}",
       "bodyFailed": "Dernière synchronisation échouée : {{error}}",
+      "lastSynced": "Dernière synchronisation : {{date}}",
       "btnSync": "Synchroniser",
       "btnResync": "Re-synchroniser",
       "btnRetry": "Réessayer",

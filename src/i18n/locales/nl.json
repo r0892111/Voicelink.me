@@ -1493,6 +1493,7 @@
       "bodyInProgress": "Je Teamleader-account wordt ingelezen — dit duurt meestal 30–90 seconden. Blijf op deze pagina of kom later terug.",
       "bodyCompleted": "{{companies}} bedrijven, {{contacts}} contacten en {{products}} producten gesynchroniseerd • {{ago}} geleden",
       "bodyFailed": "Laatste synchronisatie mislukt: {{error}}",
+      "lastSynced": "Laatst gesynchroniseerd: {{date}}",
       "btnSync": "Nu synchroniseren",
       "btnResync": "Opnieuw synchroniseren",
       "btnRetry": "Opnieuw proberen",

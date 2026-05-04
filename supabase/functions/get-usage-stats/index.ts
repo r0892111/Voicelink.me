@@ -90,10 +90,30 @@ function aggregate(rows: AnalyticsRow[]): AggregatedUsage {
 
 interface CreditsContext {
   perSeat: number | null;
-  total: number | null;
+  total: number | null;          // base + top-ups, the user-visible cap
+  topupCredits: number;          // sum of paid top-ups in the active window
   seats: number;
   isTrial: boolean;
   isUnlimited: boolean;
+}
+
+// Mirror of credit_check._window_start: trial spans the lifetime of the
+// subscription (epoch), paid plans refresh on Stripe's billing anniversary.
+const EPOCH_ZERO = '1970-01-01T00:00:00Z';
+
+async function sumPaidTopups(
+  supabaseAdmin: ReturnType<typeof createClient>,
+  customerId: string,
+  sinceIso: string,
+): Promise<number> {
+  const { data, error } = await supabaseAdmin
+    .from('credit_topups')
+    .select('credits_added')
+    .eq('customer_id', customerId)
+    .eq('status', 'paid')
+    .gte('purchased_at', sinceIso);
+  if (error || !data) return 0;
+  return data.reduce((acc, r) => acc + Number(r.credits_added ?? 0), 0);
 }
 
 async function resolveCredits(
@@ -110,7 +130,7 @@ async function resolveCredits(
 
   // Test users always run uncapped — no Stripe lookup needed.
   if (row?.is_test_user) {
-    return { perSeat: null, total: null, seats: 0, isTrial: false, isUnlimited: true };
+    return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: true };
   }
 
   let stripeCustomerId: string | null = row?.stripe_customer_id ?? null;
@@ -122,13 +142,13 @@ async function resolveCredits(
       .is('deleted_at', null)
       .maybeSingle();
     if (adminRow?.is_test_user) {
-      return { perSeat: null, total: null, seats: 0, isTrial: false, isUnlimited: true };
+      return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: true };
     }
     stripeCustomerId = adminRow?.stripe_customer_id ?? null;
   }
 
   if (!stripeCustomerId) {
-    return { perSeat: null, total: null, seats: 0, isTrial: false, isUnlimited: false };
+    return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: false };
   }
 
   const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
@@ -142,7 +162,7 @@ async function resolveCredits(
     subs.data.find((s) => s.status === 'active' || s.status === 'trialing') ??
     subs.data[0];
 
-  if (!sub) return { perSeat: null, total: null, seats: 0, isTrial: false, isUnlimited: false };
+  if (!sub) return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: false };
 
   const item = sub.items.data[0];
   const price = item?.price;
@@ -152,15 +172,36 @@ async function resolveCredits(
   const isTrial =
     sub.status === 'trialing' || (price?.unit_amount ?? 0) === 0;
   if (isTrial) {
-    return { perSeat: TRIAL_CREDITS, total: TRIAL_CREDITS, seats: 1, isTrial: true, isUnlimited: false };
+    // Trial top-ups never expire (window = epoch), matching credit_check.py.
+    const topupCredits = await sumPaidTopups(supabaseAdmin, stripeCustomerId, EPOCH_ZERO);
+    return {
+      perSeat: TRIAL_CREDITS,
+      total: TRIAL_CREDITS + topupCredits,
+      topupCredits,
+      seats: 1,
+      isTrial: true,
+      isUnlimited: false,
+    };
   }
 
   const priceId = price?.id ?? '';
   const perSeat = TIER_CREDITS_BY_PRICE_ID[priceId] ?? null;
   if (perSeat === null) {
-    return { perSeat: null, total: null, seats, isTrial: false, isUnlimited: false };
+    return { perSeat: null, total: null, topupCredits: 0, seats, isTrial: false, isUnlimited: false };
   }
-  return { perSeat, total: perSeat * seats, seats, isTrial: false, isUnlimited: false };
+
+  // Paid plan top-ups expire with the billing period — only sum since
+  // current_period_start, matching credit_check.py for the gate.
+  const periodStartIso = new Date((sub.current_period_start ?? 0) * 1000).toISOString();
+  const topupCredits = await sumPaidTopups(supabaseAdmin, stripeCustomerId, periodStartIso);
+  return {
+    perSeat,
+    total: perSeat * seats + topupCredits,
+    topupCredits,
+    seats,
+    isTrial: false,
+    isUnlimited: false,
+  };
 }
 
 Deno.serve(async (req) => {
@@ -226,6 +267,7 @@ async function handleSelfScope(
       usage: {
         credits_used: 0,
         credits_total: credits.total,
+        topup_credits: credits.topupCredits,
         messages_sent: 0,
         last_activity: null,
         is_trial: credits.isTrial,
@@ -241,6 +283,7 @@ async function handleSelfScope(
     usage: {
       credits_used: tokensToCredits(totals.input_tokens_spent),
       credits_total: credits.total,
+      topup_credits: credits.topupCredits,
       messages_sent: totals.messages_sent,
       last_activity: totals.last_activity,
       is_trial: credits.isTrial,
@@ -321,6 +364,7 @@ async function handleTeamScope(
     team: {
       credits_per_seat: credits.perSeat,
       credits_total: credits.total,
+      topup_credits: credits.topupCredits,
       seats: credits.seats,
       is_trial: credits.isTrial,
       is_unlimited: credits.isUnlimited,

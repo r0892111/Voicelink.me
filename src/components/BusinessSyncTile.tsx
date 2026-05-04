@@ -45,6 +45,18 @@ function relativeTime(iso: string | null, locale: string): string {
   return `${days}d`;
 }
 
+function absoluteTime(iso: string | null, locale: string): string {
+  if (!iso) return '';
+  try {
+    return new Intl.DateTimeFormat(locale, {
+      day: 'numeric', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    }).format(new Date(iso));
+  } catch {
+    return new Date(iso).toLocaleString();
+  }
+}
+
 export function BusinessSyncTile() {
   const { t, currentLanguage } = useI18n();
   const [row, setRow] = useState<SyncRow | null>(null);
@@ -153,6 +165,13 @@ export function BusinessSyncTile() {
               error: (row?.entity_sync_error ?? t('dash.sync.errUnknown')).slice(0, 200),
             })}
           </p>
+          {row?.entity_sync_completed_at && status !== 'never' && (
+            <p className="text-navy/45 text-xs mt-1.5">
+              {t('dash.sync.lastSynced', {
+                date: absoluteTime(row.entity_sync_completed_at, currentLanguage),
+              })}
+            </p>
+          )}
           {error && (
             <p className="text-red-600 text-xs mt-2">{error}</p>
           )}
