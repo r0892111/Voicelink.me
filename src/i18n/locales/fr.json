@@ -1452,8 +1452,8 @@
         "description": "Constituez un portefeuille, pas des commissions ponctuelles. Relation à long terme avec vos clients."
       },
       "point2": {
-        "title": "Attribution et revenus prolongés",
-        "description": "90 jours pour présenter un client, 12 mois de commission après résiliation. Vrai revenu passif."
+        "title": "Large fenêtre d'attribution",
+        "description": "90 jours pour présenter un client. Commission récurrente tant que le client reste actif et paie."
       },
       "point3": {
         "title": "Tout est fourni",
@@ -1481,7 +1481,7 @@
       },
       "duration": {
         "title": "5. Durée et résiliation",
-        "content": "Cet accord est valable pour une durée indéterminée et peut être résilié par l'une ou l'autre partie par écrit avec un préavis de 30 jours.\n\nUpon résiliation, la commission récurrente continue sur les clients existants jusqu'à 12 mois après la résiliation. Les nouveaux enregistrements expirent immédiatement."
+        "content": "Cet accord est valable pour une durée indéterminée et peut être résilié par l'une ou l'autre partie par écrit avec un préavis de 30 jours.\n\nÀ la résiliation, la commission récurrente s'arrête sur tous les clients et les nouveaux enregistrements expirent immédiatement."
       },
       "exclusivity": {
         "title": "6. Exclusivité et non-concurrence",

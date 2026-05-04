@@ -1547,8 +1547,8 @@
         "description": "Build a portfolio, not one-off commissions. Long-term relationship with your customers."
       },
       "point2": {
-        "title": "Long attribution and tail",
-        "description": "90 days to introduce a customer, 12 months commission after cancellation. True passive income."
+        "title": "Generous attribution window",
+        "description": "90 days to introduce a customer. Recurring commission for as long as they stay active and paying."
       },
       "point3": {
         "title": "Everything provided",
@@ -1576,7 +1576,7 @@
       },
       "duration": {
         "title": "5. Duration and termination",
-        "content": "This agreement is valid for an indefinite period and may be terminated by either party in writing with 30 days' notice.\n\nUpon termination, recurring commission continues on existing customers for up to 12 months after termination. New registrations expire immediately."
+        "content": "This agreement is valid for an indefinite period and may be terminated by either party in writing with 30 days' notice.\n\nUpon termination, recurring commission stops on all customers and new registrations expire immediately."
       },
       "exclusivity": {
         "title": "6. Exclusivity and non-compete",

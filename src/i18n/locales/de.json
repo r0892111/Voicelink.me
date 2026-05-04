@@ -1493,8 +1493,8 @@
         "description": "Bauen Sie ein Portfolio auf, nicht einmalige Provisionen. Langfristige Beziehung zu Ihren Kunden."
       },
       "point2": {
-        "title": "Lange Attributions- und Tail-Periode",
-        "description": "90 Tage, um einen Kunden einzuführen, 12 Monate Provision nach Kündigung. Echtes passives Einkommen."
+        "title": "Großzügiges Attributionsfenster",
+        "description": "90 Tage, um einen Kunden einzuführen. Wiederkehrende Provision, solange der Kunde aktiv und zahlend bleibt."
       },
       "point3": {
         "title": "Alles bereitgestellt",
@@ -1522,7 +1522,7 @@
       },
       "duration": {
         "title": "5. Dauer und Beendigung",
-        "content": "Diese Vereinbarung ist auf unbestimmte Dauer gültig und kann von beiden Parteien schriftlich mit 30 Tagen Kündigungsfrist beendet werden.\n\nBei Beendigung läuft die wiederkehrende Provision weiterhin auf bestehenden Kunden bis zu 12 Monate nach Beendigung. Neue Registrierungen verfallen sofort."
+        "content": "Diese Vereinbarung ist auf unbestimmte Dauer gültig und kann von beiden Parteien schriftlich mit 30 Tagen Kündigungsfrist beendet werden.\n\nBei Beendigung endet die wiederkehrende Provision für alle Kunden und neue Registrierungen verfallen sofort."
       },
       "exclusivity": {
         "title": "6. Exklusivität und Wettbewerbsverbot",

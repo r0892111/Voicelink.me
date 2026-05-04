@@ -1539,8 +1539,8 @@
         "description": "Bouw een portfolio op, niet incidentele commissies. Langetermijnrelatie met je klanten."
       },
       "point2": {
-        "title": "Lange attributie en tail",
-        "description": "90 dagen om een klant te introduceren, 12 maanden commissie na beëindiging. Echt passief income."
+        "title": "Ruim attributievenster",
+        "description": "90 dagen om een klant te introduceren. Recurring commissie zolang de klant actief is en betaalt."
       },
       "point3": {
         "title": "Alles geleverd",
@@ -1568,7 +1568,7 @@
       },
       "duration": {
         "title": "5. Duur en beëindiging",
-        "content": "Deze afspraak is geldig voor onbepaalde duur en kan door beide partijen schriftelijk worden beëindigd met 30 dagen opzegtermijn.\n\nBij beëindiging blijft de recurring commissie lopen op bestaande klanten tot 12 maanden na opzeg. Nieuwe registraties vervallen direct."
+        "content": "Deze afspraak is geldig voor onbepaalde duur en kan door beide partijen schriftelijk worden beëindigd met 30 dagen opzegtermijn.\n\nBij beëindiging stopt de recurring commissie op alle klanten en vervallen nieuwe registraties direct."
       },
       "exclusivity": {
         "title": "6. Exclusiviteit en non-concurrentie",

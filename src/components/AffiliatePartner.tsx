@@ -92,50 +92,50 @@ export const AffiliatePartner: React.FC = () => {
   return (
     <div className="min-h-screen bg-porcelain font-instrument">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6 sm:px-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="space-y-8 text-center">
-            <h1 className="font-general font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight text-navy">
-              {t('affiliate.hero.title')}
-            </h1>
-            
-            <p className="text-lg sm:text-xl text-slate-blue max-w-3xl mx-auto">
-              {t('affiliate.hero.subtitle')}
-            </p>
+      <section className="pt-44 pb-20 px-6 sm:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-[2fr_1fr] gap-12 items-center">
+            {/* Text column */}
+            <div className="space-y-8 text-center lg:text-left">
+              <h1 className="font-general font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight text-navy">
+                {t('affiliate.hero.title')}
+              </h1>
 
-            {/* Key Numbers Strip */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 py-8 border-y border-navy/10">
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-navy mb-1">20%</div>
-                <div className="text-sm text-slate-blue">{t('affiliate.hero.stat1')}</div>
-              </div>
-              <div className="hidden sm:block w-px h-8 bg-navy/15"></div>
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-navy mb-1">90 {t('affiliate.hero.days')}</div>
-                <div className="text-sm text-slate-blue">{t('affiliate.hero.stat2')}</div>
-              </div>
-              <div className="hidden sm:block w-px h-8 bg-navy/15"></div>
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-navy mb-1">12 {t('affiliate.hero.months')}</div>
-                <div className="text-sm text-slate-blue">{t('affiliate.hero.stat3')}</div>
+              <p className="text-lg sm:text-xl text-slate-blue max-w-3xl mx-auto lg:mx-0">
+                {t('affiliate.hero.subtitle')}
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                <button
+                  onClick={handlePartnerCTA}
+                  className="group text-white font-semibold py-4 px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
+                >
+                  <span>{t('affiliate.hero.cta1')}</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button
+                  onClick={handleCalendlyClick}
+                  className="group border-2 border-navy text-navy font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:scale-[1.02] hover:bg-navy/5 flex items-center justify-center space-x-2"
+                >
+                  <span>{t('affiliate.hero.cta2')}</span>
+                </button>
               </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <button
-                onClick={handlePartnerCTA}
-                className="group text-white font-semibold py-4 px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
-              >
-                <span>{t('affiliate.hero.cta1')}</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button
-                onClick={handleCalendlyClick}
-                className="group border-2 border-navy text-navy font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:scale-[1.02] hover:bg-navy/5 flex items-center justify-center space-x-2"
-              >
-                <span>{t('affiliate.hero.cta2')}</span>
-              </button>
+            {/* Phone mockup column */}
+            <div className="flex justify-center lg:justify-end">
+              <img
+                src="/whatsapp phone mock.png"
+                alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes"
+                style={{
+                  width: 'auto',
+                  height: 'clamp(364px, 65vh, 624px)',
+                  transform: 'rotate(5deg)',
+                  filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))',
+                }}
+                draggable={false}
+              />
             </div>
           </div>
         </div>
