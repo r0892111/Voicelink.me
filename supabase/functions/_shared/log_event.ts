@@ -19,8 +19,10 @@ export interface LogEventInput {
   severity?:  Severity;
 }
 
-const VLAGENT_URL    = Deno.env.get('VLAGENT_URL') ?? '';
-const VLAGENT_SECRET = Deno.env.get('VLAGENT_SECRET') ?? '';
+// .trim() — copy-paste into Supabase secrets dashboard often picks up
+// trailing whitespace. Leaves us with broken URLs otherwise.
+const VLAGENT_URL    = (Deno.env.get('VLAGENT_URL')    ?? '').trim();
+const VLAGENT_SECRET = (Deno.env.get('VLAGENT_SECRET') ?? '').trim();
 
 export async function logEvent(input: LogEventInput): Promise<void> {
   if (!VLAGENT_URL || !VLAGENT_SECRET) {

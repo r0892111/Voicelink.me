@@ -16,8 +16,12 @@ import { logEvent } from '../_shared/log_event.ts';
 
 const log = createLogger('trigger-entity-sync');
 
-const VLAGENT_URL    = Deno.env.get('VLAGENT_URL') ?? '';
-const VLAGENT_SECRET = Deno.env.get('VLAGENT_SECRET') ?? '';
+// Trim — copy-paste into Supabase Dashboard secrets often picks up a
+// trailing newline / space, which would otherwise produce
+// 'https://logs.finitplatform.be /admin/prewarm' (note the gap) and a
+// TypeError("Invalid URL") when fetch parses it.
+const VLAGENT_URL    = (Deno.env.get('VLAGENT_URL')    ?? '').trim();
+const VLAGENT_SECRET = (Deno.env.get('VLAGENT_SECRET') ?? '').trim();
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
