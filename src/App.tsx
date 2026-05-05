@@ -179,13 +179,9 @@ function App() {
                   {isHomepage && (
                     <>
                       <button
-                        onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                        className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
-                      >{t('navigation.howItWorks')}</button>
-                      <button
                         onClick={() => navigate(withUTM('/getting-started'))}
                         className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
-                      >{t('navigation.gettingStarted')}</button>
+                      >{t('navigation.howItWorks')}</button>
                       <button
                         onClick={() => document.getElementById('crm-preview')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                         className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
@@ -328,17 +324,10 @@ function App() {
                   {isHomepage ? (
                     <>
                       <button
-                        onClick={() => { setIsMobileMenuOpen(false); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-                        className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
-                      >
-                        <span>{t('navigation.howItWorks')}</span>
-                        <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
-                      </button>
-                      <button
                         onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/getting-started')); }}
                         className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
                       >
-                        <span>{t('navigation.gettingStarted')}</span>
+                        <span>{t('navigation.howItWorks')}</span>
                         <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
                       </button>
                       <button
