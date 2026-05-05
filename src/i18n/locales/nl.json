@@ -85,6 +85,7 @@
     "getStarted": "Gratis Beginnen",
     "backToHome": "Terug naar Home",
     "howItWorks": "Hoe het werkt",
+    "gettingStarted": "Aan de slag",
     "integrations": "Wat het kan",
     "contact": "Contact",
     "maatwerkAI": "Maatwerk AI",
@@ -1249,6 +1250,124 @@
       "title": "Klaar om VoiceLink te proberen?",
       "subtitle": "Start je gratis proefperiode van 1 maand. Geen creditcard nodig.",
       "button": "Start gratis proefperiode"
+    }
+  },
+  "gettingStartedPage": {
+    "hero": {
+      "eyebrow": "Aan de slag",
+      "title": "Van nul naar je eerste spraakbericht in minder dan 5 minuten.",
+      "subtitle": "Koppel Teamleader, verbind WhatsApp, praat met je CRM. Zo werkt het, stap voor stap."
+    },
+    "steps": {
+      "intro": "Vier stappen. Geen code, geen installatiewizard, geen gedoe.",
+      "exampleLabel": "Voorbeeld",
+      "items": [
+        {
+          "title": "Maak je account aan",
+          "body": "Ga naar voicelink.me/signup en kies Teamleader. We sturen je meteen door naar de autorisatiepagina van Teamleader — geen wachtwoord te kiezen, geen formulier in te vullen.",
+          "example": "Klik op “Aanmelden met Teamleader” → je bent binnen een seconde op app.teamleader.eu."
+        },
+        {
+          "title": "Geef VoiceLink toegang in Teamleader",
+          "body": "Teamleader vraagt of VoiceLink je contacten, bedrijven, deals, taken en agenda mag lezen en schrijven. Klik op Autoriseren. Je komt direct ingelogd terug op je VoiceLink-dashboard.",
+          "example": "Op het Teamleader OAuth-scherm, klik “Autoriseren” — dat is de enige klik die nodig is."
+        },
+        {
+          "title": "Koppel je WhatsApp-nummer",
+          "body": "Klik op het dashboard op WhatsApp verbinden en voer je nummer met landcode in. Wij sturen een 6-cijferige code naar dat nummer via WhatsApp. Tik de code in en de koppeling staat.",
+          "example": "Telefoon: +32 470 12 34 56 → WhatsApp-bericht komt binnen: “Je VoiceLink-code is 482917”. Invullen. Klaar."
+        },
+        {
+          "title": "Stuur je eerste spraakbericht",
+          "body": "Open de VoiceLink-chat in WhatsApp en stuur een spraakbericht. Praat normaal — volledige zinnen, geen commando’s. VoiceLink antwoordt binnen ~30 seconden met een samenvatting van wat er in Teamleader is bijgewerkt.",
+          "example": "Probeer: “Maak een deal aan van 5000 euro met Acme Corp, contact is Jan Janssens, verwachte sluiting eind mei.”"
+        }
+      ]
+    },
+    "examples": {
+      "eyebrow": "Wat zeg je",
+      "title": "Concrete dingen die je vandaag al kunt sturen",
+      "intro": "VoiceLink luistert als een collega die je CRM al kent. Je vertelt niet welk scherm te openen — je zegt wat er moet gebeuren en hij regelt de rest.",
+      "colGoal": "Doel",
+      "colSay": "Wat je zegt",
+      "items": [
+        {
+          "goal": "Nieuwe deal loggen",
+          "say": "“Nieuwe deal met Acme Corp, 12.000 euro, verwachte sluiting eind juni, contact Jan Janssens.”"
+        },
+        {
+          "goal": "Vergadering inplannen",
+          "say": "“Plan een gesprek met Jan van Brightway morgen om 10u over het Q2-voorstel.”"
+        },
+        {
+          "goal": "Taak toevoegen",
+          "say": "“Herinner me vrijdag om het voorstel naar Acme te sturen.”"
+        },
+        {
+          "goal": "Contactgegevens bijwerken",
+          "say": "“Wijzig het telefoonnummer van Jan Janssens naar +32 470 12 34 56.”"
+        },
+        {
+          "goal": "Gespreksnotities loggen",
+          "say": "“Net gesproken met Bram van Garant — ze willen volgende week een demo, budget rond de 8k.”"
+        },
+        {
+          "goal": "Acties combineren",
+          "say": "“Voeg Bram van Garant toe als contact, maak een deal van 8.000 euro en herinner me dinsdag om op te volgen.”"
+        }
+      ]
+    },
+    "tips": {
+      "eyebrow": "Spreektips",
+      "title": "Zo haal je het meeste eruit",
+      "items": [
+        {
+          "title": "Praat normaal",
+          "body": "Volledige zinnen werken het best. “Ik heb net gebeld met Acme” werkt beter dan “nieuwe taak Acme”. VoiceLink begrijpt menselijke spraak, geen commando’s."
+        },
+        {
+          "title": "Gebruik echte namen",
+          "body": "Spreek bedrijfs- en contactnamen uit zoals je ze in een gesprek zou zeggen. VoiceLink matcht ze automatisch met je bestaande Teamleader-records."
+        },
+        {
+          "title": "Stapel meerdere acties",
+          "body": "Één spraakbericht kan een contact bijwerken, een deal loggen en een taak aanmaken — alles tegelijk. Niet opsplitsen in losse berichten."
+        },
+        {
+          "title": "Corrigeer in gewone taal",
+          "body": "Klopt iets niet? Antwoord gewoon “Dat moet eigenlijk 7000 zijn, geen 5000”. VoiceLink past het aan en bevestigt."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Korte antwoorden",
+      "items": [
+        {
+          "q": "Moet ik iets installeren?",
+          "a": "Nee. WhatsApp is de enige app die je nodig hebt op je telefoon. VoiceLink draait volledig op de server — geen extra client te downloaden."
+        },
+        {
+          "q": "Welke CRM-platforms worden ondersteund?",
+          "a": "Teamleader is volledig ondersteund. Pipedrive en Odoo zijn de volgende."
+        },
+        {
+          "q": "Kan mijn hele team het gebruiken?",
+          "a": "Ja. Eens je account verbonden is, kun je teamleden uitnodigen vanaf het dashboard. Iedereen koppelt zijn eigen WhatsApp-nummer."
+        },
+        {
+          "q": "Wat als ik me halverwege vergis?",
+          "a": "Verbeter jezelf in hetzelfde spraakbericht (“nee, maak er 8000 van”) of stuur een vervolgbericht. Beide werken."
+        },
+        {
+          "q": "Zijn mijn gegevens veilig?",
+          "a": "Spraakberichten worden verwerkt en daarna verwijderd; alleen de gestructureerde CRM-updates blijven bewaard in Teamleader. Meer details in ons privacybeleid."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Klaar om met je CRM te praten?",
+      "subtitle": "Koppel Teamleader en stuur je eerste spraakbericht binnen 5 minuten.",
+      "button": "Aan de slag"
     }
   },
   "earlyAccess": {

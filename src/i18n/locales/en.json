@@ -110,6 +110,7 @@
     "getStarted": "Get Started Free",
     "backToHome": "Back to Home",
     "howItWorks": "How it works",
+    "gettingStarted": "Getting started",
     "integrations": "What it does",
     "contact": "Contact",
     "maatwerkAI": "Custom AI",
@@ -1257,6 +1258,124 @@
       "title": "Ready to try VoiceLink?",
       "subtitle": "Start your free 1-month trial. No credit card required.",
       "button": "Start free trial"
+    }
+  },
+  "gettingStartedPage": {
+    "hero": {
+      "eyebrow": "Getting started",
+      "title": "From zero to your first voice note in under 5 minutes.",
+      "subtitle": "Connect Teamleader, link WhatsApp, talk to your CRM. Here is exactly how it works."
+    },
+    "steps": {
+      "intro": "Four steps. No coding, no setup wizard, no headaches.",
+      "exampleLabel": "Example",
+      "items": [
+        {
+          "title": "Create your account",
+          "body": "Go to voicelink.me/signup and pick Teamleader. We redirect you straight to the Teamleader authorization page — no password to choose, no form to fill.",
+          "example": "Click “Sign up with Teamleader” → you land on app.teamleader.eu within a second."
+        },
+        {
+          "title": "Authorize VoiceLink in Teamleader",
+          "body": "Teamleader asks if VoiceLink can read and write your contacts, companies, deals, tasks, and calendar. Click Authorize. You come back to your VoiceLink dashboard already logged in.",
+          "example": "On the Teamleader OAuth screen, hit “Authorize” — that is the only click you need to make."
+        },
+        {
+          "title": "Link your WhatsApp number",
+          "body": "On the dashboard, click Connect WhatsApp and enter your number with country code. We send a 6-digit code to that number on WhatsApp. Type the code, and the connection is live.",
+          "example": "Phone: +32 470 12 34 56 → WhatsApp message arrives: “Your VoiceLink code is 482917”. Enter it. Done."
+        },
+        {
+          "title": "Send your first voice note",
+          "body": "Open the VoiceLink chat in WhatsApp and send a voice note. Speak naturally — full sentences, no robot commands. VoiceLink replies within ~30 seconds with a summary of what it changed in Teamleader.",
+          "example": "Try: “Add a deal of 5000 euros with Acme Corp, contact is Jane Doe, expected close end of May.”"
+        }
+      ]
+    },
+    "examples": {
+      "eyebrow": "What to say",
+      "title": "Concrete things you can send today",
+      "intro": "VoiceLink listens like a colleague who already knows your CRM. You do not tell it which screen to open — you say what you want done, and it figures out the rest.",
+      "colGoal": "Goal",
+      "colSay": "What you say",
+      "items": [
+        {
+          "goal": "Log a new deal",
+          "say": "“New deal with Acme Corp, 12,000 euros, expected close end of June, contact Jane Doe.”"
+        },
+        {
+          "goal": "Schedule a meeting",
+          "say": "“Schedule a call with John from Brightway tomorrow at 10am about the Q2 proposal.”"
+        },
+        {
+          "goal": "Add a task",
+          "say": "“Remind me Friday to send the proposal to Acme.”"
+        },
+        {
+          "goal": "Update contact info",
+          "say": "“Update Jane Doe’s phone number to +32 470 12 34 56.”"
+        },
+        {
+          "goal": "Log call notes",
+          "say": "“Just spoke with Bram from Garant — they want a demo next week, budget around 8k.”"
+        },
+        {
+          "goal": "Combine actions",
+          "say": "“Add Bram from Garant as a contact, create a deal of 8,000 euros, and remind me Tuesday to follow up.”"
+        }
+      ]
+    },
+    "tips": {
+      "eyebrow": "Speaking tips",
+      "title": "How to get the best results",
+      "items": [
+        {
+          "title": "Speak naturally",
+          "body": "Full sentences work best. “I just got off a call with Acme” beats “new task Acme”. VoiceLink is built to understand human speech, not commands."
+        },
+        {
+          "title": "Use real names",
+          "body": "Say company and contact names exactly as you would in conversation. VoiceLink matches them against your existing Teamleader entries automatically."
+        },
+        {
+          "title": "Stack multiple actions",
+          "body": "One voice note can update a contact, log a deal, and create a task all at once. No need to split it into separate messages."
+        },
+        {
+          "title": "Correct in plain language",
+          "body": "If VoiceLink gets a detail wrong, just reply “Actually that should be 7,000, not 5,000”. It updates and confirms."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Quick answers",
+      "items": [
+        {
+          "q": "Do I need to install anything?",
+          "a": "No. WhatsApp is the only app you need on your phone. VoiceLink runs entirely on the server — there is no extra client to download."
+        },
+        {
+          "q": "Which CRM platforms work today?",
+          "a": "Teamleader is fully supported. Pipedrive and Odoo are coming next."
+        },
+        {
+          "q": "Can my whole team use it?",
+          "a": "Yes. Once your account is connected, you can invite team members from the dashboard. Each person links their own WhatsApp number."
+        },
+        {
+          "q": "What if I make a mistake mid-recording?",
+          "a": "Either correct yourself in the same voice note (“scratch that, make it 8000 instead”) or send a follow-up message. VoiceLink handles both."
+        },
+        {
+          "q": "Is my data safe?",
+          "a": "Voice notes are processed and discarded; only the structured CRM updates are persisted in Teamleader. Full details on our privacy policy page."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to talk to your CRM?",
+      "subtitle": "Connect Teamleader and send your first voice note in the next 5 minutes.",
+      "button": "Get started"
     }
   },
   "earlyAccess": {

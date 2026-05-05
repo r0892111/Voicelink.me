@@ -517,6 +517,7 @@
     "getStarted": "Commencer Gratuitement",
     "backToHome": "Retour à l'accueil",
     "howItWorks": "Comment ça marche",
+    "gettingStarted": "Premiers pas",
     "integrations": "Ce que ça fait",
     "contact": "Contact",
     "maatwerkAI": "IA sur mesure",
@@ -1162,6 +1163,124 @@
       "title": "Prêt à essayer VoiceLink ?",
       "subtitle": "Commencez votre essai gratuit de 1 mois. Aucune carte de crédit requise.",
       "button": "Démarrer l'essai gratuit"
+    }
+  },
+  "gettingStartedPage": {
+    "hero": {
+      "eyebrow": "Premiers pas",
+      "title": "De zéro à votre premier message vocal en moins de 5 minutes.",
+      "subtitle": "Connectez Teamleader, liez WhatsApp, parlez à votre CRM. Voici exactement comment ça marche."
+    },
+    "steps": {
+      "intro": "Quatre étapes. Pas de code, pas d’assistant d’installation, pas de prise de tête.",
+      "exampleLabel": "Exemple",
+      "items": [
+        {
+          "title": "Créez votre compte",
+          "body": "Allez sur voicelink.me/signup et choisissez Teamleader. Nous vous redirigeons directement vers la page d’autorisation Teamleader — aucun mot de passe à choisir, aucun formulaire à remplir.",
+          "example": "Cliquez sur « S’inscrire avec Teamleader » → vous arrivez sur app.teamleader.eu en une seconde."
+        },
+        {
+          "title": "Autorisez VoiceLink dans Teamleader",
+          "body": "Teamleader demande si VoiceLink peut lire et écrire vos contacts, entreprises, affaires, tâches et agenda. Cliquez sur Autoriser. Vous revenez déjà connecté sur votre tableau de bord VoiceLink.",
+          "example": "Sur l’écran OAuth de Teamleader, cliquez sur « Autoriser » — c’est le seul clic nécessaire."
+        },
+        {
+          "title": "Liez votre numéro WhatsApp",
+          "body": "Sur le tableau de bord, cliquez sur Connecter WhatsApp et entrez votre numéro avec l’indicatif pays. Nous envoyons un code à 6 chiffres à ce numéro via WhatsApp. Saisissez le code, la connexion est active.",
+          "example": "Téléphone : +32 470 12 34 56 → message WhatsApp reçu : « Votre code VoiceLink est 482917 ». Saisissez-le. Terminé."
+        },
+        {
+          "title": "Envoyez votre premier message vocal",
+          "body": "Ouvrez le chat VoiceLink dans WhatsApp et envoyez un message vocal. Parlez naturellement — phrases complètes, pas de commandes robotiques. VoiceLink répond en ~30 secondes avec un résumé de ce qu’il a changé dans Teamleader.",
+          "example": "Essayez : « Ajoute une affaire de 5000 euros avec Acme Corp, contact Jane Doe, clôture prévue fin mai. »"
+        }
+      ]
+    },
+    "examples": {
+      "eyebrow": "Quoi dire",
+      "title": "Des choses concrètes à envoyer dès aujourd’hui",
+      "intro": "VoiceLink écoute comme un collègue qui connaît déjà votre CRM. Vous ne lui dites pas quel écran ouvrir — vous dites ce que vous voulez faire, il s’occupe du reste.",
+      "colGoal": "Objectif",
+      "colSay": "Ce que vous dites",
+      "items": [
+        {
+          "goal": "Enregistrer une nouvelle affaire",
+          "say": "« Nouvelle affaire avec Acme Corp, 12 000 euros, clôture prévue fin juin, contact Jane Doe. »"
+        },
+        {
+          "goal": "Planifier une réunion",
+          "say": "« Programme un appel avec John de Brightway demain à 10h à propos de la proposition Q2. »"
+        },
+        {
+          "goal": "Ajouter une tâche",
+          "say": "« Rappelle-moi vendredi d’envoyer la proposition à Acme. »"
+        },
+        {
+          "goal": "Mettre à jour un contact",
+          "say": "« Change le téléphone de Jane Doe en +32 470 12 34 56. »"
+        },
+        {
+          "goal": "Noter un appel",
+          "say": "« Je viens de parler avec Bram de Garant — ils veulent une démo la semaine prochaine, budget environ 8k. »"
+        },
+        {
+          "goal": "Combiner des actions",
+          "say": "« Ajoute Bram de Garant comme contact, crée une affaire de 8 000 euros, et rappelle-moi mardi de relancer. »"
+        }
+      ]
+    },
+    "tips": {
+      "eyebrow": "Conseils",
+      "title": "Comment obtenir les meilleurs résultats",
+      "items": [
+        {
+          "title": "Parlez naturellement",
+          "body": "Les phrases complètes fonctionnent le mieux. « Je viens d’appeler Acme » vaut mieux que « nouvelle tâche Acme ». VoiceLink comprend le langage humain, pas des commandes."
+        },
+        {
+          "title": "Utilisez les vrais noms",
+          "body": "Prononcez les noms d’entreprise et de contact comme dans une conversation. VoiceLink les fait correspondre automatiquement à vos entrées Teamleader existantes."
+        },
+        {
+          "title": "Combinez plusieurs actions",
+          "body": "Un seul message vocal peut mettre à jour un contact, enregistrer une affaire et créer une tâche. Pas besoin de séparer en plusieurs messages."
+        },
+        {
+          "title": "Corrigez en langage naturel",
+          "body": "Si VoiceLink se trompe sur un détail, répondez simplement « En fait c’est 7000, pas 5000 ». Il met à jour et confirme."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Réponses rapides",
+      "items": [
+        {
+          "q": "Dois-je installer quelque chose ?",
+          "a": "Non. WhatsApp est la seule application nécessaire sur votre téléphone. VoiceLink fonctionne entièrement côté serveur — aucun client à télécharger."
+        },
+        {
+          "q": "Quels CRM sont supportés aujourd’hui ?",
+          "a": "Teamleader est entièrement supporté. Pipedrive et Odoo arrivent ensuite."
+        },
+        {
+          "q": "Toute mon équipe peut-elle l’utiliser ?",
+          "a": "Oui. Une fois votre compte connecté, vous pouvez inviter vos collègues depuis le tableau de bord. Chacun lie son propre numéro WhatsApp."
+        },
+        {
+          "q": "Et si je me trompe pendant l’enregistrement ?",
+          "a": "Corrigez-vous dans le même message vocal (« non en fait 8000 ») ou envoyez un message de suivi. Les deux fonctionnent."
+        },
+        {
+          "q": "Mes données sont-elles sûres ?",
+          "a": "Les messages vocaux sont traités puis supprimés ; seules les mises à jour structurées du CRM sont conservées dans Teamleader. Plus de détails dans notre politique de confidentialité."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Prêt à parler à votre CRM ?",
+      "subtitle": "Connectez Teamleader et envoyez votre premier message vocal dans les 5 prochaines minutes.",
+      "button": "Commencer"
     }
   },
   "earlyAccess": {

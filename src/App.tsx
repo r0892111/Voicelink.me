@@ -28,6 +28,7 @@ import Support from './components/Support';
 import { ConferenceBanner } from './components/ConferenceBanner';
 import { TestSignup } from './components/TestSignup';
 import { TestDashboard } from './components/TestDashboard';
+import { GettingStarted } from './components/GettingStarted';
 import { InviteAccept } from './components/InviteAccept';
 import { useAuth } from './hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -182,6 +183,10 @@ function App() {
                         className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
                       >{t('navigation.howItWorks')}</button>
                       <button
+                        onClick={() => navigate(withUTM('/getting-started'))}
+                        className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
+                      >{t('navigation.gettingStarted')}</button>
+                      <button
                         onClick={() => document.getElementById('crm-preview')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                         className="text-gray-600 hover:text-gray-900 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-navy/5 font-instrument hover:shadow-sm"
                       >{t('navigation.integrations')}</button>
@@ -330,6 +335,13 @@ function App() {
                         <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
                       </button>
                       <button
+                        onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/getting-started')); }}
+                        className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
+                      >
+                        <span>{t('navigation.gettingStarted')}</span>
+                        <ChevronRight className="w-5 h-5 text-navy/30 flex-shrink-0" />
+                      </button>
+                      <button
                         onClick={() => { setIsMobileMenuOpen(false); document.getElementById('crm-preview')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
                         className="w-full flex items-center justify-between py-3.5 text-navy font-general font-medium text-xl text-left active:opacity-60 transition-opacity"
                       >
@@ -453,6 +465,7 @@ function App() {
               <Route path="/banner" element={<ConferenceBanner />} />
               <Route path="/test" element={<TestSignup />} />
               <Route path="/test-dashboard" element={<TestDashboard />} />
+              <Route path="/getting-started" element={<GettingStarted />} />
               {/* Fallback route for debugging */}
               <Route path="*" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-red-600">No route matched: {location.pathname}</h1><p>Available routes: /, /dashboard, /verify-whatsapp, etc.</p></div>} />
             </Routes>
