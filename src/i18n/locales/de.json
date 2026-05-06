@@ -870,7 +870,8 @@
     "hero": {
       "eyebrow": "Erste Schritte",
       "title": "Von null bis zur ersten Sprachnachricht in unter 5 Minuten.",
-      "subtitle": "Teamleader verbinden, WhatsApp koppeln, mit dem CRM sprechen. So funktioniert es genau."
+      "subtitle": "Teamleader verbinden, WhatsApp koppeln, mit dem CRM sprechen. So funktioniert es genau.",
+      "videoTitle": "VoiceLink Walkthrough"
     },
     "steps": {
       "intro": "Vier Schritte. Kein Code, kein Einrichtungsassistent, kein Stress.",
@@ -878,7 +879,7 @@
       "items": [
         {
           "title": "Konto erstellen",
-          "body": "Gehe zu voicelink.me/signup und wähle Teamleader. Wir leiten dich direkt zur Teamleader-Autorisierungsseite weiter — kein Passwort wählen, kein Formular ausfüllen.",
+          "body": "Wähle Teamleader auf der Anmeldeseite. Wir leiten dich direkt zur Teamleader-Autorisierungsseite weiter — kein Passwort wählen, kein Formular ausfüllen.",
           "example": "Klicke auf „Mit Teamleader anmelden“ → du landest in einer Sekunde auf app.teamleader.eu."
         },
         {
@@ -896,7 +897,8 @@
           "body": "Öffne den VoiceLink-Chat in WhatsApp und schicke eine Sprachnachricht. Sprich natürlich — ganze Sätze, keine Roboter-Befehle. VoiceLink antwortet in ~30 Sekunden mit einer Zusammenfassung der Änderungen in Teamleader.",
           "example": "Probiere: „Füge einen Deal über 5000 Euro mit Acme Corp hinzu, Kontakt ist Jane Doe, voraussichtlicher Abschluss Ende Mai.“"
         }
-      ]
+      ],
+      "signupCta": "Mit Teamleader anmelden"
     },
     "examples": {
       "eyebrow": "Was sagen",

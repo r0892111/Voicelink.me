@@ -22,7 +22,7 @@ const PrivacyPolicy: React.FC = () => {
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy Statement</h1>
             <h2 className="text-xl font-semibold text-blue-600 mb-4">FINIT VOICELINK</h2>
-            <p className="text-sm text-gray-600">Version: 18/08/2025</p>
+            <p className="text-sm text-gray-600">Version: 06/05/2026</p>
           </div>
         </div>
 
@@ -278,8 +278,29 @@ const PrivacyPolicy: React.FC = () => {
                     <td className="p-3 align-top border-r border-gray-300">Contract</td>
                     <td className="p-3 align-top">
                       As short as possible; raw audio messages are automatically deleted
-                      within 7 days after processing; only the output forwarded to your
-                      CRM is retained in accordance with your CRM's retention periods
+                      within 7 days after processing; the output forwarded to your CRM is
+                      retained in accordance with your CRM's retention periods. A separate
+                      per-user lookup index of CRM entities is retained as described in the
+                      next row.
+                    </td>
+                  </tr>
+                  <tr className="border-t border-gray-300">
+                    <td className="p-3 align-top border-r border-gray-300">
+                      Names, e-mail addresses, phone numbers and free-text fields (notes,
+                      custom-field values and labels) belonging to your CRM contacts,
+                      companies and products, copied from your connected CRM into a
+                      per-customer lookup index
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">
+                      To improve the accuracy and latency of voice-note recognition by
+                      matching mentions to existing CRM records without repeated CRM API
+                      lookups during a session
+                    </td>
+                    <td className="p-3 align-top border-r border-gray-300">Contract</td>
+                    <td className="p-3 align-top">
+                      For the duration of the active subscription plus 30 days after CRM
+                      disconnect or account closure; deleted on demand within 30 days of a
+                      verified erasure request
                     </td>
                   </tr>
                   <tr className="border-t border-gray-300">
@@ -547,6 +568,62 @@ const PrivacyPolicy: React.FC = () => {
             <li>Our online payment services partner;</li>
             <li>External marketing and communication partners who support us in setting up and carrying out campaigns, newsletters, and other communications.</li>
           </ul>
+
+          <h4 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Sub-processors</h4>
+
+          <p className="leading-relaxed mb-4">
+            We rely on the following sub-processors to deliver the platform. Each is bound by a data processing agreement and processes personal data only on our documented instructions:
+          </p>
+
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full text-sm border border-gray-300">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="p-3 text-left border-b border-gray-300">Sub-processor</th>
+                  <th className="p-3 text-left border-b border-gray-300">Purpose</th>
+                  <th className="p-3 text-left border-b border-gray-300">Location</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-gray-300">
+                  <td className="p-3 align-top border-r border-gray-300">Supabase, Inc.</td>
+                  <td className="p-3 align-top border-r border-gray-300">
+                    Database hosting, authentication, and serverless backend
+                    functions, including storage of the per-customer CRM lookup
+                    index, OAuth tokens, account data and operational logs
+                  </td>
+                  <td className="p-3 align-top">European Union</td>
+                </tr>
+                <tr className="border-t border-gray-300">
+                  <td className="p-3 align-top border-r border-gray-300">Stripe Payments Europe, Ltd.</td>
+                  <td className="p-3 align-top border-r border-gray-300">
+                    Subscription billing and payment processing
+                  </td>
+                  <td className="p-3 align-top">European Union (with onward transfers to Stripe, Inc. under SCCs)</td>
+                </tr>
+                <tr className="border-t border-gray-300">
+                  <td className="p-3 align-top border-r border-gray-300">Anthropic, PBC</td>
+                  <td className="p-3 align-top border-r border-gray-300">
+                    Large language model processing of voice-note transcripts and
+                    extracted entity references for CRM operation extraction
+                  </td>
+                  <td className="p-3 align-top">United States (under Standard Contractual Clauses)</td>
+                </tr>
+                <tr className="border-t border-gray-300">
+                  <td className="p-3 align-top border-r border-gray-300">Meta Platforms Ireland, Ltd. (WhatsApp Business Platform)</td>
+                  <td className="p-3 align-top border-r border-gray-300">
+                    Delivery and verification of WhatsApp messages used to interact
+                    with the platform
+                  </td>
+                  <td className="p-3 align-top">European Union (with onward transfers under SCCs)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p className="leading-relaxed">
+            Your CRM provider (Teamleader, Pipedrive or Odoo, depending on which you connect) is not a sub-processor of Finit Solutions but a separate controller; data flows between Finit Solutions and your CRM are governed by your own agreement with that CRM provider.
+          </p>
         </div>
 
         <div className="mb-8">

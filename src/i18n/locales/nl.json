@@ -1255,7 +1255,8 @@
     "hero": {
       "eyebrow": "Aan de slag",
       "title": "Van nul naar je eerste spraakbericht in minder dan 5 minuten.",
-      "subtitle": "Koppel Teamleader, verbind WhatsApp, praat met je CRM. Zo werkt het, stap voor stap."
+      "subtitle": "Koppel Teamleader, verbind WhatsApp, praat met je CRM. Zo werkt het, stap voor stap.",
+      "videoTitle": "VoiceLink uitleg"
     },
     "steps": {
       "intro": "Vier stappen. Geen code, geen installatiewizard, geen gedoe.",
@@ -1263,7 +1264,7 @@
       "items": [
         {
           "title": "Maak je account aan",
-          "body": "Ga naar voicelink.me/signup en kies Teamleader. We sturen je meteen door naar de autorisatiepagina van Teamleader — geen wachtwoord te kiezen, geen formulier in te vullen.",
+          "body": "Kies Teamleader op de aanmeldpagina. We sturen je meteen door naar de autorisatiepagina van Teamleader — geen wachtwoord te kiezen, geen formulier in te vullen.",
           "example": "Klik op “Aanmelden met Teamleader” → je bent binnen een seconde op app.teamleader.eu."
         },
         {
@@ -1281,7 +1282,8 @@
           "body": "Open de VoiceLink-chat in WhatsApp en stuur een spraakbericht. Praat normaal — volledige zinnen, geen commando’s. VoiceLink antwoordt binnen ~30 seconden met een samenvatting van wat er in Teamleader is bijgewerkt.",
           "example": "Probeer: “Maak een deal aan van 5000 euro met Acme Corp, contact is Jan Janssens, verwachte sluiting eind mei.”"
         }
-      ]
+      ],
+      "signupCta": "Aanmelden met Teamleader"
     },
     "examples": {
       "eyebrow": "Wat zeg je",

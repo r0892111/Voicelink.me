@@ -1263,7 +1263,8 @@
     "hero": {
       "eyebrow": "Getting started",
       "title": "From zero to your first voice note in under 5 minutes.",
-      "subtitle": "Connect Teamleader, link WhatsApp, talk to your CRM. Here is exactly how it works."
+      "subtitle": "Connect Teamleader, link WhatsApp, talk to your CRM. Here is exactly how it works.",
+      "videoTitle": "VoiceLink walkthrough"
     },
     "steps": {
       "intro": "Four steps. No coding, no setup wizard, no headaches.",
@@ -1271,7 +1272,7 @@
       "items": [
         {
           "title": "Create your account",
-          "body": "Go to voicelink.me/signup and pick Teamleader. We redirect you straight to the Teamleader authorization page — no password to choose, no form to fill.",
+          "body": "Pick Teamleader on the signup page. We redirect you straight to the Teamleader authorization page — no password to choose, no form to fill.",
           "example": "Click “Sign up with Teamleader” → you land on app.teamleader.eu within a second."
         },
         {
@@ -1289,7 +1290,8 @@
           "body": "Open the VoiceLink chat in WhatsApp and send a voice note. Speak naturally — full sentences, no robot commands. VoiceLink replies within ~30 seconds with a summary of what it changed in Teamleader.",
           "example": "Try: “Add a deal of 5000 euros with Acme Corp, contact is Jane Doe, expected close end of May.”"
         }
-      ]
+      ],
+      "signupCta": "Sign up with Teamleader"
     },
     "examples": {
       "eyebrow": "What to say",

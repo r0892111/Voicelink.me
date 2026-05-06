@@ -404,7 +404,7 @@ export default function SaasAgreementPage() {
                   </p>
                   
                   <p>
-                    <strong>C.</strong> The Customer acknowledges and accepts that the Software and Services only contain the functionality and other features that the Customer finds at the time of delivery of access to the Software and Services ("as is"). The Customer remains responsible and liable at all times for the content of the data and information entered via VoiceLink (including voice messages and customer data). FINIT SOLUTIONS acts solely as a processing and transmission channel and does not keep this data on a structural basis: the data is forwarded directly to the Customer's CRM. The Customer cannot hold FINIT SOLUTIONS liable in any way for the content, accuracy, or completeness of this data.
+                    <strong>C.</strong> The Customer acknowledges and accepts that the Software and Services only contain the functionality and other features that the Customer finds at the time of delivery of access to the Software and Services ("as is"). The Customer remains responsible and liable at all times for the content of the data and information entered via VoiceLink (including voice messages and customer data). FINIT SOLUTIONS acts primarily as a processing and transmission channel and forwards data directly to the Customer's CRM, with the exception of (i) a per-customer lookup index of CRM entities (such as contacts, companies and products) that is retained for the duration of the active subscription and up to thirty (30) days thereafter for the purpose of recognising entities mentioned in voice notes, and (ii) operational data necessary to provide the Services (such as authentication tokens, account data and logs), each as further described in the Privacy Statement. The Customer cannot hold FINIT SOLUTIONS liable in any way for the content, accuracy, or completeness of this data.
                   </p>
                 </div>
 
@@ -589,7 +589,7 @@ export default function SaasAgreementPage() {
                   </div>
                   
                   <p>
-                    Since VoiceLink acts solely as a processing and transmission channel and does not structurally store any data, the platform does not provide a separate export functionality. All data processed via VoiceLink is stored directly in the Customer's CRM. It is the sole responsibility of the Customer to ensure that, at the end of the Agreement, the data is stored and/or exported in its own CRM. FINIT SOLUTIONS is not liable for any loss of data after termination of the Agreement.
+                    Since VoiceLink acts primarily as a processing and transmission channel and only retains a limited per-customer lookup index of CRM entities together with operational data (as further described in the Privacy Statement), the platform does not provide a separate export functionality. All substantive data processed via VoiceLink is stored directly in the Customer's CRM. It is the sole responsibility of the Customer to ensure that, at the end of the Agreement, the data is stored and/or exported in its own CRM. The cached lookup index is automatically deleted within thirty (30) days following CRM disconnect or termination of the Agreement. FINIT SOLUTIONS is not liable for any loss of data after termination of the Agreement.
                   </p>
                   
                   <p>
