@@ -145,6 +145,11 @@ Deno.serve(async (req) => {
       .eq('teamleader_id', tlUser.id)
       .maybeSingle();
 
+    // Capture before any upsert: a missing row here means this is the first
+    // time this Teamleader account is connecting to VoiceLink, so we should
+    // fire the auto-prewarm at the end of this request.
+    const isNewTeamleaderConnection = !tlUserRow;
+
     let userId: string;
 
     if (tlUserRow?.user_id) {
@@ -317,6 +322,46 @@ Deno.serve(async (req) => {
           found: !!inviteRow,
           status: inviteRow?.invitation_status,
         });
+      }
+    }
+
+    // 6d. Auto-prewarm entity memory for first-time Teamleader connections.
+    // Test users and invited members are excluded (different flows). Manual
+    // re-sync stays available via BusinessSyncTile / trigger-entity-sync.
+    // Fire-and-forget: the prewarm endpoint returns 202 in <1s, but we don't
+    // even await the response — failures must never block the OAuth callback.
+    if (isNewTeamleaderConnection && !is_test_user && !invitation_token) {
+      const vlagentUrl = (Deno.env.get('VLAGENT_URL') ?? '').trim();
+      const vlagentSecret = (Deno.env.get('VLAGENT_SECRET') ?? '').trim();
+      if (!vlagentUrl || !vlagentSecret) {
+        r.warn('auto-prewarm skipped: VLAGENT_URL or VLAGENT_SECRET not set');
+      } else {
+        r.info('auto-prewarm: kicking off /admin/prewarm', { teamleader_id: tlUser.id });
+        const prewarmUrl = `${vlagentUrl.replace(/\/$/, '')}/admin/prewarm`;
+        // No await: we want the response on its way back to the client ASAP.
+        // The prewarm endpoint itself is async and returns 202 immediately.
+        fetch(prewarmUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-VLAgent-Secret': vlagentSecret,
+          },
+          body: JSON.stringify({
+            teamleader_id: tlUser.id,
+            access_token: tlAccessToken,
+          }),
+          signal: AbortSignal.timeout(10000),
+        })
+          .then((resp) => {
+            if (resp.status !== 202 && resp.status !== 200) {
+              r.warn('auto-prewarm rejected by VLAgent', { status: resp.status });
+            } else {
+              r.info('auto-prewarm accepted by VLAgent', { status: resp.status });
+            }
+          })
+          .catch((err) => {
+            r.warn('auto-prewarm fetch failed', toErrorDetail(err));
+          });
       }
     }
 
