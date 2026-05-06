@@ -20,3 +20,9 @@ port = 54323
 
 [functions.teamleader-auth]
 verify_jwt = false
+
+# Stripe webhooks are signed with `Stripe-Signature`, not a Supabase JWT.
+# Without this, the Supabase gateway 401s every delivery before our handler
+# can verify the signature, and no subscription/checkout events reach the DB.
+[functions.stripe-webhook]
+verify_jwt = false
