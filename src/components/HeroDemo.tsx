@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CheckCircle, Play, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { useI18n } from '../hooks/useI18n';
 import { trackCTAClick } from '../utils/analytics';
 import { withUTM } from '../utils/utm';
-import { gsap, ScrollTrigger } from '../lib/gsap';
 import { usePageTransition } from '../hooks/usePageTransition';
 import { useIsCompactHero } from '../hooks/useBreakpoint';
 
@@ -1567,33 +1566,11 @@ export const HeroDemo: React.FC = () => {
   const { displayedText, isDrawing, currentPhraseIndex } = useTypewriter(typewriterPhrases);
   const showTalkDot = currentPhraseIndex !== 0; // hide "." after "Talk" when "to your CRM." is active
   const isCompact = useIsCompactHero();
-  const mobilePhoneRef = useRef<HTMLDivElement>(null);
-
-  // Mobile-only: scroll-driven upward parallax on the phone mock
-  useEffect(() => {
-    if (!isCompact || !mobilePhoneRef.current) return;
-    const tween = gsap.to(mobilePhoneRef.current, {
-      y: window.innerWidth >= 417 ? '-200vh' : '-120vh',
-      ease: 'none',
-      force3D: true,
-      scrollTrigger: {
-        trigger: document.documentElement,
-        start: 'top top',
-        end: '30% top',
-        scrub: 0.5,
-        invalidateOnRefresh: true,
-      },
-    });
-    return () => {
-      (tween as any).scrollTrigger?.kill();
-      tween.kill();
-    };
-  }, [isCompact]);
 
   return (
     <div className="w-full">
       {/* Hero Content — Fixed layout with absolute positioning */}
-      <section className="relative" style={{ height: '100svh', overflowX: 'clip', overflowY: 'visible' }}>
+      <section className="relative" style={isCompact ? { minHeight: '100svh', overflowX: 'clip' } : { height: '100svh', overflow: 'clip' }}>
         {/* Mobile: Blue logo next to hamburger */}
         <div className="md:hidden absolute top-3 right-[72px] z-20 pointer-events-none flex items-center" style={{ height: '44px' }}>
           <img src="/Finit Voicelink Blue.svg" alt="VoiceLink" className="h-9 w-auto" />
@@ -1650,7 +1627,7 @@ export const HeroDemo: React.FC = () => {
         {/* Bottom-right corner — same desktop paths, cropped viewBox */}
         <svg
           className="absolute bottom-0 right-0 pointer-events-none block md:hidden"
-          style={{ bottom: '-6px' }}
+          style={{ bottom: '60px' }}
           width="143" height="250"
           viewBox="1183 440 285 500"
           aria-hidden="true"
@@ -1666,10 +1643,10 @@ export const HeroDemo: React.FC = () => {
           />
         </svg>
 
-        {/* ── COMPACT (mobile/tablet): text column + phone anchored at bottom ── */}
+        {/* ── COMPACT (mobile/tablet): text column + phone in normal flow ── */}
         {isCompact && (
-          <>
-            <div className="absolute z-10 left-[4%] right-[4%] flex flex-col items-center text-center" style={{ top: '20svh', bottom: '45svh' }}>
+          <div className="relative z-20 flex flex-col items-center px-[4%] pb-4 md:pb-12" style={{ paddingTop: '20svh' }}>
+            <div className="w-full max-w-lg flex flex-col items-center text-center">
               <div className="overflow-visible hero-animate-heading">
                 <h1 className="font-general leading-[1] tracking-tight text-navy text-center" style={{ fontSize: 'clamp(1.7rem, calc(0.7rem + 3vw + 1.5vh), 3.2rem)' }}>
                   <span className="font-bold" style={{ letterSpacing: '-0.025em', WebkitFontSmoothing: 'antialiased' }}>
@@ -1712,14 +1689,13 @@ export const HeroDemo: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            {/* Outer div handles centering; inner div has the animation so transforms don't conflict */}
-            <div ref={mobilePhoneRef} className="absolute" style={{ left: '50%', transform: 'translateX(-50%)', top: '66svh', width: 'min(460px, 86vw)', zIndex: 60, pointerEvents: 'none' }}>
-              <div className="flex items-start justify-center hero-animate-phone-bottom">
-                <img src="/whatsapp phone mock.png" alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes" style={{ width: 'min(460px, 97vw)', height: 'auto', transform: 'rotate(5deg)', filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))' }} draggable={false} />
+              <div className="pointer-events-none" style={{ width: 'min(460px, 86vw)', marginTop: 'clamp(1rem, 3vh, 2.5rem)' }}>
+                <div className="flex items-start justify-center hero-animate-phone-bottom">
+                  <img src="/whatsapp phone mock.png" alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes" style={{ width: 'min(460px, 97vw)', height: 'auto', transform: 'rotate(5deg)', filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))' }} draggable={false} />
+                </div>
               </div>
             </div>
-          </>
+          </div>
         )}
 
         {/* ── DESKTOP: centered flex row, text left + phone right ── */}

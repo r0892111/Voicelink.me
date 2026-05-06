@@ -120,7 +120,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
       <HeroDemo />
 
       {/* ───────── 4. HOW IT WORKS ───────── */}
-      <section id="how-it-works" className="pt-28 md:pt-0 pb-4 2xl:pb-8 relative z-10 scroll-mt-24">
+      <section id="how-it-works" className="pt-4 md:pt-0 pb-4 2xl:pb-8 relative z-10 scroll-mt-24">
         {/* Decorative corner — flows from hero bottom-right (desktop) */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none hidden md:block"
@@ -141,7 +141,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
         {/* Decorative corner — mobile/tablet top-right */}
         <svg
           className="absolute top-0 right-0 pointer-events-none block md:hidden"
-          style={{ top: '-6px' }}
+          style={{ top: '-70px' }}
           width="128" height="115"
           viewBox="1213 -30 255 230"
           aria-hidden="true"
