@@ -1591,23 +1591,22 @@
       "startTrialTitle": "Start eerst je gratis proefperiode",
       "startTrialBody": "Activeer je 1 maand gratis proefperiode om WhatsApp-verbinding te ontgrendelen.",
       "startTrialCta": "Start Gratis Proefperiode",
-      "comingSoonLabel": "Binnenkort",
-      "comingSoonTitle": "Notificaties & taal",
-      "comingSoonBody": "Kies je voorkeurstaal, e-mailnotificaties en sync-frequentie met je CRM."
+      "languageTitle": "Antwoordtaal",
+      "languageHelp": "VoiceLink antwoordt op al je voice notes in deze taal — ongeacht de taal waarin je inspreekt.",
+      "languageSaved": "Opgeslagen."
     },
     "profile": {
       "eyebrow": "Account",
       "title": "Profiel",
-      "subtitle": "Je VoiceLink-identiteit en gekoppelde accounts.",
+      "subtitle": "Wie je bent in VoiceLink. Voorkeuren wijzig je in Instellingen.",
       "workspaceSuffix": "{{platform}}-workspace",
       "email": "E-mail",
       "crm": "CRM",
-      "whatsapp": "WhatsApp",
-      "notConnectedYet": "Nog niet verbonden",
-      "languageEyebrow": "Voorkeur",
-      "languageTitle": "Antwoordtaal",
-      "languageHelp": "VoiceLink antwoordt op al je voice notes in deze taal.",
-      "languageSaved": "Opgeslagen."
+      "role": "Rol",
+      "roleAdmin": "Workspace-admin",
+      "roleMember": "Workspace-lid",
+      "roleSolo": "Solo-gebruiker",
+      "editHint": "Voorkeuren zoals taal, WhatsApp-nummer en notificaties wijzig je via Instellingen."
     },
     "sync": {
       "title": "Optimaliseer VoiceLink voor jouw CRM",

@@ -1599,23 +1599,22 @@
       "startTrialTitle": "Start your free trial first",
       "startTrialBody": "Activate your 1-Month Free Trial to unlock WhatsApp connection.",
       "startTrialCta": "Start Free Trial",
-      "comingSoonLabel": "Coming soon",
-      "comingSoonTitle": "Notifications & language",
-      "comingSoonBody": "Choose your preferred language, email notifications, and sync cadence with your CRM."
+      "languageTitle": "Reply language",
+      "languageHelp": "VoiceLink replies to all your voice notes in this language, regardless of the language you speak in.",
+      "languageSaved": "Saved."
     },
     "profile": {
       "eyebrow": "Account",
       "title": "Profile",
-      "subtitle": "Your VoiceLink identity and connected accounts.",
+      "subtitle": "Who you are in VoiceLink. Preferences live in Settings.",
       "workspaceSuffix": "{{platform}} workspace",
       "email": "Email",
       "crm": "CRM",
-      "whatsapp": "WhatsApp",
-      "notConnectedYet": "Not connected yet",
-      "languageEyebrow": "Preference",
-      "languageTitle": "Reply language",
-      "languageHelp": "VoiceLink replies to all your voice notes in this language.",
-      "languageSaved": "Saved."
+      "role": "Role",
+      "roleAdmin": "Workspace admin",
+      "roleMember": "Workspace member",
+      "roleSolo": "Solo user",
+      "editHint": "Language, WhatsApp number and notifications are edited in Settings."
     },
     "sync": {
       "title": "Optimise VoiceLink for your CRM",

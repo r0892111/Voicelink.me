@@ -1504,23 +1504,22 @@
       "startTrialTitle": "Démarrez d'abord votre essai gratuit",
       "startTrialBody": "Activez votre essai gratuit de 1 mois pour débloquer la connexion WhatsApp.",
       "startTrialCta": "Démarrer l'essai gratuit",
-      "comingSoonLabel": "Bientôt",
-      "comingSoonTitle": "Notifications & langue",
-      "comingSoonBody": "Choisissez votre langue préférée, les notifications email et la fréquence de sync avec votre CRM."
+      "languageTitle": "Langue de réponse",
+      "languageHelp": "VoiceLink répond à toutes vos notes vocales dans cette langue, quelle que soit la langue dans laquelle vous parlez.",
+      "languageSaved": "Enregistré."
     },
     "profile": {
       "eyebrow": "Compte",
       "title": "Profil",
-      "subtitle": "Votre identité VoiceLink et vos comptes connectés.",
+      "subtitle": "Qui vous êtes dans VoiceLink. Les préférences se gèrent dans Paramètres.",
       "workspaceSuffix": "Espace {{platform}}",
       "email": "E-mail",
       "crm": "CRM",
-      "whatsapp": "WhatsApp",
-      "notConnectedYet": "Pas encore connecté",
-      "languageEyebrow": "Préférence",
-      "languageTitle": "Langue de réponse",
-      "languageHelp": "VoiceLink répond à toutes vos notes vocales dans cette langue.",
-      "languageSaved": "Enregistré."
+      "role": "Rôle",
+      "roleAdmin": "Administrateur de workspace",
+      "roleMember": "Membre du workspace",
+      "roleSolo": "Utilisateur solo",
+      "editHint": "La langue, le numéro WhatsApp et les notifications se modifient dans Paramètres."
     },
     "sync": {
       "title": "Optimisez VoiceLink pour votre CRM",

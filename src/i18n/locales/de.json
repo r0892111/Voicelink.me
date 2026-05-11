@@ -1545,23 +1545,22 @@
       "startTrialTitle": "Starte zuerst deinen Gratis-Test",
       "startTrialBody": "Aktiviere deinen 1-Monat-Gratis-Test, um die WhatsApp-Verbindung freizuschalten.",
       "startTrialCta": "Gratis-Test starten",
-      "comingSoonLabel": "Demnächst",
-      "comingSoonTitle": "Benachrichtigungen & Sprache",
-      "comingSoonBody": "Wähle deine bevorzugte Sprache, E-Mail-Benachrichtigungen und Sync-Frequenz mit deinem CRM."
+      "languageTitle": "Antwortsprache",
+      "languageHelp": "VoiceLink antwortet auf alle deine Sprachnachrichten in dieser Sprache, unabhängig davon, in welcher Sprache du sprichst.",
+      "languageSaved": "Gespeichert."
     },
     "profile": {
       "eyebrow": "Konto",
       "title": "Profil",
-      "subtitle": "Deine VoiceLink-Identität und verbundene Konten.",
+      "subtitle": "Wer du bei VoiceLink bist. Einstellungen findest du unter Einstellungen.",
       "workspaceSuffix": "{{platform}}-Workspace",
       "email": "E-Mail",
       "crm": "CRM",
-      "whatsapp": "WhatsApp",
-      "notConnectedYet": "Noch nicht verbunden",
-      "languageEyebrow": "Einstellung",
-      "languageTitle": "Antwortsprache",
-      "languageHelp": "VoiceLink antwortet auf alle deine Sprachnachrichten in dieser Sprache.",
-      "languageSaved": "Gespeichert."
+      "role": "Rolle",
+      "roleAdmin": "Workspace-Admin",
+      "roleMember": "Workspace-Mitglied",
+      "roleSolo": "Solo-Nutzer",
+      "editHint": "Sprache, WhatsApp-Nummer und Benachrichtigungen werden in den Einstellungen bearbeitet."
     },
     "sync": {
       "title": "VoiceLink für Ihr CRM optimieren",
