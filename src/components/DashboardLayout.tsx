@@ -134,6 +134,7 @@ export function DashboardLayout() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [langCode, setLangCode] = useState<SupportedLanguage>('nl');
   const [langLocked, setLangLocked] = useState<boolean>(true); // assume locked until we know — avoids modal flash on load
+  const [isTestUser, setIsTestUser] = useState<boolean>(false);
 
   const mounted = useRef(true);
   useEffect(() => () => { mounted.current = false; }, []);
@@ -170,13 +171,12 @@ export function DashboardLayout() {
         .select('is_test_user, language, language_locked')
         .eq('user_id', session.user.id)
         .maybeSingle();
-      // Skip test-user redirect in dev so impersonated test fixtures (e.g.
-      // karel, is_test_user=true) can exercise the real /dashboard flow.
-      if (tlUser?.is_test_user && !import.meta.env.DEV) {
-        if (mounted.current) navigate('/test-dashboard', { replace: true });
-        return;
-      }
+      // Test users (is_test_user=true) used to be redirected to /test-dashboard;
+      // they now share the same dashboard. SubscriptionGate + DashboardHome
+      // branches on isTestUser to skip the trial/billing prompts they'd never
+      // act on (test access bypasses Stripe entirely via the credit checker).
       if (mounted.current) {
+        setIsTestUser(Boolean(tlUser?.is_test_user));
         setLangCode(normalizeLanguage(tlUser?.language));
         setLangLocked(Boolean(tlUser?.language_locked));
       }
@@ -282,7 +282,10 @@ export function DashboardLayout() {
   const pageTitle = t(pageTitleKey);
 
   const subStatus = subInfo?.subscription_status;
-  const hasActiveSubscription = subStatus === 'active' || subStatus === 'trialing';
+  // Test users have no Stripe subscription — they get free credits via the
+  // agent's is_test_user shortcut. Treat them as "subscribed" for nav-locking
+  // so they see Settings/Profile/Usage/Team like everyone else.
+  const hasActiveSubscription = subStatus === 'active' || subStatus === 'trialing' || isTestUser;
 
   // Full-screen loader while auth + subscription resolve. Previously only
   // blocked on auth; the dashboard would render an empty shell and the
@@ -313,6 +316,7 @@ export function DashboardLayout() {
   const ctxValue = {
     user,
     wa,
+    isTestUser,
     role: {
       isAdmin: role.isAdmin,
       isMember: role.isMember,

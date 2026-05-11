@@ -1511,7 +1511,10 @@
             "Note about contract renewal attached"
           ]
         }
-      ]
+      ],
+      "testAccessTitle": "Test access",
+      "testAccessBody": "No subscription needed — free credits via test access.",
+      "testAccessActive": "Active"
     },
     "team": {
       "eyebrow": "Workspace",

@@ -18,6 +18,7 @@ export type SupportedLanguage = 'nl' | 'en' | 'fr' | 'de';
 export interface DashboardContextValue {
   user: AuthUser;
   wa: WhatsAppConnect;
+  isTestUser: boolean;
   role: {
     isAdmin: boolean;
     isMember: boolean;

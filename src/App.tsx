@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { LogOut, User, Menu, X, ArrowLeft, ArrowRight, ChevronRight } from 'lucide-react';
 import { AuthPage } from './components/AuthPage';
 import { AuthCallback } from './components/AuthCallback';
@@ -27,7 +27,9 @@ import CookiePolicy from './components/CookiePolicy';
 import Support from './components/Support';
 import { ConferenceBanner } from './components/ConferenceBanner';
 import { TestSignup } from './components/TestSignup';
-import { TestDashboard } from './components/TestDashboard';
+// TestDashboard removed: test users now share the regular dashboard. The
+// /test-dashboard route below redirects to /dashboard so any existing
+// magic-link / onboarding URLs keep working.
 import { GettingStarted } from './components/GettingStarted';
 import { InviteAccept } from './components/InviteAccept';
 import { useAuth } from './hooks/useAuth';
@@ -60,18 +62,15 @@ function App() {
   }, [location]);
 
   // After OAuth magic-link redirect, Supabase sends the user back to the site
-  // root (/) with an #access_token hash. Detect that case and forward to the
-  // correct destination. Test users go straight to /test-dashboard to avoid
-  // a double-mount through /dashboard.
+  // root (/) with an #access_token hash. Forward to the dashboard — test
+  // users and regular users now share the same dashboard, no more split.
   React.useEffect(() => {
     if (!loading && user && location.pathname === '/' && window.location.hash.includes('access_token')) {
-      const { isTest } = consumeTestFlow();
-      if (isTest) {
-        clearTestFlow();
-        navigate('/test-dashboard', { replace: true });
-      } else {
-        navigate(withUTM('/dashboard'), { replace: true });
-      }
+      // consumeTestFlow() is still called to clear the TTL flag; we just no
+      // longer branch on it.
+      consumeTestFlow();
+      clearTestFlow();
+      navigate(withUTM('/dashboard'), { replace: true });
     }
   }, [user, loading, location.pathname]);
 
@@ -453,7 +452,7 @@ function App() {
               <Route path="/support" element={<Support openContactModal={openContactModal} />} />
               <Route path="/banner" element={<ConferenceBanner />} />
               <Route path="/test" element={<TestSignup />} />
-              <Route path="/test-dashboard" element={<TestDashboard />} />
+              <Route path="/test-dashboard" element={<Navigate to="/dashboard" replace />} />
               <Route path="/getting-started" element={<GettingStarted />} />
               {/* Fallback route for debugging */}
               <Route path="*" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-red-600">No route matched: {location.pathname}</h1><p>Available routes: /, /dashboard, /verify-whatsapp, etc.</p></div>} />

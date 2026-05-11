@@ -1503,7 +1503,10 @@
             "Notitie over contractverlenging toegevoegd"
           ]
         }
-      ]
+      ],
+      "testAccessTitle": "Test-toegang",
+      "testAccessBody": "Geen abonnement nodig — gratis tegoed via test-toegang.",
+      "testAccessActive": "Actief"
     },
     "team": {
       "eyebrow": "Workspace",

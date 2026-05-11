@@ -1416,7 +1416,10 @@
             "Note sur le renouvellement du contrat attachée"
           ]
         }
-      ]
+      ],
+      "testAccessTitle": "Accès test",
+      "testAccessBody": "Aucun abonnement requis — crédits gratuits via l'accès test.",
+      "testAccessActive": "Actif"
     },
     "team": {
       "eyebrow": "Espace de travail",

@@ -1457,7 +1457,10 @@
             "Notiz zur Vertragsverlängerung angehängt"
           ]
         }
-      ]
+      ],
+      "testAccessTitle": "Testzugang",
+      "testAccessBody": "Kein Abo nötig — kostenlose Credits über den Testzugang.",
+      "testAccessActive": "Aktiv"
     },
     "team": {
       "eyebrow": "Workspace",

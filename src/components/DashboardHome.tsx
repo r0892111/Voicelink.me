@@ -28,7 +28,7 @@ interface CheatExample {
 export function DashboardHome() {
   const navigate = useNavigate();
   const { t, currentLanguage } = useI18n();
-  const { user, wa, role, subscription } = useDashboardContext();
+  const { user, wa, role, subscription, isTestUser } = useDashboardContext();
 
   const platformLabel = t(`dash.platforms.${user.platform}`, {
     defaultValue: t('dash.platforms.fallback'),
@@ -37,9 +37,13 @@ export function DashboardHome() {
 
   const subStatus = subscription.info?.subscription_status;
   const isSubscribed = subStatus === 'active' || subStatus === 'trialing';
-  const isLapsed = !!subStatus && !isSubscribed && subStatus !== 'none';
-  const needsTrial = !subscription.checking && (!subStatus || subStatus === 'none');
-  const canConnectWhatsApp = isSubscribed;
+  // Test users have no Stripe subscription but get credits via the agent's
+  // is_test_user shortcut. Treat them as "subscribed" for UI-gating purposes
+  // (WhatsApp connect, trial banner suppression) — billing prompts they'd
+  // never act on just add noise.
+  const isLapsed = !isTestUser && !!subStatus && !isSubscribed && subStatus !== 'none';
+  const needsTrial = !isTestUser && !subscription.checking && (!subStatus || subStatus === 'none');
+  const canConnectWhatsApp = isSubscribed || isTestUser;
   const fullySetUp = wa.status === 'active';
 
   function getTimeGreeting(): string {
@@ -172,8 +176,25 @@ export function DashboardHome() {
             </div>
           </div>
 
-          {/* Subscription */}
-          {role.isMember ? (
+          {/* Subscription / Test access */}
+          {isTestUser ? (
+            <div
+              className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
+              style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
+            >
+              <div className="flex items-center space-x-3 mb-2">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-emerald-50">
+                  <Star className="w-5 h-5 text-emerald-500" />
+                </div>
+                <span className="font-general font-semibold text-navy text-sm">{t('dash.home.testAccessTitle')}</span>
+              </div>
+              <p className="text-xs text-navy/50">{t('dash.home.testAccessBody')}</p>
+              <div className="mt-3 flex items-center space-x-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="text-xs font-medium text-emerald-600">{t('dash.home.testAccessActive')}</span>
+              </div>
+            </div>
+          ) : role.isMember ? (
             <div
               className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
               style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.58s both' }}
