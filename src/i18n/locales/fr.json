@@ -41,7 +41,8 @@
     "teamMemberInvitedSuccessfully": "Membre de l'équipe invité avec succès !",
     "changeLanguage": "Changer de langue",
     "voiceLink": "VoiceLink",
-    "and": "et"
+    "and": "et",
+    "saving": "Enregistrement…"
   },
   "platforms": {
     "teamleader": "TeamLeader",
@@ -1516,9 +1517,10 @@
       "crm": "CRM",
       "whatsapp": "WhatsApp",
       "notConnectedYet": "Pas encore connecté",
-      "comingSoonLabel": "Bientôt",
-      "comingSoonTitle": "Édition du profil",
-      "comingSoonBody": "Mettez à jour votre nom, langue et préférences de notification depuis cette page."
+      "languageEyebrow": "Préférence",
+      "languageTitle": "Langue de réponse",
+      "languageHelp": "VoiceLink répond à toutes vos notes vocales dans cette langue.",
+      "languageSaved": "Enregistré."
     },
     "sync": {
       "title": "Optimisez VoiceLink pour votre CRM",
@@ -1635,5 +1637,12 @@
         "info": "Si vous avez des questions, contactez-nous à voicelink@finitsolutions.be. Nous répondons dans les 24 heures."
       }
     }
+  },
+  "languagePicker": {
+    "eyebrow": "Configuration",
+    "title": "Choisissez votre langue",
+    "subtitle": "VoiceLink répondra toujours dans cette langue, quelle que soit la langue dans laquelle vous parlez.",
+    "confirm": "Confirmer",
+    "editLater": "Vous pouvez modifier ceci plus tard dans votre profil."
   }
 }

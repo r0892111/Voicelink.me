@@ -13,6 +13,8 @@ export interface SubscriptionInfo {
   interval: string | null;
 }
 
+export type SupportedLanguage = 'nl' | 'en' | 'fr' | 'de';
+
 export interface DashboardContextValue {
   user: AuthUser;
   wa: WhatsAppConnect;
@@ -28,6 +30,11 @@ export interface DashboardContextValue {
     openPortal: () => Promise<void>;
     portalLoading: boolean;
     startTrial: () => Promise<void>;
+  };
+  language: {
+    code: SupportedLanguage;
+    locked: boolean;
+    update: (code: SupportedLanguage, lock: boolean) => Promise<void>;
   };
 }
 

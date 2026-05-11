@@ -11,8 +11,20 @@ import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCh
 import { withUTM } from '../utils/utm';
 import { DashboardSidebar } from './DashboardSidebar';
 import { DashboardTopBar } from './DashboardTopBar';
-import { DashboardContext, type SubscriptionInfo } from '../hooks/useDashboardContext';
+import { LanguagePickerModal } from './LanguagePickerModal';
+import {
+  DashboardContext,
+  type SubscriptionInfo,
+  type SupportedLanguage,
+} from '../hooks/useDashboardContext';
 import { useI18n } from '../hooks/useI18n';
+
+const SUPPORTED_LANGUAGES: readonly SupportedLanguage[] = ['nl', 'en', 'fr', 'de'];
+
+function normalizeLanguage(value: unknown): SupportedLanguage {
+  const v = typeof value === 'string' ? (value.toLowerCase() as SupportedLanguage) : 'nl';
+  return (SUPPORTED_LANGUAGES as readonly string[]).includes(v) ? v : 'nl';
+}
 
 // Dev-only impersonation: karel@... — a real teamleader_users row with
 // analytics data (120 messages, $3.10 spend as of 2026-04-12). Used when
@@ -120,6 +132,8 @@ export function DashboardLayout() {
   const [subChecking, setSubChecking] = useState(true);
   const [portalLoading, setPortalLoading] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [langCode, setLangCode] = useState<SupportedLanguage>('nl');
+  const [langLocked, setLangLocked] = useState<boolean>(true); // assume locked until we know — avoids modal flash on load
 
   const mounted = useRef(true);
   useEffect(() => () => { mounted.current = false; }, []);
@@ -153,7 +167,7 @@ export function DashboardLayout() {
 
       const { data: tlUser } = await supabase
         .from('teamleader_users')
-        .select('is_test_user')
+        .select('is_test_user, language, language_locked')
         .eq('user_id', session.user.id)
         .maybeSingle();
       // Skip test-user redirect in dev so impersonated test fixtures (e.g.
@@ -161,6 +175,10 @@ export function DashboardLayout() {
       if (tlUser?.is_test_user && !import.meta.env.DEV) {
         if (mounted.current) navigate('/test-dashboard', { replace: true });
         return;
+      }
+      if (mounted.current) {
+        setLangCode(normalizeLanguage(tlUser?.language));
+        setLangLocked(Boolean(tlUser?.language_locked));
       }
 
       const params = new URLSearchParams(window.location.search);
@@ -278,6 +296,20 @@ export function DashboardLayout() {
     );
   }
 
+  const updateLanguage = async (code: SupportedLanguage, lock: boolean) => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Not authenticated');
+    const { error } = await supabase
+      .from('teamleader_users')
+      .update({ language: code, language_locked: lock })
+      .eq('user_id', session.user.id);
+    if (error) throw error;
+    if (mounted.current) {
+      setLangCode(code);
+      setLangLocked(lock);
+    }
+  };
+
   const ctxValue = {
     user,
     wa,
@@ -293,6 +325,11 @@ export function DashboardLayout() {
       openPortal,
       portalLoading,
       startTrial,
+    },
+    language: {
+      code: langCode,
+      locked: langLocked,
+      update: updateLanguage,
     },
   };
 
@@ -340,6 +377,13 @@ export function DashboardLayout() {
           <DashboardTopBar title={pageTitle} onOpenSidebar={() => setDrawerOpen(true)} />
           <Outlet />
         </main>
+
+        {!langLocked && (
+          <LanguagePickerModal
+            initial={langCode}
+            onConfirm={(code) => updateLanguage(code, true)}
+          />
+        )}
       </div>
     </DashboardContext.Provider>
   );

@@ -47,7 +47,8 @@
     "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
     "minLength": "Muss mindestens {{min}} Zeichen lang sein",
     "maxLength": "Darf höchstens {{max}} Zeichen lang sein",
-    "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren"
+    "agreeToTerms": "Bitte stimmen Sie der SaaS-Vereinbarung zu, um fortzufahren",
+    "saving": "Speichern…"
   },
   "platforms": {
     "teamleader": "TeamLeader",
@@ -1557,9 +1558,10 @@
       "crm": "CRM",
       "whatsapp": "WhatsApp",
       "notConnectedYet": "Noch nicht verbunden",
-      "comingSoonLabel": "Demnächst",
-      "comingSoonTitle": "Profil bearbeiten",
-      "comingSoonBody": "Aktualisiere Anzeigenamen, Sprache und Benachrichtigungspräferenzen auf dieser Seite."
+      "languageEyebrow": "Einstellung",
+      "languageTitle": "Antwortsprache",
+      "languageHelp": "VoiceLink antwortet auf alle deine Sprachnachrichten in dieser Sprache.",
+      "languageSaved": "Gespeichert."
     },
     "sync": {
       "title": "VoiceLink für Ihr CRM optimieren",
@@ -1676,5 +1678,12 @@
         "info": "Bei Fragen erreichen Sie uns unter voicelink@finitsolutions.be. Wir antworten innerhalb von 24 Stunden."
       }
     }
+  },
+  "languagePicker": {
+    "eyebrow": "Einrichtung",
+    "title": "Wähle deine Sprache",
+    "subtitle": "VoiceLink antwortet ab jetzt immer in dieser Sprache, unabhängig davon, in welcher Sprache du sprichst.",
+    "confirm": "Bestätigen",
+    "editLater": "Du kannst dies später in deinem Profil ändern."
   }
 }

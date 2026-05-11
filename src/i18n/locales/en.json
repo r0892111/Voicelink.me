@@ -47,7 +47,8 @@
     "accessRightsTab": "Go to the 'Access Rights' tab",
     "generateOrCopyApiKey": "Generate or copy your API key",
     "function": "Function",
-    "autofill": "Autofill"
+    "autofill": "Autofill",
+    "saving": "Saving…"
   },
   "platforms": {
     "teamleader": "TeamLeader",
@@ -1611,9 +1612,10 @@
       "crm": "CRM",
       "whatsapp": "WhatsApp",
       "notConnectedYet": "Not connected yet",
-      "comingSoonLabel": "Coming soon",
-      "comingSoonTitle": "Profile editing",
-      "comingSoonBody": "Update your display name, language, and notification preferences from this page."
+      "languageEyebrow": "Preference",
+      "languageTitle": "Reply language",
+      "languageHelp": "VoiceLink replies to all your voice notes in this language.",
+      "languageSaved": "Saved."
     },
     "sync": {
       "title": "Optimise VoiceLink for your CRM",
@@ -1730,5 +1732,12 @@
         "info": "If you have any questions, reach us at voicelink@finitsolutions.be. We respond within 24 hours."
       }
     }
+  },
+  "languagePicker": {
+    "eyebrow": "Setup",
+    "title": "Pick your language",
+    "subtitle": "VoiceLink will always reply in this language, regardless of the language you speak in.",
+    "confirm": "Confirm",
+    "editLater": "You can change this later in your profile."
   }
 }
