@@ -382,7 +382,7 @@ export function DashboardLayout() {
           <Outlet />
         </main>
 
-        {!langLocked && (
+        {!langLocked && hasActiveSubscription && (
           <LanguagePickerModal
             initial={langCode}
             onConfirm={(code) => updateLanguage(code, true)}
