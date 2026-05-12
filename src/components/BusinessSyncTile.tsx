@@ -27,6 +27,10 @@ interface SyncRow {
   entity_sync_companies: number | null;
   entity_sync_contacts: number | null;
   entity_sync_products: number | null;
+  entity_sync_deal_pipelines: number | null;
+  entity_sync_deal_phases: number | null;
+  entity_sync_tax_rates: number | null;
+  entity_sync_work_types: number | null;
   entity_sync_aliases_written: number | null;
   entity_sync_error: string | null;
 }
@@ -71,6 +75,8 @@ export function BusinessSyncTile() {
       .select(
         'entity_sync_status, entity_sync_started_at, entity_sync_completed_at, ' +
         'entity_sync_companies, entity_sync_contacts, entity_sync_products, ' +
+        'entity_sync_deal_pipelines, entity_sync_deal_phases, ' +
+        'entity_sync_tax_rates, entity_sync_work_types, ' +
         'entity_sync_aliases_written, entity_sync_error',
       )
       .eq('user_id', session.user.id)
@@ -171,6 +177,17 @@ export function BusinessSyncTile() {
                 date: absoluteTime(row.entity_sync_completed_at, currentLanguage),
               })}
             </p>
+          )}
+          {status === 'completed' && (
+            <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-navy/55">
+              <li className="flex justify-between"><span>{t('dash.sync.itemCompanies')}</span>      <span className="font-medium tabular-nums text-navy/80">{row?.entity_sync_companies ?? 0}</span></li>
+              <li className="flex justify-between"><span>{t('dash.sync.itemContacts')}</span>       <span className="font-medium tabular-nums text-navy/80">{row?.entity_sync_contacts  ?? 0}</span></li>
+              <li className="flex justify-between"><span>{t('dash.sync.itemProducts')}</span>       <span className="font-medium tabular-nums text-navy/80">{row?.entity_sync_products  ?? 0}</span></li>
+              <li className="flex justify-between"><span>{t('dash.sync.itemPipelines')}</span>      <span className="font-medium tabular-nums text-navy/80">{row?.entity_sync_deal_pipelines ?? 0}</span></li>
+              <li className="flex justify-between"><span>{t('dash.sync.itemPhases')}</span>         <span className="font-medium tabular-nums text-navy/80">{row?.entity_sync_deal_phases   ?? 0}</span></li>
+              <li className="flex justify-between"><span>{t('dash.sync.itemTaxRates')}</span>       <span className="font-medium tabular-nums text-navy/80">{row?.entity_sync_tax_rates    ?? 0}</span></li>
+              <li className="flex justify-between"><span>{t('dash.sync.itemWorkTypes')}</span>      <span className="font-medium tabular-nums text-navy/80">{row?.entity_sync_work_types   ?? 0}</span></li>
+            </ul>
           )}
           {error && (
             <p className="text-red-600 text-xs mt-2">{error}</p>

@@ -1577,7 +1577,14 @@
       "btnRetry": "Erneut versuchen",
       "errSession": "Erneut anmelden, um zu synchronisieren.",
       "errKickoff": "Synchronisation konnte nicht gestartet werden, bitte erneut versuchen.",
-      "errUnknown": "Unbekannter Fehler"
+      "errUnknown": "Unbekannter Fehler",
+      "itemCompanies": "Unternehmen",
+      "itemContacts": "Kontakte",
+      "itemProducts": "Produkte",
+      "itemPipelines": "Deal-Pipelines",
+      "itemPhases": "Deal-Phasen",
+      "itemTaxRates": "Steuersätze",
+      "itemWorkTypes": "Arbeitstypen"
     }
   },
   "affiliate": {

@@ -1631,7 +1631,14 @@
       "btnRetry": "Retry",
       "errSession": "Sign in again to sync.",
       "errKickoff": "Couldn't start the sync, please try again.",
-      "errUnknown": "Unknown error"
+      "errUnknown": "Unknown error",
+      "itemCompanies": "Companies",
+      "itemContacts": "Contacts",
+      "itemProducts": "Products",
+      "itemPipelines": "Deal pipelines",
+      "itemPhases": "Deal phases",
+      "itemTaxRates": "Tax rates",
+      "itemWorkTypes": "Work types"
     }
   },
   "affiliate": {

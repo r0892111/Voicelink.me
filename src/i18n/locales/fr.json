@@ -1536,7 +1536,14 @@
       "btnRetry": "Réessayer",
       "errSession": "Reconnectez-vous pour synchroniser.",
       "errKickoff": "Impossible de lancer la synchronisation, réessayez.",
-      "errUnknown": "Erreur inconnue"
+      "errUnknown": "Erreur inconnue",
+      "itemCompanies": "Entreprises",
+      "itemContacts": "Contacts",
+      "itemProducts": "Produits",
+      "itemPipelines": "Pipelines d'affaires",
+      "itemPhases": "Phases d'affaires",
+      "itemTaxRates": "Taux de TVA",
+      "itemWorkTypes": "Types de travail"
     }
   },
   "affiliate": {

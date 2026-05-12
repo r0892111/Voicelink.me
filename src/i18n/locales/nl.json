@@ -1623,7 +1623,14 @@
       "btnRetry": "Opnieuw proberen",
       "errSession": "Meld opnieuw aan om te synchroniseren.",
       "errKickoff": "Kon de synchronisatie niet starten, probeer het opnieuw.",
-      "errUnknown": "Onbekende fout"
+      "errUnknown": "Onbekende fout",
+      "itemCompanies": "Bedrijven",
+      "itemContacts": "Contacten",
+      "itemProducts": "Producten",
+      "itemPipelines": "Deal-pipelines",
+      "itemPhases": "Deal-fases",
+      "itemTaxRates": "BTW-tarieven",
+      "itemWorkTypes": "Werktypes"
     }
   },
   "affiliate": {
