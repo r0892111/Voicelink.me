@@ -1,7 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { whatsappService } from '../services/whatsappService';
+import { AuthService } from '../services/authService';
+import { markTestFlow } from '../utils/testFlow';
 import { MessageCircle, Loader2, Check, AlertCircle, ArrowLeft } from 'lucide-react';
 
 const phoneRegex = /^\+[1-9]\d{6,14}$/;
@@ -11,7 +12,6 @@ const isValidPhone   = (v: string) => phoneRegex.test(normalizePhone(v));
 type Step = 'phone' | 'otp';
 
 export const TestSignup: React.FC = () => {
-  const navigate = useNavigate();
   const [phone,          setPhone]         = React.useState('');
   const [otp,            setOtp]           = React.useState('');
   const [step,           setStep]          = React.useState<Step>('phone');
@@ -62,10 +62,28 @@ export const TestSignup: React.FC = () => {
     try {
       await whatsappService.verifyOtp('test', testUserId, otp.trim());
       whatsappService.sendWelcome('test', testUserId, confirmedPhone).catch(() => {});
-      navigate('/test-dashboard', { state: { phone: confirmedPhone } });
+
+      // Mark this browser as a test-user signup *immediately before* kicking
+      // off the OAuth redirect. The flag (TTL 10 min, see utils/testFlow.ts)
+      // is read in AuthCallback to set is_test_user=true on the new account,
+      // which the subscription gates use to skip the paywall. We bypass
+      // /signup on purpose — AuthPage clears the flag on mount.
+      markTestFlow(confirmedPhone);
+      localStorage.setItem('userPlatform', 'teamleader');
+      localStorage.setItem('auth_provider', 'teamleader');
+
+      const result = await AuthService.createTeamleaderAuth().initiateAuth();
+      if (!result.success) {
+        localStorage.removeItem('userPlatform');
+        localStorage.removeItem('auth_provider');
+        setError(result.error || 'Could not start Teamleader connection. Try again.');
+        setBusy(false);
+      }
+      // On success, initiateAuth has set window.location.href to Teamleader
+      // and the page is unloading — leave busy=true so the spinner stays
+      // until the redirect happens.
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Invalid code. Try again.');
-    } finally {
       setBusy(false);
     }
   };
