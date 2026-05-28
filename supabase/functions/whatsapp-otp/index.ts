@@ -73,9 +73,13 @@ Deno.serve(async (req) => {
       // is used during the early-access test flow and is exempt.
       if (crm_provider !== 'test') {
         r.info('checking subscription gate', { crm_user_id });
+        // Include promo_end_date for teamleader — promo users bypass Stripe gate
+        const gateSelect = crm_provider === 'teamleader'
+          ? 'stripe_customer_id, is_admin, admin_user_id, promo_end_date'
+          : 'stripe_customer_id, is_admin, admin_user_id';
         const { data: gateRow, error: gateErr } = await supabase
           .from(`${crm_provider}_users`)
-          .select('stripe_customer_id, is_admin, admin_user_id')
+          .select(gateSelect)
           .eq('user_id', crm_user_id)
           .maybeSingle();
 
@@ -96,8 +100,10 @@ Deno.serve(async (req) => {
           gateCustomerId = adminRow?.stripe_customer_id ?? null;
         }
 
-        if (!gateCustomerId) {
-          r.warn('no stripe customer — trial not started', {
+        const promoActive = gateRow?.promo_end_date && new Date(gateRow.promo_end_date) > new Date();
+
+        if (!gateCustomerId && !promoActive) {
+          r.warn('no stripe customer or promo — trial not started', {
             crm_user_id,
             is_member: gateRow && !gateRow.is_admin,
           });
