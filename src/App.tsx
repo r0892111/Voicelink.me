@@ -32,6 +32,9 @@ import { TestSignup } from './components/TestSignup';
 // magic-link / onboarding URLs keep working.
 import { GettingStarted } from './components/GettingStarted';
 import { InviteAccept } from './components/InviteAccept';
+import { WorkSmarterLanding } from './components/WorkSmarterLanding';
+import { WorkSmarterOnboard } from './components/WorkSmarterOnboard';
+import { ServiceLeadForm } from './components/ServiceLeadForm';
 import { useAuth } from './hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ConsentProvider } from './contexts/ConsentContext';
@@ -99,6 +102,10 @@ function App() {
   const isInvitePage = location.pathname === '/invite';
   const isTestPage = location.pathname === '/test' || location.pathname === '/test-dashboard';
   const isAffiliatePage = location.pathname === '/affiliate';
+  const isWorksmarterPage =
+    location.pathname === '/lp/worksmarter' ||
+    location.pathname === '/onboard/worksmarter' ||
+    location.pathname === '/lp/service';
   const isDashboardRoute = location.pathname === '/dashboard' || location.pathname.startsWith('/dashboard/');
 
   const openContactModal = () => {
@@ -110,7 +117,7 @@ function App() {
   };
   
   // Skip loading check for public pages that don't need auth
-  if (loading && !isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isAffiliatePage) {
+  if (loading && !isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isAffiliatePage && !isWorksmarterPage) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />
@@ -125,7 +132,7 @@ function App() {
         <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage || isSigninPage ? 'h-screen overflow-hidden' : ''}`}>
           {!isDashboardRoute && <NoiseOverlay />}
           {/* Navigation */}
-          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isDashboardRoute && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isDashboardRoute && !isWorksmarterPage && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
             {/* ── White logo on hero (homepage only, fades out on scroll) — desktop only ── */}
             {isHomepage && (
@@ -262,7 +269,7 @@ function App() {
           )}
 
           {/* Mobile hamburger button — always visible */}
-          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isMobileMenuOpen && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isWorksmarterPage && !isMobileMenuOpen && (
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open menu"
@@ -273,7 +280,7 @@ function App() {
           )}
 
           {/* Full-screen mobile menu overlay */}
-          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && isMobileMenuOpen && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isWorksmarterPage && isMobileMenuOpen && (
             <div className="min-[868px]:hidden fixed inset-0 z-[10000] bg-porcelain flex flex-col overflow-y-auto">
               {/* Header */}
               <div className="flex items-center justify-between px-6 pt-10 pb-6 flex-shrink-0">
@@ -423,7 +430,7 @@ function App() {
           )}
 
           {/* Routes */}
-          <div className={isLandingPage || isSignupPage || isSigninPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage ? "" : "pt-20"}>
+          <div className={isLandingPage || isSignupPage || isSigninPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage || isWorksmarterPage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
               <Route path="/signup" element={<AuthPage />} />
@@ -433,6 +440,9 @@ function App() {
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
+              <Route path="/lp/worksmarter" element={<WorkSmarterLanding />} />
+              <Route path="/onboard/worksmarter" element={<WorkSmarterOnboard />} />
+              <Route path="/lp/service" element={<ServiceLeadForm />} />
               <Route path="/affiliate" element={<AffiliatePartner />} />
               <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route index element={<DashboardHome />} />

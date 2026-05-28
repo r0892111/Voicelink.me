@@ -40,10 +40,31 @@ Deno.serve(async (req) => {
     r.info('looking up stripe_customer_id');
     const { data: row } = await supabase
       .from('teamleader_users')
-      .select('stripe_customer_id, is_admin, admin_user_id')
+      .select('stripe_customer_id, is_admin, admin_user_id, promo_end_date')
       .eq('user_id', user.id)
       .is('deleted_at', null)
       .maybeSingle();
+
+    // Promo bypass — time-limited Professional access granted without Stripe.
+    // Checked before the Stripe API call so it works even when the user has
+    // no stripe_customer_id yet (e.g. fresh WorkSmarter signups).
+    if (row?.promo_end_date && new Date(row.promo_end_date) > new Date()) {
+      r.info('promo active, returning Professional without Stripe', { promo_end_date: row.promo_end_date });
+      r.done(200, { subscription_status: 'active', voicelink_key: 'professional_monthly' });
+      return json({
+        success: true,
+        subscription: {
+          subscription_status: 'active',
+          voicelink_key:       'professional_monthly',
+          plan_name:           'Professional',
+          current_period_end:  Math.floor(new Date(row.promo_end_date).getTime() / 1000),
+          trial_end:           null,
+          amount:              0,
+          currency:            'eur',
+          interval:            'month',
+        },
+      });
+    }
 
     // For invited members (is_admin=false with an admin_user_id), the
     // subscription lives on the admin's row — members don't have their own

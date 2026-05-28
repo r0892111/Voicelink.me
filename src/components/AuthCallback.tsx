@@ -344,6 +344,33 @@ export const AuthCallback: React.FC = () => {
         return;
       }
 
+      // WorkSmarter promo flow — provision 2 months Professional without Stripe
+      const pendingPromo = localStorage.getItem('pending_promo');
+      if (pendingPromo) {
+        try {
+          const { months } = JSON.parse(pendingPromo) as { months?: number };
+          const { data: { session: activeSession } } = await supabase.auth.getSession();
+          if (activeSession) {
+            await fetch(
+              `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/provision-promo-subscription`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${activeSession.access_token}`,
+                },
+                body: JSON.stringify({ months: months ?? 2 }),
+              },
+            );
+          }
+        } catch (_) {
+          // Non-fatal — user still lands on dashboard and can contact support
+        }
+        localStorage.removeItem('pending_promo');
+        navigate(withUTM('/dashboard'));
+        return;
+      }
+
       // Test users skip Stripe — check DB flag (works for first-time and returning users)
       if (platform === 'teamleader') {
         const { data: tlUser } = await supabase
