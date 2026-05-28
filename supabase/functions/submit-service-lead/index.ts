@@ -6,17 +6,71 @@
 // 4. Sends a confirmation email via Resend (best-effort)
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { corsHeaders } from '../_shared/cors.ts';
-import { createLogger, toErrorDetail } from '../_shared/logger.ts';
 
-const log = createLogger('submit-service-lead');
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+};
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Fetches the Voicelink admin's TL access token, refreshing if expired.
+async function getTLAccessToken(
+  supabase: ReturnType<typeof createClient>,
+  adminUserId: string,
+  clientId: string,
+  clientSecret: string,
+  authBase: string,
+): Promise<string | null> {
+  const { data: row, error } = await supabase
+    .from('oauth_tokens')
+    .select('access_token, refresh_token, expires_at')
+    .eq('user_id', adminUserId)
+    .eq('provider', 'teamleader')
+    .maybeSingle();
+
+  if (error || !row?.refresh_token) return null;
+
+  if (row.expires_at && new Date(row.expires_at) > new Date(Date.now() + 60_000)) {
+    return row.access_token as string;
+  }
+
+  const tokenUrl = `${authBase.replace(/\/$/, '')}/oauth2/access_token`;
+  const resp = await fetch(tokenUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: row.refresh_token as string,
+    }),
+  });
+
+  if (!resp.ok) return null;
+
+  const tokens = await resp.json() as { access_token: string; refresh_token?: string; expires_in?: number };
+  const expiresAt = tokens.expires_in
+    ? new Date(Date.now() + tokens.expires_in * 1000).toISOString()
+    : null;
+
+  await supabase
+    .from('oauth_tokens')
+    .update({
+      access_token: tokens.access_token,
+      refresh_token: tokens.refresh_token ?? row.refresh_token,
+      expires_at: expiresAt,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('user_id', adminUserId)
+    .eq('provider', 'teamleader');
+
+  return tokens.access_token;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
-
-  const r = log.withRequest(req);
 
   const json = (data: Record<string, unknown>, status = 200) =>
     new Response(JSON.stringify(data), {
@@ -39,7 +93,7 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
-    r.info('inserting service_lead', { email, bedrijf });
+    console.log(JSON.stringify({ level: 'info', function: 'submit-service-lead', message: 'inserting service_lead', email, bedrijf }));
     const { error: insertError } = await supabase
       .from('service_leads')
       .insert({
@@ -51,30 +105,37 @@ Deno.serve(async (req) => {
       });
 
     if (insertError) {
-      r.error('insert failed', toErrorDetail(insertError));
+      console.error(JSON.stringify({ level: 'error', function: 'submit-service-lead', message: 'insert failed', error: insertError.message }));
       return json({ success: false, error: 'Opslaan mislukt, probeer opnieuw.' }, 500);
     }
 
-    r.info('lead inserted, triggering side-effects');
-
     // ── Best-effort: create contact in Voicelink's service pipeline ──
-    const tlToken = Deno.env.get('TL_INTERNAL_ACCESS_TOKEN');
-    const tlServicePipelineId = Deno.env.get('TL_SERVICE_PIPELINE_ID');
-    if (tlToken && tlServicePipelineId) {
-      fetch('https://api.focus.teamleader.eu/contacts.add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tlToken}`,
-        },
-        body: JSON.stringify({
-          first_name: naam.trim().split(' ')[0],
-          last_name: naam.trim().split(' ').slice(1).join(' ') || '',
-          emails: [{ type: 'primary', email: email.trim().toLowerCase() }],
-          telephones: [{ type: 'phone', number: telefoonnummer.trim() }],
-          tags: ['worksmarter_2025', 'service_lead'],
-        }),
-      }).catch((e) => r.warn('TL contact creation failed', { error: String(e) }));
+    const adminUserId    = Deno.env.get('TL_ADMIN_USER_ID');
+    const tlClientId     = Deno.env.get('TEAMLEADER_CLIENT_ID');
+    const tlClientSecret = Deno.env.get('TEAMLEADER_CLIENT_SECRET');
+    const authBase       = Deno.env.get('TEAMLEADER_AUTH_BASE_URL') ?? 'https://app.teamleader.eu';
+    const tlPipelineId   = Deno.env.get('TL_SERVICE_PIPELINE_ID');
+
+    if (adminUserId && tlClientId && tlClientSecret && tlPipelineId) {
+      getTLAccessToken(supabase, adminUserId, tlClientId, tlClientSecret, authBase)
+        .then((tlToken) => {
+          if (!tlToken) {
+            console.warn(JSON.stringify({ level: 'warn', function: 'submit-service-lead', message: 'TL token unavailable, skipping contact creation' }));
+            return;
+          }
+          return fetch('https://api.focus.teamleader.eu/contacts.add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${tlToken}` },
+            body: JSON.stringify({
+              first_name: naam.trim().split(' ')[0],
+              last_name: naam.trim().split(' ').slice(1).join(' ') || '',
+              emails: [{ type: 'primary', email: email.trim().toLowerCase() }],
+              telephones: [{ type: 'phone', number: telefoonnummer.trim() }],
+              tags: ['worksmarter_2025', 'service_lead'],
+            }),
+          });
+        })
+        .catch((e) => console.warn(JSON.stringify({ level: 'warn', function: 'submit-service-lead', message: 'TL contact creation failed', error: String(e) })));
     }
 
     // ── Best-effort: send confirmation email via Resend ──
@@ -83,10 +144,7 @@ Deno.serve(async (req) => {
     if (resendKey) {
       fetch('https://api.resend.com/emails', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${resendKey}`,
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${resendKey}` },
         body: JSON.stringify({
           from: `VoiceLink <${fromEmail}>`,
           to: [email.trim().toLowerCase()],
@@ -98,13 +156,13 @@ Deno.serve(async (req) => {
             <p>— Het VoiceLink team</p>
           `,
         }),
-      }).catch((e) => r.warn('email send failed', { error: String(e) }));
+      }).catch((e) => console.warn(JSON.stringify({ level: 'warn', function: 'submit-service-lead', message: 'email send failed', error: String(e) })));
     }
 
-    r.done(200, { inserted: true });
+    console.log(JSON.stringify({ level: 'info', function: 'submit-service-lead', message: 'done', status: 200, inserted: true }));
     return json({ success: true });
   } catch (err) {
-    r.error('unhandled error', toErrorDetail(err));
+    console.error(JSON.stringify({ level: 'error', function: 'submit-service-lead', message: 'unhandled error', error: err instanceof Error ? err.message : String(err) }));
     return json({ success: false, error: 'Er is iets misgegaan.' }, 500);
   }
 });

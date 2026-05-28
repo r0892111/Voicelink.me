@@ -60,6 +60,24 @@ export const Dashboard: React.FC = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
 
+      // WorkSmarter promo: magic-link flow bypasses AuthCallback's promo intercept,
+      // so consume pending_promo here before the subscription check runs.
+      const pendingPromo = localStorage.getItem('pending_promo');
+      if (pendingPromo) {
+        try {
+          const { months } = JSON.parse(pendingPromo) as { months?: number };
+          await fetch(
+            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/provision-promo-subscription`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+              body: JSON.stringify({ months: months ?? 2 }),
+            },
+          );
+        } catch (_) { /* non-fatal */ }
+        localStorage.removeItem('pending_promo');
+      }
+
       // Skip Stripe entirely for test users
       const { data: tlUser } = await supabase
         .from('teamleader_users')
