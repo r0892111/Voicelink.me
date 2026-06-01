@@ -1,122 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { CheckCircle, Play, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CheckCircle, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { useI18n } from '../hooks/useI18n';
 import { trackCTAClick } from '../utils/analytics';
 import { withUTM } from '../utils/utm';
 import { usePageTransition } from '../hooks/usePageTransition';
 import { useIsCompactHero } from '../hooks/useBreakpoint';
-
-const typewriterPhrases = [
-  "to your CRM.",
-  "We handle the data.",
-  "Your CRM thinks.",
-];
-
-const TYPING_SPEED = 80;
-const DELETING_SPEED = 40;
-const PAUSE_DURATION = 2000;
-const UNDERLINE_DURATION = 400;
-
-const useTypewriter = (phrases: string[]) => {
-  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState("");
-  const [phase, setPhase] = useState<'typing' | 'drawing' | 'paused' | 'deleting'>('typing');
-  const [isDrawing, setIsDrawing] = useState(false);
-
-  useEffect(() => {
-    const currentPhrase = phrases[currentPhraseIndex];
-    let timer: ReturnType<typeof setTimeout>;
-
-    switch (phase) {
-      case 'typing':
-        if (displayedText.length < currentPhrase.length) {
-          timer = setTimeout(() => {
-            setDisplayedText(currentPhrase.slice(0, displayedText.length + 1));
-          }, TYPING_SPEED);
-        } else {
-          // Fully typed — start drawing underline
-          setIsDrawing(true);
-          setPhase('drawing');
-        }
-        break;
-
-      case 'drawing':
-        timer = setTimeout(() => {
-          setPhase('paused');
-        }, UNDERLINE_DURATION);
-        break;
-
-      case 'paused':
-        timer = setTimeout(() => {
-          setIsDrawing(false);
-          setPhase('deleting');
-        }, PAUSE_DURATION);
-        break;
-
-      case 'deleting':
-        if (displayedText.length > 0) {
-          timer = setTimeout(() => {
-            setDisplayedText((prev) => prev.slice(0, -1));
-          }, DELETING_SPEED);
-        } else {
-          // Move to next phrase and start typing
-          setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
-          setPhase('typing');
-        }
-        break;
-    }
-
-    return () => clearTimeout(timer);
-  }, [displayedText, phase, currentPhraseIndex, phrases]);
-
-  return { displayedText, isDrawing, currentPhraseIndex };
-};
-
-/** Split text so the last word is wrapped for the underline SVG */
-const TypewriterText: React.FC<{ text: string; isDrawing: boolean }> = ({ text, isDrawing }) => {
-  // Find the last word boundary
-  const trimmed = text.trimEnd();
-  const lastSpaceIdx = trimmed.lastIndexOf(' ');
-  const beforeLast = lastSpaceIdx >= 0 ? trimmed.slice(0, lastSpaceIdx + 1) : '';
-  const lastWord = lastSpaceIdx >= 0 ? trimmed.slice(lastSpaceIdx + 1) : trimmed;
-
-  return (
-    <>
-      {beforeLast}
-      {lastWord && (
-        <span className="relative inline-block">
-          <span className="relative z-10">{lastWord}</span>
-          <svg
-            className="absolute -bottom-1 left-0 w-full h-[0.45em] z-0"
-            viewBox="0 0 120 20"
-            preserveAspectRatio="none"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M2 16Q50 6 118 10"
-              stroke="#2D3A5C"
-              strokeOpacity="0.22"
-              strokeWidth="12"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              pathLength="1"
-              style={{
-                strokeDasharray: 1,
-                strokeDashoffset: isDrawing ? 0 : 1,
-                opacity: isDrawing ? 1 : 0,
-                transition: isDrawing
-                  ? 'stroke-dashoffset 400ms ease-out, opacity 0ms'
-                  : 'opacity 0ms',
-              }}
-            />
-          </svg>
-        </span>
-      )}
-    </>
-  );
-};
 
 /** Waveform bars + italic voice quote — shared across all cards */
 /** Seeded pseudo-random for deterministic per-card waveforms */
@@ -1433,7 +1322,9 @@ export const CrmPreviewCards: React.FC = () => {
     const onScroll = () => {
       if (isArrowNavRef.current) return;
       const cardW = (el.firstElementChild as HTMLElement)?.offsetWidth || el.clientWidth;
-      const idx = Math.round(el.scrollLeft / (cardW + 16));
+      // When scrolled to the far right, snap to the last card so the progress bar hits 100%.
+      const atEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 2;
+      const idx = atEnd ? TOTAL_CARDS - 1 : Math.round(el.scrollLeft / (cardW + 16));
       const clamped = Math.max(0, Math.min(TOTAL_CARDS - 1, idx));
       if (clamped !== currentCardIdxRef.current) {
         currentCardIdxRef.current = clamped;
@@ -1452,7 +1343,9 @@ export const CrmPreviewCards: React.FC = () => {
       if (isArrowNavRef.current) return;
       const cardW = (el.firstElementChild as HTMLElement)?.offsetWidth || 420;
       const gap = parseFloat(getComputedStyle(el).gap) || 20;
-      const idx = Math.round(el.scrollLeft / (cardW + gap));
+      // When scrolled to the far right, snap to the last card so the progress bar hits 100%.
+      const atEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 2;
+      const idx = atEnd ? TOTAL_CARDS - 1 : Math.round(el.scrollLeft / (cardW + gap));
       const clamped = Math.max(0, Math.min(TOTAL_CARDS - 1, idx));
       if (clamped !== currentCardIdxRef.current) {
         currentCardIdxRef.current = clamped;
@@ -1503,8 +1396,8 @@ export const CrmPreviewCards: React.FC = () => {
     <div style={{ zoom }}>
     <div className="relative pb-4 md:pb-6" style={{ marginTop: '0' }}>
       <h2
-        className="font-general font-bold text-navy text-center mb-6 md:mb-8 mt-6 md:mt-0 max-w-[260px] mx-auto md:max-w-none"
-        style={{ fontSize: 'clamp(1.75rem, calc(1.2rem + 2vw), 3.25rem)', letterSpacing: '-0.02em' }}
+        className="font-general font-bold text-navy text-center leading-[1.15] mb-6 md:mb-8 mt-6 md:mt-0 max-w-[260px] mx-auto md:max-w-none text-3xl sm:text-4xl md:text-5xl 2xl:text-6xl"
+        style={{ letterSpacing: '-0.02em' }}
       >
         {t('hero.carouselTitle')}
       </h2>
@@ -1563,17 +1456,25 @@ export const CrmPreviewCards: React.FC = () => {
 export const HeroDemo: React.FC = () => {
   const { navigateWithTransition } = usePageTransition();
   const { t } = useI18n();
-  const { displayedText, isDrawing, currentPhraseIndex } = useTypewriter(typewriterPhrases);
-  const showTalkDot = currentPhraseIndex !== 0; // hide "." after "Talk" when "to your CRM." is active
   const isCompact = useIsCompactHero();
+
+  // Subtitle with inline Teamleader + WhatsApp logos (shared by both branches)
+  const subtitleLogos = (
+    <>
+      {t('hero.subtitle1_pre')}{' '}
+      <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" className="inline-block h-[3.2em] w-auto align-middle -ml-1 -mr-2 my-[-1.1em]" style={{ clipPath: 'inset(0 6% 0 6%)', transform: 'translateY(-0.35em)' }} draggable={false} />{' '}
+      {t('hero.subtitle1_mid')}{' '}
+      <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em] my-[-0.2em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>{t('hero.subtitle1_post')}
+    </>
+  );
 
   return (
     <div className="w-full">
       {/* Hero Content — Fixed layout with absolute positioning */}
-      <section className="relative" style={isCompact ? { minHeight: '100svh', overflowX: 'clip' } : { height: '100svh', overflow: 'clip' }}>
-        {/* Mobile: Blue logo next to hamburger */}
-        <div className="md:hidden absolute top-3 right-[72px] z-20 pointer-events-none flex items-center" style={{ height: '44px' }}>
-          <img src="/Finit Voicelink Blue.svg" alt="VoiceLink" className="h-9 w-auto" />
+      <section className="relative" style={{ overflowX: 'clip' }}>
+        {/* Mobile: Blue logo top-left of hero (scrolls with section) */}
+        <div className="md:hidden absolute top-3 left-4 z-20 pointer-events-none flex items-center" style={{ height: '44px' }}>
+          <img src="/Finit Voicelink Blue.svg" alt="VoiceLink" className="h-10 w-auto" />
         </div>
 
         {/* Decorative corner waves — desktop (landscape) */}
@@ -1581,6 +1482,7 @@ export const HeroDemo: React.FC = () => {
           className="absolute inset-0 w-full h-full pointer-events-none hidden md:block hero-animate-waves"
           viewBox="0 0 1440 900"
           preserveAspectRatio="none"
+          overflow="visible"
           aria-hidden="true"
         >
           {/* ── Top-left corner ── */}
@@ -1593,171 +1495,78 @@ export const HeroDemo: React.FC = () => {
                L-10,370 C55,325 25,265 135,205 C235,150 175,65 218,-10 L205,-25 Z"
             fill="#7B8DB5"
           />
-          {/* ── Bottom-right corner ── vertical tangent at y=930, matched curvature with section below */}
-          <path
-            d="M1470,930 L1240,930 C1240,750 1200,690 1320,645 C1450,598 1400,540 1470,460 Z"
-            fill="#1A2D63"
-          />
-          <path
-            d="M1248,930 C1248,755 1205,693 1325,648 C1455,601 1405,543 1475,465
-               L1470,452 C1398,535 1448,595 1318,642 C1195,688 1232,750 1232,930 L1248,930 Z"
-            fill="#7B8DB5"
-          />
+          {/* Bottom-right corner is now rendered as one unit together with the
+              next section's corner — see Homepage.tsx "How It Works" section. */}
         </svg>
 
-        {/* Top-left corner — same desktop paths, cropped viewBox */}
-        <svg
-          className="absolute left-0 pointer-events-none block md:hidden hero-animate-waves"
-          style={{ top: '-8px' }}
-          width="128" height="240"
-          viewBox="-30 -30 255 480"
-          overflow="visible"
-          aria-hidden="true"
-        >
-          <path
-            d="M-30,-30 L220,-30 C170,60 230,140 130,200 C30,260 60,310 -30,360 L-30,430 Z"
-            fill="#1A2D63"
-          />
-          <path
-            d="M222,-55 C177,25 220,135 125,195 C30,255 30,318 -55,368
-               L-34,397 C31,352 30,272 140,212 C240,157 197,42 236,-25 L222,-55 Z"
-            fill="#7B8DB5"
-          />
-        </svg>
-        {/* Bottom-right corner — same desktop paths, cropped viewBox */}
-        <svg
-          className="absolute bottom-0 right-0 pointer-events-none block md:hidden"
-          style={{ bottom: '60px' }}
-          width="143" height="250"
-          viewBox="1183 440 285 500"
-          aria-hidden="true"
-        >
-          <path
-            d="M1470,940 L1240,940 C1240,750 1200,690 1320,645 C1450,598 1400,540 1470,460 Z"
-            fill="#1A2D63"
-          />
-          <path
-            d="M1248,940 C1248,755 1205,693 1325,648 C1455,601 1405,543 1475,465
-               L1470,452 C1398,535 1448,595 1318,642 C1195,688 1232,750 1232,940 L1248,940 Z"
-            fill="#7B8DB5"
-          />
-        </svg>
-
-        {/* ── COMPACT (mobile/tablet): text column + phone in normal flow ── */}
+        {/* ── COMPACT (mobile/tablet): single centered column ── */}
         {isCompact && (
-          <div className="relative z-20 flex flex-col items-center px-[4%] pb-4 md:pb-12" style={{ paddingTop: '20svh' }}>
-            <div className="w-full max-w-lg flex flex-col items-center text-center">
+          <div className="relative z-20 flex flex-col items-center px-[6%] pb-10" style={{ paddingTop: '13svh' }}>
+            <div className="w-full max-w-xl flex flex-col items-center text-center">
               <div className="overflow-visible hero-animate-heading">
-                <h1 className="font-general leading-[1] tracking-tight text-navy text-center" style={{ fontSize: 'clamp(1.7rem, calc(0.7rem + 3vw + 1.5vh), 3.2rem)' }}>
-                  <span className="font-bold" style={{ letterSpacing: '-0.025em', WebkitFontSmoothing: 'antialiased' }}>
-                    Just... Talk{showTalkDot ? '.' : ''}
-                  </span>
-                  <br />
-                  <span className="font-black italic">
-                    <TypewriterText text={displayedText} isDrawing={isDrawing} />
-                  </span>
-                  <span className="inline-block w-[3px] h-[1em] bg-[#1A2D63] ml-1 animate-pulse align-baseline" />
+                <h1 className="font-general font-black leading-[1.05] tracking-tight text-navy text-center" style={{ fontSize: 'clamp(1.9rem, calc(0.8rem + 4vw + 1.5vh), 3.4rem)' }}>
+                  {t('hero.staticTitle')}
                 </h1>
               </div>
-              <div className="w-full max-w-lg">
-                <div className="hero-animate-subtitle">
-                  <p className="font-instrument text-slate-blue leading-relaxed max-w-lg mx-auto text-center" style={{ fontSize: 'clamp(1rem, calc(0.7rem + 0.3vw + 0.35vh), 1.375rem)' }}>
-                    {t('hero.subtitle1_pre')}{' '}
-                    <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" className="inline-block h-[3.2em] w-auto align-[-1em] -mx-2" style={{ clipPath: 'inset(0 6% 0 6%)' }} draggable={false} />{' '}
-                    {t('hero.subtitle1_mid')}{' '}
-                    <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>
-                    <span className="block" style={{ marginTop: '-0.7em', lineHeight: '1.5' }}>{t('hero.subtitle1_post')}</span>
-                  </p>
-                </div>
-                <div className="hero-animate-ctas" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 2rem)' }}>
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                    <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[13px] px-5 py-2.5">
-                      <span>{t('hero.getStartedFree')}</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                    <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-[13px] px-5 py-2.5" onClick={() => { trackCTAClick('Watch Demo - Hero', '/'); const el = document.getElementById('how-it-works'); if (el) window.scrollTo({ top: el.offsetTop - 10, behavior: 'smooth' }); }}>
-                      <Play className="w-4 h-4" />
-                      <span>{t('hero.watchDemo')}</span>
-                    </button>
-                  </div>
-                </div>
-                <div className="hero-animate-checks" style={{ marginTop: 'clamp(0.5rem, calc(0.35rem + 0.6vh), 1.25rem)' }}>
-                  <div className="flex sm:flex-row flex-col items-start justify-start gap-x-6 gap-y-1.5 text-sm text-muted-blue w-fit mx-auto">
-                    <div className="flex items-center space-x-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.oneClickSetup')}</span></div>
-                    <span className="hidden sm:inline">·</span>
-                    <div className="flex items-center space-x-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.whatsappSetup')}</span></div>
-                  </div>
+              <div className="hero-animate-subtitle mt-4">
+                <p className="font-instrument text-slate-blue leading-[1.7] max-w-2xl mx-auto text-center" style={{ fontSize: 'clamp(1rem, calc(0.7rem + 0.3vw + 0.35vh), 1.375rem)' }}>
+                  {subtitleLogos}
+                </p>
+              </div>
+              <div className="hero-animate-ctas mt-6">
+                <div className="flex flex-row gap-3 justify-center">
+                  <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[15px] px-6 py-3">
+                    <span>{t('hero.getStartedFree')}</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                  <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-[15px] px-6 py-3" onClick={() => { trackCTAClick('How to Install - Hero', '/'); navigateWithTransition(withUTM('/getting-started')); }}>
+                    <span>{t('hero.howToInstall')}</span>
+                  </button>
                 </div>
               </div>
-              <div className="pointer-events-none" style={{ width: 'min(460px, 86vw)', marginTop: 'clamp(1rem, 3vh, 2.5rem)' }}>
-                <div className="flex items-start justify-center hero-animate-phone-bottom">
-                  <img src="/whatsapp phone mock.png" alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes" style={{ width: 'min(460px, 97vw)', height: 'auto', transform: 'rotate(5deg)', filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))' }} draggable={false} />
+              <div className="hero-animate-checks mt-8">
+                <div className="inline-flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-blue">
+                  <div className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.bulletSetup')}</span></div>
+                  <div className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.bulletNoTech')}</span></div>
+                  <div className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.bulletNoCard')}</span></div>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* ── DESKTOP: centered flex row, text left + phone right ── */}
+        {/* ── DESKTOP: single centered column ── */}
         {!isCompact && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center" style={{ padding: '6vh 6vw 0', gap: 'clamp(0.25rem, 0.5vw, 1rem)' }}>
-            {/* Text column */}
-            <div className="flex flex-col items-start text-left flex-1 min-w-0 max-w-[540px] xl:max-w-[660px] 2xl:max-w-[800px]">
+          <div className="relative z-10 flex flex-col items-center justify-center text-center" style={{ padding: '18vh 6vw 7vh' }}>
+            <div className="flex flex-col items-center text-center max-w-[820px]">
               <div className="overflow-visible hero-animate-heading w-full">
-                <h1 className="font-general leading-[1] tracking-tight text-navy text-left" style={{ fontSize: 'clamp(2.5rem, calc(1.8rem + 1.2vw + 1.5vh), 6rem)' }}>
-                  <span className="font-bold" style={{ letterSpacing: '-0.025em', WebkitFontSmoothing: 'antialiased' }}>
-                    Just... Talk{showTalkDot ? '.' : ''}
-                  </span>
-                  <br />
-                  <span className="font-black italic">
-                    <TypewriterText text={displayedText} isDrawing={isDrawing} />
-                  </span>
-                  <span className="inline-block w-[3px] h-[1em] bg-[#1A2D63] ml-1 animate-pulse align-baseline" />
+                <h1 className="font-general font-black leading-[1.05] tracking-tight text-navy text-center" style={{ fontSize: 'clamp(2.5rem, calc(1.8rem + 1.2vw + 1.5vh), 5.5rem)' }}>
+                  {t('hero.staticTitle')}
                 </h1>
               </div>
               <div className="hero-animate-subtitle w-full" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 1.5rem)' }}>
-                <p className="font-instrument text-slate-blue leading-relaxed text-left max-w-[520px]" style={{ fontSize: 'clamp(1rem, calc(0.7rem + 0.3vw + 0.35vh), 1.375rem)' }}>
-                  {t('hero.subtitle1_pre')}{' '}
-                  <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" className="inline-block h-[3.2em] w-auto align-[-1em] -mx-2" style={{ clipPath: 'inset(0 6% 0 6%)' }} draggable={false} />{' '}
-                  {t('hero.subtitle1_mid')}{' '}
-                  <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>{' '}
-                  {t('hero.subtitle1_post')}
+                <p className="font-instrument text-slate-blue leading-[1.7] text-center max-w-2xl mx-auto" style={{ fontSize: 'clamp(1rem, calc(0.7rem + 0.3vw + 0.35vh), 1.375rem)' }}>
+                  {subtitleLogos}
                 </p>
               </div>
               <div className="hero-animate-ctas w-full" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 2rem)' }}>
-                <div className="flex flex-row gap-4 justify-start">
-                  <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[15px] px-6 py-3">
+                <div className="flex flex-row gap-4 justify-center">
+                  <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-base md:text-[17px] px-7 py-3.5">
                     <span>{t('hero.getStartedFree')}</span>
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
-                  <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-[15px] px-6 py-3" onClick={() => { trackCTAClick('Watch Demo - Hero', '/'); const el = document.getElementById('how-it-works'); if (el) window.scrollTo({ top: el.offsetTop - 10, behavior: 'smooth' }); }}>
-                    <Play className="w-5 h-5" />
-                    <span>{t('hero.watchDemo')}</span>
+                  <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-base md:text-[17px] px-7 py-3.5" onClick={() => { trackCTAClick('How to Install - Hero', '/'); navigateWithTransition(withUTM('/getting-started')); }}>
+                    <span>{t('hero.howToInstall')}</span>
                   </button>
                 </div>
               </div>
-              <div className="hero-animate-checks w-full" style={{ marginTop: 'clamp(0.5rem, calc(0.35rem + 0.6vh), 1.25rem)' }}>
-                <div className="flex flex-wrap items-center justify-start gap-x-6 gap-y-2 text-sm text-muted-blue">
-                  <div className="flex items-center space-x-2"><CheckCircle className="w-4 h-4 text-navy" /><span>{t('hero.oneClickSetup')}</span></div>
-                  <span className="hidden sm:inline">·</span>
-                  <div className="flex items-start space-x-2 max-w-[180px]"><CheckCircle className="w-4 h-4 text-navy mt-0.5 flex-shrink-0" /><span className="leading-snug whitespace-pre-line">{t('hero.whatsappSetup')}</span></div>
+              <div className="hero-animate-checks w-full mt-8">
+                <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-blue">
+                  <div className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.bulletSetup')}</span></div>
+                  <div className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.bulletNoTech')}</span></div>
+                  <div className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-navy flex-shrink-0" /><span>{t('hero.bulletNoCard')}</span></div>
                 </div>
               </div>
-            </div>
-
-            {/* Phone */}
-            <div className="flex-shrink-0">
-              <img
-                src="/whatsapp phone mock.png"
-                alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes"
-                style={{
-                  width: 'auto',
-                  height: 'clamp(540px, 92svh, 1020px)',
-                  transform: 'rotate(7deg)',
-                  filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))',
-                }}
-                draggable={false}
-              />
             </div>
           </div>
         )}

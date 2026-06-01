@@ -85,11 +85,11 @@
     "signOut": "Uitloggen",
     "getStarted": "Gratis Beginnen",
     "backToHome": "Terug naar Home",
-    "howItWorks": "Hoe het werkt",
+    "howItWorks": "Aan de slag",
     "integrations": "Wat het kan",
     "contact": "Contact",
     "maatwerkAI": "Maatwerk AI",
-    "affiliate": "Partnerprogramma",
+    "affiliate": "Word partner",
     "urgentQuestions": "Liever direct contact?",
     "callUs": "Bel gerust op",
     "callHours": "ma-za · 8u30-19u"
@@ -97,17 +97,23 @@
   "hero": {
     "title": "Gewoon...",
     "mainTitle": "Praten met je CRM",
-    "subtitle1_pre": "Connecteer je",
+    "subtitle1_pre": "VoiceLink koppelt",
     "subtitle1_crm": "Teamleader CRM",
     "subtitle1_mid": "met",
     "subtitle1_wa": "WhatsApp",
-    "subtitle1_post": "en doe al je administratie via een simpel spraakbericht.",
+    "subtitle1_post": ", zodat je met één voicenote klantnotities toevoegt, opvolging registreert, taken aanmaakt en CRM-informatie opvraagt. Zonder Teamleader te openen.",
     "subtitle2": "Zet spraakberichten direct om in gestructureerde data.",
-    "getStartedFree": "Gratis Beginnen",
-    "watchDemo": "Bekijk Demo",
+    "getStartedFree": "Start gratis",
+    "watchDemo": "Bekijk demo",
+    "howToInstall": "Hoe installeren?",
     "oneClickSetup": "Eén-klik CRM Verbinding",
     "whatsappSetup": "Verbind WhatsApp\nin 2 minuten",
-    "carouselTitle": "Ontdek wat VoiceLink kan doen in je CRM"
+    "carouselTitle": "Wat kan VoiceLink doen in je CRM?",
+    "staticTitle": "Beheer je CRM via WhatsApp",
+    "subtitleFull": "VoiceLink koppelt Teamleader met WhatsApp, zodat je met één voicenote klantnotities toevoegt, opvolging registreert, taken aanmaakt en CRM-informatie opvraagt. Zonder Teamleader te openen.",
+    "bulletSetup": "Opgezet in enkele minuten",
+    "bulletNoTech": "Geen technische kennis nodig",
+    "bulletNoCard": "Geen creditcard vereist"
   },
   "auth": {
     "page": {
@@ -806,8 +812,8 @@
     }
   },
   "pricing": {
-    "title": "Eenvoudige, Transparante Prijzen",
-    "subtitle": "Prijs per gebruiker met duidelijke berichtlimieten. Start gratis, schaal naarmate je groeit.",
+    "title": "Minder administratie. Meer tijd voor klanten.",
+    "subtitle": "Start gratis en beheer je CRM rechtstreeks via WhatsApp.",
     "monthly": "Maandelijks",
     "yearly": "Jaarlijks",
     "save20": "Bespaar 20%",
@@ -834,7 +840,7 @@
     "startFreeTrial": "Start Gratis Proefperiode",
     "freeTrial": "1 maand gratis proefperiode",
     "custom": "Aangepast",
-    "getCustomQuote": "Vraag Offerte Aan",
+    "getCustomQuote": "Neem contact op",
     "allPlansInclude": "Alle plannen bevatten real-time CRM synchronisatie, WhatsApp integratie en meertalige ondersteuning.",
     "free": "Gratis",
     "users": "gebruikers",
@@ -844,35 +850,68 @@
     "autoTopUpInfo": "Auto top-up beschikbaar — €7 per 100 credits",
     "cards": {
       "freetrial": {
-        "name": "Gratis Proberen",
+        "name": "Gratis",
         "description": "Probeer voor je koopt",
-        "cta": "Start Gratis",
+        "cta": "Probeer nu gratis",
         "subtext": "100 gratis credits — geen kaart nodig",
-        "billingNote": "Eenmalige credits, geen kaart nodig"
+        "billingNote": "Eenmalige credits, geen kaart nodig",
+        "features": [
+          "E-mailsupport"
+        ]
       },
       "starter": {
         "name": "Starter",
         "description": "Voor licht gebruik",
-        "cta": "Start met Starter",
-        "subtext": "E-mail support inbegrepen"
+        "cta": "Probeer nu gratis",
+        "subtext": "E-mail support inbegrepen",
+        "features": [
+          "Alles uit de proefperiode, plus:",
+          "1-op-1 supportgesprekken"
+        ]
       },
       "professional": {
         "name": "Professional",
         "description": "Voor dagelijks gebruik",
         "badge": "Meest Populair",
-        "cta": "Ga naar Professional"
+        "cta": "Probeer nu gratis",
+        "features": [
+          "Alles uit Starter, plus:",
+          "Toegewijde accountmanager",
+          "Meerdere teamleden toevoegen"
+        ]
       },
       "business": {
         "name": "Business",
         "description": "Voor intensief gebruik",
-        "cta": "Ga naar Business"
+        "cta": "Probeer nu gratis",
+        "features": [
+          "Alles uit Professional, plus:",
+          "Maatwerk-features op aanvraag"
+        ]
       },
       "enterprise": {
         "name": "Enterprise",
         "description": "Voor organisaties (25+ gebruikers)",
-        "contactForPricing": "Afgestemd op jouw behoeften"
+        "contactForPricing": "Afgestemd op jouw behoeften",
+        "features": [
+          "Volledig afgestemd op jouw bedrijfsstructuur"
+        ]
       }
-    }
+    },
+    "creditUses": [
+      "± berichten per maand",
+      "Contacten",
+      "Notities",
+      "Taken",
+      "Afspraken",
+      "Offertes & facturen",
+      "Meer"
+    ],
+    "perUserLine1": "gebruiker /",
+    "perUserLine2": "maand",
+    "totalBilledAnnually": "Totaal €{{total}} /maand, jaarlijks gefactureerd",
+    "creditUsesTitle": "Gebruik je credits voor:",
+    "includedHeading": "Inbegrepen:"
   },
   "features": {
     "title": "CRM Integraties",
@@ -888,22 +927,22 @@
   },
   "howItWorks": {
     "title": "Hoe werkt het?",
-    "subtitle": "In vier stappen van spraakbericht naar je CRM",
+    "subtitle": "In vier stappen van spraak naar je CRM",
     "step1": {
       "title": "Stuur een bericht",
-      "description": "Open WhatsApp en stuur een spraakbericht of tekst — zoals je gewend bent. Voeg nieuwe info toe aan je CRM of zoek bestaande contacten en deals op."
+      "description": "Open WhatsApp en stuur een spraakbericht of tekst zoals je gewend bent. Voeg informatie toe aan je CRM of vraag bestaande contacten, deals, taken en afspraken op."
     },
     "step2": {
-      "title": "VoiceLink pikt de info eruit",
-      "description": "VoiceLink herkent de belangrijkste info — namen, nummers, afspraken, notities — en redeneert wat ermee moet gebeuren."
+      "title": "De juiste informatie wordt verwerkt",
+      "description": "Contacten, notities, opvolgingen, afspraken en opportuniteiten worden automatisch herkend en gekoppeld aan de juiste klant of deal."
     },
     "step3": {
-      "title": "Je krijgt een samenvatting",
-      "description": "Meteen een overzicht terug in WhatsApp. VoiceLink denkt ook proactief mee: het kan vragen stellen of zaken voorstellen."
+      "title": "Je krijgt meteen feedback",
+      "description": "Je ziet welke informatie werd gevonden en welke acties zullen worden uitgevoerd. Ontbreekt er iets? Dan krijg je meteen een vraag of suggestie terug."
     },
     "step4": {
-      "title": "Alles staat in je CRM",
-      "description": "Contacten, notities en taken verschijnen automatisch in je CRM. Klaar."
+      "title": "Alles staat waar het hoort",
+      "description": "Nieuwe informatie wordt toegevoegd aan je CRM en opgevraagde informatie verschijnt meteen terug in WhatsApp."
     },
     "coreFunctionalities": {
       "title": "Kernfunctionaliteiten",
@@ -957,8 +996,8 @@
     "tailoredImplementation": "Op maat gemaakte implementatie"
   },
   "footer": {
-    "ctaHeadline": "Just... talk.\nWij zorgen voor de rest.",
-    "ctaSubline": "Eén voicenote op WhatsApp is genoeg om je administratie up-to-date te houden.",
+    "ctaHeadline": "Just… talk.\nJe CRM blijft up-to-date.",
+    "ctaSubline": "Voeg informatie toe, vraag klantgegevens op en beheer je CRM rechtstreeks via WhatsApp.",
     "copyright": "© 2025 Finit Solutions",
     "privacy": "Privacy",
     "saasAgreement": "SaaS Overeenkomst",
@@ -1074,13 +1113,13 @@
     "submitFailed": "Bericht versturen mislukt. Probeer het opnieuw of neem direct contact met ons op."
   },
   "finalCta": {
-    "title": "Je administratie is nog nooit zo snel gegaan",
-    "subtitle": "Verbind je WhatsApp, stuur een spraakbericht en VoiceLink doet de rest.",
-    "startFreeTrial": "Start Gratis Proefperiode",
-    "watchDemo": "Bekijk Demo",
+    "title": "Klaar om VoiceLink gratis uit te proberen?",
+    "subtitle": "Verbind je CRM met WhatsApp en voeg notities toe, registreer opvolgingen en vraag klantinformatie op via één gesprek.",
+    "startFreeTrial": "Start gratis",
+    "watchDemo": "Bekijk demo",
     "freeTrialFeatures": {
-      "freeTrialDays": "1 maand gratis proefperiode",
-      "noSetupFees": "Geen installatiekosten",
+      "freeTrialDays": "100 gratis credits",
+      "noSetupFees": "Geen creditcard vereist",
       "cancelAnytime": "Altijd opzegbaar"
     }
   },
@@ -1142,11 +1181,11 @@
   },
   "problemAgitation": {
     "title": "Klinkt bekend?",
-    "subtitle": "Sales teams verliezen wekelijks uren aan handmatig CRM-werk.",
-    "pain1": "Je vergeet gesprekken te loggen in je CRM omdat je al bij het volgende bent.",
-    "pain2": "Notities van klantgesprekken zitten in je hoofd — of op een servet.",
-    "pain3": "Je pipeline ziet er verouderd uit omdat bijwerken te lang duurt.",
-    "pain4": "Follow-ups glippen door de mazen en deals koelen af."
+    "subtitle": "Je CRM loopt vaak achter op wat er echt gebeurt binnen je bedrijf.",
+    "pain1": "Je vergeet gesprekken te registreren omdat je al met de volgende klant bezig bent.",
+    "pain2": "Belangrijke informatie blijft hangen in WhatsApp, notities of je hoofd.",
+    "pain3": "Opvolgingen glippen door de mazen van het net omdat administratie blijft liggen.",
+    "pain4": "Het bijwerken van je CRM voelt als extra werk bovenop je echte werk."
   },
   "integrations": {
     "title": "Werkt met jouw CRM",
@@ -1635,48 +1674,39 @@
   },
   "affiliate": {
     "hero": {
-      "title": "Bouw recurring revenue door VoiceLink te introduceren bij je netwerk",
-      "subtitle": "Word partner van VoiceLink en ontvang 20% recurring commissie op elke doorverwezen klant. Lang attributievenster, maandelijkse uitbetalingen, alles geleverd.",
-      "stat1": "recurring commissie",
-      "stat2": "attributievenster",
-      "stat3": "tail na opzeg",
-      "days": "dagen",
-      "months": "maanden",
+      "title": "Word partner van VoiceLink",
+      "subtitle": "Introduceer VoiceLink bij bedrijven in je netwerk en ontvang 20% terugkerende commissie zolang ze klant blijven. Wij verzorgen de demo, onboarding en support.",
       "cta1": "Word partner",
-      "cta2": "Boek een call"
+      "cta2": "Plan een kennismaking"
     },
     "howItWorks": {
-      "title": "Hoe het werkt",
+      "title": "Zo werkt het",
       "step1": {
         "title": "Registreer een lead",
-        "description": "Stuur een mail naar voicelink@finitsolutions.be met naam, bedrijf en context."
+        "description": "Stuur een e-mail naar voicelink@finitsolutions.be met de naam van het bedrijf, een contactpersoon en wat context."
       },
       "step2": {
-        "title": "Klant tekent binnen 90 dagen",
-        "description": "Als je lead binnen 90 dagen een abonnement neemt, verdien je commissie."
+        "title": "Klant wordt actief",
+        "description": "Wordt je lead binnen 90 dagen klant, dan wordt die aan jou toegewezen."
       },
       "step3": {
-        "title": "Ontvang 20% recurring",
-        "description": "Zolang je klant betaalt, ontvang je 20% van hun maandelijkse abonnementswaarde."
-      },
-      "step4": {
-        "title": "Uitbetaling per kwartaal",
-        "description": "Maandelijks als je 5+ actieve klanten hebt, anders per kwartaal na factuur."
+        "title": "Ontvang terugkerende commissie",
+        "description": "Je ontvangt 20% commissie zolang de klant actief blijft. Uitbetaling gebeurt per kwartaal. Vanaf 5 actieve klanten schakelen we over naar maandelijkse uitbetaling."
       }
     },
     "whyPartner": {
-      "title": "Waarom partner worden?",
+      "title": "Waarom partners VoiceLink aanbevelen",
       "point1": {
-        "title": "Recurring, niet one-shot",
-        "description": "Bouw een portfolio op, niet incidentele commissies. Langetermijnrelatie met je klanten."
+        "title": "Wij doen het werk",
+        "description": "Demo's, onboarding, support en opvolging nemen wij voor onze rekening. Jij maakt de introductie, wij doen de rest."
       },
       "point2": {
-        "title": "Ruim attributievenster",
-        "description": "90 dagen om een klant te introduceren. Recurring commissie zolang de klant actief is en betaalt."
+        "title": "Past bij vrijwel elk bedrijf",
+        "description": "Vrijwel elk bedrijf werkt vandaag met een CRM en verliest tijd aan administratie, opvolging of verspreide klantinformatie."
       },
       "point3": {
-        "title": "Alles geleverd",
-        "description": "Pitch deck, demo-video's, one-pager, FAQ. Jij introduceert, wij doen de rest."
+        "title": "Makkelijk om de waarde te tonen",
+        "description": "De meerwaarde is meteen duidelijk: klanten kunnen hun CRM beheren via WhatsApp zonder hun bestaande manier van werken te veranderen."
       }
     },
     "accordion": {
@@ -1727,11 +1757,13 @@
         "error": "Er is iets misgegaan. Stuur een mail naar voicelink@finitsolutions.be."
       },
       "calendly": {
-        "title": "Of boek een call",
-        "subtitle": "Liever eerst even sparren? Boek 20 minuten met ons team.",
-        "cta": "Boek in Calendly",
-        "info": "Bij vragen kun je ons altijd bereiken op voicelink@finitsolutions.be. Reageren doen we binnen 24 uur."
-      }
+        "title": "Eerst kennismaken?",
+        "subtitle": "Wil je eerst bespreken of VoiceLink past bij jouw klanten of netwerk? Boek een gesprek van 20 minuten met ons team.",
+        "cta": "Plan een kennismaking",
+        "contactBefore": "Vragen? Stuur een e-mail naar ",
+        "contactAfter": ". We antwoorden meestal binnen één werkdag."
+      },
+      "subtitle": "Meld je aan of plan eerst een kennismaking."
     }
   },
   "languagePicker": {

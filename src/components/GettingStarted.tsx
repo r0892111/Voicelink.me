@@ -61,7 +61,7 @@ export function GettingStarted() {
   return (
     <div className="min-h-screen bg-porcelain relative font-instrument">
       {/* ───────── HERO ───────── */}
-      <section className="pt-28 pb-10 md:pt-32 md:pb-14">
+      <section className="pt-4 pb-6 md:pt-6 md:pb-8">
         <div className="max-w-5xl mx-auto px-6">
           <button
             onClick={() => navigate(withUTM('/'))}
@@ -102,9 +102,9 @@ export function GettingStarted() {
       </section>
 
       {/* ───────── STEPS ───────── */}
-      <section className="pb-16 md:pb-20">
+      <section className="pb-6 md:pb-8">
         <div className="max-w-5xl mx-auto px-6">
-          <p className="text-navy/70 text-base md:text-lg mb-8 max-w-2xl">
+          <p className="text-navy/70 text-base md:text-lg mb-6 max-w-2xl">
             {t('gettingStartedPage.steps.intro')}
           </p>
 
@@ -161,24 +161,16 @@ export function GettingStarted() {
       </section>
 
       {/* ───────── HOW IT WORKS ───────── */}
-      <section className="pb-16 md:pb-20">
+      <section className="pb-6 md:pb-8">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="font-general text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.15] text-navy mb-3 md:mb-4">
-              {t('howItWorks.title')}
-            </h2>
-            <p className="text-lg md:text-xl font-instrument font-medium text-navy/60 max-w-3xl mx-auto">
-              {t('howItWorks.subtitle')}
-            </p>
-          </div>
           <HowItWorksDemo />
         </div>
       </section>
 
       {/* ───────── EXAMPLES ───────── */}
-      <section className="pb-16 md:pb-20">
+      <section className="pb-6 md:pb-8">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="max-w-2xl mb-8">
+          <div className="max-w-2xl mb-6">
             <div className="flex items-center gap-2.5 text-navy/65 mb-3">
               <Mic className="w-4 h-4" />
               <span className="text-xs uppercase tracking-widest font-semibold">
@@ -220,9 +212,9 @@ export function GettingStarted() {
       </section>
 
       {/* ───────── TIPS ───────── */}
-      <section className="pb-16 md:pb-20">
+      <section className="pb-6 md:pb-8">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="max-w-2xl mb-8">
+          <div className="max-w-2xl mb-6">
             <div className="flex items-center gap-2.5 text-navy/65 mb-3">
               <CheckCircle2 className="w-4 h-4" />
               <span className="text-xs uppercase tracking-widest font-semibold">
@@ -254,10 +246,10 @@ export function GettingStarted() {
       </section>
 
       {/* ───────── FAQ ───────── */}
-      <section className="pb-14 md:pb-18">
+      <section className="pb-6 md:pb-8">
         <div className="max-w-5xl mx-auto px-6">
           <div className="max-w-3xl mx-auto">
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 bg-navy/[0.08] rounded-xl flex items-center justify-center">
                 <HelpCircle className="w-5 h-5 text-navy/75" />
               </div>
@@ -303,7 +295,7 @@ export function GettingStarted() {
       </section>
 
       {/* ───────── CTA ───────── */}
-      <section className="pb-16 md:pb-24">
+      <section className="pb-8 md:pb-12">
         <div className="max-w-5xl mx-auto px-6">
           <div className="bg-navy rounded-2xl p-8 md:p-12 text-center">
             <div className="relative z-10">

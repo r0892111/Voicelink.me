@@ -1,6 +1,28 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useI18n } from '../hooks/useI18n';
-import { useScaleFactor, useIsMobile } from '../hooks/useBreakpoint';
+import { useIsMobile } from '../hooks/useBreakpoint';
+
+// Local scale factor for the demo window. Extends past the shared hook so the
+// window keeps growing (proportions intact via `zoom`) on large viewports,
+// instead of staying narrow. Paired with the wider max-width wrapper below.
+function useDemoScaleFactor() {
+  const getScale = () => {
+    const w = window.innerWidth;
+    if (w >= 2200) return 1.55;
+    if (w >= 1920) return 1.42;
+    if (w >= 1700) return 1.28;
+    if (w >= 1536) return 1.15;
+    if (w >= 1280) return 1.06;
+    return 1;
+  };
+  const [scale, setScale] = useState(getScale);
+  useEffect(() => {
+    const onResize = () => setScale(getScale());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  return scale;
+}
 
 type Phase = 'idle' | 'voice' | 'transcript' | 'thinking' | 'reply' | 'crm' | 'done';
 
@@ -101,7 +123,9 @@ export const HowItWorksDemo: React.FC = () => {
   const [crmScrolled, setCrmScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [loopFading, setLoopFading] = useState(false);
+  const [replyHeight, setReplyHeight] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const replyBubbleRef = useRef<HTMLDivElement>(null);
   const timeoutRefs = useRef<number[]>([]);
   const rafRef = useRef<number | null>(null);
   const hasStarted = useRef(false);
@@ -131,6 +155,17 @@ export const HowItWorksDemo: React.FC = () => {
     );
     observer.observe(el);
     return () => observer.disconnect();
+  }, []);
+
+  // Measure the reply bubble's real height so the voice bubble can sit just
+  // above it on any screen width (narrow screens wrap text → taller bubble).
+  useEffect(() => {
+    const el = replyBubbleRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setReplyHeight(el.offsetHeight));
+    ro.observe(el);
+    setReplyHeight(el.offsetHeight);
+    return () => ro.disconnect();
   }, []);
 
   const startTypewriter = useCallback((onDone: () => void) => {
@@ -228,23 +263,23 @@ export const HowItWorksDemo: React.FC = () => {
 
   const showCrm = phaseGte('crm');
 
-  const scale = useScaleFactor();
+  const scale = useDemoScaleFactor();
   const isMobile = useIsMobile();
 
   return (
-    <div ref={containerRef} className="flex flex-col lg:flex-row gap-8 lg:gap-14 items-start" style={{ minHeight: Math.round(500 * scale) }}>
+    <div ref={containerRef} className="flex flex-col items-center gap-8 lg:gap-12">
 
-      {/* ─── macOS Window + Chat ─── */}
-      <div className="w-full lg:w-[55%] flex-shrink-0">
+      {/* ─── macOS Window + Chat (centered, prominent) ─── */}
+      <div className="w-full max-w-[760px] xl:max-w-[880px] 2xl:max-w-[1040px] mx-auto">
         <div className="relative">
           {/* Backdrop shadow — elevated "floating" effect */}
           <div
             className="absolute pointer-events-none"
             style={{
-              inset: '-24px -20px -36px -20px',
+              inset: '-18px -14px -28px -14px',
               borderRadius: '38px',
               background: 'radial-gradient(ellipse at 50% 45%, rgba(26,45,99,0.18) 0%, rgba(26,45,99,0.06) 55%, transparent 80%)',
-              filter: 'blur(24px)',
+              filter: 'blur(20px)',
             }}
           />
           <div
@@ -315,7 +350,7 @@ export const HowItWorksDemo: React.FC = () => {
                     transform: phase === 'idle'
                       ? `translateY(${isMobile ? 210 : 230}px)`
                       : bubbleShifted
-                        ? `translateY(${isMobile ? -80 : 0}px)`
+                        ? `translateY(${isMobile ? (replyHeight ? 194 - replyHeight : -15) : 0}px)`
                         : phaseGte('thinking')
                           ? `translateY(${isMobile ? 170 : 190}px)`
                           : `translateY(${isMobile ? 210 : 230}px)`,
@@ -455,6 +490,7 @@ export const HowItWorksDemo: React.FC = () => {
 
                 {/* ── Bot reply bubble (received — white) — slides up like the green bubble ── */}
                 <div
+                  ref={replyBubbleRef}
                   className="absolute left-[16px] md:left-[52px] right-[16px] md:right-[52px]"
                   style={{
                     bottom: '10px',
@@ -646,7 +682,7 @@ export const HowItWorksDemo: React.FC = () => {
                     <div
                       className="flex flex-col gap-2"
                       style={{
-                        transform: crmScrolled ? 'translateY(-82px)' : 'translateY(0)',
+                        transform: 'translateY(0)',
                         transition: 'transform 1.1s cubic-bezier(0.22, 1, 0.36, 1)',
                       }}
                     >
@@ -722,7 +758,7 @@ export const HowItWorksDemo: React.FC = () => {
                         className="absolute left-0 right-0 rounded-full"
                         style={{
                           backgroundColor: 'rgba(0,0,0,0.16)',
-                          top: crmScrolled ? '45%' : '4%',
+                          top: '4%',
                           height: '28%',
                           transition: 'top 1.1s cubic-bezier(0.22, 1, 0.36, 1)',
                         }}
@@ -901,9 +937,19 @@ export const HowItWorksDemo: React.FC = () => {
         </div>
       </div>
 
-      {/* ─── Step Timeline (vertically centered) ─── */}
+      {/* ─── Title + subtitle ─── */}
+      <div className="text-center max-w-3xl mx-auto px-4 mt-6 sm:mt-2">
+        <h2 className="font-general text-3xl sm:text-4xl md:text-5xl 2xl:text-6xl font-bold leading-[1.15] text-navy mb-2 md:mb-4">
+          {t('howItWorks.title')}
+        </h2>
+        <p className="text-lg md:text-xl xl:text-2xl font-instrument font-medium text-navy/60 max-w-3xl mx-auto">
+          {t('howItWorks.subtitle')}
+        </p>
+      </div>
+
+      {/* ─── MOBILE: vertical timeline (no cards/borders) ─── */}
       <div
-        className="w-full lg:w-[45%] flex items-center justify-center lg:-mt-2"
+        className="sm:hidden w-full flex justify-center px-4"
         style={{
           opacity: loopFading ? 0 : 1,
           transition: 'opacity 0.6s ease',
@@ -916,7 +962,7 @@ export const HowItWorksDemo: React.FC = () => {
             const isCurrent = activeStep === stepNum;
 
             return (
-              <div key={i} className="flex gap-5 lg:gap-6 items-stretch relative">
+              <div key={i} className="flex gap-5 items-stretch relative">
                 {/* Circle + line */}
                 <div className="flex flex-col items-center flex-shrink-0 relative">
                   <div
@@ -979,14 +1025,112 @@ export const HowItWorksDemo: React.FC = () => {
                 </div>
 
                 {/* Text */}
+                <div className="pt-[10px] pb-3">
+                  <h4
+                    className="font-general font-bold text-[17px] leading-tight mb-1.5"
+                    style={{ color: '#1A2D63', transition: 'color 0.5s' }}
+                  >
+                    {step.title}
+                  </h4>
+                  <p
+                    className="font-instrument text-[14px] leading-relaxed max-w-[500px]"
+                    style={{ color: 'rgba(26, 45, 99, 0.52)', transition: 'color 0.5s' }}
+                  >
+                    {step.description}
+                  </p>
+                  <div
+                    className="mt-3 h-[2.5px] rounded-full overflow-hidden w-28"
+                    style={{
+                      backgroundColor: isCurrent ? 'rgba(26, 45, 99, 0.1)' : 'transparent',
+                      transition: 'background-color 0.3s ease',
+                    }}
+                  >
+                    {isCurrent && (
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          backgroundColor: '#1A2D63',
+                          animation: `progress-bar ${stepNum === 1 ? '4s' : stepNum === 2 ? '2s' : stepNum === 3 ? '2s' : '3.5s'} ease-out forwards`,
+                        }}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ─── DESKTOP: 4 steps — 2x2 grid ─── */}
+      <div
+        className="hidden sm:grid grid-cols-2 gap-4 md:gap-5 w-full max-w-6xl mx-auto"
+        style={{
+          opacity: loopFading ? 0 : 1,
+          transition: 'opacity 0.6s ease',
+        }}
+      >
+        {steps.map((step, i) => {
+            const stepNum = i + 1;
+            const isActive = activeStep >= stepNum;
+            const isCurrent = activeStep === stepNum;
+
+            return (
+              <div
+                key={i}
+                className="flex gap-4 items-start rounded-2xl border p-5 md:p-6 transition-all duration-500"
+                style={{
+                  borderColor: isActive ? 'rgba(26,45,99,0.16)' : 'rgba(26,45,99,0.07)',
+                  background: isCurrent ? 'rgba(26,45,99,0.035)' : 'transparent',
+                  opacity: isMobile || isActive ? 1 : 0.5,
+                }}
+              >
                 <div
-                  className="pt-[10px] pb-3"
-                  style={{
-                    opacity: isMobile || isActive ? 1 : 0.28,
-                    transform: isMobile || isActive ? 'translateX(0)' : 'translateX(3px)',
-                    transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
-                  }}
-                >
+                  className="w-12 h-12 rounded-full flex items-center justify-center relative flex-shrink-0"
+                    style={{
+                      background: isActive ? '#1A2D63' : 'transparent',
+                      border: isActive ? 'none' : '2px solid rgba(26, 45, 99, 0.12)',
+                      boxShadow: isActive ? '0 4px 14px rgba(26, 45, 99, 0.22)' : 'none',
+                      transform: isCurrent ? 'scale(1.12)' : 'scale(1)',
+                      transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+                    }}
+                  >
+                    {/* Step 1: Microphone */}
+                    {i === 0 && (
+                      <svg className="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke={isActive ? 'white' : 'rgba(26,45,99,0.25)'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.5s' }}>
+                        <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+                        <path d="M19 10v2a7 7 0 01-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                      </svg>
+                    )}
+                    {/* Step 2: AI Sparkle */}
+                    {i === 1 && (
+                      <svg className="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke={isActive ? 'white' : 'rgba(26,45,99,0.25)'} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.5s' }}>
+                        <path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>
+                        <path d="M12 3c0 4.97 4.03 9 9 9-4.97 0-9 4.03-9 9 0-4.97-4.03-9-9-9 4.97 0 9-4.03 9-9z"/>
+                        <path d="M19 3c0 1.1.9 2 2 2-1.1 0-2 .9-2 2 0-1.1-.9-2-2-2 1.1 0 2-.9 2-2z" strokeWidth="1.4"/>
+                      </svg>
+                    )}
+                    {/* Step 3: Confirmation checkmark */}
+                    {i === 2 && (
+                      <svg className="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke={isActive ? 'white' : 'rgba(26,45,99,0.25)'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.5s' }}>
+                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                      </svg>
+                    )}
+                    {/* Step 4: Database */}
+                    {i === 3 && (
+                      <svg className="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke={isActive ? 'white' : 'rgba(26,45,99,0.25)'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.5s' }}>
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                      </svg>
+                    )}
+                </div>
+
+                {/* Text */}
+                <div className="min-w-0">
                   <h4
                     className="font-general font-bold text-[17px] lg:text-[18px] xl:text-[20px] 2xl:text-[22px] leading-tight mb-1.5"
                     style={{
@@ -1026,7 +1170,6 @@ export const HowItWorksDemo: React.FC = () => {
               </div>
             );
           })}
-        </div>
       </div>
     </div>
   );

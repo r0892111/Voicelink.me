@@ -54,8 +54,16 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const { user, loading, signOut } = useAuth();
-  const { t } = useI18n();
+  const { t, currentLanguage } = useI18n();
   const navigate = useNavigate();
+  // "Start free" CTA label for the mobile menu only (desktop nav keeps
+  // navigation.getStarted). Inline map so we don't touch shared locale JSON.
+  const startFreeLabel = ({
+    nl: 'Start gratis',
+    en: 'Start free',
+    fr: 'Commencer gratuitement',
+    de: 'Kostenlos starten',
+  } as Record<string, string>)[currentLanguage] ?? 'Start free';
   const location = useLocation();
   const { navigateWithTransition } = usePageTransition();
 
@@ -273,9 +281,9 @@ function App() {
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open menu"
-              className="min-[868px]:hidden fixed top-3 right-4 z-[10000] p-2.5 bg-white/90 backdrop-blur-sm shadow-sm text-gray-700 hover:text-gray-900 hover:bg-white rounded-full transition-all duration-200"
+              className="min-[868px]:hidden fixed top-3 right-4 z-[10000] p-3 bg-navy hover:bg-navy-hover text-white shadow-[6px_8px_18px_rgba(0,0,0,0.30),2px_3px_6px_rgba(0,0,0,0.22)] rounded-full transition-all duration-200"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-7 h-7" />
             </button>
           )}
 
@@ -304,7 +312,7 @@ function App() {
                 {user ? (
                   <button
                     onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/dashboard')); }}
-                    className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-4 rounded-full flex items-center justify-center gap-2 text-base transition-colors"
+                    className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-4 rounded-full flex items-center justify-center gap-2 text-lg transition-colors"
                   >
                     <span>{t('navigation.dashboard')}</span>
                     <ArrowRight className="w-5 h-5" />
@@ -312,9 +320,9 @@ function App() {
                 ) : (
                   <button
                     onClick={() => { setIsMobileMenuOpen(false); navigate(withUTM('/signup')); }}
-                    className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-4 rounded-full flex items-center justify-center gap-2 text-base transition-colors"
+                    className="w-full bg-navy hover:bg-navy-hover text-white font-semibold py-4 rounded-full flex items-center justify-center gap-2 text-lg transition-colors"
                   >
-                    <span>{t('navigation.getStarted')}</span>
+                    <span>{startFreeLabel}</span>
                     <ArrowRight className="w-5 h-5" />
                   </button>
                 )}

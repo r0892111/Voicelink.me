@@ -1,18 +1,13 @@
 import React from 'react';
-import { Zap, MessageCircle, Play, ArrowRight, CheckCircle, ChevronDown, Star, PhoneOff, StickyNote, TrendingDown, Snowflake, Phone, Mail, Linkedin } from 'lucide-react';
+import { Play, ArrowRight, CheckCircle, ChevronDown, MicOff, StickyNote, CalendarX, ClipboardList, Phone, Mail, Linkedin } from 'lucide-react';
 import { HowItWorksDemo } from './HowItWorksDemo';
 import { HeroDemo, CrmPreviewCards } from './HeroDemo';
-import { UserGuidePreview } from './UserGuidePreview';
 import { PricingSection } from './PricingSection';
-import { LogoCarousel } from './ui/LogoCarousel';
 import { SectionDivider } from './ui/SectionDivider';
 import { ScrollAnimation } from './ui/ScrollAnimation';
 import { useConsent } from '../contexts/ConsentContext';
 import { useI18n } from '../hooks/useI18n';
-import { useNavigate } from 'react-router-dom';
 import { trackCTAClick } from '../utils/analytics';
-import { withUTM } from '../utils/utm';
-import { usePageTransition } from '../hooks/usePageTransition';
 
 interface HomepageProps {
   openContactModal: () => void;
@@ -109,8 +104,6 @@ const faqContentNl: React.ReactNode[] = [
 export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
   const { openSettings } = useConsent();
   const { t, currentLanguage } = useI18n();
-  const navigate = useNavigate();
-  const { navigateWithTransition } = usePageTransition();
   const [openFaq, setOpenFaq] = React.useState<number | null>(null);
 
   return (
@@ -121,52 +114,48 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
 
       {/* ───────── 4. HOW IT WORKS ───────── */}
       <section id="how-it-works" className="pt-4 md:pt-0 pb-4 2xl:pb-8 relative z-10 scroll-mt-24">
-        {/* Decorative corner — flows from hero bottom-right (desktop) */}
+        {/* Decorative corner — BOTH shapes as one unit, anchored to the
+            hero/section boundary (top-0) with a fixed vertical scale (height in
+            px, not %), so they never drift apart or shift when section heights
+            change on resize. Shape A bleeds up into the hero; shape B sits in
+            this section. Tune positions via the two translate() values. */}
         <svg
-          className="absolute inset-0 w-full h-full pointer-events-none hidden md:block"
+          className="absolute top-0 left-0 right-0 w-full pointer-events-none hidden md:block"
+          style={{ height: '900px' }}
           viewBox="0 0 1440 900"
           preserveAspectRatio="none"
+          overflow="visible"
           aria-hidden="true"
         >
-          <path
-            d="M1470,-30 L1239.5,-30 C1239.5,90 1225.5,115 1320.5,138 C1430.5,162 1415.5,176 1470,190 Z"
-            fill="#1A2D63"
-          />
-          <path
-            d="M1248,-30 C1248,87 1232.5,112 1326,136 C1435.5,159 1420.5,173 1476,186
-               L1471,198 C1410.5,183 1428.5,168 1319,145 C1218.5,123 1232,87 1232,-30 L1248,-30 Z"
-            fill="#7B8DB5"
-          />
-        </svg>
-        {/* Decorative corner — mobile/tablet top-right */}
-        <svg
-          className="absolute top-0 right-0 pointer-events-none block md:hidden"
-          style={{ top: '-70px' }}
-          width="128" height="115"
-          viewBox="1213 -30 255 230"
-          aria-hidden="true"
-        >
-          <path
-            d="M1470,-30 L1239.5,-30 C1239.5,90 1225.5,115 1320.5,138 C1430.5,162 1415.5,176 1470,190 Z"
-            fill="#1A2D63"
-          />
-          <path
-            d="M1248,-30 C1248,87 1232.5,112 1326,136 C1435.5,159 1420.5,173 1476,186
-               L1471,198 C1410.5,183 1428.5,168 1319,145 C1218.5,123 1232,87 1232,-30 L1248,-30 Z"
-            fill="#7B8DB5"
-          />
+          {/* Whole unit — move both shapes together with this one translate. */}
+          <g transform="translate(0, 100)">
+          {/* Shape A — upper blob, bleeds up into the hero */}
+          <g transform="translate(0, -680)">
+            <path
+              d="M1470,930 L1240,930 C1240,750 1200,690 1320,645 C1450,598 1400,540 1470,460 Z"
+              fill="#1A2D63"
+            />
+            <path
+              d="M1248,930 C1248,755 1205,693 1325,648 C1455,601 1405,543 1475,465
+                 L1470,452 C1398,535 1448,595 1318,642 C1195,688 1232,750 1232,930 L1248,930 Z"
+              fill="#7B8DB5"
+            />
+          </g>
+          {/* Shape B — lower corner, sits in this section */}
+          <g transform="translate(0, 250)">
+            <path
+              d="M1470,-30 L1239.5,-30 C1239.5,90 1225.5,115 1320.5,138 C1430.5,162 1415.5,176 1470,190 Z"
+              fill="#1A2D63"
+            />
+            <path
+              d="M1248,-30 C1248,87 1232.5,112 1326,136 C1435.5,159 1420.5,173 1476,186
+                 L1471,198 C1410.5,183 1428.5,168 1319,145 C1218.5,123 1232,87 1232,-30 L1248,-30 Z"
+              fill="#7B8DB5"
+            />
+          </g>
+          </g>
         </svg>
         <div className="max-w-7xl 2xl:max-w-screen-2xl mx-auto px-6">
-          <ScrollAnimation>
-            <div className="text-center mb-6 md:mb-10 2xl:mb-14">
-              <h2 className="font-general text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold leading-[1.15] text-navy mb-2 md:mb-6">
-                {t('howItWorks.title')}
-              </h2>
-              <p className="text-lg md:text-xl xl:text-2xl font-instrument font-medium text-navy/60 max-w-3xl mx-auto">
-                {t('howItWorks.subtitle')}
-              </p>
-            </div>
-          </ScrollAnimation>
           <HowItWorksDemo />
         </div>
       </section>
@@ -176,10 +165,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
 
       {/* ───────── 3. PROBLEM AGITATION ───────── */}
       <section className="bg-navy py-6 md:py-8 relative z-10">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <ScrollAnimation>
-            <div className="text-center mb-16 md:mb-20">
-              <h2 className="font-general text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.15] text-white mb-5">
+            <div className="text-center mb-8 md:mb-10">
+              <h2 className="font-general text-3xl sm:text-4xl md:text-5xl 2xl:text-6xl font-bold leading-[1.15] text-white mb-5">
                 {t('problemAgitation.title')}
               </h2>
               <p className="text-lg md:text-xl font-instrument font-medium text-white/50 max-w-2xl mx-auto">
@@ -189,10 +178,10 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
           </ScrollAnimation>
           <div className="grid md:grid-cols-2 gap-5 md:gap-6">
             {([
-              { n: 1, Icon: PhoneOff },
+              { n: 1, Icon: MicOff },
               { n: 2, Icon: StickyNote },
-              { n: 3, Icon: TrendingDown },
-              { n: 4, Icon: Snowflake },
+              { n: 3, Icon: CalendarX },
+              { n: 4, Icon: ClipboardList },
             ]).map(({ n, Icon }) => (
               <ScrollAnimation key={n} delay={n * 100}>
                 <div
@@ -221,94 +210,8 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
         <CrmPreviewCards />
       </div>
 
-      {/* Divider: CRM Preview → User Guide Preview */}
+      {/* Divider: CRM Preview → Pricing (porcelain → porcelain) */}
       <SectionDivider fromColor="#FDFBF7" toColor="#FDFBF7" variant={0} />
-
-      {/* ───────── 5b. USER GUIDE PREVIEW ("Just say what happened") ───────── */}
-      <UserGuidePreview />
-
-      {/* Divider: User Guide Preview → Integrations */}
-      <SectionDivider fromColor="#FDFBF7" toColor="#FDFBF7" variant={3} />
-
-      {/* ───────── 6. INTEGRATIONS ───────── */}
-      <ScrollAnimation>
-        <section id="integrations" className="pt-2 pb-6 relative z-10 scroll-mt-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="text-center mb-12">
-              <h2 className="font-general text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.15] text-navy mb-6 flex flex-col sm:flex-row items-center justify-center gap-0 sm:gap-x-3 -translate-x-6 translate-y-6 sm:translate-x-0 sm:translate-y-0 md:translate-x-6">
-                <span>{t('integrations.titleBefore')}</span>
-                <img
-                  src="/Logo_Teamleader_Default_CMYK.png"
-                  alt="Teamleader"
-                  className="h-28 md:h-32 lg:h-36 -mt-12 sm:-mt-2 md:-mt-6 lg:-mt-8 self-end md:translate-y-[5px] md:-translate-x-6"
-                />
-              </h2>
-              <button
-                onClick={() => { trackCTAClick('try_free_integrations', '/'); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-                className="relative z-10 bg-navy hover:bg-navy-hover text-white font-medium text-[15px] py-3.5 px-8 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] mb-8"
-              >
-                {t('integrations.tryForFree')}
-              </button>
-              <div className="flex flex-col items-start gap-3 text-base md:text-xl font-instrument font-medium text-navy w-fit mx-auto">
-                <span className="flex items-center gap-2.5"><span className="text-navy">✓</span> {t('integrations.bullet1')}</span>
-                <span className="flex items-center gap-2.5"><span className="text-navy">✓</span> {t('integrations.bullet2')}</span>
-                <span className="flex items-center gap-2.5"><span className="text-navy">✓</span> {t('integrations.bullet3')}</span>
-              </div>
-            </div>
-
-            <div className="text-center mt-6">
-              <p className="text-slate-blue mb-4 font-instrument max-w-xl mx-auto">{t('features.dontSeeYourCrm')}</p>
-              <button
-                onClick={() => { trackCTAClick('contact_for_custom', '/'); openContactModal(); }}
-                className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-navy/30 rounded-full shadow-lg hover:border-navy/50 hover:shadow-xl hover:scale-[1.02] transition-all group"
-              >
-                <span className="text-[15px] font-medium text-navy">{t('features.contactForCustom')}</span>
-                <MessageCircle className="w-4 h-4 text-navy/50 group-hover:text-navy transition-colors" />
-              </button>
-            </div>
-
-            <div className="text-center mt-10 pt-8 border-t border-navy/10">
-              <p className="text-slate-blue mb-4 font-instrument max-w-xl mx-auto">{t('features.partnerProgramPrompt')}</p>
-              <button
-                onClick={() => { trackCTAClick('partner_program', '/'); navigate(withUTM('/affiliate')); }}
-                className="inline-flex items-center space-x-2 px-8 py-4 bg-white border border-navy/30 rounded-full shadow-lg hover:border-navy/50 hover:shadow-xl hover:scale-[1.02] transition-all group"
-              >
-                <span className="text-[15px] font-medium text-navy">{t('features.partnerProgramCTA')}</span>
-                <ArrowRight className="w-4 h-4 text-navy/50 group-hover:text-navy group-hover:translate-x-1 transition-all" />
-              </button>
-            </div>
-          </div>
-        </section>
-      </ScrollAnimation>
-
-      {/* Divider: Integrations → Testimonials (porcelain → navy) */}
-      <SectionDivider fromColor="#FDFBF7" toColor="#1A2D63" variant={1} />
-
-      {/* ───────── 7. TESTIMONIALS (on navy bg) ───────── */}
-      <section className="py-10 relative z-10 bg-navy">
-        <div className="max-w-5xl mx-auto px-6">
-          <ScrollAnimation>
-            <h2 className="font-general text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.15] text-white text-center mb-16">
-              {t('testimonials.title')}
-            </h2>
-          </ScrollAnimation>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {[1, 2].map((n) => (
-              <ScrollAnimation key={n} delay={n * 150}>
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/10 p-8 hover:bg-white/15 transition-all duration-300">
-                  <p className="font-general text-lg md:text-xl font-semibold italic text-white/90 leading-relaxed">
-                    "{t(`testimonials.quote${n}`)}"
-                  </p>
-                </div>
-              </ScrollAnimation>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Divider: Testimonials → Pricing (navy → porcelain) */}
-      <SectionDivider fromColor="#1A2D63" toColor="#FDFBF7" variant={2} />
 
       {/* ───────── 8. PRICING ───────── */}
       <ScrollAnimation>
@@ -336,12 +239,12 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
                       onClick={() => setOpenFaq(openFaq === n ? null : n)}
                       className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left gap-4 hover:bg-navy/[0.015] transition-colors duration-150"
                     >
-                      <span className="font-instrument font-semibold text-[14px] sm:text-[15px] md:text-base text-navy leading-snug">{t(`faq.q${n}`)}</span>
+                      <span className="font-instrument font-semibold text-[15px] sm:text-base text-navy leading-snug">{t(`faq.q${n}`)}</span>
                       <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-navy/40 flex-shrink-0 transition-transform duration-300 ${openFaq === n ? 'rotate-180' : ''}`} />
                     </button>
                     <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openFaq === n ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                       <div className="overflow-hidden min-h-0">
-                        <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-1 font-instrument text-[13px] sm:text-[14px] text-slate-blue leading-relaxed [&_p]:leading-relaxed [&_ul]:space-y-1.5 [&_ol]:space-y-2">
+                        <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-1 font-instrument text-[14px] sm:text-[15px] text-slate-blue leading-relaxed [&_p]:leading-relaxed [&_ul]:space-y-1.5 [&_ol]:space-y-2">
                           {currentLanguage === 'nl'
                             ? faqContentNl[n - 1]
                             : <p>{t(`faq.a${n}`)}</p>
@@ -369,7 +272,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
               <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-glow-blue/15 rounded-full blur-3xl"></div>
 
               <div className="relative z-10">
-                <h2 className="font-general text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.15] text-navy mb-6">
+                <h2 className="font-general text-3xl sm:text-4xl md:text-5xl 2xl:text-6xl font-bold leading-[1.15] text-navy mb-6">
                   {t('finalCta.title')}
                 </h2>
                 <p className="text-base md:text-lg font-instrument font-medium text-slate-blue leading-relaxed mb-10 max-w-2xl mx-auto">
@@ -419,14 +322,15 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
       {/* ───────── 11. FOOTER ───────── */}
       <footer className="text-white bg-navy relative z-10">
         {/* Upper CTA + contact area */}
-        <div className="max-w-7xl mx-auto px-6 pt-8 pb-12">
+        <div className="max-w-7xl mx-auto px-6 pt-3 pb-12">
           <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-16">
 
             {/* Left: headline + subline + three CTA buttons */}
             <div className="flex-1 flex flex-col gap-6">
               <div>
-                <h2 className="font-general text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-snug mb-4 whitespace-pre-line">
-                  {t('footer.ctaHeadline')}
+                <h2 className="font-general font-bold text-white leading-[1.1] mb-4">
+                  <span className="block text-4xl sm:text-5xl md:text-6xl">{t('footer.ctaHeadline').split('\n')[0]}</span>
+                  <span className="block text-2xl sm:text-3xl md:text-4xl text-white/75 mt-1">{t('footer.ctaHeadline').split('\n')[1]}</span>
                 </h2>
                 <p className="text-white/60 font-instrument text-lg leading-relaxed max-w-lg">
                   {t('footer.ctaSubline')}
@@ -446,12 +350,6 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
               >
                 <Play className="w-4 h-4" />
                 {t('finalCta.watchDemo')}
-              </button>
-              <button
-                onClick={openContactModal}
-                className="border border-white/25 text-white font-semibold text-sm py-3 px-6 rounded-full hover:bg-white/10 transition-all duration-200 w-fit"
-              >
-                {t('navigation.contact')}
               </button>
               </div>
             </div>

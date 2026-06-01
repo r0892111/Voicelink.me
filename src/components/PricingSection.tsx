@@ -1,5 +1,19 @@
 import React, { useCallback, useRef } from 'react';
-import { Check, ArrowRight, ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
+import {
+  Check,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Minus,
+  Plus,
+  MessageSquare,
+  Users,
+  StickyNote,
+  CheckSquare,
+  Calendar,
+  FileText,
+  MoreHorizontal,
+} from 'lucide-react';
 import { BillingPeriodSwitch, BillingPeriod } from './BillingPeriodSwitch';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
@@ -141,9 +155,52 @@ function formatPrice(price: number): string {
   return price % 1 === 0 ? String(price) : price.toFixed(2);
 }
 
+// Format a euro amount with NL-style decimals (€57,60). Used for the yearly
+// savings badge so it reads naturally for the Belgian/NL audience.
+function formatEuro(amount: number): string {
+  return '€' + amount.toFixed(2).replace('.', ',');
+}
+
+// Small inline language map for the "/ per user" suffix on the yearly savings
+// badge. Kept inline on purpose so we don't touch the shared locale JSON
+// (another session may be editing it).
+const PER_USER_SUFFIX: Record<string, string> = {
+  en: '/user',
+  nl: '/gebruiker',
+  fr: '/utilisateur',
+  de: '/Nutzer',
+};
+
+// Title above the +/- user counter. Inline map (don't touch shared locale JSON).
+const USERS_LABEL: Record<string, string> = {
+  en: 'Users',
+  nl: 'Gebruikers',
+  fr: 'Utilisateurs',
+  de: 'Nutzer',
+};
+
+// Icons for the "Use your credits for" list, in the same order as the
+// pricing.creditUses i18n array.
+const CREDIT_USE_ICONS = [
+  MessageSquare, // ± messages per month
+  Users,         // Contacts
+  StickyNote,    // Notes
+  CheckSquare,   // Tasks
+  Calendar,      // Appointments
+  FileText,      // Quotes & invoices
+  MoreHorizontal, // More
+];
+
+// Pull the upper bound from a "20–30" / "200–285" style range so the first
+// credit-use line can show a concrete estimate per plan.
+function approxUpperBound(creditsApprox: string): string {
+  const parts = creditsApprox.split(/[–-]/);
+  return (parts[parts.length - 1] ?? creditsApprox).trim();
+}
+
 
 export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal }) => {
-  const { t } = useI18n();
+  const { t, currentLanguage } = useI18n();
   const { navigateWithTransition } = usePageTransition();
   const [billingPeriod, setBillingPeriod] = React.useState<BillingPeriod>('monthly');
   const [currentCardIdx, setCurrentCardIdx] = React.useState(0);
@@ -232,12 +289,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
     const count = userCounts[plan.key] ?? 1;
     const displayValue = inputValues[plan.key] ?? String(count);
     return (
-      <div className="mb-4">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col items-start gap-1.5">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-blue/70 leading-none">
+          {USERS_LABEL[currentLanguage] ?? USERS_LABEL.en}
+        </span>
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => updateUserCount(plan.key, count - 1)}
             disabled={count <= 1}
-            className="w-8 h-8 rounded-full border border-navy/20 bg-white flex items-center justify-center text-navy hover:bg-navy/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
+            className="w-7 h-7 rounded-full border border-navy/20 bg-white flex items-center justify-center text-navy hover:bg-navy/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
             aria-label="Decrease users"
           >
             <Minus size={13} />
@@ -262,17 +322,16 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
               setUserCounts(prev => ({ ...prev, [plan.key]: clamped }));
               setInputValues(prev => ({ ...prev, [plan.key]: String(clamped) }));
             }}
-            className="w-14 text-center text-sm font-semibold text-navy border border-navy/20 rounded-lg py-1 focus:outline-none focus:ring-2 focus:ring-navy/20"
+            className="w-10 text-center text-sm font-semibold text-navy border border-navy/20 rounded-lg py-0.5 focus:outline-none focus:ring-2 focus:ring-navy/20"
           />
           <button
             onClick={() => updateUserCount(plan.key, count + 1)}
             disabled={count >= 50}
-            className="w-8 h-8 rounded-full border border-navy/20 bg-white flex items-center justify-center text-navy hover:bg-navy/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
+            className="w-7 h-7 rounded-full border border-navy/20 bg-white flex items-center justify-center text-navy hover:bg-navy/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
             aria-label="Increase users"
           >
             <Plus size={13} />
           </button>
-          <span className="text-xs text-slate-blue font-instrument">{t('pricing.users')}</span>
         </div>
       </div>
     );
@@ -285,10 +344,37 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
       ? 0
       : Math.round((1 - pricePerUser / plan.baseMonthlyPrice) * 100);
     const showStrikethrough = totalDiscountPct > 0;
+    // Yearly savings per user: the monthly per-user price (before the yearly
+    // discount) × 12 × 20%. Shown in the green badge when yearly is selected.
+    const monthlyPerUser = getPricePerUser(plan, users, 'monthly');
+    const yearlySavingsPerUser = monthlyPerUser * 12 * 0.2;
 
-    const padding = desktop ? 'p-6 lg:p-8 2xl:p-10' : 'p-6';
-    const titleSize = desktop ? 'text-xl 2xl:text-2xl' : 'text-xl';
+    const padding = desktop ? 'p-6 lg:p-7 2xl:p-8' : 'p-6';
+    const titleSize = desktop ? 'text-3xl 2xl:text-4xl' : 'text-3xl';
     const priceSize = desktop ? 'text-4xl 2xl:text-5xl' : 'text-4xl';
+
+    // "Use your credits for" — shared list of what credits buy. The first line
+    // is rebuilt to show this plan's concrete estimated message count.
+    const creditUsesRaw = t('pricing.creditUses', { returnObjects: true });
+    const creditUses = Array.isArray(creditUsesRaw) ? (creditUsesRaw as string[]) : [];
+    const creditUsesTitle = t('pricing.creditUsesTitle');
+
+    // Support / feature ladder for this specific plan. features[0] is a heading
+    // ("Everything from X, plus:" / "Included:"), the rest are bullets.
+    const planFeaturesRaw = t(`pricing.cards.${plan.key}.features`, { returnObjects: true });
+    const planFeatures = Array.isArray(planFeaturesRaw) ? (planFeaturesRaw as string[]) : [];
+    // Free Trial has no "Everything from X" ladder — give it the neutral
+    // "Included:" heading so its block lines up with the other cards.
+    const featuresHeading = plan.isFreeTrial
+      ? t('pricing.includedHeading')
+      : (planFeatures[0] ?? '');
+    const featureBullets = plan.isFreeTrial ? planFeatures : planFeatures.slice(1);
+
+    // Shared section heading style — identical for "Use your credits for:" and
+    // "Everything from X, plus:" so they read as one consistent system and
+    // align across cards.
+    const sectionHeadingClass =
+      'text-[13px] font-bold uppercase tracking-wide text-navy mb-2.5';
 
     return (
       <div
@@ -300,94 +386,74 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
             : 'shadow-md border border-navy/[0.06] hover:shadow-lg hover:scale-[1.01]'
         }`}
       >
-        {/* Header */}
-        <div className="mb-5">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className={`${titleSize} font-bold text-navy`}>
-              {t(`pricing.cards.${plan.key}.name`)}
-            </h3>
-            {plan.highlighted && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-navy text-white whitespace-nowrap flex-shrink-0">
-                {t('pricing.cards.professional.badge')}
-              </span>
-            )}
-          </div>
-          <p className="text-sm text-slate-blue font-instrument mt-1">
-            {t(`pricing.cards.${plan.key}.description`)}
-          </p>
+        {/* "Most popular" badge — sits on the top-right card edge, vertically
+            centered on the border so its top half rises above the frame and its
+            bottom half stays inside. */}
+        {plan.highlighted && (
+          <span className="absolute top-0 right-6 -translate-y-1/2 inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-navy text-white whitespace-nowrap shadow-md z-10">
+            {t('pricing.cards.professional.badge')}
+          </span>
+        )}
+
+        {/* Header — fixed height so the price row starts at the same Y on every card */}
+        <div className="min-h-[40px] mb-2">
+          <h3 className={`${titleSize} font-bold text-navy leading-tight`}>
+            {t(`pricing.cards.${plan.key}.name`)}
+          </h3>
         </div>
 
-        {/* Price */}
-        <div className="mb-4">
+        {/* Price — big amount left, small 2-line "user / month" label beside it,
+            and (paid multi-seat plans) the +/- user selector right of that.
+            At yearly the strikethrough widens the row, so the selector wraps to
+            a second line; the min-height grows by billing period so every card's
+            CTA drops by the same amount and stays aligned. */}
+        <div className="min-h-[56px]">
           {plan.isFreeTrial ? (
-            <>
-              <span className={`${priceSize} font-bold text-navy`}>€0</span>
-              <p className="text-xs text-slate-blue font-instrument mt-1">
+            <div className="flex items-end gap-2">
+              <span className={`${priceSize} font-bold text-navy leading-none`}>€0</span>
+              <span className="text-[13px] leading-tight text-slate-blue font-instrument pb-1">
                 {t('pricing.cards.freetrial.billingNote')}
-              </p>
-            </>
+              </span>
+            </div>
           ) : (
-            <div>
-              <div className="flex items-baseline gap-x-2 gap-y-0.5 flex-wrap">
-                {showStrikethrough && (
-                  <span className="text-xl font-bold text-navy/30 line-through">
-                    €{formatPrice(plan.baseMonthlyPrice)}
-                  </span>
-                )}
-                <span className={`${priceSize} font-bold text-navy`}>
-                  €{formatPrice(pricePerUser)}
+            <div className="flex items-end flex-wrap gap-x-2 gap-y-2">
+              {showStrikethrough && (
+                <span className="text-xl font-bold text-navy/30 line-through pb-1">
+                  €{formatPrice(plan.baseMonthlyPrice)}
                 </span>
-                {totalDiscountPct > 0 && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-50 border border-green-200 text-green-700">
-                    -{totalDiscountPct}%
-                  </span>
-                )}
-              </div>
-              <p className="text-slate-blue text-sm mt-0.5">{t('pricing.perUserPerMonth')}</p>
+              )}
+              <span className={`${priceSize} font-bold text-navy leading-none`}>
+                €{formatPrice(pricePerUser)}
+              </span>
+              <span className="text-[13px] leading-tight text-slate-blue font-instrument pb-1">
+                {t('pricing.perUserLine1')}
+                <br />
+                {t('pricing.perUserLine2')}
+              </span>
             </div>
           )}
         </div>
 
-        {/* User count control (Professional & Business only) */}
-        {renderUserControl(plan)}
-
-        {/* Credits box */}
-        <div className="mb-4 px-3 py-2.5 bg-blue-50/80 rounded-xl">
-          <p className="text-sm font-semibold text-navy">
-            {plan.isFreeTrial
-              ? t('pricing.oneTimeCredits', { count: plan.credits })
-              : t('pricing.creditsPerUserPerMonth', { count: plan.credits })}
-          </p>
-          <p className="text-xs text-slate-blue font-instrument mt-0.5">
-            ≈ {plan.creditsApprox} {t('pricing.voiceMessages')}
-          </p>
+        {/* User counter — below the price; reserved height on every card so all
+            CTAs stay aligned whether or not the card shows the selector. */}
+        <div className="min-h-[48px]">
+          {renderUserControl(plan)}
         </div>
 
-        {/* Features */}
-        <div className="space-y-2.5 mb-5 flex-grow">
-          {plan.featureKeys.map((featureKey, index) => (
-            <div key={index} className="flex items-center space-x-3">
-              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                plan.highlighted ? 'bg-navy' : 'bg-navy/10'
-              }`}>
-                <Check className={`w-3 h-3 ${plan.highlighted ? 'text-white' : 'text-navy'}`} />
-              </div>
-              <span className="text-sm 2xl:text-base text-slate-blue font-instrument">{t(featureKey)}</span>
-            </div>
-          ))}
+        {/* Special offer — reserve height only at yearly (where the badge shows);
+            on monthly it collapses so the CTA sits closer to the price. */}
+        <div className={billingPeriod === 'yearly' ? 'min-h-[28px] mt-2' : 'mt-1'}>
+          {!plan.isFreeTrial && billingPeriod === 'yearly' && (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-50 border border-green-200 text-green-700">
+              {t('pricing.save20')} - {formatEuro(yearlySavingsPerUser)} {PER_USER_SUFFIX[currentLanguage] ?? PER_USER_SUFFIX.en}
+            </span>
+          )}
         </div>
 
-        {/* Auto top-up info (Professional & Business) */}
-        {plan.hasAutoTopUp && (
-          <div className="mb-4 px-3 py-2 bg-glow-blue/10 border border-glow-blue/20 rounded-xl">
-            <p className="text-xs font-medium text-navy/80">{t('pricing.autoTopUpInfo')}</p>
-          </div>
-        )}
-
-        {/* CTA */}
+        {/* CTA — sits high in the card, same Y across all cards */}
         <button
           onClick={() => handleCtaClick(plan)}
-          className={`w-full font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 group ${
+          className={`w-full font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 group mt-2 ${
             plan.highlighted
               ? 'bg-navy text-white hover:bg-navy-hover hover:shadow-xl'
               : 'border-2 border-navy text-navy hover:bg-navy hover:text-white'
@@ -399,11 +465,82 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
           )}
         </button>
 
-        {/* Subtext */}
-        {(plan.isFreeTrial || plan.key === 'starter') && (
-          <p className="text-center text-xs text-muted-blue mt-3">
-            {t(`pricing.cards.${plan.key}.subtext`)}
+        {/* Divider under the CTA — Monday-style separation */}
+        <div className="border-t border-navy/10 my-5" />
+
+        {/* Credits — same vertical height across cards */}
+        <div className="min-h-[28px]">
+          <p className="text-[15px] font-semibold text-navy">
+            {plan.isFreeTrial
+              ? t('pricing.oneTimeCredits', { count: plan.credits })
+              : t('pricing.creditsPerUserPerMonth', { count: plan.credits })}
           </p>
+        </div>
+
+        {/* Use your credits for — dark navy heading + darker icons */}
+        {creditUses.length > 0 && (
+          <div className="mt-4">
+            <p className={sectionHeadingClass}>{creditUsesTitle}</p>
+            <ul className="space-y-2">
+              {creditUses.map((label, index) => {
+                const Icon = CREDIT_USE_ICONS[index] ?? MoreHorizontal;
+                // First line is the "± N messages per month" estimate. Bold just
+                // the number so it stands out; the rest of the line stays normal.
+                let content: React.ReactNode = label;
+                if (index === 0) {
+                  const num = approxUpperBound(plan.creditsApprox);
+                  const [before, after] = label.split('±');
+                  // Free trial isn't a monthly subscription, so drop the
+                  // "per month" suffix there (kept on paid tiers).
+                  const MONTHLY_SUFFIX: Record<string, string> = {
+                    nl: 'per maand', en: 'per month', fr: 'par mois', de: 'pro Monat',
+                  };
+                  const suffix = MONTHLY_SUFFIX[currentLanguage] ?? MONTHLY_SUFFIX.en;
+                  const afterText = plan.isFreeTrial
+                    ? after.replace(suffix, '').trimEnd()
+                    : after;
+                  content = (
+                    <>
+                      {before}± <span className="font-semibold text-navy">{num}</span>
+                      {afterText}
+                    </>
+                  );
+                }
+                return (
+                  <li key={index} className="flex items-center gap-2.5">
+                    <Icon className="w-4 h-4 text-navy/70 flex-shrink-0" strokeWidth={2.25} />
+                    <span className="text-[15px] text-slate-blue font-instrument">{content}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+
+        {/* "Everything from X, plus:" heading + feature bullets */}
+        {(featuresHeading || featureBullets.length > 0) && (
+          <div className="mt-5">
+            {featuresHeading && <p className={sectionHeadingClass}>{featuresHeading}</p>}
+            <div className="space-y-2.5">
+              {featureBullets.map((feature, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    plan.highlighted ? 'bg-navy' : 'bg-navy/10'
+                  }`}>
+                    <Check className={`w-3 h-3 ${plan.highlighted ? 'text-white' : 'text-navy'}`} />
+                  </div>
+                  <span className="text-[15px] text-slate-blue font-instrument">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Auto top-up info (Professional & Business) */}
+        {plan.hasAutoTopUp && (
+          <div className="mt-4 px-3 py-2 bg-glow-blue/10 border border-glow-blue/20 rounded-xl">
+            <p className="text-xs font-medium text-navy/80">{t('pricing.autoTopUpInfo')}</p>
+          </div>
         )}
       </div>
     );
@@ -446,7 +583,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
   return (
     <div className="max-w-[1400px] 2xl:max-w-screen-2xl mx-auto px-6">
       <div className="text-center mb-8 2xl:mb-10">
-        <h2 className="font-general text-4xl lg:text-5xl 2xl:text-6xl font-bold text-navy mb-4">
+        <h2 className="font-general text-3xl sm:text-4xl md:text-5xl 2xl:text-6xl font-bold text-navy mb-4">
           {t('pricing.title')}
         </h2>
         <p className="text-xl 2xl:text-2xl font-instrument text-slate-blue max-w-3xl mx-auto mb-6">
@@ -485,11 +622,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
       {/* Mobile: snap scroll carousel */}
       <div
         ref={mobileScrollRef}
-        className="md:hidden overflow-x-auto snap-x snap-mandatory flex gap-4 -mx-6 px-5 pb-4"
+        className="md:hidden overflow-x-auto snap-x snap-mandatory flex gap-4 -mx-6 px-5 -my-6 py-6"
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
       >
         {plans.map((plan) => (
-          <div key={plan.key} className="snap-center flex-shrink-0 w-[calc(100svw-2.5rem)]">
+          <div key={plan.key} className="snap-center flex-shrink-0 w-[85vw]">
             {renderCardContent(plan, false)}
           </div>
         ))}

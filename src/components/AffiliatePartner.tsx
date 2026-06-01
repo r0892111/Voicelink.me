@@ -92,7 +92,7 @@ export const AffiliatePartner: React.FC = () => {
   return (
     <div className="min-h-screen bg-porcelain font-instrument">
       {/* Hero Section */}
-      <section className="pt-28 sm:pt-32 lg:pt-36 pb-8 sm:pb-10 px-6 sm:px-8">
+      <section className="pt-28 sm:pt-32 lg:pt-36 pb-6 sm:pb-8 px-6 sm:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-[2fr_1fr] gap-8 lg:gap-12 items-center">
             {/* Text column */}
@@ -142,9 +142,9 @@ export const AffiliatePartner: React.FC = () => {
       </section>
 
       {/* How It Works */}
-      <section className="pt-2 sm:pt-4 pb-16 sm:pb-24 px-6 sm:px-8">
+      <section className="pt-2 sm:pt-4 pb-8 sm:pb-12 px-6 sm:px-8">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-8 sm:mb-12">
+          <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-6 sm:mb-8">
             {t('affiliate.howItWorks.title')}
           </h2>
 
@@ -170,9 +170,9 @@ export const AffiliatePartner: React.FC = () => {
       </section>
 
       {/* Why Partner */}
-      <section className="py-14 sm:py-20 px-6 sm:px-8">
+      <section className="py-8 sm:py-10 px-6 sm:px-8">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-8 sm:mb-14">
+          <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-6 sm:mb-8">
             {t('affiliate.whyPartner.title')}
           </h2>
 
@@ -198,12 +198,12 @@ export const AffiliatePartner: React.FC = () => {
       </section>
 
       {/* Program Details Accordion */}
-      <section className="py-14 sm:py-20 px-6 sm:px-8">
+      <section className="py-8 sm:py-10 px-6 sm:px-8">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-3 sm:mb-4">
             {t('affiliate.accordion.title')}
           </h2>
-          <p className="text-center text-slate-blue text-sm sm:text-base mb-8 sm:mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-slate-blue text-sm sm:text-base mb-6 sm:mb-8 max-w-2xl mx-auto">
             {t('affiliate.accordion.subtitle')}
           </p>
 
@@ -245,12 +245,12 @@ export const AffiliatePartner: React.FC = () => {
       </section>
 
       {/* Conversion Section */}
-      <section className="py-14 sm:py-20 px-6 sm:px-8" id="affiliate-form-section">
+      <section className="py-8 sm:py-10 px-6 sm:px-8" id="affiliate-form-section">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-3 sm:mb-4">
             {t('affiliate.conversion.title')}
           </h2>
-          <p className="text-center text-slate-blue text-sm sm:text-base mb-10 sm:mb-14 max-w-2xl mx-auto">
+          <p className="text-center text-slate-blue text-sm sm:text-base mb-7 sm:mb-9 max-w-2xl mx-auto">
             {t('affiliate.conversion.subtitle')}
           </p>
 
