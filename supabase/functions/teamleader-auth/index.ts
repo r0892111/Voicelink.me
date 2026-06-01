@@ -217,25 +217,73 @@ Deno.serve(async (req) => {
       }
     }
 
-    // 5. Save tokens to oauth_tokens (user_id is text in this table)
-    r.info('saving OAuth tokens', { user_id: userId });
-    const { error: tokenError } = await supabase.from('oauth_tokens').upsert(
-      {
-        user_id: userId,
-        provider: 'teamleader',
-        access_token: tlAccessToken,
-        refresh_token: tlRefreshToken,
-        expires_at: expiresAt,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'user_id,provider' }
-    );
+    // 5. Save Teamleader tokens.
+    //
+    // An explicit allowlist of OUR internal Teamleader accounts is served by the
+    // STAGING VLAgent, which reads tokens from teamleader_users.access_token on a
+    // SEPARATE Supabase project (the staging DB is not linked to this prod
+    // project). For those — and ONLY those — route the token to the staging DB
+    // and skip the prod oauth_tokens store, so the token has a single
+    // owner/refresher (writing it in both places lets two crons rotate + revoke
+    // the same TL refresh token). Every other account — including any other test
+    // user — keeps the unchanged prod path. The allowlist is config, not code:
+    // if STAGING_TEAMLEADER_IDS is unset, nothing is diverted and prod is identical.
+    const stagingTenantIds = (Deno.env.get('STAGING_TEAMLEADER_IDS') ?? '')
+      .split(',').map((s) => s.trim()).filter(Boolean);
+    const routeToStaging = stagingTenantIds.includes(tlUser.id);
 
-    if (tokenError) {
-      r.warn('oauth_tokens upsert failed (non-fatal)', { error: tokenError.message });
-      // Continue - user is created, we can still return session
+    if (routeToStaging) {
+      r.info('routing tokens to staging DB (allowlisted internal tenant)', { tl_id: tlUser.id });
+      const stagingUrl = Deno.env.get('STAGING_SUPABASE_URL');
+      const stagingKey = Deno.env.get('STAGING_SUPABASE_SERVICE_ROLE_KEY');
+      if (!stagingUrl || !stagingKey) {
+        r.error('test-user token routing skipped: STAGING_SUPABASE_URL/KEY not set');
+      } else {
+        const staging = createClient(stagingUrl, stagingKey);
+        // UPDATE (not upsert): the staging tenant row is pre-seeded there with
+        // its own user_id FK chain; we only refresh its tokens. A 0-row match
+        // means the tenant isn't provisioned on staging yet.
+        const { data: updated, error: stagingErr } = await staging
+          .from('teamleader_users')
+          .update({
+            access_token:     tlAccessToken,
+            refresh_token:    tlRefreshToken,
+            token_expires_at: expiresAt,
+            is_test_user:     true,
+            updated_at:       new Date().toISOString(),
+            ...(test_phone ? { whatsapp_number: test_phone, whatsapp_status: 'active' } : {}),
+          })
+          .eq('teamleader_id', tlUser.id)
+          .select('teamleader_id');
+        if (stagingErr) {
+          r.error('staging token write failed', { error: stagingErr.message, tl_id: tlUser.id });
+        } else if (!updated || updated.length === 0) {
+          r.warn('staging token write matched no row — tenant not provisioned on staging', { tl_id: tlUser.id });
+        } else {
+          r.info('staging token write OK', { tl_id: tlUser.id });
+        }
+      }
     } else {
-      r.info('OAuth tokens saved successfully');
+      // 5b. Production customers: tokens live in this project's oauth_tokens.
+      r.info('saving OAuth tokens', { user_id: userId });
+      const { error: tokenError } = await supabase.from('oauth_tokens').upsert(
+        {
+          user_id: userId,
+          provider: 'teamleader',
+          access_token: tlAccessToken,
+          refresh_token: tlRefreshToken,
+          expires_at: expiresAt,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id,provider' }
+      );
+
+      if (tokenError) {
+        r.warn('oauth_tokens upsert failed (non-fatal)', { error: tokenError.message });
+        // Continue - user is created, we can still return session
+      } else {
+        r.info('OAuth tokens saved successfully');
+      }
     }
 
     // 6. Upsert teamleader_users for mapping (teamleader_id, user_info)
