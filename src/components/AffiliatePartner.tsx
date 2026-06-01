@@ -92,21 +92,21 @@ export const AffiliatePartner: React.FC = () => {
   return (
     <div className="min-h-screen bg-porcelain font-instrument">
       {/* Hero Section */}
-      <section className="pt-32 sm:pt-40 lg:pt-44 pb-16 sm:pb-20 px-6 sm:px-8">
+      <section className="pt-28 sm:pt-32 lg:pt-36 pb-8 sm:pb-10 px-6 sm:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-[2fr_1fr] gap-10 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-[2fr_1fr] gap-8 lg:gap-12 items-center">
             {/* Text column */}
-            <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
-              <h1 className="font-general font-bold text-[2rem] leading-[1.1] sm:text-5xl lg:text-6xl sm:leading-tight text-navy">
+            <div className="space-y-5 sm:space-y-7 text-center lg:text-left">
+              <h1 className="font-general font-bold text-[2rem] leading-[1.1] sm:text-5xl lg:text-6xl sm:leading-[1.08] text-navy">
                 {t('affiliate.hero.title')}
               </h1>
 
-              <p className="text-base sm:text-lg lg:text-xl text-slate-blue max-w-3xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-base sm:text-lg lg:text-xl text-slate-blue max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 {t('affiliate.hero.subtitle')}
               </p>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 sm:pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-1 sm:pt-2">
                 <button
                   onClick={handlePartnerCTA}
                   className="group text-white font-semibold py-4 px-8 rounded-full bg-navy hover:bg-navy-hover transition-all duration-300 hover:shadow-xl hover:scale-[1.02] flex items-center justify-center space-x-2"
@@ -123,14 +123,14 @@ export const AffiliatePartner: React.FC = () => {
               </div>
             </div>
 
-            {/* Phone mockup column */}
-            <div className="flex justify-center lg:justify-end">
+            {/* Phone mockup column — desktop only */}
+            <div className="hidden lg:flex justify-center lg:justify-end">
               <img
                 src="/whatsapp phone mock.png"
                 alt="VoiceLink WhatsApp conversation showing CRM updates from voice notes"
                 style={{
                   width: 'auto',
-                  height: 'clamp(364px, 65vh, 624px)',
+                  height: 'clamp(320px, 46vh, 500px)',
                   transform: 'rotate(5deg)',
                   filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))',
                 }}
@@ -142,22 +142,25 @@ export const AffiliatePartner: React.FC = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 sm:py-20 px-6 sm:px-8 bg-white/50">
+      <section className="pt-2 sm:pt-4 pb-16 sm:pb-24 px-6 sm:px-8">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-center font-general font-bold text-2xl sm:text-3xl lg:text-4xl text-navy mb-10 sm:mb-16">
+          <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-8 sm:mb-12">
             {t('affiliate.howItWorks.title')}
           </h2>
 
-          <div className="grid sm:grid-cols-3 gap-10 sm:gap-8">
+          <div className="grid sm:grid-cols-3 gap-5 sm:gap-6">
             {[1, 2, 3].map((step) => (
-              <div key={step} className="text-center space-y-3 sm:space-y-4">
-                <div className="inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-navy text-white font-bold text-lg">
+              <div
+                key={step}
+                className="group relative bg-white rounded-2xl border border-navy/[0.07] shadow-sm p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-navy text-white font-general font-bold text-xl mb-5 shadow-sm">
                   {step}
                 </div>
-                <h3 className="font-general font-semibold text-navy text-base sm:text-lg">
+                <h3 className="font-general font-semibold text-navy text-lg mb-2">
                   {t(`affiliate.howItWorks.step${step}.title`)}
                 </h3>
-                <p className="text-slate-blue text-sm leading-relaxed max-w-xs mx-auto">
+                <p className="text-slate-blue text-[15px] leading-relaxed">
                   {t(`affiliate.howItWorks.step${step}.description`)}
                 </p>
               </div>
@@ -167,22 +170,25 @@ export const AffiliatePartner: React.FC = () => {
       </section>
 
       {/* Why Partner */}
-      <section className="py-16 sm:py-20 px-6 sm:px-8">
+      <section className="py-14 sm:py-20 px-6 sm:px-8">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-center font-general font-bold text-2xl sm:text-3xl lg:text-4xl text-navy mb-10 sm:mb-16">
+          <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-8 sm:mb-14">
             {t('affiliate.whyPartner.title')}
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-5 sm:gap-8">
+          <div className="grid md:grid-cols-3 gap-5 sm:gap-6">
             {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-white rounded-2xl p-6 sm:p-8 border border-navy/10">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-navy/10 flex items-center justify-center mb-4">
-                  <CheckCircle className="w-6 h-6 text-navy" />
+              <div
+                key={item}
+                className="group bg-white rounded-2xl p-6 sm:p-8 border border-navy/[0.07] shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-navy/[0.06] flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-navy/10">
+                  <CheckCircle className="w-6 h-6 text-navy" strokeWidth={1.75} />
                 </div>
-                <h3 className="font-general font-semibold text-navy text-base sm:text-lg mb-2 sm:mb-3">
+                <h3 className="font-general font-semibold text-navy text-lg mb-2">
                   {t(`affiliate.whyPartner.point${item}.title`)}
                 </h3>
-                <p className="text-slate-blue text-sm leading-relaxed">
+                <p className="text-slate-blue text-[15px] leading-relaxed">
                   {t(`affiliate.whyPartner.point${item}.description`)}
                 </p>
               </div>
@@ -192,9 +198,9 @@ export const AffiliatePartner: React.FC = () => {
       </section>
 
       {/* Program Details Accordion */}
-      <section className="pt-12 sm:pt-16 pb-16 sm:pb-20 px-6 sm:px-8 bg-white/50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-center font-general font-bold text-2xl sm:text-3xl lg:text-4xl text-navy mb-3 sm:mb-4">
+      <section className="py-14 sm:py-20 px-6 sm:px-8">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-3 sm:mb-4">
             {t('affiliate.accordion.title')}
           </h2>
           <p className="text-center text-slate-blue text-sm sm:text-base mb-8 sm:mb-12 max-w-2xl mx-auto">
@@ -205,29 +211,33 @@ export const AffiliatePartner: React.FC = () => {
             {accordionItems.map((item, index) => (
               <div
                 key={index}
-                className="border border-navy/15 rounded-xl overflow-hidden transition-all duration-200"
+                className="bg-white rounded-2xl border border-navy/[0.07] shadow-sm overflow-hidden"
               >
                 <button
                   onClick={() => setActiveAccordion(activeAccordion === index ? null : index)}
-                  className="w-full flex items-center justify-between p-5 sm:p-6 hover:bg-navy/5 transition-colors text-left"
+                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left gap-4 hover:bg-navy/[0.015] transition-colors duration-150"
                 >
-                  <h3 className="font-semibold text-navy text-base sm:text-lg pr-4">
+                  <h3 className="font-instrument font-semibold text-[15px] sm:text-base text-navy leading-snug pr-2">
                     {t(item.titleKey)}
                   </h3>
                   <ChevronDown
-                    className={`w-5 h-5 text-navy flex-shrink-0 transition-transform duration-300 ${
+                    className={`w-4 h-4 sm:w-5 sm:h-5 text-navy/40 flex-shrink-0 transition-transform duration-300 ${
                       activeAccordion === index ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
 
-                {activeAccordion === index && (
-                  <div className="px-6 pb-6 border-t border-navy/10 bg-navy/2">
-                    <div className="text-slate-blue text-sm leading-relaxed space-y-3 whitespace-pre-wrap">
+                <div
+                  className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+                    activeAccordion === index ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                  }`}
+                >
+                  <div className="overflow-hidden min-h-0">
+                    <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-1 font-instrument text-[14px] sm:text-[15px] text-slate-blue leading-relaxed whitespace-pre-wrap">
                       {t(item.contentKey)}
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </div>
@@ -235,18 +245,18 @@ export const AffiliatePartner: React.FC = () => {
       </section>
 
       {/* Conversion Section */}
-      <section className="py-16 sm:py-20 px-6 sm:px-8" id="affiliate-form-section">
+      <section className="py-14 sm:py-20 px-6 sm:px-8" id="affiliate-form-section">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-center font-general font-bold text-2xl sm:text-3xl lg:text-4xl text-navy mb-3 sm:mb-4">
+          <h2 className="text-center font-general font-bold text-3xl sm:text-4xl md:text-5xl leading-[1.15] text-navy mb-3 sm:mb-4">
             {t('affiliate.conversion.title')}
           </h2>
-          <p className="text-center text-slate-blue text-sm sm:text-base mb-10 sm:mb-16 max-w-2xl mx-auto">
+          <p className="text-center text-slate-blue text-sm sm:text-base mb-10 sm:mb-14 max-w-2xl mx-auto">
             {t('affiliate.conversion.subtitle')}
           </p>
 
-          <div className="grid md:grid-cols-2 gap-10 md:gap-12">
+          <div className="grid md:grid-cols-2 gap-5 sm:gap-6 items-start">
             {/* Form Column */}
-            <div>
+            <div className="bg-white rounded-2xl border border-navy/[0.07] shadow-sm p-6 sm:p-8">
               <h3 className="font-general font-semibold text-lg sm:text-xl text-navy mb-5 sm:mb-6">
                 {t('affiliate.conversion.form.title')}
               </h3>
@@ -359,7 +369,7 @@ export const AffiliatePartner: React.FC = () => {
             </div>
 
             {/* Calendly Column */}
-            <div>
+            <div className="bg-white rounded-2xl border border-navy/[0.07] shadow-sm p-6 sm:p-8">
               <h3 className="font-general font-semibold text-lg sm:text-xl text-navy mb-5 sm:mb-6">
                 {t('affiliate.conversion.calendly.title')}
               </h3>
@@ -374,7 +384,7 @@ export const AffiliatePartner: React.FC = () => {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
 
-              <div className="mt-6 sm:mt-8 p-5 sm:p-6 bg-navy/5 rounded-2xl border border-navy/10">
+              <div className="mt-6 sm:mt-8 pt-6 border-t border-navy/[0.07]">
                 <p className="text-sm text-navy/60 leading-relaxed">
                   {t('affiliate.conversion.calendly.contactBefore')}
                   <a
