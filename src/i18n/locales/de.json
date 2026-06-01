@@ -207,8 +207,8 @@
     "submitFailed": "Nachricht senden fehlgeschlagen. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
   },
   "footer": {
-    "ctaHeadline": "Sprechen Sie. Wir kümmern uns um den Rest.",
-    "ctaSubline": "Eine Sprachnachricht auf WhatsApp genügt, um Ihr CRM aktuell zu halten.",
+    "ctaHeadline": "Just… talk.\nDein CRM bleibt aktuell.",
+    "ctaSubline": "Füge Informationen hinzu, rufe Kundendaten ab und verwalte dein CRM direkt über WhatsApp.",
     "copyright": "© 2025 Finit Solutions",
     "privacy": "Datenschutz",
     "saasAgreement": "SaaS-Vereinbarung",
@@ -322,7 +322,7 @@
     "integrations": "Was es kann",
     "contact": "Kontakt",
     "maatwerkAI": "Individuelle KI",
-    "affiliate": "Partnerprogramm",
+    "affiliate": "Partner werden",
     "urgentQuestions": "Lieber direkt Kontakt?",
     "callUs": "Rufen Sie uns an",
     "callHours": "Mo-Sa · 8:30-19:00"
@@ -330,17 +330,23 @@
   "hero": {
     "title": "Einfach...",
     "mainTitle": "Sprechen Sie mit Ihrem CRM",
-    "subtitle1_pre": "Connect your",
+    "subtitle1_pre": "VoiceLink verbindet",
     "subtitle1_crm": "Teamleader CRM",
-    "subtitle1_mid": "with",
+    "subtitle1_mid": "mit",
     "subtitle1_wa": "WhatsApp",
-    "subtitle1_post": "and handle all your admin with a simple voice message.",
+    "subtitle1_post": ", sodass du mit einer einzigen Sprachnachricht Kundennotizen hinzufügst, Follow-ups erfasst, Aufgaben erstellst und CRM-Informationen abrufst. Ohne Teamleader zu öffnen.",
     "subtitle2": "Verwandeln Sie Sprachnachrichten sofort in strukturierte Daten.",
-    "getStartedFree": "Kostenlos Starten",
-    "watchDemo": "Demo Ansehen",
+    "getStartedFree": "Kostenlos starten",
+    "watchDemo": "Demo ansehen",
+    "howToInstall": "Wie einrichten?",
     "oneClickSetup": "Ein-Klick CRM Verbindung",
     "whatsappSetup": "WhatsApp verbinden\nin 2 Minuten",
-    "carouselTitle": "See what VoiceLink does inside your CRM"
+    "carouselTitle": "Was kann VoiceLink in deinem CRM?",
+    "staticTitle": "Verwalte dein CRM über WhatsApp",
+    "subtitleFull": "VoiceLink verbindet Teamleader mit WhatsApp, sodass du mit einer einzigen Sprachnachricht Kundennotizen hinzufügst, Follow-ups erfasst, Aufgaben erstellst und CRM-Informationen abrufst. Ohne Teamleader zu öffnen.",
+    "bulletSetup": "In wenigen Minuten eingerichtet",
+    "bulletNoTech": "Keine technischen Kenntnisse nötig",
+    "bulletNoCard": "Keine Kreditkarte erforderlich"
   },
   "dashboard": {
     "welcome": "Willkommen zurück, {{name}}!",
@@ -571,22 +577,22 @@
   },
   "howItWorks": {
     "title": "Wie funktioniert es?",
-    "subtitle": "In vier Schritten von der Sprachnachricht in Ihr CRM",
+    "subtitle": "In vier Schritten von der Sprache in Ihr CRM",
     "step1": {
-      "title": "Nachricht senden",
-      "description": "Öffnen Sie WhatsApp und senden Sie eine Sprachnachricht oder Text — ganz wie gewohnt. Fügen Sie neue Infos zu Ihrem CRM hinzu oder suchen Sie bestehende Kontakte und Deals."
+      "title": "Sende eine Nachricht",
+      "description": "Öffne WhatsApp und sende eine Sprachnachricht oder einen Text, so wie du es gewohnt bist. Füge Informationen zu deinem CRM hinzu oder rufe bestehende Kontakte, Deals, Aufgaben und Termine ab."
     },
     "step2": {
-      "title": "VoiceLink erkennt die Infos",
-      "description": "VoiceLink erkennt die wichtigsten Infos — Namen, Nummern, Termine, Notizen — und überlegt, was damit passieren soll."
+      "title": "Die richtigen Informationen werden verarbeitet",
+      "description": "Kontakte, Notizen, Follow-ups, Termine und Verkaufschancen werden automatisch erkannt und dem richtigen Kunden oder Deal zugeordnet."
     },
     "step3": {
-      "title": "Sie bekommen eine Zusammenfassung",
-      "description": "Sofort eine Übersicht zurück in WhatsApp. VoiceLink denkt auch voraus: es kann Fragen stellen oder Vorschläge machen."
+      "title": "Du erhältst sofort Feedback",
+      "description": "Du siehst, welche Informationen gefunden wurden und welche Aktionen ausgeführt werden. Fehlt etwas? Dann erhältst du sofort eine Rückfrage oder einen Vorschlag."
     },
     "step4": {
-      "title": "Alles steht in Ihrem CRM",
-      "description": "Kontakte, Notizen und Aufgaben erscheinen automatisch in Ihrem CRM. Fertig."
+      "title": "Alles landet, wo es hingehört",
+      "description": "Neue Informationen werden zu deinem CRM hinzugefügt und angeforderte Informationen erscheinen direkt zurück in WhatsApp."
     },
     "coreFunctionalities": {
       "title": "Kernfunktionalitäten",
@@ -614,8 +620,8 @@
     }
   },
   "pricing": {
-    "title": "Einfache, Transparente Preise",
-    "subtitle": "Pro-Benutzer-Preise mit klaren Nachrichtenlimits. Starten Sie kostenlos, skalieren Sie mit Ihrem Wachstum.",
+    "title": "Weniger Administration. Mehr Zeit für Kunden.",
+    "subtitle": "Starte kostenlos und verwalte dein CRM direkt über WhatsApp.",
     "monthly": "Monatlich",
     "yearly": "Jährlich",
     "save20": "20% Sparen",
@@ -642,7 +648,7 @@
     "startFreeTrial": "Kostenlose Testversion Starten",
     "freeTrial": "14-tägige kostenlose Testversion",
     "custom": "Individuell",
-    "getCustomQuote": "Angebot Anfordern",
+    "getCustomQuote": "Kontakt aufnehmen",
     "allPlansInclude": "Alle Pläne beinhalten Echtzeit-CRM-Synchronisation, WhatsApp-Integration und mehrsprachige Unterstützung.",
     "free": "Kostenlos",
     "users": "Benutzer",
@@ -652,44 +658,77 @@
     "autoTopUpInfo": "Auto-Aufladung — €7 pro 100 Credits",
     "cards": {
       "freetrial": {
-        "name": "Kostenlose Testversion",
+        "name": "Kostenlos",
         "description": "Testen Sie vor dem Kauf",
-        "cta": "Kostenlos Starten",
+        "cta": "Jetzt kostenlos testen",
         "subtext": "100 kostenlose Credits — keine Karte nötig",
-        "billingNote": "Einmalige Credits, keine Karte nötig"
+        "billingNote": "Einmalige Credits, keine Karte nötig",
+        "features": [
+          "E-Mail-Support"
+        ]
       },
       "starter": {
         "name": "Starter",
         "description": "Für gelegentliche Nutzung",
-        "cta": "Mit Starter Beginnen",
-        "subtext": "E-Mail-Support inklusive"
+        "cta": "Jetzt kostenlos testen",
+        "subtext": "E-Mail-Support inklusive",
+        "features": [
+          "Alles aus der Testphase, plus:",
+          "1-zu-1-Support-Gespräche"
+        ]
       },
       "professional": {
         "name": "Professional",
         "description": "Für tägliche Nutzung",
         "badge": "Am Beliebtesten",
-        "cta": "Zu Professional Wechseln"
+        "cta": "Jetzt kostenlos testen",
+        "features": [
+          "Alles aus Starter, plus:",
+          "Persönlicher Account-Manager",
+          "Mehrere Teammitglieder hinzufügen"
+        ]
       },
       "business": {
         "name": "Business",
         "description": "Für intensive Nutzung",
-        "cta": "Zu Business Wechseln"
+        "cta": "Jetzt kostenlos testen",
+        "features": [
+          "Alles aus Professional, plus:",
+          "Maßgeschneiderte Funktionen auf Anfrage"
+        ]
       },
       "enterprise": {
         "name": "Enterprise",
         "description": "Für Organisationen (25+ Benutzer)",
-        "contactForPricing": "Auf Ihre Bedürfnisse zugeschnitten"
+        "contactForPricing": "Auf Ihre Bedürfnisse zugeschnitten",
+        "features": [
+          "Vollständig auf deine Unternehmensstruktur abgestimmt"
+        ]
       }
-    }
+    },
+    "creditUses": [
+      "± Nachrichten pro Monat",
+      "Kontakte",
+      "Notizen",
+      "Aufgaben",
+      "Termine",
+      "Angebote & Rechnungen",
+      "Mehr"
+    ],
+    "perUserLine1": "Benutzer /",
+    "perUserLine2": "Monat",
+    "totalBilledAnnually": "Insgesamt €{{total}} /Monat, jährlich abgerechnet",
+    "creditUsesTitle": "Nutze deine Credits für:",
+    "includedHeading": "Enthalten:"
   },
   "finalCta": {
-    "title": "Sprechen Sie. Ihr CRM erledigt den Rest.",
-    "subtitle": "Verbinden Sie WhatsApp, senden Sie eine Sprachnachricht – VoiceLink schreibt Kontakte, Notizen und Aufgaben direkt in Ihr CRM.",
-    "startFreeTrial": "Kostenlose Testversion Starten",
-    "watchDemo": "Demo Ansehen",
+    "title": "Bereit, VoiceLink kostenlos auszuprobieren?",
+    "subtitle": "Verbinde dein CRM mit WhatsApp und füge Notizen hinzu, erfasse Follow-ups und rufe Kundeninformationen in einem einzigen Gespräch ab.",
+    "startFreeTrial": "Kostenlos starten",
+    "watchDemo": "Demo ansehen",
     "freeTrialFeatures": {
-      "freeTrialDays": "14-tägige kostenlose Testversion",
-      "noSetupFees": "Keine Einrichtungsgebühren",
+      "freeTrialDays": "100 Gratis-Credits",
+      "noSetupFees": "Keine Kreditkarte erforderlich",
       "cancelAnytime": "Jederzeit kündbar"
     }
   },
@@ -750,12 +789,12 @@
     "title": "Integriert sich mit Ihren Tools"
   },
   "problemAgitation": {
-    "title": "Kommt Ihnen bekannt vor?",
-    "subtitle": "Vertriebsteams verlieren jede Woche Stunden mit manueller CRM-Arbeit.",
-    "pain1": "Sie vergessen Anrufe im CRM zu erfassen, weil Sie bereits beim nächsten sind.",
-    "pain2": "Notizen aus Kundengesprächen stecken in Ihrem Kopf — oder auf einer Serviette.",
-    "pain3": "Ihre Pipeline sieht veraltet aus, weil das Aktualisieren zu lange dauert.",
-    "pain4": "Follow-ups rutschen durch und Deals werden kalt."
+    "title": "Kommt dir bekannt vor?",
+    "subtitle": "Dein CRM hinkt oft dem hinterher, was in deinem Unternehmen wirklich passiert.",
+    "pain1": "Du vergisst, Gespräche zu erfassen, weil du schon beim nächsten Kunden bist.",
+    "pain2": "Wichtige Informationen bleiben in WhatsApp, in Notizen oder in deinem Kopf hängen.",
+    "pain3": "Follow-ups rutschen durch, weil sich die Administration stapelt.",
+    "pain4": "Das Aktualisieren deines CRM fühlt sich an wie zusätzliche Arbeit zu deiner eigentlichen Arbeit."
   },
   "features": {
     "dontSeeYourCrm": "Sie nutzen ein anderes CRM oder eine andere Software? Wir entwickeln maßgeschneiderte Lösungen für jede Plattform, die Sie täglich nutzen.",
@@ -1589,48 +1628,39 @@
   },
   "affiliate": {
     "hero": {
-      "title": "Generieren Sie wiederkehrende Einnahmen, indem Sie VoiceLink Ihrem Netzwerk vorstellen",
-      "subtitle": "Werden Sie VoiceLink-Partner und verdienen Sie 20% wiederkehrende Provisionen bei jedem vermittelten Kunden. Langes Attributionsfenster, monatliche Auszahlungen, alles bereitgestellt.",
-      "stat1": "wiederkehrende Provision",
-      "stat2": "Attributionsfenster",
-      "stat3": "Einnahmen nach Kündigung",
-      "days": "Tage",
-      "months": "Monate",
+      "title": "Werden Sie VoiceLink-Partner",
+      "subtitle": "Stellen Sie VoiceLink Unternehmen in Ihrem Netzwerk vor und erhalten Sie 20% wiederkehrende Provision, solange sie Kunde bleiben. Wir kümmern uns um Demo, Onboarding und Support.",
       "cta1": "Partner werden",
-      "cta2": "Anruf buchen"
+      "cta2": "Kennenlernen planen"
     },
     "howItWorks": {
       "title": "So funktioniert's",
       "step1": {
-        "title": "Registrieren Sie einen Lead",
-        "description": "Senden Sie eine E-Mail an voicelink@finitsolutions.be mit Name, Unternehmen und Kontext."
+        "title": "Lead registrieren",
+        "description": "Senden Sie eine E-Mail an voicelink@finitsolutions.be mit dem Firmennamen, einer Kontaktperson und etwas Kontext."
       },
       "step2": {
-        "title": "Kunde unterzeichnet innerhalb von 90 Tagen",
-        "description": "Wenn Ihr Lead innerhalb von 90 Tagen ein Abonnement abschließt, verdienen Sie Provision."
+        "title": "Kunde wird aktiv",
+        "description": "Wird Ihr Lead innerhalb von 90 Tagen Kunde, wird er Ihnen zugewiesen."
       },
       "step3": {
-        "title": "Erhalten Sie 20% wiederkehrend",
-        "description": "Solange Ihr Kunde bezahlt, erhalten Sie 20% des monatlichen Abonnementwerts."
-      },
-      "step4": {
-        "title": "Quartalsweise Auszahlung",
-        "description": "Monatlich bei 5+ aktiven Kunden, sonst quartalsweise nach Rechnung."
+        "title": "Wiederkehrende Provision erhalten",
+        "description": "Sie erhalten 20% Provision, solange der Kunde aktiv bleibt. Die Auszahlung erfolgt quartalsweise. Ab 5 aktiven Kunden wechseln wir zu monatlicher Auszahlung."
       }
     },
     "whyPartner": {
-      "title": "Warum Partner werden?",
+      "title": "Warum Partner VoiceLink empfehlen",
       "point1": {
-        "title": "Wiederkehrend, nicht einmalig",
-        "description": "Bauen Sie ein Portfolio auf, nicht einmalige Provisionen. Langfristige Beziehung zu Ihren Kunden."
+        "title": "Wir machen die Arbeit",
+        "description": "Demos, Onboarding, Support und Nachverfolgung übernehmen wir. Sie machen die Vorstellung, wir den Rest."
       },
       "point2": {
-        "title": "Großzügiges Attributionsfenster",
-        "description": "90 Tage, um einen Kunden einzuführen. Wiederkehrende Provision, solange der Kunde aktiv und zahlend bleibt."
+        "title": "Passt zu fast jedem Unternehmen",
+        "description": "Fast jedes Unternehmen arbeitet heute mit einem CRM und verliert Zeit durch Verwaltung, Nachverfolgung oder verstreute Kundeninformationen."
       },
       "point3": {
-        "title": "Alles bereitgestellt",
-        "description": "Pitch Deck, Demo-Videos, One-Pager, FAQ. Sie stellen vor, wir kümmern uns um den Rest."
+        "title": "Der Mehrwert ist leicht zu zeigen",
+        "description": "Der Mehrwert ist sofort klar: Kunden verwalten ihr CRM über WhatsApp, ohne ihre bestehende Arbeitsweise zu ändern."
       }
     },
     "accordion": {
@@ -1681,11 +1711,13 @@
         "error": "Etwas ist schief gelaufen. Senden Sie uns eine E-Mail an voicelink@finitsolutions.be."
       },
       "calendly": {
-        "title": "Oder buchen Sie einen Anruf",
-        "subtitle": "Möchten Sie erst einmal sprechen? Buchen Sie 20 Minuten mit unserem Team.",
-        "cta": "In Calendly buchen",
-        "info": "Bei Fragen erreichen Sie uns unter voicelink@finitsolutions.be. Wir antworten innerhalb von 24 Stunden."
-      }
+        "title": "Erst kennenlernen?",
+        "subtitle": "Möchten Sie zuerst besprechen, ob VoiceLink zu Ihren Kunden oder Ihrem Netzwerk passt? Buchen Sie ein 20-minütiges Gespräch mit unserem Team.",
+        "cta": "Kennenlernen planen",
+        "contactBefore": "Fragen? Senden Sie eine E-Mail an ",
+        "contactAfter": ". Wir antworten in der Regel innerhalb eines Werktags."
+      },
+      "subtitle": "Melden Sie sich an oder planen Sie zuerst ein Kennenlernen."
     }
   },
   "languagePicker": {
@@ -1694,5 +1726,31 @@
     "subtitle": "VoiceLink antwortet ab jetzt immer in dieser Sprache, unabhängig davon, in welcher Sprache du sprichst.",
     "confirm": "Bestätigen",
     "editLater": "Du kannst dies später in deinem Profil ändern."
+  },
+  "customSolutions": {
+    "title": "Möchtest du eine maßgeschneiderte VoiceLink-Lösung?",
+    "subtitle": "Wir bauen maßgeschneiderte Sprachlösungen für jedes CRM oder Geschäftssystem. Wenn es eine API hat, können wir es anbinden.",
+    "twoExamples": "Zwei Beispiele:",
+    "adaptsToAnyIndustry": "VoiceLink passt sich an jede Branche oder jeden Workflow an, der Sprache-zu-Daten-Umwandlung benötigt.",
+    "fieldTechnicians": {
+      "title": "Servicetechniker",
+      "description": "Techniker sprechen Serviceberichte ein, während sie zwischen Einsätzen fahren. Sprachnotizen erstellen automatisch strukturierte Berichte mit Auftragsdetails, verwendeten Teilen und aufgewendeter Zeit.",
+      "features": "Individuelle Berichtsformate • Echtzeit-Sync • Mobile-first"
+    },
+    "propertyManagement": {
+      "title": "Immobilienverwaltung",
+      "description": "Immobilienverwalter erfassen Wartungsanfragen, Mieterinteraktionen und Inspektionsnotizen per Sprache. KI erstellt automatisch Arbeitsaufträge, aktualisiert Mieterdaten und plant Follow-ups.",
+      "features": "Erstellung von Arbeitsaufträgen • Mieterkommunikation • Wartungsplanung"
+    },
+    "connectAnyCrm": "Jedes CRM verbinden",
+    "integrateWithAnySystem": "Wir integrieren jedes System, das eine API hat",
+    "apiSupport": "+ Jedes System mit REST-API, GraphQL oder Webhooks",
+    "readyToBuild": "Bereit, deine maßgeschneiderte Lösung zu bauen?",
+    "customSolutionDescription": "Erzähl uns von deinem Workflow, und wir zeigen dir, wie Sprachtechnologie deine Geschäftsabläufe verändern kann. Jede Lösung wird genau auf deine Bedürfnisse zugeschnitten.",
+    "scheduleCustomDemo": "Individuelle Demo planen",
+    "discussYourNeeds": "Besprich deine Anforderungen",
+    "freeConsultation": "Kostenlose Beratung",
+    "customProofOfConcept": "Individueller Proof of Concept",
+    "tailoredImplementation": "Maßgeschneiderte Umsetzung"
   }
 }
