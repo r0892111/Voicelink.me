@@ -1,4 +1,22 @@
 {
+  "getStarted": {
+    "backToPlans": "Terug naar plannen",
+    "title": "Aan de slag met {{plan}}",
+    "subtitle": "Controleer je plan en verbind Teamleader om door te gaan.",
+    "orderSummary": "Overzicht",
+    "plan": "Plan",
+    "billing": "Facturatie",
+    "seats": "Gebruikers",
+    "perSeat": "Per gebruiker",
+    "total": "Totaal",
+    "perMonth": "/maand",
+    "yearlySavings": "Je bespaart €{{amount}}/jaar",
+    "connectNote": "Je verbindt eerst Teamleader en geeft daarna je betaalgegevens in.",
+    "error": "Er ging iets mis. Probeer opnieuw.",
+    "starting": "Bezig…",
+    "continueCta": "Doorgaan met Teamleader",
+    "tryFreeInstead": "Liever eerst gratis proberen?"
+  },
   "common": {
     "loading": "Laden...",
     "error": "Fout",
@@ -862,7 +880,7 @@
       "starter": {
         "name": "Starter",
         "description": "Voor licht gebruik",
-        "cta": "Start met Starter",
+        "cta": "Aan de slag",
         "subtext": "E-mail support inbegrepen",
         "features": [
           "Alles uit de proefperiode, plus:",
@@ -873,7 +891,7 @@
         "name": "Professional",
         "description": "Voor dagelijks gebruik",
         "badge": "Meest Populair",
-        "cta": "Start met Professional",
+        "cta": "Aan de slag",
         "features": [
           "Alles uit Starter, plus:",
           "Toegewijde accountmanager",
@@ -883,7 +901,7 @@
       "business": {
         "name": "Business",
         "description": "Voor intensief gebruik",
-        "cta": "Start met Business",
+        "cta": "Aan de slag",
         "features": [
           "Alles uit Professional, plus:",
           "Maatwerk-features op aanvraag"

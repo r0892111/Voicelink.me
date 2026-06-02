@@ -18,148 +18,19 @@ import { BillingPeriodSwitch, BillingPeriod } from './BillingPeriodSwitch';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
 import { usePageTransition } from '../hooks/usePageTransition';
-import { markPendingCheckout } from '../utils/pendingCheckout';
+import {
+  plans,
+  getPricePerUser,
+  formatPrice,
+  formatEuro,
+  type PricingPlan,
+} from '../lib/pricingCatalog';
 
 interface PricingSectionProps {
   openContactModal: () => void;
 }
 
-interface VolumeTier {
-  min: number;
-  max: number;
-  discount: number;
-  pricePerUser: number;
-}
-
-interface PricingPlan {
-  key: string;
-  isFreeTrial: boolean;
-  highlighted: boolean;
-  baseMonthlyPrice: number;
-  credits: number;
-  creditsApprox: string;
-  hasVolumeDiscounts: boolean;
-  volumeTiers: VolumeTier[];
-  hasAutoTopUp: boolean;
-  featureKeys: string[];
-}
-
-const PROFESSIONAL_TIERS: VolumeTier[] = [
-  { min: 1,  max: 3,  discount: 0,  pricePerUser: 59.00 },
-  { min: 4,  max: 6,  discount: 5,  pricePerUser: 56.05 },
-  { min: 7,  max: 10, discount: 8,  pricePerUser: 54.28 },
-  { min: 11, max: 15, discount: 12, pricePerUser: 51.92 },
-  { min: 16, max: 25, discount: 15, pricePerUser: 50.15 },
-  { min: 26, max: 50, discount: 18, pricePerUser: 48.38 },
-];
-
-const BUSINESS_TIERS: VolumeTier[] = [
-  { min: 1,  max: 3,  discount: 0,  pricePerUser: 109.00 },
-  { min: 4,  max: 6,  discount: 5,  pricePerUser: 103.55 },
-  { min: 7,  max: 10, discount: 8,  pricePerUser: 100.28 },
-  { min: 11, max: 15, discount: 12, pricePerUser: 95.92 },
-  { min: 16, max: 50, discount: 15, pricePerUser: 92.65 },
-];
-
-
-const plans: PricingPlan[] = [
-  {
-    key: 'freetrial',
-    isFreeTrial: true,
-    highlighted: false,
-    baseMonthlyPrice: 0,
-    credits: 100,
-    creditsApprox: '20–30',
-    hasVolumeDiscounts: false,
-    volumeTiers: [],
-    hasAutoTopUp: false,
-    featureKeys: [
-      'pricing.features.voiceNotes',
-      'pricing.features.realtimeCrmSync',
-      'pricing.features.multiLanguageSupport',
-    ],
-  },
-  {
-    key: 'starter',
-    isFreeTrial: false,
-    highlighted: false,
-    baseMonthlyPrice: 24,
-    credits: 350,
-    creditsApprox: '35–50',
-    hasVolumeDiscounts: false,
-    volumeTiers: [],
-    hasAutoTopUp: false,
-    featureKeys: [
-      'pricing.features.voiceNotes',
-      'pricing.features.realtimeCrmSync',
-      'pricing.features.multiLanguageSupport',
-      'pricing.features.emailSupport',
-    ],
-  },
-  {
-    key: 'professional',
-    isFreeTrial: false,
-    highlighted: true,
-    baseMonthlyPrice: 59,
-    credits: 1000,
-    creditsApprox: '100–142',
-    hasVolumeDiscounts: true,
-    volumeTiers: PROFESSIONAL_TIERS,
-    hasAutoTopUp: true,
-    featureKeys: [
-      'pricing.features.voiceNotes',
-      'pricing.features.realtimeCrmSync',
-      'pricing.features.multiLanguageSupport',
-      'pricing.features.prioritySupport',
-      'pricing.features.autoTopUp',
-    ],
-  },
-  {
-    key: 'business',
-    isFreeTrial: false,
-    highlighted: false,
-    baseMonthlyPrice: 109,
-    credits: 2000,
-    creditsApprox: '200–285',
-    hasVolumeDiscounts: true,
-    volumeTiers: BUSINESS_TIERS,
-    hasAutoTopUp: true,
-    featureKeys: [
-      'pricing.features.voiceNotes',
-      'pricing.features.realtimeCrmSync',
-      'pricing.features.multiLanguageSupport',
-      'pricing.features.prioritySupport',
-      'pricing.features.dedicatedAccountManager',
-      'pricing.features.autoTopUp',
-    ],
-  },
-];
-
 const TOTAL_PLANS = plans.length;
-
-function getVolumeTier(tiers: VolumeTier[], users: number): VolumeTier {
-  return tiers.find(t => users >= t.min && users <= t.max) ?? tiers[tiers.length - 1];
-}
-
-function getPricePerUser(plan: PricingPlan, users: number, billingPeriod: BillingPeriod): number {
-  if (plan.isFreeTrial) return 0;
-  let price = plan.baseMonthlyPrice;
-  if (plan.hasVolumeDiscounts && plan.volumeTiers.length > 0) {
-    price = getVolumeTier(plan.volumeTiers, users).pricePerUser;
-  }
-  if (billingPeriod === 'yearly') price = Math.round(price * 0.8 * 100) / 100;
-  return price;
-}
-
-function formatPrice(price: number): string {
-  return price % 1 === 0 ? String(price) : price.toFixed(2);
-}
-
-// Format a euro amount with NL-style decimals (€57,60). Used for the yearly
-// savings badge so it reads naturally for the Belgian/NL audience.
-function formatEuro(amount: number): string {
-  return '€' + amount.toFixed(2).replace('.', ',');
-}
 
 // Small inline language map for the "/ per user" suffix on the yearly savings
 // badge. Kept inline on purpose so we don't touch the shared locale JSON
@@ -256,13 +127,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
   }, []);
 
   // Route a plan-card click:
-  //  - Free Trial: /signup as before.
-  //  - Paid plan: persist the intent in localStorage and send to /signup so
-  //    the user goes through the Teamleader OAuth flow first. AuthCallback
-  //    picks up the intent after OAuth and launches Stripe Checkout, so the
-  //    user never lands on /dashboard without an active subscription.
-  //    Even if they're already authenticated we route via /signup → OAuth
-  //    to guarantee the Teamleader connection is in place before billing.
+  //  - Free Trial: /signup as before (genuinely free, separate entry).
+  //  - Paid plan: send to the plan-aware /get-started page with the choice in
+  //    the URL (shareable, refresh-safe). That page shows an order summary,
+  //    then stamps pendingCheckout + starts Teamleader OAuth; AuthCallback
+  //    picks up the intent after OAuth and launches Stripe Checkout.
   const handleCtaClick = (plan: PricingPlan) => {
     if (plan.isFreeTrial) {
       navigateWithTransition(withUTM('/signup'));
@@ -273,8 +142,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
       billingPeriod === 'yearly' ? 'yearly' : 'monthly';
     const quantity = userCounts[plan.key] ?? 1;
 
-    markPendingCheckout({ tierKey: plan.key, interval, quantity });
-    navigateWithTransition(withUTM('/signup'));
+    navigateWithTransition(
+      withUTM(`/get-started?plan=${plan.key}&interval=${interval}&seats=${quantity}`),
+    );
   };
 
   const renderUserControl = (plan: PricingPlan) => {
