@@ -15,6 +15,9 @@ export interface CheckoutOptions {
   /** 'subscription' (default) for plan signups; 'payment' for one-time
    *  purchases (credit packs). */
   mode?: 'subscription' | 'payment';
+  /** 'if_required' lets a trial subscription start without collecting a card
+   *  (WSM promo). Default (undefined) = Stripe's 'always'. */
+  paymentMethodCollection?: 'always' | 'if_required';
 }
 
 export class StripeService {
@@ -42,6 +45,7 @@ export class StripeService {
           crm_provider: crmProvider,
           trial_days: options.trialDays,
           mode: options.mode,
+          payment_method_collection: options.paymentMethodCollection,
         }),
       });
 
