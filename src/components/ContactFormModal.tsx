@@ -121,7 +121,6 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleInputChange}
-                placeholder={t('contact.fullNamePlaceholder')}
                 required
                 className="w-full px-4 py-2.5 border border-navy/15 rounded-full bg-white font-instrument text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors"
               />
@@ -137,7 +136,6 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder={t('contact.emailPlaceholder')}
                 required
                 className="w-full px-4 py-2.5 border border-navy/15 rounded-full bg-white font-instrument text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors"
               />
@@ -153,7 +151,6 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                placeholder={t('contact.phonePlaceholder')}
                 className="w-full px-4 py-2.5 border border-navy/15 rounded-full bg-white font-instrument text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors"
               />
             </div>
@@ -167,7 +164,6 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
                 name="message"
                 value={formData.message}
                 onChange={handleInputChange}
-                placeholder={t('contact.messagePlaceholder')}
                 required
                 rows={3}
                 className="w-full px-4 py-2.5 border border-navy/15 rounded-xl bg-white font-instrument text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors resize-none"
@@ -186,7 +182,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 sm:px-6 py-2.5 border border-navy/20 text-navy/60 hover:text-navy hover:border-navy/40 rounded-full font-instrument font-medium transition-colors text-sm whitespace-nowrap"
+                className="px-4 sm:px-6 py-2.5 text-navy/40 hover:text-navy/70 rounded-full font-instrument transition-colors text-sm whitespace-nowrap"
               >
                 {t('common.cancel')}
               </button>
