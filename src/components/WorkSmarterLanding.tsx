@@ -32,7 +32,7 @@ export const WorkSmarterLanding: React.FC = () => {
       <div className="flex justify-center mb-8 px-6">
         <div className="inline-flex items-center gap-2 bg-navy/[0.06] border border-navy/10 rounded-full px-4 py-2 text-sm font-medium text-navy">
           <Star className="w-3.5 h-3.5 fill-current" />
-          WorkSmarter 2025 — Exclusief aanbod
+          WorkSmarter 2026 — Exclusief aanbod
         </div>
       </div>
 
@@ -48,7 +48,7 @@ export const WorkSmarterLanding: React.FC = () => {
         <div className="flex flex-col space-y-4 mb-10 text-left max-w-sm mx-auto">
           {[
             '1.000 credits per maand op het Professional plan',
-            'Automatische updates in Teamleader of Pipedrive',
+            'Automatische updates in Teamleader',
             'Geen creditcard, geen betaalscherm',
           ].map((bullet, i) => (
             <div key={i} className="flex items-start gap-3">
