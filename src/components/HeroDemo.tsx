@@ -1501,7 +1501,7 @@ export const HeroDemo: React.FC = () => {
 
         {/* ── COMPACT (mobile/tablet): single centered column ── */}
         {isCompact && (
-          <div className="relative z-20 flex flex-col items-center px-[6%] pb-4 sm:pb-10" style={{ paddingTop: '13svh' }}>
+          <div className="relative z-20 flex flex-col items-center px-[6%] pb-4 sm:pb-10" style={{ paddingTop: '16svh' }}>
             <div className="w-full max-w-xl flex flex-col items-center text-center">
               <div className="overflow-visible hero-animate-heading">
                 <h1 className="font-general font-black leading-[1.05] tracking-tight text-navy text-center" style={{ fontSize: 'clamp(1.9rem, calc(0.8rem + 4vw + 1.5vh), 3.4rem)' }}>

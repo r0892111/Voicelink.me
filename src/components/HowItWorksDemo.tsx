@@ -277,7 +277,7 @@ export const HowItWorksDemo: React.FC = () => {
     <div ref={containerRef} className="flex flex-col items-center gap-8 lg:gap-12">
 
       {/* ─── Title + subtitle ─── */}
-      <div className="order-1 text-center max-w-3xl mx-auto px-4 mt-2 sm:mt-2 -mb-4 lg:-mb-6">
+      <div className="order-1 text-center max-w-3xl mx-auto px-4 mt-6 sm:mt-2 -mb-4 lg:-mb-6">
         <h2 className="font-general text-3xl sm:text-4xl md:text-5xl 2xl:text-6xl font-bold leading-[1.15] text-navy mb-2 md:mb-4">
           {t('howItWorks.title')}
         </h2>
@@ -287,7 +287,7 @@ export const HowItWorksDemo: React.FC = () => {
       </div>
 
       {/* ─── macOS Window + Chat (centered, prominent) ─── */}
-      <div className="order-3 w-full max-w-[760px] xl:max-w-[880px] 2xl:max-w-[1040px] mx-auto">
+      <div className="order-3 w-full max-w-[760px] xl:max-w-[880px] 2xl:max-w-[1040px] mx-auto -mt-4 sm:mt-0">
         <div className="relative">
           {/* Backdrop shadow — elevated "floating" effect */}
           <div
