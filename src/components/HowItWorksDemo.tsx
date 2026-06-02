@@ -123,6 +123,7 @@ export const HowItWorksDemo: React.FC = () => {
   const [crmScrolled, setCrmScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [loopFading, setLoopFading] = useState(false);
+  const [stepsComplete, setStepsComplete] = useState(false);
   const [replyHeight, setReplyHeight] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const replyBubbleRef = useRef<HTMLDivElement>(null);
@@ -236,8 +237,8 @@ export const HowItWorksDemo: React.FC = () => {
     // Schedule loop restart with smooth fade
     addTimeout(() => {
       setLoopFading(true);
-    }, 19400);
-    addTimeout(() => startSequence(), 20000);
+    }, 16500);
+    addTimeout(() => startSequence(), 17100);
   }, [clearAllTimeouts, addTimeout, startTypewriter]);
 
   useEffect(() => {
@@ -248,6 +249,12 @@ export const HowItWorksDemo: React.FC = () => {
   }, [isVisible, startSequence]);
 
   useEffect(() => () => clearAllTimeouts(), [clearAllTimeouts]);
+
+  // Once the 4 steps have all lit up the first time, lock them on (blue).
+  // The hero demo keeps looping, but the steps no longer reset or dim.
+  useEffect(() => {
+    if (activeStep >= 4) setStepsComplete(true);
+  }, [activeStep]);
 
   const steps = [
     { title: t('howItWorks.step1.title'), description: t('howItWorks.step1.description') },
@@ -269,8 +276,18 @@ export const HowItWorksDemo: React.FC = () => {
   return (
     <div ref={containerRef} className="flex flex-col items-center gap-8 lg:gap-12">
 
+      {/* ─── Title + subtitle ─── */}
+      <div className="order-1 text-center max-w-3xl mx-auto px-4 mt-2 sm:mt-2 -mb-4 lg:-mb-6">
+        <h2 className="font-general text-3xl sm:text-4xl md:text-5xl 2xl:text-6xl font-bold leading-[1.15] text-navy mb-2 md:mb-4">
+          {t('howItWorks.title')}
+        </h2>
+        <p className="text-base md:text-lg xl:text-xl font-instrument font-medium text-navy/60 max-w-3xl mx-auto">
+          {t('howItWorks.subtitle')}
+        </p>
+      </div>
+
       {/* ─── macOS Window + Chat (centered, prominent) ─── */}
-      <div className="w-full max-w-[760px] xl:max-w-[880px] 2xl:max-w-[1040px] mx-auto">
+      <div className="order-3 w-full max-w-[760px] xl:max-w-[880px] 2xl:max-w-[1040px] mx-auto">
         <div className="relative">
           {/* Backdrop shadow — elevated "floating" effect */}
           <div
@@ -937,29 +954,19 @@ export const HowItWorksDemo: React.FC = () => {
         </div>
       </div>
 
-      {/* ─── Title + subtitle ─── */}
-      <div className="text-center max-w-3xl mx-auto px-4 mt-6 sm:mt-2">
-        <h2 className="font-general text-3xl sm:text-4xl md:text-5xl 2xl:text-6xl font-bold leading-[1.15] text-navy mb-2 md:mb-4">
-          {t('howItWorks.title')}
-        </h2>
-        <p className="text-lg md:text-xl xl:text-2xl font-instrument font-medium text-navy/60 max-w-3xl mx-auto">
-          {t('howItWorks.subtitle')}
-        </p>
-      </div>
-
       {/* ─── MOBILE: vertical timeline (no cards/borders) ─── */}
       <div
-        className="sm:hidden w-full flex justify-center px-4"
+        className="order-2 sm:hidden w-full flex justify-center px-4"
         style={{
-          opacity: loopFading ? 0 : 1,
+          opacity: (loopFading && !stepsComplete) ? 0 : 1,
           transition: 'opacity 0.6s ease',
         }}
       >
         <div className="flex flex-col">
           {steps.map((step, i) => {
             const stepNum = i + 1;
-            const isActive = activeStep >= stepNum;
-            const isCurrent = activeStep === stepNum;
+            const isActive = stepsComplete || activeStep >= stepNum;
+            const isCurrent = !stepsComplete && activeStep === stepNum;
 
             return (
               <div key={i} className="flex gap-5 items-stretch relative">
@@ -1015,7 +1022,7 @@ export const HowItWorksDemo: React.FC = () => {
                       <div
                         className="absolute top-0 left-0 w-full rounded-full"
                         style={{
-                          height: activeStep > stepNum ? '100%' : '0%',
+                          height: (stepsComplete || activeStep > stepNum) ? '100%' : '0%',
                           backgroundColor: '#1A2D63',
                           transition: 'height 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
                         }}
@@ -1062,26 +1069,24 @@ export const HowItWorksDemo: React.FC = () => {
         </div>
       </div>
 
-      {/* ─── DESKTOP: 4 steps — 2x2 grid ─── */}
+      {/* ─── DESKTOP: 4 steps — borderless 2x2 grid ─── */}
       <div
-        className="hidden sm:grid grid-cols-2 gap-4 md:gap-5 w-full max-w-6xl mx-auto"
+        className="order-2 hidden sm:grid grid-cols-2 gap-x-8 gap-y-10 w-full max-w-4xl mx-auto"
         style={{
-          opacity: loopFading ? 0 : 1,
+          opacity: (loopFading && !stepsComplete) ? 0 : 1,
           transition: 'opacity 0.6s ease',
         }}
       >
         {steps.map((step, i) => {
             const stepNum = i + 1;
-            const isActive = activeStep >= stepNum;
-            const isCurrent = activeStep === stepNum;
+            const isActive = stepsComplete || activeStep >= stepNum;
+            const isCurrent = !stepsComplete && activeStep === stepNum;
 
             return (
               <div
                 key={i}
-                className="flex gap-4 items-start rounded-2xl border p-5 md:p-6 transition-all duration-500"
+                className="flex gap-4 items-start transition-all duration-500"
                 style={{
-                  borderColor: isActive ? 'rgba(26,45,99,0.16)' : 'rgba(26,45,99,0.07)',
-                  background: isCurrent ? 'rgba(26,45,99,0.035)' : 'transparent',
                   opacity: isMobile || isActive ? 1 : 0.5,
                 }}
               >
@@ -1141,7 +1146,7 @@ export const HowItWorksDemo: React.FC = () => {
                     {step.title}
                   </h4>
                   <p
-                    className="font-instrument text-[14px] lg:text-[15px] xl:text-[16px] 2xl:text-[17px] leading-relaxed max-w-[500px] xl:max-w-[580px]"
+                    className="font-instrument text-[14px] lg:text-[15px] xl:text-[16px] 2xl:text-[17px] leading-relaxed"
                     style={{
                       color: isMobile || isActive ? 'rgba(26, 45, 99, 0.52)' : 'rgba(26, 45, 99, 0.2)',
                       transition: 'color 0.5s',
@@ -1149,23 +1154,6 @@ export const HowItWorksDemo: React.FC = () => {
                   >
                     {step.description}
                   </p>
-                  <div
-                    className="mt-3 h-[2.5px] rounded-full overflow-hidden w-28"
-                    style={{
-                      backgroundColor: isCurrent ? 'rgba(26, 45, 99, 0.1)' : 'transparent',
-                      transition: 'background-color 0.3s ease',
-                    }}
-                  >
-                    {isCurrent && (
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          backgroundColor: '#1A2D63',
-                          animation: `progress-bar ${stepNum === 1 ? '4s' : stepNum === 2 ? '2s' : stepNum === 3 ? '2s' : '3.5s'} ease-out forwards`,
-                        }}
-                      />
-                    )}
-                  </div>
                 </div>
               </div>
             );

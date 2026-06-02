@@ -577,7 +577,7 @@
   },
   "howItWorks": {
     "title": "Wie funktioniert es?",
-    "subtitle": "In vier Schritten von der Sprache in Ihr CRM",
+    "subtitle": "In weniger als einer Minute von WhatsApp in Ihr CRM.",
     "step1": {
       "title": "Sende eine Nachricht",
       "description": "Öffne WhatsApp und sende eine Sprachnachricht oder einen Text, so wie du es gewohnt bist. Füge Informationen zu deinem CRM hinzu oder rufe bestehende Kontakte, Deals, Aufgaben und Termine ab."
@@ -660,9 +660,9 @@
       "freetrial": {
         "name": "Kostenlos",
         "description": "Testen Sie vor dem Kauf",
-        "cta": "Jetzt kostenlos testen",
+        "cta": "Kostenlos testen",
         "subtext": "100 kostenlose Credits — keine Karte nötig",
-        "billingNote": "Einmalige Credits, keine Karte nötig",
+        "billingNote": "Keine Kreditkarte erforderlich",
         "features": [
           "E-Mail-Support"
         ]
@@ -670,7 +670,7 @@
       "starter": {
         "name": "Starter",
         "description": "Für gelegentliche Nutzung",
-        "cta": "Jetzt kostenlos testen",
+        "cta": "Mit Starter starten",
         "subtext": "E-Mail-Support inklusive",
         "features": [
           "Alles aus der Testphase, plus:",
@@ -681,7 +681,7 @@
         "name": "Professional",
         "description": "Für tägliche Nutzung",
         "badge": "Am Beliebtesten",
-        "cta": "Jetzt kostenlos testen",
+        "cta": "Mit Professional starten",
         "features": [
           "Alles aus Starter, plus:",
           "Persönlicher Account-Manager",
@@ -691,7 +691,7 @@
       "business": {
         "name": "Business",
         "description": "Für intensive Nutzung",
-        "cta": "Jetzt kostenlos testen",
+        "cta": "Mit Business starten",
         "features": [
           "Alles aus Professional, plus:",
           "Maßgeschneiderte Funktionen auf Anfrage"

@@ -1473,13 +1473,13 @@ export const HeroDemo: React.FC = () => {
       {/* Hero Content — Fixed layout with absolute positioning */}
       <section className="relative" style={{ overflowX: 'clip' }}>
         {/* Mobile: Blue logo top-left of hero (scrolls with section) */}
-        <div className="md:hidden absolute top-3 left-4 z-20 pointer-events-none flex items-center" style={{ height: '44px' }}>
+        <div className="min-[1048px]:hidden absolute top-3 left-4 z-20 pointer-events-none flex items-center" style={{ height: '44px' }}>
           <img src="/Finit Voicelink Blue.svg" alt="VoiceLink" className="h-10 w-auto" />
         </div>
 
         {/* Decorative corner waves — desktop (landscape) */}
         <svg
-          className="absolute inset-0 w-full h-full pointer-events-none hidden md:block hero-animate-waves"
+          className="absolute inset-0 w-full h-full pointer-events-none hidden min-[1048px]:block hero-animate-waves"
           viewBox="0 0 1440 900"
           preserveAspectRatio="none"
           overflow="visible"
@@ -1501,7 +1501,7 @@ export const HeroDemo: React.FC = () => {
 
         {/* ── COMPACT (mobile/tablet): single centered column ── */}
         {isCompact && (
-          <div className="relative z-20 flex flex-col items-center px-[6%] pb-10" style={{ paddingTop: '13svh' }}>
+          <div className="relative z-20 flex flex-col items-center px-[6%] pb-4 sm:pb-10" style={{ paddingTop: '13svh' }}>
             <div className="w-full max-w-xl flex flex-col items-center text-center">
               <div className="overflow-visible hero-animate-heading">
                 <h1 className="font-general font-black leading-[1.05] tracking-tight text-navy text-center" style={{ fontSize: 'clamp(1.9rem, calc(0.8rem + 4vw + 1.5vh), 3.4rem)' }}>
@@ -1519,8 +1519,8 @@ export const HeroDemo: React.FC = () => {
                     <span>{t('hero.getStartedFree')}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
-                  <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-[15px] px-6 py-3" onClick={() => { trackCTAClick('How to Install - Hero', '/'); navigateWithTransition(withUTM('/getting-started')); }}>
-                    <span>{t('hero.howToInstall')}</span>
+                  <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-[15px] px-6 py-3" onClick={() => { trackCTAClick('View Demo - Hero', '/'); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
+                    <span>{t('hero.watchDemo')}</span>
                   </button>
                 </div>
               </div>
@@ -1537,7 +1537,7 @@ export const HeroDemo: React.FC = () => {
 
         {/* ── DESKTOP: single centered column ── */}
         {!isCompact && (
-          <div className="relative z-10 flex flex-col items-center justify-center text-center" style={{ padding: '18vh 6vw 7vh' }}>
+          <div className="relative z-10 flex flex-col items-center justify-center text-center" style={{ padding: '20vh 6vw 4vh' }}>
             <div className="flex flex-col items-center text-center max-w-[820px]">
               <div className="overflow-visible hero-animate-heading w-full">
                 <h1 className="font-general font-black leading-[1.05] tracking-tight text-navy text-center" style={{ fontSize: 'clamp(2.5rem, calc(1.8rem + 1.2vw + 1.5vh), 5.5rem)' }}>
@@ -1549,14 +1549,14 @@ export const HeroDemo: React.FC = () => {
                   {subtitleLogos}
                 </p>
               </div>
-              <div className="hero-animate-ctas w-full" style={{ marginTop: 'clamp(0.75rem, calc(0.5rem + 1vh), 2rem)' }}>
+              <div className="hero-animate-ctas w-full" style={{ marginTop: 'clamp(1.5rem, calc(1rem + 1.2vh), 2.5rem)' }}>
                 <div className="flex flex-row gap-4 justify-center">
                   <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-base md:text-[17px] px-7 py-3.5">
                     <span>{t('hero.getStartedFree')}</span>
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
-                  <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-base md:text-[17px] px-7 py-3.5" onClick={() => { trackCTAClick('How to Install - Hero', '/'); navigateWithTransition(withUTM('/getting-started')); }}>
-                    <span>{t('hero.howToInstall')}</span>
+                  <button className="group border-2 border-navy text-navy font-medium rounded-full flex items-center justify-center gap-2 transition-colors hover:bg-navy/5 text-base md:text-[17px] px-7 py-3.5" onClick={() => { trackCTAClick('View Demo - Hero', '/'); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
+                    <span>{t('hero.watchDemo')}</span>
                   </button>
                 </div>
               </div>

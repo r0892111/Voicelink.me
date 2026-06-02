@@ -426,9 +426,16 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
                 €{formatPrice(pricePerUser)}
               </span>
               <span className="text-[13px] leading-tight text-slate-blue font-instrument pb-1">
-                {t('pricing.perUserLine1')}
-                <br />
-                {t('pricing.perUserLine2')}
+                {plan.key === 'starter' ? (
+                  // Starter is single-seat, so it bills per month, not per user.
+                  `/${t('pricing.perUserLine2')}`
+                ) : (
+                  <>
+                    {t('pricing.perUserLine1')}
+                    <br />
+                    {t('pricing.perUserLine2')}
+                  </>
+                )}
               </span>
             </div>
           )}

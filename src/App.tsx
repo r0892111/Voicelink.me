@@ -42,6 +42,7 @@ import { CookieBanner } from './components/CookieBanner';
 import { CookieSettingsModal } from './components/CookieSettingsModal';
 import { RTLProvider } from './components/RTLProvider';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { UserMenu } from './components/UserMenu';
 import { useI18n } from './hooks/useI18n';
 import { AnalyticsListener } from './components/AnalyticsListener';
 import { withUTM } from './utils/utm';
@@ -64,6 +65,14 @@ function App() {
     fr: 'Commencer gratuitement',
     de: 'Kostenlos starten',
   } as Record<string, string>)[currentLanguage] ?? 'Start free';
+  // "Gratis beginnen" CTA for the sticky mobile top bar (appears on scroll).
+  // Inline map so we don't touch shared locale JSON.
+  const mobileStickyCtaLabel = ({
+    nl: 'Gratis beginnen',
+    en: 'Start for free',
+    fr: 'Commencer gratuitement',
+    de: 'Kostenlos starten',
+  } as Record<string, string>)[currentLanguage] ?? 'Start for free';
   const location = useLocation();
   const { navigateWithTransition } = usePageTransition();
 
@@ -145,7 +154,7 @@ function App() {
             {/* ── White logo on hero (homepage only, fades out on scroll) — desktop only ── */}
             {isHomepage && (
               <div
-                className="hidden min-[868px]:block absolute pointer-events-auto cursor-pointer group transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                className="hidden min-[1048px]:block absolute pointer-events-auto cursor-pointer group transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
                 style={{
                   top: scrolled ? '16px' : '28px',
                   left: 'clamp(12px, 1.5vw, 28px)',
@@ -156,17 +165,20 @@ function App() {
                 }}
                 onClick={() => navigate(withUTM('/'))}
               >
+                {/* Height scales with the viewport (vw) so the logo tracks the
+                    top-left blue blob behind it, which is also viewport-scaled. */}
                 <img
                   src="/Finit Voicelink White.svg"
                   alt={t('common.voiceLink')}
-                  className="h-12 w-auto group-hover:scale-[1.03] transition-transform duration-300"
+                  style={{ height: 'clamp(40px, 3.3vw, 88px)' }}
+                  className="w-auto group-hover:scale-[1.03] transition-transform duration-300"
                 />
               </div>
             )}
 
             {/* ── Centered nav pill — desktop only ── */}
-            <div className="hidden min-[868px]:flex justify-center" style={{ paddingTop: scrolled ? '12px' : '20px', transition: 'padding-top 0.5s cubic-bezier(0.4,0,0.2,1)' }}>
-              <div className="pointer-events-auto bg-porcelain/80 backdrop-blur-xl shadow-lg border border-navy/[0.06] rounded-full px-2 py-1.5 flex items-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+            <div className="hidden min-[1280px]:flex justify-center" style={{ paddingTop: scrolled ? '12px' : '20px', transition: 'padding-top 0.5s cubic-bezier(0.4,0,0.2,1)' }}>
+              <div className="pointer-events-auto whitespace-nowrap bg-porcelain/80 backdrop-blur-xl shadow-lg border border-navy/[0.06] rounded-full px-2 py-1.5 flex items-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
                 {/* Logo inside pill — slides in when scrolled past hero (or always on non-homepage) */}
                 <div
                   className={`flex items-center cursor-pointer group overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
@@ -189,7 +201,7 @@ function App() {
                 </div>
 
                 {/* Desktop Navigation */}
-                <div className="hidden min-[868px]:flex items-center space-x-0.5">
+                <div className="hidden min-[1280px]:flex items-center space-x-0.5">
                   {isHomepage && (
                     <>
                       <button
@@ -231,34 +243,7 @@ function App() {
                   <LanguageSwitcher />
 
                   {user ? (
-                    <div className="flex items-center space-x-2">
-                     {isHomepage && (
-                       <button
-                         onClick={() => navigate(withUTM('/dashboard'))}
-                         className="text-blue-600 hover:text-blue-700 font-medium transition-all duration-200 px-4 py-2 rounded-full hover:bg-blue-50 hover:shadow-sm"
-                       >
-                         {t('navigation.dashboard')}
-                       </button>
-                     )}
-                      <div className="flex items-center space-x-3 bg-gradient-to-r from-white to-gray-50 rounded-full px-3 py-1.5 shadow-sm border border-gray-200/60 hover:shadow-md transition-all duration-200">
-                        <div className="w-7 h-7 bg-navy rounded-lg flex items-center justify-center shadow-sm">
-                          <User className="w-3.5 h-3.5 text-white" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-900 font-semibold text-sm leading-tight">{user.name}</span>
-                          <span className="text-xs text-gray-500 capitalize leading-tight">
-                            {user.platform}
-                          </span>
-                        </div>
-                      </div>
-                      <button
-                        onClick={signOut}
-                        className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-all duration-200 px-3 py-2 rounded-full hover:bg-red-50 hover:shadow-sm font-medium"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span>{t('navigation.signOut')}</span>
-                      </button>
-                    </div>
+                    <UserMenu />
                   ) : (
                     <button
                       onClick={() => navigate(withUTM('/signup'))}
@@ -276,20 +261,54 @@ function App() {
           </nav>
           )}
 
-          {/* Mobile hamburger button — always visible */}
+          {/* Mobile top bar — logo left, hamburger (+ sticky CTA on scroll) right.
+              Transparent over the hero; gains a solid background once scrolled
+              (or on non-homepage pages) so it reads as a real sticky navbar. */}
           {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isWorksmarterPage && !isMobileMenuOpen && (
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              aria-label="Open menu"
-              className="min-[868px]:hidden fixed top-3 right-4 z-[10000] p-3 bg-navy hover:bg-navy-hover text-white shadow-[6px_8px_18px_rgba(0,0,0,0.30),2px_3px_6px_rgba(0,0,0,0.22)] rounded-full transition-all duration-200"
+            <div
+              className={`min-[1280px]:hidden fixed top-0 left-0 right-0 z-[10000] transition-all duration-300 ${
+                scrolled || !isHomepage
+                  ? 'bg-porcelain/90 backdrop-blur-xl border-b border-navy/[0.06] shadow-sm'
+                  : 'bg-transparent'
+              }`}
             >
-              <Menu className="w-7 h-7" />
-            </button>
+              <div className="flex items-center justify-between h-14 px-4">
+                {/* Logo — hidden at the hero top (the big hero logo shows there),
+                    fades in once scrolled so we never show two logos at once. */}
+                <img
+                  src="/Finit Voicelink Blue.svg"
+                  alt={t('common.voiceLink')}
+                  className={`h-7 w-auto cursor-pointer transition-opacity duration-300 ${
+                    scrolled || !isHomepage ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}
+                  onClick={() => navigate(withUTM('/'))}
+                />
+
+                {/* Right cluster: sticky CTA + hamburger */}
+                <div className="flex items-center gap-2">
+                  {(scrolled || !isHomepage) && !user && (
+                    <button
+                      onClick={() => navigate(withUTM('/signup'))}
+                      className="bg-navy hover:bg-navy-hover text-white font-semibold text-sm px-4 py-2 rounded-full shadow-sm transition-colors"
+                    >
+                      {mobileStickyCtaLabel}
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setIsMobileMenuOpen(true)}
+                    aria-label="Open menu"
+                    className="p-2 -mr-2 text-navy active:opacity-60 transition-opacity"
+                  >
+                    <Menu className="w-7 h-7" strokeWidth={2.5} />
+                  </button>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* Full-screen mobile menu overlay */}
           {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isWorksmarterPage && isMobileMenuOpen && (
-            <div className="min-[868px]:hidden fixed inset-0 z-[10000] bg-porcelain flex flex-col overflow-y-auto">
+            <div className="min-[1280px]:hidden fixed inset-0 z-[10000] bg-porcelain flex flex-col overflow-y-auto">
               {/* Header */}
               <div className="flex items-center justify-between px-6 pt-10 pb-6 flex-shrink-0">
                 <img

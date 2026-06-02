@@ -874,9 +874,9 @@
       "freetrial": {
         "name": "Free",
         "description": "Try before you buy",
-        "cta": "Try it free now",
+        "cta": "Try for free",
         "subtext": "100 free credits — no card needed",
-        "billingNote": "One-time credits, no card needed",
+        "billingNote": "No credit card required",
         "features": [
           "Email support"
         ]
@@ -884,7 +884,7 @@
       "starter": {
         "name": "Starter",
         "description": "For casual users",
-        "cta": "Try it free now",
+        "cta": "Start with Starter",
         "subtext": "Email support included",
         "features": [
           "Everything from the trial, plus:",
@@ -895,7 +895,7 @@
         "name": "Professional",
         "description": "For daily users",
         "badge": "Most Popular",
-        "cta": "Try it free now",
+        "cta": "Start with Professional",
         "features": [
           "Everything from Starter, plus:",
           "Dedicated account manager",
@@ -905,7 +905,7 @@
       "business": {
         "name": "Business",
         "description": "For power users",
-        "cta": "Try it free now",
+        "cta": "Start with Business",
         "features": [
           "Everything from Professional, plus:",
           "Custom features on request"
@@ -949,7 +949,7 @@
   },
   "howItWorks": {
     "title": "How does it work?",
-    "subtitle": "From voice to your CRM in four steps",
+    "subtitle": "From WhatsApp to your CRM in less than a minute.",
     "step1": {
       "title": "Send a message",
       "description": "Open WhatsApp and send a voice note or text, just like you're used to. Add information to your CRM or pull up existing contacts, deals, tasks and appointments."

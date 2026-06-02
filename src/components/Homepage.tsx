@@ -113,14 +113,14 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
       <HeroDemo />
 
       {/* ───────── 4. HOW IT WORKS ───────── */}
-      <section id="how-it-works" className="pt-4 md:pt-0 pb-4 2xl:pb-8 relative z-10 scroll-mt-24">
+      <section id="how-it-works" className="pt-1 md:pt-0 pb-4 2xl:pb-8 relative z-10 scroll-mt-24">
         {/* Decorative corner — BOTH shapes as one unit, anchored to the
             hero/section boundary (top-0) with a fixed vertical scale (height in
             px, not %), so they never drift apart or shift when section heights
             change on resize. Shape A bleeds up into the hero; shape B sits in
             this section. Tune positions via the two translate() values. */}
         <svg
-          className="absolute top-0 left-0 right-0 w-full pointer-events-none hidden md:block"
+          className="absolute top-0 left-0 right-0 w-full pointer-events-none hidden min-[1500px]:block"
           style={{ height: '900px' }}
           viewBox="0 0 1440 900"
           preserveAspectRatio="none"
@@ -128,7 +128,7 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
           aria-hidden="true"
         >
           {/* Whole unit — move both shapes together with this one translate. */}
-          <g transform="translate(0, 100)">
+          <g transform="translate(0, 240)">
           {/* Shape A — upper blob, bleeds up into the hero */}
           <g transform="translate(0, -680)">
             <path

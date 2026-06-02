@@ -797,7 +797,7 @@
         "description": "Essayez avant d'acheter",
         "cta": "Essayer gratuitement",
         "subtext": "100 crédits gratuits — sans carte",
-        "billingNote": "Crédits uniques, sans carte",
+        "billingNote": "Aucune carte de crédit requise",
         "features": [
           "Support par e-mail"
         ]
@@ -805,7 +805,7 @@
       "starter": {
         "name": "Starter",
         "description": "Utilisation occasionnelle",
-        "cta": "Essayer gratuitement",
+        "cta": "Commencer avec Starter",
         "subtext": "Support par e-mail inclus",
         "features": [
           "Tout de la période d'essai, plus :",
@@ -816,7 +816,7 @@
         "name": "Professionnel",
         "description": "Utilisation quotidienne",
         "badge": "Le Plus Populaire",
-        "cta": "Essayer gratuitement",
+        "cta": "Commencer avec Professionnel",
         "features": [
           "Tout de Starter, plus :",
           "Gestionnaire de compte dédié",
@@ -826,7 +826,7 @@
       "business": {
         "name": "Business",
         "description": "Utilisation intensive",
-        "cta": "Essayer gratuitement",
+        "cta": "Commencer avec Business",
         "features": [
           "Tout de Professional, plus :",
           "Fonctionnalités sur mesure sur demande"
@@ -858,7 +858,7 @@
   },
   "howItWorks": {
     "title": "Comment ça marche ?",
-    "subtitle": "De la voix à votre CRM en quatre étapes",
+    "subtitle": "De WhatsApp à votre CRM en moins d'une minute.",
     "step1": {
       "title": "Envoyez un message",
       "description": "Ouvrez WhatsApp et envoyez un message vocal ou texte, comme d'habitude. Ajoutez des informations à votre CRM ou consultez vos contacts, affaires, tâches et rendez-vous existants."

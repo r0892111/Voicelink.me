@@ -852,9 +852,9 @@
       "freetrial": {
         "name": "Gratis",
         "description": "Probeer voor je koopt",
-        "cta": "Probeer nu gratis",
+        "cta": "Probeer gratis",
         "subtext": "100 gratis credits — geen kaart nodig",
-        "billingNote": "Eenmalige credits, geen kaart nodig",
+        "billingNote": "Geen creditcard vereist",
         "features": [
           "E-mailsupport"
         ]
@@ -862,7 +862,7 @@
       "starter": {
         "name": "Starter",
         "description": "Voor licht gebruik",
-        "cta": "Probeer nu gratis",
+        "cta": "Start met Starter",
         "subtext": "E-mail support inbegrepen",
         "features": [
           "Alles uit de proefperiode, plus:",
@@ -873,7 +873,7 @@
         "name": "Professional",
         "description": "Voor dagelijks gebruik",
         "badge": "Meest Populair",
-        "cta": "Probeer nu gratis",
+        "cta": "Start met Professional",
         "features": [
           "Alles uit Starter, plus:",
           "Toegewijde accountmanager",
@@ -883,7 +883,7 @@
       "business": {
         "name": "Business",
         "description": "Voor intensief gebruik",
-        "cta": "Probeer nu gratis",
+        "cta": "Start met Business",
         "features": [
           "Alles uit Professional, plus:",
           "Maatwerk-features op aanvraag"
@@ -927,7 +927,7 @@
   },
   "howItWorks": {
     "title": "Hoe werkt het?",
-    "subtitle": "In vier stappen van spraak naar je CRM",
+    "subtitle": "In minder dan één minuut van WhatsApp naar je CRM.",
     "step1": {
       "title": "Stuur een bericht",
       "description": "Open WhatsApp en stuur een spraakbericht of tekst zoals je gewend bent. Voeg informatie toe aan je CRM of vraag bestaande contacten, deals, taken en afspraken op."
