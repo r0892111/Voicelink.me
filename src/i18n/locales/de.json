@@ -1,4 +1,22 @@
 {
+  "getStarted": {
+    "backToPlans": "Zurück zu den Tarifen",
+    "title": "Loslegen mit {{plan}}",
+    "subtitle": "Überprüfe deinen Tarif und verbinde Teamleader, um fortzufahren.",
+    "orderSummary": "Übersicht",
+    "plan": "Tarif",
+    "billing": "Abrechnung",
+    "seats": "Nutzer",
+    "perSeat": "Pro Nutzer",
+    "total": "Gesamt",
+    "perMonth": "/Monat",
+    "yearlySavings": "Du sparst €{{amount}}/Jahr",
+    "connectNote": "Du verbindest zuerst Teamleader und gibst dann deine Zahlungsdaten ein.",
+    "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "starting": "Wird gestartet…",
+    "continueCta": "Mit Teamleader fortfahren",
+    "tryFreeInstead": "Lieber zuerst kostenlos testen?"
+  },
   "common": {
     "loading": "Laden...",
     "error": "Fehler",
@@ -670,7 +688,7 @@
       "starter": {
         "name": "Starter",
         "description": "Für gelegentliche Nutzung",
-        "cta": "Jetzt kostenlos testen",
+        "cta": "Loslegen",
         "subtext": "E-Mail-Support inklusive",
         "features": [
           "Alles aus der Testphase, plus:",
@@ -681,7 +699,7 @@
         "name": "Professional",
         "description": "Für tägliche Nutzung",
         "badge": "Am Beliebtesten",
-        "cta": "Jetzt kostenlos testen",
+        "cta": "Loslegen",
         "features": [
           "Alles aus Starter, plus:",
           "Persönlicher Account-Manager",
@@ -691,7 +709,7 @@
       "business": {
         "name": "Business",
         "description": "Für intensive Nutzung",
-        "cta": "Jetzt kostenlos testen",
+        "cta": "Loslegen",
         "features": [
           "Alles aus Professional, plus:",
           "Maßgeschneiderte Funktionen auf Anfrage"
