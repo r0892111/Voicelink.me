@@ -38,3 +38,6 @@ scripts/stripe-manifest.json
 
 # Supabase CLI scratch files (per-machine, never commit)
 supabase/.temp/
+
+# git worktrees created by tooling — never part of the repo
+.claude/worktrees/
