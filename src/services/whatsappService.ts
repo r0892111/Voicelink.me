@@ -6,6 +6,7 @@ export interface IWhatsAppService {
   sendOtp(platform: string, userId: string, phone: string): Promise<{ expiresAt: string }>;
   verifyOtp(platform: string, userId: string, code: string): Promise<void>;
   sendWelcome(platform: string, userId: string, phone: string): Promise<void>;
+  cancelPending(platform: string, userId: string): Promise<void>;
 }
 
 class WhatsAppService implements IWhatsAppService {
@@ -36,6 +37,15 @@ class WhatsAppService implements IWhatsAppService {
       otp_code:     code,
     });
     if (!data.success) throw new Error(data.error ?? 'Failed to verify code.');
+  }
+
+  async cancelPending(platform: string, userId: string): Promise<void> {
+    const data = await this.call('whatsapp-otp', {
+      action:       'cancel',
+      crm_provider: platform,
+      crm_user_id:  userId,
+    });
+    if (!data.success) throw new Error(data.error ?? 'Failed to cancel verification.');
   }
 
   async sendWelcome(platform: string, userId: string, phone: string): Promise<void> {

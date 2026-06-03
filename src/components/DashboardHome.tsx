@@ -452,7 +452,7 @@ export function DashboardHome() {
                       )}
                     </div>
 
-                    {step.n === 2 && wa.status === 'not_set' && canConnectWhatsApp && (
+                    {step.n === 2 && wa.status !== 'active' && canConnectWhatsApp && (
                       <WhatsAppConnectForm
                         open={wa.open}
                         step={wa.step}
@@ -467,6 +467,7 @@ export function DashboardHome() {
                         onVerifyOtp={wa.verifyOtp}
                         onBackToPhone={wa.backToPhone}
                         onResendOtp={wa.resendOtp}
+                        onCancel={wa.cancelPending}
                       />
                     )}
                   </div>

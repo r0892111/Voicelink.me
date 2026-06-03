@@ -21,11 +21,12 @@ export interface WhatsAppConnectFormProps {
   onVerifyOtp(): void;
   onBackToPhone(): void;
   onResendOtp(): void;
+  onCancel?(): void;
 }
 
 export const WhatsAppConnectForm: React.FC<WhatsAppConnectFormProps> = ({
   open, step, phone, otp, busy, error, success,
-  onPhoneChange, onOtpChange, onSendOtp, onVerifyOtp, onBackToPhone, onResendOtp,
+  onPhoneChange, onOtpChange, onSendOtp, onVerifyOtp, onBackToPhone, onResendOtp, onCancel,
 }) => (
   <div
     className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
@@ -128,6 +129,15 @@ export const WhatsAppConnectForm: React.FC<WhatsAppConnectFormProps> = ({
             </button>
           </div>
         </div>
+      )}
+
+      {onCancel && !success && (
+        <button
+          onClick={onCancel}
+          className="mt-3 text-xs text-navy/40 hover:text-red-600 font-instrument underline underline-offset-2 transition-colors"
+        >
+          Cancel verification
+        </button>
       )}
 
     </div>
