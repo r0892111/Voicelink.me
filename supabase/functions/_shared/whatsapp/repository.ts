@@ -25,6 +25,8 @@ export interface IWhatsAppRepository {
   getOtpRecord(userId: string): Promise<OtpRecord | null>;
 
   markVerified(userId: string, phone: string): Promise<void>;
+
+  clearPending(userId: string): Promise<void>;
 }
 
 export class SupabaseWhatsAppRepository implements IWhatsAppRepository {
@@ -115,5 +117,24 @@ export class SupabaseWhatsAppRepository implements IWhatsAppRepository {
       throw new Error('No user row found — cannot mark WhatsApp as verified.');
     }
     log.info('markVerified successful', { table: this.table, user_id: userId });
+  }
+
+  async clearPending(userId: string): Promise<void> {
+    log.info('clearPending', { table: this.table, user_id: userId });
+    const { error } = await this.db
+      .from(this.table)
+      .update({
+        whatsapp_status:         'not_set',
+        whatsapp_otp_code:       null,
+        whatsapp_otp_expires_at: null,
+        whatsapp_otp_phone:      null,
+        updated_at:              new Date().toISOString(),
+      })
+      .eq('user_id', userId);
+    if (error) {
+      log.error('clearPending failed', { table: this.table, user_id: userId, error: error.message });
+      throw new Error(`clearPending failed: ${error.message}`);
+    }
+    log.info('clearPending successful', { table: this.table, user_id: userId });
   }
 }

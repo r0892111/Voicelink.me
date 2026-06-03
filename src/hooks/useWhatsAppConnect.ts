@@ -34,6 +34,7 @@ export interface WhatsAppConnect {
   backToPhone(): void;
   resendOtp(): Promise<void>;
   reset(): void;
+  cancelPending(): Promise<void>;
 }
 
 export function useWhatsAppConnect(user: AuthUser | null): WhatsAppConnect {
@@ -52,14 +53,23 @@ export function useWhatsAppConnect(user: AuthUser | null): WhatsAppConnect {
     if (!user) return;
     supabase
       .from(`${user.platform}_users`)
-      .select('whatsapp_number, whatsapp_status')
+      .select('whatsapp_number, whatsapp_status, whatsapp_otp_phone')
       .eq('user_id', user.id)
       .is('deleted_at', null)
       .maybeSingle()
       .then(({ data }) => {
         if (data) {
-          setStatus(data.whatsapp_status || 'not_set');
+          const st = data.whatsapp_status || 'not_set';
+          setStatus(st);
           setNumber(data.whatsapp_number);
+          // Returning to a pending verification: open the OTP step with the
+          // number prefilled so the user can finish, resend, or cancel —
+          // instead of a dead-end "pending" badge with no action.
+          if (st === 'pending') {
+            setPhone(data.whatsapp_otp_phone || data.whatsapp_number || '');
+            setStep('otp');
+            setOpen(true);
+          }
         }
       });
   }, [user]);
@@ -135,9 +145,27 @@ export function useWhatsAppConnect(user: AuthUser | null): WhatsAppConnect {
     setSuccess(false);
   }, []);
 
+  const cancelPending = useCallback(async () => {
+    if (!user) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await whatsappService.cancelPending(user.platform, user.id);
+      setStatus('not_set');
+      setStep('phone');
+      setPhone('');
+      setOtp('');
+      setOpen(false);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not cancel. Try again.');
+    } finally {
+      setBusy(false);
+    }
+  }, [user]);
+
   return {
     status, number,
     open, step, phone, otp, busy, error, success,
-    toggle, setPhone, setOtp, sendOtp, verifyOtp, backToPhone, resendOtp, reset,
+    toggle, setPhone, setOtp, sendOtp, verifyOtp, backToPhone, resendOtp, reset, cancelPending,
   };
 }

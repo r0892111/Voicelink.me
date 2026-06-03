@@ -126,6 +126,7 @@ export function DashboardSettings() {
             onVerifyOtp={wa.verifyOtp}
             onBackToPhone={wa.backToPhone}
             onResendOtp={wa.resendOtp}
+            onCancel={wa.cancelPending}
           />
         )}
       </section>
