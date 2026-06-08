@@ -2,7 +2,10 @@
 // Default: cumulative usage for the authenticated user (credits + messages).
 // ?scope=team (admin only): per-member breakdown for the admin's workspace.
 //
-// Credits are the user-facing unit. 1 credit = 1,000 input tokens.
+// Credits are the user-facing unit. 1 credit = 300 input tokens — calibrated so
+// observed usage (~2.4k input tokens/message) lands credit consumption inside the
+// per-plan message ranges shown on the pricing page (~8 credits/message). Must stay
+// in sync with the analytics.credits_used generated column (VLAgent migration 015).
 // Cap is derived from the active Stripe subscription:
 //   is_test_user          → unlimited (no cap)
 //   trialing OR free price → TRIAL_CREDITS (100)
@@ -14,7 +17,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 
-const TOKENS_PER_CREDIT = 1_000;
+const TOKENS_PER_CREDIT = 300;
 const TRIAL_CREDITS = 100;
 
 // Mirror of src/config/teamPricing.ts — kept in sync manually.
