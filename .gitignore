@@ -38,3 +38,6 @@ scripts/stripe-manifest.json
 
 # Supabase CLI scratch files (per-machine, never commit)
 supabase/.temp/
+
+# Claude Code internal worktrees / scratch
+.claude/worktrees/
