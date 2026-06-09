@@ -138,7 +138,9 @@
     "subtitleFull": "VoiceLink connects Teamleader with WhatsApp, so a single voice note lets you add client notes, log follow-ups, create tasks and pull up CRM information. Without ever opening Teamleader.",
     "bulletSetup": "Set up in minutes",
     "bulletNoTech": "No technical knowledge needed",
-    "bulletNoCard": "No credit card required"
+    "bulletNoCard": "No credit card required",
+    "supportedBy": "Supported by",
+    "gdprCompliant": "Compliant"
   },
   "auth": {
     "modal": {

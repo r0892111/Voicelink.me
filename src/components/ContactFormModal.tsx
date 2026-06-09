@@ -69,7 +69,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onCl
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] overflow-y-auto">
+    <div className="fixed inset-0 z-[10001] overflow-y-auto">
       <div className="flex min-h-screen items-center justify-center p-4">
         {/* Backdrop */}
         <div

@@ -1041,7 +1041,7 @@ export const HowItWorksDemo: React.FC = () => {
                   </h4>
                   <p
                     className="font-instrument text-[14px] leading-relaxed max-w-[500px]"
-                    style={{ color: 'rgba(26, 45, 99, 0.52)', transition: 'color 0.5s' }}
+                    style={{ color: 'rgba(26, 45, 99, 0.72)', transition: 'color 0.5s' }}
                   >
                     {step.description}
                   </p>
@@ -1148,7 +1148,7 @@ export const HowItWorksDemo: React.FC = () => {
                   <p
                     className="font-instrument text-[14px] lg:text-[15px] xl:text-[16px] 2xl:text-[17px] leading-relaxed"
                     style={{
-                      color: isMobile || isActive ? 'rgba(26, 45, 99, 0.52)' : 'rgba(26, 45, 99, 0.2)',
+                      color: isMobile || isActive ? 'rgba(26, 45, 99, 0.72)' : 'rgba(26, 45, 99, 0.2)',
                       transition: 'color 0.5s',
                     }}
                   >

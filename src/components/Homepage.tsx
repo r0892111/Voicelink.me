@@ -157,6 +157,30 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
         </svg>
         <div className="max-w-7xl 2xl:max-w-screen-2xl mx-auto px-6">
           <HowItWorksDemo />
+
+          {/* Supported-by / trust strip — single line under the demo, no background bar */}
+          <div className="mt-10 md:mt-14 py-4 md:py-6 flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-6 md:gap-x-7 md:gap-y-4">
+            <span className="font-instrument text-xs font-semibold uppercase tracking-[0.14em] text-navy/60 text-center">
+              {t('hero.supportedBy')}
+            </span>
+            <a href="https://www.vlaio.be/nl/subsidies-financiering/innovatieve-starterssteun" target="_blank" rel="noopener noreferrer" className="inline-flex items-center transition-opacity hover:opacity-80">
+              <img src="/VLAIO_sponsorlogo-antraciet.png" alt="VLAIO" className="h-12 w-auto translate-y-1.5 md:-translate-y-1" draggable={false} />
+            </a>
+            <a href="https://startit-x.com/en/accelerate" target="_blank" rel="noopener noreferrer" className="inline-flex items-center transition-opacity hover:opacity-80">
+              <img src="/start-it-kbc.png" alt="Start it @KBC" className="h-11 w-auto md:-translate-y-1" draggable={false} />
+            </a>
+            <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer" className="inline-flex items-center transition-opacity hover:opacity-80">
+              <img src="/elevenlabs-grants.webp" alt="ElevenLabs Grants" className="h-7 w-auto md:translate-y-1" draggable={false} />
+            </a>
+            <span className="block w-24 h-px md:w-px md:h-10 bg-navy/10" />
+            <div className="inline-flex items-center gap-2.5 rounded-xl border border-navy/10 bg-white px-4 py-2 shadow-sm">
+              <img src="/gdpr.jpg" alt="GDPR" className="h-10 w-10 md:h-8 md:w-8 rounded-full" draggable={false} />
+              <div className="leading-tight text-left">
+                <div className="font-general font-bold text-navy text-base">GDPR</div>
+                <div className="font-instrument text-navy/50 text-xs -mt-0.5">{t('hero.gdprCompliant')}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

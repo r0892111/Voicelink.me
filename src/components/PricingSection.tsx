@@ -409,23 +409,23 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
             CTA drops by the same amount and stays aligned. */}
         <div className="min-h-[56px]">
           {plan.isFreeTrial ? (
-            <div className="flex items-end gap-2">
+            <div className="flex items-center gap-2">
               <span className={`${priceSize} font-bold text-navy leading-none`}>€0</span>
-              <span className="text-[13px] leading-tight text-slate-blue font-instrument pb-1">
+              <span className="text-[13px] leading-tight text-slate-blue font-instrument">
                 {t('pricing.cards.freetrial.billingNote')}
               </span>
             </div>
           ) : (
-            <div className="flex items-end flex-wrap gap-x-2 gap-y-2">
+            <div className="flex items-center flex-wrap gap-x-2 gap-y-2">
               {showStrikethrough && (
-                <span className="text-xl font-bold text-navy/30 line-through pb-1">
+                <span className="text-xl font-bold text-navy/30 line-through">
                   €{formatPrice(plan.baseMonthlyPrice)}
                 </span>
               )}
               <span className={`${priceSize} font-bold text-navy leading-none`}>
                 €{formatPrice(pricePerUser)}
               </span>
-              <span className="text-[13px] leading-tight text-slate-blue font-instrument pb-1">
+              <span className="text-[13px] leading-tight text-slate-blue font-instrument">
                 {plan.key === 'starter' ? (
                   // Starter is single-seat, so it bills per month, not per user.
                   `/${t('pricing.perUserLine2')}`

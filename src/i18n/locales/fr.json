@@ -545,7 +545,9 @@
     "subtitleFull": "VoiceLink connecte Teamleader à WhatsApp : un simple message vocal vous permet d'ajouter des notes clients, d'enregistrer des suivis, de créer des tâches et de consulter les informations de votre CRM. Sans jamais ouvrir Teamleader.",
     "bulletSetup": "Configuré en quelques minutes",
     "bulletNoTech": "Aucune connaissance technique requise",
-    "bulletNoCard": "Aucune carte de crédit requise"
+    "bulletNoCard": "Aucune carte de crédit requise",
+    "supportedBy": "Soutenu par",
+    "gdprCompliant": "Conforme"
   },
   "features": {
     "title": "Intégrations CRM",
