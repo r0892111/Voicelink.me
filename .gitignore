@@ -41,3 +41,6 @@ supabase/.temp/
 
 # git worktrees / Claude Code scratch — never part of the repo
 .claude/worktrees/
+
+# Internal offer/sales docs — keep local, never commit
+offer_docs/
