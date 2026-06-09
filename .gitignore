@@ -39,5 +39,5 @@ scripts/stripe-manifest.json
 # Supabase CLI scratch files (per-machine, never commit)
 supabase/.temp/
 
-# Claude Code internal worktrees / scratch
+# git worktrees / Claude Code scratch — never part of the repo
 .claude/worktrees/

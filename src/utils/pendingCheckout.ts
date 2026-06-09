@@ -17,6 +17,10 @@ export interface PendingCheckout {
   tierKey: string;
   interval: BillingInterval;
   quantity: number;
+  /** Optional Stripe trial length (days). WSM promo uses 60. */
+  trialDays?: number;
+  /** false → start the trial without collecting a card (WSM promo). */
+  collectPaymentMethod?: boolean;
 }
 
 interface StoredPendingCheckout extends PendingCheckout {
@@ -53,6 +57,9 @@ export function consumePendingCheckout(): PendingCheckout | null {
       tierKey: parsed.tierKey,
       interval: parsed.interval,
       quantity: parsed.quantity,
+      trialDays: typeof parsed.trialDays === 'number' ? parsed.trialDays : undefined,
+      collectPaymentMethod:
+        typeof parsed.collectPaymentMethod === 'boolean' ? parsed.collectPaymentMethod : undefined,
     };
   } catch {
     return null;

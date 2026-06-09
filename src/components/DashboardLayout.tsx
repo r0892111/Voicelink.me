@@ -227,6 +227,9 @@ export function DashboardLayout() {
             quantity: pending.quantity,
             successUrl: `${window.location.origin}/dashboard`,
             cancelUrl: `${window.location.origin}/dashboard`,
+            trialDays: pending.trialDays,
+            paymentMethodCollection:
+              pending.collectPaymentMethod === false ? 'if_required' : undefined,
           });
           return; // window.location.href inside createCheckoutSession → we're leaving anyway
         }

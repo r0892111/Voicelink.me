@@ -1,4 +1,22 @@
 {
+  "getStarted": {
+    "backToPlans": "Retour aux formules",
+    "title": "Commencer avec {{plan}}",
+    "subtitle": "Vérifiez votre formule, puis connectez Teamleader pour continuer.",
+    "orderSummary": "Récapitulatif",
+    "plan": "Formule",
+    "billing": "Facturation",
+    "seats": "Utilisateurs",
+    "perSeat": "Par utilisateur",
+    "total": "Total",
+    "perMonth": "/mois",
+    "yearlySavings": "Vous économisez €{{amount}}/an",
+    "connectNote": "Vous connecterez d'abord Teamleader, puis saisirez vos informations de paiement.",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "starting": "Démarrage…",
+    "continueCta": "Continuer avec Teamleader",
+    "tryFreeInstead": "Vous préférez d'abord l'essai gratuit ?"
+  },
   "common": {
     "loading": "Chargement...",
     "error": "Erreur",
@@ -807,7 +825,7 @@
       "starter": {
         "name": "Starter",
         "description": "Utilisation occasionnelle",
-        "cta": "Commencer avec Starter",
+        "cta": "Commencer",
         "subtext": "Support par e-mail inclus",
         "features": [
           "Tout de la période d'essai, plus :",
@@ -818,7 +836,7 @@
         "name": "Professionnel",
         "description": "Utilisation quotidienne",
         "badge": "Le Plus Populaire",
-        "cta": "Commencer avec Professionnel",
+        "cta": "Commencer",
         "features": [
           "Tout de Starter, plus :",
           "Gestionnaire de compte dédié",
@@ -828,7 +846,7 @@
       "business": {
         "name": "Business",
         "description": "Utilisation intensive",
-        "cta": "Commencer avec Business",
+        "cta": "Commencer",
         "features": [
           "Tout de Professional, plus :",
           "Fonctionnalités sur mesure sur demande"

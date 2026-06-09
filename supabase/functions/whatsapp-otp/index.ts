@@ -162,6 +162,14 @@ Deno.serve(async (req) => {
       return ok({});
     }
 
+    // ── cancel ────────────────────────────────────────────────────────────────
+    if (action === 'cancel') {
+      r.info('cancelling pending verification', { crm_user_id });
+      await repo.clearPending(crm_user_id);
+      r.done(200);
+      return ok({});
+    }
+
     r.warn('unknown action', { action });
     r.done(400);
     return fail(`Unknown action: ${action}`);

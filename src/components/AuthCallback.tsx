@@ -444,6 +444,9 @@ export const AuthCallback: React.FC = () => {
               quantity: pending.quantity,
               successUrl: `${window.location.origin}/dashboard`,
               cancelUrl: `${window.location.origin}/dashboard`,
+              trialDays: pending.trialDays,
+              paymentMethodCollection:
+                pending.collectPaymentMethod === false ? 'if_required' : undefined,
             });
             return;
           }

@@ -1,4 +1,22 @@
 {
+  "getStarted": {
+    "backToPlans": "Back to plans",
+    "title": "Get started with {{plan}}",
+    "subtitle": "Review your plan, then connect Teamleader to continue.",
+    "orderSummary": "Order summary",
+    "plan": "Plan",
+    "billing": "Billing",
+    "seats": "Seats",
+    "perSeat": "Per seat",
+    "total": "Total",
+    "perMonth": "/month",
+    "yearlySavings": "You save €{{amount}}/year",
+    "connectNote": "You'll connect Teamleader first, then enter your payment details.",
+    "error": "Something went wrong. Please try again.",
+    "starting": "Starting…",
+    "continueCta": "Continue with Teamleader",
+    "tryFreeInstead": "Prefer to try it free first?"
+  },
   "common": {
     "loading": "Loading...",
     "error": "Error",
@@ -886,7 +904,7 @@
       "starter": {
         "name": "Starter",
         "description": "For casual users",
-        "cta": "Start with Starter",
+        "cta": "Get started",
         "subtext": "Email support included",
         "features": [
           "Everything from the trial, plus:",
@@ -897,7 +915,7 @@
         "name": "Professional",
         "description": "For daily users",
         "badge": "Most Popular",
-        "cta": "Start with Professional",
+        "cta": "Get started",
         "features": [
           "Everything from Starter, plus:",
           "Dedicated account manager",
@@ -907,7 +925,7 @@
       "business": {
         "name": "Business",
         "description": "For power users",
-        "cta": "Start with Business",
+        "cta": "Get started",
         "features": [
           "Everything from Professional, plus:",
           "Custom features on request"

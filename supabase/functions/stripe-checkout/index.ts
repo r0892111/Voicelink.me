@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
     }
     r.info('authenticated', { user_id: user.id, email: user.email });
 
-    const { price_id, quantity, success_url, cancel_url, trial_days, mode } = await req.json();
+    const { price_id, quantity, success_url, cancel_url, trial_days, mode, payment_method_collection } = await req.json();
     r.info('creating checkout session', { price_id, quantity, trial_days, mode, user_id: user.id });
 
     if (!price_id) {
@@ -84,6 +84,10 @@ Deno.serve(async (req) => {
             // Homepage paid-plan CTAs don't send trial_days, so those users pay
             // from day one.
             ...(trialDays > 0 ? { subscription_data: { trial_period_days: trialDays } } : {}),
+            // WSM promo: real subscription with a trial but no card up front.
+            // Gated — normal paid/30-day-trial signups keep card collection so
+            // they auto-bill when the trial ends.
+            ...(payment_method_collection === 'if_required' ? { payment_method_collection: 'if_required' as const } : {}),
           }
         : baseParams,
     );
