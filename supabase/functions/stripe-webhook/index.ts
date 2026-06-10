@@ -206,6 +206,94 @@ async function handleSubscriptionEvent(
   } else {
     r.info('stripe_subscriptions upserted', { subscription_id: row.subscription_id });
   }
+
+  // ── GDPR retention schedule ────────────────────────────────────────────
+  // Subscription ENDED (`deleted` fires at period lapse for
+  // cancel_at_period_end, immediately for hard cancels): null the OAuth
+  // tokens so processing stops, and stamp the 30-day erasure deadline.
+  // VLAgent's daily sweep runs the full Art. 17 cascade once it lapses.
+  // Subscription ACTIVE again: clear the stamp — resubscribers within the
+  // grace period lose nothing (they reconnect OAuth via onboarding).
+  if (eventType === 'customer.subscription.deleted') {
+    await scheduleErasureIfLastSubscription(r, supabase, row.customer_id, row.subscription_id);
+  } else if (sub.status === 'active' || sub.status === 'trialing') {
+    await clearScheduledErasure(r, supabase, row.customer_id);
+  }
+}
+
+const ERASURE_GRACE_DAYS = 30;
+
+async function scheduleErasureIfLastSubscription(
+  r: RequestLogger,
+  supabase: SupabaseClient,
+  customerId: string,
+  endedSubscriptionId: string,
+) {
+  // Plan switches fire `deleted` for the OLD subscription while the new one
+  // is live — never cut a paying customer's tokens. Only schedule when the
+  // customer has no other live subscription.
+  const { data: live, error: liveErr } = await supabase
+    .from('stripe_subscriptions')
+    .select('subscription_id')
+    .eq('customer_id', customerId)
+    .neq('subscription_id', endedSubscriptionId)
+    .in('status', ['active', 'trialing', 'past_due'])
+    .limit(1);
+
+  if (liveErr) {
+    r.error('erasure schedule: live-subscription check failed — NOT scheduling', {
+      error: liveErr.message,
+      customer_id: customerId,
+    });
+    return;
+  }
+  if (live && live.length > 0) {
+    r.info('erasure schedule skipped: customer still has a live subscription', {
+      customer_id: customerId,
+      live_subscription_id: live[0].subscription_id,
+    });
+    return;
+  }
+
+  const dueAt = new Date(Date.now() + ERASURE_GRACE_DAYS * 24 * 3600 * 1000).toISOString();
+  const { data, error } = await supabase
+    .from('teamleader_users')
+    .update({ access_token: null, refresh_token: null, erasure_due_at: dueAt })
+    .eq('stripe_customer_id', customerId)
+    .is('deleted_at', null)
+    .select('teamleader_id');
+
+  if (error) {
+    r.error('erasure schedule failed', { error: error.message, customer_id: customerId });
+  } else {
+    r.info('erasure scheduled: tokens nulled, grace period started', {
+      customer_id: customerId,
+      due_at: dueAt,
+      tenants: (data ?? []).map((d) => d.teamleader_id),
+    });
+  }
+}
+
+async function clearScheduledErasure(
+  r: RequestLogger,
+  supabase: SupabaseClient,
+  customerId: string,
+) {
+  const { data, error } = await supabase
+    .from('teamleader_users')
+    .update({ erasure_due_at: null })
+    .eq('stripe_customer_id', customerId)
+    .not('erasure_due_at', 'is', null)
+    .select('teamleader_id');
+
+  if (error) {
+    r.error('erasure clear failed', { error: error.message, customer_id: customerId });
+  } else if (data && data.length > 0) {
+    r.info('scheduled erasure cleared (resubscribe within grace period)', {
+      customer_id: customerId,
+      tenants: data.map((d) => d.teamleader_id),
+    });
+  }
 }
 
 Deno.serve(async (req) => {
