@@ -21,14 +21,42 @@ export function PartnerLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState<'password' | 'link' | null>(null);
-  const [error, setError] = useState<'password' | 'link' | null>(null);
+  const [error, setError] = useState<'password' | 'link' | 'notPartner' | null>(null);
   const [linkSent, setLinkSent] = useState(false);
+
+  // Only emails on an active affiliates row may log in. Fails open on
+  // transient errors — the portal still 403s non-partners after auth.
+  const isPartnerEmail = async (): Promise<boolean> => {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/affiliate-portal`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({ action: 'precheck', email: email.trim() }),
+        },
+      );
+      if (!res.ok) return true;
+      const data = await res.json();
+      return data.exists !== false;
+    } catch {
+      return true;
+    }
+  };
 
   const signInWithPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password) return;
     setBusy('password');
     setError(null);
+    if (!(await isPartnerEmail())) {
+      setError('notPartner');
+      setBusy(null);
+      return;
+    }
     const { error: err } = await supabase.auth.signInWithPassword({
       email: email.trim(),
       password,
@@ -45,6 +73,11 @@ export function PartnerLogin() {
     if (!email.trim()) return;
     setBusy('link');
     setError(null);
+    if (!(await isPartnerEmail())) {
+      setError('notPartner');
+      setBusy(null);
+      return;
+    }
     const { error: err } = await supabase.auth.signInWithOtp({
       email: email.trim(),
       options: { emailRedirectTo: `${window.location.origin}/partner` },
@@ -108,6 +141,9 @@ export function PartnerLogin() {
               </div>
               {error === 'password' && (
                 <p className="text-red-600 text-sm mb-4">{t('partner.login.invalid')}</p>
+              )}
+              {error === 'notPartner' && (
+                <p className="text-red-600 text-sm mb-4">{t('partner.login.notPartner')}</p>
               )}
               <button
                 type="submit"

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ChevronDown, CheckCircle, AlertCircle } from 'lucide-react';
 import { useI18n } from '../hooks/useI18n';
 import { trackCTAClick } from '../utils/analytics';
@@ -10,6 +11,7 @@ interface AccordionItem {
 
 export const AffiliatePartner: React.FC = () => {
   const { t } = useI18n();
+  const navigate = useNavigate();
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -121,6 +123,13 @@ export const AffiliatePartner: React.FC = () => {
                   <span>{t('affiliate.hero.cta2')}</span>
                 </button>
               </div>
+
+              <button
+                onClick={() => navigate('/partner/login')}
+                className="text-slate-blue hover:text-navy text-sm font-medium underline underline-offset-4 transition-colors"
+              >
+                {t('affiliate.hero.loginLink')}
+              </button>
             </div>
 
             {/* Phone mockup column — desktop only */}

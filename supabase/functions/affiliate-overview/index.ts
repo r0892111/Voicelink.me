@@ -1,8 +1,10 @@
 // ── affiliate-overview ────────────────────────────────────────────────────────
 // Owner-only: every affiliate with their referred accounts and live
-// subscription state. The caller must be listed in PLATFORM_ADMIN_USER_IDS
-// (comma-separated auth.users ids) — fail-closed, this is NOT the per-tenant
-// is_admin flag, which every workspace admin has.
+// subscription state. The caller must have a row in platform_admins
+// (added via plain INSERT, service-role only) — fail-closed, and NOT the
+// per-tenant is_admin flag, which every workspace admin has.
+// ?probe=1 returns right after the gate — the dashboard sidebar uses it to
+// decide whether to show the owner section without paying for Stripe calls.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
@@ -39,12 +41,20 @@ Deno.serve(async (req) => {
       return json({ success: false, error: 'Unauthorized' }, 401);
     }
 
-    const ownerIds = (Deno.env.get('PLATFORM_ADMIN_USER_IDS') ?? '')
-      .split(',').map((s) => s.trim()).filter(Boolean);
-    if (!ownerIds.includes(user.id)) {
+    const { data: adminRow } = await supabase
+      .from('platform_admins')
+      .select('user_id')
+      .eq('user_id', user.id)
+      .maybeSingle();
+    if (!adminRow) {
       r.warn('caller is not a platform admin', { user_id: user.id });
       r.done(403);
       return json({ success: false, error: 'Forbidden' }, 403);
+    }
+
+    if (new URL(req.url).searchParams.get('probe') === '1') {
+      r.done(200, { probe: true });
+      return json({ success: true, admin: true });
     }
 
     const { data: affiliates, error: affErr } = await supabase

@@ -1773,6 +1773,7 @@
       "signIn": "Sign in",
       "signingIn": "Signing in…",
       "invalid": "Wrong email or password. No password set yet? Use the sign-in link below.",
+      "notPartner": "This email isn't registered as a partner, so you can't log in. Apply via the partner page or contact voicelink@finitsolutions.be.",
       "orLink": "or",
       "sendLinkInstead": "Email me a sign-in link",
       "send": "Send sign-in link",
@@ -1804,7 +1805,8 @@
       "title": "Become a VoiceLink partner",
       "subtitle": "Introduce VoiceLink to companies in your network and earn 20% recurring commission for as long as they stay a customer. We handle the demo, onboarding and support.",
       "cta1": "Become a partner",
-      "cta2": "Book an intro call"
+      "cta2": "Book an intro call",
+      "loginLink": "Already a partner? Sign in"
     },
     "howItWorks": {
       "title": "How it works",

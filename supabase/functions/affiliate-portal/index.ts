@@ -37,6 +37,29 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
+    // Pre-auth email check for the login page: only emails on an active
+    // affiliates row may log in at all (no magic link is sent otherwise).
+    // Callable with the anon key — reveals partner-email membership, which
+    // is acceptable for this small, low-sensitivity list.
+    if (req.method === 'POST') {
+      const body = await req.json().catch(() => ({}));
+      if (body?.action === 'precheck') {
+        const email = typeof body.email === 'string' ? body.email.trim() : '';
+        if (!email) {
+          r.done(400, { precheck: true });
+          return json({ success: false, error: 'missing_email' }, 400);
+        }
+        const { data: match } = await supabase
+          .from('affiliates')
+          .select('id')
+          .ilike('contact_email', email.replace(/[%_]/g, '\\$&'))
+          .eq('status', 'active')
+          .maybeSingle();
+        r.done(200, { precheck: true, exists: !!match });
+        return json({ success: true, exists: !!match });
+      }
+    }
+
     const { data: { user }, error: authError } =
       await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
 
@@ -58,7 +81,7 @@ Deno.serve(async (req) => {
         .from('affiliates')
         .update({ auth_user_id: user.id, updated_at: new Date().toISOString() })
         .is('auth_user_id', null)
-        .ilike('contact_email', user.email)
+        .ilike('contact_email', user.email.replace(/[%_]/g, '\\$&'))
         .select('id, ref_code, company_name, status, commission_rate')
         .maybeSingle();
       if (claimErr) {

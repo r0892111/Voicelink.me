@@ -136,6 +136,7 @@ export function DashboardLayout() {
   const [langCode, setLangCode] = useState<SupportedLanguage>('nl');
   const [langLocked, setLangLocked] = useState<boolean>(true); // assume locked until we know — avoids modal flash on load
   const [isTestUser, setIsTestUser] = useState<boolean>(false);
+  const [isPlatformOwner, setIsPlatformOwner] = useState<boolean>(false);
 
   const mounted = useRef(true);
   useEffect(() => () => { mounted.current = false; }, []);
@@ -157,6 +158,28 @@ export function DashboardLayout() {
     document.body.style.overflow = drawerOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [drawerOpen]);
+
+  // Owner gate for the sidebar's affiliate section: probe the edge function,
+  // which checks platform_admins server-side. Fire-and-forget; everyone but
+  // the owner gets a 403 and never sees the section.
+  useEffect(() => {
+    if (loading || !realUser) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session || cancelled) return;
+        const res = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/affiliate-overview?probe=1`,
+          { headers: { Authorization: `Bearer ${session.access_token}` } },
+        );
+        if (!cancelled) setIsPlatformOwner(res.ok);
+      } catch {
+        /* stay false */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [realUser, loading]);
 
   useEffect(() => {
     setDrawerOpen(false);
@@ -349,6 +372,7 @@ export function DashboardLayout() {
             user={user}
             isAdmin={role.isAdmin}
             isMember={role.isMember}
+            isPlatformOwner={isPlatformOwner}
             hasActiveSubscription={hasActiveSubscription}
             onSignOut={signOut}
           />
@@ -366,6 +390,7 @@ export function DashboardLayout() {
                 user={user}
                 isAdmin={role.isAdmin}
                 isMember={role.isMember}
+                isPlatformOwner={isPlatformOwner}
                 hasActiveSubscription={hasActiveSubscription}
                 onSignOut={signOut}
                 onNavigate={() => setDrawerOpen(false)}

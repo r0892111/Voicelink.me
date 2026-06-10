@@ -1765,6 +1765,7 @@
       "signIn": "Aanmelden",
       "signingIn": "Aanmelden…",
       "invalid": "Verkeerd e-mailadres of wachtwoord. Nog geen wachtwoord ingesteld? Gebruik de inloglink hieronder.",
+      "notPartner": "Dit e-mailadres is niet geregistreerd als partner, dus je kan niet inloggen. Meld je aan via de partnerpagina of contacteer voicelink@finitsolutions.be.",
       "orLink": "of",
       "sendLinkInstead": "Stuur me een inloglink",
       "send": "Stuur inloglink",
@@ -1796,7 +1797,8 @@
       "title": "Word partner van VoiceLink",
       "subtitle": "Introduceer VoiceLink bij bedrijven in je netwerk en ontvang 20% terugkerende commissie zolang ze klant blijven. Wij verzorgen de demo, onboarding en support.",
       "cta1": "Word partner",
-      "cta2": "Plan een kennismaking"
+      "cta2": "Plan een kennismaking",
+      "loginLink": "Al partner? Meld je aan"
     },
     "howItWorks": {
       "title": "Zo werkt het",
