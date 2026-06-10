@@ -39,7 +39,7 @@ const STATUS_STYLES: Record<PortalReferral['status'], string> = {
 };
 
 export function PartnerDashboard() {
-  const { t, formatDate } = useI18n();
+  const { t, date } = useI18n();
   const navigate = useNavigate();
   const [state, setState] = useState<ViewState>('loading');
   const [data, setData] = useState<PortalData | null>(null);
@@ -255,7 +255,7 @@ export function PartnerDashboard() {
                 )}
                 {data.referrals.map((ref, i) => (
                   <tr key={i} className="text-navy">
-                    <td className="px-4 py-3 text-navy/70">{formatDate(new Date(ref.signed_up_at))}</td>
+                    <td className="px-4 py-3 text-navy/70">{date(ref.signed_up_at)}</td>
                     <td className="px-4 py-3">
                       <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_STYLES[ref.status]}`}>
                         {t(`partner.status.${ref.status}`)}

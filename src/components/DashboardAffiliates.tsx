@@ -47,7 +47,7 @@ const STATUS_STYLES: Record<ReferredUserRow['status'], string> = {
 };
 
 export function DashboardAffiliates() {
-  const { t, formatDate } = useI18n();
+  const { t, date } = useI18n();
   const [data, setData] = useState<OverviewData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -195,7 +195,7 @@ export function DashboardAffiliates() {
                     <div className="text-xs text-navy/50">{u.email ?? '—'}</div>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs">{u.ref_code}</td>
-                  <td className="px-4 py-3 text-navy/70">{formatDate(new Date(u.signed_up_at))}</td>
+                  <td className="px-4 py-3 text-navy/70">{date(u.signed_up_at)}</td>
                   <td className="px-4 py-3">
                     <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_STYLES[u.status]}`}>
                       {statusLabel(u.status)}
