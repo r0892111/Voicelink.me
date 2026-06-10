@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CreditCard, ExternalLink, Loader2, Lock, Plus, Sparkles } from 'lucide-react';
 import { useDashboardContext } from '../hooks/useDashboardContext';
 import { useI18n } from '../hooks/useI18n';
+import { DashboardDangerZone } from './DashboardDangerZone';
 import { StripeService } from '../services/stripeService';
 import { getStripePriceId, getActiveCreditPacks, type CreditPack } from '../lib/teamPricing';
 import { withUTM } from '../utils/utm';
@@ -257,6 +258,8 @@ export function DashboardBilling() {
           </ul>
         </section>
       )}
+
+      <DashboardDangerZone />
     </div>
   );
 }

@@ -1698,6 +1698,15 @@
       "itemPhases": "Deal phases",
       "itemTaxRates": "Tax rates",
       "itemWorkTypes": "Work types"
+    },
+    "danger": {
+      "eyebrow": "Danger zone",
+      "title": "Delete my account & data",
+      "body": "Permanently erases everything VoiceLink stores about you: your CRM connection, message history, cached names, usage logs and your login. This is immediate and cannot be undone. Your CRM itself is not touched.",
+      "confirmLabel": "Type DELETE to confirm",
+      "button": "Delete everything",
+      "working": "Erasing…",
+      "error": "Erasure failed: {{detail}} — nothing was deleted. Please try again or contact support."
     }
   },
   "affiliate": {

@@ -1644,6 +1644,15 @@
       "itemPhases": "Deal-Phasen",
       "itemTaxRates": "Steuersätze",
       "itemWorkTypes": "Arbeitstypen"
+    },
+    "danger": {
+      "eyebrow": "Gefahrenzone",
+      "title": "Konto & Daten löschen",
+      "body": "Löscht dauerhaft alles, was VoiceLink über dich speichert: CRM-Verbindung, Nachrichtenverlauf, zwischengespeicherte Namen, Nutzungsprotokolle und deinen Login. Sofort und unwiderruflich. Dein CRM selbst bleibt unberührt.",
+      "confirmLabel": "Tippe DELETE zur Bestätigung",
+      "button": "Alles löschen",
+      "working": "Wird gelöscht…",
+      "error": "Löschen fehlgeschlagen: {{detail}} — es wurde nichts gelöscht. Bitte erneut versuchen oder den Support kontaktieren."
     }
   },
   "affiliate": {

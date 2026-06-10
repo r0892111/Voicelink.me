@@ -1690,6 +1690,15 @@
       "itemPhases": "Deal-fases",
       "itemTaxRates": "BTW-tarieven",
       "itemWorkTypes": "Werktypes"
+    },
+    "danger": {
+      "eyebrow": "Gevarenzone",
+      "title": "Verwijder mijn account & gegevens",
+      "body": "Wist permanent alles wat VoiceLink over je bewaart: je CRM-koppeling, berichtgeschiedenis, gecachte namen, gebruikslogs en je login. Dit gebeurt onmiddellijk en kan niet ongedaan worden gemaakt. Je CRM zelf blijft onaangeroerd.",
+      "confirmLabel": "Typ DELETE om te bevestigen",
+      "button": "Alles verwijderen",
+      "working": "Bezig met wissen…",
+      "error": "Verwijderen mislukt: {{detail}} — er is niets verwijderd. Probeer opnieuw of contacteer support."
     }
   },
   "affiliate": {

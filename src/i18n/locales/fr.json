@@ -1603,6 +1603,15 @@
       "itemPhases": "Phases d'affaires",
       "itemTaxRates": "Taux de TVA",
       "itemWorkTypes": "Types de travail"
+    },
+    "danger": {
+      "eyebrow": "Zone de danger",
+      "title": "Supprimer mon compte et mes données",
+      "body": "Efface définitivement tout ce que VoiceLink conserve à votre sujet : connexion CRM, historique des messages, noms en cache, journaux d'utilisation et votre identifiant. Immédiat et irréversible. Votre CRM lui-même n'est pas affecté.",
+      "confirmLabel": "Tapez DELETE pour confirmer",
+      "button": "Tout supprimer",
+      "working": "Suppression…",
+      "error": "Échec de la suppression : {{detail}} — rien n'a été supprimé. Réessayez ou contactez le support."
     }
   },
   "affiliate": {
