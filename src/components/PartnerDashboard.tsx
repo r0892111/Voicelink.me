@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserPlus, Hourglass, BadgeEuro, TrendingUp, Copy, Check, LogOut } from 'lucide-react';
+import { UserPlus, Hourglass, BadgeEuro, TrendingUp, Copy, Check, LogOut, KeyRound } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useI18n } from '../hooks/useI18n';
 
@@ -44,6 +44,8 @@ export function PartnerDashboard() {
   const [state, setState] = useState<ViewState>('loading');
   const [data, setData] = useState<PortalData | null>(null);
   const [copied, setCopied] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [pwState, setPwState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
 
   useEffect(() => {
     let cancelled = false;
@@ -102,6 +104,18 @@ export function PartnerDashboard() {
   const signOut = async () => {
     await supabase.auth.signOut();
     navigate('/partner/login', { replace: true });
+  };
+
+  const savePassword = async (e: FormEvent) => {
+    e.preventDefault();
+    setPwState('saving');
+    const { error: err } = await supabase.auth.updateUser({ password: newPassword });
+    if (err) {
+      setPwState('error');
+      return;
+    }
+    setNewPassword('');
+    setPwState('saved');
   };
 
   const refLink = data ? `${window.location.origin}/?ref=${data.partner.ref_code}` : '';
@@ -256,6 +270,41 @@ export function PartnerDashboard() {
             </table>
           </div>
           <p className="text-navy/45 text-xs mt-4">{t('partner.payoutNote')}</p>
+        </section>
+
+        <section className="mt-10">
+          <div className="bg-white rounded-2xl border border-navy/[0.07] shadow-sm p-5">
+            <div className="flex items-center gap-2 text-navy/45 mb-1.5">
+              <KeyRound className="w-4 h-4" />
+              <span className="text-xs uppercase tracking-wider font-semibold">{t('partner.security.title')}</span>
+            </div>
+            <p className="text-navy/60 text-sm mb-4">{t('partner.security.body')}</p>
+            <form onSubmit={savePassword} className="flex flex-col sm:flex-row gap-3 sm:items-start">
+              <input
+                type="password"
+                required
+                minLength={8}
+                value={newPassword}
+                onChange={(e) => { setNewPassword(e.target.value); if (pwState !== 'idle') setPwState('idle'); }}
+                placeholder={t('partner.security.newPassword')}
+                autoComplete="new-password"
+                className="flex-1 px-3 py-2.5 rounded-xl border border-navy/15 focus:border-navy focus:ring-1 focus:ring-navy outline-none text-sm"
+              />
+              <button
+                type="submit"
+                disabled={pwState === 'saving'}
+                className="bg-navy hover:bg-navy-hover disabled:opacity-60 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors flex-shrink-0"
+              >
+                {pwState === 'saving' ? t('partner.security.saving') : t('partner.security.save')}
+              </button>
+            </form>
+            {pwState === 'saved' && (
+              <p className="text-emerald-700 text-sm mt-3">{t('partner.security.saved')}</p>
+            )}
+            {pwState === 'error' && (
+              <p className="text-red-600 text-sm mt-3">{t('partner.security.error')}</p>
+            )}
+          </div>
         </section>
       </main>
     </div>

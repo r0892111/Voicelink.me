@@ -1767,13 +1767,28 @@
     },
     "login": {
       "title": "Partner login",
-      "subtitle": "Enter the email address your partner agreement is registered with — we'll send you a sign-in link.",
+      "subtitle": "Sign in with your password, or request a sign-in link by email. First time here? Use the sign-in link.",
       "email": "Email address",
+      "password": "Password",
+      "signIn": "Sign in",
+      "signingIn": "Signing in…",
+      "invalid": "Wrong email or password. No password set yet? Use the sign-in link below.",
+      "orLink": "or",
+      "sendLinkInstead": "Email me a sign-in link",
       "send": "Send sign-in link",
       "sending": "Sending…",
       "sent": "Check your inbox — we sent a sign-in link to {{email}}.",
       "error": "Couldn't send the link. Try again or email voicelink@finitsolutions.be.",
       "hint": "Not a partner yet? See voicelink.me/affiliate."
+    },
+    "security": {
+      "title": "Sign-in & security",
+      "body": "Set a password to sign in without email links. A sign-in link by email always keeps working as a backup.",
+      "newPassword": "New password (min. 8 characters)",
+      "save": "Save password",
+      "saving": "Saving…",
+      "saved": "Password saved — you can now sign in with email and password.",
+      "error": "Couldn't save the password. Try again."
     },
     "denied": {
       "title": "No partner account",

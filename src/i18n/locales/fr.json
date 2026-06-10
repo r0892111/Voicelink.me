@@ -1672,13 +1672,28 @@
     },
     "login": {
       "title": "Connexion partenaire",
-      "subtitle": "Saisissez l'adresse e-mail de votre contrat de partenariat — nous vous enverrons un lien de connexion.",
+      "subtitle": "Connectez-vous avec votre mot de passe, ou demandez un lien de connexion par e-mail. Première visite ? Utilisez le lien de connexion.",
       "email": "Adresse e-mail",
+      "password": "Mot de passe",
+      "signIn": "Se connecter",
+      "signingIn": "Connexion…",
+      "invalid": "E-mail ou mot de passe incorrect. Pas encore de mot de passe ? Utilisez le lien de connexion ci-dessous.",
+      "orLink": "ou",
+      "sendLinkInstead": "M'envoyer un lien de connexion",
       "send": "Envoyer le lien",
       "sending": "Envoi…",
       "sent": "Vérifiez votre boîte mail — lien envoyé à {{email}}.",
       "error": "Impossible d'envoyer le lien. Réessayez ou écrivez à voicelink@finitsolutions.be.",
       "hint": "Pas encore partenaire ? Voir voicelink.me/affiliate."
+    },
+    "security": {
+      "title": "Connexion & sécurité",
+      "body": "Définissez un mot de passe pour vous connecter sans lien e-mail. Le lien de connexion par e-mail reste toujours disponible en secours.",
+      "newPassword": "Nouveau mot de passe (min. 8 caractères)",
+      "save": "Enregistrer le mot de passe",
+      "saving": "Enregistrement…",
+      "saved": "Mot de passe enregistré — vous pouvez maintenant vous connecter avec e-mail et mot de passe.",
+      "error": "Impossible d'enregistrer le mot de passe. Réessayez."
     },
     "denied": {
       "title": "Aucun compte partenaire",

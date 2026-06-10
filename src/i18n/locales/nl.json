@@ -1759,13 +1759,28 @@
     },
     "login": {
       "title": "Partnerlogin",
-      "subtitle": "Vul het e-mailadres in waarmee je partnerovereenkomst geregistreerd is — we sturen je een inloglink.",
+      "subtitle": "Meld je aan met je wachtwoord, of vraag een inloglink per e-mail. Eerste keer hier? Gebruik de inloglink.",
       "email": "E-mailadres",
+      "password": "Wachtwoord",
+      "signIn": "Aanmelden",
+      "signingIn": "Aanmelden…",
+      "invalid": "Verkeerd e-mailadres of wachtwoord. Nog geen wachtwoord ingesteld? Gebruik de inloglink hieronder.",
+      "orLink": "of",
+      "sendLinkInstead": "Stuur me een inloglink",
       "send": "Stuur inloglink",
       "sending": "Versturen…",
       "sent": "Check je inbox — we stuurden een inloglink naar {{email}}.",
       "error": "De link kon niet verstuurd worden. Probeer opnieuw of mail voicelink@finitsolutions.be.",
       "hint": "Nog geen partner? Zie voicelink.me/affiliate."
+    },
+    "security": {
+      "title": "Aanmelden & beveiliging",
+      "body": "Stel een wachtwoord in om aan te melden zonder e-maillinks. Een inloglink per e-mail blijft altijd werken als back-up.",
+      "newPassword": "Nieuw wachtwoord (min. 8 tekens)",
+      "save": "Wachtwoord opslaan",
+      "saving": "Opslaan…",
+      "saved": "Wachtwoord opgeslagen — je kan nu aanmelden met e-mail en wachtwoord.",
+      "error": "Wachtwoord kon niet opgeslagen worden. Probeer opnieuw."
     },
     "denied": {
       "title": "Geen partneraccount",
