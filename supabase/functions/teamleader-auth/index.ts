@@ -29,7 +29,7 @@ Deno.serve(async (req) => {
   const r = log.withRequest(req);
 
   try {
-    const { code, state, redirect_uri, is_test_user, test_phone, invitation_token } = await req.json();
+    const { code, state, redirect_uri, is_test_user, test_phone, invitation_token, ref_code } = await req.json();
     r.info('auth request received', {
       has_code: !!code,
       has_redirect_uri: !!redirect_uri,
@@ -297,6 +297,23 @@ Deno.serve(async (req) => {
     if (test_phone) {
       tlUserPayload.whatsapp_number = test_phone;
       tlUserPayload.whatsapp_status = 'active';
+    }
+
+    // Affiliate attribution: write-once, only when this Teamleader account
+    // connects for the first time. Invited members and test users are never
+    // attributed. The code is stored even if it doesn't match a known
+    // affiliate (TEXT, no FK) — the owner dashboard surfaces unmatched codes.
+    const normalizedRef = typeof ref_code === 'string' ? ref_code.trim().toLowerCase() : '';
+    if (
+      isNewTeamleaderConnection &&
+      !is_test_user &&
+      !invitation_token &&
+      /^[a-z0-9-]{2,32}$/.test(normalizedRef)
+    ) {
+      tlUserPayload.ref_code = normalizedRef;
+      tlUserPayload.ref_attributed_at = new Date().toISOString();
+      tlUserPayload.ref_source = 'link';
+      r.info('affiliate attribution recorded', { ref_code: normalizedRef });
     }
 
     const { error: tlUserError } = await supabase.from('teamleader_users').upsert(

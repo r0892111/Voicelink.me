@@ -1390,7 +1390,36 @@
       "openSidebar": "Ouvrir la barre latérale",
       "closeSidebar": "Fermer la barre latérale",
       "subscriptionLockedTooltip": "Démarrez votre essai gratuit pour débloquer",
-      "subscriptionLockedMemberTooltip": "En attente du démarrage de l'essai par votre admin"
+      "subscriptionLockedMemberTooltip": "En attente du démarrage de l'essai par votre admin",
+      "groupOwner": "Propriétaire",
+      "affiliates": "Affiliés"
+    },
+    "affiliates": {
+      "eyebrow": "Programme partenaire",
+      "title": "Affiliés",
+      "subtitle": "Quel partenaire a référé quel compte, et la commission cumulée ce mois-ci.",
+      "error": "Impossible de charger les données d'affiliation.",
+      "unmatched": "Des inscriptions existent avec des codes inconnus : {{codes}}. Ajoutez les partenaires correspondants dans la table affiliates.",
+      "partnersTitle": "Partenaires",
+      "usersTitle": "Comptes référés",
+      "colPartner": "Partenaire",
+      "colCode": "Code",
+      "colSignups": "Inscriptions",
+      "colTrials": "Essais",
+      "colPaying": "Payants",
+      "colCommission": "Commission",
+      "colStatus": "Statut",
+      "colUser": "Compte",
+      "colSignedUp": "Inscrit le",
+      "colNetMonthly": "MRR net",
+      "noPartners": "Pas encore de partenaires. Ajoutez une ligne dans la table affiliates pour commencer.",
+      "noUsers": "Pas encore d'inscriptions référées.",
+      "month": "mois",
+      "status": {
+        "trial": "Essai",
+        "paying": "Payant",
+        "churned": "Parti"
+      }
     },
     "platforms": {
       "teamleader": "Teamleader",
@@ -1612,6 +1641,52 @@
       "button": "Tout supprimer",
       "working": "Suppression…",
       "error": "Échec de la suppression : {{detail}} — rien n'a été supprimé. Réessayez ou contactez le support."
+    }
+  },
+  "partner": {
+    "title": "Tableau de bord partenaire",
+    "subtitle": "Vos clients référés et la commission projetée ({{rate}}% du MRR net, clients payants uniquement).",
+    "linkLabel": "Votre lien partenaire",
+    "copy": "Copier le lien",
+    "copied": "Copié",
+    "signOut": "Se déconnecter",
+    "referralsTitle": "Vos référencements",
+    "noReferrals": "Pas encore d'inscriptions via votre lien. Partagez votre lien partenaire pour commencer.",
+    "month": "mois",
+    "payoutNote": "La commission ne s'applique qu'aux clients payants (après remises, hors TVA). Paiement trimestriel après réception de votre facture ; mensuel à partir de 5 clients actifs. Les chiffres sont une projection en direct, pas une facture.",
+    "stats": {
+      "signups": "Inscriptions",
+      "trials": "Essais en cours",
+      "paying": "Clients payants",
+      "commission": "Commission / mois"
+    },
+    "table": {
+      "date": "Inscrit le",
+      "status": "Statut",
+      "commission": "Commission"
+    },
+    "status": {
+      "trial": "Essai",
+      "paying": "Payant",
+      "churned": "Parti"
+    },
+    "login": {
+      "title": "Connexion partenaire",
+      "subtitle": "Saisissez l'adresse e-mail de votre contrat de partenariat — nous vous enverrons un lien de connexion.",
+      "email": "Adresse e-mail",
+      "send": "Envoyer le lien",
+      "sending": "Envoi…",
+      "sent": "Vérifiez votre boîte mail — lien envoyé à {{email}}.",
+      "error": "Impossible d'envoyer le lien. Réessayez ou écrivez à voicelink@finitsolutions.be.",
+      "hint": "Pas encore partenaire ? Voir voicelink.me/affiliate."
+    },
+    "denied": {
+      "title": "Aucun compte partenaire",
+      "body": "Cette adresse e-mail n'est liée à aucun contrat de partenariat. Utilisez l'adresse de votre contrat ou contactez voicelink@finitsolutions.be."
+    },
+    "error": {
+      "title": "Une erreur est survenue",
+      "body": "Impossible de charger vos données partenaire. Réessayez plus tard ou contactez voicelink@finitsolutions.be."
     }
   },
   "affiliate": {

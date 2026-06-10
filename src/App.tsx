@@ -13,6 +13,9 @@ import { DashboardSettings } from './components/DashboardSettings';
 import { DashboardProfile } from './components/DashboardProfile';
 import { DashboardBilling } from './components/DashboardBilling';
 import { DashboardGuide } from './components/DashboardGuide';
+import { DashboardAffiliates } from './components/DashboardAffiliates';
+import { PartnerLogin } from './components/PartnerLogin';
+import { PartnerDashboard } from './components/PartnerDashboard';
 import { SubscriptionGate } from './components/SubscriptionGate';
 import { ContactFormModal } from './components/ContactFormModal';
 import { FieldServiceLanding } from './components/FieldServiceLanding';
@@ -126,6 +129,7 @@ function App() {
     location.pathname === '/onboard/worksmarter' ||
     location.pathname === '/lp/service';
   const isDashboardRoute = location.pathname === '/dashboard' || location.pathname.startsWith('/dashboard/');
+  const isPartnerPage = location.pathname === '/partner' || location.pathname.startsWith('/partner/');
 
   const openContactModal = () => {
     setIsContactModalOpen(true);
@@ -136,7 +140,7 @@ function App() {
   };
   
   // Skip loading check for public pages that don't need auth
-  if (loading && !isLandingPage && !isSignupPage && !isGetStartedPage && !isSigninPage && !isInvitePage && !isTestPage && !isAffiliatePage && !isWorksmarterPage) {
+  if (loading && !isLandingPage && !isSignupPage && !isGetStartedPage && !isSigninPage && !isInvitePage && !isTestPage && !isAffiliatePage && !isWorksmarterPage && !isPartnerPage) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />
@@ -151,7 +155,7 @@ function App() {
         <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage || isGetStartedPage || isSigninPage ? 'h-screen overflow-hidden' : ''}`}>
           {!isDashboardRoute && <NoiseOverlay />}
           {/* Navigation */}
-          {!isLandingPage && !isSignupPage && !isGetStartedPage && !isSigninPage && !isInvitePage && !isTestPage && !isDashboardRoute && !isWorksmarterPage && (
+          {!isLandingPage && !isSignupPage && !isGetStartedPage && !isSigninPage && !isInvitePage && !isTestPage && !isDashboardRoute && !isWorksmarterPage && !isPartnerPage && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
             {/* ── White logo on hero (homepage only, fades out on scroll) — desktop only ── */}
             {isHomepage && (
@@ -266,7 +270,7 @@ function App() {
           {/* Mobile top bar — logo left, hamburger (+ sticky CTA on scroll) right.
               Transparent over the hero; gains a solid background once scrolled
               (or on non-homepage pages) so it reads as a real sticky navbar. */}
-          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isWorksmarterPage && !isMobileMenuOpen && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isWorksmarterPage && !isPartnerPage && !isMobileMenuOpen && (
             <div
               className={`min-[1280px]:hidden fixed top-0 left-0 right-0 z-[10000] transition-all duration-300 ${
                 scrolled || !isHomepage
@@ -309,7 +313,7 @@ function App() {
           )}
 
           {/* Full-screen mobile menu overlay */}
-          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isWorksmarterPage && isMobileMenuOpen && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isDashboardRoute && !isWorksmarterPage && !isPartnerPage && isMobileMenuOpen && (
             <div className="min-[1280px]:hidden fixed inset-0 z-[10000] bg-porcelain flex flex-col overflow-y-auto">
               {/* Header */}
               <div className="flex items-center justify-between px-6 pt-10 pb-6 flex-shrink-0">
@@ -459,7 +463,7 @@ function App() {
           )}
 
           {/* Routes */}
-          <div className={isLandingPage || isSignupPage || isGetStartedPage || isSigninPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage || isWorksmarterPage ? "" : "pt-20"}>
+          <div className={isLandingPage || isSignupPage || isGetStartedPage || isSigninPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage || isWorksmarterPage || isPartnerPage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
               <Route path="/signup" element={<AuthPage />} />
@@ -482,7 +486,10 @@ function App() {
                 <Route path="profile"  element={<SubscriptionGate><DashboardProfile /></SubscriptionGate>} />
                 <Route path="billing"  element={<SubscriptionGate><DashboardBilling /></SubscriptionGate>} />
                 <Route path="guide"    element={<DashboardGuide />} />
+                <Route path="affiliates" element={<DashboardAffiliates />} />
               </Route>
+              <Route path="/partner/login" element={<PartnerLogin />} />
+              <Route path="/partner" element={<PartnerDashboard />} />
               <Route path="/auth/:platform/callback" element={<AuthCallback />} />
               <Route path="/success" element={<SuccessPage />} />
               <Route path="/saas-agreement" element={<SaasAgreement />} />

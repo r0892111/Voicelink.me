@@ -1477,7 +1477,36 @@
       "openSidebar": "Zijbalk openen",
       "closeSidebar": "Zijbalk sluiten",
       "subscriptionLockedTooltip": "Start je gratis proefperiode om te ontgrendelen",
-      "subscriptionLockedMemberTooltip": "Wachten tot je admin de proefperiode start"
+      "subscriptionLockedMemberTooltip": "Wachten tot je admin de proefperiode start",
+      "groupOwner": "Eigenaar",
+      "affiliates": "Affiliates"
+    },
+    "affiliates": {
+      "eyebrow": "Partnerprogramma",
+      "title": "Affiliates",
+      "subtitle": "Welke partner welke klant aanbracht, en welke commissie deze maand oploopt.",
+      "error": "Affiliate-data kon niet geladen worden.",
+      "unmatched": "Er zijn signups met onbekende ref-codes: {{codes}}. Voeg de bijhorende partnerrijen toe in de affiliates-tabel.",
+      "partnersTitle": "Partners",
+      "usersTitle": "Aangebrachte accounts",
+      "colPartner": "Partner",
+      "colCode": "Code",
+      "colSignups": "Signups",
+      "colTrials": "Trials",
+      "colPaying": "Betalend",
+      "colCommission": "Commissie",
+      "colStatus": "Status",
+      "colUser": "Account",
+      "colSignedUp": "Aangemeld",
+      "colNetMonthly": "Netto MRR",
+      "noPartners": "Nog geen partners. Voeg een rij toe in de affiliates-tabel om te starten.",
+      "noUsers": "Nog geen aangebrachte signups.",
+      "month": "mnd",
+      "status": {
+        "trial": "Trial",
+        "paying": "Betalend",
+        "churned": "Gestopt"
+      }
     },
     "platforms": {
       "teamleader": "Teamleader",
@@ -1699,6 +1728,52 @@
       "button": "Alles verwijderen",
       "working": "Bezig met wissen…",
       "error": "Verwijderen mislukt: {{detail}} — er is niets verwijderd. Probeer opnieuw of contacteer support."
+    }
+  },
+  "partner": {
+    "title": "Partnerdashboard",
+    "subtitle": "Je aangebrachte klanten en verwachte commissie ({{rate}}% van netto MRR, enkel betalende klanten).",
+    "linkLabel": "Jouw partnerlink",
+    "copy": "Kopieer link",
+    "copied": "Gekopieerd",
+    "signOut": "Afmelden",
+    "referralsTitle": "Jouw referrals",
+    "noReferrals": "Nog geen signups via jouw link. Deel je partnerlink om te starten.",
+    "month": "mnd",
+    "payoutNote": "Commissie loopt enkel op betalende klanten (na kortingen, excl. btw). Uitbetaling per kwartaal na ontvangst van je factuur; maandelijks vanaf 5 actieve klanten. De cijfers zijn een live projectie, geen factuur.",
+    "stats": {
+      "signups": "Signups",
+      "trials": "Lopende trials",
+      "paying": "Betalende klanten",
+      "commission": "Commissie / maand"
+    },
+    "table": {
+      "date": "Aangemeld",
+      "status": "Status",
+      "commission": "Commissie"
+    },
+    "status": {
+      "trial": "Trial",
+      "paying": "Betalend",
+      "churned": "Gestopt"
+    },
+    "login": {
+      "title": "Partnerlogin",
+      "subtitle": "Vul het e-mailadres in waarmee je partnerovereenkomst geregistreerd is — we sturen je een inloglink.",
+      "email": "E-mailadres",
+      "send": "Stuur inloglink",
+      "sending": "Versturen…",
+      "sent": "Check je inbox — we stuurden een inloglink naar {{email}}.",
+      "error": "De link kon niet verstuurd worden. Probeer opnieuw of mail voicelink@finitsolutions.be.",
+      "hint": "Nog geen partner? Zie voicelink.me/affiliate."
+    },
+    "denied": {
+      "title": "Geen partneraccount",
+      "body": "Dit e-mailadres is niet gekoppeld aan een partnerovereenkomst. Gebruik het e-mailadres van je overeenkomst of contacteer voicelink@finitsolutions.be."
+    },
+    "error": {
+      "title": "Er ging iets mis",
+      "body": "Je partnerdata kon niet geladen worden. Probeer later opnieuw of contacteer voicelink@finitsolutions.be."
     }
   },
   "affiliate": {

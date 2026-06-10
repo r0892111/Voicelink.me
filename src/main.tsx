@@ -5,6 +5,7 @@ import './i18n';
 import App from './App.tsx';
 import './index.css';
 import { initializeUTMTracking } from './utils/utm';
+import { initializeReferralTracking } from './utils/referral';
 import { PageTransitionProvider } from './hooks/usePageTransition';
 
 // Handle client-side routing for GitHub Pages and similar static hosts
@@ -22,6 +23,7 @@ if (typeof window !== 'undefined') {
 
 // Initialize UTM tracking
 initializeUTMTracking();
+initializeReferralTracking();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

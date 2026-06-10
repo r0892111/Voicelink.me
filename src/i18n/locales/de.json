@@ -1431,7 +1431,36 @@
       "openSidebar": "Seitenleiste öffnen",
       "closeSidebar": "Seitenleiste schließen",
       "subscriptionLockedTooltip": "Starte deinen Gratis-Test zum Entsperren",
-      "subscriptionLockedMemberTooltip": "Warten bis dein Admin den Test startet"
+      "subscriptionLockedMemberTooltip": "Warten bis dein Admin den Test startet",
+      "groupOwner": "Inhaber",
+      "affiliates": "Affiliates"
+    },
+    "affiliates": {
+      "eyebrow": "Partnerprogramm",
+      "title": "Affiliates",
+      "subtitle": "Welcher Partner welchen Account geworben hat und welche Provision diesen Monat aufläuft.",
+      "error": "Affiliate-Daten konnten nicht geladen werden.",
+      "unmatched": "Es gibt Anmeldungen mit unbekannten Ref-Codes: {{codes}}. Lege passende Partnerzeilen in der affiliates-Tabelle an.",
+      "partnersTitle": "Partner",
+      "usersTitle": "Geworbene Accounts",
+      "colPartner": "Partner",
+      "colCode": "Code",
+      "colSignups": "Anmeldungen",
+      "colTrials": "Tests",
+      "colPaying": "Zahlend",
+      "colCommission": "Provision",
+      "colStatus": "Status",
+      "colUser": "Account",
+      "colSignedUp": "Angemeldet",
+      "colNetMonthly": "Netto-MRR",
+      "noPartners": "Noch keine Partner. Lege eine Zeile in der affiliates-Tabelle an, um zu starten.",
+      "noUsers": "Noch keine geworbenen Anmeldungen.",
+      "month": "Mon.",
+      "status": {
+        "trial": "Test",
+        "paying": "Zahlend",
+        "churned": "Abgesprungen"
+      }
     },
     "platforms": {
       "teamleader": "Teamleader",
@@ -1653,6 +1682,52 @@
       "button": "Alles löschen",
       "working": "Wird gelöscht…",
       "error": "Löschen fehlgeschlagen: {{detail}} — es wurde nichts gelöscht. Bitte erneut versuchen oder den Support kontaktieren."
+    }
+  },
+  "partner": {
+    "title": "Partner-Dashboard",
+    "subtitle": "Deine geworbenen Kunden und die erwartete Provision ({{rate}}% vom Netto-MRR, nur zahlende Kunden).",
+    "linkLabel": "Dein Partnerlink",
+    "copy": "Link kopieren",
+    "copied": "Kopiert",
+    "signOut": "Abmelden",
+    "referralsTitle": "Deine Referrals",
+    "noReferrals": "Noch keine Anmeldungen über deinen Link. Teile deinen Partnerlink, um zu starten.",
+    "month": "Mon.",
+    "payoutNote": "Provision läuft nur auf zahlende Kunden auf (nach Rabatten, exkl. MwSt.). Auszahlung quartalsweise nach Eingang deiner Rechnung; monatlich ab 5 aktiven Kunden. Die Zahlen sind eine Live-Projektion, keine Rechnung.",
+    "stats": {
+      "signups": "Anmeldungen",
+      "trials": "Laufende Tests",
+      "paying": "Zahlende Kunden",
+      "commission": "Provision / Monat"
+    },
+    "table": {
+      "date": "Angemeldet",
+      "status": "Status",
+      "commission": "Provision"
+    },
+    "status": {
+      "trial": "Test",
+      "paying": "Zahlend",
+      "churned": "Abgesprungen"
+    },
+    "login": {
+      "title": "Partner-Login",
+      "subtitle": "Gib die E-Mail-Adresse deiner Partnervereinbarung ein — wir senden dir einen Anmeldelink.",
+      "email": "E-Mail-Adresse",
+      "send": "Anmeldelink senden",
+      "sending": "Wird gesendet…",
+      "sent": "Prüfe dein Postfach — Anmeldelink an {{email}} gesendet.",
+      "error": "Der Link konnte nicht gesendet werden. Versuche es erneut oder schreibe an voicelink@finitsolutions.be.",
+      "hint": "Noch kein Partner? Siehe voicelink.me/affiliate."
+    },
+    "denied": {
+      "title": "Kein Partnerkonto",
+      "body": "Diese E-Mail-Adresse ist mit keiner Partnervereinbarung verknüpft. Verwende die E-Mail-Adresse deiner Vereinbarung oder kontaktiere voicelink@finitsolutions.be."
+    },
+    "error": {
+      "title": "Etwas ist schiefgelaufen",
+      "body": "Deine Partnerdaten konnten nicht geladen werden. Versuche es später erneut oder kontaktiere voicelink@finitsolutions.be."
     }
   },
   "affiliate": {

@@ -51,6 +51,7 @@ const PAGE_TITLES: Array<{ pattern: string; key: string }> = [
   { pattern: '/dashboard/profile',  key: 'dash.nav.profile' },
   { pattern: '/dashboard/billing',  key: 'dash.nav.billing' },
   { pattern: '/dashboard/guide',    key: 'dash.nav.guide' },
+  { pattern: '/dashboard/affiliates', key: 'dash.nav.affiliates' },
 ];
 
 function resolvePageTitleKey(pathname: string): string {

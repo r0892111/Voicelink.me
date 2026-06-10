@@ -1485,7 +1485,36 @@
       "openSidebar": "Open sidebar",
       "closeSidebar": "Close sidebar",
       "subscriptionLockedTooltip": "Start your free trial to unlock",
-      "subscriptionLockedMemberTooltip": "Waiting on your admin to start the trial"
+      "subscriptionLockedMemberTooltip": "Waiting on your admin to start the trial",
+      "groupOwner": "Owner",
+      "affiliates": "Affiliates"
+    },
+    "affiliates": {
+      "eyebrow": "Partner program",
+      "title": "Affiliates",
+      "subtitle": "Which partner referred which account, and what commission accrues this month.",
+      "error": "Couldn't load affiliate data.",
+      "unmatched": "Signups exist with unknown ref codes: {{codes}}. Add matching partner rows in the affiliates table.",
+      "partnersTitle": "Partners",
+      "usersTitle": "Referred accounts",
+      "colPartner": "Partner",
+      "colCode": "Code",
+      "colSignups": "Signups",
+      "colTrials": "Trials",
+      "colPaying": "Paying",
+      "colCommission": "Commission",
+      "colStatus": "Status",
+      "colUser": "Account",
+      "colSignedUp": "Signed up",
+      "colNetMonthly": "Net MRR",
+      "noPartners": "No partners yet. Insert a row in the affiliates table to get started.",
+      "noUsers": "No referred signups yet.",
+      "month": "mo",
+      "status": {
+        "trial": "Trial",
+        "paying": "Paying",
+        "churned": "Churned"
+      }
     },
     "platforms": {
       "teamleader": "Teamleader",
@@ -1707,6 +1736,52 @@
       "button": "Delete everything",
       "working": "Erasing…",
       "error": "Erasure failed: {{detail}} — nothing was deleted. Please try again or contact support."
+    }
+  },
+  "partner": {
+    "title": "Partner dashboard",
+    "subtitle": "Your referrals and projected commission ({{rate}}% of net MRR, paying customers only).",
+    "linkLabel": "Your partner link",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "signOut": "Sign out",
+    "referralsTitle": "Your referrals",
+    "noReferrals": "No signups via your link yet. Share your partner link to get started.",
+    "month": "mo",
+    "payoutNote": "Commission accrues on paying customers only (net of discounts, excl. VAT). Payouts are quarterly after you send an invoice; monthly from 5 active customers. Figures are a live projection, not an invoice.",
+    "stats": {
+      "signups": "Signups",
+      "trials": "Trials running",
+      "paying": "Paying customers",
+      "commission": "Commission / month"
+    },
+    "table": {
+      "date": "Signed up",
+      "status": "Status",
+      "commission": "Commission"
+    },
+    "status": {
+      "trial": "Trial",
+      "paying": "Paying",
+      "churned": "Churned"
+    },
+    "login": {
+      "title": "Partner login",
+      "subtitle": "Enter the email address your partner agreement is registered with — we'll send you a sign-in link.",
+      "email": "Email address",
+      "send": "Send sign-in link",
+      "sending": "Sending…",
+      "sent": "Check your inbox — we sent a sign-in link to {{email}}.",
+      "error": "Couldn't send the link. Try again or email voicelink@finitsolutions.be.",
+      "hint": "Not a partner yet? See voicelink.me/affiliate."
+    },
+    "denied": {
+      "title": "No partner account",
+      "body": "This email isn't linked to a partner agreement. Use the email your agreement is registered with, or contact voicelink@finitsolutions.be."
+    },
+    "error": {
+      "title": "Something went wrong",
+      "body": "Couldn't load your partner data. Try again later or contact voicelink@finitsolutions.be."
     }
   },
   "affiliate": {

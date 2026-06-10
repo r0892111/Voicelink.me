@@ -9,6 +9,7 @@ import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
 import { trackTrialStarted } from '../utils/analytics';
 import { consumeTestFlow, clearTestFlow } from '../utils/testFlow';
+import { getReferralCode } from '../utils/referral';
 
 type CallbackStatus = 'loading' | 'success' | 'error';
 
@@ -134,6 +135,10 @@ export const AuthCallback: React.FC = () => {
       // Check if this is a team invite flow
       const inviteToken = localStorage.getItem('team_invite_token');
 
+      // Affiliate attribution — the edge function only writes this on the
+      // account-creation path, so sending it on every login is harmless.
+      const referralCode = getReferralCode();
+
       const requestBody: Record<string, unknown> = {
         code,
         state,
@@ -143,6 +148,7 @@ export const AuthCallback: React.FC = () => {
           test_phone: testPhone ?? undefined,
         }),
         ...(inviteToken && { invitation_token: inviteToken }),
+        ...(referralCode && { ref_code: referralCode }),
       };
 
       // For custom Odoo implementations, pass the OAuth URL to the backend

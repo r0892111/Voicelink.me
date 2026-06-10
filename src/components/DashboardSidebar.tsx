@@ -11,9 +11,11 @@ import {
   LogOut,
   User,
   Lock,
+  Handshake,
 } from 'lucide-react';
 import type { AuthUser } from '../hooks/useAuth';
 import { useI18n } from '../hooks/useI18n';
+import { isPlatformOwner } from '../utils/platformOwner';
 
 export interface DashboardSidebarProps {
   user: AuthUser;
@@ -62,6 +64,13 @@ const NAV_GROUPS: NavGroup[] = [
     items: [{ to: '/dashboard/guide', labelKey: 'dash.nav.guide', icon: BookOpen }],
   },
 ];
+
+// Platform-owner section — only rendered for allowlisted emails (cosmetic;
+// the affiliate-overview edge function enforces the real gate).
+const OWNER_GROUP: NavGroup = {
+  labelKey: 'dash.nav.groupOwner',
+  items: [{ to: '/dashboard/affiliates', labelKey: 'dash.nav.affiliates', icon: Handshake }],
+};
 
 type LockReason = 'admin' | 'subscription_admin' | 'subscription_member' | null;
 
@@ -129,7 +138,7 @@ export function DashboardSidebar({
           extend rightward beyond the sidebar. Our nav has ~7 fixed items
           so scrolling isn't needed on any reasonable screen size. */}
       <nav className="flex-1 px-3 pb-4">
-        {NAV_GROUPS.map((group) => (
+        {(isPlatformOwner(user.email) ? [...NAV_GROUPS, OWNER_GROUP] : NAV_GROUPS).map((group) => (
           <div key={group.labelKey} className="mb-6">
             <p className="px-3 mb-2 text-[10px] uppercase tracking-widest font-semibold text-navy/35">
               {t(group.labelKey)}
