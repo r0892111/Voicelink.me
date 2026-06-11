@@ -3,6 +3,7 @@ import { MessageCircle, Check, Loader2, AlertCircle, X, Clock } from 'lucide-rea
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../lib/supabase';
 import { useI18n } from '../hooks/useI18n';
+import i18n from '../i18n';
 
 interface WhatsAppStatus {
   whatsapp_number: string | null;
@@ -278,7 +279,8 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
         body: JSON.stringify({
           crm_provider: platform,
           crm_user_id: crmUserId,
-          phone_number: whatsappInput.trim()
+          phone_number: whatsappInput.trim(),
+          language: i18n.language
         })
       });
     } catch (error) {

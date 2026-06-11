@@ -1,6 +1,7 @@
 import React from 'react';
 import { supabase } from '../lib/supabase';
 import { whatsappService } from '../services/whatsappService';
+import i18n from '../i18n';
 import { AuthService } from '../services/authService';
 import { markTestFlow } from '../utils/testFlow';
 import { MessageCircle, Loader2, Check, AlertCircle, ArrowLeft } from 'lucide-react';
@@ -61,7 +62,7 @@ export const TestSignup: React.FC = () => {
     setError(null);
     try {
       await whatsappService.verifyOtp('test', testUserId, otp.trim());
-      whatsappService.sendWelcome('test', testUserId, confirmedPhone).catch(() => {});
+      whatsappService.sendWelcome('test', testUserId, confirmedPhone, i18n.language).catch(() => {});
 
       // Mark this browser as a test-user signup *immediately before* kicking
       // off the OAuth redirect. The flag (TTL 10 min, see utils/testFlow.ts)

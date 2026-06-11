@@ -5,7 +5,7 @@
 export interface IWhatsAppService {
   sendOtp(platform: string, userId: string, phone: string): Promise<{ expiresAt: string }>;
   verifyOtp(platform: string, userId: string, code: string): Promise<void>;
-  sendWelcome(platform: string, userId: string, phone: string): Promise<void>;
+  sendWelcome(platform: string, userId: string, phone: string, language?: string): Promise<void>;
   cancelPending(platform: string, userId: string): Promise<void>;
 }
 
@@ -48,13 +48,14 @@ class WhatsAppService implements IWhatsAppService {
     if (!data.success) throw new Error(data.error ?? 'Failed to cancel verification.');
   }
 
-  async sendWelcome(platform: string, userId: string, phone: string): Promise<void> {
+  async sendWelcome(platform: string, userId: string, phone: string, language?: string): Promise<void> {
     // Best-effort — swallow errors so the signup flow is never blocked.
     try {
       await this.call('whatsapp-welcome', {
         crm_provider: platform,
         crm_user_id:  userId,
         phone_number: phone,
+        ...(language ? { language } : {}),
       });
     } catch {
       // intentionally silent

@@ -13,8 +13,12 @@ export interface TwilioProviderConfig {
    *  the code is passed as ContentVariables {"1": code}.
    *  Falls back to a plain Body if not set. */
   otpTemplateSid?: string;
-  /** Twilio Content Template SID for the welcome message. Optional. */
+  /** Twilio Content Template SID for the welcome message. Optional.
+   *  Legacy single-language fallback — superseded by welcomeTemplateSids. */
   welcomeTemplateSid?: string;
+  /** Per-language welcome Content Template SIDs, keyed by site locale
+   *  (nl/en/fr/de). Lookup order: requested language → nl → legacy SID. */
+  welcomeTemplateSids?: Record<string, string>;
   /** Twilio Content Template SID for team invite message. Optional. */
   teamInviteTemplateSid?: string;
   /** Plain-text fallback used when no otpTemplateSid is configured. */
@@ -72,16 +76,20 @@ export class TwilioWhatsAppProvider implements IWhatsAppProvider {
     });
   }
 
-  async sendWelcome(toPhone: string): Promise<void> {
-    log.info('sendWelcome', { to: normalisePhone(toPhone), has_template: !!this.cfg.welcomeTemplateSid });
+  async sendWelcome(toPhone: string, language?: string): Promise<void> {
+    const templateSid =
+      (language ? this.cfg.welcomeTemplateSids?.[language] : undefined)
+      ?? this.cfg.welcomeTemplateSids?.nl
+      ?? this.cfg.welcomeTemplateSid;
+    log.info('sendWelcome', { to: normalisePhone(toPhone), language, has_template: !!templateSid });
     const params = this.baseParams(normalisePhone(toPhone));
 
     let usedTemplate: string | null = null;
     let usedBody: string | null = null;
-    if (this.cfg.welcomeTemplateSid) {
-      params.set('ContentSid', this.cfg.welcomeTemplateSid);
+    if (templateSid) {
+      params.set('ContentSid', templateSid);
       params.set('ContentVariables', JSON.stringify({}));
-      usedTemplate = this.cfg.welcomeTemplateSid;
+      usedTemplate = templateSid;
     } else {
       params.set('Body', this.cfg.welcomeFallbackBody);
       usedBody = this.cfg.welcomeFallbackBody;
