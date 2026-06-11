@@ -78,6 +78,15 @@ function createTwilioProvider(): TwilioWhatsAppProvider {
     authToken,
     fromNumber,
     otpTemplateSid:        Deno.env.get('TWILIO_WHATSAPP_OTP_TEMPLATE_SID'),
+    // Welcome v2 templates (approved 2026-06): defaults are the live Content
+    // SIDs; the env vars allow repointing without a redeploy. The legacy
+    // single-SID secret below only applies if a language's SID is unset.
+    welcomeTemplateSids: {
+      nl: Deno.env.get('TWILIO_WHATSAPP_WELCOME_TEMPLATE_SID_NL') ?? 'HXc301334c031e1da6404ef6e1bba5e26a',
+      en: Deno.env.get('TWILIO_WHATSAPP_WELCOME_TEMPLATE_SID_EN') ?? 'HXfb039d77af2f1fac4bb351172759f8ae',
+      fr: Deno.env.get('TWILIO_WHATSAPP_WELCOME_TEMPLATE_SID_FR') ?? 'HXb06256e81a31e89aa74f3ed1916f47aa',
+      de: Deno.env.get('TWILIO_WHATSAPP_WELCOME_TEMPLATE_SID_DE') ?? 'HXaf864af11346cb5eeb82d336436ceab0',
+    },
     welcomeTemplateSid:    Deno.env.get('TWILIO_WHATSAPP_WELCOME_TEMPLATE_SID'),
     teamInviteTemplateSid: Deno.env.get('TWILIO_WHATSAPP_TEAM_INVITE_TEMPLATE_SID'),
     otpFallbackBody:        'Your VoiceLink verification code is: {code}. Valid for 10 minutes.',

@@ -7,9 +7,11 @@ export interface IWhatsAppOtpSender {
   sendOtp(toPhone: string, code: string): Promise<void>;
 }
 
-/** Sends a one-time welcome message to a newly verified WhatsApp number. */
+/** Sends a one-time welcome message to a newly verified WhatsApp number.
+ *  `language` is a site-locale hint (nl/en/fr/de); implementations fall back
+ *  to their configured default when omitted or unsupported. */
 export interface IWhatsAppWelcomeSender {
-  sendWelcome(toPhone: string): Promise<void>;
+  sendWelcome(toPhone: string, language?: string): Promise<void>;
 }
 
 /** Sends a team invite message with admin name and invite link. */

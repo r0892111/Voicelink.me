@@ -23,7 +23,7 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { phone_number } = body;
+    const { phone_number, language } = body;
 
     if (!phone_number) {
       r.warn('missing phone_number', { received_keys: Object.keys(body ?? {}) });
@@ -31,17 +31,23 @@ Deno.serve(async (req) => {
       return respond({ success: false, error: 'Missing phone_number' }, 400);
     }
 
+    // Site locale (possibly regionalised, e.g. "nl-BE") → supported welcome
+    // language. Default nl: pre-language callers keep today's behaviour.
+    const SUPPORTED_LANGS = ['nl', 'en', 'fr', 'de'];
+    const normalised = String(language ?? '').slice(0, 2).toLowerCase();
+    const welcomeLang = SUPPORTED_LANGS.includes(normalised) ? normalised : 'nl';
+
     r.info('sending welcome message', {
       phone: phone_number,
+      language: welcomeLang,
+      language_raw: language ?? null,
       provider: Deno.env.get('WHATSAPP_PROVIDER') ?? 'meta',
-      template: Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_NAME') ?? 'voicelink_welcome',
-      lang: Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_LANG') ?? 'en_US',
     });
 
     const provider = createWhatsAppProvider();
 
     try {
-      await provider.sendWelcome(phone_number);
+      await provider.sendWelcome(phone_number, welcomeLang);
       const meta = (provider as unknown as { lastResult?: Record<string, unknown> }).lastResult;
       const providerClass = (provider as object).constructor?.name ?? 'unknown';
       r.info('welcome message sent successfully', { phone: phone_number, meta, providerClass });
@@ -52,8 +58,7 @@ Deno.serve(async (req) => {
         debug: {
           providerClass,
           provider: Deno.env.get('WHATSAPP_PROVIDER') ?? 'meta',
-          template: Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_NAME') ?? 'voicelink_welcome',
-          lang: Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_LANG') ?? 'en_US',
+          language: welcomeLang,
         },
       });
     } catch (sendErr) {
@@ -70,8 +75,7 @@ Deno.serve(async (req) => {
         debug: {
           phase: 'provider_send',
           provider: Deno.env.get('WHATSAPP_PROVIDER') ?? 'meta',
-          template: Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_NAME') ?? 'voicelink_welcome',
-          lang: Deno.env.get('META_WHATSAPP_WELCOME_TEMPLATE_LANG') ?? 'en_US',
+          language: welcomeLang,
           ...detail,
         },
       });

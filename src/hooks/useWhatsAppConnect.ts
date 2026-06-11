@@ -5,6 +5,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { whatsappService } from '../services/whatsappService';
+import i18n from '../i18n';
 import type { AuthUser } from './useAuth';
 
 export type WhatsAppStatus = 'not_set' | 'pending' | 'active';
@@ -106,7 +107,7 @@ export function useWhatsAppConnect(user: AuthUser | null): WhatsAppConnect {
     try {
       await whatsappService.verifyOtp(user.platform, user.id, otp.trim());
       // Non-blocking welcome message — failures never surface to user
-      whatsappService.sendWelcome(user.platform, user.id, phone.trim()).catch(() => {});
+      whatsappService.sendWelcome(user.platform, user.id, phone.trim(), i18n.language).catch(() => {});
       setSuccess(true);
       setStatus('active');
       setNumber(phone.trim());

@@ -51,14 +51,18 @@ export class MetaWhatsAppProvider implements IWhatsAppProvider {
     log.info('sendOtp completed', { to: normalisePhone(toPhone) });
   }
 
-  async sendWelcome(toPhone: string): Promise<void> {
-    log.info('sendWelcome', { to: normalisePhone(toPhone), template: this.cfg.welcomeTemplateName });
+  async sendWelcome(toPhone: string, language?: string): Promise<void> {
+    // Site locale → Meta template language code; unsupported locales fall
+    // back to the configured default so behaviour matches the Twilio provider.
+    const metaLangs: Record<string, string> = { nl: 'nl', en: 'en_US', fr: 'fr', de: 'de' };
+    const templateLang = (language ? metaLangs[language] : undefined) ?? this.cfg.welcomeTemplateLang;
+    log.info('sendWelcome', { to: normalisePhone(toPhone), template: this.cfg.welcomeTemplateName, lang: templateLang });
     const result = await this.post({
       to: normalisePhone(toPhone),
       type: 'template',
       template: {
         name: this.cfg.welcomeTemplateName,
-        language: { code: this.cfg.welcomeTemplateLang },
+        language: { code: templateLang },
         components: [],
       },
     });
