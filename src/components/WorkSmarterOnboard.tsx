@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Check, Loader2 } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { AuthService } from '../services/authService';
-import { markPendingCheckout } from '../utils/pendingCheckout';
+import { startTeamleaderCheckout } from '../utils/startCheckout';
 import { NoiseOverlay } from './ui/NoiseOverlay';
 
 const QR_REF = 'wms';
@@ -30,24 +29,17 @@ export const WorkSmarterOnboard: React.FC = () => {
   const handleConnect = async () => {
     if (starting) return;
     setStarting(true);
-    // Mirror AuthPage: cache platform before OAuth so AuthCallback resolves the
-    // right table, then stamp the WSM offer as the post-OAuth checkout intent.
-    localStorage.setItem('userPlatform', 'teamleader');
-    localStorage.setItem('auth_provider', 'teamleader');
-    markPendingCheckout({
+    // WSM offer: 60-day Professional trial, no card up front
+    // (collectPaymentMethod: false → checkout uses payment_method_collection
+    // 'if_required'). On success initiateAuth redirects the page away.
+    const result = await startTeamleaderCheckout({
       tierKey: 'professional',
       interval: 'monthly',
       quantity: 1,
       trialDays: 60,
       collectPaymentMethod: false,
     });
-    const result = await AuthService.createTeamleaderAuth().initiateAuth();
-    if (!result.success) {
-      localStorage.removeItem('userPlatform');
-      localStorage.removeItem('auth_provider');
-      setStarting(false);
-    }
-    // On success initiateAuth redirects the page away.
+    if (!result.success) setStarting(false);
   };
 
   return (

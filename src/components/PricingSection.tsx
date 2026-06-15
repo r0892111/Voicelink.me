@@ -13,11 +13,13 @@ import {
   Calendar,
   FileText,
   MoreHorizontal,
+  Loader2,
 } from 'lucide-react';
 import { BillingPeriodSwitch, BillingPeriod } from './BillingPeriodSwitch';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
 import { usePageTransition } from '../hooks/usePageTransition';
+import { startTeamleaderCheckout } from '../utils/startCheckout';
 import {
   plans,
   getPricePerUser,
@@ -89,6 +91,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
   const currentCardIdxRef = useRef(0);
   const isArrowNavRef = useRef(false);
   const arrowNavTimeout = useRef<ReturnType<typeof setTimeout>>();
+  // Which paid plan is mid-OAuth-handoff (disables CTAs + shows a spinner), and
+  // the per-plan error to surface if initiating Teamleader OAuth fails.
+  const [startingKey, setStartingKey] = React.useState<string | null>(null);
+  const [ctaError, setCtaError] = React.useState<{ key: string; msg: string } | null>(null);
 
   const updateUserCount = useCallback((planKey: string, val: number) => {
     const clamped = Math.max(1, Math.min(50, isNaN(val) ? 1 : val));
@@ -128,23 +134,29 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
 
   // Route a plan-card click:
   //  - Free Trial: /signup as before (genuinely free, separate entry).
-  //  - Paid plan: send to the plan-aware /get-started page with the choice in
-  //    the URL (shareable, refresh-safe). That page shows an order summary,
-  //    then stamps pendingCheckout + starts Teamleader OAuth; AuthCallback
-  //    picks up the intent after OAuth and launches Stripe Checkout.
-  const handleCtaClick = (plan: PricingPlan) => {
+  //  - Paid plan: stamp the checkout intent (plan/interval/seats already chosen
+  //    on the card) and start Teamleader OAuth straight away — no intermediate
+  //    order-summary page. AuthCallback picks up the intent after OAuth and
+  //    launches Stripe Checkout.
+  const handleCtaClick = async (plan: PricingPlan) => {
     if (plan.isFreeTrial) {
       navigateWithTransition(withUTM('/signup'));
       return;
     }
+    if (startingKey) return;
 
     const interval: 'monthly' | 'yearly' =
       billingPeriod === 'yearly' ? 'yearly' : 'monthly';
     const quantity = userCounts[plan.key] ?? 1;
 
-    navigateWithTransition(
-      withUTM(`/get-started?plan=${plan.key}&interval=${interval}&seats=${quantity}`),
-    );
+    setStartingKey(plan.key);
+    setCtaError(null);
+    const result = await startTeamleaderCheckout({ tierKey: plan.key, interval, quantity });
+    if (!result.success) {
+      setStartingKey(null);
+      setCtaError({ key: plan.key, msg: result.error ?? t('getStarted.error') });
+    }
+    // On success initiateAuth redirects the page away.
   };
 
   const renderUserControl = (plan: PricingPlan) => {
@@ -330,17 +342,27 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ openContactModal
         {/* CTA — sits high in the card, same Y across all cards */}
         <button
           onClick={() => handleCtaClick(plan)}
-          className={`w-full font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 group mt-2 ${
+          disabled={!!startingKey}
+          className={`w-full font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 group mt-2 disabled:opacity-60 disabled:cursor-not-allowed ${
             plan.highlighted
               ? 'bg-navy text-white hover:bg-navy-hover hover:shadow-xl'
               : 'border-2 border-navy text-navy hover:bg-navy hover:text-white'
           }`}
         >
-          <span>{t(`pricing.cards.${plan.key}.cta`)}</span>
-          {plan.highlighted && (
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          {startingKey === plan.key ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <>
+              <span>{t(`pricing.cards.${plan.key}.cta`)}</span>
+              {plan.highlighted && (
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              )}
+            </>
           )}
         </button>
+        {ctaError?.key === plan.key && (
+          <p className="mt-2 text-xs text-red-600 text-center">{ctaError.msg}</p>
+        )}
 
         {/* Divider under the CTA — Monday-style separation */}
         <div className="border-t border-navy/10 my-5" />

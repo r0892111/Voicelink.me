@@ -34,7 +34,6 @@ import { TestSignup } from './components/TestSignup';
 // /test-dashboard route below redirects to /dashboard so any existing
 // magic-link / onboarding URLs keep working.
 import { GettingStarted } from './components/GettingStarted';
-import { GetStarted } from './components/GetStarted';
 import { InviteAccept } from './components/InviteAccept';
 import { WorkSmarterLanding } from './components/WorkSmarterLanding';
 import { WorkSmarterOnboard } from './components/WorkSmarterOnboard';
@@ -119,7 +118,6 @@ function App() {
   // Check if we're on the landing page (hide navigation)
   const isLandingPage = location.pathname === '/landing' || location.pathname === '/banner';
   const isSignupPage = location.pathname === '/signup';
-  const isGetStartedPage = location.pathname === '/get-started';
   const isSigninPage = location.pathname === '/signin';
   const isInvitePage = location.pathname === '/invite';
   const isTestPage = location.pathname === '/test' || location.pathname === '/test-dashboard';
@@ -140,7 +138,7 @@ function App() {
   };
   
   // Skip loading check for public pages that don't need auth
-  if (loading && !isLandingPage && !isSignupPage && !isGetStartedPage && !isSigninPage && !isInvitePage && !isTestPage && !isAffiliatePage && !isWorksmarterPage && !isPartnerPage) {
+  if (loading && !isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isAffiliatePage && !isWorksmarterPage && !isPartnerPage) {
     return (
       <div className="min-h-screen bg-porcelain flex items-center justify-center">
         <div className="dot-loader" />
@@ -152,10 +150,10 @@ function App() {
     <ConsentProvider>
       <RTLProvider>
         <AnalyticsListener />
-        <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage || isGetStartedPage || isSigninPage ? 'h-screen overflow-hidden' : ''}`}>
+        <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage || isSigninPage ? 'h-screen overflow-hidden' : ''}`}>
           {!isDashboardRoute && <NoiseOverlay />}
           {/* Navigation */}
-          {!isLandingPage && !isSignupPage && !isGetStartedPage && !isSigninPage && !isInvitePage && !isTestPage && !isDashboardRoute && !isWorksmarterPage && !isPartnerPage && (
+          {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isDashboardRoute && !isWorksmarterPage && !isPartnerPage && (
           <nav className="fixed top-0 left-0 right-0 z-[9999] pointer-events-none">
             {/* ── White logo on hero (homepage only, fades out on scroll) — desktop only ── */}
             {isHomepage && (
@@ -463,11 +461,12 @@ function App() {
           )}
 
           {/* Routes */}
-          <div className={isLandingPage || isSignupPage || isGetStartedPage || isSigninPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage || isWorksmarterPage || isPartnerPage ? "" : "pt-20"}>
+          <div className={isLandingPage || isSignupPage || isSigninPage || isInvitePage || isHomepage || isTestPage || isDashboardRoute || isAffiliatePage || isWorksmarterPage || isPartnerPage ? "" : "pt-20"}>
             <Routes>
               <Route path="/" element={<Homepage openContactModal={openContactModal} />} />
               <Route path="/signup" element={<AuthPage />} />
-              <Route path="/get-started" element={<GetStarted />} />
+              {/* /get-started page removed — redirect stale links (ads/QRs/bookmarks) to pricing */}
+              <Route path="/get-started" element={<Navigate to="/#pricing" replace />} />
               <Route path="/signin" element={<AuthPage initialMode="login" />} />
               <Route path="/landing" element={<HeroLanding />} />
               <Route path="/invite" element={<InviteAccept />} />
