@@ -391,6 +391,38 @@ export const AuthCallback: React.FC = () => {
         }
       }
 
+      // Affiliate referral promo: new TL signups via ?ref=<code> get 1 month
+      // free Professional. Scoped to teamleader because get-subscription only
+      // queries teamleader_users for promo bypass. Skip if user already has a
+      // Stripe customer ID (paying customer) or an active promo.
+      if (platform === 'teamleader') {
+        const affiliateRef = getReferralCode();
+        if (affiliateRef) {
+          const { data: tlRow } = await supabase
+            .from('teamleader_users')
+            .select('stripe_customer_id, promo_end_date')
+            .eq('user_id', session.user.id)
+            .maybeSingle();
+          const hasStripe = !!tlRow?.stripe_customer_id;
+          const hasActivePromo = !!tlRow?.promo_end_date && new Date(tlRow.promo_end_date) > new Date();
+          if (!hasStripe && !hasActivePromo) {
+            try {
+              await fetch(
+                `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/provision-promo-subscription`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${session.access_token}`,
+                  },
+                  body: JSON.stringify({ months: 1 }),
+                },
+              );
+            } catch (_) {}
+          }
+        }
+      }
+
       const hasActiveSubscription = await checkSubscriptionStatus();
 
       if (hasActiveSubscription) {

@@ -2,6 +2,8 @@
 // Requires auth (called from AuthCallback after CRM OAuth).
 // Sets promo_end_date on teamleader_users so get-subscription returns
 // status='active', plan='professional_monthly' without touching Stripe.
+// Only extends promo if the computed end date is later than the current one —
+// prevents a shorter promo from overwriting a longer one.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
@@ -39,16 +41,36 @@ Deno.serve(async (req) => {
 
     const body = await req.json().catch(() => ({}));
     const rawMonths = Number((body as Record<string, unknown>).months ?? 2);
-    // Clamp to reasonable range; prevents abuse via crafted requests
     const months = Math.max(1, Math.min(6, Math.floor(rawMonths)));
 
-    r.info('provisioning promo', { user_id: user.id, months });
+    // Compute end date in JS — PostgREST cannot evaluate SQL expressions like
+    // "now() + interval '1 months'" as a column value; it treats them as literal
+    // strings which fail timestamptz casting.
+    const MS_PER_MONTH = 30 * 24 * 60 * 60 * 1000;
+    const newEndDate = new Date(Date.now() + months * MS_PER_MONTH);
+
+    r.info('provisioning promo', { user_id: user.id, months, new_end: newEndDate.toISOString() });
+
+    // Check current promo_end_date — only extend if new end is later (prevents
+    // a 1-month affiliate promo from overwriting a 2-month WorkSmarter promo).
+    const { data: currentRow } = await supabase
+      .from('teamleader_users')
+      .select('promo_end_date')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    const currentEnd = currentRow?.promo_end_date ? new Date(currentRow.promo_end_date) : null;
+
+    if (currentEnd && currentEnd > newEndDate) {
+      r.info('existing promo is longer, skipping', { current_end: currentEnd.toISOString() });
+      r.done(200, { months, skipped: true });
+      return json({ success: true, months, skipped: true });
+    }
 
     const { error: updateError } = await supabase
       .from('teamleader_users')
-      .update({ promo_end_date: `now() + interval '${months} months'` })
-      .eq('user_id', user.id)
-      .or('promo_end_date.is.null,promo_end_date.lt.now()');
+      .update({ promo_end_date: newEndDate.toISOString() })
+      .eq('user_id', user.id);
 
     if (updateError) {
       r.error('update failed', toErrorDetail(updateError));
