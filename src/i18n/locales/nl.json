@@ -1653,6 +1653,7 @@
       "noPlanHint": "Activeer een abonnement om je credit-quota te zien.",
       "metricLastActivity": "Laatste activiteit",
       "teamTitle": "Teamgebruik",
+      "teamPoolLabel": "Gedeeld krediet",
       "teamLoadFailed": "Kon teamgebruik niet laden.",
       "teamEmpty": "Nog geen teamleden.",
       "errorTitle": "Kon gebruik niet laden",

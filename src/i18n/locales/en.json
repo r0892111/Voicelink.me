@@ -1661,6 +1661,7 @@
       "noPlanHint": "Activate a plan to see your credit allowance.",
       "metricLastActivity": "Last activity",
       "teamTitle": "Team usage",
+      "teamPoolLabel": "Shared pool",
       "teamLoadFailed": "Couldn't load team usage right now.",
       "teamEmpty": "No team members yet.",
       "errorTitle": "Couldn't load usage",

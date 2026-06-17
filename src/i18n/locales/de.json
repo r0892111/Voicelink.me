@@ -1607,6 +1607,7 @@
       "noPlanHint": "Aktiviere einen Plan, um dein Credit-Kontingent zu sehen.",
       "metricLastActivity": "Letzte Aktivität",
       "teamTitle": "Team-Nutzung",
+      "teamPoolLabel": "Gemeinsamer Pool",
       "teamLoadFailed": "Team-Nutzung konnte nicht geladen werden.",
       "teamEmpty": "Noch keine Teammitglieder.",
       "errorTitle": "Nutzung konnte nicht geladen werden",

@@ -323,15 +323,37 @@ function TeamPanel({ team }: { team: TeamUsage | null }) {
     );
   }
 
-  const perSeatCap = team.credits_per_seat;
+  const poolTotal = team.credits_total;
+  const teamUsed = team.members.reduce((sum, m) => sum + m.credits_used, 0);
+  const teamPct = pct(teamUsed, poolTotal);
 
   return (
     <section className="bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-6">
       <TeamHeader />
+
+      {!team.is_unlimited && poolTotal !== null && (
+        <div className="mb-5 pb-5 border-b border-navy/[0.06]">
+          <div className="flex items-baseline justify-between mb-2">
+            <p className="text-xs font-semibold text-navy/50 uppercase tracking-wide">
+              {t('dash.usage.teamPoolLabel')}
+            </p>
+            <p className="text-sm font-semibold text-navy tabular-nums">
+              {formatCredits(teamUsed)} / {formatCredits(poolTotal)}
+            </p>
+          </div>
+          <div className="h-2 rounded-full bg-navy/[0.07] overflow-hidden">
+            <div
+              className={`h-full rounded-full ${barColor(teamPct)} transition-[width] duration-500`}
+              style={{ width: `${teamPct}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       <ul className="divide-y divide-navy/[0.06]">
         {team.members.map((m) => {
-          const memberPct = pct(m.credits_used, perSeatCap);
-          const showBar = !m.is_unlimited && perSeatCap !== null;
+          const memberPct = pct(m.credits_used, poolTotal);
+          const showBar = !m.is_unlimited && poolTotal !== null;
           return (
             <li key={m.user_id} className="py-3 first:pt-0 last:pb-0">
               <div className="flex items-baseline justify-between mb-1.5">
@@ -345,10 +367,8 @@ function TeamPanel({ team }: { team: TeamUsage | null }) {
                 </p>
                 <p className="text-sm font-medium text-navy/70 tabular-nums whitespace-nowrap">
                   {formatCredits(m.credits_used)}
-                  {m.is_unlimited ? (
+                  {m.is_unlimited && (
                     <span className="text-navy/40 ml-1">/ ∞</span>
-                  ) : perSeatCap !== null && (
-                    <span className="text-navy/40 ml-1">/ {formatCredits(perSeatCap)}</span>
                   )}
                 </p>
               </div>

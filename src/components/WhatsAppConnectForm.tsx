@@ -2,10 +2,11 @@
 // SRP: pure presentational component for the WhatsApp connection flow.
 // DIP: receives all state + callbacks as props — no service or hook imports.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { MessageCircle, Loader2, AlertCircle, Check, X } from 'lucide-react';
 import { isValidPhone } from '../hooks/useWhatsAppConnect';
 import type { WaStep } from '../hooks/useWhatsAppConnect';
+import { COUNTRY_CODES, DEFAULT_COUNTRY_CODE } from '../lib/countryCodes';
 
 export interface WhatsAppConnectFormProps {
   open: boolean;
@@ -27,7 +28,22 @@ export interface WhatsAppConnectFormProps {
 export const WhatsAppConnectForm: React.FC<WhatsAppConnectFormProps> = ({
   open, step, phone, otp, busy, error, success,
   onPhoneChange, onOtpChange, onSendOtp, onVerifyOtp, onBackToPhone, onResendOtp, onCancel,
-}) => (
+}) => {
+  const [cc, setCc] = useState(DEFAULT_COUNTRY_CODE);
+  const [digits, setDigits] = useState('');
+
+  const handleCcChange = (newCc: string) => {
+    setCc(newCc);
+    onPhoneChange(newCc + digits.replace(/\D/g, ''));
+  };
+
+  const handleDigitsChange = (raw: string) => {
+    const cleaned = raw.replace(/[^\d\s]/g, '');
+    setDigits(cleaned);
+    onPhoneChange(cc + cleaned.replace(/\s/g, ''));
+  };
+
+  return (
   <div
     className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
     style={{ maxHeight: open ? '400px' : '0px' }}
@@ -55,19 +71,27 @@ export const WhatsAppConnectForm: React.FC<WhatsAppConnectFormProps> = ({
             <label className="block text-xs font-semibold text-navy/70 font-general mb-1.5">
               Your WhatsApp number
             </label>
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => onPhoneChange(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && onSendOtp()}
-              placeholder="+32 123 456 789"
-              className={`w-full px-4 py-2.5 rounded-xl border text-sm font-instrument bg-white/80 focus:outline-none focus:ring-2 focus:ring-navy/20 transition-colors ${
-                phone && !isValidPhone(phone) ? 'border-red-300' : 'border-navy/[0.12]'
-              }`}
-            />
-            <p className="text-xs text-navy/40 font-instrument mt-1">
-              Include your country code — e.g. +32 for Belgium.
-            </p>
+            <div className="flex gap-2">
+              <select
+                value={cc}
+                onChange={(e) => handleCcChange(e.target.value)}
+                className="flex-shrink-0 px-3 py-2.5 rounded-xl border border-navy/[0.12] text-sm font-instrument bg-white/80 focus:outline-none focus:ring-2 focus:ring-navy/20 transition-colors text-navy"
+              >
+                {COUNTRY_CODES.map((c) => (
+                  <option key={c.code} value={c.code}>{c.label}</option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                value={digits}
+                onChange={(e) => handleDigitsChange(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && onSendOtp()}
+                placeholder="123 456 789"
+                className={`flex-1 min-w-0 px-4 py-2.5 rounded-xl border text-sm font-instrument bg-white/80 focus:outline-none focus:ring-2 focus:ring-navy/20 transition-colors ${
+                  phone && !isValidPhone(phone) ? 'border-red-300' : 'border-navy/[0.12]'
+                }`}
+              />
+            </div>
           </div>
           <button
             onClick={onSendOtp}
@@ -142,4 +166,5 @@ export const WhatsAppConnectForm: React.FC<WhatsAppConnectFormProps> = ({
 
     </div>
   </div>
-);
+  );
+};

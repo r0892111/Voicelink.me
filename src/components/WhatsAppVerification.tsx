@@ -3,6 +3,7 @@ import { MessageCircle, Check, Loader2, AlertCircle, X, Clock } from 'lucide-rea
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../lib/supabase';
 import { useI18n } from '../hooks/useI18n';
+import { COUNTRY_CODES, DEFAULT_COUNTRY_CODE } from '../lib/countryCodes';
 
 interface WhatsAppStatus {
   whatsapp_number: string | null;
@@ -16,7 +17,8 @@ interface WhatsAppVerificationProps {
 export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({ onStatusChange }) => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const [whatsappInput, setWhatsappInput] = useState('');
+  const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY_CODE);
+  const [whatsappInput, setWhatsappInput] = useState(''); // local digits only
   const [otpCode, setOtpCode] = useState('');
   const [otpStep, setOtpStep] = useState<'input' | 'verify'>('input');
   const [loading, setLoading] = useState(false);
@@ -104,8 +106,10 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
     return phoneRegex.test(phoneNumber.trim());
   };
 
+  const fullPhone = () => countryCode + whatsappInput.replace(/\D/g, '');
+
   const sendOTP = async () => {
-    if (!whatsappInput.trim() || !isValidPhoneNumber(whatsappInput.trim())) {
+    if (!isValidPhoneNumber(fullPhone())) {
       setError(t('validation.enterValidPhoneNumber'));
       return;
     }
@@ -154,7 +158,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
           action: 'send',
           crm_provider: platform,
           crm_user_id: crmUserId.toString(),
-          phone_number: whatsappInput.trim()
+          phone_number: fullPhone()
         })
       });
 
@@ -237,6 +241,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
       // Send welcome message
       await sendWelcomeMessage(platform, crmUserId.toString());
 
+      const verifiedPhone = fullPhone();
       setSuccess(true);
       setOtpStep('input');
       setWhatsappInput('');
@@ -245,7 +250,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
 
       // Update local status to active
       setWhatsappStatus({
-        whatsapp_number: whatsappInput.trim(),
+        whatsapp_number: verifiedPhone,
         whatsapp_status: 'active'
       });
       
@@ -278,7 +283,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
         body: JSON.stringify({
           crm_provider: platform,
           crm_user_id: crmUserId,
-          phone_number: whatsappInput.trim()
+          phone_number: fullPhone()
         })
       });
     } catch (error) {
@@ -474,22 +479,30 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
            <label htmlFor="whatsapp" className="block text-sm font-medium text-gray-700 mb-2">
              {t('whatsapp.whatsappNumber')}
            </label>
-            <input
-              type="tel"
-              id="whatsapp"
-              value={whatsappInput}
-              onChange={(e) => setWhatsappInput(e.target.value)}
-             placeholder="+32 123 456 789"
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                whatsappInput.trim() && !isValidPhoneNumber(whatsappInput.trim())
-                  ? 'border-red-300'
-                  : 'border-gray-300'
-              }`}
-            />
-           <p className="text-xs text-gray-500 mt-1">
-             {t('whatsapp.includeCountryCode')}
-           </p>
-            {whatsappInput.trim() && !isValidPhoneNumber(whatsappInput.trim()) && (
+            <div className="flex gap-2">
+              <select
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+                className="flex-shrink-0 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-sm"
+              >
+                {COUNTRY_CODES.map((c) => (
+                  <option key={c.code} value={c.code}>{c.label}</option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                id="whatsapp"
+                value={whatsappInput}
+                onChange={(e) => setWhatsappInput(e.target.value.replace(/[^\d\s]/g, ''))}
+                placeholder="123 456 789"
+                className={`flex-1 min-w-0 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  whatsappInput && !isValidPhoneNumber(fullPhone())
+                    ? 'border-red-300'
+                    : 'border-gray-300'
+                }`}
+              />
+            </div>
+            {whatsappInput && !isValidPhoneNumber(fullPhone()) && (
              <p className="text-xs text-red-500 mt-1">
                {t('whatsapp.validPhoneRequired')}
              </p>
@@ -498,7 +511,7 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
           
           <button
             onClick={sendOTP}
-            disabled={loading || !whatsappInput.trim() || !isValidPhoneNumber(whatsappInput.trim())}
+            disabled={loading || !whatsappInput.trim() || !isValidPhoneNumber(fullPhone())}
             className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
           >
             {loading ? (

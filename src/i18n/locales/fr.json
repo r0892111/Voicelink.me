@@ -1566,6 +1566,7 @@
       "noPlanHint": "Activez un plan pour voir votre quota de crédits.",
       "metricLastActivity": "Dernière activité",
       "teamTitle": "Utilisation de l'équipe",
+      "teamPoolLabel": "Crédits partagés",
       "teamLoadFailed": "Impossible de charger l'utilisation de l'équipe.",
       "teamEmpty": "Aucun membre d'équipe pour le moment.",
       "errorTitle": "Impossible de charger l'utilisation",
