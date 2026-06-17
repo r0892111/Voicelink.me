@@ -4,6 +4,7 @@ import { whatsappService } from '../services/whatsappService';
 import { AuthService } from '../services/authService';
 import { markTestFlow } from '../utils/testFlow';
 import { MessageCircle, Loader2, Check, AlertCircle, ArrowLeft } from 'lucide-react';
+import { COUNTRY_CODES, DEFAULT_COUNTRY_CODE } from '../lib/countryCodes';
 
 const phoneRegex = /^\+[1-9]\d{6,14}$/;
 const normalizePhone = (v: string) => v.trim().replace(/[\s\-().]/g, '');
@@ -12,6 +13,8 @@ const isValidPhone   = (v: string) => phoneRegex.test(normalizePhone(v));
 type Step = 'phone' | 'otp';
 
 export const TestSignup: React.FC = () => {
+  const [cc,             setCc]            = React.useState(DEFAULT_COUNTRY_CODE);
+  const [digits,         setDigits]        = React.useState('');
   const [phone,          setPhone]         = React.useState('');
   const [otp,            setOtp]           = React.useState('');
   const [step,           setStep]          = React.useState<Step>('phone');
@@ -19,6 +22,18 @@ export const TestSignup: React.FC = () => {
   const [error,          setError]         = React.useState<string | null>(null);
   const [testUserId,     setTestUserId]    = React.useState<string | null>(null);
   const [confirmedPhone, setConfirmedPhone] = React.useState('');
+
+  const handleDigitsChange = (raw: string) => {
+    const cleaned = raw.replace(/[^\d\s]/g, '');
+    setDigits(cleaned);
+    setPhone(cc + cleaned.replace(/\s/g, ''));
+    setError(null);
+  };
+
+  const handleCcChange = (newCc: string) => {
+    setCc(newCc);
+    setPhone(newCc + digits.replace(/\s/g, ''));
+  };
 
   // ── Phone lookup + OTP send ────────────────────────────────────────────────
   const handleSendOtp = async () => {
@@ -137,18 +152,26 @@ export const TestSignup: React.FC = () => {
                   <label className="block text-xs font-semibold text-navy/60 mb-1.5">
                     WhatsApp number
                   </label>
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => { setPhone(e.target.value); setError(null); }}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSendOtp()}
-                    placeholder="+32 456 789 123"
-                    className="w-full px-4 py-3 rounded-xl border border-navy/[0.12] text-sm bg-white focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy/30 transition-all"
-                    autoFocus
-                  />
-                  <p className="text-xs text-navy/35 mt-1.5">
-                    Include your country code — e.g. +32 for Belgium.
-                  </p>
+                  <div className="flex gap-2">
+                    <select
+                      value={cc}
+                      onChange={(e) => handleCcChange(e.target.value)}
+                      className="flex-shrink-0 px-3 py-3 rounded-xl border border-navy/[0.12] text-sm bg-white focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy/30 transition-all"
+                    >
+                      {COUNTRY_CODES.map((c) => (
+                        <option key={c.code} value={c.code}>{c.label}</option>
+                      ))}
+                    </select>
+                    <input
+                      type="tel"
+                      value={digits}
+                      onChange={(e) => handleDigitsChange(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSendOtp()}
+                      placeholder="123 456 789"
+                      className="flex-1 min-w-0 px-4 py-3 rounded-xl border border-navy/[0.12] text-sm bg-white focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy/30 transition-all"
+                      autoFocus
+                    />
+                  </div>
                 </div>
 
                 <button
