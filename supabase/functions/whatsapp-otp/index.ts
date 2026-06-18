@@ -11,7 +11,7 @@ import { createLogger, toErrorDetail } from '../_shared/logger.ts';
 
 const log = createLogger('whatsapp-otp');
 
-const VALID_PROVIDERS: CrmProvider[] = ['teamleader', 'pipedrive', 'odoo', 'test'];
+const VALID_PROVIDERS: CrmProvider[] = ['teamleader', 'pipedrive', 'odoo', 'hubspot', 'test'];
 
 function ok(data: Record<string, unknown>) {
   return new Response(JSON.stringify({ success: true, ...data }), {
