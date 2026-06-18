@@ -15,6 +15,17 @@ import { createLogger, toErrorDetail, RequestLogger } from '../_shared/logger.ts
 
 const log = createLogger('stripe-webhook');
 
+// Resolve which CRM table a user lives in (teamleader/pipedrive/hubspot) via the
+// crm_users view. The webhook has no JWT/user_metadata, so it looks up by user id.
+async function crmTableForUser(supabase: SupabaseClient, userId: string): Promise<string> {
+  const { data } = await supabase
+    .from('crm_users')
+    .select('provider')
+    .eq('user_id', userId)
+    .maybeSingle();
+  return `${(data?.provider as string) ?? 'teamleader'}_users`;
+}
+
 function epochToIso(epoch: number | null | undefined): string | null {
   if (!epoch) return null;
   return new Date(epoch * 1000).toISOString();
@@ -56,8 +67,9 @@ async function handleCheckoutCompleted(
   });
 
   if (userId && customerId) {
+    const table = await crmTableForUser(supabase, userId);
     const { error } = await supabase
-      .from('teamleader_users')
+      .from(table)
       .update({ stripe_customer_id: customerId })
       .eq('user_id', userId);
 
@@ -99,17 +111,18 @@ async function handleCreditPackPurchase(
     expand: ['data.price'],
   });
 
-  // Best-effort: resolve the buyer's teamleader_id; null is acceptable since
-  // the credit grant attaches to customer_id either way.
+  // Best-effort: resolve the buyer's CRM user id (any provider) for the
+  // credit_topups.teamleader_id column; null is acceptable since the grant
+  // attaches to customer_id either way.
   let teamleaderId: string | null = null;
   if (session.client_reference_id) {
-    const { data: tlRow } = await supabase
-      .from('teamleader_users')
-      .select('teamleader_id')
+    const { data: crmRow } = await supabase
+      .from('crm_users')
+      .select('crm_user_id')
       .eq('user_id', session.client_reference_id)
       .is('deleted_at', null)
       .maybeSingle();
-    teamleaderId = (tlRow?.teamleader_id as string | undefined) ?? null;
+    teamleaderId = (crmRow?.crm_user_id as string | undefined) ?? null;
   }
 
   const paymentId =
