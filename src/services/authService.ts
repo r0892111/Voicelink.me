@@ -17,6 +17,10 @@ export class AuthService {
     return new AuthService('odoo');
   }
 
+  static createHubspotAuth(): AuthService {
+    return new AuthService('hubspot');
+  }
+
   constructor(private provider: string) {}
 
   async initiateAuth(): Promise<AuthResult> {
@@ -28,6 +32,8 @@ export class AuthService {
           return this.initiatePipedriveAuth();
         case 'odoo':
           return this.initiateOdooAuth();
+        case 'hubspot':
+          return this.initiateHubspotAuth();
         default:
           return { success: false, error: 'Unknown provider' };
       }
@@ -131,6 +137,33 @@ export class AuthService {
     const authUrl = `${odooAuthUrl}/oauth2/auth?${params.toString()}`;
 
     window.location.href = authUrl;
+    return { success: true };
+  }
+
+  private async initiateHubspotAuth(): Promise<AuthResult> {
+    const clientId = import.meta.env.VITE_HUBSPOT_CLIENT_ID;
+    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/hubspot/callback`;
+
+    if (!clientId) {
+      return { success: false, error: 'HubSpot client ID not configured' };
+    }
+
+    const state = this.generateState();
+    localStorage.setItem('hubspot_oauth_state', state);
+    localStorage.setItem('auth_provider', 'hubspot');
+
+    // HubSpot requires the scope set in the authorize URL (space-delimited) and it
+    // must be a subset of the app's configured scopes. Connection/auth + contacts.
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      scope: 'oauth crm.objects.contacts.read crm.objects.contacts.write',
+      state,
+    });
+
+    const authUrl = `https://app.hubspot.com/oauth/authorize?${params.toString()}`;
+    window.location.href = authUrl;
+
     return { success: true };
   }
 

@@ -180,7 +180,8 @@
       "signupSubtitle": "1-Month Free Trial. Connect your CRM to get started.",
       "continueTeamleader": "Continue with Teamleader",
       "continuePipedrive": "Continue with Pipedrive",
-      "continueOdoo": "Continue with Odoo"
+      "continueOdoo": "Continue with Odoo",
+      "continueHubspot": "Continue with HubSpot"
     },
     "passiveTermsConsent": "By signing up, you agree to our",
     "callback": {

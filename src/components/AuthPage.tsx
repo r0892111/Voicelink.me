@@ -69,6 +69,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
       switch (provider.name) {
         case 'teamleader': authService = AuthService.createTeamleaderAuth(); break;
         case 'pipedrive': authService = AuthService.createPipedriveAuth(); break;
+        case 'hubspot': authService = AuthService.createHubspotAuth(); break;
         default: console.error('Unknown provider:', provider.name); return;
       }
 
@@ -206,6 +207,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
       case 'teamleader': return '/Teamleader_Icon.svg';
       case 'pipedrive': return '/Pipedrive_id-7ejZnwv_0.svg';
       case 'odoo': return '/odoo_logo.svg';
+      case 'hubspot': return '/hubspot.svg';
       default: return null;
     }
   };
@@ -446,6 +448,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
                         {provider.name === 'teamleader' && t('auth.page.continueTeamleader')}
                         {provider.name === 'pipedrive' && t('auth.page.continuePipedrive')}
                         {provider.name === 'odoo' && t('auth.page.continueOdoo')}
+                        {provider.name === 'hubspot' && t('auth.page.continueHubspot')}
                       </div>
                       <div className="text-xs sm:text-sm font-instrument text-muted-blue mt-0.5">
                         {isDisabled ? t('auth.temporarilyUnavailable') : (provider.name === 'odoo' ? t('auth.forOdooAccountsOnly') : t('auth.modal.startTrialInstantly'))}

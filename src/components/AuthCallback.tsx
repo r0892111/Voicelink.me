@@ -429,11 +429,9 @@ export const AuthCallback: React.FC = () => {
         // User has active subscription, check if trial event already tracked
         const provider = localStorage.getItem('auth_provider') || localStorage.getItem('userPlatform');
 
-        // Get table name based on provider
-        const tableName = provider === 'teamleader' ? 'teamleader_users'
-                       : provider === 'pipedrive' ? 'pipedrive_users'
-                       : provider === 'odoo' ? 'odoo_users'
-                       : null;
+        // trial_started_tracked is a Teamleader-only analytics column; the other
+        // CRM tables don't have it, so this one-time-event check is scoped to TL.
+        const tableName = provider === 'teamleader' ? 'teamleader_users' : null;
 
         if (tableName) {
           // Check if trial_started_tracked is false

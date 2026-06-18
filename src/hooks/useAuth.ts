@@ -5,7 +5,7 @@ export interface AuthUser {
   id: string;
   email: string;
   name: string;
-  platform: 'teamleader' | 'pipedrive' | 'odoo';
+  platform: 'teamleader' | 'pipedrive' | 'odoo' | 'hubspot';
   user_info: any;
 }
 
@@ -40,7 +40,7 @@ export const useAuth = () => {
       }
 
       const platform = (localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider') || 'teamleader') as AuthUser['platform'];
-      if (['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
+      if (['teamleader', 'pipedrive', 'odoo', 'hubspot'].includes(platform)) {
         setUserPlatformStorage(platform);
       }
 
@@ -49,8 +49,8 @@ export const useAuth = () => {
 
       // If the stored name looks like a placeholder (e.g. "teamleader_undefined"),
       // fall back to querying the platform-specific table for the real name.
-      const nameIsCorrupt = !name || name.includes('undefined') || /^(teamleader|pipedrive|odoo)_/.test(name);
-      if (nameIsCorrupt && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
+      const nameIsCorrupt = !name || name.includes('undefined') || /^(teamleader|pipedrive|odoo|hubspot)_/.test(name);
+      if (nameIsCorrupt && ['teamleader', 'pipedrive', 'odoo', 'hubspot'].includes(platform)) {
         try {
           const { data: platformRow } = await supabase
             .from(`${platform}_users`)
@@ -73,7 +73,7 @@ export const useAuth = () => {
         // The stored email may also be a placeholder (teamleader_undefined@placeholder.local)
         // — fall back to a generic label rather than propagate the bad string.
         const emailPrefix = session.user.email?.split('@')[0] || '';
-        const emailIsBad = !emailPrefix || emailPrefix.includes('undefined') || /^(teamleader|pipedrive|odoo)_/.test(emailPrefix);
+        const emailIsBad = !emailPrefix || emailPrefix.includes('undefined') || /^(teamleader|pipedrive|odoo|hubspot)_/.test(emailPrefix);
         name = emailIsBad ? 'there' : emailPrefix;
       }
 
@@ -81,7 +81,7 @@ export const useAuth = () => {
         id: session.user.id,
         email: session.user.email || '',
         name,
-        platform: ['teamleader', 'pipedrive', 'odoo'].includes(platform) ? platform : 'teamleader',
+        platform: ['teamleader', 'pipedrive', 'odoo', 'hubspot'].includes(platform) ? platform : 'teamleader',
         user_info: metadata,
       });
     } catch (error) {
@@ -115,6 +115,7 @@ export const useAuth = () => {
     localStorage.removeItem('teamleader_oauth_state');
     localStorage.removeItem('pipedrive_oauth_state');
     localStorage.removeItem('odoo_oauth_state');
+    localStorage.removeItem('hubspot_oauth_state');
 
     // Must await so Supabase clears its own localStorage before the page reloads,
     // otherwise checkAuth() finds the old session on the next render.
