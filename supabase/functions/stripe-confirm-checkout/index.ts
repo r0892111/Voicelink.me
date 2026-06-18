@@ -81,24 +81,40 @@ Deno.serve(async (req) => {
       return json({ success: false, error: 'No customer on session' }, 400);
     }
 
+    // Resolve which CRM table this user lives in (teamleader/pipedrive/hubspot).
+    // user_metadata.provider is set by every *-auth function; fall back to crm_users.
+    const metaProvider = user.user_metadata?.provider as string | undefined;
+    let provider = ['teamleader', 'pipedrive', 'hubspot'].includes(metaProvider ?? '')
+      ? metaProvider!
+      : null;
+    if (!provider) {
+      const { data: crmRow } = await supabase
+        .from('crm_users')
+        .select('provider')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      provider = (crmRow?.provider as string) ?? 'teamleader';
+    }
+    const table = `${provider}_users`;
+
     // Save customer ID — idempotent, safe to call multiple times
-    r.info('saving stripe_customer_id', { user_id: user.id, customer_id: customerId });
+    r.info('saving stripe_customer_id', { user_id: user.id, customer_id: customerId, provider });
     const { data: updated, error: dbError } = await supabase
-      .from('teamleader_users')
+      .from(table)
       .update({ stripe_customer_id: customerId })
       .eq('user_id', user.id)
       .select('user_id');
 
     if (dbError) {
-      r.error('db update failed', { error: dbError.message, code: dbError.code });
+      r.error('db update failed', { error: dbError.message, code: dbError.code, table });
       r.done(500);
       return json({ success: false, error: dbError.message }, 500);
     }
 
     if (!updated || updated.length === 0) {
-      r.error('no teamleader_users row found', { user_id: user.id });
+      r.error('no CRM user row found', { user_id: user.id, table });
       r.done(404);
-      return json({ success: false, error: 'User row not found in teamleader_users' }, 404);
+      return json({ success: false, error: `User row not found in ${table}` }, 404);
     }
 
     r.info('stripe_customer_id saved successfully', { user_id: user.id, customer_id: customerId });

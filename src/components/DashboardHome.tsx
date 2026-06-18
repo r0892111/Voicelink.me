@@ -33,6 +33,13 @@ export function DashboardHome() {
   const platformLabel = t(`dash.platforms.${user.platform}`, {
     defaultValue: t('dash.platforms.fallback'),
   });
+  const platformLogo: Record<string, string> = {
+    teamleader: '/Teamleader_Icon.svg',
+    pipedrive: '/Pipedrive_id-7ejZnwv_0.svg',
+    odoo: '/odoo_logo.svg',
+    hubspot: '/hubspot.svg',
+  };
+  const crmLogo = platformLogo[user.platform];
   const firstName = user.name?.split(' ')[0] || t('dash.home.greetingFallback');
 
   const subStatus = subscription.info?.subscription_status;
@@ -134,10 +141,12 @@ export function DashboardHome() {
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.42s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-emerald-500" />
+              <div className="w-9 h-9 rounded-xl bg-white border border-navy/[0.07] flex items-center justify-center overflow-hidden">
+                {crmLogo
+                  ? <img src={crmLogo} alt={platformLabel} className="w-5 h-5 object-contain" />
+                  : <CheckCircle className="w-5 h-5 text-emerald-500" />}
               </div>
-              <span className="font-general font-semibold text-navy text-sm">{t('dash.home.crmCardTitle')}</span>
+              <span className="font-general font-semibold text-navy text-sm">{platformLabel}</span>
             </div>
             <p className="text-xs text-navy/50">{t('dash.home.crmCardNote', { platform: platformLabel })}</p>
             <div className="mt-3 flex items-center space-x-1.5">

@@ -38,8 +38,10 @@ Deno.serve(async (req) => {
     r.info('authenticated', { user_id: user.id, email: user.email });
 
     r.info('looking up stripe_customer_id');
+    // crm_users unions teamleader/pipedrive/hubspot — resolves the caller's row
+    // regardless of which CRM they connected.
     const { data: row } = await supabase
-      .from('teamleader_users')
+      .from('crm_users')
       .select('stripe_customer_id, is_admin, admin_user_id, promo_end_date')
       .eq('user_id', user.id)
       .is('deleted_at', null)
@@ -75,7 +77,7 @@ Deno.serve(async (req) => {
     if (row && !row.is_admin && row.admin_user_id) {
       r.info('caller is member, resolving admin subscription', { admin_user_id: row.admin_user_id });
       const { data: adminRow } = await supabase
-        .from('teamleader_users')
+        .from('crm_users')
         .select('stripe_customer_id')
         .eq('user_id', row.admin_user_id)
         .is('deleted_at', null)

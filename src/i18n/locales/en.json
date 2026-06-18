@@ -72,6 +72,7 @@
     "teamleader": "TeamLeader",
     "pipedrive": "Pipedrive",
     "odoo": "Odoo",
+    "hubspot": "HubSpot",
     "unknown": "Unknown"
   },
   "validation": {
@@ -1521,6 +1522,7 @@
       "teamleader": "Teamleader",
       "pipedrive": "Pipedrive",
       "odoo": "Odoo",
+      "hubspot": "HubSpot",
       "fallback": "your CRM"
     },
     "home": {
