@@ -51,10 +51,25 @@ Deno.serve(async (req) => {
 
     r.info('provisioning promo', { user_id: user.id, months, new_end: newEndDate.toISOString() });
 
+    // Resolve which CRM table this user lives in (teamleader/pipedrive/hubspot).
+    const metaProvider = user.user_metadata?.provider as string | undefined;
+    let provider = ['teamleader', 'pipedrive', 'hubspot'].includes(metaProvider ?? '')
+      ? metaProvider!
+      : null;
+    if (!provider) {
+      const { data: pRow } = await supabase
+        .from('crm_users')
+        .select('provider')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      provider = (pRow?.provider as string) ?? 'teamleader';
+    }
+    const table = `${provider}_users`;
+
     // Check current promo_end_date — only extend if new end is later (prevents
     // a 1-month affiliate promo from overwriting a 2-month WorkSmarter promo).
     const { data: currentRow } = await supabase
-      .from('teamleader_users')
+      .from(table)
       .select('promo_end_date')
       .eq('user_id', user.id)
       .maybeSingle();
@@ -68,7 +83,7 @@ Deno.serve(async (req) => {
     }
 
     const { error: updateError } = await supabase
-      .from('teamleader_users')
+      .from(table)
       .update({ promo_end_date: newEndDate.toISOString() })
       .eq('user_id', user.id);
 

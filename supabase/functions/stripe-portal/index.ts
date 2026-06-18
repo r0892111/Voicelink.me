@@ -38,25 +38,27 @@ Deno.serve(async (req) => {
     r.info('authenticated', { user_id: user.id, email: user.email });
 
     r.info('looking up stripe_customer_id');
-    const { data: tlUser, error: dbError } = await supabase
-      .from('teamleader_users')
+    // crm_users unions teamleader/pipedrive/hubspot — resolves the caller's row
+    // regardless of which CRM they connected.
+    const { data: crmRow, error: dbError } = await supabase
+      .from('crm_users')
       .select('stripe_customer_id')
       .eq('user_id', user.id)
       .maybeSingle();
 
-    if (dbError || !tlUser?.stripe_customer_id) {
+    if (dbError || !crmRow?.stripe_customer_id) {
       r.warn('no stripe customer found', { user_id: user.id, db_error: dbError?.message });
       r.done(400);
       return json({ error: 'No Stripe customer found' }, 400);
     }
 
-    r.info('creating billing portal session', { customer_id: tlUser.stripe_customer_id });
+    r.info('creating billing portal session', { customer_id: crmRow.stripe_customer_id });
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
 
     const { return_url } = await req.json().catch(() => ({}));
 
     const session = await stripe.billingPortal.sessions.create({
-      customer:   tlUser.stripe_customer_id,
+      customer:   crmRow.stripe_customer_id,
       return_url: return_url ?? `${Deno.env.get('SITE_URL') ?? ''}/dashboard`,
     });
 
