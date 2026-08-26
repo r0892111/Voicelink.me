@@ -46,7 +46,25 @@ async function handleCheckoutCompleted(
   session: Stripe.Checkout.Session,
 ) {
   const userId     = session.client_reference_id;
-  const customerId = session.customer as string | null;
+  let customerId   = session.customer as string | null;
+
+  // Payment-mode sessions created before 2026-08-26 carried no customer
+  // (stripe-checkout now passes one). Attribute the purchase to the customer
+  // the credit gate reads for this user so the pack is never silently lost.
+  if (!customerId && userId && session.mode === 'payment') {
+    const { data: tlRow, error: tlErr } = await supabase
+      .from('teamleader_users')
+      .select('stripe_customer_id')
+      .eq('user_id', userId)
+      .is('deleted_at', null)
+      .maybeSingle();
+    if (tlErr) r.warn('customer fallback lookup failed', { error: tlErr.message });
+    customerId = (tlRow?.stripe_customer_id as string | undefined) ?? null;
+    r.info('payment session without customer — resolved via client_reference_id', {
+      user_id: userId,
+      customer_id: customerId,
+    });
+  }
 
   r.info('processing checkout.session.completed', {
     session_id: session.id,

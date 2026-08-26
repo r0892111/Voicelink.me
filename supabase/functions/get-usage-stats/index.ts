@@ -1,11 +1,12 @@
 // ── get-usage-stats ───────────────────────────────────────────────────────────
-// Default: cumulative usage for the authenticated user (credits + messages).
-// ?scope=team (admin only): per-member breakdown for the admin's workspace.
+// Default: usage in the current billing window for the authenticated user
+// (credits + messages). ?scope=team (admin only): per-member breakdown.
 //
-// Credits are the user-facing unit. 1 credit = 300 input tokens — calibrated so
-// observed usage (~2.4k input tokens/message) lands credit consumption inside the
-// per-plan message ranges shown on the pricing page (~8 credits/message). Must stay
-// in sync with the analytics.credits_used generated column (VLAgent migration 015).
+// Credits are computed by VLAgent at write time (cost-based, cache-aware —
+// core/usage_metering.py) and stored per interaction in usage_events; this
+// function only SUMS them via the usage_summary RPC (VLAgent migration 023)
+// over the same window the credit gate uses, so the dashboard can never show
+// a different number than enforcement charges. No token→credit math here.
 // Cap is derived from the active Stripe subscription:
 //   is_test_user          → unlimited (no cap)
 //   trialing OR free price → TRIAL_CREDITS (100)
@@ -17,7 +18,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 
-const TOKENS_PER_CREDIT = 300;
 const TRIAL_CREDITS = 100;
 
 // Mirror of src/config/teamPricing.ts — kept in sync manually.
@@ -32,12 +32,12 @@ const TIER_CREDITS_BY_PRICE_ID: Record<string, number> = {
   'price_1TOZ26LPohnizGblh8BYsGWM': 2000,   // Business yearly
 };
 
-interface AnalyticsRow {
-  user_id: string;
-  messages_sent: number | null;
-  input_tokens_spent: number | null;
+// One row per tenant from usage_summary(p_tenant_ids, p_since).
+interface UsageSummaryRow {
+  tenant_id: string;
+  credits: number | string | null;   // NUMERIC arrives as a string over PostgREST
+  messages: number | string | null;
   last_activity: string | null;
-  environment: string | null;
 }
 
 function json(data: Record<string, unknown>, status = 200): Response {
@@ -45,10 +45,6 @@ function json(data: Record<string, unknown>, status = 200): Response {
     status,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
-}
-
-function tokensToCredits(tokens: number): number {
-  return tokens / TOKENS_PER_CREDIT;
 }
 
 interface MemberInfo {
@@ -68,27 +64,45 @@ function nameFromUserInfo(info: Record<string, unknown> | null): string {
   return joined || (info.email as string) || 'Member';
 }
 
-interface AggregatedUsage {
+interface UsageTotals {
+  credits_used: number;
   messages_sent: number;
-  input_tokens_spent: number;
   last_activity: string | null;
 }
 
-function aggregate(rows: AnalyticsRow[]): AggregatedUsage {
-  let lastMs = 0;
-  return rows.reduce<AggregatedUsage>(
-    (acc, r) => {
-      acc.messages_sent += Number(r.messages_sent ?? 0);
-      acc.input_tokens_spent += Number(r.input_tokens_spent ?? 0);
-      const ts = r.last_activity ? Date.parse(r.last_activity) : 0;
-      if (ts && ts > lastMs) {
-        lastMs = ts;
-        acc.last_activity = r.last_activity;
-      }
-      return acc;
-    },
-    { messages_sent: 0, input_tokens_spent: 0, last_activity: null },
-  );
+const EMPTY_USAGE: UsageTotals = { credits_used: 0, messages_sent: 0, last_activity: null };
+
+// Sum usage_events per tenant since `sinceIso` (the billing-window start —
+// identical to credit_check._window_start on the VLAgent side).
+async function fetchUsage(
+  supabaseAdmin: ReturnType<typeof createClient>,
+  tenantIds: string[],
+  sinceIso: string,
+): Promise<Map<string, UsageTotals>> {
+  const out = new Map<string, UsageTotals>();
+  if (tenantIds.length === 0) return out;
+  // The admin client is built without generated Database types, so
+  // supabase-js types .rpc() arguments as `never`; declare the one call shape
+  // we use instead of casting to any.
+  const rpcClient = supabaseAdmin as unknown as {
+    rpc(
+      fn: 'usage_summary',
+      args: { p_tenant_ids: string[]; p_since: string },
+    ): Promise<{ data: unknown; error: { message: string } | null }>;
+  };
+  const { data, error } = await rpcClient.rpc('usage_summary', {
+    p_tenant_ids: tenantIds,
+    p_since: sinceIso,
+  });
+  if (error) throw new Error(`usage_summary failed: ${error.message}`);
+  for (const r of (data ?? []) as UsageSummaryRow[]) {
+    out.set(r.tenant_id, {
+      credits_used: Number(r.credits ?? 0),
+      messages_sent: Number(r.messages ?? 0),
+      last_activity: r.last_activity,
+    });
+  }
+  return out;
 }
 
 interface CreditsContext {
@@ -98,6 +112,7 @@ interface CreditsContext {
   seats: number;
   isTrial: boolean;
   isUnlimited: boolean;
+  windowStartIso: string;        // usage + top-ups are summed from here
 }
 
 // Mirror of credit_check._window_start: trial spans the lifetime of the
@@ -133,7 +148,7 @@ async function resolveCredits(
 
   // Test users always run uncapped — no Stripe lookup needed.
   if (row?.is_test_user) {
-    return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: true };
+    return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: true, windowStartIso: EPOCH_ZERO };
   }
 
   let stripeCustomerId: string | null = row?.stripe_customer_id ?? null;
@@ -145,13 +160,13 @@ async function resolveCredits(
       .is('deleted_at', null)
       .maybeSingle();
     if (adminRow?.is_test_user) {
-      return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: true };
+      return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: true, windowStartIso: EPOCH_ZERO };
     }
     stripeCustomerId = adminRow?.stripe_customer_id ?? null;
   }
 
   if (!stripeCustomerId) {
-    return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: false };
+    return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: false, windowStartIso: EPOCH_ZERO };
   }
 
   const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
@@ -165,7 +180,7 @@ async function resolveCredits(
     subs.data.find((s) => s.status === 'active' || s.status === 'trialing') ??
     subs.data[0];
 
-  if (!sub) return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: false };
+  if (!sub) return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: false, windowStartIso: EPOCH_ZERO };
 
   const item = sub.items.data[0];
   const price = item?.price;
@@ -184,18 +199,19 @@ async function resolveCredits(
       seats: 1,
       isTrial: true,
       isUnlimited: false,
+      windowStartIso: EPOCH_ZERO,
     };
   }
 
   const priceId = price?.id ?? '';
   const perSeat = TIER_CREDITS_BY_PRICE_ID[priceId] ?? null;
-  if (perSeat === null) {
-    return { perSeat: null, total: null, topupCredits: 0, seats, isTrial: false, isUnlimited: false };
-  }
-
-  // Paid plan top-ups expire with the billing period — only sum since
+  // Paid plan usage + top-ups reset with the billing period — sum since
   // current_period_start, matching credit_check.py for the gate.
   const periodStartIso = new Date((sub.current_period_start ?? 0) * 1000).toISOString();
+  if (perSeat === null) {
+    return { perSeat: null, total: null, topupCredits: 0, seats, isTrial: false, isUnlimited: false, windowStartIso: periodStartIso };
+  }
+
   const topupCredits = await sumPaidTopups(supabaseAdmin, stripeCustomerId, periodStartIso);
   return {
     perSeat,
@@ -204,6 +220,7 @@ async function resolveCredits(
     seats,
     isTrial: false,
     isUnlimited: false,
+    windowStartIso: periodStartIso,
   };
 }
 
@@ -255,36 +272,20 @@ async function handleSelfScope(
   if (tlError) return json({ success: false, error: tlError.message }, 500);
   if (!tl?.teamleader_id) return json({ success: true, usage: null });
 
-  const { data: rows, error: analyticsError } = await supabase
-    .from('analytics')
-    .select('user_id, messages_sent, input_tokens_spent, last_activity, environment')
-    .eq('user_id', tl.teamleader_id);
-
-  if (analyticsError) return json({ success: false, error: analyticsError.message }, 500);
-
   const credits = await resolveCredits(supabase, userId);
 
-  if (!rows || rows.length === 0) {
-    return json({
-      success: true,
-      usage: {
-        credits_used: 0,
-        credits_total: credits.total,
-        topup_credits: credits.topupCredits,
-        messages_sent: 0,
-        last_activity: null,
-        is_trial: credits.isTrial,
-        is_unlimited: credits.isUnlimited,
-      },
-    });
+  const tenantId = tl.teamleader_id as string;
+  let totals: UsageTotals;
+  try {
+    totals = (await fetchUsage(supabase, [tenantId], credits.windowStartIso)).get(tenantId) ?? EMPTY_USAGE;
+  } catch (err) {
+    return json({ success: false, error: err instanceof Error ? err.message : 'usage lookup failed' }, 500);
   }
-
-  const totals = aggregate(rows as AnalyticsRow[]);
 
   return json({
     success: true,
     usage: {
-      credits_used: tokensToCredits(totals.input_tokens_spent),
+      credits_used: totals.credits_used,
       credits_total: credits.total,
       topup_credits: credits.topupCredits,
       messages_sent: totals.messages_sent,
@@ -332,27 +333,21 @@ async function handleTeamScope(
     .map((m) => m.teamleader_id)
     .filter((id): id is string => !!id);
 
-  let analyticsRows: AnalyticsRow[] = [];
-  if (teamleaderIds.length > 0) {
-    const { data: rows, error: analyticsErr } = await supabase
-      .from('analytics')
-      .select('user_id, messages_sent, input_tokens_spent, last_activity, environment')
-      .in('user_id', teamleaderIds);
-    if (analyticsErr) return json({ success: false, error: analyticsErr.message }, 500);
-    analyticsRows = (rows ?? []) as AnalyticsRow[];
-  }
-
   const credits = await resolveCredits(supabase, callerUserId);
 
+  let usageByTenant: Map<string, UsageTotals>;
+  try {
+    usageByTenant = await fetchUsage(supabase, teamleaderIds, credits.windowStartIso);
+  } catch (err) {
+    return json({ success: false, error: err instanceof Error ? err.message : 'usage lookup failed' }, 500);
+  }
+
   const memberUsage = members.map((m) => {
-    const ownRows = m.teamleader_id
-      ? analyticsRows.filter((r) => r.user_id === m.teamleader_id)
-      : [];
-    const totals = aggregate(ownRows);
+    const totals = (m.teamleader_id ? usageByTenant.get(m.teamleader_id) : undefined) ?? EMPTY_USAGE;
     return {
       user_id: m.user_id,
       name: m.name,
-      credits_used: tokensToCredits(totals.input_tokens_spent),
+      credits_used: totals.credits_used,
       messages_sent: totals.messages_sent,
       last_activity: totals.last_activity,
       is_unlimited: m.isTestUser,

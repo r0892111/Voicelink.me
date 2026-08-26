@@ -63,6 +63,27 @@ Deno.serve(async (req) => {
     const checkoutMode: 'subscription' | 'payment' =
       mode === 'payment' ? 'payment' : 'subscription';
 
+    // Credit packs (mode='payment') must land on the Stripe customer the
+    // credit gate reads (teamleader_users.stripe_customer_id): the webhook
+    // keys credit_topups on session.customer, and a payment-mode session has
+    // NO customer unless we pass one — every pack bought before 2026-08-26
+    // was paid but never credited. Reuse the user's customer when known,
+    // else make Stripe create one. Subscription mode keeps creating its own
+    // customer (unchanged): one customer per subscription is what
+    // get_active_for_customer assumes.
+    let existingCustomerId: string | null = null;
+    if (checkoutMode === 'payment') {
+      const { data: tlRow, error: tlErr } = await supabase
+        .from('teamleader_users')
+        .select('stripe_customer_id')
+        .eq('user_id', user.id)
+        .is('deleted_at', null)
+        .maybeSingle();
+      if (tlErr) r.warn('stripe_customer_id lookup failed (will let Stripe create one)', { error: tlErr.message });
+      existingCustomerId = (tlRow?.stripe_customer_id as string | undefined) ?? null;
+      r.info('credit pack checkout customer', { existing_customer: existingCustomerId });
+    }
+
     const baseParams = {
       mode:                 checkoutMode,
       payment_method_types: ['card'] as ['card'],
@@ -89,7 +110,12 @@ Deno.serve(async (req) => {
             // they auto-bill when the trial ends.
             ...(payment_method_collection === 'if_required' ? { payment_method_collection: 'if_required' as const } : {}),
           }
-        : baseParams,
+        : {
+            ...baseParams,
+            ...(existingCustomerId
+              ? { customer: existingCustomerId }
+              : { customer_creation: 'always' as const }),
+          },
     );
 
     r.info('checkout session created', { session_id: session.id, url_present: !!session.url });
