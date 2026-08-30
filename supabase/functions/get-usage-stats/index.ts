@@ -18,7 +18,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 
-const TRIAL_CREDITS = 350;
+const TRIAL_CREDITS = 150;
 
 // Mirror of src/config/teamPricing.ts — kept in sync manually.
 // Edge functions can't import from src/, so the price-id → credits mapping
