@@ -1,6 +1,6 @@
 // ── Domain types ────────────────────────────────────────────────────────────
 
-export type CrmProvider = 'teamleader' | 'pipedrive' | 'odoo' | 'test';
+export type CrmProvider = 'teamleader' | 'pipedrive' | 'odoo' | 'catermonkey_mcp' | 'test';
 
 export interface OtpRecord {
   code: string;

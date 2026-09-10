@@ -62,6 +62,25 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
       setError(null);
       if (globalAuthMode === 'signup') trackSignupStart();
 
+      if (provider.name === 'catermonkey') {
+        // No client-side authorize URL to build: VoiceLink's backend owns the
+        // MCP OAuth flow (discovery, PKCE, dynamic client registration) and
+        // redirects back to /auth/catermonkey_mcp/callback?handoff=… on this
+        // origin. The platform key everywhere else is 'catermonkey_mcp'.
+        const vlagentBase = (import.meta.env.VITE_VLAGENT_URL || '').replace(/\/$/, '');
+        if (!vlagentBase) {
+          // No silent prod fallback: a dev build would send users to prod,
+          // which then rejects this origin's return_to anyway.
+          setError('Catermonkey sign-in is not configured for this environment (VITE_VLAGENT_URL).');
+          return;
+        }
+        localStorage.setItem('userPlatform', 'catermonkey_mcp');
+        localStorage.setItem('auth_provider', 'catermonkey_mcp');
+        const params = new URLSearchParams({ server: 'catermonkey', return_to: window.location.origin });
+        window.location.href = `${vlagentBase}/oauth/mcp/start?${params.toString()}`;
+        return;
+      }
+
       localStorage.setItem('userPlatform', provider.name);
       localStorage.setItem('auth_provider', provider.name);
 
@@ -439,16 +458,22 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
                 <>
                   <div className="flex items-center space-x-3 sm:space-x-4">
                     <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-navy/5 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${!isDisabled && 'group-hover:bg-navy/10'}`}>
-                      <img src={getProviderLogo(provider.name) || ''} alt={provider.displayName} className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+                      {getProviderLogo(provider.name)
+                        ? <img src={getProviderLogo(provider.name) || ''} alt={provider.displayName} className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+                        : <provider.icon className="w-6 h-6 sm:w-7 sm:h-7 text-navy" aria-hidden="true" />}
                     </div>
                     <div className="text-left">
                       <div className="text-sm sm:text-lg font-general font-semibold text-navy leading-tight">
                         {provider.name === 'teamleader' && t('auth.page.continueTeamleader')}
                         {provider.name === 'pipedrive' && t('auth.page.continuePipedrive')}
                         {provider.name === 'odoo' && t('auth.page.continueOdoo')}
+                        {provider.name === 'catermonkey' && t('auth.page.continueCatermonkey')}
                       </div>
                       <div className="text-xs sm:text-sm font-instrument text-muted-blue mt-0.5">
-                        {isDisabled ? t('auth.temporarilyUnavailable') : (provider.name === 'odoo' ? t('auth.forOdooAccountsOnly') : t('auth.modal.startTrialInstantly'))}
+                        {isDisabled ? t('auth.temporarilyUnavailable')
+                          : provider.name === 'odoo' ? t('auth.forOdooAccountsOnly')
+                          : provider.name === 'catermonkey' ? t('auth.page.catermonkeySubtitle')
+                          : t('auth.modal.startTrialInstantly')}
                       </div>
                     </div>
                   </div>

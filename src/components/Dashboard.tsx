@@ -132,8 +132,15 @@ export const Dashboard: React.FC = () => {
 
   const getFirstName = () => user?.name?.split(' ')[0] || 'there';
 
-  const getPlatformLabel = () =>
-    ({ teamleader: 'Teamleader', pipedrive: 'Pipedrive', odoo: 'Odoo' }[user?.platform || ''] || 'your CRM');
+  const getPlatformLabel = () => {
+    const labels: Record<string, string> = {
+      teamleader: 'Teamleader',
+      pipedrive: 'Pipedrive',
+      odoo: 'Odoo',
+      catermonkey_mcp: 'Catermonkey',
+    };
+    return labels[user?.platform || ''] || 'your CRM';
+  };
 
   const startTrial = async () => {
     const { stripe_price_id } = await getTrialTier();

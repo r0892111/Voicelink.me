@@ -10,6 +10,7 @@ import { withUTM } from '../utils/utm';
 import { trackTrialStarted } from '../utils/analytics';
 import { consumeTestFlow, clearTestFlow } from '../utils/testFlow';
 import { getReferralCode } from '../utils/referral';
+import { takeStashedHandoff } from '../utils/mcpHandoff';
 
 type CallbackStatus = 'loading' | 'success' | 'error';
 
@@ -75,8 +76,26 @@ export const AuthCallback: React.FC = () => {
       let state: string | null = null;
       let error: string | null = null;
 
-      // Odoo sends access_token in the hash fragment
-      if (platform === 'odoo') {
+      // MCP-connected platforms (e.g. 'catermonkey_mcp'): the OAuth dance ran
+      // in VoiceLink's backend; it redirected here with a single-use, 5-min
+      // `handoff` token instead of code+state. The token is a bearer for
+      // account creation — strip it from the address bar / history at once
+      // so it can't leak through referers, screenshots or a shared tab.
+      const isMcpHandoff = platform.endsWith('_mcp');
+      let handoff: string | null = null;
+      if (isMcpHandoff) {
+        // main.tsx already moved the token into sessionStorage before any
+        // render (analytics never saw it); takeStashedHandoff falls back to
+        // the URL for a browser with storage blocked.
+        handoff = takeStashedHandoff();
+        window.history.replaceState({}, '', window.location.pathname);
+        if (!handoff) {
+          setStatus('error');
+          setMessage(t('auth.missingAuthenticationParameters'));
+          return;
+        }
+      } else if (platform === 'odoo') {
+        // Odoo sends access_token in the hash fragment
         const fragment = window.location.hash.substring(1);
         const params = new URLSearchParams(fragment);
         code = params.get('access_token');
@@ -95,14 +114,16 @@ export const AuthCallback: React.FC = () => {
         return;
       }
 
-      if (!code || !state) {
+      if (!isMcpHandoff && (!code || !state)) {
         setStatus('error');
         setMessage(t('auth.missingAuthenticationParameters'));
         return;
       }
 
-      // Verify stored state (if applicable)
-      const storedState = platform === 'odoo'
+      // Verify stored state (if applicable; the MCP handoff has none — its
+      // CSRF protection is the state cookie on VoiceLink's own callback)
+      const storedState = isMcpHandoff ? null
+        : platform === 'odoo'
         ? localStorage.getItem('odoo_oauth_state')
         : localStorage.getItem(`${platform}_oauth_state`);
 
@@ -139,17 +160,19 @@ export const AuthCallback: React.FC = () => {
       // account-creation path, so sending it on every login is harmless.
       const referralCode = getReferralCode();
 
-      const requestBody: Record<string, unknown> = {
-        code,
-        state,
-        redirect_uri: redirectUri,
-        ...(isTestUserFlow && platform === 'teamleader' && {
-          is_test_user: true,
-          test_phone: testPhone ?? undefined,
-        }),
-        ...(inviteToken && { invitation_token: inviteToken }),
-        ...(referralCode && { ref_code: referralCode }),
-      };
+      const requestBody: Record<string, unknown> = isMcpHandoff
+        ? { handoff, redirect_uri: redirectUri }
+        : {
+            code,
+            state,
+            redirect_uri: redirectUri,
+            ...(isTestUserFlow && platform === 'teamleader' && {
+              is_test_user: true,
+              test_phone: testPhone ?? undefined,
+            }),
+            ...(inviteToken && { invitation_token: inviteToken }),
+            ...(referralCode && { ref_code: referralCode }),
+          };
 
       // For custom Odoo implementations, pass the OAuth URL to the backend
       if (platform === 'odoo' && import.meta.env.VITE_ODOO_AUTH_URL) {
@@ -158,8 +181,11 @@ export const AuthCallback: React.FC = () => {
 
       // Check if we're in WhatsApp verification flow and use external auth for Pipedrive
       const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
-      const authFunctionName = (platform === 'pipedrive' && isWhatsAppFlow) 
-        ? 'pipedrive-external-auth' 
+      // 'catermonkey_mcp' -> 'catermonkey-mcp-auth'
+      const authFunctionName = isMcpHandoff
+        ? `${platform.replace(/_mcp$/, '')}-mcp-auth`
+        : (platform === 'pipedrive' && isWhatsAppFlow)
+        ? 'pipedrive-external-auth'
         : `${platform}-auth`;
 
       console.log('Auth callback:', { platform, isWhatsAppFlow, authFunctionName });
@@ -181,7 +207,11 @@ export const AuthCallback: React.FC = () => {
         let errorMessage = `Authentication failed: ${response.statusText}`;
         try {
           const errorData = await response.json();
-          errorMessage = errorData.error || errorData.message || errorMessage;
+          // Edge functions that return a `code` get localized copy; the raw
+          // server text is the fallback.
+          errorMessage = errorData.code === 'handoff_invalid'
+            ? t('auth.callback.handoffInvalid')
+            : (errorData.error || errorData.message || errorMessage);
         } catch (e) {
           // If response is not JSON, use status text
         }
@@ -433,6 +463,7 @@ export const AuthCallback: React.FC = () => {
         const tableName = provider === 'teamleader' ? 'teamleader_users'
                        : provider === 'pipedrive' ? 'pipedrive_users'
                        : provider === 'odoo' ? 'odoo_users'
+                       : provider === 'catermonkey_mcp' ? 'catermonkey_mcp_users'
                        : null;
 
         if (tableName) {

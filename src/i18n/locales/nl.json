@@ -66,6 +66,7 @@
     "teamleader": "TeamLeader",
     "pipedrive": "Pipedrive",
     "odoo": "Odoo",
+    "catermonkey_mcp": "Catermonkey",
     "unknown": "Onbekend"
   },
   "validation": {
@@ -140,10 +141,13 @@
       "signupSubtitle": "Probeer het 1 maand gratis. Verbind je CRM om te starten.",
       "continueTeamleader": "Doorgaan met Teamleader",
       "continuePipedrive": "Doorgaan met Pipedrive",
-      "continueOdoo": "Doorgaan met Odoo"
+      "continueOdoo": "Doorgaan met Odoo",
+      "continueCatermonkey": "Doorgaan met Catermonkey",
+      "catermonkeySubtitle": "Voor cateraars — meld je aan met je Catermonkey-account"
     },
     "passiveTermsConsent": "Door je aan te melden, ga je akkoord met onze",
     "callback": {
+      "handoffInvalid": "Deze aanmeldlink is ongeldig of verlopen. Verbind Catermonkey opnieuw.",
       "authenticating": "Authenticeren...",
       "authenticationSuccessful": "Authenticatie Succesvol!",
       "authenticationFailed": "Authenticatie Mislukt",
@@ -1512,6 +1516,7 @@
       "teamleader": "Teamleader",
       "pipedrive": "Pipedrive",
       "odoo": "Odoo",
+      "catermonkey_mcp": "Catermonkey",
       "fallback": "je CRM"
     },
     "home": {

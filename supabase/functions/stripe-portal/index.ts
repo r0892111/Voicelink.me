@@ -5,6 +5,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+import { findBillingRow } from '../_shared/billing/users.ts';
 
 const log = createLogger('stripe-portal');
 
@@ -38,25 +39,24 @@ Deno.serve(async (req) => {
     r.info('authenticated', { user_id: user.id, email: user.email });
 
     r.info('looking up stripe_customer_id');
-    const { data: tlUser, error: dbError } = await supabase
-      .from('teamleader_users')
-      .select('stripe_customer_id')
-      .eq('user_id', user.id)
-      .maybeSingle();
+    const billing = await findBillingRow(supabase, user.id, (table, message) =>
+      r.warn('billing row lookup failed', { table, error: message }),
+    );
+    const customerId = billing?.row.stripe_customer_id ?? null;
 
-    if (dbError || !tlUser?.stripe_customer_id) {
-      r.warn('no stripe customer found', { user_id: user.id, db_error: dbError?.message });
+    if (!customerId) {
+      r.warn('no stripe customer found', { user_id: user.id, table: billing?.table ?? null });
       r.done(400);
       return json({ error: 'No Stripe customer found' }, 400);
     }
 
-    r.info('creating billing portal session', { customer_id: tlUser.stripe_customer_id });
+    r.info('creating billing portal session', { customer_id: customerId });
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!);
 
     const { return_url } = await req.json().catch(() => ({}));
 
     const session = await stripe.billingPortal.sessions.create({
-      customer:   tlUser.stripe_customer_id,
+      customer:   customerId,
       return_url: return_url ?? `${Deno.env.get('SITE_URL') ?? ''}/dashboard`,
     });
 

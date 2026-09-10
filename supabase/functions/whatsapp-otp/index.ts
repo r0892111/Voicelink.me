@@ -11,7 +11,12 @@ import { createLogger, toErrorDetail } from '../_shared/logger.ts';
 
 const log = createLogger('whatsapp-otp');
 
-const VALID_PROVIDERS: CrmProvider[] = ['teamleader', 'pipedrive', 'odoo', 'test'];
+// catermonkey_mcp: self-serve Catermonkey-via-MCP accounts (table
+// catermonkey_mcp_users, created by catermonkey-mcp-auth). Same columns the
+// repository writes for every other provider — no special-casing below.
+const VALID_PROVIDERS: CrmProvider[] = ['teamleader', 'pipedrive', 'odoo', 'catermonkey_mcp', 'test'];
+// Providers whose users table carries promo_end_date (promo users bypass the Stripe gate).
+const PROMO_AWARE_PROVIDERS: CrmProvider[] = ['teamleader', 'catermonkey_mcp'];
 
 function ok(data: Record<string, unknown>) {
   return new Response(JSON.stringify({ success: true, ...data }), {
@@ -110,8 +115,8 @@ Deno.serve(async (req) => {
       // is used during the early-access test flow and is exempt.
       if (crm_provider !== 'test') {
         r.info('checking subscription gate', { crm_user_id });
-        // Include promo_end_date for teamleader — promo users bypass Stripe gate
-        const gateSelect = crm_provider === 'teamleader'
+        // Include promo_end_date where the table has it — promo users bypass Stripe gate
+        const gateSelect = PROMO_AWARE_PROVIDERS.includes(crm_provider)
           ? 'stripe_customer_id, is_admin, admin_user_id, promo_end_date'
           : 'stripe_customer_id, is_admin, admin_user_id';
         const { data: gateRow, error: gateErr } = await supabase
