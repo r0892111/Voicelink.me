@@ -32,15 +32,15 @@ Deno.serve(async (req) => {
   const r = log.withRequest(req);
 
   try {
-    const { action, crm_provider, crm_user_id, phone_number, otp_code } =
+    const { action, crm_provider, crm_user_id: bodyUserId, phone_number, otp_code } =
       await req.json();
 
-    r.info('request parsed', { action, crm_provider, crm_user_id });
+    r.info('request parsed', { action, crm_provider });
 
-    if (!action || !crm_provider || !crm_user_id) {
-      r.warn('missing required fields', { action, crm_provider, crm_user_id });
+    if (!action || !crm_provider) {
+      r.warn('missing required fields', { action, crm_provider });
       r.done(400);
-      return fail('Missing required fields: action, crm_provider, crm_user_id');
+      return fail('Missing required fields: action, crm_provider');
     }
     if (!VALID_PROVIDERS.includes(crm_provider)) {
       r.warn('invalid crm_provider', { crm_provider });
@@ -52,6 +52,43 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
+
+    // Authenticate the caller from a real session JWT and use THAT as the
+    // identity for every DB write below — never an identity value taken
+    // straight from the request body. Previously crm_user_id came from the
+    // body with only the anon key on the request — anyone who knew a
+    // victim's user_id could request/verify an OTP for their own phone and
+    // have it written onto the victim's row, then have the victim's CRM
+    // tokens routed to their own WhatsApp number via twilio_inbound.py's
+    // phone sweep. Fixed 2026-09-10.
+    //
+    // Exception: provider 'test' runs BEFORE any portal account exists
+    // (TestSignup.tsx looks up a pre-provisioned test row by phone via the
+    // lookup_test_user_by_phone RPC, verifies WhatsApp ownership, and only
+    // THEN creates the real account via Teamleader OAuth) — there is no
+    // session JWT to check yet by design, so it keeps trusting the body's
+    // crm_user_id, same as before. Blast radius is a pre-provisioned test
+    // slot, not a live CRM connection.
+    let crm_user_id: string;
+    if (crm_provider === 'test') {
+      if (!bodyUserId) {
+        r.warn('missing crm_user_id for test provider');
+        r.done(400);
+        return fail('Missing crm_user_id');
+      }
+      crm_user_id = bodyUserId;
+    } else {
+      const authHeader = req.headers.get('Authorization') ?? '';
+      const { data: { user }, error: authError } =
+        await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
+      if (authError || !user) {
+        r.warn('auth failed', { error: authError?.message });
+        r.done(401);
+        return fail('Unauthorized', 401);
+      }
+      crm_user_id = user.id;
+      r.info('authenticated', { user_id: crm_user_id });
+    }
 
     const repo     = new SupabaseWhatsAppRepository(supabase, `${crm_provider}_users`);
     const provider = createWhatsAppProvider();

@@ -2,6 +2,8 @@
 // SRP: only knows how to call the WhatsApp edge functions over HTTP.
 // DIP: components and hooks depend on this interface, never on raw fetch calls.
 
+import { supabase } from '../lib/supabase';
+
 export interface IWhatsAppService {
   sendOtp(platform: string, userId: string, phone: string): Promise<{ expiresAt: string }>;
   verifyOtp(platform: string, userId: string, code: string): Promise<void>;
@@ -62,11 +64,15 @@ class WhatsAppService implements IWhatsAppService {
   }
 
   private async call(fn: string, body: Record<string, string>): Promise<Record<string, unknown>> {
+    // whatsapp-otp authenticates the caller from this token (not the anon
+    // key) and derives the identity to act on from it server-side — never
+    // trust the anon key alone for an identity-changing call.
+    const { data: { session } } = await supabase.auth.getSession();
     const res = await fetch(`${this.base}/functions/v1/${fn}`, {
       method:  'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.anonKey}`,
+        Authorization: `Bearer ${session?.access_token ?? this.anonKey}`,
       },
       body: JSON.stringify(body),
     });
