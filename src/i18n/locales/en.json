@@ -188,6 +188,7 @@
     "passiveTermsConsent": "By signing up, you agree to our",
     "callback": {
       "handoffInvalid": "This sign-in link is invalid or has expired. Please connect Catermonkey again.",
+      "linkRefused": "An account with this email address already exists but was created through a provider that does not verify email addresses. Contact support@voicelink.me and we'll link it for you.",
       "authenticating": "Authenticating...",
       "authenticationSuccessful": "Authentication Successful!",
       "authenticationFailed": "Authentication Failed",

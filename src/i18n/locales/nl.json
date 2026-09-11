@@ -148,6 +148,7 @@
     "passiveTermsConsent": "Door je aan te melden, ga je akkoord met onze",
     "callback": {
       "handoffInvalid": "Deze aanmeldlink is ongeldig of verlopen. Verbind Catermonkey opnieuw.",
+      "linkRefused": "Er bestaat al een account met dit e-mailadres, aangemaakt via een dienst die e-mailadressen niet verifieert. Mail support@voicelink.me en we koppelen het voor je.",
       "authenticating": "Authenticeren...",
       "authenticationSuccessful": "Authenticatie Succesvol!",
       "authenticationFailed": "Authenticatie Mislukt",

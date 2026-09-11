@@ -211,6 +211,8 @@ export const AuthCallback: React.FC = () => {
           // server text is the fallback.
           errorMessage = errorData.code === 'handoff_invalid'
             ? t('auth.callback.handoffInvalid')
+            : errorData.code === 'link_refused'
+            ? t('auth.callback.linkRefused')
             : (errorData.error || errorData.message || errorMessage);
         } catch (e) {
           // If response is not JSON, use status text
