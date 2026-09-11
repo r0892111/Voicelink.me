@@ -183,7 +183,8 @@
       "continuePipedrive": "Continue with Pipedrive",
       "continueOdoo": "Continue with Odoo",
       "continueCatermonkey": "Continue with Catermonkey",
-      "catermonkeySubtitle": "For caterers — sign in with your Catermonkey account"
+      "catermonkeySubtitle": "For caterers — sign in with your Catermonkey account",
+      "comingSoon": "Coming soon"
     },
     "passiveTermsConsent": "By signing up, you agree to our",
     "callback": {

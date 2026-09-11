@@ -38,7 +38,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
   const [emailError, setEmailError] = React.useState<string | null>(null);
   const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
 
-  const disabledProviders: string[] = [];
+  // Catermonkey ships "coming soon": the MCP signup flow is built but not yet
+  // deployed end to end / accepted with a real phone. Remove it from this
+  // list to go live — everything behind the button is already wired.
+  const disabledProviders: string[] = ['catermonkey'];
 
   // Clear any leftover test-user flags on mount. If the visitor is on /signup,
   // they're doing the real flow — stale keys from a prior /test-dashboard
@@ -470,7 +473,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
                         {provider.name === 'catermonkey' && t('auth.page.continueCatermonkey')}
                       </div>
                       <div className="text-xs sm:text-sm font-instrument text-muted-blue mt-0.5">
-                        {isDisabled ? t('auth.temporarilyUnavailable')
+                        {isDisabled ? (provider.name === 'catermonkey' ? t('auth.page.comingSoon') : t('auth.temporarilyUnavailable'))
                           : provider.name === 'odoo' ? t('auth.forOdooAccountsOnly')
                           : provider.name === 'catermonkey' ? t('auth.page.catermonkeySubtitle')
                           : t('auth.modal.startTrialInstantly')}
