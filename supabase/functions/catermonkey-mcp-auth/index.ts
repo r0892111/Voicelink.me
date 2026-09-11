@@ -81,10 +81,19 @@ Deno.serve(async (req) => {
       return json({ success: false, code: 'bad_request', error: 'Missing handoff or redirect_uri' }, 400);
     }
 
-    const vlagentUrl = (Deno.env.get('VLAGENT_URL') ?? '').trim().replace(/\/$/, '');
+    // Only the VLAgent that minted the handoff can redeem it (handoffs are
+    // env-scoped), and that is the one the signup button sent the user to
+    // (VITE_VLAGENT_URL). VLAGENT_MCP_URL lets it differ from VLAGENT_URL,
+    // which teamleader-auth / trigger-entity-sync / log_event use for
+    // production prewarm + events and which must keep pointing at prod while
+    // the Catermonkey flow is accepted on staging. Unset → VLAGENT_URL (the
+    // go-live configuration).
+    const vlagentUrl = (Deno.env.get('VLAGENT_MCP_URL') ?? Deno.env.get('VLAGENT_URL') ?? '')
+      .trim()
+      .replace(/\/$/, '');
     const vlagentSecret = (Deno.env.get('VLAGENT_SECRET') ?? '').trim();
     if (!vlagentUrl || !vlagentSecret) {
-      r.error('VLAGENT_URL / VLAGENT_SECRET not configured');
+      r.error('VLAGENT_MCP_URL/VLAGENT_URL or VLAGENT_SECRET not configured');
       r.done(500);
       return json({ success: false, code: 'not_configured', error: 'Sign-in backend not configured' }, 500);
     }
