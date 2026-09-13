@@ -134,6 +134,8 @@
     "bulletNoTech": "Geen technische kennis nodig",
     "bulletNoCard": "Geen creditcard vereist",
     "supportedBy": "Ondersteund door",
+    "worksWith": "Werkt met",
+    "comingSoonBadge": "Binnenkort",
     "gdprCompliant": "Compliant"
   },
   "auth": {

@@ -4,6 +4,7 @@ import { HowItWorksDemo } from './HowItWorksDemo';
 import { HeroDemo, CrmPreviewCards } from './HeroDemo';
 import { PricingSection } from './PricingSection';
 import { SectionDivider } from './ui/SectionDivider';
+import { LogoCarousel } from './ui/LogoCarousel';
 import { ScrollAnimation } from './ui/ScrollAnimation';
 import { useConsent } from '../contexts/ConsentContext';
 import { useI18n } from '../hooks/useI18n';
@@ -228,6 +229,9 @@ export const Homepage: React.FC<HomepageProps> = ({ openContactModal }) => {
 
       {/* Divider: Problem Agitation → CRM Preview */}
       <SectionDivider fromColor="#1A2D63" toColor="#FDFBF7" variant={2} />
+
+      {/* ───────── 4.5 WORKS WITH (multi-CRM logo strip) ───────── */}
+      <LogoCarousel label={t('hero.worksWith')} comingSoonLabel={t('hero.comingSoonBadge')} />
 
       {/* ───────── 5. CRM PREVIEW ("Ontdek wat VoiceLink doet in je CRM") ───────── */}
       <div id="crm-preview" className="scroll-mt-24">

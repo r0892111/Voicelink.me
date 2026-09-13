@@ -159,6 +159,8 @@
     "bulletNoTech": "No technical knowledge needed",
     "bulletNoCard": "No credit card required",
     "supportedBy": "Supported by",
+    "worksWith": "Works with",
+    "comingSoonBadge": "Soon",
     "gdprCompliant": "Compliant"
   },
   "auth": {

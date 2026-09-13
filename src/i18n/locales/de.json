@@ -366,6 +366,8 @@
     "bulletNoTech": "Keine technischen Kenntnisse nötig",
     "bulletNoCard": "Keine Kreditkarte erforderlich",
     "supportedBy": "Unterstützt von",
+    "worksWith": "Funktioniert mit",
+    "comingSoonBadge": "Bald",
     "gdprCompliant": "Konform"
   },
   "dashboard": {

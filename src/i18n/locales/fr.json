@@ -565,6 +565,8 @@
     "bulletNoTech": "Aucune connaissance technique requise",
     "bulletNoCard": "Aucune carte de crédit requise",
     "supportedBy": "Soutenu par",
+    "worksWith": "Fonctionne avec",
+    "comingSoonBadge": "Bientôt",
     "gdprCompliant": "Conforme"
   },
   "features": {
