@@ -2,8 +2,16 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createWhatsAppProvider } from '../_shared/whatsapp/providers/factory.ts';
 import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+import { canLinkByEmail } from '../_shared/auth/linking.ts';
 
 const log = createLogger('teamleader-auth');
+
+const LINK_REFUSED_BODY = JSON.stringify({
+  success: false,
+  code: 'link_refused',
+  error:
+    'An account with this email address already exists but was created through a provider that does not verify email addresses. Please contact support@voicelink.me to link it.',
+});
 
 interface TeamleaderTokenResponse {
   access_token: string;
@@ -169,6 +177,18 @@ Deno.serve(async (req) => {
         .maybeSingle();
 
       if (userRow?.id) {
+        // Verified-email linking rule (_shared/auth/linking.ts): never attach
+        // this (verified) Teamleader login to an account whose email was
+        // asserted by a provider that doesn't verify it.
+        const link = await canLinkByEmail(supabase, userRow.id);
+        if (!link.safe) {
+          r.warn('refusing to link by email', { target_user_id: userRow.id, reason: link.reason });
+          r.done(409);
+          return new Response(LINK_REFUSED_BODY, {
+            status: 409,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
         userId = userRow.id;
         r.info('existing user found via email', { user_id: userId });
       } else {
@@ -190,6 +210,17 @@ Deno.serve(async (req) => {
             const { data: listData } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
             const existingUser = listData?.users?.find((u: { email?: string }) => u.email?.toLowerCase() === email.toLowerCase());
             if (existingUser) {
+              // Same rule as the public.users match above — this is the
+              // second merge site.
+              const link = await canLinkByEmail(supabase, existingUser.id);
+              if (!link.safe) {
+                r.warn('refusing to link by email (admin list path)', { target_user_id: existingUser.id, reason: link.reason });
+                r.done(409);
+                return new Response(LINK_REFUSED_BODY, {
+                  status: 409,
+                  headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                });
+              }
               userId = existingUser.id;
               r.info('found existing user via admin list', { user_id: userId });
               await supabase.from('users').upsert({ id: userId, email, name }, { onConflict: 'id' });

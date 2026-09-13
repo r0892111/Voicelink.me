@@ -72,6 +72,7 @@
     "teamleader": "TeamLeader",
     "pipedrive": "Pipedrive",
     "odoo": "Odoo",
+    "catermonkey_mcp": "Catermonkey",
     "unknown": "Unknown"
   },
   "validation": {
@@ -140,11 +141,10 @@
   "hero": {
     "title": "Just...",
     "mainTitle": "Talk to your CRM",
-    "subtitle1_pre": "VoiceLink connects",
-    "subtitle1_crm": "Teamleader CRM",
-    "subtitle1_mid": "with",
-    "subtitle1_wa": "WhatsApp",
-    "subtitle1_post": ", so a single voice note lets you add client notes, log follow-ups, create tasks and pull up CRM information. Without ever opening Teamleader.",
+    "heroSubtitlePre": "VoiceLink connects your CRM with",
+    "heroSubtitlePost": ", so a single voice note lets you add client notes, log follow-ups, create tasks and pull up CRM information — without ever opening your CRM.",
+    "badgeBeta": "Beta",
+    "badgeSoon": "Coming soon",
     "subtitle2": "Turn voice messages into structured data instantly.",
     "getStartedFree": "Start for free",
     "watchDemo": "Watch demo",
@@ -180,10 +180,15 @@
       "signupSubtitle": "1-Month Free Trial. Connect your CRM to get started.",
       "continueTeamleader": "Continue with Teamleader",
       "continuePipedrive": "Continue with Pipedrive",
-      "continueOdoo": "Continue with Odoo"
+      "continueOdoo": "Continue with Odoo",
+      "continueCatermonkey": "Continue with Catermonkey",
+      "catermonkeySubtitle": "For caterers — sign in with your Catermonkey account",
+      "comingSoon": "Coming soon"
     },
     "passiveTermsConsent": "By signing up, you agree to our",
     "callback": {
+      "handoffInvalid": "This sign-in link is invalid or has expired. Please connect Catermonkey again.",
+      "linkRefused": "An account with this email address already exists but was created through a provider that does not verify email addresses. Contact support@voicelink.me and we'll link it for you.",
       "authenticating": "Authenticating...",
       "authenticationSuccessful": "Authentication Successful!",
       "authenticationFailed": "Authentication Failed",
@@ -1520,6 +1525,7 @@
       "teamleader": "Teamleader",
       "pipedrive": "Pipedrive",
       "odoo": "Odoo",
+      "catermonkey_mcp": "Catermonkey",
       "fallback": "your CRM"
     },
     "home": {

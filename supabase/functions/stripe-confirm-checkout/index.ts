@@ -1,13 +1,14 @@
 // ── stripe-confirm-checkout ───────────────────────────────────────────────────
 // Called immediately when the user returns from Stripe checkout (success URL).
-// Retrieves the session from Stripe and saves stripe_customer_id to
-// teamleader_users — so the subscription check works even before the
-// webhook fires.
+// Retrieves the session from Stripe and saves stripe_customer_id to the
+// user's billing row (`${platform}_users`, see _shared/billing/users.ts) —
+// so the subscription check works even before the webhook fires.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+import { updateBillingRow } from '../_shared/billing/users.ts';
 
 const log = createLogger('stripe-confirm-checkout');
 
@@ -83,25 +84,21 @@ Deno.serve(async (req) => {
 
     // Save customer ID — idempotent, safe to call multiple times
     r.info('saving stripe_customer_id', { user_id: user.id, customer_id: customerId });
-    const { data: updated, error: dbError } = await supabase
-      .from('teamleader_users')
-      .update({ stripe_customer_id: customerId })
-      .eq('user_id', user.id)
-      .select('user_id');
+    const result = await updateBillingRow(supabase, user.id, { stripe_customer_id: customerId });
 
-    if (dbError) {
-      r.error('db update failed', { error: dbError.message, code: dbError.code });
+    if (result.table === null) {
+      if (result.error === 'no billing row for user') {
+        r.error('no billing row found', { user_id: user.id });
+        r.done(404);
+        return json({ success: false, error: 'User row not found' }, 404);
+      }
+      // A lookup or update error (not "no row") — 500, as before.
+      r.error('db update failed', { error: result.error });
       r.done(500);
-      return json({ success: false, error: dbError.message }, 500);
+      return json({ success: false, error: result.error }, 500);
     }
 
-    if (!updated || updated.length === 0) {
-      r.error('no teamleader_users row found', { user_id: user.id });
-      r.done(404);
-      return json({ success: false, error: 'User row not found in teamleader_users' }, 404);
-    }
-
-    r.info('stripe_customer_id saved successfully', { user_id: user.id, customer_id: customerId });
+    r.info('stripe_customer_id saved successfully', { user_id: user.id, customer_id: customerId, table: result.table });
     r.done(200);
     return json({ success: true, customer_id: customerId });
 

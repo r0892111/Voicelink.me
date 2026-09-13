@@ -17,6 +17,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
+import { findBillingRow, getBillingRowInTable } from '../_shared/billing/users.ts';
 
 const TRIAL_CREDITS = 150;
 
@@ -138,13 +139,10 @@ async function resolveCredits(
   supabaseAdmin: ReturnType<typeof createClient>,
   callerUserId: string,
 ): Promise<CreditsContext> {
-  // Resolve which row owns the subscription. Members defer to admin's row.
-  const { data: row } = await supabaseAdmin
-    .from('teamleader_users')
-    .select('stripe_customer_id, is_admin, admin_user_id, is_test_user')
-    .eq('user_id', callerUserId)
-    .is('deleted_at', null)
-    .maybeSingle();
+  // Resolve which row owns the subscription (whichever billing-capable users
+  // table holds this user). Members defer to admin's row in the same table.
+  const billing = await findBillingRow(supabaseAdmin, callerUserId);
+  const row = billing?.row ?? null;
 
   // Test users always run uncapped — no Stripe lookup needed.
   if (row?.is_test_user) {
@@ -152,13 +150,8 @@ async function resolveCredits(
   }
 
   let stripeCustomerId: string | null = row?.stripe_customer_id ?? null;
-  if (row && !row.is_admin && row.admin_user_id) {
-    const { data: adminRow } = await supabaseAdmin
-      .from('teamleader_users')
-      .select('stripe_customer_id, is_test_user')
-      .eq('user_id', row.admin_user_id)
-      .is('deleted_at', null)
-      .maybeSingle();
+  if (billing && row && !row.is_admin && row.admin_user_id) {
+    const adminRow = await getBillingRowInTable(supabaseAdmin, billing.table, row.admin_user_id);
     if (adminRow?.is_test_user) {
       return { perSeat: null, total: null, topupCredits: 0, seats: 0, isTrial: false, isUnlimited: true, windowStartIso: EPOCH_ZERO };
     }
@@ -263,18 +256,13 @@ async function handleSelfScope(
   supabase: ReturnType<typeof createClient>,
   userId: string,
 ): Promise<Response> {
-  const { data: tl, error: tlError } = await supabase
-    .from('teamleader_users')
-    .select('teamleader_id')
-    .eq('user_id', userId)
-    .maybeSingle();
-
-  if (tlError) return json({ success: false, error: tlError.message }, 500);
-  if (!tl?.teamleader_id) return json({ success: true, usage: null });
+  // tenant_id is what VLAgent writes to usage_events for this user:
+  // teamleader_id for Teamleader, vendor_subject for Catermonkey-via-MCP.
+  const billing = await findBillingRow(supabase, userId);
+  const tenantId = billing?.tenant_id ?? null;
+  if (!tenantId) return json({ success: true, usage: null });
 
   const credits = await resolveCredits(supabase, userId);
-
-  const tenantId = tl.teamleader_id as string;
   let totals: UsageTotals;
   try {
     totals = (await fetchUsage(supabase, [tenantId], credits.windowStartIso)).get(tenantId) ?? EMPTY_USAGE;

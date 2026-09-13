@@ -1,6 +1,7 @@
 // ── stripe-webhook ────────────────────────────────────────────────────────────
 // Handles Stripe webhook events.
-//   checkout.session.completed         → saves stripe_customer_id to teamleader_users
+//   checkout.session.completed         → saves stripe_customer_id to the user's
+//                                        billing row (`${platform}_users`)
 //   customer.subscription.created      → upsert into stripe_subscriptions
 //   customer.subscription.updated      → upsert into stripe_subscriptions
 //   customer.subscription.deleted      → upsert into stripe_subscriptions (status=canceled)
@@ -8,10 +9,18 @@
 // We rely on customer.subscription.updated to surface payment-failure transitions
 // (Stripe sets status='past_due' on the subscription itself), so a separate
 // invoice.payment_failed handler isn't needed for v1 enforcement.
+//
+// Which users table a customer lives in is decided by _shared/billing/users.ts
+// (teamleader_users, catermonkey_mcp_users). The erasure schedule below is
+// per-table on purpose: Teamleader's OAuth tokens sit on the users row and
+// are nulled here; Catermonkey-via-MCP tokens live in VoiceLink's
+// mcp_connections, so only the erasure deadline is stamped and VoiceLink's
+// sweep revokes/removes them.
 
 import { createClient, SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { createLogger, toErrorDetail, RequestLogger } from '../_shared/logger.ts';
+import { BILLING_TABLES, findBillingRow, updateBillingRow } from '../_shared/billing/users.ts';
 
 const log = createLogger('stripe-webhook');
 
@@ -52,17 +61,14 @@ async function handleCheckoutCompleted(
   // (stripe-checkout now passes one). Attribute the purchase to the customer
   // the credit gate reads for this user so the pack is never silently lost.
   if (!customerId && userId && session.mode === 'payment') {
-    const { data: tlRow, error: tlErr } = await supabase
-      .from('teamleader_users')
-      .select('stripe_customer_id')
-      .eq('user_id', userId)
-      .is('deleted_at', null)
-      .maybeSingle();
-    if (tlErr) r.warn('customer fallback lookup failed', { error: tlErr.message });
-    customerId = (tlRow?.stripe_customer_id as string | undefined) ?? null;
+    const billing = await findBillingRow(supabase, userId, (table, message) =>
+      r.warn('customer fallback lookup failed', { table, error: message }),
+    );
+    customerId = billing?.row.stripe_customer_id ?? null;
     r.info('payment session without customer — resolved via client_reference_id', {
       user_id: userId,
       customer_id: customerId,
+      table: billing?.table ?? null,
     });
   }
 
@@ -74,15 +80,11 @@ async function handleCheckoutCompleted(
   });
 
   if (userId && customerId) {
-    const { error } = await supabase
-      .from('teamleader_users')
-      .update({ stripe_customer_id: customerId })
-      .eq('user_id', userId);
-
-    if (error) {
-      r.error('failed to save stripe_customer_id', { error: error.message, code: error.code, user_id: userId });
+    const result = await updateBillingRow(supabase, userId, { stripe_customer_id: customerId });
+    if (result.table === null) {
+      r.error('failed to save stripe_customer_id', { error: result.error, user_id: userId });
     } else {
-      r.info('stripe_customer_id saved', { user_id: userId, customer_id: customerId });
+      r.info('stripe_customer_id saved', { user_id: userId, customer_id: customerId, table: result.table });
     }
   } else {
     r.warn('missing userId or customerId on session — skipping stripe_customer_id update', {
@@ -118,16 +120,12 @@ async function handleCreditPackPurchase(
   });
 
   // Best-effort: resolve the buyer's teamleader_id; null is acceptable since
-  // the credit grant attaches to customer_id either way.
+  // the credit grant attaches to customer_id either way (credit_topups has a
+  // Teamleader-specific column — other platforms simply leave it null).
   let teamleaderId: string | null = null;
   if (session.client_reference_id) {
-    const { data: tlRow } = await supabase
-      .from('teamleader_users')
-      .select('teamleader_id')
-      .eq('user_id', session.client_reference_id)
-      .is('deleted_at', null)
-      .maybeSingle();
-    teamleaderId = (tlRow?.teamleader_id as string | undefined) ?? null;
+    const billing = await findBillingRow(supabase, session.client_reference_id);
+    teamleaderId = billing?.table === 'teamleader_users' ? (billing.row.teamleader_id ?? null) : null;
   }
 
   const paymentId =
@@ -274,21 +272,31 @@ async function scheduleErasureIfLastSubscription(
   }
 
   const dueAt = new Date(Date.now() + ERASURE_GRACE_DAYS * 24 * 3600 * 1000).toISOString();
-  const { data, error } = await supabase
-    .from('teamleader_users')
-    .update({ access_token: null, refresh_token: null, erasure_due_at: dueAt })
-    .eq('stripe_customer_id', customerId)
-    .is('deleted_at', null)
-    .select('teamleader_id');
+  for (const table of BILLING_TABLES) {
+    // Teamleader keeps its OAuth tokens on the users row: null them so
+    // processing stops now. Catermonkey-via-MCP has no token columns here
+    // (they live in VoiceLink's mcp_connections) — stamp the deadline only.
+    const patch =
+      table === 'teamleader_users'
+        ? { access_token: null, refresh_token: null, erasure_due_at: dueAt }
+        : { erasure_due_at: dueAt };
+    const { data, error } = await supabase
+      .from(table)
+      .update(patch)
+      .eq('stripe_customer_id', customerId)
+      .is('deleted_at', null)
+      .select('user_id');
 
-  if (error) {
-    r.error('erasure schedule failed', { error: error.message, customer_id: customerId });
-  } else {
-    r.info('erasure scheduled: tokens nulled, grace period started', {
-      customer_id: customerId,
-      due_at: dueAt,
-      tenants: (data ?? []).map((d) => d.teamleader_id),
-    });
+    if (error) {
+      r.error('erasure schedule failed', { error: error.message, customer_id: customerId, table });
+    } else if (data && data.length > 0) {
+      r.info('erasure scheduled: grace period started', {
+        customer_id: customerId,
+        due_at: dueAt,
+        table,
+        users: data.map((d) => d.user_id),
+      });
+    }
   }
 }
 
@@ -297,20 +305,23 @@ async function clearScheduledErasure(
   supabase: SupabaseClient,
   customerId: string,
 ) {
-  const { data, error } = await supabase
-    .from('teamleader_users')
-    .update({ erasure_due_at: null })
-    .eq('stripe_customer_id', customerId)
-    .not('erasure_due_at', 'is', null)
-    .select('teamleader_id');
+  for (const table of BILLING_TABLES) {
+    const { data, error } = await supabase
+      .from(table)
+      .update({ erasure_due_at: null })
+      .eq('stripe_customer_id', customerId)
+      .not('erasure_due_at', 'is', null)
+      .select('user_id');
 
-  if (error) {
-    r.error('erasure clear failed', { error: error.message, customer_id: customerId });
-  } else if (data && data.length > 0) {
-    r.info('scheduled erasure cleared (resubscribe within grace period)', {
-      customer_id: customerId,
-      tenants: data.map((d) => d.teamleader_id),
-    });
+    if (error) {
+      r.error('erasure clear failed', { error: error.message, customer_id: customerId, table });
+    } else if (data && data.length > 0) {
+      r.info('scheduled erasure cleared (resubscribe within grace period)', {
+        customer_id: customerId,
+        table,
+        users: data.map((d) => d.user_id),
+      });
+    }
   }
 }
 

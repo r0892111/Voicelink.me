@@ -1,11 +1,22 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
+export type Platform = 'teamleader' | 'pipedrive' | 'odoo' | 'catermonkey_mcp';
+
+// Every platform with a `${platform}_users` table the dashboard may read.
+// 'catermonkey_mcp' = Catermonkey connected through its MCP server (see
+// catermonkey-mcp-auth); the '_mcp' suffix is the contract with VoiceLink's
+// /oauth/mcp/callback redirect and /claim response.
+export const PLATFORMS: readonly Platform[] = ['teamleader', 'pipedrive', 'odoo', 'catermonkey_mcp'];
+
+export const isPlatform = (v: string | null | undefined): v is Platform =>
+  !!v && (PLATFORMS as readonly string[]).includes(v);
+
 export interface AuthUser {
   id: string;
   email: string;
   name: string;
-  platform: 'teamleader' | 'pipedrive' | 'odoo';
+  platform: Platform;
   user_info: any;
 }
 
@@ -39,18 +50,29 @@ export const useAuth = () => {
         return;
       }
 
-      const platform = (localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider') || 'teamleader') as AuthUser['platform'];
-      if (['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
+      const metadata = session.user.user_metadata || {};
+
+      // Platform: localStorage first (set by the signup flow), then the
+      // provider the auth edge function stamped on the user at signup — so a
+      // fresh browser / cleared storage (CookieSettingsModal wipes these
+      // keys) doesn't silently fall back to Teamleader for a Catermonkey
+      // account and read the wrong `${platform}_users` table everywhere.
+      const storedPlatform = localStorage.getItem('userPlatform') || localStorage.getItem('auth_provider');
+      const metadataPlatform = typeof metadata.provider === 'string' ? metadata.provider : null;
+      const platform: Platform = isPlatform(storedPlatform)
+        ? storedPlatform
+        : isPlatform(metadataPlatform)
+        ? metadataPlatform
+        : 'teamleader';
+      if (isPlatform(storedPlatform) || isPlatform(metadataPlatform)) {
         setUserPlatformStorage(platform);
       }
-
-      const metadata = session.user.user_metadata || {};
       let name: string = metadata.name || '';
 
       // If the stored name looks like a placeholder (e.g. "teamleader_undefined"),
       // fall back to querying the platform-specific table for the real name.
-      const nameIsCorrupt = !name || name.includes('undefined') || /^(teamleader|pipedrive|odoo)_/.test(name);
-      if (nameIsCorrupt && ['teamleader', 'pipedrive', 'odoo'].includes(platform)) {
+      const nameIsCorrupt = !name || name.includes('undefined') || /^(teamleader|pipedrive|odoo|catermonkey-mcp)[_-]/.test(name);
+      if (nameIsCorrupt) {
         try {
           const { data: platformRow } = await supabase
             .from(`${platform}_users`)
@@ -73,7 +95,7 @@ export const useAuth = () => {
         // The stored email may also be a placeholder (teamleader_undefined@placeholder.local)
         // — fall back to a generic label rather than propagate the bad string.
         const emailPrefix = session.user.email?.split('@')[0] || '';
-        const emailIsBad = !emailPrefix || emailPrefix.includes('undefined') || /^(teamleader|pipedrive|odoo)_/.test(emailPrefix);
+        const emailIsBad = !emailPrefix || emailPrefix.includes('undefined') || /^(teamleader|pipedrive|odoo|catermonkey-mcp)[_-]/.test(emailPrefix);
         name = emailIsBad ? 'there' : emailPrefix;
       }
 
@@ -81,7 +103,7 @@ export const useAuth = () => {
         id: session.user.id,
         email: session.user.email || '',
         name,
-        platform: ['teamleader', 'pipedrive', 'odoo'].includes(platform) ? platform : 'teamleader',
+        platform,
         user_info: metadata,
       });
     } catch (error) {

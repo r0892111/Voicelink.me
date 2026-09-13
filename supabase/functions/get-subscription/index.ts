@@ -5,6 +5,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+import { findBillingRow, getBillingRowInTable } from '../_shared/billing/users.ts';
 
 const log = createLogger('get-subscription');
 
@@ -37,13 +38,14 @@ Deno.serve(async (req) => {
     }
     r.info('authenticated', { user_id: user.id, email: user.email });
 
-    r.info('looking up stripe_customer_id');
-    const { data: row } = await supabase
-      .from('teamleader_users')
-      .select('stripe_customer_id, is_admin, admin_user_id, promo_end_date')
-      .eq('user_id', user.id)
-      .is('deleted_at', null)
-      .maybeSingle();
+    // The `?provider=` query param is informational only: the billing row is
+    // discovered by user id across every billing-capable users table
+    // (_shared/billing/users.ts), so a stale or missing param can't route a
+    // user to the wrong table.
+    r.info('looking up billing row');
+    const billing = await findBillingRow(supabase, user.id);
+    const row = billing?.row ?? null;
+    r.info('billing row', { table: billing?.table ?? null });
 
     // Promo bypass — time-limited Professional access granted without Stripe.
     // Checked before the Stripe API call so it works even when the user has
@@ -72,14 +74,10 @@ Deno.serve(async (req) => {
     // reflects the team-level subscription state and members aren't
     // prompted to start a trial they don't own.
     let stripeCustomerId: string | null = row?.stripe_customer_id ?? null;
-    if (row && !row.is_admin && row.admin_user_id) {
+    if (billing && row && !row.is_admin && row.admin_user_id) {
       r.info('caller is member, resolving admin subscription', { admin_user_id: row.admin_user_id });
-      const { data: adminRow } = await supabase
-        .from('teamleader_users')
-        .select('stripe_customer_id')
-        .eq('user_id', row.admin_user_id)
-        .is('deleted_at', null)
-        .maybeSingle();
+      // An admin's row lives in the same table as the member's.
+      const adminRow = await getBillingRowInTable(supabase, billing.table, row.admin_user_id);
       stripeCustomerId = adminRow?.stripe_customer_id ?? null;
     }
 

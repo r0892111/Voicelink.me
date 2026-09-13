@@ -478,8 +478,10 @@ export function DashboardHome() {
         </section>
       )}
 
-      {/* ── BUSINESS SYNC (admins only, post-onboarding) ── */}
-      {fullySetUp && !role.isMember && (
+      {/* ── BUSINESS SYNC (Teamleader admins only, post-onboarding) — the
+          tile and trigger-entity-sync read teamleader_users; other
+          platforms have no entity sync yet ── */}
+      {fullySetUp && !role.isMember && user.platform === 'teamleader' && (
         <section className="px-6 pb-6">
           <div className="max-w-4xl mx-auto">
             <BusinessSyncTile />

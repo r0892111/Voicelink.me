@@ -66,6 +66,34 @@ Deno.serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
   );
 
+  // Catermonkey-via-MCP accounts: their CRM tokens live in VoiceLink's
+  // mcp_connections, which this function's cascade (/oauth/teamleader/
+  // disconnect) does not cover yet. Deleting the auth user would cascade the
+  // identity row away and strand a live vendor grant + tokens — so refuse
+  // self-serve erasure for this platform until VoiceLink's erasure covers
+  // it (plan Phase 4/5), rather than report account_deleted while data
+  // remains. Nothing is deleted on this path.
+  const { data: cmRow, error: cmErr } = await service
+    .from('catermonkey_mcp_users')
+    .select('user_id')
+    .eq('user_id', user.id)
+    .maybeSingle();
+  // 42P01 = relation does not exist: this function deployed ahead of the
+  // catermonkey_mcp_users migration. Treat as "no row" so Teamleader
+  // erasure keeps working; every other error is a hard stop.
+  if (cmErr && cmErr.code !== '42P01') {
+    r.error('catermonkey_mcp_users lookup failed', { error: cmErr.message, code: cmErr.code });
+    r.done(500);
+    return json(500, { error: 'lookup failed — nothing was deleted' });
+  }
+  if (cmRow) {
+    r.warn('erasure refused: Catermonkey-via-MCP account, cascade not wired yet', { user_id: user.id });
+    r.done(501);
+    return json(501, {
+      error: 'Account deletion for Catermonkey accounts is handled by support for now — nothing was deleted. Please contact support@voicelink.me.',
+    });
+  }
+
   // CRM-connected tenants get the full VLAgent cascade first.
   const { data: tlRow, error: tlErr } = await service
     .from('teamleader_users')

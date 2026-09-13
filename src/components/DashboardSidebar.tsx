@@ -36,6 +36,10 @@ interface NavItem {
    *  Dashboard home and User Guide stay open without one. */
   subscriptionRequired?: boolean;
   end?: boolean;
+  /** Only shown for these platforms (default: every platform). Team
+   *  management is Teamleader-only today: team-members / team-invite read
+   *  teamleader_users. */
+  platforms?: readonly string[];
 }
 
 interface NavGroup {
@@ -48,7 +52,7 @@ const NAV_GROUPS: NavGroup[] = [
     labelKey: 'dash.nav.groupMain',
     items: [
       { to: '/dashboard',         labelKey: 'dash.nav.dashboard', icon: LayoutDashboard, end: true },
-      { to: '/dashboard/team',    labelKey: 'dash.nav.team',      icon: Users,           adminOnly: true, subscriptionRequired: true },
+      { to: '/dashboard/team',    labelKey: 'dash.nav.team',      icon: Users,           adminOnly: true, subscriptionRequired: true, platforms: ['teamleader'] },
       { to: '/dashboard/usage',   labelKey: 'dash.nav.usage',     icon: BarChart3,       subscriptionRequired: true },
     ],
   },
@@ -146,7 +150,9 @@ export function DashboardSidebar({
               {t(group.labelKey)}
             </p>
             <ul className="space-y-0.5">
-              {group.items.map((item) => {
+              {group.items
+                .filter((item) => !item.platforms || item.platforms.includes(user.platform))
+                .map((item) => {
                 const lockReason = resolveLock(item, isAdmin, hasActiveSubscription, isMember);
                 const Icon = item.icon;
                 const label = t(item.labelKey);

@@ -25,28 +25,8 @@ function useDemoScaleFactor() {
 }
 
 type Phase = 'idle' | 'voice' | 'transcript' | 'thinking' | 'reply' | 'crm' | 'done';
-
-const TRANSCRIPT_TEXT = "Just had a call with Sarah Mitchell from TechFlow Solutions. She's the procurement manager. Her number is 0456 789 123, email sarah@techflow.be. Enterprise client, very promising. She mentioned they're migrating from Salesforce next quarter.";
-
-const TRANSCRIPT_TEXT_NL = "Net gebeld met Sarah Mitchell van TechFlow Solutions. Ze is de aankoopmanager. Haar nummer is 0456 789 123, e-mail sarah@techflow.be. Enterprise klant, heel veelbelovend. Ze zei dat ze volgend kwartaal migreren van Salesforce.";
-
-const REPLY_LINES = [
-  { emoji: '\u2705', text: 'Contact created: Sarah Mitchell' },
-  { emoji: '\uD83C\uDFE2', text: 'TechFlow Solutions \u2014 Procurement Manager' },
-  { emoji: '\uD83D\uDCDE', text: '0456 789 123' },
-  { emoji: '\uD83D\uDCE7', text: 'sarah@techflow.be' },
-  { emoji: '\uD83C\uDFF7\uFE0F', text: 'Hot Lead \u00B7 Enterprise Client' },
-  { emoji: '\uD83D\uDD04', text: 'Migrating from Salesforce next Q' },
-];
-
-const REPLY_LINES_NL = [
-  { emoji: '\u2705', text: 'Contact aangemaakt: Sarah Mitchell' },
-  { emoji: '\uD83C\uDFE2', text: 'TechFlow Solutions \u2014 Aankoopmanager' },
-  { emoji: '\uD83D\uDCDE', text: '0456 789 123' },
-  { emoji: '\uD83D\uDCE7', text: 'sarah@techflow.be' },
-  { emoji: '\uD83C\uDFF7\uFE0F', text: 'Hot Lead \u00B7 Enterprise Klant' },
-  { emoji: '\uD83D\uDD04', text: 'Migreert volgend kwartaal van Salesforce' },
-];
+type NavIcon = 'people' | 'building' | 'deal' | 'calendar' | 'invoice' | 'pin';
+type CrmBrandKey = 'teamleader' | 'catermonkey';
 
 // Generate natural-looking waveform with envelope
 const generateWaveform = (seed: number, barCount: number): number[] => {
@@ -64,55 +44,200 @@ const generateWaveform = (seed: number, barCount: number): number[] => {
 
 const WAVEFORM_BARS = generateWaveform(42, 48);
 
-// CRM contact fields — Teamleader-style label/value rows
-const CRM_CONTACT_ROWS = [
-  { label: 'Bedrijf', value: 'TechFlow Solutions' },
-  { label: 'Functie', value: 'Procurement Manager' },
-  { label: 'E-mail', value: 'sarah@techflow.be', isLink: true },
-  { label: 'Telefoonnummer', value: '0456 789 123', isLink: true },
-];
+// One entry per CRM this demo can recreate. UI chrome (card titles, breadcrumb,
+// bottom sections, sidebar labels) is Dutch-only regardless of site language --
+// matches how the Teamleader recreation always worked, since it's showing what
+// the real interface looks like, not translating the product for the visitor.
+// Content (transcript, reply checklist, field values) stays bilingual (en/nl).
+// Add a brand here to feature its demo; give it `status: 'beta'` for the same
+// early-access framing as the hero chip, or omit it once fully live.
+interface CrmBrandConfig {
+  name: string;
+  status?: 'beta';
+  logo: string;
+  sidebarBg: string;
+  accent: string;
+  navItems: { label: string; icon: NavIcon; active: boolean }[];
+  transcript: { en: string; nl: string };
+  replyLines: { en: { emoji: string; text: string }[]; nl: { emoji: string; text: string }[] };
+  avatarInitials: string;
+  entityName: string;
+  tags: string[];
+  fieldRows: { en: { label: string; value: string; isLink?: boolean }[]; nl: { label: string; value: string; isLink?: boolean }[] };
+  noteBullets: { en: string[]; nl: string[] };
+  primaryCardTitle: string;
+  secondaryCardTitle: string;
+  breadcrumb: string;
+  bottomSections: string[];
+}
 
-const CRM_CONTACT_ROWS_NL = [
-  { label: 'Bedrijf', value: 'TechFlow Solutions' },
-  { label: 'Functie', value: 'Aankoopmanager' },
-  { label: 'E-mail', value: 'sarah@techflow.be', isLink: true },
-  { label: 'Telefoonnummer', value: '0456 789 123', isLink: true },
-];
+const CRM_BRANDS: Record<CrmBrandKey, CrmBrandConfig> = {
+  teamleader: {
+    name: 'Teamleader',
+    logo: '/Teamleader_Icon.svg',
+    sidebarBg: '#1b2540',
+    accent: '#50B0B1',
+    navItems: [
+      { label: 'Contacten', icon: 'people', active: true },
+      { label: 'Bedrijven', icon: 'building', active: false },
+      { label: 'Deals', icon: 'deal', active: false },
+      { label: 'Agenda', icon: 'calendar', active: false },
+    ],
+    transcript: {
+      en: "Just had a call with Sarah Mitchell from TechFlow Solutions. She's the procurement manager. Her number is 0456 789 123, email sarah@techflow.be. Enterprise client, very promising. She mentioned they're migrating from Salesforce next quarter.",
+      nl: 'Net gebeld met Sarah Mitchell van TechFlow Solutions. Ze is de aankoopmanager. Haar nummer is 0456 789 123, e-mail sarah@techflow.be. Enterprise klant, heel veelbelovend. Ze zei dat ze volgend kwartaal migreren van Salesforce.',
+    },
+    replyLines: {
+      en: [
+        { emoji: '✅', text: 'Contact created: Sarah Mitchell' },
+        { emoji: '🏢', text: 'TechFlow Solutions — Procurement Manager' },
+        { emoji: '📞', text: '0456 789 123' },
+        { emoji: '📧', text: 'sarah@techflow.be' },
+        { emoji: '🏷️', text: 'Hot Lead · Enterprise Client' },
+        { emoji: '🔄', text: 'Migrating from Salesforce next Q' },
+      ],
+      nl: [
+        { emoji: '✅', text: 'Contact aangemaakt: Sarah Mitchell' },
+        { emoji: '🏢', text: 'TechFlow Solutions — Aankoopmanager' },
+        { emoji: '📞', text: '0456 789 123' },
+        { emoji: '📧', text: 'sarah@techflow.be' },
+        { emoji: '🏷️', text: 'Hot Lead · Enterprise Klant' },
+        { emoji: '🔄', text: 'Migreert volgend kwartaal van Salesforce' },
+      ],
+    },
+    avatarInitials: 'SM',
+    entityName: 'Sarah Mitchell',
+    tags: ['Hot Lead', 'Enterprise'],
+    fieldRows: {
+      en: [
+        { label: 'Bedrijf', value: 'TechFlow Solutions' },
+        { label: 'Functie', value: 'Procurement Manager' },
+        { label: 'E-mail', value: 'sarah@techflow.be', isLink: true },
+        { label: 'Telefoonnummer', value: '0456 789 123', isLink: true },
+      ],
+      nl: [
+        { label: 'Bedrijf', value: 'TechFlow Solutions' },
+        { label: 'Functie', value: 'Aankoopmanager' },
+        { label: 'E-mail', value: 'sarah@techflow.be', isLink: true },
+        { label: 'Telefoonnummer', value: '0456 789 123', isLink: true },
+      ],
+    },
+    noteBullets: {
+      en: [
+        'Procurement Manager at TechFlow Solutions',
+        'Enterprise client — very promising',
+        'Migrating from Salesforce next quarter',
+      ],
+      nl: [
+        'Aankoopmanager bij TechFlow Solutions',
+        'Enterprise klant — zeer veelbelovend',
+        'Migreert volgend kwartaal van Salesforce',
+      ],
+    },
+    primaryCardTitle: 'Contactinformatie',
+    secondaryCardTitle: 'Achtergrondinformatie',
+    breadcrumb: '← Overzicht contacten',
+    bottomSections: ['Deals (0)', 'Afspraken (0)'],
+  },
+  catermonkey: {
+    name: 'Catermonkey',
+    status: 'beta',
+    logo: '/Catermonkey_Icon.png',
+    sidebarBg: '#16302c',
+    accent: '#d97706',
+    navItems: [
+      { label: 'Kalender', icon: 'calendar', active: true },
+      { label: 'Klanten', icon: 'people', active: false },
+      { label: 'Facturatie', icon: 'invoice', active: false },
+      { label: 'Locaties', icon: 'pin', active: false },
+    ],
+    transcript: {
+      en: "Just got a call from Jonas Peeters — he wants catering for 40 people at his company's office event next Friday in Ghent. Mixed buffet, drinks included, budget around 1200 euros.",
+      nl: 'Net gebeld met Jonas Peeters — hij wil catering voor 40 personen op het bedrijfsevent van volgende vrijdag, op kantoor in Gent. Gemengd buffet, drank inbegrepen, budget rond de 1200 euro.',
+    },
+    replyLines: {
+      en: [
+        { emoji: '✅', text: 'Order created: Jonas Peeters' },
+        { emoji: '📍', text: 'Ghent — office event' },
+        { emoji: '📅', text: 'Friday · 40 guests' },
+        { emoji: '🍽️', text: 'Mixed buffet + drinks' },
+        { emoji: '💶', text: 'Est. €1,200' },
+        { emoji: '🔔', text: 'Added to calendar' },
+      ],
+      nl: [
+        { emoji: '✅', text: 'Bestelling aangemaakt: Jonas Peeters' },
+        { emoji: '📍', text: 'Gent — bedrijfsevent' },
+        { emoji: '📅', text: 'Vrijdag · 40 gasten' },
+        { emoji: '🍽️', text: 'Gemengd buffet + drank' },
+        { emoji: '💶', text: 'Geschat €1.200' },
+        { emoji: '🔔', text: 'Toegevoegd aan kalender' },
+      ],
+    },
+    avatarInitials: 'JP',
+    entityName: 'Jonas Peeters',
+    tags: ['Bedrijfsevent', 'Offerte'],
+    fieldRows: {
+      en: [
+        { label: 'Locatie', value: 'Kantoor, Gent' },
+        { label: 'Datum', value: 'Vrijdag · 40 pers.' },
+        { label: 'Menu', value: 'Gemengd buffet + drank' },
+        { label: 'Budget', value: '≈ €1.200', isLink: true },
+      ],
+      nl: [
+        { label: 'Locatie', value: 'Kantoor, Gent' },
+        { label: 'Datum', value: 'Vrijdag · 40 pers.' },
+        { label: 'Menu', value: 'Gemengd buffet + drank' },
+        { label: 'Budget', value: '≈ €1.200', isLink: true },
+      ],
+    },
+    noteBullets: {
+      en: [
+        'Bedrijfsevent voor 40 personen',
+        'Locatie: kantoor in Gent',
+        'Budget rond €1.200',
+      ],
+      nl: [
+        'Bedrijfsevent voor 40 personen',
+        'Locatie: kantoor in Gent',
+        'Budget rond €1.200',
+      ],
+    },
+    primaryCardTitle: 'Bestelgegevens',
+    secondaryCardTitle: 'Achtergrondinformatie',
+    breadcrumb: '← Overzicht bestellingen',
+    bottomSections: ['Facturen (0)', 'Documenten (0)'],
+  },
+};
 
-const CRM_TAGS = ['Hot Lead', 'Enterprise'];
-
-const CRM_NOTE_BULLETS = [
-  'Procurement Manager at TechFlow Solutions',
-  'Enterprise client — very promising',
-  'Migrating from Salesforce next quarter',
-];
-
-const CRM_NOTE_BULLETS_NL = [
-  'Aankoopmanager bij TechFlow Solutions',
-  'Enterprise klant — zeer veelbelovend',
-  'Migreert volgend kwartaal van Salesforce',
-];
-
-// Sidebar items matching Teamleader nav
-const CRM_SIDEBAR_ITEMS = [
-  { label: 'Contacten', active: true },
-  { label: 'Bedrijven', active: false },
-  { label: 'Deals', active: false },
-  { label: 'Agenda', active: false },
-];
+const NAV_ICON_PATHS: Record<NavIcon, React.ReactNode> = {
+  people: <><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></>,
+  building: <><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"/></>,
+  deal: <><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/><path d="M12 18V6"/></>,
+  calendar: <><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>,
+  invoice: <><path d="M6 2h9l5 5v15H6z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></>,
+  pin: <><path d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></>,
+};
 
 export const HowItWorksDemo: React.FC = () => {
   const { t, currentLanguage } = useI18n();
   const isNl = currentLanguage === 'nl';
-  const transcriptText = isNl ? TRANSCRIPT_TEXT_NL : TRANSCRIPT_TEXT;
-  const replyLines = isNl ? REPLY_LINES_NL : REPLY_LINES;
-  const crmContactRows = isNl ? CRM_CONTACT_ROWS_NL : CRM_CONTACT_ROWS;
-  const crmNoteBullets = isNl ? CRM_NOTE_BULLETS_NL : CRM_NOTE_BULLETS;
+  const [crmBrandKey, setCrmBrandKey] = useState<CrmBrandKey>('teamleader');
+  const brand = CRM_BRANDS[crmBrandKey];
+  const transcriptText = isNl ? brand.transcript.nl : brand.transcript.en;
+  const replyLines = isNl ? brand.replyLines.nl : brand.replyLines.en;
+  const crmContactRows = isNl ? brand.fieldRows.nl : brand.fieldRows.en;
+  const crmNoteBullets = isNl ? brand.noteBullets.nl : brand.noteBullets.en;
   const crmUpdatedLabel = isNl ? 'CRM Bijgewerkt' : 'CRM Updated';
   const typeMessagePlaceholder = isNl ? 'Typ een bericht' : 'Type a message';
 
   const transcriptTextRef = useRef(transcriptText);
   useEffect(() => { transcriptTextRef.current = transcriptText; }, [transcriptText]);
+  const replyLinesRef = useRef(replyLines);
+  useEffect(() => { replyLinesRef.current = replyLines; }, [replyLines]);
+  const crmContactRowsRef = useRef(crmContactRows);
+  useEffect(() => { crmContactRowsRef.current = crmContactRows; }, [crmContactRows]);
+  const crmNoteBulletsRef = useRef(crmNoteBullets);
+  useEffect(() => { crmNoteBulletsRef.current = crmNoteBullets; }, [crmNoteBullets]);
 
   const [phase, setPhase] = useState<Phase>('idle');
   const [activeStep, setActiveStep] = useState(0);
@@ -213,22 +338,22 @@ export const HowItWorksDemo: React.FC = () => {
           setBubbleShifted(true);
           setPhase('reply');
           setActiveStep(3);
-          REPLY_LINES.forEach((_, i) => {
+          replyLinesRef.current.forEach((_, i) => {
             addTimeout(() => setReplyLinesShown(prev => prev + 1), i * 280);
           });
           // After reply lines are done, transition to CRM view
-          const replyDuration = REPLY_LINES.length * 280 + 2500;
+          const replyDuration = replyLinesRef.current.length * 280 + 2500;
           addTimeout(() => {
             setPhase('crm');
             setActiveStep(4);
             // Stagger CRM elements in
-            const totalCrmElements = 2 + CRM_CONTACT_ROWS.length + CRM_NOTE_BULLETS.length;
+            const totalCrmElements = 2 + crmContactRowsRef.current.length + crmNoteBulletsRef.current.length;
             for (let i = 0; i < totalCrmElements; i++) {
               addTimeout(() => setCrmFieldsShown(prev => prev + 1), i * 180);
             }
             addTimeout(() => setPhase('done'), totalCrmElements * 180 + 500);
             // Trigger scroll reveal of background info on mobile
-            addTimeout(() => setCrmScrolled(true), (2 + CRM_CONTACT_ROWS.length) * 180 + 400);
+            addTimeout(() => setCrmScrolled(true), (2 + crmContactRowsRef.current.length) * 180 + 400);
           }, replyDuration);
         }, 2000);
       });
@@ -284,6 +409,42 @@ export const HowItWorksDemo: React.FC = () => {
         <p className="text-base md:text-lg xl:text-xl font-instrument font-medium text-navy/60 max-w-3xl mx-auto">
           {t('howItWorks.subtitle')}
         </p>
+        <div className="flex items-center justify-center border-b border-navy/10 mt-6">
+          {(Object.keys(CRM_BRANDS) as CrmBrandKey[]).map((key) => {
+            const b = CRM_BRANDS[key];
+            const isSelected = key === crmBrandKey;
+            return (
+              <button
+                key={key}
+                onClick={() => { setCrmBrandKey(key); startSequence(); }}
+                className="relative flex items-center gap-2 px-5 py-3 transition-colors"
+              >
+                <img
+                  src={b.logo}
+                  alt=""
+                  className="h-4 w-4 object-contain rounded-[2px] transition-opacity"
+                  style={{ opacity: isSelected ? 1 : 0.45 }}
+                  draggable={false}
+                />
+                <span
+                  className="font-instrument font-semibold text-[14px] transition-colors"
+                  style={{ color: isSelected ? '#1A2D63' : 'rgba(26,45,99,0.4)' }}
+                >
+                  {b.name}
+                </span>
+                {b.status === 'beta' && (
+                  <span className="rounded-full bg-amber-100 px-1.5 py-[1px] text-[9px] font-semibold uppercase tracking-wide text-amber-700">
+                    {t('hero.badgeBeta')}
+                  </span>
+                )}
+                <span
+                  className="absolute left-2 right-2 -bottom-[1px] h-[2px] rounded-full transition-opacity"
+                  style={{ backgroundColor: b.accent, opacity: isSelected ? 1 : 0 }}
+                />
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* ─── macOS Window + Chat (centered, prominent) ─── */}
@@ -585,7 +746,7 @@ export const HowItWorksDemo: React.FC = () => {
               </div>
               </div>{/* end WhatsApp full view */}
 
-              {/* ── CRM Interface View (Teamleader-style) ── */}
+              {/* ── CRM Interface View (brand-driven — see CRM_BRANDS) ── */}
               <div
                 className="absolute inset-0 flex"
                 style={{
@@ -595,20 +756,20 @@ export const HowItWorksDemo: React.FC = () => {
                   pointerEvents: showCrm ? 'auto' : 'none',
                 }}
               >
-                {/* ── Teamleader sidebar ── */}
+                {/* ── Sidebar ── */}
                 <div
                   className="flex-shrink-0 flex flex-col items-center py-3 gap-1"
                   style={{
                     width: '52px',
-                    backgroundColor: '#1b2540',
+                    backgroundColor: brand.sidebarBg,
                   }}
                 >
-                  {/* TL logo */}
+                  {/* Brand logo */}
                   <div className="w-[28px] h-[28px] flex items-center justify-center mb-2">
-                    <img src="/Teamleader_Icon.svg" alt="" className="w-[20px] h-[20px]" />
+                    <img src={brand.logo} alt="" className="w-[20px] h-[20px] object-contain" />
                   </div>
                   {/* Nav items */}
-                  {CRM_SIDEBAR_ITEMS.map((item, i) => (
+                  {brand.navItems.map((item, i) => (
                     <div
                       key={item.label}
                       className="flex flex-col items-center justify-center w-full relative"
@@ -621,43 +782,22 @@ export const HowItWorksDemo: React.FC = () => {
                       {item.active && (
                         <div
                           className="absolute left-0 top-1 bottom-1 rounded-r"
-                          style={{ width: '3px', backgroundColor: '#50B0B1' }}
+                          style={{ width: '3px', backgroundColor: brand.accent }}
                         />
                       )}
                       <div
                         className="w-[20px] h-[20px] flex items-center justify-center"
-                        style={{ color: item.active ? '#50B0B1' : 'rgba(255,255,255,0.35)' }}
+                        style={{ color: item.active ? brand.accent : 'rgba(255,255,255,0.35)' }}
                       >
-                        {/* Contacten */}
-                        {i === 0 && (
-                          <svg className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                          </svg>
-                        )}
-                        {/* Bedrijven */}
-                        {i === 1 && (
-                          <svg className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                            <rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"/>
-                          </svg>
-                        )}
-                        {/* Deals */}
-                        {i === 2 && (
-                          <svg className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/><path d="M12 18V6"/>
-                          </svg>
-                        )}
-                        {/* Agenda */}
-                        {i === 3 && (
-                          <svg className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                          </svg>
-                        )}
+                        <svg className="w-[16px] h-[16px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          {NAV_ICON_PATHS[item.icon]}
+                        </svg>
                       </div>
                       <span
                         className="font-instrument text-center leading-none mt-0.5"
                         style={{
                           fontSize: '7px',
-                          color: item.active ? '#50B0B1' : 'rgba(255,255,255,0.3)',
+                          color: item.active ? brand.accent : 'rgba(255,255,255,0.3)',
                           fontWeight: item.active ? 600 : 400,
                         }}
                       >
@@ -675,12 +815,12 @@ export const HowItWorksDemo: React.FC = () => {
                     style={{ height: '32px', borderColor: '#e8eaed' }}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="font-instrument font-semibold text-[10px] uppercase tracking-wider" style={{ color: '#50B0B1', borderBottom: '2px solid #50B0B1', paddingBottom: '6px', marginBottom: '-1px' }}>Overzicht</span>
+                      <span className="font-instrument font-semibold text-[10px] uppercase tracking-wider" style={{ color: brand.accent, borderBottom: `2px solid ${brand.accent}`, paddingBottom: '6px', marginBottom: '-1px' }}>Overzicht</span>
                       <span className="font-instrument text-[10px] uppercase tracking-wider" style={{ color: '#9ca3af' }}>Mailen</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <svg className="w-[12px] h-[12px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                      <div className="w-[14px] h-[14px] rounded-full" style={{ backgroundColor: '#50B0B1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div className="w-[14px] h-[14px] rounded-full" style={{ backgroundColor: brand.accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <svg className="w-[8px] h-[8px] text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                       </div>
                     </div>
@@ -688,7 +828,7 @@ export const HowItWorksDemo: React.FC = () => {
 
                   {/* Breadcrumb */}
                   <div className="px-3 pt-2 pb-1 flex-shrink-0">
-                    <span className="font-instrument text-[9px]" style={{ color: '#50B0B1' }}>&larr; Overzicht contacten</span>
+                    <span className="font-instrument text-[9px]" style={{ color: brand.accent }}>{brand.breadcrumb}</span>
                   </div>
 
                   {/* Content: cards — mobile stacked, desktop side-by-side */}
@@ -714,18 +854,18 @@ export const HowItWorksDemo: React.FC = () => {
                         }}
                       >
                         <div className="flex items-center justify-between px-3 py-2 border-b" style={{ borderColor: '#f0f1f3' }}>
-                          <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>Contactinformatie</span>
+                          <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>{brand.primaryCardTitle}</span>
                           <div className="flex items-center gap-1.5">
                             <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                             <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
                           </div>
                         </div>
                         <div className="flex items-center gap-2.5 px-3 py-2.5" style={{ opacity: crmFieldsShown > 0 ? 1 : 0, transition: 'opacity 0.3s ease' }}>
-                          <div className="rounded-full flex items-center justify-center font-semibold flex-shrink-0" style={{ width: '32px', height: '32px', fontSize: '11px', backgroundColor: '#50B0B1', color: 'white' }}>SM</div>
-                          <span className="font-instrument font-medium text-[13px]" style={{ color: '#1f2937' }}>Sarah Mitchell</span>
+                          <div className="rounded-full flex items-center justify-center font-semibold flex-shrink-0" style={{ width: '32px', height: '32px', fontSize: '11px', backgroundColor: brand.accent, color: 'white' }}>{brand.avatarInitials}</div>
+                          <span className="font-instrument font-medium text-[13px]" style={{ color: '#1f2937' }}>{brand.entityName}</span>
                         </div>
                         <div className="flex items-center gap-1.5 px-3 pb-2" style={{ opacity: crmFieldsShown > 1 ? 1 : 0, transform: crmFieldsShown > 1 ? 'translateY(0)' : 'translateY(3px)', transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)' }}>
-                          {CRM_TAGS.map((tag) => (
+                          {brand.tags.map((tag) => (
                             <span key={tag} className="inline-flex items-center px-2 py-[2px] rounded-full font-instrument text-[9px] font-medium" style={{ border: '1px solid #e0e2e5', color: '#4b5563', backgroundColor: 'white' }}>{tag}</span>
                           ))}
                         </div>
@@ -733,7 +873,7 @@ export const HowItWorksDemo: React.FC = () => {
                           {crmContactRows.map((row, i) => (
                             <div key={row.label} className="flex items-baseline gap-2 px-3 py-[5px]" style={{ opacity: crmFieldsShown > i + 2 ? 1 : 0, transform: crmFieldsShown > i + 2 ? 'translateX(0)' : 'translateX(-4px)', transition: `all 0.3s cubic-bezier(0.22, 1, 0.36, 1) ${i * 50}ms` }}>
                               <span className="font-instrument text-[10px] font-semibold flex-shrink-0" style={{ color: '#374151', width: '42%' }}>{row.label}</span>
-                              <span className="font-instrument text-[10px] truncate" style={{ color: row.isLink ? '#50B0B1' : '#4b5563' }}>{row.value}</span>
+                              <span className="font-instrument text-[10px] truncate" style={{ color: row.isLink ? brand.accent : '#4b5563' }}>{row.value}</span>
                             </div>
                           ))}
                         </div>
@@ -750,7 +890,7 @@ export const HowItWorksDemo: React.FC = () => {
                         }}
                       >
                         <div className="flex items-center justify-between px-3 py-2 border-b" style={{ borderColor: '#f0f1f3' }}>
-                          <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>Achtergrondinformatie</span>
+                          <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>{brand.secondaryCardTitle}</span>
                           <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                         </div>
                         <div className="flex-1 px-3 py-2.5">
@@ -798,7 +938,7 @@ export const HowItWorksDemo: React.FC = () => {
                     >
                       {/* Card title bar */}
                       <div className="flex items-center justify-between px-3 py-2 border-b" style={{ borderColor: '#f0f1f3' }}>
-                        <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>Contactinformatie</span>
+                        <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>{brand.primaryCardTitle}</span>
                         <div className="flex items-center gap-1.5">
                           <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                           <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
@@ -819,13 +959,13 @@ export const HowItWorksDemo: React.FC = () => {
                             width: '32px',
                             height: '32px',
                             fontSize: '11px',
-                            backgroundColor: '#50B0B1',
+                            backgroundColor: brand.accent,
                             color: 'white',
                           }}
                         >
-                          SM
+                          {brand.avatarInitials}
                         </div>
-                        <span className="font-instrument font-medium text-[13px]" style={{ color: '#1f2937' }}>Sarah Mitchell</span>
+                        <span className="font-instrument font-medium text-[13px]" style={{ color: '#1f2937' }}>{brand.entityName}</span>
                       </div>
 
                       {/* Tags row */}
@@ -837,7 +977,7 @@ export const HowItWorksDemo: React.FC = () => {
                           transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
                         }}
                       >
-                        {CRM_TAGS.map((tag) => (
+                        {brand.tags.map((tag) => (
                           <span
                             key={tag}
                             className="inline-flex items-center px-2 py-[2px] rounded-full font-instrument text-[9px] font-medium"
@@ -872,7 +1012,7 @@ export const HowItWorksDemo: React.FC = () => {
                             </span>
                             <span
                               className="font-instrument text-[10px] truncate"
-                              style={{ color: row.isLink ? '#50B0B1' : '#4b5563' }}
+                              style={{ color: row.isLink ? brand.accent : '#4b5563' }}
                             >
                               {row.value}
                             </span>
@@ -895,7 +1035,7 @@ export const HowItWorksDemo: React.FC = () => {
                     >
                       {/* Card title bar */}
                       <div className="flex items-center justify-between px-3 py-2 border-b" style={{ borderColor: '#f0f1f3' }}>
-                        <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>Achtergrondinformatie</span>
+                        <span className="font-instrument font-semibold text-[11px]" style={{ color: '#1f2937' }}>{brand.secondaryCardTitle}</span>
                         <svg className="w-[11px] h-[11px]" style={{ color: '#9ca3af' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                       </div>
 
@@ -928,7 +1068,7 @@ export const HowItWorksDemo: React.FC = () => {
 
                   {/* Collapsible sections at bottom (just hints, like the screenshot) */}
                   <div className="hidden md:block px-3 pb-2 flex-shrink-0 space-y-[3px]">
-                    {['Deals (0)', 'Afspraken (0)'].map((section, i) => (
+                    {brand.bottomSections.map((section, i) => (
                       <div
                         key={section}
                         className="flex items-center justify-between px-2.5 py-[5px] rounded bg-white border"

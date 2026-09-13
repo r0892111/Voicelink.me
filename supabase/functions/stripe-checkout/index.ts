@@ -5,6 +5,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'npm:stripe@17';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+import { findBillingRow } from '../_shared/billing/users.ts';
 
 const log = createLogger('stripe-checkout');
 
@@ -64,7 +65,7 @@ Deno.serve(async (req) => {
       mode === 'payment' ? 'payment' : 'subscription';
 
     // Credit packs (mode='payment') must land on the Stripe customer the
-    // credit gate reads (teamleader_users.stripe_customer_id): the webhook
+    // credit gate reads (`${platform}_users.stripe_customer_id`): the webhook
     // keys credit_topups on session.customer, and a payment-mode session has
     // NO customer unless we pass one — every pack bought before 2026-08-26
     // was paid but never credited. Reuse the user's customer when known,
@@ -73,15 +74,11 @@ Deno.serve(async (req) => {
     // get_active_for_customer assumes.
     let existingCustomerId: string | null = null;
     if (checkoutMode === 'payment') {
-      const { data: tlRow, error: tlErr } = await supabase
-        .from('teamleader_users')
-        .select('stripe_customer_id')
-        .eq('user_id', user.id)
-        .is('deleted_at', null)
-        .maybeSingle();
-      if (tlErr) r.warn('stripe_customer_id lookup failed (will let Stripe create one)', { error: tlErr.message });
-      existingCustomerId = (tlRow?.stripe_customer_id as string | undefined) ?? null;
-      r.info('credit pack checkout customer', { existing_customer: existingCustomerId });
+      const billing = await findBillingRow(supabase, user.id, (table, message) =>
+        r.warn('stripe_customer_id lookup failed (will let Stripe create one)', { table, error: message }),
+      );
+      existingCustomerId = billing?.row.stripe_customer_id ?? null;
+      r.info('credit pack checkout customer', { existing_customer: existingCustomerId, table: billing?.table ?? null });
     }
 
     const baseParams = {

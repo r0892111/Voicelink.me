@@ -66,6 +66,7 @@
     "teamleader": "TeamLeader",
     "pipedrive": "Pipedrive",
     "odoo": "Odoo",
+    "catermonkey_mcp": "Catermonkey",
     "unknown": "Onbekend"
   },
   "validation": {
@@ -115,11 +116,10 @@
   "hero": {
     "title": "Gewoon...",
     "mainTitle": "Praten met je CRM",
-    "subtitle1_pre": "VoiceLink koppelt",
-    "subtitle1_crm": "Teamleader CRM",
-    "subtitle1_mid": "met",
-    "subtitle1_wa": "WhatsApp",
-    "subtitle1_post": ", zodat je met één voicenote klantnotities toevoegt, opvolging registreert, taken aanmaakt en CRM-informatie opvraagt. Zonder Teamleader te openen.",
+    "heroSubtitlePre": "VoiceLink koppelt je CRM aan",
+    "heroSubtitlePost": ", zodat je met één voicenote klantnotities toevoegt, opvolging registreert, taken aanmaakt en CRM-informatie opvraagt — zonder je CRM te openen.",
+    "badgeBeta": "Bèta",
+    "badgeSoon": "Binnenkort",
     "subtitle2": "Zet spraakberichten direct om in gestructureerde data.",
     "getStartedFree": "Start gratis",
     "watchDemo": "Bekijk demo",
@@ -140,10 +140,15 @@
       "signupSubtitle": "Probeer het 1 maand gratis. Verbind je CRM om te starten.",
       "continueTeamleader": "Doorgaan met Teamleader",
       "continuePipedrive": "Doorgaan met Pipedrive",
-      "continueOdoo": "Doorgaan met Odoo"
+      "continueOdoo": "Doorgaan met Odoo",
+      "continueCatermonkey": "Doorgaan met Catermonkey",
+      "catermonkeySubtitle": "Voor cateraars — meld je aan met je Catermonkey-account",
+      "comingSoon": "Binnenkort beschikbaar"
     },
     "passiveTermsConsent": "Door je aan te melden, ga je akkoord met onze",
     "callback": {
+      "handoffInvalid": "Deze aanmeldlink is ongeldig of verlopen. Verbind Catermonkey opnieuw.",
+      "linkRefused": "Er bestaat al een account met dit e-mailadres, aangemaakt via een dienst die e-mailadressen niet verifieert. Mail support@voicelink.me en we koppelen het voor je.",
       "authenticating": "Authenticeren...",
       "authenticationSuccessful": "Authenticatie Succesvol!",
       "authenticationFailed": "Authenticatie Mislukt",
@@ -1512,6 +1517,7 @@
       "teamleader": "Teamleader",
       "pipedrive": "Pipedrive",
       "odoo": "Odoo",
+      "catermonkey_mcp": "Catermonkey",
       "fallback": "je CRM"
     },
     "home": {
