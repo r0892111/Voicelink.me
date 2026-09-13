@@ -118,9 +118,11 @@
     "mainTitle": "Praten met je CRM",
     "subtitle1_pre": "VoiceLink koppelt",
     "subtitle1_crm": "Teamleader CRM",
+    "subtitle1_and": "en",
+    "betaTag": "(bèta)",
     "subtitle1_mid": "met",
     "subtitle1_wa": "WhatsApp",
-    "subtitle1_post": ", zodat je met één voicenote klantnotities toevoegt, opvolging registreert, taken aanmaakt en CRM-informatie opvraagt. Zonder Teamleader te openen.",
+    "subtitle1_post": ", zodat je met één voicenote klantnotities toevoegt, opvolging registreert, taken aanmaakt en CRM-informatie opvraagt — zonder je CRM te openen.",
     "subtitle2": "Zet spraakberichten direct om in gestructureerde data.",
     "getStartedFree": "Start gratis",
     "watchDemo": "Bekijk demo",
@@ -134,8 +136,6 @@
     "bulletNoTech": "Geen technische kennis nodig",
     "bulletNoCard": "Geen creditcard vereist",
     "supportedBy": "Ondersteund door",
-    "worksWith": "Werkt met",
-    "comingSoonBadge": "Binnenkort",
     "gdprCompliant": "Compliant"
   },
   "auth": {

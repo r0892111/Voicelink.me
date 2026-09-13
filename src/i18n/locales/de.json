@@ -350,9 +350,11 @@
     "mainTitle": "Sprechen Sie mit Ihrem CRM",
     "subtitle1_pre": "VoiceLink verbindet",
     "subtitle1_crm": "Teamleader CRM",
+    "subtitle1_and": "und",
+    "betaTag": "(Beta)",
     "subtitle1_mid": "mit",
     "subtitle1_wa": "WhatsApp",
-    "subtitle1_post": ", sodass du mit einer einzigen Sprachnachricht Kundennotizen hinzufügst, Follow-ups erfasst, Aufgaben erstellst und CRM-Informationen abrufst. Ohne Teamleader zu öffnen.",
+    "subtitle1_post": ", sodass du mit einer einzigen Sprachnachricht Kundennotizen hinzufügst, Follow-ups erfasst, Aufgaben erstellst und CRM-Informationen abrufst — ohne dein CRM zu öffnen.",
     "subtitle2": "Verwandeln Sie Sprachnachrichten sofort in strukturierte Daten.",
     "getStartedFree": "Kostenlos starten",
     "watchDemo": "Demo ansehen",
@@ -366,8 +368,6 @@
     "bulletNoTech": "Keine technischen Kenntnisse nötig",
     "bulletNoCard": "Keine Kreditkarte erforderlich",
     "supportedBy": "Unterstützt von",
-    "worksWith": "Funktioniert mit",
-    "comingSoonBadge": "Bald",
     "gdprCompliant": "Konform"
   },
   "dashboard": {

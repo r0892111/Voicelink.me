@@ -1458,11 +1458,17 @@ export const HeroDemo: React.FC = () => {
   const { t } = useI18n();
   const isCompact = useIsCompactHero();
 
-  // Subtitle with inline Teamleader + WhatsApp logos (shared by both branches)
+  // Subtitle with inline Teamleader + Catermonkey (beta) + WhatsApp logos (shared by both branches)
   const subtitleLogos = (
     <>
       {t('hero.subtitle1_pre')}{' '}
       <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" className="inline-block h-[3.2em] w-auto align-middle -ml-1 -mr-2 my-[-1.1em]" style={{ clipPath: 'inset(0 6% 0 6%)', transform: 'translateY(-0.35em)' }} draggable={false} />{' '}
+      {t('hero.subtitle1_and')}{' '}
+      <span className="inline-flex items-center gap-[0.2em] mx-1 align-[-0.15em]">
+        <img src="/Catermonkey_Icon.png" alt="Catermonkey" className="h-[1.2em] w-auto rounded-[0.2em]" draggable={false} />
+        <span className="font-bold text-black text-[0.9em]">Catermonkey</span>
+        <span className="text-amber-600 font-semibold text-[0.7em]">{t('hero.betaTag')}</span>
+      </span>{' '}
       {t('hero.subtitle1_mid')}{' '}
       <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em] my-[-0.2em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>{t('hero.subtitle1_post')}
     </>
