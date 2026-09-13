@@ -1458,20 +1458,43 @@ export const HeroDemo: React.FC = () => {
   const { t } = useI18n();
   const isCompact = useIsCompactHero();
 
-  // Subtitle with inline Teamleader + Catermonkey (beta) + WhatsApp logos (shared by both branches)
+  // Generic subtitle — no hardcoded CRM name, just the fixed WhatsApp anchor
+  // (shared by both branches). Which CRMs we support is shown separately,
+  // right below, via crmStatusRow — see the platforms array for how to add one.
   const subtitleLogos = (
     <>
-      {t('hero.subtitle1_pre')}{' '}
-      <img src="/Logo_Teamleader_Default_CMYK.png" alt="Teamleader" className="inline-block h-[3.2em] w-auto align-middle -ml-1 -mr-2 my-[-1.1em]" style={{ clipPath: 'inset(0 6% 0 6%)', transform: 'translateY(-0.35em)' }} draggable={false} />{' '}
-      {t('hero.subtitle1_and')}{' '}
-      <span className="inline-flex items-center gap-[0.2em] mx-1 align-[-0.15em]">
-        <img src="/Catermonkey_Icon.png" alt="Catermonkey" className="h-[1.2em] w-auto rounded-[0.2em]" draggable={false} />
-        <span className="font-bold text-black text-[0.9em]">Catermonkey</span>
-        <span className="text-amber-600 font-semibold text-[0.7em]">{t('hero.betaTag')}</span>
-      </span>{' '}
-      {t('hero.subtitle1_mid')}{' '}
-      <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em] my-[-0.2em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>{t('hero.subtitle1_post')}
+      {t('hero.heroSubtitlePre')}{' '}
+      <span className="inline-flex items-center gap-[0.25em] mx-1 align-[-0.3em] my-[-0.2em]"><img src="/whatsapp-green.svg" alt="WhatsApp" className="h-[1.35em] w-auto" draggable={false} /><span className="font-bold text-black text-[0.9em]">WhatsApp</span></span>{t('hero.heroSubtitlePost')}
     </>
+  );
+
+  // Which CRMs we support, shown as a small status-chip row under the
+  // subtitle. Add a platform here to feature it; give it a `status` for an
+  // early-access badge, or omit `status` once it's fully at prod standards.
+  // Not every CRM VoiceLink technically connects to belongs here — only the
+  // ones ready to be shown to a new visitor.
+  const crmPlatforms: { name: string; icon: string; status?: 'beta' | 'soon' }[] = [
+    { name: 'Teamleader', icon: '/Teamleader_Icon.svg' },
+    { name: 'Catermonkey', icon: '/Catermonkey_Icon.png', status: 'beta' },
+  ];
+
+  const crmStatusRow = (
+    <div className="flex flex-wrap items-center justify-center gap-2.5">
+      {crmPlatforms.map((platform) => (
+        <div
+          key={platform.name}
+          className="inline-flex items-center gap-1.5 rounded-full border border-navy/10 bg-white pl-1.5 pr-3 py-1 shadow-sm"
+        >
+          <img src={platform.icon} alt={platform.name} className="h-5 w-5 object-contain rounded-[3px]" draggable={false} />
+          <span className="font-instrument font-semibold text-[13px] text-navy">{platform.name}</span>
+          {platform.status && (
+            <span className="rounded-full bg-amber-100 px-1.5 py-[1px] text-[10px] font-semibold uppercase tracking-wide text-amber-700">
+              {t(`hero.badge${platform.status === 'beta' ? 'Beta' : 'Soon'}`)}
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
   );
 
   return (
@@ -1519,6 +1542,9 @@ export const HeroDemo: React.FC = () => {
                   {subtitleLogos}
                 </p>
               </div>
+              <div className="hero-animate-subtitle mt-4">
+                {crmStatusRow}
+              </div>
               <div className="hero-animate-ctas mt-6">
                 <div className="flex flex-row gap-3 justify-center">
                   <button onClick={() => { trackCTAClick('Get Started Free - Hero', '/'); navigateWithTransition(withUTM('/signup')); }} className="group bg-navy text-white font-medium rounded-full flex items-center justify-center gap-2 hover:bg-navy-hover transition-colors shadow-lg shadow-black/10 text-[15px] px-6 py-3">
@@ -1554,6 +1580,9 @@ export const HeroDemo: React.FC = () => {
                 <p className="font-instrument text-slate-blue leading-[1.7] text-center max-w-2xl mx-auto" style={{ fontSize: 'clamp(1rem, calc(0.7rem + 0.3vw + 0.35vh), 1.375rem)' }}>
                   {subtitleLogos}
                 </p>
+              </div>
+              <div className="hero-animate-subtitle w-full mt-4">
+                {crmStatusRow}
               </div>
               <div className="hero-animate-ctas w-full" style={{ marginTop: 'clamp(1.5rem, calc(1rem + 1.2vh), 2.5rem)' }}>
                 <div className="flex flex-row gap-4 justify-center">
