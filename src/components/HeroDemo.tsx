@@ -1479,16 +1479,16 @@ export const HeroDemo: React.FC = () => {
   ];
 
   const crmStatusRow = (
-    <div className="flex flex-wrap items-center justify-center gap-2.5">
+    <div className="flex flex-wrap items-center justify-center gap-3.5">
       {crmPlatforms.map((platform) => (
         <div
           key={platform.name}
-          className="inline-flex items-center gap-1.5 rounded-full border border-navy/10 bg-white pl-1.5 pr-3 py-1 shadow-sm"
+          className="inline-flex items-center gap-2.5 rounded-full border border-navy/10 bg-white pl-2.5 pr-4 py-2 shadow-sm"
         >
-          <img src={platform.icon} alt={platform.name} className="h-5 w-5 object-contain rounded-[3px]" draggable={false} />
-          <span className="font-instrument font-semibold text-[13px] text-navy">{platform.name}</span>
+          <img src={platform.icon} alt={platform.name} className="h-8 w-8 object-contain rounded-[4px]" draggable={false} />
+          <span className="font-instrument font-semibold text-base text-navy">{platform.name}</span>
           {platform.status && (
-            <span className="rounded-full bg-amber-100 px-1.5 py-[1px] text-[10px] font-semibold uppercase tracking-wide text-amber-700">
+            <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-amber-700">
               {t(`hero.badge${platform.status === 'beta' ? 'Beta' : 'Soon'}`)}
             </span>
           )}
