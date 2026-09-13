@@ -409,7 +409,7 @@ export const HowItWorksDemo: React.FC = () => {
         <p className="text-base md:text-lg xl:text-xl font-instrument font-medium text-navy/60 max-w-3xl mx-auto">
           {t('howItWorks.subtitle')}
         </p>
-        <div className="flex items-center justify-center gap-2 mt-5">
+        <div className="flex items-center justify-center border-b border-navy/10 mt-6">
           {(Object.keys(CRM_BRANDS) as CrmBrandKey[]).map((key) => {
             const b = CRM_BRANDS[key];
             const isSelected = key === crmBrandKey;
@@ -417,16 +417,18 @@ export const HowItWorksDemo: React.FC = () => {
               <button
                 key={key}
                 onClick={() => { setCrmBrandKey(key); startSequence(); }}
-                className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 transition-colors"
-                style={{
-                  borderColor: isSelected ? b.accent : 'rgba(26,45,99,0.12)',
-                  backgroundColor: isSelected ? `${b.accent}14` : 'white',
-                }}
+                className="relative flex items-center gap-2 px-5 py-3 transition-colors"
               >
-                <img src={b.logo} alt="" className="h-4 w-4 object-contain rounded-[2px]" draggable={false} />
+                <img
+                  src={b.logo}
+                  alt=""
+                  className="h-4 w-4 object-contain rounded-[2px] transition-opacity"
+                  style={{ opacity: isSelected ? 1 : 0.45 }}
+                  draggable={false}
+                />
                 <span
-                  className="font-instrument font-semibold text-[13px]"
-                  style={{ color: isSelected ? b.accent : 'rgba(26,45,99,0.55)' }}
+                  className="font-instrument font-semibold text-[14px] transition-colors"
+                  style={{ color: isSelected ? '#1A2D63' : 'rgba(26,45,99,0.4)' }}
                 >
                   {b.name}
                 </span>
@@ -435,6 +437,10 @@ export const HowItWorksDemo: React.FC = () => {
                     {t('hero.badgeBeta')}
                   </span>
                 )}
+                <span
+                  className="absolute left-2 right-2 -bottom-[1px] h-[2px] rounded-full transition-opacity"
+                  style={{ backgroundColor: b.accent, opacity: isSelected ? 1 : 0 }}
+                />
               </button>
             );
           })}
