@@ -228,6 +228,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
       case 'teamleader': return '/Teamleader_Icon.svg';
       case 'pipedrive': return '/Pipedrive_id-7ejZnwv_0.svg';
       case 'odoo': return '/odoo_logo.svg';
+      case 'catermonkey': return '/Catermonkey_Icon.png';
       default: return null;
     }
   };
