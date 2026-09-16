@@ -17,6 +17,13 @@ export class AuthService {
     return new AuthService('odoo');
   }
 
+  /** Catermonkey via its MCP server: the OAuth dance runs in VoiceLink's
+   *  backend (/oauth/mcp/start → vendor login → /auth/catermonkey_mcp/callback
+   *  ?handoff=…). Shared by /signup and /test/catermonkey. */
+  static createCatermonkeyMcpAuth(): AuthService {
+    return new AuthService('catermonkey_mcp');
+  }
+
   constructor(private provider: string) {}
 
   async initiateAuth(): Promise<AuthResult> {
@@ -28,6 +35,8 @@ export class AuthService {
           return this.initiatePipedriveAuth();
         case 'odoo':
           return this.initiateOdooAuth();
+        case 'catermonkey_mcp':
+          return this.initiateCatermonkeyMcpAuth();
         default:
           return { success: false, error: 'Unknown provider' };
       }
@@ -131,6 +140,24 @@ export class AuthService {
     const authUrl = `${odooAuthUrl}/oauth2/auth?${params.toString()}`;
 
     window.location.href = authUrl;
+    return { success: true };
+  }
+
+  private async initiateCatermonkeyMcpAuth(): Promise<AuthResult> {
+    // No client-side authorize URL to build: VoiceLink's backend owns the
+    // MCP OAuth flow (discovery, PKCE, dynamic client registration) and
+    // redirects back to /auth/catermonkey_mcp/callback?handoff=… on this
+    // origin. The platform key everywhere else is 'catermonkey_mcp'.
+    const vlagentBase = (import.meta.env.VITE_VLAGENT_URL || '').replace(/\/$/, '');
+    if (!vlagentBase) {
+      // No silent prod fallback: a dev build would send users to prod,
+      // which then rejects this origin's return_to anyway.
+      return { success: false, error: 'Catermonkey sign-in is not configured for this environment (VITE_VLAGENT_URL).' };
+    }
+    localStorage.setItem('userPlatform', 'catermonkey_mcp');
+    localStorage.setItem('auth_provider', 'catermonkey_mcp');
+    const params = new URLSearchParams({ server: 'catermonkey', return_to: window.location.origin });
+    window.location.href = `${vlagentBase}/oauth/mcp/start?${params.toString()}`;
     return { success: true };
   }
 

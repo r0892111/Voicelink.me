@@ -6,7 +6,9 @@ import { useAuth, type AuthUser } from '../hooks/useAuth';
 // Which `${platform}_users` table holds the dashboard's language preference
 // (and, for Teamleader, the is_test_user flag). See checkSubscription.
 const prefsTableFor = (platform: string | null | undefined) =>
-  platform === 'catermonkey_mcp' ? 'catermonkey_mcp_users' : 'teamleader_users';
+  platform === 'catermonkey_mcp' ? 'catermonkey_mcp_users'
+  : platform === 'odoo' ? 'odoo_users'
+  : 'teamleader_users';
 
 type PrefsRow = { is_test_user?: boolean | null; language?: string | null; language_locked?: boolean | null };
 import { useWhatsAppConnect } from '../hooks/useWhatsAppConnect';
@@ -198,18 +200,19 @@ export function DashboardLayout() {
       if (!session) return;
 
       // Language / test-user flags live on the platform's own users table
-      // only for Catermonkey-via-MCP (catermonkey_mcp_users has no
-      // is_test_user). Every other platform keeps reading teamleader_users —
-      // pipedrive/odoo rows carry no language columns, so this is the
-      // pre-existing behaviour for them, not a regression.
+      // (catermonkey_mcp_users, odoo_users — is_test_user since migration
+      // 20260916120001). Pipedrive keeps reading teamleader_users — its rows
+      // carry no language columns, so this is the pre-existing behaviour for
+      // it, not a regression.
       // Two literal queries rather than one with a dynamic select string:
       // supabase-js parses the select literal at the type level and can't
       // resolve a union.
       let tlUser: PrefsRow | null = null;
-      if (prefsTableFor(realUser?.platform ?? localStorage.getItem('userPlatform')) === 'catermonkey_mcp_users') {
+      const prefsTable = prefsTableFor(realUser?.platform ?? localStorage.getItem('userPlatform'));
+      if (prefsTable !== 'teamleader_users') {
         const { data } = await supabase
-          .from('catermonkey_mcp_users')
-          .select('language, language_locked')
+          .from(prefsTable)
+          .select('is_test_user, language, language_locked')
           .eq('user_id', session.user.id)
           .maybeSingle();
         tlUser = data;

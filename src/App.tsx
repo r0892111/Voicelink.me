@@ -497,7 +497,7 @@ function App() {
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/support" element={<Support openContactModal={openContactModal} />} />
               <Route path="/banner" element={<ConferenceBanner />} />
-              <Route path="/test" element={<TestSignup />} />
+              <Route path="/test/:platform?" element={<TestSignup />} />
               <Route path="/test-dashboard" element={<Navigate to="/dashboard" replace />} />
               <Route path="/getting-started" element={<GettingStarted />} />
               {/* Fallback route for debugging */}
