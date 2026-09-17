@@ -1,8 +1,11 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { whatsappService } from '../services/whatsappService';
 import { AuthService } from '../services/authService';
 import { markTestFlow } from '../utils/testFlow';
+import { authProviders } from '../config/authProviders';
+import { isPlatform, type Platform } from '../hooks/useAuth';
 import { MessageCircle, Loader2, Check, AlertCircle, ArrowLeft } from 'lucide-react';
 import { COUNTRY_CODES, DEFAULT_COUNTRY_CODE } from '../lib/countryCodes';
 
@@ -12,7 +15,41 @@ const isValidPhone   = (v: string) => phoneRegex.test(normalizePhone(v));
 
 type Step = 'phone' | 'otp';
 
+// /test/<segment>: which CRM this slot page is for. The URL segment is the
+// provider's public name ('catermonkey'); the slot row and the auth flow use
+// the platform key ('catermonkey_mcp'). No segment = Teamleader, the original
+// /test. Plan: VoiceLink docs/crm-onboarding/PLAN-test-accounts-per-crm.md (D2, D3).
+const platformFromSegment = (segment: string | undefined): Platform | null => {
+  if (!segment) return 'teamleader';
+  const provider = authProviders.find((p) => p.name === segment);
+  if (provider) return provider.platform;
+  return isPlatform(segment) ? segment : null;
+};
+// Platforms whose auth edge function honours the test flag today. Odoo and
+// Pipedrive slots can be created already but their page says "coming soon"
+// until their auth function exists (D7).
+const SIGNUP_READY: ReadonlySet<Platform> = new Set<Platform>(['teamleader', 'catermonkey_mcp']);
+const DISPLAY_NAME: Record<Platform, string> = {
+  teamleader: 'Teamleader',
+  pipedrive: 'Pipedrive',
+  odoo: 'Odoo',
+  catermonkey_mcp: 'Catermonkey',
+};
+const authServiceFor = (platform: Platform): AuthService => {
+  switch (platform) {
+    case 'catermonkey_mcp': return AuthService.createCatermonkeyMcpAuth();
+    case 'odoo': return AuthService.createOdooAuth();
+    case 'pipedrive': return AuthService.createPipedriveAuth();
+    default: return AuthService.createTeamleaderAuth();
+  }
+};
+
 export const TestSignup: React.FC = () => {
+  const { platform: segment } = useParams<{ platform?: string }>();
+  const resolvedPlatform = platformFromSegment(segment);
+  const unknownPage = resolvedPlatform === null;
+  const platform: Platform = resolvedPlatform ?? 'teamleader';
+  const crmName = DISPLAY_NAME[platform];
   const [cc,             setCc]            = React.useState(DEFAULT_COUNTRY_CODE);
   const [digits,         setDigits]        = React.useState('');
   const [phone,          setPhone]         = React.useState('');
@@ -47,11 +84,17 @@ export const TestSignup: React.FC = () => {
     try {
       const { data: rows, error: dbError } = await supabase
         .rpc('lookup_test_user_by_phone', { phone_in: normalized });
-      const data = (rows as Array<{ user_id: string; whatsapp_status: string }> | null)?.[0] ?? null;
+      const data = (rows as Array<{ user_id: string; whatsapp_status: string; platform?: string | null }> | null)?.[0] ?? null;
 
       if (dbError) throw new Error('Something went wrong. Please try again.');
       if (!data) {
         setError("This number isn't in our system. Reach out if you think that's a mistake.");
+        return;
+      }
+      // The slot is for one CRM; the page for another CRM must not redeem it
+      // (and must not spend an OTP on it).
+      if ((data.platform ?? 'teamleader') !== platform) {
+        setError('This number is registered for another CRM. Use the link you received.');
         return;
       }
 
@@ -84,17 +127,17 @@ export const TestSignup: React.FC = () => {
       // which the subscription gates use to skip the paywall. We bypass
       // /signup on purpose — AuthPage clears the flag on mount.
       markTestFlow(confirmedPhone);
-      localStorage.setItem('userPlatform', 'teamleader');
-      localStorage.setItem('auth_provider', 'teamleader');
+      localStorage.setItem('userPlatform', platform);
+      localStorage.setItem('auth_provider', platform);
 
-      const result = await AuthService.createTeamleaderAuth().initiateAuth();
+      const result = await authServiceFor(platform).initiateAuth();
       if (!result.success) {
         localStorage.removeItem('userPlatform');
         localStorage.removeItem('auth_provider');
-        setError(result.error || 'Could not start Teamleader connection. Try again.');
+        setError(result.error || `Could not start ${crmName} connection. Try again.`);
         setBusy(false);
       }
-      // On success, initiateAuth has set window.location.href to Teamleader
+      // On success, initiateAuth has set window.location.href to the CRM
       // and the page is unloading — leave busy=true so the spinner stays
       // until the redirect happens.
     } catch (e) {
@@ -118,6 +161,21 @@ export const TestSignup: React.FC = () => {
     }
   };
 
+  if (unknownPage || !SIGNUP_READY.has(platform)) {
+    return (
+      <div className="min-h-screen bg-porcelain flex items-center justify-center p-6 font-instrument">
+        <div className="w-full max-w-sm bg-white rounded-2xl shadow-md border border-navy/[0.07] p-8 text-center">
+          <h1 className="font-general text-xl font-bold text-navy mb-1.5">
+            {unknownPage ? 'No such test page' : `${crmName} testing is coming soon`}
+          </h1>
+          <p className="text-sm text-slate-blue">
+            {unknownPage ? 'Check the link you received.' : 'We will send you a new link as soon as it is ready.'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-porcelain flex items-center justify-center p-6 font-instrument">
 
@@ -137,7 +195,7 @@ export const TestSignup: React.FC = () => {
                 Connect your WhatsApp
               </h1>
               <p className="text-sm text-slate-blue mb-7">
-                Enter the phone number we have on file for you.
+                Enter the phone number we have on file for your {crmName} test account.
               </p>
 
               {error && (

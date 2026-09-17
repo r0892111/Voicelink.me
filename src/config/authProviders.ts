@@ -4,6 +4,7 @@ import { AuthProvider } from '../types/auth';
 export const authProviders: AuthProvider[] = [
   {
     name: 'teamleader',
+    platform: 'teamleader',
     displayName: 'Teamleader',
     icon: Users,
     color: 'bg-emerald-600',
@@ -15,6 +16,7 @@ export const authProviders: AuthProvider[] = [
   // AuthPage.handleSignIn and AuthCallback. Platform key: 'catermonkey_mcp'.
   {
     name: 'catermonkey',
+    platform: 'catermonkey_mcp',
     displayName: 'Catermonkey',
     icon: ChefHat,
     color: 'bg-amber-600',

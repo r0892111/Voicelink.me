@@ -152,6 +152,11 @@ export const AuthCallback: React.FC = () => {
       // values from earlier test sessions are ignored so they can't hijack
       // a fresh /signup attempt.
       const { isTest: isTestUserFlow, phone: testPhone } = consumeTestFlow();
+      // Consumed: the keys must not outlive this callback. An OAuth started
+      // later from the homepage checkout CTA or an invite link (neither mounts
+      // AuthPage, which is where the other clear lives) would otherwise inherit
+      // the flag for up to 10 minutes and flag a real account.
+      clearTestFlow();
 
       // Check if this is a team invite flow
       const inviteToken = localStorage.getItem('team_invite_token');
@@ -160,16 +165,20 @@ export const AuthCallback: React.FC = () => {
       // account-creation path, so sending it on every login is harmless.
       const referralCode = getReferralCode();
 
+      // Test-slot signup (/test/<platform>): the flag rides along for every
+      // platform; each auth function decides what to do with it (teamleader-auth
+      // trusts it as before, catermonkey-mcp-auth verifies the slot server-side).
+      // Plan: VoiceLink docs/crm-onboarding/PLAN-test-accounts-per-crm.md, D4.
+      const testFields = isTestUserFlow
+        ? { is_test_user: true, test_phone: testPhone ?? undefined }
+        : {};
       const requestBody: Record<string, unknown> = isMcpHandoff
-        ? { handoff, redirect_uri: redirectUri }
+        ? { handoff, redirect_uri: redirectUri, ...testFields }
         : {
             code,
             state,
             redirect_uri: redirectUri,
-            ...(isTestUserFlow && platform === 'teamleader' && {
-              is_test_user: true,
-              test_phone: testPhone ?? undefined,
-            }),
+            ...testFields,
             ...(inviteToken && { invitation_token: inviteToken }),
             ...(referralCode && { ref_code: referralCode }),
           };

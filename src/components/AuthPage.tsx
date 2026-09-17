@@ -66,21 +66,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
       if (globalAuthMode === 'signup') trackSignupStart();
 
       if (provider.name === 'catermonkey') {
-        // No client-side authorize URL to build: VoiceLink's backend owns the
-        // MCP OAuth flow (discovery, PKCE, dynamic client registration) and
-        // redirects back to /auth/catermonkey_mcp/callback?handoff=… on this
-        // origin. The platform key everywhere else is 'catermonkey_mcp'.
-        const vlagentBase = (import.meta.env.VITE_VLAGENT_URL || '').replace(/\/$/, '');
-        if (!vlagentBase) {
-          // No silent prod fallback: a dev build would send users to prod,
-          // which then rejects this origin's return_to anyway.
-          setError('Catermonkey sign-in is not configured for this environment (VITE_VLAGENT_URL).');
-          return;
-        }
-        localStorage.setItem('userPlatform', 'catermonkey_mcp');
-        localStorage.setItem('auth_provider', 'catermonkey_mcp');
-        const params = new URLSearchParams({ server: 'catermonkey', return_to: window.location.origin });
-        window.location.href = `${vlagentBase}/oauth/mcp/start?${params.toString()}`;
+        // VoiceLink's backend owns the MCP OAuth flow; the start URL lives in
+        // AuthService so /test/catermonkey uses the very same code path.
+        const result = await AuthService.createCatermonkeyMcpAuth().initiateAuth();
+        if (!result.success && result.error) setError(result.error);
         return;
       }
 

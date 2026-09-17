@@ -72,7 +72,7 @@ Deno.serve(async (req) => {
   const r = log.withRequest(req);
 
   try {
-    const { handoff, redirect_uri } = await req.json();
+    const { handoff, redirect_uri, is_test_user, test_phone } = await req.json();
     r.info('auth request received', { has_handoff: !!handoff, has_redirect_uri: !!redirect_uri });
 
     if (typeof handoff !== 'string' || !handoff || handoff.length > 256 || !redirect_uri) {
@@ -186,6 +186,67 @@ Deno.serve(async (req) => {
       return json({ success: false, code: 'db_error', error: GENERIC_FAIL }, 500);
     }
 
+    // Test-slot signup (voicelink.me/test/catermonkey): AuthCallback sends
+    // is_test_user + test_phone when the browser holds a fresh test-flow
+    // marker. The body is unauthenticated, so the slot is verified here — and
+    // verified for THIS caller, now, not "by someone, sometime":
+    //   1. the phone is a catermonkey_mcp slot whose OTP round-trip completed
+    //      (test_users.whatsapp_status = 'active');
+    //   2. that OTP completed within the test-flow window — markVerified bumps
+    //      updated_at, and the client-side flag itself lives 10 minutes;
+    //   3. the slot is unredeemed (tl_user_id null) or was redeemed by this very
+    //      account (the tester signing in again);
+    //   4. no OTHER account on this table already carries the phone as active.
+    // Without 2–4 anyone with a Catermonkey login and a tester's number could
+    // attach that number to their own account and hijack its WhatsApp routing
+    // (VLAgent resolves the sender by phone). A rejected slot never fails the
+    // login and never flags the account. Plan: VoiceLink
+    // docs/crm-onboarding/PLAN-test-accounts-per-crm.md (D4).
+    const TEST_SLOT_WINDOW_MS = 15 * 60 * 1000;
+    let testSlotPhone: string | null = null;
+    if (is_test_user === true && typeof test_phone === 'string' && /^\+[1-9]\d{6,14}$/.test(test_phone)) {
+      const { data: slot, error: slotErr } = await supabase
+        .from('test_users')
+        .select('platform, whatsapp_status, tl_user_id, updated_at')
+        .eq('phone', test_phone)
+        .maybeSingle();
+      const verifiedAt = slot?.updated_at ? Date.parse(slot.updated_at) : NaN;
+      const fresh = Number.isFinite(verifiedAt) && Date.now() - verifiedAt < TEST_SLOT_WINDOW_MS;
+      const unclaimed = !slot?.tl_user_id || slot.tl_user_id === existingRow?.user_id;
+      let reason: string | null = null;
+      if (slotErr) reason = `lookup failed: ${slotErr.message}`;
+      else if (!slot) reason = 'no slot';
+      else if (slot.platform !== PROVIDER) reason = `slot is for ${slot.platform}`;
+      else if (slot.whatsapp_status !== 'active') reason = `otp ${slot.whatsapp_status}`;
+      else if (!fresh) reason = 'otp too old';
+      else if (!unclaimed) reason = 'slot already redeemed by another account';
+      if (!reason) {
+        const { data: holders, error: holdErr } = await supabase
+          .from(TABLE)
+          .select('user_id')
+          .eq('whatsapp_number', test_phone)
+          .eq('whatsapp_status', 'active')
+          .is('deleted_at', null)
+          .limit(2);
+        if (holdErr) reason = `holder lookup failed: ${holdErr.message}`;
+        else if ((holders ?? []).some((h: { user_id: string }) => h.user_id !== existingRow?.user_id)) {
+          reason = 'phone active on another account';
+        }
+      }
+      if (reason) {
+        r.warn('test slot rejected', { reason, phone_tail: test_phone.slice(-4) });
+      } else {
+        testSlotPhone = test_phone;
+        r.info('test slot verified', { phone_tail: test_phone.slice(-4) });
+      }
+    }
+    // Copied onto the identity row: the tester verified this phone on the
+    // slot already, so the dashboard OTP is skipped exactly like teamleader-auth
+    // does for Teamleader test users.
+    const testFields = testSlotPhone
+      ? { is_test_user: true, whatsapp_number: testSlotPhone, whatsapp_status: 'active' }
+      : {};
+
     let userId: string;
     let sessionEmail: string;
 
@@ -206,7 +267,7 @@ Deno.serve(async (req) => {
       await supabase.auth.admin.updateUserById(userId, { user_metadata: userMetadata });
       const { error: refreshErr } = await supabase
         .from(TABLE)
-        .update({ user_info: userInfo, company_id: record.company_id ?? null })
+        .update({ user_info: userInfo, company_id: record.company_id ?? null, ...testFields })
         .eq('user_id', userId);
       if (refreshErr) r.warn('identity row refresh failed (non-fatal)', { error: refreshErr.message });
     } else {
@@ -279,6 +340,7 @@ Deno.serve(async (req) => {
         user_info: userInfo,
         env: record.env,
         language,
+        ...testFields,
       });
       if (insertErr && insertErr.code === '23505') {
         // Two handoffs for the same vendor_subject raced (two tabs within
@@ -329,6 +391,16 @@ Deno.serve(async (req) => {
     // 6. Session via magic link, landing on the dashboard of the origin the
     // flow started from (dev vs prod), like teamleader-auth. The link is
     // returned to the browser and followed directly — never emailed.
+    // 6b (teamleader-auth parity): link the slot to the account it produced.
+    if (testSlotPhone) {
+      const { error: linkErr } = await supabase
+        .from('test_users')
+        .update({ tl_user_id: userId, updated_at: new Date().toISOString() })
+        .eq('phone', testSlotPhone);
+      if (linkErr) r.warn('test_users link failed (non-fatal)', { error: linkErr.message });
+      else r.info('test slot linked', { user_id: userId });
+    }
+
     let postAuthRedirect: string;
     try {
       postAuthRedirect = `${new URL(redirect_uri).origin}/dashboard`;
