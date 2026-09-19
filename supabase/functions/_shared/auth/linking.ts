@@ -19,7 +19,7 @@ import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
 /** Providers whose asserted email is NOT verified by the provider. A login
  *  from a verified provider must never be merged INTO an account created by
  *  one of these, and vice versa. */
-export const UNVERIFIED_EMAIL_PROVIDERS: ReadonlySet<string> = new Set(['catermonkey_mcp']);
+export const UNVERIFIED_EMAIL_PROVIDERS: ReadonlySet<string> = new Set(['catermonkey_mcp', 'odoo']);
 
 export interface LinkDecision {
   safe: boolean;

@@ -94,7 +94,10 @@ Deno.serve(async (req) => {
     });
   }
 
-  // CRM-connected tenants get the full VLAgent cascade first.
+  // CRM-connected tenants get the full VLAgent cascade first: Teamleader
+  // (/oauth/teamleader/disconnect) and, since 2026-09-19, Odoo
+  // (/oauth/odoo/disconnect — VoiceLink revokes the API key where the build
+  // allows it, deletes the row and purges the entity memory; spec D2 OD-15).
   const { data: tlRow, error: tlErr } = await service
     .from('teamleader_users')
     .select('teamleader_id')
@@ -105,9 +108,27 @@ Deno.serve(async (req) => {
     r.done(500);
     return json(500, { error: 'lookup failed — nothing was deleted' });
   }
+  const { data: odooRow, error: odooErr } = await service
+    .from('odoo_users')
+    .select('odoo_user_id')
+    .eq('user_id', user.id)
+    .is('deleted_at', null)
+    .maybeSingle();
+  // 42P01 = relation does not exist: deployed ahead of the odoo_users
+  // migration — treat as "no row", every other error is a hard stop.
+  if (odooErr && odooErr.code !== '42P01') {
+    r.error('odoo_users lookup failed', { error: odooErr.message, code: odooErr.code });
+    r.done(500);
+    return json(500, { error: 'lookup failed — nothing was deleted' });
+  }
+  const cascade: { vendor: string; tenantId: string } | null = tlRow?.teamleader_id
+    ? { vendor: 'teamleader', tenantId: tlRow.teamleader_id as string }
+    : odooRow?.odoo_user_id
+    ? { vendor: 'odoo', tenantId: odooRow.odoo_user_id as string }
+    : null;
 
   let erased: Record<string, unknown> | null = null;
-  if (tlRow?.teamleader_id) {
+  if (cascade) {
     const vlagentUrl = Deno.env.get('VLAGENT_API_URL');
     const vlagentSecret = Deno.env.get('VLAGENT_SECRET');
     if (!vlagentUrl || !vlagentSecret) {
@@ -115,8 +136,8 @@ Deno.serve(async (req) => {
       r.done(500);
       return json(500, { error: 'erasure backend not configured — nothing was deleted' });
     }
-    const tenantId = tlRow.teamleader_id as string;
-    const resp = await fetch(`${vlagentUrl}/oauth/teamleader/disconnect`, {
+    const tenantId = cascade.tenantId;
+    const resp = await fetch(`${vlagentUrl}/oauth/${cascade.vendor}/disconnect`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -134,7 +155,7 @@ Deno.serve(async (req) => {
       return json(502, { error: 'erasure cascade failed — nothing was deleted, please contact support' });
     }
     erased = await resp.json();
-    r.info('VLAgent cascade complete', { tenant_id: tenantId });
+    r.info('VLAgent cascade complete', { vendor: cascade.vendor, tenant_id: tenantId });
   } else {
     r.info('no connected CRM tenant — erasing auth account only', { user_id: user.id });
   }

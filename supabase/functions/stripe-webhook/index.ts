@@ -276,6 +276,8 @@ async function scheduleErasureIfLastSubscription(
     // Teamleader keeps its OAuth tokens on the users row: null them so
     // processing stops now. Catermonkey-via-MCP has no token columns here
     // (they live in VoiceLink's mcp_connections) — stamp the deadline only.
+    // Odoo keeps its API key on the row too, but NOT NULL (VoiceLink 029):
+    // the deadline is stamped and VoiceLink's sweep revokes + deletes.
     const patch =
       table === 'teamleader_users'
         ? { access_token: null, refresh_token: null, erasure_due_at: dueAt }

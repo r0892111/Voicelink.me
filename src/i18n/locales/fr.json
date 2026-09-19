@@ -36,23 +36,6 @@
     "enterNumberOfUsers": "Entrez le nombre d'utilisateurs",
     "premiumMonthly": "Premium Mensuel",
     "advancedCrmFeatures": "Fonctionnalités CRM avancées et support prioritaire",
-    "updateDatabaseName": "Mettre à jour le nom de la base de données",
-    "enterOdooDatabaseName": "Entrez votre nom de base de données Odoo",
-    "enterNewApiKey": "Entrez une nouvelle clé API pour mettre à jour",
-    "enterOdooApiKey": "Entrez votre clé API Odoo",
-    "odooApiInstructions": {
-      "title": "Comment obtenir votre clé API Odoo",
-      "step1": "Connectez-vous à votre compte Odoo",
-      "step2": "Cliquez sur votre icône de profil en haut à droite de la page",
-      "step3": "Sélectionnez 'Préférences'",
-      "step4": "Ouvrez l'onglet 'Sécurité du Compte'",
-      "step5": "Cliquez sur 'Nouvelle Clé API' en bas de la page",
-      "step6": "Confirmez votre mot de passe Odoo",
-      "step7": "Nommez votre clé API : 'VoiceLink' (ou un autre nom de votre choix)",
-      "step8": "IMPORTANT : Sélectionnez 'Clé Persistante' comme durée de cette clé API",
-      "step9": "Copiez et collez votre nouvelle clé API dans le champ ci-dessus",
-      "allSet": "Vous êtes maintenant prêt !"
-    },
     "function": "Fonction",
     "autofill": "Remplissage automatique",
     "loadingDashboard": "Chargement du tableau de bord...",
@@ -70,7 +53,6 @@
   },
   "validation": {
     "enterValidApiKey": "Veuillez entrer une clé API valide",
-    "enterOdooDatabaseName": "Veuillez entrer votre nom de base de données Odoo",
     "userNotAuthenticated": "Utilisateur non authentifié",
     "failedToSaveApiKey": "Échec de la sauvegarde de la clé API",
     "enterValidPhoneNumber": "Veuillez entrer un numéro de téléphone international valide",
@@ -103,6 +85,42 @@
       "connectTeamleader": "Connecter Teamleader",
       "connectPipedrive": "Connecter Pipedrive",
       "connectOdoo": "Connecter Odoo"
+    },
+    "page": {
+      "odooSubtitle": "Connexion par clé API — deux minutes"
+    },
+    "odoo": {
+      "title": "Connecter Odoo",
+      "subtitle": "VoiceLink parle à votre CRM Odoo via son propre utilisateur et sa clé API.",
+      "howTo": "Dans Odoo, créez un utilisateur VoiceLink dédié avec accès à l'application CRM et donnez-lui une clé API de portée RPC (Préférences › Sécurité du compte › Nouvelle clé API). Collez cette clé ci-dessous : elle est envoyée une seule fois à VoiceLink et jamais conservée dans ce portail.",
+      "planNote": "Odoo Online exige le plan Custom pour l'API externe. Odoo 17, 18 et 19 sur votre propre serveur fonctionnent tels quels.",
+      "docsLink": "Les instructions d'Odoo sur les clés API",
+      "url": "Adresse de votre Odoo",
+      "urlHint": "https://votresociete.odoo.com — ou l'adresse de votre propre serveur, sans chemin.",
+      "db": "Base de données",
+      "dbHint": "Déduite de l'adresse pour Odoo Online. Sur votre propre serveur, c'est le nom choisi sur l'écran de connexion d'Odoo.",
+      "login": "Identifiant de l'utilisateur VoiceLink",
+      "loginHint": "L'adresse e-mail avec laquelle cet utilisateur se connecte à Odoo.",
+      "apiKey": "Clé API",
+      "apiKeyHint": "Collée avec des espaces ou des sauts de ligne ? Nous les retirons.",
+      "connect": "Connecter Odoo",
+      "connecting": "Vérification de votre clé auprès d'Odoo...",
+      "connected": "Connecté — ouverture de votre tableau de bord...",
+      "back": "Retour aux options de connexion",
+      "errors": {
+        "missing_fields": "Renseignez l'adresse, la base de données, l'identifiant et la clé API.",
+        "odoo_bad_url": "L'adresse doit commencer par https:// et pointer vers votre Odoo, sans chemin.",
+        "odoo_unreachable": "Aucun Odoo n'a répondu à cette adresse. Vérifiez l'URL et que l'instance est joignable depuis internet.",
+        "odoo_bad_credentials": "Odoo a refusé l'identifiant ou la clé API. Vérifiez l'identifiant de l'utilisateur VoiceLink et recollez la clé.",
+        "odoo_db_unknown": "Odoo ne connaît pas ce nom de base de données — vérifiez-le.",
+        "odoo_crm_missing": "L'application CRM n'est pas installée sur cette base, ou l'utilisateur VoiceLink ne peut pas la voir.",
+        "odoo_plan_gate": "Cette base Odoo Online est sur un plan sans API externe. Odoo exige le plan Custom pour cela.",
+        "odoo_error": "Odoo a renvoyé une erreur. Réessayez dans un instant.",
+        "not_configured": "La connexion Odoo n'est pas configurée pour cet environnement.",
+        "db_error": "La connexion a échoué. Veuillez réessayer.",
+        "session_failed": "Votre Odoo est connecté, mais la session n'a pas pu être créée. Reconnectez-vous dans un instant.",
+        "unexpected": "Une erreur s'est produite. Veuillez réessayer."
+      }
     }
   },
   "invite": {

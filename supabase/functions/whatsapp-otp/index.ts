@@ -16,7 +16,7 @@ const log = createLogger('whatsapp-otp');
 // repository writes for every other provider — no special-casing below.
 const VALID_PROVIDERS: CrmProvider[] = ['teamleader', 'pipedrive', 'odoo', 'catermonkey_mcp', 'test'];
 // Providers whose users table carries promo_end_date (promo users bypass the Stripe gate).
-const PROMO_AWARE_PROVIDERS: CrmProvider[] = ['teamleader', 'catermonkey_mcp'];
+const PROMO_AWARE_PROVIDERS: CrmProvider[] = ['teamleader', 'catermonkey_mcp', 'odoo'];
 
 function ok(data: Record<string, unknown>) {
   return new Response(JSON.stringify({ success: true, ...data }), {

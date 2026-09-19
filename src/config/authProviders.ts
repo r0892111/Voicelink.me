@@ -1,4 +1,4 @@
-import { Users, ChefHat } from 'lucide-react';
+import { Users, ChefHat, Database } from 'lucide-react';
 import { AuthProvider } from '../types/auth';
 
 export const authProviders: AuthProvider[] = [
@@ -21,6 +21,20 @@ export const authProviders: AuthProvider[] = [
     icon: ChefHat,
     color: 'bg-amber-600',
     hoverColor: 'hover:bg-amber-700'
+  },
+  // Odoo connects with a static API key, not OAuth (Odoo has no OAuth
+  // provider for third parties). The button opens AuthPage.renderOdooConnect;
+  // the form posts to the odoo-connect edge function, which has VoiceLink
+  // prove the key and store it, then creates the portal account. Spec:
+  // VoiceLink docs/crm-onboarding/odoo/specs/D3-portal.md (OD-17).
+  {
+    name: 'odoo',
+    platform: 'odoo',
+    displayName: 'Odoo',
+    kind: 'credentials',
+    icon: Database,
+    color: 'bg-purple-700',
+    hoverColor: 'hover:bg-purple-800'
   },
   // TEMPORARY: Pipedrive disabled
   // {

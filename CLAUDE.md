@@ -22,7 +22,7 @@ No test framework is configured.
 **Backend:** Supabase (auth, database, edge functions). No custom backend server — the frontend talks directly to Supabase and its edge functions.
 
 **Key integrations:**
-- **CRM OAuth:** Teamleader, Pipedrive, and Odoo via `src/services/authService.ts`. Each CRM has its own OAuth flow and `{platform}_users` table in Supabase. Catermonkey (platform key `catermonkey_mcp`, table `catermonkey_mcp_users`) is different: its OAuth runs in the VoiceLink backend over MCP; the portal only redeems a handoff token in `supabase/functions/catermonkey-mcp-auth` (identity only — the CRM tokens never reach this project).
+- **CRM sign-in:** Teamleader and Pipedrive via OAuth in `src/services/authService.ts`; each has its own OAuth flow and `{platform}_users` table in Supabase. Odoo has no OAuth: `/signup` shows a credentials form (instance URL, database, login, API key — `AuthPage.renderOdooConnect`) that posts to the `odoo-connect` edge function, which has VoiceLink prove and store the key (`POST /oauth/odoo/connect`) and then creates the account keyed by the Odoo identity (table `odoo_users`, owned by VoiceLink). The key never touches the browser's storage or the portal's tables. Spec: VoiceLink repo `docs/crm-onboarding/odoo/specs/D3-portal.md`. Catermonkey (platform key `catermonkey_mcp`, table `catermonkey_mcp_users`) is different: its OAuth runs in the VoiceLink backend over MCP; the portal only redeems a handoff token in `supabase/functions/catermonkey-mcp-auth` (identity only — the CRM tokens never reach this project).
 - **Stripe:** Checkout sessions created via Supabase edge function (`supabase/functions/create-stripe-customer`, `stripe-checkout`). Client-side in `src/services/stripeService.ts` and `src/lib/stripe.ts`.
 - **WhatsApp:** Verification and OTP flows via Supabase edge functions (`whatsapp-otp`, `whatsapp-verify-external`, `whatsapp-welcome`).
 
@@ -49,7 +49,6 @@ All prefixed with `VITE_`:
 - `VITE_STRIPE_PUBLISHABLE_KEY`
 - `VITE_TEAMLEADER_CLIENT_ID`, `VITE_TEAMLEADER_REDIRECT_URI`
 - `VITE_PIPEDRIVE_CLIENT_ID`
-- `VITE_ODOO_CLIENT_ID`, `VITE_ODOO_AUTH_URL`
 - `VITE_VLAGENT_URL` — public base of the VoiceLink backend (VLAgent). Used by the Catermonkey button on `/signup`: the MCP OAuth flow runs there (`/oauth/mcp/start?server=catermonkey&return_to=<this origin>`) and returns to `/auth/catermonkey_mcp/callback?handoff=…`, which `catermonkey-mcp-auth` redeems. Dev: `http://127.0.0.1:8000` (the backend must list this origin in its `MCP_ONBOARDING_RETURN_ORIGINS`).
 
 ## Supabase
