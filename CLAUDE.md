@@ -51,6 +51,10 @@ All prefixed with `VITE_`:
 - `VITE_PIPEDRIVE_CLIENT_ID`
 - `VITE_VLAGENT_URL` — public base of the VoiceLink backend (VLAgent). Used by the Catermonkey button on `/signup`: the MCP OAuth flow runs there (`/oauth/mcp/start?server=catermonkey&return_to=<this origin>`) and returns to `/auth/catermonkey_mcp/callback?handoff=…`, which `catermonkey-mcp-auth` redeems. Dev: `http://127.0.0.1:8000` (the backend must list this origin in its `MCP_ONBOARDING_RETURN_ORIGINS`).
 
+## Browser tests
+
+`npm run test:e2e` runs Playwright (`playwright.config.ts`, specs in `e2e/`) against `vite dev` started with dummy Supabase values — every backend call is irrelevant or mocked with `page.route()`, nothing reaches a real project. Chromium once: `npx playwright install chromium`. First suite: `e2e/odoo-connect.spec.ts` (the Odoo connect form and its contract with the `odoo-connect` function).
+
 ## Supabase
 
 - Edge functions in `supabase/functions/`
