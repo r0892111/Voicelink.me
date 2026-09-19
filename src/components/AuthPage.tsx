@@ -369,7 +369,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
                         {provider.name === 'catermonkey' && t('auth.page.continueCatermonkey')}
                       </div>
                       <div className="text-xs sm:text-sm font-instrument text-muted-blue mt-0.5">
-                        {isDisabled ? (provider.name === 'catermonkey' ? t('auth.page.comingSoon') : t('auth.temporarilyUnavailable'))
+                        {isDisabled ? (['catermonkey', 'odoo'].includes(provider.name) ? t('auth.page.comingSoon') : t('auth.temporarilyUnavailable'))
                           : provider.name === 'odoo' ? t('auth.page.odooSubtitle')
                           : provider.name === 'catermonkey' ? t('auth.page.catermonkeySubtitle')
                           : t('auth.modal.startTrialInstantly')}
