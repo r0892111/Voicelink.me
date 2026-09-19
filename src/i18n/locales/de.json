@@ -36,23 +36,6 @@
     "enterNumberOfUsers": "Anzahl der Benutzer eingeben",
     "premiumMonthly": "Premium Monatlich",
     "advancedCrmFeatures": "Erweiterte CRM-Funktionen und Prioritätssupport",
-    "updateDatabaseName": "Datenbankname aktualisieren",
-    "enterOdooDatabaseName": "Geben Sie Ihren Odoo-Datenbanknamen ein",
-    "enterNewApiKey": "Neuen API-Schlüssel zum Aktualisieren eingeben",
-    "enterOdooApiKey": "Geben Sie Ihren Odoo API-Schlüssel ein",
-    "odooApiInstructions": {
-      "title": "So erhalten Sie Ihren Odoo API-Schlüssel",
-      "step1": "Melden Sie sich bei Ihrem Odoo-Konto an",
-      "step2": "Klicken Sie auf Ihr Profilsymbol oben rechts auf der Seite",
-      "step3": "Wählen Sie 'Einstellungen'",
-      "step4": "Öffnen Sie den Tab 'Kontosicherheit'",
-      "step5": "Klicken Sie auf 'Neuer API-Schlüssel' am unteren Rand der Seite",
-      "step6": "Bestätigen Sie Ihr Odoo-Passwort",
-      "step7": "Benennen Sie Ihren API-Schlüssel: 'VoiceLink' (oder einen anderen Namen Ihrer Wahl)",
-      "step8": "WICHTIG: Wählen Sie 'Dauerhafter Schlüssel' als Dauer dieses API-Schlüssels",
-      "step9": "Kopieren Sie Ihren neuen API-Schlüssel und fügen Sie ihn in das obige Feld ein",
-      "allSet": "Sie sind jetzt startklar!"
-    },
     "function": "Funktion",
     "autofill": "Automatisch ausfüllen",
     "loadingDashboard": "Dashboard wird geladen...",
@@ -76,7 +59,6 @@
   },
   "validation": {
     "enterValidApiKey": "Bitte geben Sie einen gültigen API-Schlüssel ein",
-    "enterOdooDatabaseName": "Bitte geben Sie Ihren Odoo-Datenbanknamen ein",
     "userNotAuthenticated": "Benutzer nicht authentifiziert",
     "failedToSaveApiKey": "API-Schlüssel speichern fehlgeschlagen",
     "enterValidPhoneNumber": "Bitte geben Sie eine gültige internationale Telefonnummer ein",
@@ -109,6 +91,42 @@
       "connectTeamleader": "Teamleader Verbinden",
       "connectPipedrive": "Pipedrive Verbinden",
       "connectOdoo": "Odoo Verbinden"
+    },
+    "page": {
+      "odooSubtitle": "Verbinden mit API-Schlüssel — in zwei Minuten"
+    },
+    "odoo": {
+      "title": "Odoo verbinden",
+      "subtitle": "VoiceLink spricht mit Ihrem Odoo-CRM über einen eigenen Benutzer und API-Schlüssel.",
+      "howTo": "Legen Sie in Odoo einen eigenen VoiceLink-Benutzer mit Zugriff auf die CRM-App an und geben Sie ihm einen API-Schlüssel mit Bereich RPC (Einstellungen › Kontosicherheit › Neuer API-Schlüssel). Fügen Sie den Schlüssel unten ein: Er wird einmal an VoiceLink gesendet und nie in diesem Portal gespeichert.",
+      "planNote": "Odoo Online braucht den Custom-Plan für die externe API. Odoo 17, 18 und 19 auf dem eigenen Server funktionieren unverändert.",
+      "docsLink": "Odoos eigene Anleitung zu API-Schlüsseln",
+      "url": "Adresse Ihres Odoo",
+      "urlHint": "https://ihrefirma.odoo.com — oder die Adresse Ihres eigenen Servers, ohne Pfad.",
+      "db": "Datenbank",
+      "dbHint": "Wird bei Odoo Online aus der Adresse abgeleitet. Auf dem eigenen Server ist es der Name, den Sie im Odoo-Anmeldebildschirm wählen.",
+      "login": "Login des VoiceLink-Benutzers",
+      "loginHint": "Die E-Mail-Adresse, mit der sich dieser Benutzer bei Odoo anmeldet.",
+      "apiKey": "API-Schlüssel",
+      "apiKeyHint": "Mit Leerzeichen oder Zeilenumbrüchen eingefügt? Wir entfernen sie.",
+      "connect": "Odoo verbinden",
+      "connecting": "Wir prüfen Ihren Schlüssel bei Odoo...",
+      "connected": "Verbunden — Ihr Dashboard wird geöffnet...",
+      "back": "Zurück zu den Anmeldeoptionen",
+      "errors": {
+        "missing_fields": "Geben Sie Adresse, Datenbank, Login und API-Schlüssel ein.",
+        "odoo_bad_url": "Die Adresse muss mit https:// beginnen und auf Ihr Odoo zeigen, ohne Pfad.",
+        "odoo_unreachable": "Unter dieser Adresse hat kein Odoo geantwortet. Prüfen Sie die URL und ob die Instanz aus dem Internet erreichbar ist.",
+        "odoo_bad_credentials": "Odoo hat Login oder API-Schlüssel abgelehnt. Prüfen Sie das Login des VoiceLink-Benutzers und fügen Sie den Schlüssel erneut ein.",
+        "odoo_db_unknown": "Odoo kennt diesen Datenbanknamen nicht — bitte prüfen.",
+        "odoo_crm_missing": "Die CRM-App ist auf dieser Datenbank nicht installiert, oder der VoiceLink-Benutzer darf sie nicht sehen.",
+        "odoo_plan_gate": "Diese Odoo-Online-Datenbank läuft auf einem Plan ohne externe API. Odoo verlangt dafür den Custom-Plan.",
+        "odoo_error": "Odoo hat einen Fehler zurückgegeben. Versuchen Sie es gleich noch einmal.",
+        "not_configured": "Die Odoo-Anmeldung ist für diese Umgebung nicht eingerichtet.",
+        "db_error": "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+        "session_failed": "Ihr Odoo ist verbunden, aber die Sitzung konnte nicht erstellt werden. Melden Sie sich gleich erneut an.",
+        "unexpected": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+      }
     }
   },
   "invite": {

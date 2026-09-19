@@ -56,25 +56,38 @@ Current tables in the `public` schema (minimal setup for Teamleader auth):
 ---
 
 ### `odoo_users`
+Owned by VoiceLink (migration `029_odoo_users.sql`, portal parity copy `20260915120000_create_odoo_users.sql`); the portal only links `user_id` (odoo-connect) and the OTP / billing / language columns. RLS enabled with no policies: backend (service role) only — `access_token` never reaches a browser.
+
 | Column | Type | Notes |
 |--------|------|-------|
-| id | uuid | PK |
-| user_id | uuid | FK → auth.users |
-| odoo_user_id | text | UNIQUE, NOT NULL |
-| access_token | text | |
-| refresh_token | text | |
-| token_expires_at | timestamptz | |
-| user_info | jsonb | |
-| created_at | timestamptz | |
-| updated_at | timestamptz | |
-| deleted_at | timestamptz | |
+| odoo_user_id | text | PK — `host/db/uid`, one Odoo login on one database on one instance |
+| api_domain | text | NOT NULL — instance base URL |
+| odoo_db | text | NOT NULL |
+| odoo_login | text | NOT NULL |
+| odoo_uid | integer | |
+| access_token | text | NOT NULL — the static Odoo API key (no OAuth, no refresh) |
+| refresh_token | text | NOT NULL DEFAULT '' (parity with the generic token path) |
+| expires_at_unix | double precision | when the tenant set an expiry on the key |
+| odoo_version | text | |
+| user_id | uuid | FK → auth.users, ON DELETE SET NULL — linked by odoo-connect |
+| env | text | NOT NULL, 'dev' \| 'staging' \| 'prod' — one row per env |
 | whatsapp_number | text | |
-| whatsapp_status | text | 'not_set', 'pending', 'active' |
+| whatsapp_status | text | NOT NULL DEFAULT 'pending' — 'pending' \| 'active' \| 'disabled'; VoiceLink routes 'active' only |
 | whatsapp_otp_code | text | |
 | whatsapp_otp_expires_at | timestamptz | |
 | whatsapp_otp_phone | text | |
-| stripe_customer_id | text | UNIQUE |
-
+| stripe_customer_id | text | |
+| is_admin | boolean | NOT NULL DEFAULT false |
+| admin_user_id | uuid | |
+| promo_end_date | timestamptz | |
+| trial_started_tracked | boolean | NOT NULL DEFAULT false |
+| language | text | |
+| language_locked | boolean | NOT NULL DEFAULT false |
+| is_test_user | boolean | since `20260916120001` |
+| erasure_due_at | timestamptz | |
+| deleted_at | timestamptz | |
+| created_at | timestamptz | NOT NULL DEFAULT now() |
+| updated_at | timestamptz | NOT NULL DEFAULT now() |
 ---
 
 ### `oauth_tokens`

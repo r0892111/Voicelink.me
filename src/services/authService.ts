@@ -13,10 +13,6 @@ export class AuthService {
     return new AuthService('pipedrive');
   }
 
-  static createOdooAuth(): AuthService {
-    return new AuthService('odoo');
-  }
-
   /** Catermonkey via its MCP server: the OAuth dance runs in VoiceLink's
    *  backend (/oauth/mcp/start → vendor login → /auth/catermonkey_mcp/callback
    *  ?handoff=…). Shared by /signup and /test/catermonkey. */
@@ -33,8 +29,6 @@ export class AuthService {
           return this.initiateTeamleaderAuth();
         case 'pipedrive':
           return this.initiatePipedriveAuth();
-        case 'odoo':
-          return this.initiateOdooAuth();
         case 'catermonkey_mcp':
           return this.initiateCatermonkeyMcpAuth();
         default:
@@ -102,44 +96,6 @@ export class AuthService {
     const authUrl = `https://oauth.pipedrive.com/oauth/authorize?${params.toString()}`;
     window.location.href = authUrl;
     
-    return { success: true };
-  }
-
-  private async initiateOdooAuth(): Promise<AuthResult> {
-    const clientId = import.meta.env.VITE_ODOO_CLIENT_ID;
-
-    if (!clientId) {
-      return { success: false, error: 'Odoo client ID not configured' };
-    }
-    const redirectUri = `${window.location.protocol}//${window.location.host}/auth/odoo/callback`;
-
-    // Clear any existing auth state to ensure fresh authentication
-    localStorage.removeItem('odoo_oauth_state');
-    localStorage.removeItem('userPlatform');
-    localStorage.removeItem('auth_provider');
-
-    // Generate a fresh state parameter
-    const state = this.generateState();
-
-    const params = new URLSearchParams({
-      response_type: 'code',
-      client_id: clientId,
-      redirect_uri: redirectUri,
-      scope: 'userinfo',
-      state: state,
-    });
-
-    // Store the new state
-    localStorage.setItem('odoo_oauth_state', state);
-    localStorage.setItem('auth_provider', 'odoo');
-    localStorage.setItem('userPlatform', 'odoo');
-
-    // Support custom Odoo domains via environment variable
-    // Default to accounts.odoo.com for standard Odoo.com installations
-    const odooAuthUrl = import.meta.env.VITE_ODOO_AUTH_URL || 'https://accounts.odoo.com';
-    const authUrl = `${odooAuthUrl}/oauth2/auth?${params.toString()}`;
-
-    window.location.href = authUrl;
     return { success: true };
   }
 

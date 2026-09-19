@@ -136,7 +136,6 @@ export const useAuth = () => {
     localStorage.removeItem('auth_provider');
     localStorage.removeItem('teamleader_oauth_state');
     localStorage.removeItem('pipedrive_oauth_state');
-    localStorage.removeItem('odoo_oauth_state');
 
     // Must await so Supabase clears its own localStorage before the page reloads,
     // otherwise checkAuth() finds the old session on the next render.

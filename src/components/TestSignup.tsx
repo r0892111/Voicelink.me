@@ -35,12 +35,14 @@ const DISPLAY_NAME: Record<Platform, string> = {
   odoo: 'Odoo',
   catermonkey_mcp: 'Catermonkey',
 };
-const authServiceFor = (platform: Platform): AuthService => {
+// Odoo is absent on purpose: it connects with a credentials form on /signup
+// (AuthPage.renderOdooConnect), not with a redirect — no AuthService to start.
+const authServiceFor = (platform: Platform): AuthService | null => {
   switch (platform) {
     case 'catermonkey_mcp': return AuthService.createCatermonkeyMcpAuth();
-    case 'odoo': return AuthService.createOdooAuth();
     case 'pipedrive': return AuthService.createPipedriveAuth();
-    default: return AuthService.createTeamleaderAuth();
+    case 'teamleader': return AuthService.createTeamleaderAuth();
+    default: return null;
   }
 };
 
@@ -130,7 +132,8 @@ export const TestSignup: React.FC = () => {
       localStorage.setItem('userPlatform', platform);
       localStorage.setItem('auth_provider', platform);
 
-      const result = await authServiceFor(platform).initiateAuth();
+      const service = authServiceFor(platform);
+      const result = service ? await service.initiateAuth() : { success: false, error: `${crmName} test sign-up is not available yet.` };
       if (!result.success) {
         localStorage.removeItem('userPlatform');
         localStorage.removeItem('auth_provider');

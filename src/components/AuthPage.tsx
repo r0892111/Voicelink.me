@@ -1,12 +1,9 @@
 import React from 'react';
-import { Loader2, AlertCircle, Mail, Lock, UserPlus, Eye, EyeOff, ArrowRight, ArrowLeft } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
+import { Loader2, AlertCircle, ArrowRight, ArrowLeft, Globe, Database, User, KeyRound, ExternalLink } from 'lucide-react';
 import { AuthProvider } from '../types/auth';
 import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
 import { useI18n } from '../hooks/useI18n';
-import { StripeService } from '../services/stripeService';
 import { withUTM } from '../utils/utm';
 import { trackSignupStart } from '../utils/analytics';
 import { LanguageSwitcher } from './LanguageSwitcher';
@@ -19,29 +16,36 @@ interface AuthPageProps {
 
 export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) => {
   const { t } = useI18n();
-  const navigate = useNavigate();
   const { navigateWithTransition } = usePageTransition();
   const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const processingRef = React.useRef(false);
 
-  const [showOdooTypeSelection, setShowOdooTypeSelection] = React.useState(false);
-  const [showSelfHostedLogin, setShowSelfHostedLogin] = React.useState(false);
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [isSignup, setIsSignup] = React.useState(true);
   const [globalAuthMode, setGlobalAuthMode] = React.useState<'signup' | 'login'>(initialMode);
-  const [emailLoading, setEmailLoading] = React.useState(false);
-  const [emailError, setEmailError] = React.useState<string | null>(null);
   const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
 
-  // Catermonkey ships "coming soon": the MCP signup flow is built but not yet
-  // deployed end to end / accepted with a real phone. Remove it from this
-  // list to go live — everything behind the button is already wired.
-  const disabledProviders: string[] = ['catermonkey'];
+  // Odoo credentials form (spec D3, OD-17). The key lives in component state
+  // for the one request that carries it — never localStorage, never the URL,
+  // never the portal's own tables.
+  const [showOdooConnect, setShowOdooConnect] = React.useState(false);
+  const [odooUrl, setOdooUrl] = React.useState('');
+  const [odooDb, setOdooDb] = React.useState('');
+  const [odooDbTouched, setOdooDbTouched] = React.useState(false);
+  const [odooLogin, setOdooLogin] = React.useState('');
+  const [odooKey, setOdooKey] = React.useState('');
+  const [odooLoading, setOdooLoading] = React.useState(false);
+  const [odooError, setOdooError] = React.useState<string | null>(null);
+
+  // Catermonkey and Odoo ship "coming soon": both flows are built but not yet
+  // accepted end to end with a real phone (Odoo: OD-20). Remove a name from
+  // this list to go live — everything behind the button is already wired.
+  // `?enable=odoo` switches one on for THIS visit only: the acceptance
+  // tester's door, not something a visitor stumbles into.
+  const enabledByQuery = React.useMemo(
+    () => new Set((new URLSearchParams(window.location.search).get('enable') || '').split(',').map((v) => v.trim()).filter(Boolean)),
+    [],
+  );
+  const disabledProviders: string[] = ['catermonkey', 'odoo'].filter((name) => !enabledByQuery.has(name));
 
   // Clear any leftover test-user flags on mount. If the visitor is on /signup,
   // they're doing the real flow — stale keys from a prior /test-dashboard
@@ -57,7 +61,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
 
   const handleSignIn = async (provider: AuthProvider) => {
     if (processingRef.current || loadingProvider) return;
-    if (provider.name === 'odoo') { setShowOdooTypeSelection(true); return; }
+    if (provider.kind === 'credentials') {
+      // No redirect: the form on this page does the connecting.
+      setError(null);
+      setOdooError(null);
+      setShowOdooConnect(true);
+      return;
+    }
 
     try {
       processingRef.current = true;
@@ -99,117 +109,68 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
     }
   };
 
-  const handleOdooCloudAuth = async () => {
+  /* ─── Odoo: credentials form (spec D3, OD-17) ───
+     The odoo-connect edge function has VoiceLink prove the key against the
+     instance and store it, creates or reuses the portal account keyed by
+     the Odoo identity (never by e-mail), and answers with a session link. */
+
+  const deriveOdooDb = (url: string): string => {
+    // Odoo Online: the database is the subdomain (VERIFIED #9 — every Online
+    // database seen so far). Self-hosted: nothing to derive, the user types it.
     try {
-      processingRef.current = true;
-      setLoadingProvider('odoo');
-      setError(null);
-      if (globalAuthMode === 'signup') trackSignupStart();
-
-      localStorage.setItem('userPlatform', 'odoo');
-      localStorage.setItem('auth_provider', 'odoo');
-
-      const authService = AuthService.createOdooAuth();
-      const result = await authService.initiateAuth();
-      if (!result.success && result.error) {
-        setError(`${t('auth.authenticationFailedFor', { provider: 'Odoo' })}: ${result.error}`);
-        localStorage.removeItem('userPlatform');
-        localStorage.removeItem('auth_provider');
-      }
-    } catch (error) {
-      setError(`Error signing in with Odoo: ${error instanceof Error ? error.message : 'Unknown error'}`);
-      localStorage.removeItem('userPlatform');
-      localStorage.removeItem('auth_provider');
-    } finally {
-      setLoadingProvider(null);
-      processingRef.current = false;
+      const host = new URL(url.trim()).hostname.toLowerCase();
+      const m = host.match(/^([a-z0-9-]+)\.odoo\.com$/);
+      return m ? m[1] : '';
+    } catch {
+      return '';
     }
   };
 
-  const handleEmailAuth = async () => {
-    if (!email || !password) { setEmailError('Please enter both email and password'); return; }
-    if (isSignup && password !== confirmPassword) { setEmailError('Passwords do not match'); return; }
-    if (isSignup && password.length < 6) { setEmailError('Password must be at least 6 characters'); return; }
+  const handleOdooUrlChange = (value: string) => {
+    setOdooUrl(value);
+    if (!odooDbTouched) setOdooDb(deriveOdooDb(value));
+  };
 
-    setEmailLoading(true);
-    setEmailError(null);
-    setError(null);
+  const ODOO_ERROR_CODES = ['odoo_bad_url', 'odoo_unreachable', 'odoo_bad_credentials', 'odoo_db_unknown', 'odoo_crm_missing', 'odoo_plan_gate', 'odoo_error', 'not_configured', 'db_error', 'session_failed'];
+  const odooErrorText = (code: unknown, fallback: unknown): string => {
+    if (typeof code === 'string' && ODOO_ERROR_CODES.includes(code)) return t(`auth.odoo.errors.${code}`);
+    return typeof fallback === 'string' && fallback ? fallback : t('auth.odoo.errors.unexpected');
+  };
 
+  const handleOdooConnect = async () => {
+    if (odooLoading) return;
+    const url = odooUrl.trim().replace(/\/+$/, '');
+    const db = odooDb.trim();
+    const login = odooLogin.trim();
+    const apiKey = odooKey.replace(/\s+/g, ''); // pasted with spaces or line breaks
+    if (!url || !db || !login || !apiKey) { setOdooError(t('auth.odoo.errors.missing_fields')); return; }
+    if (!/^https:\/\/[^/?#]+$/i.test(url)) { setOdooError(t('auth.odoo.errors.odoo_bad_url')); return; }
+
+    setOdooLoading(true);
+    setOdooError(null);
+    if (globalAuthMode === 'signup') trackSignupStart();
     try {
-      if (isSignup) {
-        trackSignupStart();
-        const { data, error: signupError } = await supabase.auth.signUp({ email, password });
-        if (signupError) throw signupError;
-
-        if (data.user) {
-          setRedirectingMessage(t('auth.preparingCheckout') || 'Setting up your account...');
-          const userName = email.split('@')[0];
-
-          const { error: odooUserError } = await supabase.from('odoo_users').insert({
-            user_id: data.user.id, odoo_user_id: data.user.id,
-            user_info: { email, name: userName },
-          });
-          if (odooUserError) console.error('Error creating odoo_users entry:', odooUserError);
-
-          const { error: userError } = await supabase.from('users').insert({
-            id: data.user.id, email, name: userName,
-          });
-          if (userError) console.error('Error creating users entry:', userError);
-
-          localStorage.setItem('userPlatform', 'odoo');
-          localStorage.setItem('auth_provider', 'odoo');
-
-          try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-              const customerResponse = await fetch(
-                `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-stripe-customer`,
-                { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` }, body: JSON.stringify({ provider: 'odoo' }) }
-              );
-              const customerResult = await customerResponse.json();
-              if (!customerResult.success) console.error('Failed to create Stripe customer:', customerResult.error);
-              else console.log('Stripe customer created:', customerResult.customer_id);
-            }
-          } catch (customerError) { console.error('Error creating Stripe customer:', customerError); }
-
-          setRedirectingMessage(t('auth.redirectingToCheckout') || 'Redirecting to checkout...');
-          try {
-            await StripeService.createCheckoutSession({ priceId: 'price_1S5o6zLPohnizGblsQq7OYCT', quantity: 1, successUrl: `${window.location.origin}/dashboard`, cancelUrl: `${window.location.origin}/dashboard`, crmProvider: 'odoo' });
-            return;
-          } catch (checkoutError) { console.error('Checkout error:', checkoutError); setRedirectingMessage(null); navigate(withUTM('/dashboard')); return; }
-        }
-      } else {
-        const { data, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
-        if (loginError) throw loginError;
-
-        if (data.user) {
-          localStorage.setItem('userPlatform', 'odoo');
-          localStorage.setItem('auth_provider', 'odoo');
-          setRedirectingMessage(t('auth.checkingSubscription') || 'Checking your subscription...');
-
-          try {
-            const response = await fetch(
-              `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription?provider=odoo`,
-              { method: 'GET', headers: { Authorization: `Bearer ${data.session.access_token}`, 'Content-Type': 'application/json' } }
-            );
-            const result = await response.json();
-            const hasActiveSubscription = result.success && result.subscription && (result.subscription.subscription_status === 'active' || result.subscription.subscription_status === 'trialing');
-
-            if (hasActiveSubscription) { navigate(withUTM('/dashboard')); return; }
-            else {
-              setRedirectingMessage(t('auth.redirectingToCheckout') || 'Redirecting to checkout...');
-              try {
-                await StripeService.createCheckoutSession({ priceId: 'price_1S5o6zLPohnizGblsQq7OYCT', quantity: 1, successUrl: `${window.location.origin}/dashboard`, cancelUrl: `${window.location.origin}/dashboard`, crmProvider: 'odoo' });
-                return;
-              } catch (checkoutError) { console.error('Checkout error during login:', checkoutError); setRedirectingMessage(null); navigate(withUTM('/dashboard')); return; }
-            }
-          } catch (subscriptionError) { console.error('Error checking subscription:', subscriptionError); navigate(withUTM('/dashboard')); return; }
-        }
+      const language = (localStorage.getItem('i18nextLng') || navigator.language || 'nl').slice(0, 2);
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/odoo-connect`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({ url, db, login, api_key: apiKey, redirect_uri: `${window.location.origin}/dashboard`, language }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result?.success || typeof result.session_url !== 'string') {
+        setOdooError(odooErrorText(result?.code, result?.error));
+        return;
       }
+      setOdooKey('');
+      localStorage.setItem('userPlatform', 'odoo');
+      localStorage.setItem('auth_provider', 'odoo');
+      setRedirectingMessage(t('auth.odoo.connected'));
+      window.location.href = result.session_url;
     } catch (err) {
-      setEmailError(err instanceof Error ? err.message : 'Authentication failed');
-      console.error('Email auth error:', err);
-    } finally { setEmailLoading(false); }
+      setOdooError(err instanceof Error ? err.message : t('auth.odoo.errors.unexpected'));
+    } finally {
+      setOdooLoading(false);
+    }
   };
 
   const getProviderLogo = (providerName: string) => {
@@ -264,131 +225,83 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
     </svg>
   );
 
-  /* ─── Sub-screens ─── */
+  /* ─── Sub-screen: Connect Odoo ─── */
 
-  const renderOdooTypeSelection = () => (
+  const odooInputClass = 'w-full pl-12 pr-4 py-3.5 text-base border-2 border-navy/10 rounded-xl focus:ring-2 focus:ring-navy focus:border-transparent bg-white transition-all';
+
+  const renderOdooConnect = () => (
     <div className="w-full max-w-lg mx-auto lg:ml-auto lg:mr-8">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-general font-bold text-navy mb-4">{t('auth.chooseYourOdooType')}</h1>
-        <p className="text-lg sm:text-xl font-instrument text-slate-blue">{t('auth.selectOdooInstallationType')}</p>
+      <div className="text-center mb-6">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-general font-bold text-navy mb-3">{t('auth.odoo.title')}</h1>
+        <p className="text-lg sm:text-xl font-instrument text-slate-blue">{t('auth.odoo.subtitle')}</p>
       </div>
 
-      <div className="space-y-4 mb-8">
-        <button
-          onClick={handleOdooCloudAuth}
-          disabled={loadingProvider === 'odoo'}
-          className="w-full p-5 sm:p-6 bg-white border-2 border-navy/10 rounded-2xl hover:bg-navy/5 hover:border-navy/20 transition-all text-left group shadow-sm hover:shadow-md"
-        >
-          <div className="flex items-start space-x-4">
-            <div className="flex-shrink-0 mt-1"><img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8 sm:h-10 sm:w-10" /></div>
-            <div className="flex-1">
-              <h3 className="text-lg sm:text-xl font-general font-semibold text-navy mb-1">{t('auth.odooCloudTitle')}</h3>
-              <p className="text-sm sm:text-base font-instrument text-slate-blue">{t('auth.odooCloudDescription')}</p>
-            </div>
-            {loadingProvider === 'odoo' && <Loader2 className="w-6 h-6 text-navy animate-spin" />}
+      <div className="p-4 sm:p-5 bg-navy/5 border border-navy/10 rounded-xl mb-5">
+        <div className="flex items-start space-x-3">
+          <AlertCircle className="w-5 h-5 text-navy flex-shrink-0 mt-0.5" />
+          <div className="flex-1 text-sm sm:text-base font-instrument text-slate-blue space-y-1.5">
+            <p>{t('auth.odoo.howTo')}</p>
+            <p>{t('auth.odoo.planNote')}</p>
+            <a href="https://www.odoo.com/documentation/19.0/developer/reference/external_api.html#api-keys" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-navy hover:underline font-medium">
+              <span>{t('auth.odoo.docsLink')}</span><ExternalLink className="w-4 h-4" />
+            </a>
           </div>
-        </button>
-
-        <button
-          onClick={() => { setShowOdooTypeSelection(false); setShowSelfHostedLogin(true); setIsSignup(globalAuthMode === 'signup'); }}
-          className="w-full p-5 sm:p-6 bg-white border-2 border-navy/10 rounded-2xl hover:bg-navy/5 hover:border-navy/20 transition-all text-left group shadow-sm hover:shadow-md"
-        >
-          <div className="flex items-start space-x-4">
-            <div className="flex-shrink-0 mt-1"><img src="/odoo_logo.svg" alt="Odoo" className="h-8 w-8 sm:h-10 sm:w-10" /></div>
-            <div className="flex-1">
-              <h3 className="text-lg sm:text-xl font-general font-semibold text-navy mb-1">{t('auth.selfHostedOdooTitle')}</h3>
-              <p className="text-sm sm:text-base font-instrument text-slate-blue">{t('auth.selfHostedOdooDescription')}</p>
-            </div>
-          </div>
-        </button>
+        </div>
       </div>
 
-      <button onClick={() => setShowOdooTypeSelection(false)} className="w-full py-3 text-base font-instrument text-slate-blue hover:text-navy transition-colors">
-        ← {t('auth.backToLoginOptions')}
-      </button>
-    </div>
-  );
+      {odooError && (
+        <div className="mb-5 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-2">
+          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-red-700">{odooError}</p>
+        </div>
+      )}
 
-  const renderSelfHostedLogin = () => (
-    <div className="w-full max-w-lg mx-auto lg:ml-auto lg:mr-8">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-general font-bold text-navy mb-4">
-          {isSignup ? t('auth.createAccount') : t('auth.signIn')}
-        </h1>
-        <p className="text-lg sm:text-xl font-instrument text-slate-blue">{t('auth.forSelfHostedInstances')}</p>
-      </div>
-
-      <div className="space-y-5">
-        {isSignup && (
-          <div className="p-4 sm:p-5 bg-navy/5 border border-navy/10 rounded-xl">
-            <div className="flex items-start space-x-3">
-              <AlertCircle className="w-5 h-5 text-navy flex-shrink-0 mt-0.5" />
-              <div className="flex-1">
-                <p className="text-sm sm:text-base font-general font-semibold text-navy mb-1">{t('auth.importantEmailAddress')}</p>
-                <p className="text-sm sm:text-base font-instrument text-slate-blue">{t('auth.emailMatchWarning')}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {emailError && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-2">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1"><p className="text-sm text-red-800 font-medium">{t('auth.error')}</p><p className="text-sm text-red-700">{emailError}</p></div>
-          </div>
-        )}
-
+      <form className="space-y-4" autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleOdooConnect(); }}>
         <div>
-          <label htmlFor="email" className="block text-sm sm:text-base font-instrument font-medium text-navy mb-2">
-            {t('auth.email')} {isSignup && <span className="text-red-500">*</span>}
-          </label>
-          {isSignup && <p className="text-xs sm:text-sm font-instrument text-slate-blue mb-2">{t('auth.mustMatchOdooEmail')}</p>}
+          <label htmlFor="odoo-url" className="block text-sm sm:text-base font-instrument font-medium text-navy mb-1.5">{t('auth.odoo.url')} <span className="text-red-500">*</span></label>
           <div className="relative">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-blue" />
-            <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
-              className="w-full pl-12 pr-4 py-3.5 text-base border-2 border-navy/10 rounded-xl focus:ring-2 focus:ring-navy focus:border-transparent bg-white transition-all" />
+            <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-blue" />
+            <input type="url" id="odoo-url" value={odooUrl} onChange={(e) => handleOdooUrlChange(e.target.value)} placeholder="https://yourcompany.odoo.com" inputMode="url" spellCheck={false} className={odooInputClass} />
           </div>
+          <p className="text-xs sm:text-sm font-instrument text-slate-blue mt-1">{t('auth.odoo.urlHint')}</p>
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm sm:text-base font-instrument font-medium text-navy mb-2">
-            {t('auth.password')} {isSignup && <span className="text-red-500">*</span>}
-          </label>
-          {isSignup && <p className="text-xs sm:text-sm font-instrument text-slate-blue mb-2">{t('auth.chooseSecurePassword')}</p>}
+          <label htmlFor="odoo-db" className="block text-sm sm:text-base font-instrument font-medium text-navy mb-1.5">{t('auth.odoo.db')} <span className="text-red-500">*</span></label>
           <div className="relative">
-            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-blue" />
-            <input type={showPassword ? "text" : "password"} id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••"
-              className="w-full pl-12 pr-14 py-3.5 text-base border-2 border-navy/10 rounded-xl focus:ring-2 focus:ring-navy focus:border-transparent bg-white transition-all" />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-blue hover:text-navy">
-              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-            </button>
+            <Database className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-blue" />
+            <input type="text" id="odoo-db" value={odooDb} onChange={(e) => { setOdooDbTouched(true); setOdooDb(e.target.value); }} placeholder="yourcompany" spellCheck={false} className={odooInputClass} />
           </div>
+          <p className="text-xs sm:text-sm font-instrument text-slate-blue mt-1">{t('auth.odoo.dbHint')}</p>
         </div>
 
-        {isSignup && (
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm sm:text-base font-instrument font-medium text-navy mb-2">
-              {t('auth.confirmPassword')} <span className="text-red-500">*</span>
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-blue" />
-              <input type={showConfirmPassword ? "text" : "password"} id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••"
-                className="w-full pl-12 pr-14 py-3.5 text-base border-2 border-navy/10 rounded-xl focus:ring-2 focus:ring-navy focus:border-transparent bg-white transition-all" />
-              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-blue hover:text-navy">
-                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              </button>
-            </div>
+        <div>
+          <label htmlFor="odoo-login" className="block text-sm sm:text-base font-instrument font-medium text-navy mb-1.5">{t('auth.odoo.login')} <span className="text-red-500">*</span></label>
+          <div className="relative">
+            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-blue" />
+            <input type="text" id="odoo-login" value={odooLogin} onChange={(e) => setOdooLogin(e.target.value)} placeholder="voicelink@yourcompany.com" autoComplete="off" spellCheck={false} className={odooInputClass} />
           </div>
-        )}
+          <p className="text-xs sm:text-sm font-instrument text-slate-blue mt-1">{t('auth.odoo.loginHint')}</p>
+        </div>
 
-        <button onClick={handleEmailAuth} disabled={emailLoading || !email || !password || (isSignup && !confirmPassword)}
+        <div>
+          <label htmlFor="odoo-key" className="block text-sm sm:text-base font-instrument font-medium text-navy mb-1.5">{t('auth.odoo.apiKey')} <span className="text-red-500">*</span></label>
+          <div className="relative">
+            <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-blue" />
+            <input type="password" id="odoo-key" value={odooKey} onChange={(e) => setOdooKey(e.target.value)} placeholder="••••••••••••••••" autoComplete="new-password" spellCheck={false} className={odooInputClass} />
+          </div>
+          <p className="text-xs sm:text-sm font-instrument text-slate-blue mt-1">{t('auth.odoo.apiKeyHint')}</p>
+        </div>
+
+        <button type="submit" disabled={odooLoading || !odooUrl || !odooDb || !odooLogin || !odooKey}
           className="w-full bg-navy hover:bg-navy-hover disabled:bg-muted-blue text-white font-general font-semibold text-lg py-4 px-6 rounded-xl transition-colors flex items-center justify-center space-x-2">
-          {emailLoading
-            ? <><Loader2 className="w-5 h-5 animate-spin" /><span>{isSignup ? t('auth.creatingAccount') : t('auth.signingIn')}</span></>
-            : <><UserPlus className="w-5 h-5" /><span>{isSignup ? t('auth.createAccount') : t('auth.signIn')}</span></>}
+          {odooLoading
+            ? <><Loader2 className="w-5 h-5 animate-spin" /><span>{t('auth.odoo.connecting')}</span></>
+            : <><span>{t('auth.odoo.connect')}</span><ArrowRight className="w-5 h-5" /></>}
         </button>
 
-        {isSignup && (
+        {globalAuthMode === 'signup' && (
           <p className="text-sm font-instrument text-muted-blue text-center leading-relaxed">
             {t('auth.passiveTermsConsent')}{' '}
             <a href="/saas-agreement" className="text-navy hover:underline" target="_blank" rel="noopener noreferrer">{t('validation.saasAgreement')}</a>
@@ -396,19 +309,12 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
             <a href="/privacy-policy" className="text-navy hover:underline" target="_blank" rel="noopener noreferrer">{t('validation.privacyPolicy')}</a>
           </p>
         )}
+      </form>
 
-        <div className="flex items-center justify-center pt-2">
-          <button onClick={() => { const m = isSignup ? 'login' : 'signup'; setGlobalAuthMode(m); setShowSelfHostedLogin(false); setShowOdooTypeSelection(false); setIsSignup(m === 'signup'); setEmailError(null); setConfirmPassword(''); }}
-            className="text-base text-navy hover:underline font-general font-medium">
-            {isSignup ? t('auth.alreadyHaveAccountSignIn') : t('auth.needAccountSignUp')}
-          </button>
-        </div>
-      </div>
-
-      <div className="mt-8">
-        <button onClick={() => { setShowSelfHostedLogin(false); setShowOdooTypeSelection(true); }}
+      <div className="mt-6">
+        <button type="button" onClick={() => { setShowOdooConnect(false); setOdooError(null); }} disabled={odooLoading}
           className="text-base text-slate-blue hover:text-navy transition-colors flex items-center space-x-1 mx-auto">
-          <span>←</span><span>{t('auth.backToOdooOptions')}</span>
+          <span>←</span><span>{t('auth.odoo.back')}</span>
         </button>
       </div>
     </div>
@@ -463,8 +369,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
                         {provider.name === 'catermonkey' && t('auth.page.continueCatermonkey')}
                       </div>
                       <div className="text-xs sm:text-sm font-instrument text-muted-blue mt-0.5">
-                        {isDisabled ? (provider.name === 'catermonkey' ? t('auth.page.comingSoon') : t('auth.temporarilyUnavailable'))
-                          : provider.name === 'odoo' ? t('auth.forOdooAccountsOnly')
+                        {isDisabled ? (['catermonkey', 'odoo'].includes(provider.name) ? t('auth.page.comingSoon') : t('auth.temporarilyUnavailable'))
+                          : provider.name === 'odoo' ? t('auth.page.odooSubtitle')
                           : provider.name === 'catermonkey' ? t('auth.page.catermonkeySubtitle')
                           : t('auth.modal.startTrialInstantly')}
                       </div>
@@ -563,7 +469,11 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
       {/* Main content */}
       <div className="flex-1 flex min-h-0 md:-mt-[9vh]">
         {/* Left side: form — centered on mobile, pushed toward center on desktop */}
-        <div className="w-full lg:w-[55%] flex items-center justify-center lg:justify-end relative z-10 px-6 sm:px-10 lg:pl-4 lg:pr-0 pb-[32vh] lg:pb-0">
+        {/* The Odoo form is taller than the provider list: let its column
+            scroll (the page itself is overflow-hidden for the corner waves)
+            and start it at the top, or a short viewport clips the button. */}
+        <div className={`w-full lg:w-[55%] flex justify-center lg:justify-end relative z-10 px-6 sm:px-10 lg:pl-4 lg:pr-0 ${
+          showOdooConnect ? 'items-start overflow-y-auto pt-2 pb-[32vh] lg:pb-16' : 'items-center pb-[32vh] lg:pb-0'}`}>
           {redirectingMessage && (
             <div className="absolute inset-0 bg-porcelain/95 backdrop-blur-sm flex flex-col items-center justify-center z-50 px-6">
               <div className="w-14 h-14 rounded-2xl bg-navy/[0.05] flex items-center justify-center mb-5">
@@ -574,9 +484,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
             </div>
           )}
 
-          {showOdooTypeSelection ? renderOdooTypeSelection()
-            : showSelfHostedLogin ? renderSelfHostedLogin()
-            : renderMainForm()}
+          {showOdooConnect ? renderOdooConnect() : renderMainForm()}
         </div>
 
         {/* Right side: phone mock — vertically centered */}
