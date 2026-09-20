@@ -27,11 +27,9 @@ verify_jwt = false
 [functions.catermonkey-mcp-auth]
 verify_jwt = false
 
-# Same shape again: AuthPage's Odoo form posts here with the anon key before
-# any session exists. It authenticates the API KEY with VoiceLink
-# (server-to-server, shared secret), not the caller.
-[functions.odoo-connect]
-verify_jwt = false
+# odoo-connect and odoo-account are called by a signed-in account (the
+# dashboard's Connect Odoo card, the sign-up screen right after the session
+# exists) — the gateway's JWT check stays ON for both, like whatsapp-otp.
 
 # Stripe webhooks are signed with `Stripe-Signature`, not a Supabase JWT.
 # Without this, the Supabase gateway 401s every delivery before our handler

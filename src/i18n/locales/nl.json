@@ -126,7 +126,7 @@
       "continueCatermonkey": "Doorgaan met Catermonkey",
       "catermonkeySubtitle": "Voor cateraars — meld je aan met je Catermonkey-account",
       "comingSoon": "Binnenkort beschikbaar",
-      "odooSubtitle": "Koppel met een API-sleutel — twee minuten werk"
+      "odooSubtitle": "Eerst gratis proberen — je Odoo koppel je wanneer je wilt"
     },
     "passiveTermsConsent": "Door je aan te melden, ga je akkoord met onze",
     "callback": {
@@ -185,8 +185,6 @@
     "completingAuthentication": "Authenticatie voltooien...",
     "authenticationFailedFor": "Authenticatie mislukt voor {{provider}}",
     "odoo": {
-      "title": "Odoo koppelen",
-      "subtitle": "VoiceLink praat met je Odoo CRM via een eigen gebruiker en API-sleutel.",
       "howTo": "Maak in Odoo een aparte VoiceLink-gebruiker met toegang tot de CRM-app en geef die een API-sleutel met scope RPC (Voorkeuren › Accountbeveiliging › Nieuwe API-sleutel). Plak die sleutel hieronder: ze wordt één keer naar VoiceLink gestuurd en nooit in dit portaal bewaard.",
       "planNote": "Odoo Online heeft het Custom-abonnement nodig voor de externe API. Odoo 17, 18 en 19 op je eigen server werken zoals ze zijn.",
       "docsLink": "De uitleg van Odoo over API-sleutels",
@@ -200,8 +198,6 @@
       "apiKeyHint": "Geplakt met spaties of regeleinden? Die halen we eraf.",
       "connect": "Odoo koppelen",
       "connecting": "We controleren je sleutel bij Odoo...",
-      "connected": "Gekoppeld — je dashboard wordt geopend...",
-      "back": "Terug naar de aanmeldopties",
       "errors": {
         "missing_fields": "Vul het adres, de database, de login en de API-sleutel in.",
         "odoo_bad_url": "Het adres moet met https:// beginnen en naar je Odoo wijzen, zonder pad.",
@@ -215,6 +211,52 @@
         "db_error": "Aanmelden is mislukt. Probeer het opnieuw.",
         "session_failed": "Je Odoo is gekoppeld, maar de sessie kon niet worden gestart. Meld je zo meteen opnieuw aan.",
         "unexpected": "Er ging iets mis. Probeer het opnieuw."
+      },
+      "account": {
+        "title": "Starten met Odoo",
+        "subtitle": "Maak je VoiceLink-account, start de gratis proefperiode en koppel je Odoo vanuit het dashboard wanneer je wilt — nu hoef je niets klaar te hebben.",
+        "loginTitle": "Aanmelden",
+        "loginSubtitle": "Je VoiceLink-account voor Odoo: e-mail en wachtwoord.",
+        "email": "E-mail",
+        "password": "Wachtwoord",
+        "confirmPassword": "Wachtwoord bevestigen",
+        "passwordHint": "Minstens 8 tekens.",
+        "create": "Account aanmaken",
+        "creating": "Je account wordt aangemaakt...",
+        "signIn": "Aanmelden",
+        "signingIn": "Aanmelden...",
+        "forgot": "Wachtwoord vergeten?",
+        "opening": "Je dashboard wordt geopend...",
+        "confirmSentTitle": "Kijk in je mailbox",
+        "confirmSentBody": "We stuurden een bevestigingsmail. Klik één keer op de link om je account te activeren — daarna meld je aan met je wachtwoord.",
+        "resetSentTitle": "Resetmail verstuurd",
+        "resetSentBody": "Als er een account bestaat voor dat adres, staat er een link in om een nieuw wachtwoord te kiezen.",
+        "back": "Terug naar de aanmeldopties",
+        "errors": {
+          "missing": "Vul je e-mailadres en een wachtwoord in.",
+          "emailInvalid": "Dat ziet er niet uit als een e-mailadres.",
+          "passwordShort": "Gebruik minstens 8 tekens voor het wachtwoord.",
+          "passwordMismatch": "De twee wachtwoorden komen niet overeen.",
+          "exists": "Er bestaat al een account voor dat e-mailadres — meld je aan.",
+          "badCredentials": "Verkeerd e-mailadres of wachtwoord.",
+          "notConfirmed": "Bevestig eerst je e-mailadres — de link staat in je mailbox.",
+          "rateLimited": "Te veel pogingen. Wacht een minuut en probeer opnieuw.",
+          "unexpected": "Er ging iets mis. Probeer het opnieuw."
+        }
+      },
+      "reset": {
+        "title": "Kies een nieuw wachtwoord",
+        "subtitle": "Je opende de link uit de resetmail. Stel een nieuw wachtwoord in voor je VoiceLink-account.",
+        "checking": "We controleren je link...",
+        "newPassword": "Nieuw wachtwoord",
+        "confirmPassword": "Nieuw wachtwoord bevestigen",
+        "save": "Wachtwoord opslaan",
+        "saving": "Opslaan...",
+        "savedTitle": "Wachtwoord opgeslagen",
+        "savedBody": "Je dashboard wordt geopend...",
+        "expiredTitle": "Deze link werkt niet meer",
+        "expiredBody": "Een resetlink werkt één keer en vervalt na een tijdje.",
+        "requestNew": "Vraag een nieuwe aan"
       }
     }
   },
@@ -1600,7 +1642,14 @@
       ],
       "testAccessTitle": "Test-toegang",
       "testAccessBody": "Geen abonnement nodig — gratis tegoed via test-toegang.",
-      "testAccessActive": "Actief"
+      "testAccessActive": "Actief",
+      "stepOdooTitle": "Odoo koppelen",
+      "stepOdooTitleDone": "Odoo gekoppeld",
+      "stepOdooBody": "Geef VoiceLink een eigen Odoo-gebruiker en API-sleutel. Twee minuten, wanneer je wilt.",
+      "stepOdooBodyDone": "Gekoppeld aan {{instance}}. Spraakberichten stromen naar je CRM.",
+      "crmCardOdooNotConnected": "Odoo is nog niet gekoppeld",
+      "statusPillOdooNotConnected": "Odoo — nog niet gekoppeld",
+      "replaceOdooKey": "API-sleutel vervangen"
     },
     "team": {
       "eyebrow": "Workspace",

@@ -166,7 +166,7 @@
       "continueCatermonkey": "Continue with Catermonkey",
       "catermonkeySubtitle": "For caterers — sign in with your Catermonkey account",
       "comingSoon": "Coming soon",
-      "odooSubtitle": "Connect with an API key — takes two minutes"
+      "odooSubtitle": "Free trial first — connect your Odoo whenever you're ready"
     },
     "passiveTermsConsent": "By signing up, you agree to our",
     "callback": {
@@ -207,8 +207,6 @@
     "completingAuthentication": "Completing authentication...",
     "authenticationFailedFor": "Authentication failed for {{provider}}",
     "odoo": {
-      "title": "Connect Odoo",
-      "subtitle": "VoiceLink talks to your Odoo CRM through its own user and API key.",
       "howTo": "In Odoo, create a dedicated VoiceLink user with access to the CRM app and give it an API key with scope RPC (Preferences › Account Security › New API Key). Paste that key below: it is sent once to VoiceLink and never stored in this portal.",
       "planNote": "Odoo Online needs the Custom plan for the external API. Odoo 17, 18 and 19 on your own server work as they are.",
       "docsLink": "Odoo's own API key instructions",
@@ -222,8 +220,6 @@
       "apiKeyHint": "Pasted with spaces or line breaks? We trim them.",
       "connect": "Connect Odoo",
       "connecting": "Checking your key with Odoo...",
-      "connected": "Connected — opening your dashboard...",
-      "back": "Back to login options",
       "errors": {
         "missing_fields": "Fill in the address, the database, the login and the API key.",
         "odoo_bad_url": "The address must start with https:// and point at your Odoo instance, without a path.",
@@ -237,6 +233,52 @@
         "db_error": "Sign-in failed. Please try again.",
         "session_failed": "Your Odoo is connected, but the session could not be created. Sign in again in a moment.",
         "unexpected": "Something went wrong. Please try again."
+      },
+      "account": {
+        "title": "Start with Odoo",
+        "subtitle": "Create your VoiceLink account, start the free trial, and connect your Odoo from the dashboard whenever you're ready — nothing to prepare now.",
+        "loginTitle": "Sign in",
+        "loginSubtitle": "Your VoiceLink account for Odoo: e-mail and password.",
+        "email": "E-mail",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "passwordHint": "At least 8 characters.",
+        "create": "Create account",
+        "creating": "Creating your account...",
+        "signIn": "Sign in",
+        "signingIn": "Signing in...",
+        "forgot": "Forgot your password?",
+        "opening": "Opening your dashboard...",
+        "confirmSentTitle": "Check your inbox",
+        "confirmSentBody": "We sent a confirmation e-mail. Click the link once to activate your account — after that you sign in with your password.",
+        "resetSentTitle": "Reset e-mail sent",
+        "resetSentBody": "If an account exists for that address, it holds a link to choose a new password.",
+        "back": "Back to login options",
+        "errors": {
+          "missing": "Fill in your e-mail address and a password.",
+          "emailInvalid": "That doesn't look like an e-mail address.",
+          "passwordShort": "Use at least 8 characters for the password.",
+          "passwordMismatch": "The two passwords don't match.",
+          "exists": "There is already an account for that e-mail address — sign in instead.",
+          "badCredentials": "Wrong e-mail address or password.",
+          "notConfirmed": "Confirm your e-mail address first — check your inbox for the link.",
+          "rateLimited": "Too many attempts. Wait a minute and try again.",
+          "unexpected": "Something went wrong. Please try again."
+        }
+      },
+      "reset": {
+        "title": "Choose a new password",
+        "subtitle": "You opened the link from the reset e-mail. Set a new password for your VoiceLink account.",
+        "checking": "Checking your link...",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm new password",
+        "save": "Save password",
+        "saving": "Saving...",
+        "savedTitle": "Password saved",
+        "savedBody": "Opening your dashboard...",
+        "expiredTitle": "This link no longer works",
+        "expiredBody": "Reset links can be used once and expire after a while.",
+        "requestNew": "Request a new one"
       }
     }
   },
@@ -1608,7 +1650,14 @@
       ],
       "testAccessTitle": "Test access",
       "testAccessBody": "No subscription needed — free credits via test access.",
-      "testAccessActive": "Active"
+      "testAccessActive": "Active",
+      "stepOdooTitle": "Connect Odoo",
+      "stepOdooTitleDone": "Odoo Connected",
+      "stepOdooBody": "Give VoiceLink its own Odoo user and API key. Two minutes, whenever you're ready.",
+      "stepOdooBodyDone": "Linked to {{instance}}. Voice notes will flow into your CRM.",
+      "crmCardOdooNotConnected": "Odoo is not connected yet",
+      "statusPillOdooNotConnected": "Odoo — not connected yet",
+      "replaceOdooKey": "Replace API key"
     },
     "team": {
       "eyebrow": "Workspace",

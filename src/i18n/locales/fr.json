@@ -87,11 +87,9 @@
       "connectOdoo": "Connecter Odoo"
     },
     "page": {
-      "odooSubtitle": "Connexion par clé API — deux minutes"
+      "odooSubtitle": "Essai gratuit d'abord — connectez votre Odoo quand vous voulez"
     },
     "odoo": {
-      "title": "Connecter Odoo",
-      "subtitle": "VoiceLink parle à votre CRM Odoo via son propre utilisateur et sa clé API.",
       "howTo": "Dans Odoo, créez un utilisateur VoiceLink dédié avec accès à l'application CRM et donnez-lui une clé API de portée RPC (Préférences › Sécurité du compte › Nouvelle clé API). Collez cette clé ci-dessous : elle est envoyée une seule fois à VoiceLink et jamais conservée dans ce portail.",
       "planNote": "Odoo Online exige le plan Custom pour l'API externe. Odoo 17, 18 et 19 sur votre propre serveur fonctionnent tels quels.",
       "docsLink": "Les instructions d'Odoo sur les clés API",
@@ -105,8 +103,6 @@
       "apiKeyHint": "Collée avec des espaces ou des sauts de ligne ? Nous les retirons.",
       "connect": "Connecter Odoo",
       "connecting": "Vérification de votre clé auprès d'Odoo...",
-      "connected": "Connecté — ouverture de votre tableau de bord...",
-      "back": "Retour aux options de connexion",
       "errors": {
         "missing_fields": "Renseignez l'adresse, la base de données, l'identifiant et la clé API.",
         "odoo_bad_url": "L'adresse doit commencer par https:// et pointer vers votre Odoo, sans chemin.",
@@ -120,6 +116,52 @@
         "db_error": "La connexion a échoué. Veuillez réessayer.",
         "session_failed": "Votre Odoo est connecté, mais la session n'a pas pu être créée. Reconnectez-vous dans un instant.",
         "unexpected": "Une erreur s'est produite. Veuillez réessayer."
+      },
+      "account": {
+        "title": "Commencer avec Odoo",
+        "subtitle": "Créez votre compte VoiceLink, lancez l'essai gratuit et connectez votre Odoo depuis le tableau de bord quand vous voulez — rien à préparer maintenant.",
+        "loginTitle": "Se connecter",
+        "loginSubtitle": "Votre compte VoiceLink pour Odoo : e-mail et mot de passe.",
+        "email": "E-mail",
+        "password": "Mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "passwordHint": "Au moins 8 caractères.",
+        "create": "Créer le compte",
+        "creating": "Création de votre compte...",
+        "signIn": "Se connecter",
+        "signingIn": "Connexion...",
+        "forgot": "Mot de passe oublié ?",
+        "opening": "Ouverture de votre tableau de bord...",
+        "confirmSentTitle": "Vérifiez votre boîte mail",
+        "confirmSentBody": "Nous avons envoyé un e-mail de confirmation. Cliquez une fois sur le lien pour activer votre compte — ensuite vous vous connectez avec votre mot de passe.",
+        "resetSentTitle": "E-mail de réinitialisation envoyé",
+        "resetSentBody": "Si un compte existe pour cette adresse, il contient un lien pour choisir un nouveau mot de passe.",
+        "back": "Retour aux options de connexion",
+        "errors": {
+          "missing": "Renseignez votre adresse e-mail et un mot de passe.",
+          "emailInvalid": "Cela ne ressemble pas à une adresse e-mail.",
+          "passwordShort": "Utilisez au moins 8 caractères pour le mot de passe.",
+          "passwordMismatch": "Les deux mots de passe ne correspondent pas.",
+          "exists": "Un compte existe déjà pour cette adresse — connectez-vous.",
+          "badCredentials": "Adresse e-mail ou mot de passe incorrect.",
+          "notConfirmed": "Confirmez d'abord votre adresse e-mail — le lien est dans votre boîte mail.",
+          "rateLimited": "Trop de tentatives. Attendez une minute et réessayez.",
+          "unexpected": "Une erreur s'est produite. Veuillez réessayer."
+        }
+      },
+      "reset": {
+        "title": "Choisir un nouveau mot de passe",
+        "subtitle": "Vous avez ouvert le lien de l'e-mail de réinitialisation. Définissez un nouveau mot de passe pour votre compte VoiceLink.",
+        "checking": "Vérification de votre lien...",
+        "newPassword": "Nouveau mot de passe",
+        "confirmPassword": "Confirmer le nouveau mot de passe",
+        "save": "Enregistrer le mot de passe",
+        "saving": "Enregistrement...",
+        "savedTitle": "Mot de passe enregistré",
+        "savedBody": "Ouverture de votre tableau de bord...",
+        "expiredTitle": "Ce lien ne fonctionne plus",
+        "expiredBody": "Un lien de réinitialisation ne sert qu'une fois et expire après un moment.",
+        "requestNew": "En demander un nouveau"
       }
     }
   },
@@ -1524,7 +1566,14 @@
       ],
       "testAccessTitle": "Accès test",
       "testAccessBody": "Aucun abonnement requis — crédits gratuits via l'accès test.",
-      "testAccessActive": "Actif"
+      "testAccessActive": "Actif",
+      "stepOdooTitle": "Connecter Odoo",
+      "stepOdooTitleDone": "Odoo connecté",
+      "stepOdooBody": "Donnez à VoiceLink son propre utilisateur Odoo et sa clé API. Deux minutes, quand vous voulez.",
+      "stepOdooBodyDone": "Relié à {{instance}}. Les notes vocales arrivent dans votre CRM.",
+      "crmCardOdooNotConnected": "Odoo n'est pas encore connecté",
+      "statusPillOdooNotConnected": "Odoo — pas encore connecté",
+      "replaceOdooKey": "Remplacer la clé API"
     },
     "team": {
       "eyebrow": "Espace de travail",

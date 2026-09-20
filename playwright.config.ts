@@ -1,6 +1,6 @@
 // Browser tests (npm run test:e2e). Chromium once: `npx playwright install chromium`.
 //
-// They run against `vite dev` started here with DUMMY Supabase values — every
+// They run against a production build served here with DUMMY Supabase values — every
 // Supabase call a page makes is either irrelevant to the test or mocked with
 // page.route(). Shell values win over .env files in Vite, so a developer's
 // real .env never leaks into a run. Nothing here talks to a real backend.
@@ -22,11 +22,15 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
   },
+  // The PRODUCTION bundle, not `vite dev`: React 18 StrictMode double-mounts
+  // in dev and DashboardLayout's `mounted` ref never recovers from the
+  // simulated unmount, so the dashboard sits on its loader forever there.
+  // The build bakes the dummy env below in (VITE_* is read at build time).
   webServer: {
-    command: 'npx vite --port 3000 --strictPort',
+    command: 'npx vite build --outDir dist-e2e --logLevel warn && npx vite preview --outDir dist-e2e --port 3000 --strictPort',
     url: 'http://localhost:3000/signup',
-    reuseExistingServer: !process.env.CI,
-    timeout: 60_000,
+    reuseExistingServer: false,
+    timeout: 120_000,
     env: {
       VITE_SUPABASE_URL: 'https://example-project.supabase.co',
       VITE_SUPABASE_ANON_KEY: E2E_ANON_KEY,

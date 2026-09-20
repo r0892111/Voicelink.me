@@ -48,3 +48,4 @@ offer_docs/draaiboek.md
 # Playwright (npm run test:e2e) — reports and traces, never part of the repo
 test-results/
 playwright-report/
+dist-e2e/
