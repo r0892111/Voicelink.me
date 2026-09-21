@@ -21,7 +21,7 @@ export interface BillingRow {
   is_admin?: boolean | null;
   admin_user_id?: string | null;
   promo_end_date?: string | null;
-  /** teamleader_users only */
+  /** every platform table carries it since migration 20260916120001 */
   is_test_user?: boolean | null;
   /** teamleader_users only */
   teamleader_id?: string | null;
@@ -38,9 +38,16 @@ export interface BillingLookup {
 }
 
 // Per-table select: the shared billing columns plus what each table has.
+// `is_test_user` belongs in EVERY select (migration 20260916120001 added it to
+// the platform tables): get-usage-stats reads it to answer "unlimited" for a
+// test account, and without it in the select the field is simply undefined —
+// the account then reads as "no subscription" and the dashboard tells a test
+// user to activate one (seen on /dashboard/usage for the Catermonkey account,
+// 2026-09-21).
 const SELECT: Record<BillingTable, string> = {
   teamleader_users: 'user_id, stripe_customer_id, is_admin, admin_user_id, promo_end_date, is_test_user, teamleader_id',
-  catermonkey_mcp_users: 'user_id, stripe_customer_id, is_admin, admin_user_id, promo_end_date, vendor_subject',
+  catermonkey_mcp_users:
+    'user_id, stripe_customer_id, is_admin, admin_user_id, promo_end_date, is_test_user, vendor_subject',
 };
 
 function toLookup(table: BillingTable, row: BillingRow): BillingLookup {

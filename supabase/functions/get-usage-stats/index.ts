@@ -240,6 +240,16 @@ Deno.serve(async (req) => {
     }
 
     if (scope === 'team') {
+      // Team management (invites, seats, the member breakdown) exists for
+      // Teamleader only: `teamleader_users` is the one table with the
+      // invitation columns, and buildTeamUsage reads it directly. For any
+      // other platform answer "no team" explicitly — an empty member list
+      // made the dashboard render "could not load team usage", which read
+      // as a failure for something that simply does not apply (2026-09-21).
+      const callerBilling = await findBillingRow(supabase, user.id);
+      if (callerBilling && callerBilling.table !== 'teamleader_users') {
+        return json({ success: true, team: null, team_supported: false });
+      }
       return await handleTeamScope(supabase, user.id);
     }
 
