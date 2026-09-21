@@ -137,9 +137,6 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
         case 'pipedrive':
           crmUserId = user.id;
           break;
-        case 'odoo':
-          crmUserId = user.id
-          break;
         default:
           throw new Error('Unknown platform');
       }
@@ -206,9 +203,6 @@ export const WhatsAppVerification: React.FC<WhatsAppVerificationProps> = memo(({
           crmUserId = user.id;
           break;
         case 'pipedrive':
-          crmUserId = user.id;
-          break;
-        case 'odoo':
           crmUserId = user.id;
           break;
         default:

@@ -13,9 +13,13 @@ import {
   ChevronDown,
   X,
   ExternalLink,
+  Database,
+  KeyRound,
 } from 'lucide-react';
 import { useDashboardContext } from '../hooks/useDashboardContext';
 import { WhatsAppConnectForm } from './WhatsAppConnectForm';
+import { useOdooConnect } from '../hooks/useOdooConnect';
+import { OdooConnectForm } from './OdooConnectForm';
 import { BusinessSyncTile } from './BusinessSyncTile';
 import { withUTM } from '../utils/utm';
 import { useI18n } from '../hooks/useI18n';
@@ -29,6 +33,12 @@ export function DashboardHome() {
   const navigate = useNavigate();
   const { t, currentLanguage } = useI18n();
   const { user, wa, role, subscription, isTestUser } = useDashboardContext();
+  // Odoo accounts sign up trial-first (spec D3 rev. 2026-09-20): the CRM is
+  // connected from step 1 of the checklist, after the trial has started. The
+  // hook also makes sure the account's odoo_users row exists (odoo-account).
+  const odoo = useOdooConnect(user);
+  const isOdoo = user.platform === 'odoo';
+  const odooConnected = !isOdoo || odoo.status === 'connected';
 
   const platformLabel = t(`dash.platforms.${user.platform}`, {
     defaultValue: t('dash.platforms.fallback'),
@@ -44,7 +54,10 @@ export function DashboardHome() {
   const isLapsed = !isTestUser && !!subStatus && !isSubscribed && subStatus !== 'none';
   const needsTrial = !isTestUser && !subscription.checking && (!subStatus || subStatus === 'none');
   const canConnectWhatsApp = isSubscribed || isTestUser;
-  const fullySetUp = wa.status === 'active';
+  const canConnectOdoo = isSubscribed || isTestUser;
+  // A connected Odoo can still get a new key (OD-14: expired or revoked):
+  // the CRM card's "Replace key" opens step 1 again while the rest is done.
+  const fullySetUp = wa.status === 'active' && odooConnected && !odoo.open;
 
   function getTimeGreeting(): string {
     const h = new Date().getHours();
@@ -56,12 +69,22 @@ export function DashboardHome() {
   const cheats = (t('dash.home.cheats', { returnObjects: true }) as CheatExample[]) ?? [];
 
   const setupSteps = [
-    {
-      n: 1,
-      done: true,
-      title: t('dash.home.stepCrmTitle', { platform: platformLabel }),
-      description: t('dash.home.stepCrmBody'),
-    },
+    isOdoo
+      ? {
+          n: 1,
+          done: odoo.status === 'connected' && !odoo.open,
+          title: odoo.status === 'connected' ? t('dash.home.stepOdooTitleDone') : t('dash.home.stepOdooTitle'),
+          description:
+            odoo.status === 'connected'
+              ? t('dash.home.stepOdooBodyDone', { instance: odoo.instance ?? 'Odoo' })
+              : t('dash.home.stepOdooBody'),
+        }
+      : {
+          n: 1,
+          done: true,
+          title: t('dash.home.stepCrmTitle', { platform: platformLabel }),
+          description: t('dash.home.stepCrmBody'),
+        },
     {
       n: 2,
       done: wa.status === 'active',
@@ -102,8 +125,10 @@ export function DashboardHome() {
             className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-navy/[0.08] rounded-full px-4 py-1.5 mb-5 shadow-sm"
             style={{ animation: 'hero-subtitle-in 0.5s cubic-bezier(0.22,1,0.36,1) 0.05s both' }}
           >
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-sm font-medium text-navy/65">{t('dash.home.statusPill', { platform: platformLabel })}</span>
+            <div className={`w-2 h-2 rounded-full ${odooConnected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+            <span className="text-sm font-medium text-navy/65">
+              {odooConnected ? t('dash.home.statusPill', { platform: platformLabel }) : t('dash.home.statusPillOdooNotConnected')}
+            </span>
           </div>
 
           <h1
@@ -134,16 +159,31 @@ export function DashboardHome() {
             style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.42s both' }}
           >
             <div className="flex items-center space-x-3 mb-2">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-emerald-500" />
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${odooConnected ? 'bg-emerald-50' : 'bg-navy/[0.05]'}`}>
+                {odooConnected ? <CheckCircle className="w-5 h-5 text-emerald-500" /> : <Database className="w-5 h-5 text-navy/35" />}
               </div>
               <span className="font-general font-semibold text-navy text-sm">{t('dash.home.crmCardTitle')}</span>
             </div>
-            <p className="text-xs text-navy/50">{t('dash.home.crmCardNote', { platform: platformLabel })}</p>
+            <p className="text-xs text-navy/50 truncate">
+              {odooConnected
+                ? (isOdoo && odoo.instance ? odoo.instance.replace(/^https?:\/\//, '') : t('dash.home.crmCardNote', { platform: platformLabel }))
+                : t('dash.home.crmCardOdooNotConnected')}
+            </p>
             <div className="mt-3 flex items-center space-x-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span className="text-xs font-medium text-emerald-600">{t('dash.home.crmCardLive')}</span>
+              <div className={`w-1.5 h-1.5 rounded-full ${odooConnected ? 'bg-emerald-400' : 'bg-navy/20'}`} />
+              <span className={`text-xs font-medium ${odooConnected ? 'text-emerald-600' : 'text-navy/40'}`}>
+                {odooConnected ? t('dash.home.crmCardLive') : t('dash.home.statusNotConnected')}
+              </span>
             </div>
+            {isOdoo && odoo.status === 'connected' && (
+              <button
+                onClick={odoo.toggle}
+                className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-navy/50 hover:text-navy transition-colors"
+              >
+                <KeyRound className="w-3 h-3" />
+                {odoo.open ? t('dash.home.cancel') : t('dash.home.replaceOdooKey')}
+              </button>
+            )}
           </div>
 
           {/* WhatsApp */}
@@ -386,7 +426,7 @@ export function DashboardHome() {
                       className={`flex items-start gap-4 p-4 rounded-2xl transition-colors duration-200 ${
                         step.done
                           ? 'bg-emerald-50/70 border border-emerald-100/80'
-                          : step.n === 2 && wa.open
+                          : (step.n === 2 && wa.open) || (step.n === 1 && isOdoo && odoo.open)
                           ? 'bg-navy/[0.05] border border-navy/[0.09] rounded-b-none'
                           : 'bg-navy/[0.03] border border-transparent hover:border-navy/[0.06]'
                       }`}
@@ -418,6 +458,33 @@ export function DashboardHome() {
                         <p className="text-xs text-navy/50 mt-0.5 leading-relaxed">{step.description}</p>
                       </div>
 
+                      {step.n === 1 && isOdoo && (odoo.status !== 'connected' || odoo.open) && canConnectOdoo && (
+                        <button
+                          onClick={odoo.toggle}
+                          className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
+                        >
+                          {odoo.open ? (
+                            <>
+                              <X className="w-3 h-3" />
+                              {t('dash.home.cancel')}
+                            </>
+                          ) : (
+                            <>
+                              {t('dash.home.connectNow')}
+                              <ChevronDown className="w-3 h-3" />
+                            </>
+                          )}
+                        </button>
+                      )}
+                      {step.n === 1 && isOdoo && odoo.status !== 'connected' && !canConnectOdoo && !subscription.checking && !role.isMember && (
+                        <button
+                          onClick={subscription.startTrial}
+                          className="flex-shrink-0 inline-flex items-center gap-1.5 bg-navy text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-navy-hover transition-colors"
+                        >
+                          {t('dash.home.startTrialFirst')}
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
                       {step.n === 2 && wa.status === 'not_set' && canConnectWhatsApp && (
                         <button
                           onClick={wa.toggle}
@@ -451,6 +518,24 @@ export function DashboardHome() {
                         </span>
                       )}
                     </div>
+
+                    {step.n === 1 && isOdoo && canConnectOdoo && (
+                      <OdooConnectForm
+                        open={odoo.open}
+                        url={odoo.url}
+                        db={odoo.db}
+                        login={odoo.odooLogin}
+                        apiKey={odoo.apiKey}
+                        busy={odoo.busy}
+                        error={odoo.error}
+                        errorCode={odoo.errorCode}
+                        onUrlChange={odoo.setUrl}
+                        onDbChange={odoo.setDb}
+                        onLoginChange={odoo.setOdooLogin}
+                        onApiKeyChange={odoo.setApiKey}
+                        onSubmit={odoo.submit}
+                      />
+                    )}
 
                     {step.n === 2 && wa.status !== 'active' && canConnectWhatsApp && (
                       <WhatsAppConnectForm

@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { LogOut, User, Menu, X, ArrowLeft, ArrowRight, ChevronRight } from 'lucide-react';
 import { AuthPage } from './components/AuthPage';
 import { AuthCallback } from './components/AuthCallback';
+import { ResetPassword } from './components/ResetPassword';
 import { SuccessPage } from './components/SuccessPage';
 import { Homepage } from './components/Homepage';
 import { DashboardLayout } from './components/DashboardLayout';
@@ -468,6 +469,8 @@ function App() {
               {/* /get-started page removed — redirect stale links (ads/QRs/bookmarks) to pricing */}
               <Route path="/get-started" element={<Navigate to="/#pricing" replace />} />
               <Route path="/signin" element={<AuthPage initialMode="login" />} />
+              {/* Lands the "Forgot password?" e-mail (Odoo accounts) — the recovery token in the URL becomes a session, the form sets the new password */}
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/landing" element={<HeroLanding />} />
               <Route path="/invite" element={<InviteAccept />} />
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />

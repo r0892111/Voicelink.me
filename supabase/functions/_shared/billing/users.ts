@@ -7,12 +7,14 @@
 //
 // Lookup order matters: teamleader_users first (status quo for every
 // existing customer, and the only table with team/test-user columns), then
-// catermonkey_mcp_users. pipedrive_users / odoo_users have no billing
-// columns and are deliberately absent — querying them would 400.
+// catermonkey_mcp_users, then odoo_users (2026-09-19: the Odoo table from
+// VoiceLink migration 029 carries the same Stripe columns; tenant id =
+// odoo_user_id, the host/db/uid key VLAgent uses). pipedrive_users has no
+// billing columns and is deliberately absent — querying it would 400.
 
 import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-export const BILLING_TABLES = ['teamleader_users', 'catermonkey_mcp_users'] as const;
+export const BILLING_TABLES = ['teamleader_users', 'catermonkey_mcp_users', 'odoo_users'] as const;
 export type BillingTable = (typeof BILLING_TABLES)[number];
 
 export interface BillingRow {
@@ -27,11 +29,13 @@ export interface BillingRow {
   teamleader_id?: string | null;
   /** catermonkey_mcp_users only */
   vendor_subject?: string | null;
+  /** odoo_users only */
+  odoo_user_id?: string | null;
 }
 
 export interface BillingLookup {
   table: BillingTable;
-  provider: 'teamleader' | 'catermonkey_mcp';
+  provider: 'teamleader' | 'catermonkey_mcp' | 'odoo';
   /** The id VLAgent uses as tenant_id in usage_events / analytics for this row. */
   tenant_id: string | null;
   row: BillingRow;
@@ -48,12 +52,18 @@ const SELECT: Record<BillingTable, string> = {
   teamleader_users: 'user_id, stripe_customer_id, is_admin, admin_user_id, promo_end_date, is_test_user, teamleader_id',
   catermonkey_mcp_users:
     'user_id, stripe_customer_id, is_admin, admin_user_id, promo_end_date, is_test_user, vendor_subject',
+  odoo_users: 'user_id, stripe_customer_id, is_admin, admin_user_id, promo_end_date, is_test_user, odoo_user_id',
 };
 
 function toLookup(table: BillingTable, row: BillingRow): BillingLookup {
-  return table === 'teamleader_users'
-    ? { table, provider: 'teamleader', tenant_id: row.teamleader_id ?? null, row }
-    : { table, provider: 'catermonkey_mcp', tenant_id: row.vendor_subject ?? null, row };
+  switch (table) {
+    case 'teamleader_users':
+      return { table, provider: 'teamleader', tenant_id: row.teamleader_id ?? null, row };
+    case 'odoo_users':
+      return { table, provider: 'odoo', tenant_id: row.odoo_user_id ?? null, row };
+    default:
+      return { table, provider: 'catermonkey_mcp', tenant_id: row.vendor_subject ?? null, row };
+  }
 }
 
 export type OnLookupError = (table: BillingTable, message: string) => void;

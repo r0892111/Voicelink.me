@@ -66,48 +66,47 @@ Deno.serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
   );
 
-  // Catermonkey-via-MCP accounts: their CRM tokens live in VoiceLink's
-  // mcp_connections, which this function's cascade (/oauth/teamleader/
-  // disconnect) does not cover yet. Deleting the auth user would cascade the
-  // identity row away and strand a live vendor grant + tokens — so refuse
-  // self-serve erasure for this platform until VoiceLink's erasure covers
-  // it (plan Phase 4/5), rather than report account_deleted while data
-  // remains. Nothing is deleted on this path.
-  const { data: cmRow, error: cmErr } = await service
-    .from('catermonkey_mcp_users')
-    .select('user_id')
-    .eq('user_id', user.id)
-    .maybeSingle();
-  // 42P01 = relation does not exist: this function deployed ahead of the
-  // catermonkey_mcp_users migration. Treat as "no row" so Teamleader
-  // erasure keeps working; every other error is a hard stop.
-  if (cmErr && cmErr.code !== '42P01') {
-    r.error('catermonkey_mcp_users lookup failed', { error: cmErr.message, code: cmErr.code });
-    r.done(500);
-    return json(500, { error: 'lookup failed — nothing was deleted' });
-  }
-  if (cmRow) {
-    r.warn('erasure refused: Catermonkey-via-MCP account, cascade not wired yet', { user_id: user.id });
-    r.done(501);
-    return json(501, {
-      error: 'Account deletion for Catermonkey accounts is handled by support for now — nothing was deleted. Please contact support@voicelink.me.',
-    });
-  }
+  // A CRM-connected tenant gets VoiceLink's full cascade before the account
+  // is deleted: it revokes at the vendor where that is possible, deletes the
+  // token/identity row and purges entity memory, history, monitor logs and
+  // analytics. One entry per platform the portal sells self-serve; the first
+  // match wins (an account only ever has one). Keep this list next to
+  // VoiceLink's `core.erasure.supported_vendors()` — a platform missing here
+  // would have its auth user deleted while the vendor grant stayed live.
+  //   teamleader — since the beginning
+  //   odoo       — 2026-09-19 (API key revoked on 19+, spec D2 OD-15)
+  //   catermonkey_mcp — 2026-09-21 (tokens in mcp_connections; VoiceLink
+  //     revokes the grant by RFC 7009 and deletes by the full
+  //     (server_key, env, vendor_subject) key). Before this date the function
+  //     REFUSED erasure for these accounts because that cascade did not exist.
+  const CASCADES: ReadonlyArray<{ table: string; idColumn: string; vendor: string; softDeleted: boolean }> = [
+    { table: 'teamleader_users', idColumn: 'teamleader_id', vendor: 'teamleader', softDeleted: false },
+    { table: 'catermonkey_mcp_users', idColumn: 'vendor_subject', vendor: 'catermonkey_mcp', softDeleted: true },
+    { table: 'odoo_users', idColumn: 'odoo_user_id', vendor: 'odoo', softDeleted: true },
+  ];
 
-  // CRM-connected tenants get the full VLAgent cascade first.
-  const { data: tlRow, error: tlErr } = await service
-    .from('teamleader_users')
-    .select('teamleader_id')
-    .eq('user_id', user.id)
-    .maybeSingle();
-  if (tlErr) {
-    r.error('teamleader_users lookup failed', { error: tlErr.message });
-    r.done(500);
-    return json(500, { error: 'lookup failed — nothing was deleted' });
+  let cascade: { vendor: string; tenantId: string } | null = null;
+  for (const c of CASCADES) {
+    let q = service.from(c.table).select(c.idColumn).eq('user_id', user.id);
+    if (c.softDeleted) q = q.is('deleted_at', null);
+    const { data, error } = await q.maybeSingle();
+    // 42P01 = relation does not exist: this function deployed ahead of that
+    // platform's migration. Treat as "no row" so the others keep working;
+    // every other error is a hard stop — never delete on an unknown state.
+    if (error && error.code !== '42P01') {
+      r.error('platform row lookup failed', { table: c.table, error: error.message, code: error.code });
+      r.done(500);
+      return json(500, { error: 'lookup failed — nothing was deleted' });
+    }
+    const tenantId = (data as Record<string, unknown> | null)?.[c.idColumn];
+    if (typeof tenantId === 'string' && tenantId) {
+      cascade = { vendor: c.vendor, tenantId };
+      break;
+    }
   }
 
   let erased: Record<string, unknown> | null = null;
-  if (tlRow?.teamleader_id) {
+  if (cascade) {
     const vlagentUrl = Deno.env.get('VLAGENT_API_URL');
     const vlagentSecret = Deno.env.get('VLAGENT_SECRET');
     if (!vlagentUrl || !vlagentSecret) {
@@ -115,8 +114,8 @@ Deno.serve(async (req) => {
       r.done(500);
       return json(500, { error: 'erasure backend not configured — nothing was deleted' });
     }
-    const tenantId = tlRow.teamleader_id as string;
-    const resp = await fetch(`${vlagentUrl}/oauth/teamleader/disconnect`, {
+    const tenantId = cascade.tenantId;
+    const resp = await fetch(`${vlagentUrl}/oauth/${cascade.vendor}/disconnect`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -134,7 +133,7 @@ Deno.serve(async (req) => {
       return json(502, { error: 'erasure cascade failed — nothing was deleted, please contact support' });
     }
     erased = await resp.json();
-    r.info('VLAgent cascade complete', { tenant_id: tenantId });
+    r.info('VLAgent cascade complete', { vendor: cascade.vendor, tenant_id: tenantId });
   } else {
     r.info('no connected CRM tenant — erasing auth account only', { user_id: user.id });
   }

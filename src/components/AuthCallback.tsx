@@ -94,13 +94,6 @@ export const AuthCallback: React.FC = () => {
           setMessage(t('auth.missingAuthenticationParameters'));
           return;
         }
-      } else if (platform === 'odoo') {
-        // Odoo sends access_token in the hash fragment
-        const fragment = window.location.hash.substring(1);
-        const params = new URLSearchParams(fragment);
-        code = params.get('access_token');
-        state = params.get('state');
-        error = params.get('error');
       } else {
         const urlParams = new URLSearchParams(window.location.search);
         code = urlParams.get('code');
@@ -122,10 +115,7 @@ export const AuthCallback: React.FC = () => {
 
       // Verify stored state (if applicable; the MCP handoff has none — its
       // CSRF protection is the state cookie on VoiceLink's own callback)
-      const storedState = isMcpHandoff ? null
-        : platform === 'odoo'
-        ? localStorage.getItem('odoo_oauth_state')
-        : localStorage.getItem(`${platform}_oauth_state`);
+      const storedState = isMcpHandoff ? null : localStorage.getItem(`${platform}_oauth_state`);
 
       if (storedState && state !== storedState) {
         setStatus('error');
@@ -134,13 +124,11 @@ export const AuthCallback: React.FC = () => {
       }
 
       // Clean up stored state
-      if (platform === 'odoo') localStorage.removeItem('odoo_oauth_state');
-      else localStorage.removeItem(`${platform}_oauth_state`);
+      localStorage.removeItem(`${platform}_oauth_state`);
 
       setMessage(`Processing ${platform} authentication...`);
       setMessage(t('auth.callback.processingAuth', { platform }));
 
-      // Build request body - include custom OAuth URL for Odoo if configured
       // Support custom redirect URI for Teamleader via environment variable
       let redirectUri = `${window.location.protocol}//${window.location.host}/auth/${platform}/callback`;
       if (platform === 'teamleader' && import.meta.env.VITE_TEAMLEADER_REDIRECT_URI) {
@@ -182,11 +170,6 @@ export const AuthCallback: React.FC = () => {
             ...(inviteToken && { invitation_token: inviteToken }),
             ...(referralCode && { ref_code: referralCode }),
           };
-
-      // For custom Odoo implementations, pass the OAuth URL to the backend
-      if (platform === 'odoo' && import.meta.env.VITE_ODOO_AUTH_URL) {
-        requestBody.odoo_oauth_url = import.meta.env.VITE_ODOO_AUTH_URL;
-      }
 
       // Check if we're in WhatsApp verification flow and use external auth for Pipedrive
       const isWhatsAppFlow = localStorage.getItem('whatsapp_verification_flow') === 'true';
