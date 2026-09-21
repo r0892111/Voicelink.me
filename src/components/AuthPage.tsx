@@ -38,10 +38,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
   const [emailError, setEmailError] = React.useState<string | null>(null);
   const [redirectingMessage, setRedirectingMessage] = React.useState<string | null>(null);
 
-  // Catermonkey ships "coming soon": the MCP signup flow is built but not yet
-  // deployed end to end / accepted with a real phone. Remove it from this
-  // list to go live — everything behind the button is already wired.
-  const disabledProviders: string[] = ['catermonkey'];
+  // Catermonkey is live (go-live 2026-09-__, VoiceLink
+  // docs/crm-onboarding/catermonkey/GO-LIVE.md): sign-up, OTP and a real
+  // WhatsApp round trip were accepted on staging, credits are enforced for
+  // the platform, and self-serve erasure cascades. Put a name back in this
+  // list to take a provider off the sign-up page without a code change
+  // anywhere else.
+  const disabledProviders: string[] = [];
 
   // Clear any leftover test-user flags on mount. If the visitor is on /signup,
   // they're doing the real flow — stale keys from a prior /test-dashboard
