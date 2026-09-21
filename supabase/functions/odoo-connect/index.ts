@@ -123,6 +123,19 @@ Deno.serve(async (req) => {
     }
     if (!connectRes.ok || !connect?.success) {
       const vlCode = typeof connect?.code === 'string' ? connect.code : '';
+      // No JSON body at all means VoiceLink never saw the request: something in
+      // front of it answered — nginx basic auth on the /oauth/odoo/ prefix, a
+      // proxy error page, a gateway timeout. Blaming Odoo there is a lie the
+      // user cannot act on ("Odoo gaf een fout terug" while Odoo was never
+      // contacted — Alex's first real connect attempt, 2026-09-21).
+      if (connect === null) {
+        r.error('the connect backend did not answer with JSON', { status: connectRes.status });
+        r.done(502);
+        return json(
+          { success: false, code: 'connect_unavailable', error: 'The connection service did not answer.' },
+          502,
+        );
+      }
       if (connectRes.status === 400) {
         const detail = typeof connect?.detail === 'string' ? connect.detail : 'Invalid request';
         r.warn('VoiceLink rejected the request', { detail });

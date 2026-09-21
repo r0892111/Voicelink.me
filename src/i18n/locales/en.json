@@ -232,7 +232,8 @@
         "not_configured": "Odoo sign-in is not configured for this environment.",
         "db_error": "Sign-in failed. Please try again.",
         "session_failed": "Your Odoo is connected, but the session could not be created. Sign in again in a moment.",
-        "unexpected": "Something went wrong. Please try again."
+        "unexpected": "Something went wrong. Please try again.",
+        "connect_unavailable": "VoiceLink could not reach its connection service, so your key was never sent to Odoo. Nothing changed. Try again in a minute — if it keeps failing, let us know."
       },
       "account": {
         "title": "Start with Odoo",

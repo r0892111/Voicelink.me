@@ -255,6 +255,27 @@ test('a rejected key renders its message on the dashboard form and keeps the ste
   await expect(page.locator('#odoo-key')).toBeVisible();
 });
 
+test('a proxy failure says the connection service did not answer — it does not blame Odoo', async ({ page }) => {
+  await mockDashboard(page, { subscription: 'trialing' });
+  // what nginx basic auth in front of VoiceLink actually returns: HTML, not JSON
+  await page.route('**/functions/v1/odoo-connect', (r) =>
+    r.fulfill({ status: 502, contentType: 'application/json', body: JSON.stringify({ success: false, code: 'connect_unavailable', error: 'The connection service did not answer.' }) }));
+  await page.route('**/auth/v1/signup*', (r) => json(r, session()));
+  await openAccountScreen(page);
+  await page.fill('#acct-email', EMAIL);
+  await page.fill('#acct-password', 'longenough1');
+  await page.fill('#acct-confirm', 'longenough1');
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await page.waitForURL(/\/dashboard/);
+  await page.getByRole('button', { name: 'Connect Now' }).first().click({ timeout: 15000 });
+  await page.fill('#odoo-url', 'https://finit-solutions.odoo.com');
+  await page.fill('#odoo-login', 'voicelink@finit.be');
+  await page.fill('#odoo-key', KEY);
+  await page.getByRole('button', { name: 'Connect Odoo' }).click();
+  await expect(page.getByText(/could not reach its connection service/i)).toBeVisible({ timeout: 15000 });
+  await expect(page.getByText(/Odoo rejected|Odoo returned an error/i)).toHaveCount(0);
+});
+
 test('a connected Odoo shows its instance and offers "Replace API key"', async ({ page }) => {
   await mockDashboard(page, { subscription: 'active', odooStatus: 'connected' });
   await page.route('**/auth/v1/token?grant_type=password', (r) => json(r, session()));
