@@ -455,8 +455,16 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
 
   /* ─── Page layout ─── */
 
+  // `lg:h-screen`, not `h-screen`: on a phone the visual viewport shrinks when
+  // the keyboard opens and grows when it closes. A viewport-height page with an
+  // inner scrolling column then re-clamps that column's scrollTop on every
+  // toggle and the form lurches — it reads as the page reloading (Alex,
+  // 2026-09-21; measured on the live site: the column's max scroll was 430 with
+  // the keyboard up and 206 with it down, so the browser yanked 328 → 206).
+  // Letting the document scroll on small screens leaves no range to clamp.
+  // Desktop keeps the fixed-height split with the phone mock beside the form.
   return (
-    <div className="h-screen bg-porcelain relative overflow-hidden flex flex-col">
+    <div className="min-h-screen lg:h-screen bg-porcelain relative overflow-x-clip lg:overflow-hidden flex flex-col">
       <CornerWaves />
 
       {/* Top-left corner wave — mobile only */}
@@ -513,11 +521,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
       {/* Main content */}
       <div className="flex-1 flex min-h-0 md:-mt-[9vh]">
         {/* Left side: form — centered on mobile, pushed toward center on desktop */}
-        {/* The Odoo form is taller than the provider list: let its column
-            scroll (the page itself is overflow-hidden for the corner waves)
-            and start it at the top, or a short viewport clips the button. */}
+        {/* The account form is taller than the provider list. On desktop the
+            page is a fixed-height split, so the column itself scrolls; on a
+            phone the document scrolls instead (see the comment on the root). */}
         <div className={`w-full lg:w-[55%] flex justify-center lg:justify-end relative z-10 px-6 sm:px-10 lg:pl-4 lg:pr-0 ${
-          showOdooAccount ? 'items-start overflow-y-auto pt-2 pb-[32vh] lg:pb-16' : 'items-center pb-[32vh] lg:pb-0'}`}>
+          showOdooAccount
+            ? 'items-start pt-2 pb-16 lg:overflow-y-auto lg:pb-16'
+            : 'items-center pb-[32vh] lg:pb-0'}`}>
           {redirectingMessage && (
             <div className="absolute inset-0 bg-porcelain/95 backdrop-blur-sm flex flex-col items-center justify-center z-50 px-6">
               <div className="w-14 h-14 rounded-2xl bg-navy/[0.05] flex items-center justify-center mb-5">
@@ -546,7 +556,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
         </div>
       </div>
       {/* Mobile phone mock — pinned to bottom, behind form content */}
-      <div className="block lg:hidden absolute left-1/2 -translate-x-1/2 pointer-events-none z-0" style={{ top: '65vh', width: 'min(380px, 88vw)' }}>
+      {/* Decoration only: hidden while the account form is open, so it cannot
+          add height to a page that now scrolls, nor sit behind the password
+          fields on a short screen. */}
+      <div className={`${showOdooAccount ? 'hidden' : 'block'} lg:hidden absolute left-1/2 -translate-x-1/2 pointer-events-none z-0`} style={{ top: '65vh', width: 'min(380px, 88vw)' }}>
         <img
           src="/whatsapp phone mock.png"
           alt=""
