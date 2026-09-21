@@ -59,6 +59,12 @@ export function DashboardUsage() {
   const { t, currentLanguage } = useI18n();
   const { user } = useAuth();
   const { isAdmin, loading: roleLoading } = useTeamRole(user);
+  // Team management (invites, seats, the member breakdown) is Teamleader-only:
+  // only `teamleader_users` carries the invitation columns. Asking for the
+  // team scope on another platform used to answer with nothing and render
+  // "could not load team usage" — a failure message for something that simply
+  // does not apply (Catermonkey account on /dashboard/usage, 2026-09-21).
+  const teamSupported = user?.platform === 'teamleader';
 
   const [self, setSelf] = useState<SelfUsage | null>(null);
   const [team, setTeam] = useState<TeamUsage | null>(null);
@@ -85,7 +91,7 @@ export function DashboardUsage() {
         const base = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-usage-stats`;
 
         const requests: Promise<Response>[] = [fetch(base, { headers })];
-        if (isAdmin) requests.push(fetch(`${base}?scope=team`, { headers }));
+        if (isAdmin && teamSupported) requests.push(fetch(`${base}?scope=team`, { headers }));
 
         const responses = await Promise.all(requests);
         const [selfData, teamData] = await Promise.all(responses.map((r) => r.json()));
@@ -97,7 +103,7 @@ export function DashboardUsage() {
           setSelf(selfData.usage as SelfUsage | null);
         }
 
-        if (isAdmin && teamData?.success) {
+        if (isAdmin && teamSupported && teamData?.success) {
           setTeam(teamData.team as TeamUsage | null);
         }
       } catch (err) {
@@ -110,7 +116,7 @@ export function DashboardUsage() {
     })();
 
     return () => { cancelled = true; };
-  }, [isAdmin, roleLoading]);
+  }, [isAdmin, roleLoading, teamSupported]);
 
   function formatRelative(iso: string | null): string {
     if (!iso) return t('dash.usage.relNone');
@@ -153,7 +159,7 @@ export function DashboardUsage() {
         <UsageContent
           self={self}
           team={team}
-          isAdmin={isAdmin}
+          isAdmin={isAdmin && teamSupported}
           formatRelative={formatRelative}
         />
       )}
