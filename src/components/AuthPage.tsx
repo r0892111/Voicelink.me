@@ -38,16 +38,18 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
   const [acctError, setAcctError] = React.useState<string | null>(null);
   const [acctNotice, setAcctNotice] = React.useState<'confirm_sent' | 'reset_sent' | null>(null);
 
-  // Catermonkey and Odoo ship "coming soon": both flows are built but not yet
-  // accepted end to end with a real phone (Odoo: OD-20). Remove a name from
-  // this list to go live — everything behind the button is already wired.
+  // Catermonkey is live since 2026-09-21 (VoiceLink
+  // docs/crm-onboarding/catermonkey/GO-LIVE.md). Odoo stays "coming soon"
+  // until OD-20 passes — the flow is complete but never walked end to end
+  // with a real phone. Remove a name from this list to go live; add one to
+  // take a provider off the sign-up page without a code change anywhere else.
   // `?enable=odoo` switches one on for THIS visit only: the acceptance
   // tester's door, not something a visitor stumbles into.
   const enabledByQuery = React.useMemo(
     () => new Set((new URLSearchParams(window.location.search).get('enable') || '').split(',').map((v) => v.trim()).filter(Boolean)),
     [],
   );
-  const disabledProviders: string[] = ['catermonkey', 'odoo'].filter((name) => !enabledByQuery.has(name));
+  const disabledProviders: string[] = ['odoo'].filter((name) => !enabledByQuery.has(name));
 
   // Clear any leftover test-user flags on mount. If the visitor is on /signup,
   // they're doing the real flow — stale keys from a prior /test-dashboard
