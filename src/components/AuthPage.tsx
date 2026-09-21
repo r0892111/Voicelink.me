@@ -38,18 +38,18 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
   const [acctError, setAcctError] = React.useState<string | null>(null);
   const [acctNotice, setAcctNotice] = React.useState<'confirm_sent' | 'reset_sent' | null>(null);
 
-  // Catermonkey is live since 2026-09-21 (VoiceLink
-  // docs/crm-onboarding/catermonkey/GO-LIVE.md). Odoo stays "coming soon"
-  // until OD-20 passes — the flow is complete but never walked end to end
-  // with a real phone. Remove a name from this list to go live; add one to
-  // take a provider off the sign-up page without a code change anywhere else.
-  // `?enable=odoo` switches one on for THIS visit only: the acceptance
-  // tester's door, not something a visitor stumbles into.
+  // Every provider on this list is live. Odoo joined 2026-09-21: the account
+  // screen, the trial and the dashboard's Connect Odoo step are deployed
+  // (`odoo-account`, `odoo-connect`). The connect step itself still needs the
+  // nginx block for `/staging/oauth/odoo/` on the box before a key can be
+  // proven — until then it answers with the honest error from the form.
+  // `?enable=<name>` still opens a provider that IS on the list below, so a
+  // tester can reach one taken off the page without a code change.
   const enabledByQuery = React.useMemo(
     () => new Set((new URLSearchParams(window.location.search).get('enable') || '').split(',').map((v) => v.trim()).filter(Boolean)),
     [],
   );
-  const disabledProviders: string[] = ['odoo'].filter((name) => !enabledByQuery.has(name));
+  const disabledProviders: string[] = ([] as string[]).filter((name) => !enabledByQuery.has(name));
 
   // Clear any leftover test-user flags on mount. If the visitor is on /signup,
   // they're doing the real flow — stale keys from a prior /test-dashboard
