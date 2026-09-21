@@ -43,16 +43,34 @@ test('every field and the submit button are reachable on a short phone screen', 
   expect(box.y + box.height).toBeLessThanOrEqual(520);
 });
 
+test('the page itself can scroll — no ancestor pins it to the viewport', async ({ page }) => {
+  await openAccountScreen(page);
+  // The real guard. The first version of this fix only unpinned AuthPage's own
+  // root; the App shell still carried `h-screen overflow-hidden` on /signup and
+  // won, so the form stayed pinned on a phone (Alex: "it's still refreshing").
+  const doc = await page.evaluate(() => {
+    const el = document.scrollingElement as HTMLElement;
+    const pinned = Array.from(document.querySelectorAll('body *')).filter((n) => {
+      const cs = getComputedStyle(n as Element);
+      return cs.overflowY === 'hidden' && (n as HTMLElement).scrollHeight > (n as HTMLElement).clientHeight + 4;
+    }).map((n) => (n as HTMLElement).className.toString().slice(0, 60));
+    return { scrollable: el.scrollHeight > el.clientHeight + 4, clipped: pinned };
+  });
+  expect(doc.clipped, `content clipped by an overflow-hidden ancestor: ${JSON.stringify(doc.clipped)}`).toEqual([]);
+});
+
 test('no element traps the scroll on a phone — the document scrolls', async ({ page }) => {
   await openAccountScreen(page);
+  // html/body ARE expected to scroll now — that is the fix. Only an element
+  // inside the page counts as a trap.
   const trapped = await page.evaluate(() =>
-    Array.from(document.querySelectorAll('*'))
+    Array.from(document.querySelectorAll('body *'))
       .filter((el) => {
         const cs = getComputedStyle(el as Element);
         const e = el as HTMLElement;
         return /auto|scroll/.test(cs.overflowY) && e.scrollHeight > e.clientHeight + 4;
       })
-      .map((el) => (el as HTMLElement).className.toString().slice(0, 60)),
+      .map((el) => `${el.tagName.toLowerCase()}.${(el as HTMLElement).className.toString().slice(0, 50)}`),
   );
   expect(trapped, `scroll traps found: ${JSON.stringify(trapped)}`).toEqual([]);
 });
