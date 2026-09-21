@@ -74,3 +74,22 @@ test('no element traps the scroll on a phone — the document scrolls', async ({
   );
   expect(trapped, `scroll traps found: ${JSON.stringify(trapped)}`).toEqual([]);
 });
+
+// Typing must not remount anything. A component declared INSIDE another is a
+// new type on every render, so React throws the old subtree away and mounts a
+// fresh one — and any entrance animation on it replays. `CornerWaves` was
+// declared inside AuthPage, so every keystroke re-ran its 0.9s wave-in and the
+// blue corner flashed (Alex, 2026-09-21).
+test('typing does not remount the decorative wave (no flash on every keystroke)', async ({ page }) => {
+  await openAccountScreen(page);
+  await page.addStyleTag({ content: '@media (max-width: 9999px) { .auth-animate-waves { display: block !important; } }' });
+  const handleBefore = await page.evaluateHandle(() => document.querySelector('.auth-animate-waves'));
+  expect(await handleBefore.evaluate((n) => !!n)).toBe(true);
+  // mark the node; a remount replaces it and the mark is gone
+  await handleBefore.evaluate((n: Element) => n.setAttribute('data-kept', 'yes'));
+  await page.locator('#acct-email').click();
+  await page.keyboard.type('jord@finit.be', { delay: 25 });
+  await page.locator('#acct-password').fill('longenough1');
+  const survived = await page.evaluate(() => document.querySelector('.auth-animate-waves')?.getAttribute('data-kept'));
+  expect(survived, 'the wave element was replaced while typing — it is remounting').toBe('yes');
+});
