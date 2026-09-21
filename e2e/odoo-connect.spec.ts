@@ -33,6 +33,8 @@ async function english(page: Page) {
 
 async function openAccountScreen(page: Page, mode: 'signup' | 'login' = 'signup') {
   await english(page);
+  // `?enable=odoo` is a no-op now that Odoo is on the page; kept so the
+  // helper still works if a provider is ever taken off it again.
   await page.goto(mode === 'signup' ? '/signup?enable=odoo' : '/signin?enable=odoo');
   const btn = page.getByRole('button', { name: /Continue with Odoo/ });
   await expect(btn).toBeEnabled();
@@ -67,12 +69,12 @@ async function mockDashboard(page: Page, opts: { subscription?: string; odooStat
   await page.route('**/auth/v1/logout*', (r) => r.fulfill({ status: 204, body: '' }));
 }
 
-test('without ?enable=odoo the Odoo button is "coming soon" and disabled', async ({ page }) => {
+test('the Odoo button is live on /signup — no flag needed', async ({ page }) => {
   await english(page);
   await page.goto('/signup');
   const btn = page.getByRole('button', { name: /Continue with Odoo/ });
-  await expect(btn).toBeDisabled();
-  await expect(btn).toContainText(/coming soon/i);
+  await expect(btn).toBeEnabled();
+  await expect(btn).not.toContainText(/coming soon/i);
 });
 
 test('sign-up validates before it talks to Supabase: short password, mismatch, bad e-mail', async ({ page }) => {
