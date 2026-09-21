@@ -151,7 +151,14 @@ function App() {
     <ConsentProvider>
       <RTLProvider>
         <AnalyticsListener />
-        <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage || isSigninPage ? 'h-screen overflow-hidden' : ''}`}>
+        {/* `lg:` on the sign-up pages: pinning the app shell to 100vh with the
+            overflow hidden is what the desktop split-screen layout wants, but
+            on a phone the visual viewport shrinks when the keyboard opens, so a
+            pinned shell either clips the form or (with an inner scroller)
+            re-clamps its scroll position on every keyboard toggle — which reads
+            as the page reloading. AuthPage's own root has the same lg: split;
+            this ancestor has to match or it wins. (Alex, 2026-09-21.) */}
+        <div className={`min-h-screen bg-porcelain font-instrument ${isSignupPage || isSigninPage ? 'lg:h-screen lg:overflow-hidden' : ''}`}>
           {!isDashboardRoute && <NoiseOverlay />}
           {/* Navigation */}
           {!isLandingPage && !isSignupPage && !isSigninPage && !isInvitePage && !isTestPage && !isDashboardRoute && !isWorksmarterPage && !isPartnerPage && (
