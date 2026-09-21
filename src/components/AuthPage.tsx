@@ -16,6 +16,53 @@ interface AuthPageProps {
   initialMode?: 'signup' | 'login';
 }
 
+// Module scope, NOT inside AuthPage. A component declared inside another is a
+// NEW component type on every render, so React unmounts and remounts it — and
+// its entrance animation (`auth-animate-waves`, 0.9s) replays. Declared inside,
+// every keystroke in the form flashed the blue corner wave (Alex, 2026-09-21:
+// "every keytap is still flashing the blue background").
+/* ─────────────────────────────────────────────
+   Decorative SVG — diagonal corner waves
+   Same 3-layer pattern as SectionDivider:
+     1. Navy fill (corner area)
+     2. Navy accent stripe (#1A2D63)
+     3. Light accent stripe (#7B8DB5)
+   ───────────────────────────────────────────── */
+const CornerWaves = () => (
+  <svg
+    className="absolute inset-0 w-full h-full pointer-events-none hidden md:block auth-animate-waves"
+    viewBox="0 0 1440 900"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    {/* ── Top-left corner ──
+        Navy fill extends all the way past the light stripe to eliminate gaps */}
+    <path
+      d="M-30,-30 L330,-30 C260,100 340,210 200,300 C60,390 110,460 -30,530 Z"
+      fill="#1A2D63"
+    />
+    {/* Light accent stripe — thicker, endpoints bleed past viewport edges */}
+    <path
+      d="M310,-25 C250,90 330,200 195,290 C60,380 110,450 -25,520
+         L-10,540 C105,475 65,395 210,305 C345,215 265,105 328,-10 L310,-25 Z"
+      fill="#7B8DB5"
+    />
+
+    {/* ── Bottom-right corner ──
+        Navy fill extends all the way past the light stripe */}
+    <path
+      d="M1470,930 L1110,930 C1180,800 1100,690 1240,600 C1380,510 1330,440 1470,370 Z"
+      fill="#1A2D63"
+    />
+    {/* Light accent stripe — thicker, endpoints bleed past viewport edges */}
+    <path
+      d="M1130,925 C1190,800 1110,690 1245,600 C1380,510 1330,450 1465,380
+         L1450,360 C1335,435 1375,495 1230,585 C1095,675 1175,795 1112,910 L1130,925 Z"
+      fill="#7B8DB5"
+    />
+  </svg>
+);
+
 export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) => {
   const { t } = useI18n();
   const { navigateWithTransition } = usePageTransition();
@@ -219,48 +266,6 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
       default: return null;
     }
   };
-
-  /* ─────────────────────────────────────────────
-     Decorative SVG — diagonal corner waves
-     Same 3-layer pattern as SectionDivider:
-       1. Navy fill (corner area)
-       2. Navy accent stripe (#1A2D63)
-       3. Light accent stripe (#7B8DB5)
-     ───────────────────────────────────────────── */
-  const CornerWaves = () => (
-    <svg
-      className="absolute inset-0 w-full h-full pointer-events-none hidden md:block auth-animate-waves"
-      viewBox="0 0 1440 900"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      {/* ── Top-left corner ──
-          Navy fill extends all the way past the light stripe to eliminate gaps */}
-      <path
-        d="M-30,-30 L330,-30 C260,100 340,210 200,300 C60,390 110,460 -30,530 Z"
-        fill="#1A2D63"
-      />
-      {/* Light accent stripe — thicker, endpoints bleed past viewport edges */}
-      <path
-        d="M310,-25 C250,90 330,200 195,290 C60,380 110,450 -25,520
-           L-10,540 C105,475 65,395 210,305 C345,215 265,105 328,-10 L310,-25 Z"
-        fill="#7B8DB5"
-      />
-
-      {/* ── Bottom-right corner ──
-          Navy fill extends all the way past the light stripe */}
-      <path
-        d="M1470,930 L1110,930 C1180,800 1100,690 1240,600 C1380,510 1330,440 1470,370 Z"
-        fill="#1A2D63"
-      />
-      {/* Light accent stripe — thicker, endpoints bleed past viewport edges */}
-      <path
-        d="M1130,925 C1190,800 1110,690 1245,600 C1380,510 1330,450 1465,380
-           L1450,360 C1335,435 1375,495 1230,585 C1095,675 1175,795 1112,910 L1130,925 Z"
-        fill="#7B8DB5"
-      />
-    </svg>
-  );
 
   /* ─── Sub-screen: Odoo account ─── */
 
