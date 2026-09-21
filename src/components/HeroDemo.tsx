@@ -1476,12 +1476,11 @@ export const HeroDemo: React.FC = () => {
   const crmPlatforms: { name: string; icon: string; status?: 'beta' | 'soon' }[] = [
     { name: 'Teamleader', icon: '/Teamleader_Icon.svg' },
     { name: 'Catermonkey', icon: '/Catermonkey_Icon.png', status: 'beta' },
-    // Odoo: the adapter and the sign-up flow are built and proven on staging,
-    // but the button on /signup is still gated behind `?enable=odoo` until
-    // OD-20 (a real phone, end to end) passes — so the chip says "coming
-    // soon" rather than promising something a visitor cannot start yet. Drop
-    // the `status` the day that gate comes off.
-    { name: 'Odoo', icon: '/odoo_logo.svg', status: 'soon' },
+    // Odoo is beta like Catermonkey: the adapter is proven against Odoo 17,
+    // 18, 19 and Odoo Online, and the portal flow (account → trial → connect
+    // → WhatsApp) is built and browser-tested. Drop the `status` once OD-20
+    // has been walked end to end with a real phone.
+    { name: 'Odoo', icon: '/odoo_logo.svg', status: 'beta' },
   ];
 
   const crmStatusRow = (
