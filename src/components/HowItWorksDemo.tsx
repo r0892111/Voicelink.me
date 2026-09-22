@@ -26,7 +26,7 @@ function useDemoScaleFactor() {
 
 type Phase = 'idle' | 'voice' | 'transcript' | 'thinking' | 'reply' | 'crm' | 'done';
 type NavIcon = 'people' | 'building' | 'deal' | 'calendar' | 'invoice' | 'pin';
-type CrmBrandKey = 'teamleader' | 'catermonkey';
+type CrmBrandKey = 'teamleader' | 'catermonkey' | 'odoo';
 
 // Generate natural-looking waveform with envelope
 const generateWaveform = (seed: number, barCount: number): number[] => {
@@ -206,6 +206,75 @@ const CRM_BRANDS: Record<CrmBrandKey, CrmBrandConfig> = {
     secondaryCardTitle: 'Achtergrondinformatie',
     breadcrumb: '← Overzicht bestellingen',
     bottomSections: ['Facturen (0)', 'Documenten (0)'],
+  },
+  // Odoo's CRM: the opportunity form view. Aubergine chrome (#714B67 is Odoo's
+  // own primary), the pipeline nav, and the fields VoiceLink actually writes
+  // on a crm.lead — customer, expected revenue, stage, salesperson.
+  odoo: {
+    name: 'Odoo',
+    status: 'beta',
+    logo: '/odoo_logo.svg',
+    sidebarBg: '#714B67',
+    accent: '#00A09D',
+    navItems: [
+      { label: 'Pipeline', icon: 'deal', active: true },
+      { label: 'Contacten', icon: 'people', active: false },
+      { label: 'Bedrijven', icon: 'building', active: false },
+      { label: 'Activiteiten', icon: 'calendar', active: false },
+    ],
+    transcript: {
+      en: 'Just visited Bram Coppens at Hoveniers De Wilg. They want a maintenance contract for next season, about 18 thousand. Put it in the pipeline as a proposal and remind me to call him Tuesday.',
+      nl: 'Net langs geweest bij Bram Coppens van Hoveniers De Wilg. Ze willen een onderhoudscontract voor volgend seizoen, zo’n 18 duizend. Zet het in de pipeline als voorstel en herinner me om hem dinsdag te bellen.',
+    },
+    replyLines: {
+      en: [
+        { emoji: '✅', text: 'Opportunity created: Maintenance contract' },
+        { emoji: '🏢', text: 'Hoveniers De Wilg — Bram Coppens' },
+        { emoji: '💶', text: 'Expected revenue €18,000' },
+        { emoji: '📊', text: 'Stage: Proposition' },
+        { emoji: '📞', text: 'Call scheduled for Tuesday' },
+      ],
+      nl: [
+        { emoji: '✅', text: 'Opportuniteit aangemaakt: Onderhoudscontract' },
+        { emoji: '🏢', text: 'Hoveniers De Wilg — Bram Coppens' },
+        { emoji: '💶', text: 'Verwachte omzet €18.000' },
+        { emoji: '📊', text: 'Fase: Voorstel' },
+        { emoji: '📞', text: 'Telefoontje gepland op dinsdag' },
+      ],
+    },
+    avatarInitials: 'HW',
+    entityName: 'Onderhoudscontract',
+    tags: ['Voorstel', '€18.000'],
+    fieldRows: {
+      en: [
+        { label: 'Klant', value: 'Hoveniers De Wilg' },
+        { label: 'Contact', value: 'Bram Coppens', isLink: true },
+        { label: 'Verwachte omzet', value: '€18.000' },
+        { label: 'Fase', value: 'Voorstel' },
+      ],
+      nl: [
+        { label: 'Klant', value: 'Hoveniers De Wilg' },
+        { label: 'Contact', value: 'Bram Coppens', isLink: true },
+        { label: 'Verwachte omzet', value: '€18.000' },
+        { label: 'Fase', value: 'Voorstel' },
+      ],
+    },
+    noteBullets: {
+      en: [
+        'Maintenance contract for next season',
+        'Budget indication around €18,000',
+        'Call back Tuesday — decision after their board meeting',
+      ],
+      nl: [
+        'Onderhoudscontract voor volgend seizoen',
+        'Budgetindicatie rond €18.000',
+        'Dinsdag terugbellen — beslissing na hun bestuursvergadering',
+      ],
+    },
+    primaryCardTitle: 'Opportuniteit',
+    secondaryCardTitle: 'Interne notitie',
+    breadcrumb: '← Pipeline',
+    bottomSections: ['Geplande activiteiten (1)', 'Offertes (0)'],
   },
 };
 
