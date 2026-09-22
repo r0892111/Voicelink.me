@@ -27,6 +27,7 @@ export interface OdooConnectFormProps {
 const KNOWN_CODES = new Set([
   'missing_fields', 'odoo_bad_url', 'odoo_unreachable', 'odoo_bad_credentials', 'odoo_db_unknown',
   'odoo_crm_missing', 'odoo_plan_gate', 'odoo_error', 'odoo_already_linked', 'not_configured',
+  'connect_unavailable',
   'db_error', 'unauthorized', 'unexpected',
 ]);
 

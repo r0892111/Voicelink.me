@@ -210,7 +210,8 @@
         "not_configured": "Aanmelden met Odoo is voor deze omgeving niet ingesteld.",
         "db_error": "Aanmelden is mislukt. Probeer het opnieuw.",
         "session_failed": "Je Odoo is gekoppeld, maar de sessie kon niet worden gestart. Meld je zo meteen opnieuw aan.",
-        "unexpected": "Er ging iets mis. Probeer het opnieuw."
+        "unexpected": "Er ging iets mis. Probeer het opnieuw.",
+        "connect_unavailable": "VoiceLink kon zijn koppeldienst niet bereiken, dus je sleutel is nooit naar Odoo gestuurd. Er is niets gewijzigd. Probeer het zo meteen opnieuw — blijft het misgaan, laat het ons weten."
       },
       "account": {
         "title": "Starten met Odoo",

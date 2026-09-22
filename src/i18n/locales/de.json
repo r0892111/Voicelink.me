@@ -121,7 +121,8 @@
         "not_configured": "Die Odoo-Anmeldung ist für diese Umgebung nicht eingerichtet.",
         "db_error": "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
         "session_failed": "Ihr Odoo ist verbunden, aber die Sitzung konnte nicht erstellt werden. Melden Sie sich gleich erneut an.",
-        "unexpected": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+        "unexpected": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+        "connect_unavailable": "VoiceLink konnte seinen Verbindungsdienst nicht erreichen, Ihr Schlüssel wurde also nie an Odoo gesendet. Es hat sich nichts geändert. Versuchen Sie es gleich noch einmal — wenn es weiterhin fehlschlägt, sagen Sie uns Bescheid."
       },
       "account": {
         "title": "Mit Odoo starten",

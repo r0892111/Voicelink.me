@@ -115,7 +115,8 @@
         "not_configured": "La connexion Odoo n'est pas configurée pour cet environnement.",
         "db_error": "La connexion a échoué. Veuillez réessayer.",
         "session_failed": "Votre Odoo est connecté, mais la session n'a pas pu être créée. Reconnectez-vous dans un instant.",
-        "unexpected": "Une erreur s'est produite. Veuillez réessayer."
+        "unexpected": "Une erreur s'est produite. Veuillez réessayer.",
+        "connect_unavailable": "VoiceLink n'a pas pu joindre son service de connexion ; votre clé n'a donc jamais été envoyée à Odoo. Rien n'a changé. Réessayez dans une minute — si cela persiste, dites-le-nous."
       },
       "account": {
         "title": "Commencer avec Odoo",
