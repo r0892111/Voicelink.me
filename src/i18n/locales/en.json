@@ -1958,5 +1958,43 @@
     "subtitle": "VoiceLink will always reply in this language, regardless of the language you speak in.",
     "confirm": "Confirm",
     "editLater": "You can change this later in your profile."
+  },
+  "odooExperience": {
+    "badge": "Odoo Experience 2026 — exclusive offer",
+    "title": "2 months of Professional, free",
+    "subtitle": "Send a voice note on WhatsApp. VoiceLink turns it into notes, activities and follow-ups in your Odoo. No more typing.",
+    "bullets": {
+      "credits": "1,000 credits a month on the Professional plan",
+      "odoo": "Updates land straight in Odoo",
+      "noCard": "No credit card, no payment screen"
+    },
+    "cta": "Start now",
+    "footnote": "No card details needed · 2 months of Professional free"
+  },
+  "worksmarterQr": {
+    "landing": {
+      "badge": "Exclusive trade-show offer",
+      "title": "2 months of Professional, free",
+      "subtitle": "Send a voice note on WhatsApp. VoiceLink turns it into notes, tasks and follow-ups in your CRM. No more typing.",
+      "bullets": {
+        "credits": "1,000 credits a month on the Professional plan",
+        "crm": "Automatic updates in Teamleader or Odoo",
+        "noCard": "No credit card, no payment screen"
+      },
+      "cta": "Start now",
+      "footnote": "No card details needed · 2 months of Professional free"
+    },
+    "onboard": {
+      "title": "Connect your CRM",
+      "subtitle": "Connect your Teamleader or Odoo and your 2 free months of Professional start right away.",
+      "bullets": {
+        "free": "2 months of Professional free",
+        "noCard": "No card needed to start",
+        "after": "Then €59/user/month — cancel monthly"
+      },
+      "connectTeamleader": "Connect Teamleader",
+      "connectOdoo": "Connect Odoo",
+      "note": "Teamleader: you'll be redirected to grant access. Odoo: you create an account first, then connect Odoo from your dashboard."
+    }
   }
 }

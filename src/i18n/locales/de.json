@@ -1941,5 +1941,43 @@
     "freeConsultation": "Kostenlose Beratung",
     "customProofOfConcept": "Individueller Proof of Concept",
     "tailoredImplementation": "Maßgeschneiderte Umsetzung"
+  },
+  "odooExperience": {
+    "badge": "Odoo Experience 2026 — exklusives Angebot",
+    "title": "2 Monate Professional gratis",
+    "subtitle": "Schick eine Sprachnachricht über WhatsApp. VoiceLink macht daraus automatisch Notizen, Aktivitäten und Follow-ups in deinem Odoo. Kein Tippen mehr.",
+    "bullets": {
+      "credits": "1.000 Credits pro Monat im Professional-Plan",
+      "odoo": "Automatische Updates in Odoo",
+      "noCard": "Keine Kreditkarte, kein Bezahlbildschirm"
+    },
+    "cta": "Jetzt starten",
+    "footnote": "Keine Kartendaten nötig · 2 Monate Professional gratis"
+  },
+  "worksmarterQr": {
+    "landing": {
+      "badge": "Exklusives Messeangebot",
+      "title": "2 Monate Professional gratis",
+      "subtitle": "Schick eine Sprachnachricht über WhatsApp. VoiceLink macht daraus automatisch Notizen, Aufgaben und Follow-ups in deinem CRM. Kein Tippen mehr.",
+      "bullets": {
+        "credits": "1.000 Credits pro Monat im Professional-Plan",
+        "crm": "Automatische Updates in Teamleader oder Odoo",
+        "noCard": "Keine Kreditkarte, kein Bezahlbildschirm"
+      },
+      "cta": "Jetzt starten",
+      "footnote": "Keine Kartendaten nötig · 2 Monate Professional gratis"
+    },
+    "onboard": {
+      "title": "Verbinde dein CRM",
+      "subtitle": "Verbinde dein Teamleader oder Odoo und deine 2 Gratis-Monate Professional starten sofort.",
+      "bullets": {
+        "free": "2 Monate Professional gratis",
+        "noCard": "Keine Karte nötig zum Start",
+        "after": "Danach 59 €/Nutzer/Monat — monatlich kündbar"
+      },
+      "connectTeamleader": "Teamleader verbinden",
+      "connectOdoo": "Odoo verbinden",
+      "note": "Teamleader: Du wirst weitergeleitet, um den Zugriff zu erlauben. Odoo: Du erstellst zuerst ein Konto und verbindest Odoo dann über dein Dashboard."
+    }
   }
 }

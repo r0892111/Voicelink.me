@@ -1,13 +1,17 @@
 // ── provision-promo-subscription ──────────────────────────────────────────
-// Requires auth (called from AuthCallback after CRM OAuth).
-// Sets promo_end_date on teamleader_users so get-subscription returns
-// status='active', plan='professional_monthly' without touching Stripe.
+// Requires auth (called from AuthCallback / Dashboard after sign-up).
+// Sets promo_end_date on the caller's billing row — whichever platform table
+// it lives on (_shared/billing/users.ts: Teamleader, Catermonkey, Odoo) — so
+// get-subscription returns status='active', plan='professional_monthly'
+// without touching Stripe. It used to write teamleader_users only, so a
+// promo for an Odoo or Catermonkey account silently granted nothing.
 // Only extends promo if the computed end date is later than the current one —
 // prevents a shorter promo from overwriting a longer one.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger, toErrorDetail } from '../_shared/logger.ts';
+import { findBillingRow } from '../_shared/billing/users.ts';
 
 const log = createLogger('provision-promo-subscription');
 
@@ -51,15 +55,20 @@ Deno.serve(async (req) => {
 
     r.info('provisioning promo', { user_id: user.id, months, new_end: newEndDate.toISOString() });
 
-    // Check current promo_end_date — only extend if new end is later (prevents
-    // a 1-month affiliate promo from overwriting a 2-month WorkSmarter promo).
-    const { data: currentRow } = await supabase
-      .from('teamleader_users')
-      .select('promo_end_date')
-      .eq('user_id', user.id)
-      .maybeSingle();
+    // The caller's billing row, whichever platform table it lives on. None yet
+    // (an Odoo account whose placeholder row odoo-account has not written) →
+    // 409 so the browser keeps its promo intent and retries, instead of a 200
+    // for an update that touched nothing.
+    const billing = await findBillingRow(supabase, user.id);
+    if (!billing) {
+      r.warn('no billing row for user yet', { user_id: user.id });
+      r.done(409);
+      return json({ success: false, code: 'no_billing_row', error: 'Account nog niet klaar.' }, 409);
+    }
 
-    const currentEnd = currentRow?.promo_end_date ? new Date(currentRow.promo_end_date) : null;
+    // Only extend if the new end is later (prevents a 1-month affiliate promo
+    // from overwriting a 2-month event promo).
+    const currentEnd = billing.row.promo_end_date ? new Date(billing.row.promo_end_date) : null;
 
     if (currentEnd && currentEnd > newEndDate) {
       r.info('existing promo is longer, skipping', { current_end: currentEnd.toISOString() });
@@ -68,7 +77,7 @@ Deno.serve(async (req) => {
     }
 
     const { error: updateError } = await supabase
-      .from('teamleader_users')
+      .from(billing.table)
       .update({ promo_end_date: newEndDate.toISOString() })
       .eq('user_id', user.id);
 
@@ -77,7 +86,7 @@ Deno.serve(async (req) => {
       return json({ success: false, error: 'Kon promo niet activeren.' }, 500);
     }
 
-    r.done(200, { months });
+    r.done(200, { months, table: billing.table });
     return json({ success: true, months });
   } catch (err) {
     r.error('unhandled error', toErrorDetail(err));
