@@ -5,6 +5,8 @@ import { startTeamleaderCheckout } from '../utils/startCheckout';
 import { setPendingPromo } from '../utils/pendingPromo';
 import { withUTM } from '../utils/utm';
 import { NoiseOverlay } from './ui/NoiseOverlay';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { useI18n } from '../hooks/useI18n';
 
 const QR_REF = 'wms';
 const SESSION_KEY = 'wms_ref';
@@ -23,6 +25,7 @@ export const WorkSmarterOnboard: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [starting, setStarting] = useState(false);
+  const { t } = useI18n();
 
   useEffect(() => {
     if (searchParams.get('ref') === QR_REF) {
@@ -57,26 +60,29 @@ export const WorkSmarterOnboard: React.FC = () => {
     <div className="min-h-screen bg-porcelain font-instrument relative flex flex-col">
       <NoiseOverlay />
 
-      <div className="flex justify-center pt-10 pb-6 px-6">
+      <div className="flex justify-center pt-10 pb-6 px-6 relative">
         <img src="/Finit Voicelink Blue.svg" alt="VoiceLink" className="h-8 w-auto" />
+        <div className="absolute right-6 top-9">
+          <LanguageSwitcher />
+        </div>
       </div>
 
       <div className="flex-1 flex items-start justify-center px-6 pb-16">
         <div className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-8">
           <div className="text-center mb-7">
             <h1 className="font-general font-bold text-2xl text-navy mb-2">
-              Koppel je CRM
+              {t('worksmarterQr.onboard.title')}
             </h1>
             <p className="text-sm text-navy/60 leading-relaxed">
-              Verbind jouw Teamleader of Odoo en je 2 maanden gratis Professional starten meteen.
+              {t('worksmarterQr.onboard.subtitle')}
             </p>
           </div>
 
           <ul className="mb-7 space-y-2.5">
             {[
-              '2 maanden Professional gratis',
-              'Geen kaart nodig om te starten',
-              'Daarna €59/gebruiker/maand — maandelijks opzegbaar',
+              t('worksmarterQr.onboard.bullets.free'),
+              t('worksmarterQr.onboard.bullets.noCard'),
+              t('worksmarterQr.onboard.bullets.after'),
             ].map((line) => (
               <li key={line} className="flex items-center gap-2.5 text-sm text-navy/70">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" strokeWidth={2.5} />
@@ -95,7 +101,7 @@ export const WorkSmarterOnboard: React.FC = () => {
             ) : (
               <>
                 <img src="/Teamleader_Icon.svg" alt="Teamleader" className="h-7 w-7 object-contain" />
-                <span className="font-medium text-navy">Teamleader koppelen</span>
+                <span className="font-medium text-navy">{t('worksmarterQr.onboard.connectTeamleader')}</span>
                 <ArrowRight className="w-4 h-4 text-navy/40 ml-auto" />
               </>
             )}
@@ -107,12 +113,12 @@ export const WorkSmarterOnboard: React.FC = () => {
             className="mt-3 flex items-center gap-3 w-full border border-navy/[0.12] bg-white hover:bg-navy/[0.03] disabled:opacity-60 rounded-xl px-5 py-4 transition-colors"
           >
             <img src="/odoo_logo.svg" alt="Odoo" className="h-7 w-7 object-contain" />
-            <span className="font-medium text-navy">Odoo koppelen</span>
+            <span className="font-medium text-navy">{t('worksmarterQr.onboard.connectOdoo')}</span>
             <ArrowRight className="w-4 h-4 text-navy/40 ml-auto" />
           </button>
 
           <p className="mt-5 text-xs text-navy/40 text-center">
-            Teamleader: je wordt doorgestuurd om toegang te verlenen. Odoo: je maakt eerst een account aan en koppelt Odoo daarna vanuit je dashboard.
+            {t('worksmarterQr.onboard.note')}
           </p>
         </div>
       </div>

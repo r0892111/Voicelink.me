@@ -1909,5 +1909,31 @@
     },
     "cta": "Commencer",
     "footnote": "Aucune carte requise · 2 mois de Professional offerts"
+  },
+  "worksmarterQr": {
+    "landing": {
+      "badge": "Offre exclusive salon",
+      "title": "2 mois de Professional offerts",
+      "subtitle": "Envoyez un message vocal sur WhatsApp. VoiceLink le transforme automatiquement en notes, tâches et suivis dans votre CRM. Fini la saisie.",
+      "bullets": {
+        "credits": "1 000 crédits par mois avec le plan Professional",
+        "crm": "Mises à jour automatiques dans Teamleader ou Odoo",
+        "noCard": "Pas de carte bancaire, pas d'écran de paiement"
+      },
+      "cta": "Commencer",
+      "footnote": "Aucune carte requise · 2 mois de Professional offerts"
+    },
+    "onboard": {
+      "title": "Connectez votre CRM",
+      "subtitle": "Connectez votre Teamleader ou Odoo et vos 2 mois de Professional offerts démarrent immédiatement.",
+      "bullets": {
+        "free": "2 mois de Professional offerts",
+        "noCard": "Aucune carte requise pour commencer",
+        "after": "Ensuite 59 €/utilisateur/mois — résiliable chaque mois"
+      },
+      "connectTeamleader": "Connecter Teamleader",
+      "connectOdoo": "Connecter Odoo",
+      "note": "Teamleader : vous serez redirigé pour autoriser l'accès. Odoo : vous créez d'abord un compte, puis vous connectez Odoo depuis votre tableau de bord."
+    }
   }
 }

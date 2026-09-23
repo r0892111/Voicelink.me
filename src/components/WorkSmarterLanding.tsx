@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { ArrowRight, CheckCircle, Star } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { NoiseOverlay } from './ui/NoiseOverlay';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { useI18n } from '../hooks/useI18n';
 
 const QR_REF = 'wms';
 const SESSION_KEY = 'wms_ref';
@@ -9,6 +11,7 @@ const SESSION_KEY = 'wms_ref';
 export const WorkSmarterLanding: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { t } = useI18n();
 
   useEffect(() => {
     const ref = searchParams.get('ref');
@@ -24,32 +27,35 @@ export const WorkSmarterLanding: React.FC = () => {
       <NoiseOverlay />
 
       {/* Header */}
-      <div className="flex justify-center pt-10 pb-6 px-6">
+      <div className="flex justify-center pt-10 pb-6 px-6 relative">
         <img src="/Finit Voicelink Blue.svg" alt="VoiceLink" className="h-8 w-auto" />
+        <div className="absolute right-6 top-9">
+          <LanguageSwitcher />
+        </div>
       </div>
 
       {/* Event badge */}
       <div className="flex justify-center mb-8 px-6">
         <div className="inline-flex items-center gap-2 bg-navy/[0.06] border border-navy/10 rounded-full px-4 py-2 text-sm font-medium text-navy">
           <Star className="w-3.5 h-3.5 fill-current" />
-          Exclusief beursaanbod
+          {t('worksmarterQr.landing.badge')}
         </div>
       </div>
 
       {/* Hero */}
       <section className="px-6 pb-16 max-w-2xl mx-auto text-center">
         <h1 className="font-general font-bold text-4xl md:text-5xl leading-tight text-navy mb-6">
-          2 maanden Professional gratis
+          {t('worksmarterQr.landing.title')}
         </h1>
         <p className="text-xl text-slate-blue leading-relaxed mb-10">
-          Stuur een spraakbericht op WhatsApp. VoiceLink zet het automatisch om in notities, taken en follow-ups in jouw CRM. Geen tikwerk meer.
+          {t('worksmarterQr.landing.subtitle')}
         </p>
 
         <div className="flex flex-col space-y-4 mb-10 text-left max-w-sm mx-auto">
           {[
-            '1.000 credits per maand op het Professional plan',
-            'Automatische updates in Teamleader of Odoo',
-            'Geen creditcard, geen betaalscherm',
+            t('worksmarterQr.landing.bullets.credits'),
+            t('worksmarterQr.landing.bullets.crm'),
+            t('worksmarterQr.landing.bullets.noCard'),
           ].map((bullet, i) => (
             <div key={i} className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-navy flex-shrink-0 mt-0.5" />
@@ -62,12 +68,12 @@ export const WorkSmarterLanding: React.FC = () => {
           onClick={() => navigate('/onboard/worksmarter')}
           className="group inline-flex items-center gap-2 bg-navy hover:bg-navy-hover text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
         >
-          <span>Nu starten</span>
+          <span>{t('worksmarterQr.landing.cta')}</span>
           <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
         </button>
 
         <p className="mt-5 text-sm text-navy/40">
-          Geen kaartgegevens vereist · 2 maanden gratis Professional
+          {t('worksmarterQr.landing.footnote')}
         </p>
       </section>
 

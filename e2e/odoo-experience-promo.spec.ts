@@ -133,9 +133,10 @@ test('the old WorkSmarter QR (?ref=wms) also leads to the Odoo sign-up with the 
     return json(r, { ...authUser(), email_confirmed_at: null, confirmed_at: null, confirmation_sent_at: '2026-09-24T09:00:00Z' });
   });
   await page.goto('/lp/worksmarter?ref=wms');
-  await page.getByRole('button', { name: /Nu starten/ }).click();
+  await expect(page.getByRole('heading', { name: '2 months of Professional, free' })).toBeVisible();
+  await page.getByRole('button', { name: /Start now/ }).click();
   await page.waitForURL(/\/onboard\/worksmarter/);
-  await page.getByRole('button', { name: /Odoo koppelen/ }).click();
+  await page.getByRole('button', { name: /Connect Odoo/ }).click();
   await page.waitForURL(/\/signup\?provider=odoo/);
   await expect(page.getByRole('heading', { name: 'Start with Odoo' })).toBeVisible();
   expect(await page.evaluate(() => localStorage.getItem('pending_promo'))).toContain('"months":2');
@@ -145,4 +146,13 @@ test('the old WorkSmarter QR (?ref=wms) also leads to the Odoo sign-up with the 
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page.getByRole('status')).toContainText(/Check your inbox/);
   expect(sent).toMatchObject({ data: { provider: 'odoo', promo_months: 2 } });
+});
+
+test('the old QR pages follow the visitor\'s language (French browser)', async ({ page }) => {
+  await page.addInitScript(() => { try { localStorage.setItem('i18nextLng', 'fr'); } catch { /* ignore */ } });
+  await page.goto('/lp/worksmarter?ref=wms');
+  await expect(page.getByRole('heading', { name: '2 mois de Professional offerts' })).toBeVisible();
+  await page.getByRole('button', { name: /Commencer/ }).click();
+  await expect(page.getByRole('heading', { name: 'Connectez votre CRM' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Connecter Odoo/ })).toBeVisible();
 });

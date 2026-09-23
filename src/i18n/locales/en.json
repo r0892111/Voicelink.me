@@ -1970,5 +1970,31 @@
     },
     "cta": "Start now",
     "footnote": "No card details needed · 2 months of Professional free"
+  },
+  "worksmarterQr": {
+    "landing": {
+      "badge": "Exclusive trade-show offer",
+      "title": "2 months of Professional, free",
+      "subtitle": "Send a voice note on WhatsApp. VoiceLink turns it into notes, tasks and follow-ups in your CRM. No more typing.",
+      "bullets": {
+        "credits": "1,000 credits a month on the Professional plan",
+        "crm": "Automatic updates in Teamleader or Odoo",
+        "noCard": "No credit card, no payment screen"
+      },
+      "cta": "Start now",
+      "footnote": "No card details needed · 2 months of Professional free"
+    },
+    "onboard": {
+      "title": "Connect your CRM",
+      "subtitle": "Connect your Teamleader or Odoo and your 2 free months of Professional start right away.",
+      "bullets": {
+        "free": "2 months of Professional free",
+        "noCard": "No card needed to start",
+        "after": "Then €59/user/month — cancel monthly"
+      },
+      "connectTeamleader": "Connect Teamleader",
+      "connectOdoo": "Connect Odoo",
+      "note": "Teamleader: you'll be redirected to grant access. Odoo: you create an account first, then connect Odoo from your dashboard."
+    }
   }
 }

@@ -1962,5 +1962,31 @@
     },
     "cta": "Nu starten",
     "footnote": "Geen kaartgegevens vereist · 2 maanden gratis Professional"
+  },
+  "worksmarterQr": {
+    "landing": {
+      "badge": "Exclusief beursaanbod",
+      "title": "2 maanden Professional gratis",
+      "subtitle": "Stuur een spraakbericht op WhatsApp. VoiceLink zet het automatisch om in notities, taken en follow-ups in jouw CRM. Geen tikwerk meer.",
+      "bullets": {
+        "credits": "1.000 credits per maand op het Professional plan",
+        "crm": "Automatische updates in Teamleader of Odoo",
+        "noCard": "Geen creditcard, geen betaalscherm"
+      },
+      "cta": "Nu starten",
+      "footnote": "Geen kaartgegevens vereist · 2 maanden gratis Professional"
+    },
+    "onboard": {
+      "title": "Koppel je CRM",
+      "subtitle": "Verbind jouw Teamleader of Odoo en je 2 maanden gratis Professional starten meteen.",
+      "bullets": {
+        "free": "2 maanden Professional gratis",
+        "noCard": "Geen kaart nodig om te starten",
+        "after": "Daarna €59/gebruiker/maand — maandelijks opzegbaar"
+      },
+      "connectTeamleader": "Teamleader koppelen",
+      "connectOdoo": "Odoo koppelen",
+      "note": "Teamleader: je wordt doorgestuurd om toegang te verlenen. Odoo: je maakt eerst een account aan en koppelt Odoo daarna vanuit je dashboard."
+    }
   }
 }
