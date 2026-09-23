@@ -279,8 +279,11 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
   const acctInputClass = 'w-full pl-12 pr-12 py-3.5 text-base border-2 border-navy/10 rounded-xl focus:ring-2 focus:ring-navy focus:border-transparent bg-white transition-all';
   const isSignupMode = globalAuthMode === 'signup';
 
+  // The account form is wider and taller than the provider list, so at
+  // laptop widths its text ran over the navy corner wave and became
+  // unreadable: it sits on its own solid card, dropped below the logo.
   const renderOdooAccount = () => (
-    <div className="w-full max-w-lg mx-auto lg:ml-auto lg:mr-8">
+    <div className="w-full max-w-lg mx-auto lg:ml-auto lg:mr-8 lg:mt-16 bg-white/95 backdrop-blur-sm rounded-2xl border border-navy/[0.07] shadow-sm p-6 sm:p-8">
       <div className="text-center mb-6">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-general font-bold text-navy mb-3">
           {isSignupMode ? t('auth.odoo.account.title') : t('auth.odoo.account.loginTitle')}
