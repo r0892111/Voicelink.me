@@ -7,6 +7,7 @@ import { AuthService } from '../services/authService';
 import { authProviders } from '../config/authProviders';
 import { useI18n } from '../hooks/useI18n';
 import { withUTM } from '../utils/utm';
+import { pendingPromoMonths } from '../utils/pendingPromo';
 import { trackSignupStart } from '../utils/analytics';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { usePageTransition } from '../hooks/usePageTransition';
@@ -76,7 +77,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
   // Odoo account screen (spec D3 rev. 2026-09-20, trial first): e-mail +
   // password with Supabase Auth — no magic links. The Odoo credentials are
   // asked later, on the dashboard (DashboardHome → OdooConnectForm).
-  const [showOdooAccount, setShowOdooAccount] = React.useState(false);
+  // `?provider=odoo` opens the account screen directly (event QR pages).
+  const [showOdooAccount, setShowOdooAccount] = React.useState(
+    () => new URLSearchParams(window.location.search).get('provider') === 'odoo',
+  );
   const [acctEmail, setAcctEmail] = React.useState('');
   const [acctPassword, setAcctPassword] = React.useState('');
   const [acctConfirm, setAcctConfirm] = React.useState('');
@@ -198,13 +202,16 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'signup' }) =>
     try {
       if (globalAuthMode === 'signup') {
         trackSignupStart();
+        const promoMonths = pendingPromoMonths();
         const { data, error: signUpErr } = await supabase.auth.signUp({
           email,
           password: acctPassword,
           options: {
             // provider: useAuth reads the platform off the metadata in a fresh
             // browser; name: the dashboard greeting until Odoo tells us better.
-            data: { provider: 'odoo', name: email.split('@')[0] },
+            // promo_months: an event promo pending in this browser, so the
+            // grant survives confirming the e-mail in another browser.
+            data: { provider: 'odoo', name: email.split('@')[0], ...(promoMonths ? { promo_months: promoMonths } : {}) },
             emailRedirectTo: `${window.location.origin}/dashboard`,
           },
         });

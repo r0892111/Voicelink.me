@@ -1897,5 +1897,17 @@
     "currency": "€{{amount}}",
     "percentage": "{{value}} %",
     "decimal": "{{value}}"
+  },
+  "odooExperience": {
+    "badge": "Odoo Experience 2026 — offre exclusive",
+    "title": "2 mois de Professional offerts",
+    "subtitle": "Envoyez un message vocal sur WhatsApp. VoiceLink le transforme automatiquement en notes, activités et suivis dans votre Odoo. Fini la saisie.",
+    "bullets": {
+      "credits": "1 000 crédits par mois avec le plan Professional",
+      "odoo": "Mises à jour automatiques dans Odoo",
+      "noCard": "Pas de carte bancaire, pas d'écran de paiement"
+    },
+    "cta": "Commencer",
+    "footnote": "Aucune carte requise · 2 mois de Professional offerts"
   }
 }

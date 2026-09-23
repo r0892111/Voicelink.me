@@ -1950,5 +1950,17 @@
     "subtitle": "VoiceLink antwoordt voortaan altijd in deze taal op je voice notes — ongeacht de taal waarin je inspreekt.",
     "confirm": "Bevestigen",
     "editLater": "Je kan dit later aanpassen in je profiel."
+  },
+  "odooExperience": {
+    "badge": "Odoo Experience 2026 — exclusief aanbod",
+    "title": "2 maanden Professional gratis",
+    "subtitle": "Stuur een spraakbericht op WhatsApp. VoiceLink zet het automatisch om in notities, activiteiten en follow-ups in jouw Odoo. Geen tikwerk meer.",
+    "bullets": {
+      "credits": "1.000 credits per maand op het Professional plan",
+      "odoo": "Automatische updates in Odoo",
+      "noCard": "Geen creditcard, geen betaalscherm"
+    },
+    "cta": "Nu starten",
+    "footnote": "Geen kaartgegevens vereist · 2 maanden gratis Professional"
   }
 }

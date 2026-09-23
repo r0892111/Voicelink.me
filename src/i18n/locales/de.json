@@ -1941,5 +1941,17 @@
     "freeConsultation": "Kostenlose Beratung",
     "customProofOfConcept": "Individueller Proof of Concept",
     "tailoredImplementation": "Maßgeschneiderte Umsetzung"
+  },
+  "odooExperience": {
+    "badge": "Odoo Experience 2026 — exklusives Angebot",
+    "title": "2 Monate Professional gratis",
+    "subtitle": "Schick eine Sprachnachricht über WhatsApp. VoiceLink macht daraus automatisch Notizen, Aktivitäten und Follow-ups in deinem Odoo. Kein Tippen mehr.",
+    "bullets": {
+      "credits": "1.000 Credits pro Monat im Professional-Plan",
+      "odoo": "Automatische Updates in Odoo",
+      "noCard": "Keine Kreditkarte, kein Bezahlbildschirm"
+    },
+    "cta": "Jetzt starten",
+    "footnote": "Keine Kartendaten nötig · 2 Monate Professional gratis"
   }
 }

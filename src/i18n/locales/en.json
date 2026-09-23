@@ -1958,5 +1958,17 @@
     "subtitle": "VoiceLink will always reply in this language, regardless of the language you speak in.",
     "confirm": "Confirm",
     "editLater": "You can change this later in your profile."
+  },
+  "odooExperience": {
+    "badge": "Odoo Experience 2026 — exclusive offer",
+    "title": "2 months of Professional, free",
+    "subtitle": "Send a voice note on WhatsApp. VoiceLink turns it into notes, activities and follow-ups in your Odoo. No more typing.",
+    "bullets": {
+      "credits": "1,000 credits a month on the Professional plan",
+      "odoo": "Updates land straight in Odoo",
+      "noCard": "No credit card, no payment screen"
+    },
+    "cta": "Start now",
+    "footnote": "No card details needed · 2 months of Professional free"
   }
 }

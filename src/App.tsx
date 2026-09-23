@@ -38,6 +38,7 @@ import { GettingStarted } from './components/GettingStarted';
 import { InviteAccept } from './components/InviteAccept';
 import { WorkSmarterLanding } from './components/WorkSmarterLanding';
 import { WorkSmarterOnboard } from './components/WorkSmarterOnboard';
+import { OdooExperienceLanding } from './components/OdooExperienceLanding';
 import { ServiceLeadForm } from './components/ServiceLeadForm';
 import { useAuth } from './hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -125,6 +126,7 @@ function App() {
   const isAffiliatePage = location.pathname === '/affiliate';
   const isWorksmarterPage =
     location.pathname === '/lp/worksmarter' ||
+    location.pathname === '/lp/odoo-experience' ||
     location.pathname === '/onboard/worksmarter' ||
     location.pathname === '/lp/service';
   const isDashboardRoute = location.pathname === '/dashboard' || location.pathname.startsWith('/dashboard/');
@@ -484,6 +486,7 @@ function App() {
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
               <Route path="/lp/worksmarter" element={<WorkSmarterLanding />} />
+              <Route path="/lp/odoo-experience" element={<OdooExperienceLanding />} />
               <Route path="/onboard/worksmarter" element={<WorkSmarterOnboard />} />
               <Route path="/lp/service" element={<ServiceLeadForm />} />
               <Route path="/affiliate" element={<AffiliatePartner />} />

@@ -18,6 +18,7 @@ import { StripeService } from '../services/stripeService';
 import { getStripePriceId, getTrialTier } from '../lib/teamPricing';
 import { consumePendingCheckout, clearPendingCheckout } from '../utils/pendingCheckout';
 import { withUTM } from '../utils/utm';
+import { consumePendingPromo } from '../utils/pendingPromo';
 import { DashboardSidebar } from './DashboardSidebar';
 import { DashboardTopBar } from './DashboardTopBar';
 import { LanguagePickerModal } from './LanguagePickerModal';
@@ -250,6 +251,12 @@ export function DashboardLayout() {
           },
         ).catch(() => {});
       }
+
+      // Event promo (WorkSmarter, Odoo Experience QR pages): grant it before
+      // the subscription check so the first dashboard load already reads
+      // Professional. E-mail + password and magic-link sign-ups never pass
+      // AuthCallback, which is the only other place that consumed it.
+      await consumePendingPromo(session, realUser?.platform ?? localStorage.getItem('userPlatform'));
 
       const res = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-subscription`,
