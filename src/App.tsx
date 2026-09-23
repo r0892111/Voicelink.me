@@ -36,7 +36,6 @@ import { TestSignup } from './components/TestSignup';
 // magic-link / onboarding URLs keep working.
 import { GettingStarted } from './components/GettingStarted';
 import { InviteAccept } from './components/InviteAccept';
-import { WorkSmarterLanding } from './components/WorkSmarterLanding';
 import { WorkSmarterOnboard } from './components/WorkSmarterOnboard';
 import { OdooExperienceLanding } from './components/OdooExperienceLanding';
 import { ServiceLeadForm } from './components/ServiceLeadForm';
@@ -485,7 +484,11 @@ function App() {
               <Route path="/lp/field-service" element={<FieldServiceLanding />} />
               <Route path="/lp/installateurs" element={<InstallatorsLanding />} />
               <Route path="/lp/b2b-sales" element={<B2BSalesLanding />} />
-              <Route path="/lp/worksmarter" element={<WorkSmarterLanding />} />
+              {/* Odoo Experience 2026-09-24: the printed WorkSmarter QR
+                  (/lp/worksmarter?ref=wms) forwards to the Odoo Experience
+                  page. Temporary — to restore the WorkSmarter page, put
+                  element={<WorkSmarterLanding />} back (and its import). */}
+              <Route path="/lp/worksmarter" element={<Navigate to={withUTM('/lp/odoo-experience?ref=oxp')} replace />} />
               <Route path="/lp/odoo-experience" element={<OdooExperienceLanding />} />
               <Route path="/onboard/worksmarter" element={<WorkSmarterOnboard />} />
               <Route path="/lp/service" element={<ServiceLeadForm />} />
